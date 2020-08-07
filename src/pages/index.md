@@ -1,6 +1,6 @@
 ---
 templateKey: index-page
-title: Same Agent Less Commission
+title: Get Packup
 heroImage: /img/index-jumbotron.png
 heroHeading: 'Start here, free...'
 heroSubheading: Top agents that will earn less for your business!

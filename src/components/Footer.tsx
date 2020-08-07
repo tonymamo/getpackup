@@ -29,16 +29,7 @@ const Footer = () => (
   <StyledFooter>
     <PageContainer>
       <FlexContainer flexDirection="column">
-        {/* TODO for PROD: update to / */}
-        <Link to="/landing" title="Logo">
-          <img src={logo} alt="Realty Offer" height={doubleSpacer} /> RealtyOffer
-        </Link>
-        <small>
-          {`Copyright © ${new Date().getFullYear()} | `}
-          <Link to="/terms">Terms</Link>
-          {' | '}
-          <Link to="/privacy">Privacy</Link>
-        </small>
+        <small>{`Copyright © Packup ${new Date().getFullYear()}`}</small>
       </FlexContainer>
     </PageContainer>
   </StyledFooter>

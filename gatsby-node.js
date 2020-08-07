@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const _ = require('lodash');
 const path = require('path');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const webpack = require('webpack');
 const { createFilePath } = require('gatsby-source-filesystem');
 const { fmImagesToRelative } = require('gatsby-remark-relative-images');
 
@@ -107,14 +105,4 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value,
     });
   }
-};
-
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [
-      new webpack.ProvidePlugin({
-        fetch: path.resolve(path.join(__dirname, 'node_modules/isomorphic-fetch/fetch-npm-node')),
-      }),
-    ],
-  });
 };

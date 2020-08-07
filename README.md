@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/24009d09-87ab-48e9-8eff-d7164c92eac2/deploy-status)](https://app.netlify.com/sites/getpackup/deploys)
+
 <p align="center">
   <a href="https://getpackup.com/">
     <img alt="Packup" src="" width="96px" />

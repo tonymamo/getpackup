@@ -7,8 +7,8 @@ import Footer from './Footer';
 import Navbar from './Navbar';
 
 import { baseSpacer, doubleSpacer, breakpoints } from '../styles/size';
-import { offWhite } from '../styles/color';
 import CssReset from '../styles/cssReset';
+import bgImg from '../images/Mountains_Day.jpg';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -16,10 +16,12 @@ const LayoutWrapper = styled.div`
   min-height: 100vh;
   width: 100vw;
   overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(${bgImg});
 `;
 
 const PageBody = styled.div`
-  background-color: ${offWhite};
   flex: 1;
   padding: ${baseSpacer} 0;
   @media only screen and (min-width: ${breakpoints.sm}) {
