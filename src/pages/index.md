@@ -3,6 +3,9 @@ templateKey: index-page
 title: Get Packup
 heroImage: /img/singlehikerapproachingbaseofmountainwithanothermountaininthebackground.jpg
 heroHeading: Never forget your helmet again
+typewriterList:
+  - text: Helmet
+  - text: Skins
 heroSubheading: Sign up below to become an early adopter
 heroCTALink: "#signup"
 heroCTAText: Signup now
