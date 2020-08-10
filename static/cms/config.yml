@@ -54,6 +54,12 @@ collections:
           - { label: Title, name: title, widget: string }
           - { label: HeroImage, name: heroImage, widget: image }
           - { label: HeroHeading, name: heroHeading, widget: string }
+          - {
+              label: HeroHeadingTypewriter,
+              name: typewriterList,
+              widget: list,
+              fields: [{ label: text, name: text, widget: string }],
+            }
           - { label: HeroSubheading, name: heroSubheading, widget: string }
           - { label: HeroCTALink, name: heroCTALink, widget: string }
           - { label: HeroCTAText, name: heroCTAText, widget: string }

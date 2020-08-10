@@ -1,20 +1,17 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import styled from 'styled-components';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
 
 import { brandTertiary, white } from '../styles/color';
-import { baseSpacer, doubleSpacer } from '../styles/size';
-
-import logo from '../images/logo.svg';
+import { quadrupleSpacer } from '../styles/size';
 
 const StyledFooter = styled.footer`
   background-color: ${brandTertiary};
   color: ${white};
-  padding: ${baseSpacer};
-
+  height: ${quadrupleSpacer};
+  line-height: ${quadrupleSpacer};
   & a {
     color: ${white};
 

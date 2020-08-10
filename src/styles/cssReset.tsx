@@ -74,6 +74,7 @@ const CssReset = createGlobalStyle`
     line-height: calc(12px + 1.05vw); /* Responsive Vertical Rhythm */
     color: ${textColor};
     overflow-x: hidden;
+    background-color: ${white};
   }
 
   h1, h2, h3, h4, h5, h6 {

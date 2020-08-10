@@ -5984,7 +5984,7 @@ de-indent@^1.0.2:
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
   integrity sha1-sgOOhG3DO6pXlhKNCAS0VbjB4h0=
 
-debug@2, debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.6, debug@^2.6.9:
+debug@2, debug@2.6.9, debug@^2.1.3, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.6, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   integrity sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==
@@ -6644,6 +6644,11 @@ elliptic@^6.5.3:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
+
+email-validator@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/email-validator/-/email-validator-2.0.4.tgz#b8dfaa5d0dae28f1b03c95881d904d4e40bfe7ed"
+  integrity sha512-gYCwo7kh5S3IDyZPLZf6hSS0MnZT8QmJFqYvbqlDZSbwdZlY6QZWxJ4i/6UhITOJ4XzyI647Bm2MXKCLqnJ4nQ==
 
 "emoji-regex@>=6.0.0 <=6.1.1":
   version "6.1.1"
@@ -8214,6 +8219,14 @@ gatsby-plugin-graphql-codegen@^2.7.1:
     fs-extra "^7.0.1"
     lodash.debounce "^4.0.8"
 
+gatsby-plugin-mailchimp@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-mailchimp/-/gatsby-plugin-mailchimp-5.2.2.tgz#bed94cb70b9d91267329a5e6a0220e821d8ff6e8"
+  integrity sha512-O9JizVPJAe5YT1QAHZNRh1xUVdPnfayfIRhsBULiK2629TQRvEzzQxTDbt/WZU02cVm8415Fx2CneaxYKLt0ag==
+  dependencies:
+    email-validator "^2.0.4"
+    jsonp "^0.2.1"
+
 gatsby-plugin-manifest@^2.2.47:
   version "2.4.22"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-manifest/-/gatsby-plugin-manifest-2.4.22.tgz#fb2f52e361f45d83df646b33f43a3640c8df4592"
@@ -8309,7 +8322,7 @@ gatsby-plugin-sharp@^2.4.12:
     svgo "1.3.2"
     uuid "^3.4.0"
 
-gatsby-plugin-smoothscroll@^1.1.0:
+gatsby-plugin-smoothscroll@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-smoothscroll/-/gatsby-plugin-smoothscroll-1.2.0.tgz#249c0ad660e167043652b34277f44d16ca2bf4b6"
   integrity sha512-wfIK06xwbNx91nHVg1YJwlLUJc0EmfWqV8KgvlNr6gFa9pqMx5Mprdp5jDRloAi3+9K0dVCybPO8FfaZ0i4HgA==
@@ -11413,6 +11426,13 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
   integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+
+jsonp@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/jsonp/-/jsonp-0.2.1.tgz#a65b4fa0f10bda719a05441ea7b94c55f3e15bae"
+  integrity sha1-pltPoPEL2nGaBUQep7lMVfPhW64=
+  dependencies:
+    debug "^2.1.3"
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -18082,6 +18102,11 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typeface-krona-one@^0.0.71:
+  version "0.0.71"
+  resolved "https://registry.yarnpkg.com/typeface-krona-one/-/typeface-krona-one-0.0.71.tgz#1fbdea18d5bffd0db236c358214c99368a2c3318"
+  integrity sha512-H7WLpkeP0+DE9+o492NxyJDyGuw1dyO3iowTeMUZyHDjExNGA/3BDzpb+pIEQTowp36upRG5Z2dc7oAOibREzw==
+
 typeface-lato@^0.0.75:
   version "0.0.75"
   resolved "https://registry.yarnpkg.com/typeface-lato/-/typeface-lato-0.0.75.tgz#8aa11c5611dc38416837c089b265a2abd1f7dd31"
@@ -18091,6 +18116,14 @@ typescript@^3.8.3:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
+
+typewriter-effect@^2.13.1:
+  version "2.13.1"
+  resolved "https://registry.yarnpkg.com/typewriter-effect/-/typewriter-effect-2.13.1.tgz#c820469eec39d41b89a86867588d3a362b37171c"
+  integrity sha512-SlKC2URrw/ziEEWmSQxPu4mbLrXrQibwJ3iuRFu4rXbRohT4AsBM5BvSBsqD8lUIvqqhcIS/WdWk5Us15jd3qg==
+  dependencies:
+    prop-types "^15.6.2"
+    raf "^3.4.0"
 
 ua-parser-js@^0.7.18:
   version "0.7.21"

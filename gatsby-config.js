@@ -16,6 +16,12 @@ module.exports = {
     'gatsby-plugin-eslint',
     'gatsby-plugin-smoothscroll',
     {
+      resolve: 'gatsby-plugin-mailchimp',
+      options: {
+        endpoint: process.env.GATSBY_MAILCHIMP_ENDPOINT,
+      },
+    },
+    {
       // keep as first gatsby-source-filesystem plugin for gatsby image support
       resolve: 'gatsby-source-filesystem',
       options: {
