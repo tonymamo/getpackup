@@ -18,6 +18,7 @@ import {
   Heading,
 } from '../components';
 import { requiredEmail, requiredField } from '../utils/validations';
+import { white, brandSecondary, brandTertiary } from '../styles/color';
 
 type IndexPageProps = {
   title: string;
@@ -94,7 +95,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
       <Seo title={props.title} />
       <HeroImage imgSrc={props.heroImage.childImageSharp.fluid.src}>
         <PageContainer>
-          <Heading inverse align="center" uppercase>
+          <Heading inverse align="center">
             Never forget your{' '}
             <TypewriterEffect
               options={{
@@ -111,6 +112,15 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Button>
         </PageContainer>
       </HeroImage>
+      <div style={{ backgroundColor: white, height: 400 }}>
+        <PageContainer>another section</PageContainer>
+      </div>
+      <div style={{ backgroundColor: brandSecondary, height: 400 }}>
+        <PageContainer>another section</PageContainer>
+      </div>
+      <div style={{ backgroundColor: brandTertiary, height: 400 }}>
+        <PageContainer>another section</PageContainer>
+      </div>
       <div
         id="signup"
         style={{
@@ -120,7 +130,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
       >
         <Row>
           <Column md={6} mdOffset={3}>
-            <h1>Stay Up to Date</h1>
+            <Heading>Stay Up to Date</Heading>
             <p>Enter your name and email to get periodic updates about Packup</p>
             <Formik
               validateOnMount

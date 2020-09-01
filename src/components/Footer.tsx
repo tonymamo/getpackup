@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
 
-import { brandTertiary, white } from '../styles/color';
+import { brandSecondary, white } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
 
 const StyledFooter = styled.footer`
-  background-color: ${brandTertiary};
+  background-color: ${brandSecondary};
   color: ${white};
   height: ${quadrupleSpacer};
   line-height: ${quadrupleSpacer};

@@ -6,6 +6,7 @@ import 'typeface-lato';
 
 import Footer from './Footer';
 import Navbar from './Navbar';
+import '../styles/webfonts.css';
 
 import { quadrupleSpacer } from '../styles/size';
 import CssReset from '../styles/cssReset';

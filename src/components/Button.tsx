@@ -2,7 +2,13 @@ import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'gatsby';
 
-import { baseSpacer, baseAndAHalfSpacer, borderWidth, halfSpacer } from '../styles/size';
+import {
+  baseSpacer,
+  baseAndAHalfSpacer,
+  borderWidth,
+  halfSpacer,
+  borderRadius,
+} from '../styles/size';
 import { fontFamilySansSerif, fontSizeBase } from '../styles/typography';
 import {
   brandPrimary,
@@ -162,6 +168,7 @@ const allStyles = css`
   padding: ${halfSpacer} ${baseAndAHalfSpacer};
   transition: all .2s ease-in-out;
   text-decoration: none;
+  border-radius: ${borderRadius};
   
   /* Color */
   ${primaryButtonStyles}

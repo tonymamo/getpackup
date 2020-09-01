@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 
 import PageContainer from './PageContainer';
 
-import { brandPrimary, white } from '../styles/color';
+import { brandSecondary, white } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
 import { headingsFontFamily } from '../styles/typography';
 
@@ -14,7 +14,7 @@ const StyledNavbar = styled.nav`
   position: fixed;
   left: 0;
   right: 0;
-  background: ${brandPrimary};
+  background: ${brandSecondary};
   color: ${white};
   height: ${quadrupleSpacer};
   line-height: ${quadrupleSpacer};
@@ -23,7 +23,11 @@ const StyledNavbar = styled.nav`
   & a,
   & a:hover {
     color: ${white};
+  }
+
+  & h1 a {
     font-family: ${headingsFontFamily};
+    letter-spacing: 1px;
   }
 `;
 
@@ -31,7 +35,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <PageContainer>
-        <Link to="/">packup</Link>
+        <h1>
+          <Link to="/">packup</Link>
+        </h1>
       </PageContainer>
     </StyledNavbar>
   );

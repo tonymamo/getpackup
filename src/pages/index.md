@@ -4,18 +4,18 @@ title: Get Packup
 heroImage: /img/singlehikerapproachingbaseofmountainwithanothermountaininthebackground.jpg
 heroHeading: Never forget important gear again
 typewriterList:
-  - text: Tent Poles
-  - text: Harness
-  - text: Sunscreen
-  - text: Ice Axe
-  - text: Swim Suit
-  - text: Ski Boots
-  - text: First Aid Kit
-  - text: Passport
-  - text: Bug Spray
-  - text: Gloves
-  - text: Helmet
-  - text: Batteries
+  - text: tent poles
+  - text: harness
+  - text: sunscreen
+  - text: ice axe
+  - text: swim suit
+  - text: ski boots
+  - text: first aid kit
+  - text: passport
+  - text: bug spray
+  - text: gloves
+  - text: helmet
+  - text: batteries
 heroSubheading: Sign up below to become an early adopter
 heroCTALink: '#signup'
 heroCTAText: Signup now
