@@ -1,7 +1,7 @@
 ---
 templateKey: index-page
 title: Get Packup
-heroImage: /img/singlehikerapproachingbaseofmountainwithanothermountaininthebackground.jpg
+heroImage: /img/mountains_day.jpg
 heroHeading: Never forget important gear again
 typewriterList:
   - text: tent poles
@@ -17,31 +17,25 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: '#signup'
+heroCTALink: "#signup"
 heroCTAText: Signup now
 mainpitch:
   title: Need More Info?
   bgImage: /img/topo.png
   cards:
-    - text: >-
-        Reach new audiences with our technology and marketing solutions to drive
-        …
+    - text: Reach new audiences with our technology and marketing solutions to drive …
       title: Sell A House
       image: /img/index-jumbotron.png
       link: /login
       linkText: Card 1 CTA
       linkType: button
-    - text: >-
-        Reach new audiences with our technology and marketing solutions to drive
-        …
+    - text: Reach new audiences with our technology and marketing solutions to drive …
       title: Buy A House
       icon: /img/realtyoffer-logo.png
       link: /login
       linkText: Card 2 CTA
       linkType: link
-    - text: >-
-        Reach new audiences with our technology and marketing solutions to drive
-        …
+    - text: Reach new audiences with our technology and marketing solutions to drive …
       title: Buy And Sell A House
       image: /img/home-jumbotron.jpg
       link: /login
