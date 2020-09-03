@@ -47,7 +47,7 @@ const Footer = () => (
         <Column md={2}>
           <p>Product</p>
           <p>
-            <Link to="/">Something</Link>
+            <Link to="/">Learn More</Link>
           </p>
         </Column>
         <Column md={2}>

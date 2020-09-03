@@ -118,6 +118,15 @@ module.exports = {
         publicPath: 'cms',
       },
     },
+    {
+      resolve: `gatsby-plugin-segment-js`,
+      options: {
+        prodKey: process.env.GATSBY_SEGMENT_API_KEY,
+        devKey: process.env.GATSBY_SEGMENT_API_KEY,
+        trackPage: true,
+        trackPageDelay: 50,
+      }
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline'
