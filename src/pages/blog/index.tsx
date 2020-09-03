@@ -9,7 +9,7 @@ import { quadrupleSpacer } from '../../styles/size';
 const BlogIndexPage = () => (
   <>
     <Seo title="Latest Stories" />
-    <HeroImage imgSrc={image} height="75vh">
+    <HeroImage imgSrc={image} height="500px">
       <PageContainer>
         <Heading as="h1" inverse align="center">
           Latest Stories

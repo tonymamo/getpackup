@@ -40,7 +40,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
   return (
     <>
-      <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src} height="75vh" />
+      <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src} height="500px" />
       <PageContainer>
         <article style={{ margin: `${quadrupleSpacer} 0` }}>
           <Row>

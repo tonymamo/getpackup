@@ -35,7 +35,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
 
   return (
     <>
-      <HeroImage imgSrc={image} height="75vh">
+      <HeroImage imgSrc={image} height="500px">
         <PageContainer>
           <Heading as="h1" inverse align="center">
             Contact Us
