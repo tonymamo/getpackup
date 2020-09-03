@@ -37,6 +37,7 @@
     "gatsby-remark-autolink-headers": "^2.3.11",
     "gatsby-remark-copy-linked-files": "^2.3.2",
     "gatsby-remark-images": "^3.1.49",
+    "gatsby-remark-reading-time": "^1.1.0",
     "gatsby-remark-relative-images": "^0.3.0",
     "gatsby-source-filesystem": "^2.1.55",
     "gatsby-transformer-remark": "^2.6.58",
@@ -59,8 +60,7 @@
     "redux-thunk": "^2.3.0",
     "string-mask": "^0.3.0",
     "styled-components": "^5.0.1",
-    "typeface-krona-one": "^0.0.71",
-    "typeface-lato": "^0.0.75",
+    "typeface-open-sans": "^0.0.75",
     "typewriter-effect": "^2.13.1",
     "uuid": "^7.0.2"
   },

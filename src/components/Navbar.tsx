@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 
 import PageContainer from './PageContainer';
+import FlexContainer from './FlexContainer';
 
 import { brandSecondary, white } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
-import { headingsFontFamily } from '../styles/typography';
+import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
 
 type NavbarProps = {};
 
@@ -28,6 +29,7 @@ const StyledNavbar = styled.nav`
   & h1 a {
     font-family: ${headingsFontFamily};
     letter-spacing: 1px;
+    font-size: ${fontSizeSmall};
   }
 `;
 
@@ -35,9 +37,14 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <PageContainer>
-        <h1>
-          <Link to="/">packup</Link>
-        </h1>
+        <FlexContainer justifyContent="space-between">
+          <h1>
+            <Link to="/">packup</Link>
+          </h1>
+          <nav>
+            <Link to="/blog">Blog</Link>
+          </nav>
+        </FlexContainer>
       </PageContainer>
     </StyledNavbar>
   );

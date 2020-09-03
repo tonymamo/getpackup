@@ -1,18 +1,33 @@
 import React from 'react';
 
-import { Seo, PageContainer } from '../../components';
+import { HeroImage, Seo, PageContainer, Heading } from '../../components';
 import BlogRoll from '../../templates/BlogRoll';
+import image from '../../images/SingleHikerApproachingBaseOfMountainWithAnotherMountainInTheBackground.jpg';
+
+import { quadrupleSpacer } from '../../styles/size';
 
 const BlogIndexPage = () => (
-  <PageContainer>
+  <>
     <Seo title="Latest Stories" />
-    <div>
-      <h1>Latest Stories</h1>
-    </div>
-    <section>
-      <BlogRoll />
+    <HeroImage imgSrc={image} height="75vh">
+      <PageContainer>
+        <Heading as="h1" inverse align="center">
+          Latest Stories
+        </Heading>
+      </PageContainer>
+    </HeroImage>
+    <section
+      style={{
+        padding: `${quadrupleSpacer} 0`,
+      }}
+    >
+      <PageContainer>
+        <section>
+          <BlogRoll />
+        </section>
+      </PageContainer>
     </section>
-  </PageContainer>
+  </>
 );
 
 export default BlogIndexPage;

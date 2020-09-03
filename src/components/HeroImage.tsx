@@ -11,7 +11,7 @@ type FullBleedImageProps = {
 
 const StyledFullBleedImage = styled.div`
   background-image: ${(props: FullBleedImageProps) => `url(${props.imgSrc})`};
-  background-position: top center;
+  background-position: center center;
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;

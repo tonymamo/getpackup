@@ -1,4 +1,5 @@
 import Alert from './Alert';
+import Box from './Box';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
@@ -7,6 +8,7 @@ import FlexContainer from './FlexContainer';
 import Footer from './Footer';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
+import HorizontalRule from './HorizontalRule';
 import Image from './Image';
 import Input from './Input';
 import Layout from './Layout';
@@ -20,6 +22,7 @@ import SiteMetadata from './SiteMetadata';
 
 export {
   Alert,
+  Box,
   Button,
   ClientOnly,
   Column,
@@ -28,6 +31,7 @@ export {
   Footer,
   Heading,
   HeroImage,
+  HorizontalRule,
   Image,
   Input,
   Layout,

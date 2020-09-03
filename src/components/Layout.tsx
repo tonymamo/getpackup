@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
-import 'typeface-krona-one';
-import 'typeface-lato';
+import 'typeface-open-sans';
 
 import Footer from './Footer';
 import Navbar from './Navbar';
@@ -10,6 +9,7 @@ import '../styles/webfonts.css';
 
 import { quadrupleSpacer } from '../styles/size';
 import CssReset from '../styles/cssReset';
+import topo from '../images/topo.png';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -22,6 +22,8 @@ const LayoutWrapper = styled.div`
 const PageBody = styled.div`
   flex: 1;
   margin-top: ${quadrupleSpacer};
+  background: url('${(props: { bgImg: string }) => props.bgImg}');
+  background-size: 500px;
 `;
 
 type LayoutProps = { element: any };
@@ -32,7 +34,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ element }) => (
     <IconContext.Provider value={{ style: { position: 'relative' } }}>
       <LayoutWrapper>
         <Navbar />
-        <PageBody>{element}</PageBody>
+        <PageBody bgImg={topo}>{element}</PageBody>
         <Footer />
       </LayoutWrapper>
     </IconContext.Provider>

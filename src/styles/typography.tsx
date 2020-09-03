@@ -1,8 +1,8 @@
 // Font Families
-export const fontFamilySansSerif = '"Lato", "Open Sans", sans-serif';
+export const fontFamilySansSerif = '"Open Sans", sans-serif';
 export const fontFamilySerif = 'Georgia, serif';
 export const fontFamilyMonospace = 'Consolas, Liberation Mono, Menlo, Courier, monospace';
-export const headingsFontFamily = '"GlamourAbsolute-regular", "Lato", "Open Sans", sans-serif';
+export const headingsFontFamily = '"GlamourAbsolute-regular", "Open Sans", sans-serif';
 
 // Font Sizes
 // https://www.codementor.io/@ricardozea/100-responsive-typography-system-using-a-modular-scale-s5rhft58g

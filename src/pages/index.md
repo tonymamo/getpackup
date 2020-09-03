@@ -17,49 +17,25 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: "#signup"
+heroCTALink: '#signup'
 heroCTAText: Signup now
 mainpitch:
-  title: Need More Info?
-  bgImage: /img/topo.png
-  cards:
-    - text: Reach new audiences with our technology and marketing solutions to drive …
-      title: Sell A House
-      image: /img/index-jumbotron.png
-      link: /login
-      linkText: Card 1 CTA
-      linkType: button
-    - text: Reach new audiences with our technology and marketing solutions to drive …
-      title: Buy A House
-      icon: /img/realtyoffer-logo.png
-      link: /login
-      linkText: Card 2 CTA
-      linkType: link
-    - text: Reach new audiences with our technology and marketing solutions to drive …
-      title: Buy And Sell A House
-      image: /img/home-jumbotron.jpg
-      link: /login
-      linkText: Card 3 CTA
-      linkType: button
+  image: /img/IPhone7pic.jpg
+  heading: Spend more time outside doing what you love.
+  subheading: Pack with confidence with a trip generator for any occassion
+  text: Take the guesswork out of packing by following and customizing comprehensive packing lists that are tailored to your excursion type, making sure you have everything necessary for what you’re doing and where you're staying.
 secondpitch:
-  title: Title
-  text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  caption: ImageBox with caption
-  image: /img/singlehikerapproachingbaseofmountainwithanothermountaininthebackground.jpg
-  link: /login
-  linkText: Learn More
-  linkType: button
+  image: /img/IPhone7pic.jpg
+  heading: Create and share collaborative packing lists
+  subheading: Create and share collaborative packing lists
+  text: Create collaborative packing lists that will help your group ensure everyone has their share of essential items, and that nothing gets left behind (or double packed).
 thirdpitch:
-  title: title
-  text: text
-  caption: caption
-  image: /img/singlehikerapproachingbaseofmountainwithanothermountaininthebackground.jpg
-  link: /login
-  linkText: cta
-  linkType: button
+  image: /img/IPhone7pic.jpg
+  heading: Learn from others and view the trips they packed for
+  subheading: Learn from others and view the trips they packed for
+  text: See what other professionals and enthusiasts are packing for their excursions, improving and refining your own personal packing lists.
+signupform:
+  bgImage: /img/topo.png
+  heading: Stay up to date
+  text: Enter your name and email to get periodic updates about Packup
 ---

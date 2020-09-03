@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, graphql, StaticQuery } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import { Row, Column, PreviewCompatibleImage } from '../components';
+import { Box, HorizontalRule, Heading, Row, Column, PreviewCompatibleImage } from '../components';
 
 type BlogRollProps = {
   data: {
@@ -12,6 +12,7 @@ type BlogRollProps = {
         slug: string;
       };
       date: string;
+      description: string;
       excerpt: string;
       edges: Array<{
         frontmatter: {
@@ -36,7 +37,7 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ data }) => {
       {posts &&
         posts.map(({ node: post }: any) => (
           <Column md={4} key={post.id}>
-            <div>
+            <Box>
               {post.frontmatter.featuredimage && (
                 <PreviewCompatibleImage
                   imageInfo={{
@@ -46,17 +47,19 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ data }) => {
                 />
               )}
               <small>{post.frontmatter.date}</small>
-              <h1 as="h1" styledAs="subtitle">
+              <Heading as="h2">
                 <Link className="title has-text-primary is-size-4" to={post.fields.slug}>
                   {post.frontmatter.title}
                 </Link>
-              </h1>
-              <hr />
-              <p>{post.excerpt}</p>
+              </Heading>
+              <HorizontalRule compact />
+              <p>
+                <small>{post.frontmatter.description}</small>
+              </p>
               <Link className="button" to={post.fields.slug}>
                 Keep Reading
               </Link>
-            </div>
+            </Box>
           </Column>
         ))}
     </Row>
@@ -82,6 +85,7 @@ export default () => (
               frontmatter {
                 title
                 templateKey
+                description
                 date(formatString: "MMMM DD, YYYY")
                 featuredpost
                 featuredimage {
