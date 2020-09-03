@@ -188,6 +188,12 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                     validateOnMount
                     initialValues={initialValues}
                     onSubmit={(values, { setSubmitting }) => {
+                      window.analytics.track('Signed Up For Newsletter', {
+                        firstName: values.fname,
+                        lastName: values.lname,
+                        email: values.email,
+                        position: 'top',
+                      });
                       addToMailchimp(values.email, {
                         FNAME: values.fname,
                         LNAME: values.lname,
@@ -341,6 +347,12 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                     validateOnMount
                     initialValues={initialValues}
                     onSubmit={(values, { setSubmitting }) => {
+                      window.analytics.track('Signed Up For Newsletter', {
+                        firstName: values.fname,
+                        lastName: values.lname,
+                        email: values.email,
+                        position: 'bottom',
+                      });
                       addToMailchimp(values.email, {
                         FNAME: values.fname,
                         LNAME: values.lname,

@@ -81,6 +81,7 @@
     "@types/react-table": "^7.0.16",
     "@types/react-text-truncate": "^0.14.0",
     "@types/redux-api-middleware": "^3.0.7",
+    "@types/segment-analytics": "^0.0.32",
     "@types/uuid": "^7.0.0",
     "@typescript-eslint/parser": "^2.23.0",
     "babel-eslint": "^10.1.0",
