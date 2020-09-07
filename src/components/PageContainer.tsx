@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { breakpoints, baseSpacer, halfSpacer } from '../styles/size';
+import { breakpoints, baseSpacer, halfSpacer, quadrupleSpacer } from '../styles/size';
 
 const PageContainer = styled.div`
   margin-right: auto;
@@ -9,6 +9,8 @@ const PageContainer = styled.div`
   padding-left: ${halfSpacer};
   width: 100%;
   max-width: ${breakpoints.xl};
+  ${(props: { withVerticalPadding?: boolean }) =>
+    props.withVerticalPadding && `margin-top: ${quadrupleSpacer};`}
 
   @media only screen and (min-width: ${breakpoints.sm}) {
     padding-right: ${baseSpacer};

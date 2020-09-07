@@ -15,7 +15,6 @@ import {
   FlexContainer,
 } from '../components';
 import Content, { HTMLContent } from '../components/Content';
-import { quadrupleSpacer } from '../styles/size';
 
 type BlogPostProps = {
   content: any;
@@ -40,41 +39,39 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
   return (
     <>
-      <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src} height="500px" />
-      <PageContainer>
-        <article style={{ margin: `${quadrupleSpacer} 0` }}>
-          <Row>
-            <Column md={9}>
-              <Box largePadding>
-                <div>
-                  {props.helmet || ''}
-                  <Heading>{props.title}</Heading>
-                  <FlexContainer justifyContent="space-between">
-                    <small>{props.date}</small>
+      <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src} />
+      <PageContainer withVerticalPadding>
+        <Row>
+          <Column md={9}>
+            <Box largePadding>
+              <div>
+                {props.helmet || ''}
+                <Heading>{props.title}</Heading>
+                <FlexContainer justifyContent="space-between">
+                  <small>{props.date}</small>
 
-                    <small>{props.readingTime.text}</small>
-                  </FlexContainer>
-                  <HorizontalRule />
-                  <p style={{ fontStyle: 'italic' }}>{props.description}</p>
-                  <PostContent content={props.content} />
-                  <HorizontalRule />
-                  {props.tags && props.tags.length ? (
-                    <>
-                      <h4>Tags</h4>
-                      <ul>
-                        {props.tags.map((tag: string) => (
-                          <li key={`${tag}tag`}>
-                            <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  ) : null}
-                </div>
-              </Box>
-            </Column>
-          </Row>
-        </article>
+                  <small>{props.readingTime.text}</small>
+                </FlexContainer>
+                <HorizontalRule />
+                <p>{props.description}</p>
+                <PostContent content={props.content} />
+                <HorizontalRule />
+                {props.tags && props.tags.length ? (
+                  <>
+                    <h4>Tags</h4>
+                    <ul>
+                      {props.tags.map((tag: string) => (
+                        <li key={`${tag}tag`}>
+                          <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+              </div>
+            </Box>
+          </Column>
+        </Row>
       </PageContainer>
     </>
   );

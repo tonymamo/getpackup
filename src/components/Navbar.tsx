@@ -4,6 +4,7 @@ import { Link } from 'gatsby';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
+import Heading from './Heading';
 
 import { brandSecondary, white } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
@@ -38,9 +39,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <PageContainer>
         <FlexContainer justifyContent="space-between">
-          <h1>
+          <Heading noMargin>
             <Link to="/">packup</Link>
-          </h1>
+          </Heading>
           <nav>
             <Link to="/blog">Blog</Link>
           </nav>

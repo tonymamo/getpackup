@@ -42,7 +42,7 @@ const Footer = () => (
           <h1>
             <Link to="/">packup</Link>
           </h1>
-          <p>Spend more time outside doing what you love.</p>
+          <p>Adventure made easy.</p>
         </Column>
         <Column md={2}>
           <p>Product</p>
@@ -78,7 +78,7 @@ const Footer = () => (
           <Social href="https://twitter.com">
             <FaTwitter />
           </Social>
-          <Social href="https://instagram.com">
+          <Social href="https://www.instagram.com/getpackup/">
             <FaInstagram />
           </Social>
         </nav>

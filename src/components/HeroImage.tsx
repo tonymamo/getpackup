@@ -1,33 +1,50 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
+import SimpleParallax from 'simple-parallax-js';
 
-import { quarterSpacer, quadrupleSpacer } from '../styles/size';
 import { white } from '../styles/color';
 
 type FullBleedImageProps = {
   imgSrc: string;
   height?: string;
+  parallax?: boolean;
 };
 
-const StyledFullBleedImage = styled.div`
-  background-image: ${(props: FullBleedImageProps) => `url(${props.imgSrc})`};
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: ${(props: FullBleedImageProps) => props.height || `calc(100vh - ${quadrupleSpacer})`};
+const HeroImageWrapper = styled.div`
+  position: relative;
+`;
+
+const StyledImage = styled.img`
+  max-width: 100%;
+`;
+
+const ChildrenWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
   text-align: center;
-  text-shadow: 0 0 ${quarterSpacer} rgba(0, 0, 0, 0.5);
   color: ${white};
 `;
 
-const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, height }) => (
-  <StyledFullBleedImage imgSrc={imgSrc} height={height}>
-    {children}
-  </StyledFullBleedImage>
-);
+const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, parallax }) => {
+  useEffect(() => {
+    if (parallax) {
+      const image = document.getElementsByClassName('parallaxImage');
+      (() => new SimpleParallax(image, { orientation: 'left', delay: 0.5 }))();
+    }
+  });
+
+  return (
+    <HeroImageWrapper>
+      <StyledImage src={imgSrc} alt="" className={parallax ? 'parallaxImage' : ''} />
+      <ChildrenWrapper>{children}</ChildrenWrapper>
+    </HeroImageWrapper>
+  );
+};
 
 export default FullBleedImage;

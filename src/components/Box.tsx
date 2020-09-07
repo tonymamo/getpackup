@@ -2,7 +2,13 @@ import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { FluidObject } from 'gatsby-image';
 
-import { baseSpacer, doubleSpacer, quadrupleSpacer, borderRadius } from '../styles/size';
+import {
+  baseSpacer,
+  doubleSpacer,
+  quadrupleSpacer,
+  borderRadius,
+  breakpoints,
+} from '../styles/size';
 import { white } from '../styles/color';
 import { z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '../styles/mixins';
 
@@ -38,7 +44,7 @@ const renderShadow = (zindex: number) => {
 
 const StyledBox = styled.div`
   border-radius: ${borderRadius};
-  padding: ${(props: BoxProps) => (props.largePadding ? quadrupleSpacer : baseSpacer)};
+  padding: ${baseSpacer};
   margin-bottom: ${baseSpacer};
   box-shadow: ${(props: BoxProps) => props.zindex && renderShadow(props.zindex)};
   text-align: ${(props: BoxProps) => props.textAlign};
@@ -54,6 +60,14 @@ const StyledBox = styled.div`
       position: relative;
       padding-bottom: ${quadrupleSpacer};
     `}
+  
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    padding: ${(props: BoxProps) => (props.largePadding ? quadrupleSpacer : doubleSpacer)};
+  }
+
+  @media only screen and (min-width: ${breakpoints.md}) {
+    padding: ${(props: BoxProps) => (props.largePadding ? quadrupleSpacer : baseSpacer)};
+  }
 `;
 
 const StyledBoxBackground = styled.div`

@@ -17,12 +17,12 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: '#signup'
-heroCTAText: Signup now
+heroCTALink: '#learn-more'
+heroCTAText: Learn More
 mainpitch:
   image: /img/IPhone7pic.jpg
-  heading: Spend more time outside doing what you love.
-  subheading: Pack with confidence with a trip generator for any occassion
+  heading: Adventure made easy.
+  subheading: Pack with confidence with a trip generator for any occasion
   text: Take the guesswork out of packing by following and customizing comprehensive packing lists that are tailored to your excursion type, making sure you have everything necessary for what you’re doing and where you're staying.
 secondpitch:
   image: /img/IPhone7pic.jpg

@@ -22,7 +22,7 @@ import {
   Box,
 } from '../components';
 import { requiredEmail, requiredField } from '../utils/validations';
-import { white, brandPrimary, brandSecondary, brandTertiary } from '../styles/color';
+import { textColor, white, brandPrimary, brandSecondary, brandTertiary } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
 import mountains from '../images/mountains.svg';
 import collage from '../images/Outdoorsman_Collage.jpg';
@@ -79,8 +79,10 @@ type IndexPageProps = {
 
 const Section = styled.section`
   padding: ${quadrupleSpacer} 0;
-  background-color: ${(props: { backgroundColor?: string }) => props.backgroundColor};
+  background-color: ${(props: { backgroundColor?: string; inverse?: boolean }) =>
+    props.backgroundColor};
   position: relative;
+  color: ${(props) => (props.inverse ? white : textColor)};
 `;
 
 const Mountains = styled.img`
@@ -176,91 +178,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Button>
         </PageContainer>
       </HeroImage>
-      <div id="signup">
-        <Section>
-          <PageContainer>
-            <Row>
-              <Column md={6} mdOffset={3}>
-                <Box>
-                  <Heading>{props.signupform.heading}</Heading>
-                  <p>{props.signupform.text}</p>
-                  <Formik
-                    validateOnMount
-                    initialValues={initialValues}
-                    onSubmit={(values, { setSubmitting }) => {
-                      window.analytics.track('Signed Up For Newsletter', {
-                        firstName: values.fname,
-                        lastName: values.lname,
-                        email: values.email,
-                        position: 'top',
-                      });
-                      addToMailchimp(values.email, {
-                        FNAME: values.fname,
-                        LNAME: values.lname,
-                      }).then((res: MailchimpResponse) => {
-                        setSubmitting(false);
-                        setResponse(res);
-                      });
-                    }}
-                  >
-                    {({ isSubmitting, isValid }) => (
-                      <Form>
-                        <Row>
-                          <Column md={6}>
-                            <Field
-                              as={Input}
-                              type="text"
-                              name="fname"
-                              label="First Name"
-                              required
-                              validate={requiredField}
-                            />
-                          </Column>
-                          <Column md={6}>
-                            <Field
-                              as={Input}
-                              type="text"
-                              name="lname"
-                              label="Last Name"
-                              required
-                              validate={requiredField}
-                            />
-                          </Column>
-                        </Row>
-                        <Field
-                          as={Input}
-                          type="email"
-                          name="email"
-                          label="Email"
-                          required
-                          validate={requiredEmail}
-                        />
-                        {response.msg ? (
-                          <Alert
-                            type={error ? 'danger' : 'success'}
-                            message={error ? getTextFromHtmlString(response.msg) : response.msg}
-                            callToActionLink={
-                              error ? getHrefFromHtmlString(response.msg) : undefined
-                            }
-                            callToActionLinkText={
-                              error ? getLinkTextFromHtmlString(response.msg) : undefined
-                            }
-                          />
-                        ) : (
-                          <Button type="submit" block disabled={isSubmitting || !isValid}>
-                            Submit
-                          </Button>
-                        )}
-                      </Form>
-                    )}
-                  </Formik>
-                </Box>
-              </Column>
-            </Row>
-          </PageContainer>
-        </Section>
-      </div>
-      <Section backgroundColor={brandPrimary}>
+      <Section backgroundColor={brandPrimary} id="learn-more" inverse>
         <PageContainer>
           <Heading as="h1" align="center" inverse>
             {props.mainpitch.heading}
@@ -288,7 +206,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Row>
         </PageContainer>
       </Section>
-      <Section backgroundColor={brandSecondary}>
+      <Section backgroundColor={brandSecondary} inverse>
         <UpsideDownMountains src={mountains} alt="" />
         <PageContainer>
           <Row>
@@ -305,13 +223,13 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                 <Heading as="h3" inverse>
                   {props.secondpitch.subheading}
                 </Heading>
-                <p style={{ color: white }}>{props.secondpitch.text}</p>
+                <p>{props.secondpitch.text}</p>
               </FlexContainer>
             </Column>
           </Row>
         </PageContainer>
       </Section>
-      <Section backgroundColor={brandTertiary}>
+      <Section backgroundColor={brandTertiary} inverse>
         <WavesAnimation wave={wave1} />
         <PageContainer>
           <Row>
@@ -325,7 +243,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                 <Heading as="h3" inverse>
                   {props.thirdpitch.subheading}
                 </Heading>
-                <p style={{ color: white }}>{props.thirdpitch.text}</p>
+                <p>{props.thirdpitch.text}</p>
               </FlexContainer>
             </Column>
             <Column md={6}>
@@ -334,8 +252,8 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Row>
         </PageContainer>
       </Section>
-      <img src={collage} style={{ maxWidth: '100%' }} alt="collage" />
-      <div>
+      <HeroImage imgSrc={collage} parallax />
+      <div id="signup">
         <Section>
           <PageContainer>
             <Row>
@@ -347,18 +265,18 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                     validateOnMount
                     initialValues={initialValues}
                     onSubmit={(values, { setSubmitting }) => {
-                      window.analytics.track('Signed Up For Newsletter', {
-                        firstName: values.fname,
-                        lastName: values.lname,
-                        email: values.email,
-                        position: 'bottom',
-                      });
                       addToMailchimp(values.email, {
                         FNAME: values.fname,
                         LNAME: values.lname,
                       }).then((res: MailchimpResponse) => {
                         setSubmitting(false);
                         setResponse(res);
+                        window.analytics.track('Signed Up For Newsletter', {
+                          firstName: values.fname,
+                          lastName: values.lname,
+                          email: values.email,
+                          response: res,
+                        });
                       });
                     }}
                   >
