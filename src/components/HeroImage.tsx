@@ -34,7 +34,7 @@ const ChildrenWrapper = styled.div`
 const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, parallax }) => {
   useEffect(() => {
     if (parallax) {
-      const image = document.getElementsByClassName('parallaxImage');
+      const image = window && document.getElementsByClassName('parallaxImage');
       (() => new SimpleParallax(image, { orientation: 'left', delay: 0.5 }))();
     }
   });
