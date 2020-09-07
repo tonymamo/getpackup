@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import SimpleParallax from 'simple-parallax-js';
 
 import { white } from '../styles/color';
-import ClientOnly from './ClientOnly';
 
 type FullBleedImageProps = {
   imgSrc: string;
@@ -36,20 +35,15 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, childr
   useEffect(() => {
     if (parallax && typeof window !== 'undefined') {
       const image = window && document.getElementsByClassName('parallaxImage');
-      (() => new SimpleParallax(image, { orientation: 'left', delay: 0.5 }))();
+      if (image) {
+        (() => new SimpleParallax(image, { orientation: 'left', delay: 0.5 }))();
+      }
     }
   });
 
   return (
     <HeroImageWrapper>
-      {typeof window !== 'undefined' ? (
-        <ClientOnly>
-          <StyledImage src={imgSrc} alt="" className="parallaxImage" />
-        </ClientOnly>
-      ) : (
-        <StyledImage src={imgSrc} alt="" />
-      )}
-
+      <StyledImage src={imgSrc} alt="" className={parallax ? 'parallaxImage' : ''} />
       <ChildrenWrapper>{children}</ChildrenWrapper>
     </HeroImageWrapper>
   );
