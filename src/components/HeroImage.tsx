@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
-import SimpleParallax from 'simple-parallax-js';
 
 import { white } from '../styles/color';
+import ClientOnly from './ClientOnly';
 
 type FullBleedImageProps = {
   imgSrc: string;
@@ -33,12 +33,16 @@ const ChildrenWrapper = styled.div`
 
 const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, parallax }) => {
   useEffect(() => {
-    if (parallax && typeof window !== 'undefined') {
-      const image = window && document.getElementsByClassName('parallaxImage');
-      if (image) {
-        (() => new SimpleParallax(image, { orientation: 'left', delay: 0.5 }))();
+    (async () => {
+      if (parallax && typeof window !== 'undefined') {
+        const { default: SimpleParallax } = await import('simple-parallax-js');
+        const isClient = typeof window === 'object';
+        const image = document.getElementsByClassName('parallaxImage');
+        if (isClient && image) {
+          (() => new SimpleParallax(image, { orientation: 'left', delay: 0.5 }))();
+        }
       }
-    }
+    })();
   });
 
   return (
