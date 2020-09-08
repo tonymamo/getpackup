@@ -39,12 +39,14 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ data }) => {
           <Column md={4} key={post.id}>
             <Box>
               {post.frontmatter.featuredimage && (
-                <PreviewCompatibleImage
-                  imageInfo={{
-                    image: post.frontmatter.featuredimage,
-                    alt: `featured image thumbnail for post ${post.frontmatter.title}`,
-                  }}
-                />
+                <Link to={post.fields.slug}>
+                  <PreviewCompatibleImage
+                    imageInfo={{
+                      image: post.frontmatter.featuredimage,
+                      alt: `featured image thumbnail for post ${post.frontmatter.title}`,
+                    }}
+                  />
+                </Link>
               )}
               <small>{post.frontmatter.date}</small>
               <Heading as="h2">

@@ -36,6 +36,6 @@ thirdpitch:
   text: See what other professionals and enthusiasts are packing for their excursions, improving and refining your own personal packing lists.
 signupform:
   bgImage: /img/topo.png
-  heading: Stay up to date
+  heading: Be the first to know when packup is live
   text: Enter your name and email to get periodic updates about Packup
 ---

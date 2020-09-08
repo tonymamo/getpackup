@@ -2,7 +2,6 @@ import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { white } from '../styles/color';
-import ClientOnly from './ClientOnly';
 
 type FullBleedImageProps = {
   imgSrc: string;
