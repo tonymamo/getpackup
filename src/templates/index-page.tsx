@@ -25,7 +25,6 @@ import { requiredEmail, requiredField } from '../utils/validations';
 import { textColor, white, brandPrimary, brandSecondary, brandTertiary } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
 import collage from '../images/Outdoorsman_Collage copy.jpg';
-import waveWhite from '../images/wave-white.svg';
 import waveBismark from '../images/wave-bismark.svg';
 import waveDownriver from '../images/wave-downriver.svg';
 
@@ -178,7 +177,6 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </PageContainer>
         </Section>
         <Section backgroundColor={white}>
-          <WavesAnimation wave={waveWhite} />
           <PageContainer>
             <Row>
               <Column sm={6}>
@@ -386,7 +384,7 @@ export const pageQuery = graphql`
           text
           image {
             childImageSharp {
-              fluid(maxWidth: 512, quality: 100) {
+              fluid(maxWidth: 1000, quality: 100) {
                 ...GatsbyImageSharpFluid
               }
             }
@@ -398,7 +396,7 @@ export const pageQuery = graphql`
           text
           image {
             childImageSharp {
-              fluid(maxWidth: 512, quality: 100) {
+              fluid(maxWidth: 1000, quality: 100) {
                 ...GatsbyImageSharpFluid
               }
             }
@@ -410,7 +408,7 @@ export const pageQuery = graphql`
           text
           image {
             childImageSharp {
-              fluid(maxWidth: 512, quality: 100) {
+              fluid(maxWidth: 1000, quality: 100) {
                 ...GatsbyImageSharpFluid
               }
             }
@@ -421,7 +419,7 @@ export const pageQuery = graphql`
           text
           bgImage {
             childImageSharp {
-              fluid(maxWidth: 512, quality: 100) {
+              fluid(maxWidth: 1000, quality: 100) {
                 ...GatsbyImageSharpFluid
               }
             }

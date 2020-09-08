@@ -2,7 +2,7 @@
 templateKey: blog-post
 title: The Ultimate Car Camping Packing List
 date: 2020-02-06T03:20:13.590Z
-description: short description goes here
+description: Learn more about what to pack for the ultimate car camping excursion from our team, complete with checklist
 featuredpost: false
 featuredimage: /img/robson-hatsukami-morgan-17qv-GmYcZ0-unsplash.jpg
 tags:
