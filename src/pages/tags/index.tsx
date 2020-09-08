@@ -3,7 +3,7 @@ import { kebabCase } from 'lodash';
 import { Helmet } from 'react-helmet-async';
 import { Link, graphql } from 'gatsby';
 
-import { PageContainer } from '../../components';
+import { PageContainer, Box, Heading } from '../../components';
 
 const TagsPage = ({
   data: {
@@ -15,10 +15,10 @@ const TagsPage = ({
 }: {
   data: any;
 }) => (
-  <PageContainer>
+  <PageContainer withVerticalPadding>
     <Helmet title={`Tags | ${title}`} />
-    <div>
-      <h1>Tags</h1>
+    <Box>
+      <Heading>Tags</Heading>
       <ul>
         {group.map((tag: any) => (
           <li key={tag.fieldValue}>
@@ -28,7 +28,7 @@ const TagsPage = ({
           </li>
         ))}
       </ul>
-    </div>
+    </Box>
   </PageContainer>
 );
 

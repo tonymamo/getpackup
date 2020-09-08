@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, graphql } from 'gatsby';
 
-import { PageContainer } from '../components';
+import { PageContainer, Box, Heading } from '../components';
 
 type TagRouteProps = {
   data: {
@@ -43,15 +43,15 @@ const TagRoute: FunctionComponent<TagRouteProps> = ({ data, pageContext }) => {
   const tagHeader = `${totalCount} post${totalCount === 1 ? '' : 's'} tagged with “${tag}”`;
 
   return (
-    <PageContainer>
+    <PageContainer withVerticalPadding>
       <Helmet title={`${tag} | ${title}`} />
-      <div>
-        <h1>{tagHeader}</h1>
+      <Box>
+        <Heading>{tagHeader}</Heading>
         <ul>{postLinks}</ul>
         <p>
           <Link to="/tags/">Browse all tags</Link>
         </p>
-      </div>
+      </Box>
     </PageContainer>
   );
 };
