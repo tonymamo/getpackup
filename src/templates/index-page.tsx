@@ -26,8 +26,8 @@ import { textColor, white, brandPrimary, brandSecondary, brandTertiary } from '.
 import { quadrupleSpacer } from '../styles/size';
 import collage from '../images/Outdoorsman_Collage copy.jpg';
 import waveWhite from '../images/wave-white.svg';
-import waveOrange from '../images/wave-orange.svg';
 import waveBismark from '../images/wave-bismark.svg';
+import waveDownriver from '../images/wave-downriver.svg';
 
 type IndexPageProps = {
   title: string;
@@ -181,7 +181,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <WavesAnimation wave={waveWhite} />
           <PageContainer>
             <Row>
-              <Column md={6}>
+              <Column sm={6}>
                 <FlexContainer
                   flexDirection="column"
                   justifyContent="center"
@@ -192,20 +192,20 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                   <p>{props.mainpitch.text}</p>
                 </FlexContainer>
               </Column>
-              <Column md={3} mdOffset={3}>
+              <Column sm={3} smOffset={2}>
                 <PreviewCompatibleImage imageInfo={{ image: props.mainpitch.image, alt: '' }} />
               </Column>
             </Row>
           </PageContainer>
         </Section>
         <Section backgroundColor={brandSecondary} inverse>
-          <WavesAnimation wave={waveOrange} />
+          <WavesAnimation wave={waveDownriver} />
           <PageContainer>
             <Row>
-              <Column md={3}>
+              <Column sm={6}>
                 <PreviewCompatibleImage imageInfo={{ image: props.secondpitch.image, alt: '' }} />
               </Column>
-              <Column md={6} mdOffset={3}>
+              <Column sm={6}>
                 <FlexContainer
                   flexDirection="column"
                   justifyContent="center"
@@ -225,7 +225,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <WavesAnimation wave={waveBismark} />
           <PageContainer>
             <Row>
-              <Column md={6}>
+              <Column sm={6}>
                 <FlexContainer
                   flexDirection="column"
                   justifyContent="center"
@@ -238,7 +238,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                   <p>{props.thirdpitch.text}</p>
                 </FlexContainer>
               </Column>
-              <Column md={3} mdOffset={3}>
+              <Column sm={3} smOffset={2}>
                 <PreviewCompatibleImage imageInfo={{ image: props.thirdpitch.image, alt: '' }} />
               </Column>
             </Row>
@@ -255,7 +255,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           >
             <PageContainer>
               <Row>
-                <Column md={6} mdOffset={3}>
+                <Column sm={6} smOffset={3}>
                   <Box>
                     <Heading>{props.signupform.heading}</Heading>
                     <p>{props.signupform.text}</p>
@@ -281,7 +281,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                       {({ isSubmitting, isValid }) => (
                         <Form>
                           <Row>
-                            <Column md={6}>
+                            <Column sm={6}>
                               <Field
                                 as={Input}
                                 type="text"
@@ -291,7 +291,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                                 validate={requiredField}
                               />
                             </Column>
-                            <Column md={6}>
+                            <Column sm={6}>
                               <Field
                                 as={Input}
                                 type="text"
