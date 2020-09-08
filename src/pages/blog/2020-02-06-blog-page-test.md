@@ -4,7 +4,7 @@ title: The Ultimate Car Camping Packing List
 date: 2020-02-06T03:20:13.590Z
 description: short description goes here
 featuredpost: false
-featuredimage: /img/mountains_day.jpg
+featuredimage: /img/robson-hatsukami-morgan-17qv-GmYcZ0-unsplash.jpg
 tags:
   - how-to
   - packing

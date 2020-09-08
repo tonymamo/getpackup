@@ -14,7 +14,7 @@ import {
   Heading,
 } from '../components';
 import { requiredEmail, requiredField } from '../utils/validations';
-import image from '../images/FemaleRockclimberLookingBackAtDaybreak.jpg';
+import image from '../images/FemaleRockclimberLookingBackAtDaybreak copy.jpg';
 
 type ContactProps = {};
 

@@ -19,6 +19,7 @@ import PreviewCompatibleImage from './PreviewCompatibleImage';
 import Row from './Row';
 import Seo from './Seo';
 import SiteMetadata from './SiteMetadata';
+import Wave from './wave';
 
 export {
   Alert,
@@ -42,4 +43,5 @@ export {
   Row,
   Seo,
   SiteMetadata,
+  Wave,
 };

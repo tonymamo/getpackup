@@ -24,9 +24,10 @@ import {
 import { requiredEmail, requiredField } from '../utils/validations';
 import { textColor, white, brandPrimary, brandSecondary, brandTertiary } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
-import mountains from '../images/mountains.svg';
 import collage from '../images/Outdoorsman_Collage copy.jpg';
-import wave1 from '../images/wave1.svg';
+import waveWhite from '../images/wave-white.svg';
+import waveOrange from '../images/wave-orange.svg';
+import waveBismark from '../images/wave-bismark.svg';
 
 type IndexPageProps = {
   title: string;
@@ -85,13 +86,6 @@ const Section = styled.section`
   color: ${(props) => (props.inverse ? white : textColor)};
 `;
 
-const Mountains = styled.img`
-  position: absolute;
-  right: 0;
-  width: 25%;
-  bottom: 99%;
-`;
-
 const waves = keyframes`
   from { background-position: 0; }
   to { background-position: 1600px; }
@@ -136,14 +130,6 @@ const WavesAnimation = styled.div`
     animation-delay: -5s;
     animation: ${waves} 20s linear infinite;
   }
-`;
-
-const UpsideDownMountains = styled.img`
-  position: absolute;
-  left: ${quadrupleSpacer};
-  width: 25%;
-  top: -1%;
-  transform: rotate(180deg);
 `;
 
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
@@ -192,7 +178,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </PageContainer>
         </Section>
         <Section backgroundColor={white}>
-          <Mountains src={mountains} alt="" />
+          <WavesAnimation wave={waveWhite} />
           <PageContainer>
             <Row>
               <Column md={6}>
@@ -206,20 +192,20 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                   <p>{props.mainpitch.text}</p>
                 </FlexContainer>
               </Column>
-              <Column md={6}>
+              <Column md={3} mdOffset={3}>
                 <PreviewCompatibleImage imageInfo={{ image: props.mainpitch.image, alt: '' }} />
               </Column>
             </Row>
           </PageContainer>
         </Section>
         <Section backgroundColor={brandSecondary} inverse>
-          <UpsideDownMountains src={mountains} alt="" />
+          <WavesAnimation wave={waveOrange} />
           <PageContainer>
             <Row>
-              <Column md={6}>
+              <Column md={3}>
                 <PreviewCompatibleImage imageInfo={{ image: props.secondpitch.image, alt: '' }} />
               </Column>
-              <Column md={6}>
+              <Column md={6} mdOffset={3}>
                 <FlexContainer
                   flexDirection="column"
                   justifyContent="center"
@@ -236,7 +222,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </PageContainer>
         </Section>
         <Section backgroundColor={brandTertiary} inverse>
-          <WavesAnimation wave={wave1} />
+          <WavesAnimation wave={waveBismark} />
           <PageContainer>
             <Row>
               <Column md={6}>
@@ -252,7 +238,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                   <p>{props.thirdpitch.text}</p>
                 </FlexContainer>
               </Column>
-              <Column md={6}>
+              <Column md={3} mdOffset={3}>
                 <PreviewCompatibleImage imageInfo={{ image: props.thirdpitch.image, alt: '' }} />
               </Column>
             </Row>

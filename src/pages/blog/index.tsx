@@ -2,7 +2,7 @@ import React from 'react';
 
 import { HeroImage, Seo, PageContainer, Heading } from '../../components';
 import BlogRoll from '../../templates/BlogRoll';
-import image from '../../images/SingleHikerApproachingBaseOfMountainWithAnotherMountainInTheBackground.jpg';
+import image from '../../images/044A4171.jpg';
 
 const BlogIndexPage = () => (
   <>

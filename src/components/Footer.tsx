@@ -72,10 +72,10 @@ const Footer = () => (
       <HorizontalRule />
       <FlexContainer justifyContent="space-between">
         <nav>
-          <Social href="https://facebook.com">
+          <Social href="https://www.facebook.com/getpackup">
             <FaFacebook />
           </Social>
-          <Social href="https://twitter.com">
+          <Social href="https://twitter.com/getpackup">
             <FaTwitter />
           </Social>
           <Social href="https://www.instagram.com/getpackup/">

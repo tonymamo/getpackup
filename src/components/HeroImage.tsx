@@ -28,6 +28,10 @@ const ChildrenWrapper = styled.div`
   height: 100%;
   text-align: center;
   color: ${white};
+
+  & h1 {
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+  }
 `;
 
 const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, parallax }) => {

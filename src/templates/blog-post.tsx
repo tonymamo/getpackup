@@ -39,7 +39,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
   return (
     <>
-      <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src} />
+      <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src}>
+        <Heading inverse>{props.title}</Heading>
+      </HeroImage>
       <PageContainer withVerticalPadding>
         <Row>
           <Column md={9}>

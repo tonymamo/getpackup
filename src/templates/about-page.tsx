@@ -2,7 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
 
 import Content, { HTMLContent } from '../components/Content';
-import { PageContainer, Seo } from '../components';
+import { Box, PageContainer, Seo, HeroImage, Heading } from '../components';
+import image from '../images/Mountains_Day.jpg';
 
 type AboutPageProps = {
   title: string;
@@ -18,13 +19,24 @@ export const AboutPageTemplate: FunctionComponent<AboutPageProps> = ({
   const PageContent = contentComponent || Content;
 
   return (
-    <PageContainer>
-      <Seo title={title} />
-      <h1>{title}</h1>
-      <div>
-        <PageContent content={content} />
-      </div>
-    </PageContainer>
+    <>
+      <HeroImage imgSrc={image}>
+        <PageContainer>
+          <Heading as="h1" inverse align="center">
+            {title}
+          </Heading>
+        </PageContainer>
+      </HeroImage>
+      <PageContainer withVerticalPadding>
+        <Seo title={title} />
+        <Box>
+          <Heading>{title}</Heading>
+          <div>
+            <PageContent content={content} />
+          </div>
+        </Box>
+      </PageContainer>
+    </>
   );
 };
 

@@ -1,13 +1,11 @@
 ---
 templateKey: 'about-page'
 path: /about
-title: About our values
+title: Our Story
 ---
 
-### Some subheading here
+## Where did the idea for packup come from?
 
-This is some text.
+During a complex multi-day ski traverse on the Wapta Ice Field the idea for our app originally sparked. We wanted to build an app that could help others refine their flow when it comes to packing and organization. Our goal is to help you become more organized and prepared on your outdoor adventures. We appreciate you taking the time to learn more about our app, we can't wait to share his with you!
 
-### Another markdown heading
-
-more text.
+-Taylor & Mack
