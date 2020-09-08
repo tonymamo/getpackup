@@ -25,7 +25,7 @@ import { requiredEmail, requiredField } from '../utils/validations';
 import { textColor, white, brandPrimary, brandSecondary, brandTertiary } from '../styles/color';
 import { quadrupleSpacer } from '../styles/size';
 import mountains from '../images/mountains.svg';
-import collage from '../images/Outdoorsman_Collage.jpg';
+import collage from '../images/Outdoorsman_Collage copy.jpg';
 import wave1 from '../images/wave1.svg';
 
 type IndexPageProps = {

@@ -38,7 +38,7 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, childr
         const isClient = typeof window === 'object';
         const image = document.getElementsByClassName('parallaxImage');
         if (isClient && image) {
-          (() => new SimpleParallax(image, { orientation: 'left', delay: 0.5 }))();
+          (() => new SimpleParallax(image, { delay: 0.5 }))();
         }
       }
     })();
