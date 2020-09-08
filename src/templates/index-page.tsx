@@ -157,185 +157,198 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
 
   return (
     <>
-      <Seo title={props.title} />
-      <HeroImage imgSrc={props.heroImage.childImageSharp.fluid.src}>
-        <PageContainer>
-          <Heading inverse align="center" noMargin>
-            Never forget your{' '}
-            <Typewriter
-              options={{
-                strings: props.typewriterList.map((arr) => arr.text),
-                autoStart: true,
-                loop: true,
-              }}
-            />{' '}
-            again
-          </Heading>
+      <div
+        style={{
+          background: `url("${collage}") no-repeat fixed`,
+          backgroundSize: 'contain',
+        }}
+      >
+        <Seo title={props.title} />
+        <HeroImage imgSrc={props.heroImage.childImageSharp.fluid.src}>
+          <PageContainer>
+            <Heading inverse align="center" noMargin>
+              Never forget your{' '}
+              <Typewriter
+                options={{
+                  strings: props.typewriterList.map((arr) => arr.text),
+                  autoStart: true,
+                  loop: true,
+                }}
+              />{' '}
+              again
+            </Heading>
 
-          <p>{props.heroSubheading}</p>
-          <Button type="button" onClick={() => scrollTo(props.heroCTALink)}>
-            {props.heroCTAText}
-          </Button>
-        </PageContainer>
-      </HeroImage>
-      <Section backgroundColor={brandPrimary} id="learn-more" inverse>
-        <PageContainer>
-          <Heading as="h1" align="center" inverse>
-            {props.mainpitch.heading}
-          </Heading>
-        </PageContainer>
-      </Section>
-      <Section backgroundColor={white}>
-        <Mountains src={mountains} alt="" />
-        <PageContainer>
-          <Row>
-            <Column md={6}>
-              <FlexContainer
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="start"
-                height="100%"
-              >
-                <Heading as="h3">{props.mainpitch.subheading}</Heading>
-                <p>{props.mainpitch.text}</p>
-              </FlexContainer>
-            </Column>
-            <Column md={6}>
-              <PreviewCompatibleImage imageInfo={{ image: props.mainpitch.image, alt: '' }} />
-            </Column>
-          </Row>
-        </PageContainer>
-      </Section>
-      <Section backgroundColor={brandSecondary} inverse>
-        <UpsideDownMountains src={mountains} alt="" />
-        <PageContainer>
-          <Row>
-            <Column md={6}>
-              <PreviewCompatibleImage imageInfo={{ image: props.secondpitch.image, alt: '' }} />
-            </Column>
-            <Column md={6}>
-              <FlexContainer
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="start"
-                height="100%"
-              >
-                <Heading as="h3" inverse>
-                  {props.secondpitch.subheading}
-                </Heading>
-                <p>{props.secondpitch.text}</p>
-              </FlexContainer>
-            </Column>
-          </Row>
-        </PageContainer>
-      </Section>
-      <Section backgroundColor={brandTertiary} inverse>
-        <WavesAnimation wave={wave1} />
-        <PageContainer>
-          <Row>
-            <Column md={6}>
-              <FlexContainer
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="start"
-                height="100%"
-              >
-                <Heading as="h3" inverse>
-                  {props.thirdpitch.subheading}
-                </Heading>
-                <p>{props.thirdpitch.text}</p>
-              </FlexContainer>
-            </Column>
-            <Column md={6}>
-              <PreviewCompatibleImage imageInfo={{ image: props.thirdpitch.image, alt: '' }} />
-            </Column>
-          </Row>
-        </PageContainer>
-      </Section>
-      <HeroImage imgSrc={collage} parallax />
-      <div id="signup">
-        <Section>
+            <p>{props.heroSubheading}</p>
+            <Button type="button" onClick={() => scrollTo(props.heroCTALink)}>
+              {props.heroCTAText}
+            </Button>
+          </PageContainer>
+        </HeroImage>
+        <Section backgroundColor={brandPrimary} id="learn-more" inverse>
+          <PageContainer>
+            <Heading as="h1" align="center" inverse>
+              {props.mainpitch.heading}
+            </Heading>
+          </PageContainer>
+        </Section>
+        <Section backgroundColor={white}>
+          <Mountains src={mountains} alt="" />
           <PageContainer>
             <Row>
-              <Column md={6} mdOffset={3}>
-                <Box>
-                  <Heading>{props.signupform.heading}</Heading>
-                  <p>{props.signupform.text}</p>
-                  <Formik
-                    validateOnMount
-                    initialValues={initialValues}
-                    onSubmit={(values, { setSubmitting }) => {
-                      addToMailchimp(values.email, {
-                        FNAME: values.fname,
-                        LNAME: values.lname,
-                      }).then((res: MailchimpResponse) => {
-                        setSubmitting(false);
-                        setResponse(res);
-                        window.analytics.track('Signed Up For Newsletter', {
-                          firstName: values.fname,
-                          lastName: values.lname,
-                          email: values.email,
-                          response: res,
-                        });
-                      });
-                    }}
-                  >
-                    {({ isSubmitting, isValid }) => (
-                      <Form>
-                        <Row>
-                          <Column md={6}>
-                            <Field
-                              as={Input}
-                              type="text"
-                              name="fname"
-                              label="First Name"
-                              required
-                              validate={requiredField}
-                            />
-                          </Column>
-                          <Column md={6}>
-                            <Field
-                              as={Input}
-                              type="text"
-                              name="lname"
-                              label="Last Name"
-                              required
-                              validate={requiredField}
-                            />
-                          </Column>
-                        </Row>
-                        <Field
-                          as={Input}
-                          type="email"
-                          name="email"
-                          label="Email"
-                          required
-                          validate={requiredEmail}
-                        />
-                        {response.msg ? (
-                          <Alert
-                            type={error ? 'danger' : 'success'}
-                            message={error ? getTextFromHtmlString(response.msg) : response.msg}
-                            callToActionLink={
-                              error ? getHrefFromHtmlString(response.msg) : undefined
-                            }
-                            callToActionLinkText={
-                              error ? getLinkTextFromHtmlString(response.msg) : undefined
-                            }
-                          />
-                        ) : (
-                          <Button type="submit" block disabled={isSubmitting || !isValid}>
-                            Submit
-                          </Button>
-                        )}
-                      </Form>
-                    )}
-                  </Formik>
-                </Box>
+              <Column md={6}>
+                <FlexContainer
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="start"
+                  height="100%"
+                >
+                  <Heading as="h3">{props.mainpitch.subheading}</Heading>
+                  <p>{props.mainpitch.text}</p>
+                </FlexContainer>
+              </Column>
+              <Column md={6}>
+                <PreviewCompatibleImage imageInfo={{ image: props.mainpitch.image, alt: '' }} />
               </Column>
             </Row>
           </PageContainer>
         </Section>
+        <Section backgroundColor={brandSecondary} inverse>
+          <UpsideDownMountains src={mountains} alt="" />
+          <PageContainer>
+            <Row>
+              <Column md={6}>
+                <PreviewCompatibleImage imageInfo={{ image: props.secondpitch.image, alt: '' }} />
+              </Column>
+              <Column md={6}>
+                <FlexContainer
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="start"
+                  height="100%"
+                >
+                  <Heading as="h3" inverse>
+                    {props.secondpitch.subheading}
+                  </Heading>
+                  <p>{props.secondpitch.text}</p>
+                </FlexContainer>
+              </Column>
+            </Row>
+          </PageContainer>
+        </Section>
+        <Section backgroundColor={brandTertiary} inverse>
+          <WavesAnimation wave={wave1} />
+          <PageContainer>
+            <Row>
+              <Column md={6}>
+                <FlexContainer
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="start"
+                  height="100%"
+                >
+                  <Heading as="h3" inverse>
+                    {props.thirdpitch.subheading}
+                  </Heading>
+                  <p>{props.thirdpitch.text}</p>
+                </FlexContainer>
+              </Column>
+              <Column md={6}>
+                <PreviewCompatibleImage imageInfo={{ image: props.thirdpitch.image, alt: '' }} />
+              </Column>
+            </Row>
+          </PageContainer>
+        </Section>
+        <Section style={{ height: 400 }} />
+        <div id="signup">
+          <Section
+            backgroundColor={white}
+            style={{
+              backgroundImage: `url("${props.signupform.bgImage.childImageSharp.fluid.src}")`,
+              backgroundSize: 500,
+            }}
+          >
+            <PageContainer>
+              <Row>
+                <Column md={6} mdOffset={3}>
+                  <Box>
+                    <Heading>{props.signupform.heading}</Heading>
+                    <p>{props.signupform.text}</p>
+                    <Formik
+                      validateOnMount
+                      initialValues={initialValues}
+                      onSubmit={(values, { setSubmitting }) => {
+                        addToMailchimp(values.email, {
+                          FNAME: values.fname,
+                          LNAME: values.lname,
+                        }).then((res: MailchimpResponse) => {
+                          setSubmitting(false);
+                          setResponse(res);
+                          window.analytics.track('Signed Up For Newsletter', {
+                            firstName: values.fname,
+                            lastName: values.lname,
+                            email: values.email,
+                            response: res,
+                          });
+                        });
+                      }}
+                    >
+                      {({ isSubmitting, isValid }) => (
+                        <Form>
+                          <Row>
+                            <Column md={6}>
+                              <Field
+                                as={Input}
+                                type="text"
+                                name="fname"
+                                label="First Name"
+                                required
+                                validate={requiredField}
+                              />
+                            </Column>
+                            <Column md={6}>
+                              <Field
+                                as={Input}
+                                type="text"
+                                name="lname"
+                                label="Last Name"
+                                required
+                                validate={requiredField}
+                              />
+                            </Column>
+                          </Row>
+                          <Field
+                            as={Input}
+                            type="email"
+                            name="email"
+                            label="Email"
+                            required
+                            validate={requiredEmail}
+                          />
+                          {response.msg ? (
+                            <Alert
+                              type={error ? 'danger' : 'success'}
+                              message={error ? getTextFromHtmlString(response.msg) : response.msg}
+                              callToActionLink={
+                                error ? getHrefFromHtmlString(response.msg) : undefined
+                              }
+                              callToActionLinkText={
+                                error ? getLinkTextFromHtmlString(response.msg) : undefined
+                              }
+                            />
+                          ) : (
+                            <Button type="submit" block disabled={isSubmitting || !isValid}>
+                              Submit
+                            </Button>
+                          )}
+                        </Form>
+                      )}
+                    </Formik>
+                  </Box>
+                </Column>
+              </Row>
+            </PageContainer>
+          </Section>
+        </div>
       </div>
     </>
   );
