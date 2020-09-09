@@ -56,9 +56,10 @@ testimonials:
     author: Hayley
     location: Ontario
     avatar: /img/hayleygirlonrocks.png
-  - author: Tony
-    location: Michigan
-    avatar: /img/avatar.jpg
-    quote: I love trying to perfect what gear I bring on trips, so I'm interested in
-      seeing what the pros bring with them.
+  - author: Kristian
+    location: Edmonton
+    avatar: /img/66297736_10161885243285545_8771925095204519936_o.jpg
+    quote: As a habitual overpacker, I’m excited for Packup’s lists to help me
+      determine exactly what I need to bring on my next adventure. No more
+      unnecessary weight for extraneous items in my packs!
 ---
