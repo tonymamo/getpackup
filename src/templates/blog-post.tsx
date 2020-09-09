@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { kebabCase } from 'lodash';
 import { graphql } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
+import { FluidObject, FixedObject } from 'gatsby-image';
 import { DiscussionEmbed } from 'disqus-react';
 
 import {
@@ -31,6 +31,7 @@ type BlogPostProps = {
   featuredimage: {
     childImageSharp: {
       fluid: FluidObject;
+      fixed: FixedObject;
     };
   };
 };
@@ -49,7 +50,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
       <Seo
         title={props.title}
         description={props.description}
-        image={props.featuredimage.childImageSharp.fluid.src}
+        image={props.featuredimage.childImageSharp.fixed.src}
+        imageWidth={props.featuredimage.childImageSharp.fixed.width}
+        imageHeight={props.featuredimage.childImageSharp.fixed.height}
       />
       <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src}>
         <Heading inverse>{props.title}</Heading>
@@ -129,6 +132,9 @@ export const pageQuery = graphql`
           childImageSharp {
             fluid(maxWidth: 2400, quality: 100) {
               ...GatsbyImageSharpFluid
+            }
+            fixed(width: 1080, quality: 100) {
+              ...GatsbyImageSharpFixed
             }
           }
         }

@@ -19,9 +19,19 @@ type SeoType = {
   }>;
   title?: string;
   lang?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 };
 
-const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta }) => {
+const Seo: FunctionComponent<SeoType> = ({
+  title,
+  description,
+  image,
+  lang,
+  meta,
+  imageWidth,
+  imageHeight,
+}) => {
   const { pathname } = useLocation();
   const { site } = useStaticQuery(
     graphql`
@@ -46,6 +56,8 @@ const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta
     description: description || defaultDescription,
     image: `${siteUrl}${image || defaultImage}`,
     url: `${siteUrl}${pathname}`,
+    imageWidth: imageWidth || 1080,
+    imageHeight: imageHeight || 1080,
   };
 
   return (
@@ -69,6 +81,14 @@ const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta
           content: seo.image,
         },
         {
+          property: 'og:image:width',
+          content: seo.imageWidth,
+        },
+        {
+          property: 'og:image:height',
+          content: seo.imageHeight,
+        },
+        {
           name: 'description',
           content: seo.description,
         },
@@ -76,6 +96,7 @@ const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta
           property: 'og:title',
           content: seo.title,
         },
+
         {
           property: 'og:description',
           content: seo.description,
