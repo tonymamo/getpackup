@@ -20,7 +20,7 @@ const StyledNavbar = styled.nav`
   color: ${white};
   height: ${quadrupleSpacer};
   line-height: ${quadrupleSpacer};
-  z-index: 1;
+  z-index: 1000;
 
   & a,
   & a:hover {

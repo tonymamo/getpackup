@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { white } from '../styles/color';
 import { screenSizes } from '../styles/size';
 import useWindowSize from '../utils/useWindowSize';
+import ClientOnly from './ClientOnly';
 
 type FullBleedImageProps = {
   imgSrc: string;
@@ -61,16 +62,13 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
 
   return (
     <HeroImageWrapper>
-      {isClient ? (
+      <ClientOnly>
         <StyledImage
           src={isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc}
           alt=""
           className={parallax ? 'parallaxImage' : ''}
         />
-      ) : (
-        <StyledImage src={imgSrc} alt="" />
-      )}
-
+      </ClientOnly>
       <ChildrenWrapper>{children}</ChildrenWrapper>
     </HeroImageWrapper>
   );
