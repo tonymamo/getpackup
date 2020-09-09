@@ -6,6 +6,7 @@ description: "Some insight to where we are as a company right now. "
 featuredpost: true
 featuredimage: /img/image-from-ios.png
 tags:
+  - product
   - update
   - packup
   - team
