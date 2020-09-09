@@ -39,13 +39,7 @@ const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta
     `
   );
 
-  const {
-    defaultTitle,
-    titleTemplate,
-    defaultDescription,
-    siteUrl,
-    defaultImage,
-  } = site.siteMetadata;
+  const { defaultTitle, defaultDescription, siteUrl, defaultImage } = site.siteMetadata;
 
   const seo = {
     title: title || defaultTitle,
@@ -60,7 +54,7 @@ const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta
         lang,
       }}
       title={title}
-      titleTemplate={titleTemplate}
+      titleTemplate={`%s | ${site.siteMetadata.title}: Adventure made easy.`}
       meta={[
         {
           property: 'og:url',
