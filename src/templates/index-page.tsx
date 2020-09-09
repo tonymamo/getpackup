@@ -22,6 +22,7 @@ import {
   FlexContainer,
   Box,
   Testimonial,
+  ClientOnly,
 } from '../components';
 import { requiredEmail, requiredField } from '../utils/validations';
 import {
@@ -306,7 +307,11 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Row>
         </PageContainer>
       </Section>
-      {isLargeScreen && <ParallaxBackground bgImage={collage} />}
+      {isLargeScreen && (
+        <ClientOnly>
+          <ParallaxBackground bgImage={collage} />
+        </ClientOnly>
+      )}
       <Section
         backgroundColor={white}
         id="signup"
