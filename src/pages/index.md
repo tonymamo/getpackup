@@ -56,4 +56,9 @@ testimonials:
     author: Hayley
     location: Ontario
     avatar: /img/hayleygirlonrocks.png
+  - author: Tony
+    location: Michigan
+    avatar: /img/avatar.jpg
+    quote: I love trying to perfect what gear I bring on trips, so I'm interested in
+      seeing what the pros bring with them.
 ---
