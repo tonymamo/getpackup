@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { kebabCase } from 'lodash';
-import { Helmet } from 'react-helmet-async';
 import { graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 import { DiscussionEmbed } from 'disqus-react';
@@ -15,6 +14,7 @@ import {
   HorizontalRule,
   FlexContainer,
   Pill,
+  Seo,
 } from '../components';
 import Content, { HTMLContent } from '../components/Content';
 
@@ -25,7 +25,6 @@ type BlogPostProps = {
   tags: Array<string>;
   title: string;
   description: string;
-  helmet: any;
   readingTime: {
     text: string;
   };
@@ -47,6 +46,11 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
   return (
     <>
+      <Seo
+        title={props.title}
+        description={props.description}
+        image={props.featuredimage.childImageSharp.fluid.src}
+      />
       <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src}>
         <Heading inverse>{props.title}</Heading>
       </HeroImage>
@@ -55,7 +59,6 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           <Column md={9}>
             <Box largePadding>
               <div>
-                {props.helmet || ''}
                 <Heading>{props.title}</Heading>
                 <FlexContainer justifyContent="space-between">
                   <small>{props.date}</small>
@@ -90,19 +93,12 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
 const BlogPost = ({ data }: { data: any }) => {
   const { markdownRemark: post } = data;
-  const helmet = (
-    <Helmet titleTemplate="%s | packup blog">
-      <title>{post.frontmatter.title}</title>
-      <meta name="description" content={`${post.frontmatter.description}`} />
-    </Helmet>
-  );
 
   return (
     <BlogPostTemplate
       content={post.html}
       contentComponent={HTMLContent}
       date={post.frontmatter.date}
-      helmet={helmet}
       tags={post.frontmatter.tags}
       title={post.frontmatter.title}
       featuredimage={post.frontmatter.featuredimage}

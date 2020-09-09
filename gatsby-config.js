@@ -6,8 +6,12 @@ require('dotenv').config({
 module.exports = {
   siteMetadata: {
     title: 'Packup',
-    description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for',
-    author: '@tonymamo',
+    titleTemplate: "%s | Packup: Adventure made easy.",
+    description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
+    author: '@getpackup',
+    url: 'https://getpackup.com',
+    image: '/img/avatar.jpg', // Path to your image you placed in the 'static' folder
+
   },
   plugins: [
     'gatsby-plugin-typescript',

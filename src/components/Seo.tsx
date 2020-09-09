@@ -8,52 +8,83 @@
 import React, { FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useStaticQuery, graphql } from 'gatsby';
+import { useLocation } from '@reach/router';
 
 type SeoType = {
   description?: string;
-  lang?: string;
+  image?: string;
   meta?: Array<{
     content: string;
     name: string;
   }>;
   title?: string;
+  lang?: string;
 };
 
-const Seo: FunctionComponent<SeoType> = ({ description, lang, meta, title }) => {
+const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta }) => {
+  const { pathname } = useLocation();
   const { site } = useStaticQuery(
     graphql`
       query {
         site {
           siteMetadata {
             title
-            description
             author
+            defaultDescription: description
+            siteUrl: url
+            defaultImage: image
           }
         }
       }
     `
   );
 
-  const metaDescription = description || site.siteMetadata.description;
+  const {
+    defaultTitle,
+    titleTemplate,
+    defaultDescription,
+    siteUrl,
+    defaultImage,
+  } = site.siteMetadata;
+
+  const seo = {
+    title: title || defaultTitle,
+    description: description || defaultDescription,
+    image: `${siteUrl}${image || defaultImage}`,
+    url: `${siteUrl}${pathname}`,
+  };
+
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}: Adventure made easy.`}
+      titleTemplate={titleTemplate}
       meta={[
         {
+          name: 'og:url',
+          content: seo.url,
+        },
+        {
+          name: 'image',
+          content: seo.image,
+        },
+        {
+          name: 'og:image',
+          content: seo.image,
+        },
+        {
           name: 'description',
-          content: metaDescription,
+          content: seo.description,
         },
         {
           property: 'og:title',
-          content: title,
+          content: seo.title,
         },
         {
           property: 'og:description',
-          content: metaDescription,
+          content: seo.description,
         },
         {
           property: 'og:type',
@@ -73,7 +104,11 @@ const Seo: FunctionComponent<SeoType> = ({ description, lang, meta, title }) => 
         },
         {
           name: 'twitter:description',
-          content: metaDescription,
+          content: seo.description,
+        },
+        {
+          name: 'twitter:image',
+          content: seo.image,
         },
       ].concat(meta || [])}
     />
