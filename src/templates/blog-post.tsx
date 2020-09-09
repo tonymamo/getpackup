@@ -69,7 +69,8 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                   <small>{props.readingTime.text}</small>
                 </FlexContainer>
                 <HorizontalRule />
-                <p>{props.description}</p>
+                <p style={{ fontStyle: 'italic' }}>{props.description}</p>
+                <HorizontalRule />
                 <PostContent content={props.content} />
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (

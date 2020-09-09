@@ -56,7 +56,7 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ data }) => {
               </Heading>
               <HorizontalRule compact />
               <p>
-                <small>{post.frontmatter.description}</small>
+                <small style={{ fontStyle: 'italic' }}>{post.frontmatter.description}</small>
               </p>
               <Link className="button" to={post.fields.slug}>
                 Keep Reading
