@@ -6,7 +6,7 @@ require('dotenv').config({
 module.exports = {
   siteMetadata: {
     title: 'Packup',
-    description: 'Packup',
+    description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for',
     author: '@tonymamo',
   },
   plugins: [

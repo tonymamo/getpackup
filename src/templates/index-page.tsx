@@ -6,6 +6,8 @@ import { Formik, Form, Field } from 'formik';
 import Typewriter from 'typewriter-effect';
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import styled, { keyframes } from 'styled-components';
+import Carousel from 'react-bootstrap/Carousel';
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 import {
   Alert,
@@ -185,10 +187,16 @@ const SectionImage = styled.img`
   }
 `;
 
+const CarouselWrapper = styled.div`
+  & .carousel-indicators li {
+    background-color: ${textColor};
+  }
+`;
+
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
   const [response, setResponse] = useState({ msg: '', result: '' });
   const size = useWindowSize();
-  const isLargeScreen = Boolean(size && size.width && size.width < screenSizes.large);
+  const isLargeScreen = Boolean(size && size.width && size.width > screenSizes.large);
   const initialValues = { fname: '', lname: '', email: '' };
 
   const getTextFromHtmlString = (s: string) => s.replace(/<.*?>*<\/.*?>/g, '');
@@ -255,10 +263,10 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
         <WavesAnimation wave={waveDownriver} />
         <PageContainer>
           <Row>
-            <Column sm={6}>
+            <Column sm={6} xsOrder={2} smOrder={1}>
               <SectionImage src={props.secondpitch.image.childImageSharp.fluid.src} alt="" />
             </Column>
-            <Column sm={6}>
+            <Column sm={6} xsOrder={1} smOrder={2}>
               <FlexContainer
                 flexDirection="column"
                 justifyContent="center"
@@ -297,7 +305,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Row>
         </PageContainer>
       </Section>
-      {isLargeScreen ? <img src={collage} alt="" /> : <ParallaxBackground bgImage={collage} />}
+      {isLargeScreen && <ParallaxBackground bgImage={collage} />}
       <Section
         backgroundColor={white}
         id="signup"
@@ -388,13 +396,19 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
       <div style={{ backgroundColor: lightestGray, padding: `${doubleSpacer} 0` }}>
         <PageContainer>
           <Heading align="center">Word on the trail about packup</Heading>
-          <Row>
-            {props.testimonials.map((testimonial) => (
-              <Column md={6} lg={4} key={testimonial.author}>
-                <Testimonial testimonial={testimonial} />
-              </Column>
-            ))}
-          </Row>
+          <CarouselWrapper>
+            <Carousel
+              fade
+              nextIcon={<FaChevronRight color={textColor} />}
+              prevIcon={<FaChevronLeft color={textColor} />}
+            >
+              {props.testimonials.map((testimonial) => (
+                <Carousel.Item key={testimonial.author}>
+                  <Testimonial testimonial={testimonial} />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </CarouselWrapper>
         </PageContainer>
       </div>
     </>

@@ -45,12 +45,12 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
 }) => {
   const size = useWindowSize();
   const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
+  const isClient = typeof window === 'object';
 
   useEffect(() => {
     (async () => {
       if (parallax && typeof window !== 'undefined') {
         const { default: SimpleParallax } = await import('simple-parallax-js');
-        const isClient = typeof window === 'object';
         const image = document.getElementsByClassName('parallaxImage');
         if (isClient && image) {
           (() => new SimpleParallax(image, { scale: 1.5 }))();
@@ -61,11 +61,16 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
 
   return (
     <HeroImageWrapper>
-      <StyledImage
-        src={isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc}
-        alt=""
-        className={parallax ? 'parallaxImage' : ''}
-      />
+      {isClient ? (
+        <StyledImage
+          src={isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc}
+          alt=""
+          className={parallax ? 'parallaxImage' : ''}
+        />
+      ) : (
+        <StyledImage src={imgSrc} alt="" />
+      )}
+
       <ChildrenWrapper>{children}</ChildrenWrapper>
     </HeroImageWrapper>
   );

@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
 import 'typeface-open-sans';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Footer from './Footer';
 import Navbar from './Navbar';
