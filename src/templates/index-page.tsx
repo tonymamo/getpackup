@@ -180,7 +180,8 @@ const WavesAnimation = styled.div`
 `;
 
 const SectionImage = styled.img`
-  max-height: 400px;
+  max-height: 300px;
+  margin-bottom: ${doubleSpacer};
 
   @media only screen and (min-width: ${breakpoints.sm}) {
     max-height: 800px;
