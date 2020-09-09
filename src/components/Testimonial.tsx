@@ -32,7 +32,14 @@ const Testimonial: FunctionComponent<TestimonialProps> = ({ testimonial }) => {
         height="100%"
       >
         <FaQuoteRight />
-        <p style={{ fontSize: fontSizeH6, lineHeight: 1.5, margin: `${doubleSpacer} 0` }}>
+        <p
+          style={{
+            fontSize: fontSizeH6,
+            lineHeight: 1.5,
+            margin: `${doubleSpacer} 0`,
+            fontStyle: 'italic',
+          }}
+        >
           {testimonial.quote}
         </p>
         <div>
