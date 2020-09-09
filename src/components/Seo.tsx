@@ -63,7 +63,7 @@ const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta
       titleTemplate={titleTemplate}
       meta={[
         {
-          name: 'og:url',
+          property: 'og:url',
           content: seo.url,
         },
         {
@@ -71,7 +71,7 @@ const Seo: FunctionComponent<SeoType> = ({ title, description, image, lang, meta
           content: seo.image,
         },
         {
-          name: 'og:image',
+          property: 'og:image',
           content: seo.image,
         },
         {
