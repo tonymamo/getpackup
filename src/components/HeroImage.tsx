@@ -2,9 +2,12 @@ import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { white } from '../styles/color';
+import { screenSizes } from '../styles/size';
+import useWindowSize from '../utils/useWindowSize';
 
 type FullBleedImageProps = {
   imgSrc: string;
+  mobileImgSrc?: string;
   height?: string;
   parallax?: boolean;
 };
@@ -34,7 +37,15 @@ const ChildrenWrapper = styled.div`
   }
 `;
 
-const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, parallax }) => {
+const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
+  imgSrc,
+  children,
+  parallax,
+  mobileImgSrc,
+}) => {
+  const size = useWindowSize();
+  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
+
   useEffect(() => {
     (async () => {
       if (parallax && typeof window !== 'undefined') {
@@ -42,7 +53,7 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, childr
         const isClient = typeof window === 'object';
         const image = document.getElementsByClassName('parallaxImage');
         if (isClient && image) {
-          (() => new SimpleParallax(image, { delay: 0.5 }))();
+          (() => new SimpleParallax(image, { scale: 1.5 }))();
         }
       }
     })();
@@ -50,7 +61,11 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, childr
 
   return (
     <HeroImageWrapper>
-      <StyledImage src={imgSrc} alt="" className={parallax ? 'parallaxImage' : ''} />
+      <StyledImage
+        src={isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc}
+        alt=""
+        className={parallax ? 'parallaxImage' : ''}
+      />
       <ChildrenWrapper>{children}</ChildrenWrapper>
     </HeroImageWrapper>
   );

@@ -53,6 +53,7 @@ collections:
             }
           - { label: Title, name: title, widget: string }
           - { label: HeroImage, name: heroImage, widget: image }
+          - { label: HeroMobileImage, name: mobileHeroImage, widget: image }
           - { label: HeroHeading, name: heroHeading, widget: string }
           - {
               label: HeroHeadingTypewriter,
@@ -108,6 +109,18 @@ collections:
                   { label: Heading, name: heading, widget: string },
                   { label: Text, name: text, widget: string },
                   { label: BGImage, name: bgImage, widget: image },
+                ],
+            }
+          - {
+              label: "Testimonial",
+              name: testimonials,
+              widget: list,
+              fields:
+                [
+                  { label: Quote, name: quote, widget: string },
+                  { label: Author, name: author, widget: string },
+                  { label: Location, name: location, widget: string },
+                  { label: Avatar, name: avatar, widget: image },
                 ],
             }
       - file: "src/pages/frequently-asked-questions.md"

@@ -38,19 +38,22 @@ const Footer = () => (
   <StyledFooter>
     <PageContainer>
       <Row>
-        <Column md={6}>
+        <Column md={3} lg={6}>
           <h1>
             <Link to="/">packup</Link>
           </h1>
           <p>Adventure made easy.</p>
         </Column>
-        <Column md={2}>
+        <Column sm={4} md={3} lg={2}>
           <p>Product</p>
           <p>
             <Link to="/">Learn More</Link>
           </p>
+          <p>
+            <Link to="/#signup">Sign Up</Link>
+          </p>
         </Column>
-        <Column md={2}>
+        <Column sm={4} md={3} lg={2}>
           <p>Company</p>
           <p>
             <Link to="/blog">Blog</Link>
@@ -59,7 +62,7 @@ const Footer = () => (
             <Link to="/about">About</Link>
           </p>
         </Column>
-        <Column md={2}>
+        <Column sm={4} md={3} lg={2}>
           <p>Contact</p>
           <p>
             <a href="mailto:hello@getpackup.com">hello@getpackup.com</a>
@@ -72,13 +75,13 @@ const Footer = () => (
       <HorizontalRule />
       <FlexContainer justifyContent="space-between">
         <nav>
-          <Social href="https://www.facebook.com/getpackup">
+          <Social href="https://www.facebook.com/getpackup" target="_blank">
             <FaFacebook />
           </Social>
-          <Social href="https://twitter.com/getpackup">
+          <Social href="https://twitter.com/getpackup" target="_blank">
             <FaTwitter />
           </Social>
-          <Social href="https://www.instagram.com/getpackup/">
+          <Social href="https://www.instagram.com/getpackup/" target="_blank">
             <FaInstagram />
           </Social>
         </nav>

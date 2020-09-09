@@ -1,4 +1,5 @@
 import Alert from './Alert';
+import Avatar from './Avatar';
 import Box from './Box';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
@@ -19,10 +20,12 @@ import PreviewCompatibleImage from './PreviewCompatibleImage';
 import Row from './Row';
 import Seo from './Seo';
 import SiteMetadata from './SiteMetadata';
+import Testimonial from './Testimonial';
 import Wave from './wave';
 
 export {
   Alert,
+  Avatar,
   Box,
   Button,
   ClientOnly,
@@ -43,5 +46,6 @@ export {
   Row,
   Seo,
   SiteMetadata,
+  Testimonial,
   Wave,
 };

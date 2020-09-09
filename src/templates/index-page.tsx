@@ -17,16 +17,24 @@ import {
   Row,
   Column,
   Heading,
-  PreviewCompatibleImage,
   FlexContainer,
   Box,
+  Testimonial,
 } from '../components';
 import { requiredEmail, requiredField } from '../utils/validations';
-import { textColor, white, brandPrimary, brandSecondary, brandTertiary } from '../styles/color';
-import { quadrupleSpacer } from '../styles/size';
+import {
+  textColor,
+  white,
+  brandPrimary,
+  brandSecondary,
+  brandTertiary,
+  lightestGray,
+} from '../styles/color';
+import { screenSizes, quadrupleSpacer, breakpoints, doubleSpacer } from '../styles/size';
 import collage from '../images/Outdoorsman_Collage copy.jpg';
 import waveBismark from '../images/wave-bismark.svg';
 import waveDownriver from '../images/wave-downriver.svg';
+import useWindowSize from '../utils/useWindowSize';
 
 type IndexPageProps = {
   title: string;
@@ -36,6 +44,7 @@ type IndexPageProps = {
   heroCTALink: string;
   heroCTAText: string;
   heroImage: { childImageSharp: { fluid: FluidObject } };
+  mobileHeroImage: { childImageSharp: { fluid: FluidObject } };
   mainpitch: {
     heading: string;
     subheading: string;
@@ -75,14 +84,51 @@ type IndexPageProps = {
       };
     };
   };
+  testimonials: Array<{
+    quote: string;
+    author: string;
+    location: string;
+    avatar: {
+      childImageSharp: {
+        fluid: FluidObject;
+      };
+    };
+  }>;
 };
 
 const Section = styled.section`
-  padding: ${quadrupleSpacer} 0;
+  padding: ${doubleSpacer} 0;
+  text-align: center;
   background-color: ${(props: { backgroundColor?: string; inverse?: boolean }) =>
     props.backgroundColor};
   position: relative;
   color: ${(props) => (props.inverse ? white : textColor)};
+
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    padding: ${quadrupleSpacer} 0;
+    text-align: left;
+  }
+`;
+
+const ParallaxBackground = styled.div`
+  background: ${(props: { bgImage: string }) => `url("${props.bgImage}")`};
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+  height: 300px;
+`;
+
+const TypewriterWrapper = styled.div`
+  & .Typewriter {
+    display: block;
+  }
+
+  @media only screen and (min-width: ${breakpoints.md}) {
+    & .Typewriter {
+      display: inline-block;
+    }
+  }
 `;
 
 const waves = keyframes`
@@ -131,8 +177,18 @@ const WavesAnimation = styled.div`
   }
 `;
 
+const SectionImage = styled.img`
+  max-height: 400px;
+
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    max-height: 800px;
+  }
+`;
+
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
   const [response, setResponse] = useState({ msg: '', result: '' });
+  const size = useWindowSize();
+  const isLargeScreen = Boolean(size && size.width && size.width < screenSizes.large);
   const initialValues = { fname: '', lname: '', email: '' };
 
   const getTextFromHtmlString = (s: string) => s.replace(/<.*?>*<\/.*?>/g, '');
@@ -142,16 +198,14 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
 
   return (
     <>
-      <div
-        style={{
-          background: `url("${collage}") no-repeat fixed`,
-          backgroundSize: 'contain',
-        }}
+      <Seo title={props.title} />
+      <HeroImage
+        imgSrc={props.heroImage.childImageSharp.fluid.src}
+        mobileImgSrc={props.mobileHeroImage.childImageSharp.fluid.src}
       >
-        <Seo title={props.title} />
-        <HeroImage imgSrc={props.heroImage.childImageSharp.fluid.src}>
-          <PageContainer>
-            <Heading inverse align="center" noMargin>
+        <PageContainer>
+          <Heading inverse align="center" noMargin>
+            <TypewriterWrapper>
               Never forget your{' '}
               <Typewriter
                 options={{
@@ -161,178 +215,187 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                 }}
               />{' '}
               again
-            </Heading>
+            </TypewriterWrapper>
+          </Heading>
 
-            <p>{props.heroSubheading}</p>
-            <Button type="button" onClick={() => scrollTo(props.heroCTALink)}>
-              {props.heroCTAText}
-            </Button>
-          </PageContainer>
-        </HeroImage>
-        <Section backgroundColor={brandPrimary} id="learn-more" inverse>
-          <PageContainer>
-            <Heading as="h1" align="center" inverse>
-              {props.mainpitch.heading}
-            </Heading>
-          </PageContainer>
-        </Section>
-        <Section backgroundColor={white}>
-          <PageContainer>
-            <Row>
-              <Column sm={6}>
-                <FlexContainer
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="start"
-                  height="100%"
+          <p>{props.heroSubheading}</p>
+          <Button type="button" onClick={() => scrollTo(props.heroCTALink)}>
+            {props.heroCTAText}
+          </Button>
+        </PageContainer>
+      </HeroImage>
+      <Section backgroundColor={brandPrimary} id="learn-more" inverse>
+        <PageContainer>
+          <Heading as="h1" align="center" inverse noMargin>
+            {props.mainpitch.heading}
+          </Heading>
+        </PageContainer>
+      </Section>
+      <Section backgroundColor={white}>
+        <PageContainer>
+          <Row>
+            <Column sm={6}>
+              <FlexContainer
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="start"
+                height="100%"
+              >
+                <Heading as="h3">{props.mainpitch.subheading}</Heading>
+                <p>{props.mainpitch.text}</p>
+              </FlexContainer>
+            </Column>
+            <Column sm={6} md={3} mdOffset={2}>
+              <SectionImage src={props.mainpitch.image.childImageSharp.fluid.src} alt="" />
+            </Column>
+          </Row>
+        </PageContainer>
+      </Section>
+      <Section backgroundColor={brandSecondary} inverse>
+        <WavesAnimation wave={waveDownriver} />
+        <PageContainer>
+          <Row>
+            <Column sm={6}>
+              <SectionImage src={props.secondpitch.image.childImageSharp.fluid.src} alt="" />
+            </Column>
+            <Column sm={6}>
+              <FlexContainer
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="start"
+                height="100%"
+              >
+                <Heading as="h3" inverse>
+                  {props.secondpitch.subheading}
+                </Heading>
+                <p>{props.secondpitch.text}</p>
+              </FlexContainer>
+            </Column>
+          </Row>
+        </PageContainer>
+      </Section>
+      <Section backgroundColor={brandTertiary} inverse>
+        <WavesAnimation wave={waveBismark} />
+        <PageContainer>
+          <Row>
+            <Column sm={6}>
+              <FlexContainer
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="start"
+                height="100%"
+              >
+                <Heading as="h3" inverse>
+                  {props.thirdpitch.subheading}
+                </Heading>
+                <p>{props.thirdpitch.text}</p>
+              </FlexContainer>
+            </Column>
+            <Column sm={6} md={3} mdOffset={2}>
+              <SectionImage src={props.thirdpitch.image.childImageSharp.fluid.src} alt="" />
+            </Column>
+          </Row>
+        </PageContainer>
+      </Section>
+      {isLargeScreen ? <img src={collage} alt="" /> : <ParallaxBackground bgImage={collage} />}
+      <Section
+        backgroundColor={white}
+        id="signup"
+        style={{
+          backgroundImage: `url("${props.signupform.bgImage.childImageSharp.fluid.src}")`,
+          backgroundSize: 500,
+        }}
+      >
+        <PageContainer>
+          <Row>
+            <Column md={6} mdOffset={3}>
+              <Box>
+                <Heading>{props.signupform.heading}</Heading>
+                <p>{props.signupform.text}</p>
+                <Formik
+                  validateOnMount
+                  initialValues={initialValues}
+                  onSubmit={(values, { setSubmitting }) => {
+                    addToMailchimp(values.email, {
+                      FNAME: values.fname,
+                      LNAME: values.lname,
+                    }).then((res: MailchimpResponse) => {
+                      setSubmitting(false);
+                      setResponse(res);
+                      window.analytics.track('Signed Up For Newsletter', {
+                        firstName: values.fname,
+                        lastName: values.lname,
+                        email: values.email,
+                        response: res,
+                      });
+                    });
+                  }}
                 >
-                  <Heading as="h3">{props.mainpitch.subheading}</Heading>
-                  <p>{props.mainpitch.text}</p>
-                </FlexContainer>
-              </Column>
-              <Column sm={3} smOffset={2}>
-                <PreviewCompatibleImage imageInfo={{ image: props.mainpitch.image, alt: '' }} />
-              </Column>
-            </Row>
-          </PageContainer>
-        </Section>
-        <Section backgroundColor={brandSecondary} inverse>
-          <WavesAnimation wave={waveDownriver} />
-          <PageContainer>
-            <Row>
-              <Column sm={6}>
-                <PreviewCompatibleImage imageInfo={{ image: props.secondpitch.image, alt: '' }} />
-              </Column>
-              <Column sm={6}>
-                <FlexContainer
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="start"
-                  height="100%"
-                >
-                  <Heading as="h3" inverse>
-                    {props.secondpitch.subheading}
-                  </Heading>
-                  <p>{props.secondpitch.text}</p>
-                </FlexContainer>
-              </Column>
-            </Row>
-          </PageContainer>
-        </Section>
-        <Section backgroundColor={brandTertiary} inverse>
-          <WavesAnimation wave={waveBismark} />
-          <PageContainer>
-            <Row>
-              <Column sm={6}>
-                <FlexContainer
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="start"
-                  height="100%"
-                >
-                  <Heading as="h3" inverse>
-                    {props.thirdpitch.subheading}
-                  </Heading>
-                  <p>{props.thirdpitch.text}</p>
-                </FlexContainer>
-              </Column>
-              <Column sm={3} smOffset={2}>
-                <PreviewCompatibleImage imageInfo={{ image: props.thirdpitch.image, alt: '' }} />
-              </Column>
-            </Row>
-          </PageContainer>
-        </Section>
-        <Section style={{ height: 400 }} />
-        <div id="signup">
-          <Section
-            backgroundColor={white}
-            style={{
-              backgroundImage: `url("${props.signupform.bgImage.childImageSharp.fluid.src}")`,
-              backgroundSize: 500,
-            }}
-          >
-            <PageContainer>
-              <Row>
-                <Column sm={6} smOffset={3}>
-                  <Box>
-                    <Heading>{props.signupform.heading}</Heading>
-                    <p>{props.signupform.text}</p>
-                    <Formik
-                      validateOnMount
-                      initialValues={initialValues}
-                      onSubmit={(values, { setSubmitting }) => {
-                        addToMailchimp(values.email, {
-                          FNAME: values.fname,
-                          LNAME: values.lname,
-                        }).then((res: MailchimpResponse) => {
-                          setSubmitting(false);
-                          setResponse(res);
-                          window.analytics.track('Signed Up For Newsletter', {
-                            firstName: values.fname,
-                            lastName: values.lname,
-                            email: values.email,
-                            response: res,
-                          });
-                        });
-                      }}
-                    >
-                      {({ isSubmitting, isValid }) => (
-                        <Form>
-                          <Row>
-                            <Column sm={6}>
-                              <Field
-                                as={Input}
-                                type="text"
-                                name="fname"
-                                label="First Name"
-                                required
-                                validate={requiredField}
-                              />
-                            </Column>
-                            <Column sm={6}>
-                              <Field
-                                as={Input}
-                                type="text"
-                                name="lname"
-                                label="Last Name"
-                                required
-                                validate={requiredField}
-                              />
-                            </Column>
-                          </Row>
+                  {({ isSubmitting, isValid }) => (
+                    <Form>
+                      <Row>
+                        <Column sm={6}>
                           <Field
                             as={Input}
-                            type="email"
-                            name="email"
-                            label="Email"
+                            type="text"
+                            name="fname"
+                            label="First Name"
                             required
-                            validate={requiredEmail}
+                            validate={requiredField}
                           />
-                          {response.msg ? (
-                            <Alert
-                              type={error ? 'danger' : 'success'}
-                              message={error ? getTextFromHtmlString(response.msg) : response.msg}
-                              callToActionLink={
-                                error ? getHrefFromHtmlString(response.msg) : undefined
-                              }
-                              callToActionLinkText={
-                                error ? getLinkTextFromHtmlString(response.msg) : undefined
-                              }
-                            />
-                          ) : (
-                            <Button type="submit" block disabled={isSubmitting || !isValid}>
-                              Submit
-                            </Button>
-                          )}
-                        </Form>
+                        </Column>
+                        <Column sm={6}>
+                          <Field
+                            as={Input}
+                            type="text"
+                            name="lname"
+                            label="Last Name"
+                            required
+                            validate={requiredField}
+                          />
+                        </Column>
+                      </Row>
+                      <Field
+                        as={Input}
+                        type="email"
+                        name="email"
+                        label="Email"
+                        required
+                        validate={requiredEmail}
+                      />
+                      {response.msg ? (
+                        <Alert
+                          type={error ? 'danger' : 'success'}
+                          message={error ? getTextFromHtmlString(response.msg) : response.msg}
+                          callToActionLink={error ? getHrefFromHtmlString(response.msg) : undefined}
+                          callToActionLinkText={
+                            error ? getLinkTextFromHtmlString(response.msg) : undefined
+                          }
+                        />
+                      ) : (
+                        <Button type="submit" block disabled={isSubmitting || !isValid}>
+                          Submit
+                        </Button>
                       )}
-                    </Formik>
-                  </Box>
-                </Column>
-              </Row>
-            </PageContainer>
-          </Section>
-        </div>
+                    </Form>
+                  )}
+                </Formik>
+              </Box>
+            </Column>
+          </Row>
+        </PageContainer>
+      </Section>
+      <div style={{ backgroundColor: lightestGray, padding: `${doubleSpacer} 0` }}>
+        <PageContainer>
+          <Heading align="center">Word on the trail about packup</Heading>
+          <Row>
+            {props.testimonials.map((testimonial) => (
+              <Column md={6} lg={4} key={testimonial.author}>
+                <Testimonial testimonial={testimonial} />
+              </Column>
+            ))}
+          </Row>
+        </PageContainer>
       </div>
     </>
   );
@@ -343,6 +406,7 @@ const IndexPage = ({ data }: { data: { markdownRemark: { frontmatter: IndexPageP
   return (
     <IndexPageTemplate
       heroImage={frontmatter.heroImage}
+      mobileHeroImage={frontmatter.mobileHeroImage}
       title={frontmatter.title}
       heroHeading={frontmatter.heroHeading}
       typewriterList={frontmatter.typewriterList}
@@ -353,6 +417,7 @@ const IndexPage = ({ data }: { data: { markdownRemark: { frontmatter: IndexPageP
       secondpitch={frontmatter.secondpitch}
       thirdpitch={frontmatter.thirdpitch}
       signupform={frontmatter.signupform}
+      testimonials={frontmatter.testimonials}
     />
   );
 };
@@ -367,6 +432,13 @@ export const pageQuery = graphql`
         heroImage {
           childImageSharp {
             fluid(maxWidth: 2048, quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+        mobileHeroImage {
+          childImageSharp {
+            fluid(maxWidth: 768, quality: 100) {
               ...GatsbyImageSharpFluid
             }
           }
@@ -420,6 +492,18 @@ export const pageQuery = graphql`
           bgImage {
             childImageSharp {
               fluid(maxWidth: 1000, quality: 100) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
+        }
+        testimonials {
+          quote
+          author
+          location
+          avatar {
+            childImageSharp {
+              fluid(maxWidth: 300, quality: 100) {
                 ...GatsbyImageSharpFluid
               }
             }
