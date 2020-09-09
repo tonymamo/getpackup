@@ -16,6 +16,7 @@ import Layout from './Layout';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
 import PageContainer from './PageContainer';
+import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 import Row from './Row';
 import Seo from './Seo';
@@ -42,6 +43,7 @@ export {
   Navbar,
   NegativeMarginContainer,
   PageContainer,
+  Pill,
   PreviewCompatibleImage,
   Row,
   Seo,

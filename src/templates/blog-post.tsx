@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { kebabCase } from 'lodash';
 import { Helmet } from 'react-helmet-async';
-import { graphql, Link } from 'gatsby';
+import { graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
+import { DiscussionEmbed } from 'disqus-react';
 
 import {
   HeroImage,
@@ -13,6 +14,7 @@ import {
   Heading,
   HorizontalRule,
   FlexContainer,
+  Pill,
 } from '../components';
 import Content, { HTMLContent } from '../components/Content';
 
@@ -36,6 +38,12 @@ type BlogPostProps = {
 
 export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   const PostContent = props.contentComponent || Content;
+
+  const disqusConfig = {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    shortname: process.env.GATSBY_DISQUS_NAME!,
+    config: { identifier: props.title },
+  };
 
   return (
     <>
@@ -61,16 +69,17 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 {props.tags && props.tags.length ? (
                   <>
                     <h4>Tags</h4>
-                    <ul>
+                    <ul style={{ margin: 0, padding: 0 }}>
                       {props.tags.map((tag: string) => (
-                        <li key={`${tag}tag`}>
-                          <Link to={`/tags/${kebabCase(tag)}/`}>{tag}</Link>
-                        </li>
+                        <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
                       ))}
                     </ul>
                   </>
                 ) : null}
               </div>
+              <HorizontalRule />
+              <Heading as="h3">Comments</Heading>
+              <DiscussionEmbed {...disqusConfig} />
             </Box>
           </Column>
         </Row>
