@@ -48,15 +48,15 @@ signupform:
 testimonials:
   - quote: This app is going to be a game changer. I can't wait to use it on
       upcoming hiking trips!
-    author: Hamish
+    author: Hamish E.
     location: British Columbia
     avatar: /img/hamishguylookingout.png
   - quote: I'm looking forward to creating collaborative lists with my friends.
       Tracking who is bringing what has always been an issue.
-    author: Hayley
+    author: Hayley G.
     location: Ontario
     avatar: /img/hayleygirlonrocks.png
-  - author: Kristian
+  - author: Kristian P.
     location: Edmonton
     avatar: /img/66297736_10161885243285545_8771925095204519936_o.jpg
     quote: As a habitual overpacker, I’m excited for Packup’s lists to help me
