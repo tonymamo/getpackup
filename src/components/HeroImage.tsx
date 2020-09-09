@@ -1,24 +1,19 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import { white } from '../styles/color';
 import { screenSizes } from '../styles/size';
 import useWindowSize from '../utils/useWindowSize';
 import ClientOnly from './ClientOnly';
+import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type FullBleedImageProps = {
   imgSrc: string;
   mobileImgSrc?: string;
-  height?: string;
-  parallax?: boolean;
 };
 
 const HeroImageWrapper = styled.div`
   position: relative;
-`;
-
-const StyledImage = styled.img`
-  max-width: 100%;
 `;
 
 const ChildrenWrapper = styled.div`
@@ -41,32 +36,19 @@ const ChildrenWrapper = styled.div`
 const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
   imgSrc,
   children,
-  parallax,
   mobileImgSrc,
 }) => {
   const size = useWindowSize();
   const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
-  const isClient = typeof window === 'object';
-
-  useEffect(() => {
-    (async () => {
-      if (parallax && typeof window !== 'undefined') {
-        const { default: SimpleParallax } = await import('simple-parallax-js');
-        const image = document.getElementsByClassName('parallaxImage');
-        if (isClient && image) {
-          (() => new SimpleParallax(image, { scale: 1.5 }))();
-        }
-      }
-    })();
-  });
 
   return (
     <HeroImageWrapper>
       <ClientOnly>
-        <StyledImage
-          src={isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc}
-          alt=""
-          className={parallax ? 'parallaxImage' : ''}
+        <PreviewCompatibleImage
+          imageInfo={{
+            image: isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc,
+            alt: '',
+          }}
         />
       </ClientOnly>
       <ChildrenWrapper>{children}</ChildrenWrapper>
