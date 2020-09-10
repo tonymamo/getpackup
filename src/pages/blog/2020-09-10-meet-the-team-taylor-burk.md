@@ -10,7 +10,7 @@ tags:
   - owners
   - packup
 ---
-###### Meet Taylor Burk, one of the co-founders of packup. Taylor is a full-time professional photographer in the outdoor adventure & travel space. Utilizing Instagram as a way to market himself, he has been able to gain rapid popularity and secure many sponsors and clients around the world. His work is not only a representation of his skill, but a testament to the deep affinity for nature he possesses. When he’s not traversing the globe, Burk keeps busy exploring his new "backyard" in Gibsons, British Columbia. 
+###### Meet Taylor Burk, one of the co-founders of packup. Taylor is a full-time professional photographer in the outdoor adventure & travel space. Utilizing Instagram as a way to market himself, he has been able to gain rapid popularity and secure many sponsors and clients around the world. His work is not only a representation of his skill, but a testament to the deep affinity for nature he possesses. When he’s not traversing the globe, Burk keeps busy exploring his new  home of Gibsons, British Columbia.
 
 ###### **Worst experience in the backcountry:**
 
@@ -31,8 +31,6 @@ What is one thing you learned about yourself recently?**
 
 Socotra Island, Yemen. It’s like something out of a Dr. Seuss book. Seriously, Google it. 
 
-
-
 **What are your favourite outdoor activities?**
 
 Backpacking, Biking, Backcountry skiing, Climbing, Running (love/hate), Hiking, Paddling
@@ -42,25 +40,17 @@ What is one item that you couldn't live without?**
 
 Water, literally I guess. I am a water-aholic.
 
-
-
 **Share about a time when you felt the most alive and fully yourself?**
 
 Backpacking through New Zealand in 2011, that’s where I first got into the outdoors and my life changed drastically. I spent a lot of time in the bush avoiding cities and civilization, only going in town for food when I needed to restock supplies. Still chasing that feeling of freedom and discovery.
-
-
 
 **What injustices in the world make you angry?**
 
 Inequality, across the board.
 
-
-
 **Is a hot dog a sandwich, and why?**
 
 Anything between two pieces of bread qualifies as a sandwich in my eyes.
-
-
 
 **What is your biggest dream in life?**
 
