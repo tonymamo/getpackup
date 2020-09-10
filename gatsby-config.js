@@ -19,7 +19,7 @@ module.exports = {
     'gatsby-plugin-eslint',
     'gatsby-plugin-smoothscroll',
     {
-      resolve: 'gatsby-plugin-hotjar',
+      resolve: 'gatsby-plugin-hotjar-tracking',
       options: {
         id: process.env.GATSBY_HOTJAR_ID,
         sv: process.env.GATSBY_HOTJAR_SV,

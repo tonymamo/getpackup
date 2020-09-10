@@ -8670,12 +8670,12 @@ gatsby-plugin-graphql-codegen@^2.7.1:
     fs-extra "^7.0.1"
     lodash.debounce "^4.0.8"
 
-gatsby-plugin-hotjar@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-hotjar/-/gatsby-plugin-hotjar-1.0.1.tgz#f5703d7d2a354752e20230a0074d53c7287d8950"
-  integrity sha512-1iZIftJin3Ti51ho7HiGes2ZiXZhU0/sSe6OCvULy3F9hSpADrX5jU48ajnZnrS1O0lf7pyVfjvBBpXOawASHw==
+gatsby-plugin-hotjar-tracking@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-hotjar-tracking/-/gatsby-plugin-hotjar-tracking-1.1.0.tgz#9dd1e1c780a68ceb4d4118a29e36984821d3f0d5"
+  integrity sha512-ec3t8cLz0FABGqnmhccCwam/SCPdDdCAw7mqTGLoq2XPM6zKGZkbArjdXUIX6NS3jmuqk9h9An8Rwr+zyb9Asw==
   dependencies:
-    babel-runtime "^6.26.0"
+    "@babel/runtime" "^7.0.0"
 
 gatsby-plugin-mailchimp@^5.2.2:
   version "5.2.2"
