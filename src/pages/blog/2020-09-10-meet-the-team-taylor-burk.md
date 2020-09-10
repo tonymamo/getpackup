@@ -13,7 +13,7 @@ tags:
 ---
 Meet Taylor Burk, one of the co-founders of packup. Taylor is a full-time professional photographer in the outdoor adventure & travel space. Utilizing Instagram as a way to market himself, he has been able to gain rapid popularity and secure many sponsors and clients around the world. His work is not only a representation of his skill, but a testament to the deep affinity for nature he possesses. When he’s not traversing the globe, Burk keeps busy exploring his new home of Gibsons, British Columbia.
 
-![](/img/taylorburkheadshot.jpg)
+![](/img/headshot-copy.jpg)
 
 **Worst experience in the backcountry?**
 
