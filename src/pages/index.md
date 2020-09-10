@@ -18,7 +18,7 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: '#learn-more'
+heroCTALink: "#learn-more"
 heroCTAText: Learn More
 mainpitch:
   image: /img/Screen Shot 2020-09-08 at 1.17.18 PM.png
@@ -26,10 +26,7 @@ mainpitch:
   subheading: Outside faster, with more confidence
   text: Take the guesswork out of trip preparation using our Trip Generator –
     simply choose your accommodation, transportation, and outdoor activities to
-    form the foundation of your customizable packing list and trip.Take the
-    guesswork out of packing by following and customizing comprehensive packing
-    lists that are tailored to your excursion type, making sure you have
-    everything necessary for what you’re doing and where you're staying.
+    form the foundation of your customizable packing list and trip.
 secondpitch:
   image: /img/shared.png
   heading: Collaborate with your trip party
