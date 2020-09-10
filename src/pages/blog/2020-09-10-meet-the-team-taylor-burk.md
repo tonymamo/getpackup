@@ -15,7 +15,7 @@ Meet Taylor Burk, one of the co-founders of packup. Taylor is a full-time profes
 
 ![](/img/taylorburkheadshot.jpg)
 
-**Worst experience in the backcountry:**
+**Worst experience in the backcountry?**
 
 I’m not going to get into too much detail but it involves rock climbing in Mexico, montezuma's revenge and unwanted bowel movements which led to a very uncomfortable but memorable experience on a wall.
 
