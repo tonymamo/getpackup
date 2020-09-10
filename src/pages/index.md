@@ -18,7 +18,7 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: "#learn-more"
+heroCTALink: '#learn-more'
 heroCTAText: Learn More
 mainpitch:
   image: /img/Screen Shot 2020-09-08 at 1.17.18 PM.png
@@ -37,7 +37,7 @@ secondpitch:
   text: Organize and lead your group to ensure everyone has their share of
     essential items, and that nothing gets left behind (or double packed!).
 thirdpitch:
-  image: /img/Screen Shot 2020-09-08 at 1.42.26 PM.png
+  image: /img/learn.png
   heading: Learn from the best
   subheading: Learn from the best
   text: Going to a new area or trying a new activity? See what other professional
