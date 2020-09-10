@@ -2,7 +2,7 @@
 templateKey: blog-post
 title: "Meet The Team - Taylor Burk "
 date: 2020-09-10T19:45:07.805Z
-description: A brief introduction to our team members, meet Taylor!
+description: "A brief introduction to our team members. "
 featuredpost: true
 featuredimage: /img/headshotpano-copy.jpg
 tags:
