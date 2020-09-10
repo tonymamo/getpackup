@@ -19,6 +19,13 @@ module.exports = {
     'gatsby-plugin-eslint',
     'gatsby-plugin-smoothscroll',
     {
+      resolve: 'gatsby-plugin-hotjar',
+      options: {
+        id: process.env.GATSBY_HOTJAR_ID,
+        sv: process.env.GATSBY_HOTJAR_SV,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-mailchimp',
       options: {
         endpoint: process.env.GATSBY_MAILCHIMP_ENDPOINT,

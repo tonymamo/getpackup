@@ -35,4 +35,4 @@ Very excited to see what we can share with you in the future. Connect with us on
 
 Cheers,
 
-Mack, Taylor and Tony
+Mack, Taylor, and Tony
