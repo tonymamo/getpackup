@@ -46,8 +46,6 @@ const sharedStyles = css`
   border-radius: ${borderRadius};
   transition: border-color .2s ease-in-out;
 
-  ${(props: InputProps) => props.square && 'text-align: center;'}
-
   ${(meta: FieldMetaProps<string>) =>
     meta &&
     meta.touched &&
@@ -80,7 +78,7 @@ const StyledErrorMessage = styled.div`
 
 const InputWrapper = styled.div`
   margin-bottom: ${baseSpacer};
-  ${(props: { square?: boolean }) => props.square && `max-width: ${inputHeight};`}
+  text-align: left;
   ${(props: { hidden?: boolean }) => props.hidden && `display: none;`}
   & .tooltip {
     padding: 0 ${halfSpacer};
@@ -89,7 +87,7 @@ const InputWrapper = styled.div`
 
 const StyledLabel = styled.label`
   margin: 0;
-  ${(props) =>
+  ${(props: { invalid: boolean; required: boolean }) =>
     props.invalid &&
     `
     color: ${brandDanger};

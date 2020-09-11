@@ -109,7 +109,6 @@ const Section = styled.section`
 
   @media only screen and (min-width: ${breakpoints.sm}) {
     padding: ${quadrupleSpacer} 0;
-    text-align: left;
   }
 `;
 
@@ -245,12 +244,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
         <PageContainer>
           <Row>
             <Column sm={6}>
-              <FlexContainer
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="start"
-                height="100%"
-              >
+              <FlexContainer flexDirection="column" justifyContent="center" height="100%">
                 <Heading as="h3">{props.mainpitch.subheading}</Heading>
                 <p>{props.mainpitch.text}</p>
               </FlexContainer>
@@ -269,12 +263,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               <SectionImage src={props.secondpitch.image.childImageSharp.fluid.src} alt="" />
             </Column>
             <Column sm={6} xsOrder={1} smOrder={2}>
-              <FlexContainer
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="start"
-                height="100%"
-              >
+              <FlexContainer flexDirection="column" justifyContent="center" height="100%">
                 <Heading as="h3" inverse>
                   {props.secondpitch.subheading}
                 </Heading>
@@ -289,12 +278,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
         <PageContainer>
           <Row>
             <Column sm={6}>
-              <FlexContainer
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="start"
-                height="100%"
-              >
+              <FlexContainer flexDirection="column" justifyContent="center" height="100%">
                 <Heading as="h3" inverse>
                   {props.thirdpitch.subheading}
                 </Heading>
