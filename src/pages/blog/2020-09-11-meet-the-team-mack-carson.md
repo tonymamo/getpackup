@@ -43,6 +43,8 @@ The Paprika 3 cooking app. Lululemon ABC (Anti ball chafe) pants. My bike. My 15
 
  I spent a summer during university in 2015 living and working in the mountain town of Jasper. At the time I was working as a hotel bartender so that I could cover living costs, and have a bit of savings for tuition. I lived in an absolute dump of a staff accommodation for $250/month, but met some amazing people on my floor (shout-out to Patrik and Callum). I was able to run, climb, scramble, and ride practically every day, giving myself tendonitis in my knee by the end of the summer. It was a simple time in my life where I felt I was spending time with the right people and putting my energy into things that brought me joy.
 
+![](/img/044a1107.jpg)
+
 **What injustices in the world make you angry?**
 
 Racial inequality. I grew up with a lot of friends from all backgrounds and ethnicities and always want to see them be respected and succeed in life.
