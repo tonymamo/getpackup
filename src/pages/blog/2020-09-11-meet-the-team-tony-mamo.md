@@ -38,7 +38,7 @@ Hiking, Climbing, Backpacking, Kayaking, Mountain Biking, Outdoor Photography
 
 **What is one item that you couldn't live without?**
 
-No matter what the objective or trip is, I always end up with some sort of stash of carabiners and ropes, they are just so handy. Other than that, I always make sure to bring the necessary gear to make a good cup of coffee!
+No matter what the objective or trip is, I always end up with some sort of stash of carabiners and ropes/cordage, they are just so handy for random things. Other than that, I always make sure to bring the necessary gear to make a good cup of coffee!
 
 **Share about a time when you felt the most alive and fully yourself?**
 
@@ -48,7 +48,7 @@ The year-long road trip I took in the van during 2017-18 with my wife and dog wa
 
 **What injustices in the world make you angry?**
 
-Climate change, unchecked capitalism, racial, gender, and social inequality... they are all linked together and it just baffles me that we haven't as a society figured out how to move past it and live our best lives.
+Climate change, unchecked capitalism, racial, gender, and social inequality... they are all linked together and it just baffles me that we haven't as a society figured out how to move past it and live our best lives together.
 
 **Is a hot dog a sandwich, and why?**
 
@@ -60,7 +60,7 @@ To be able to travel and experience all of the places this great Earth has to of
 
 **What motivates you to work hard?**
 
-Wanting to make a difference and the desire to help people (and myself) so we can all live happier healthier lives
+Wanting to make a difference and the desire to help people (and myself) so we can all live happier healthier lives.
 
 **Was the outdoor lifestyle something that you grew up in or was it discovered?**
 
