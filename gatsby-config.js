@@ -119,6 +119,7 @@ module.exports = {
               destinationDir: 'static',
             },
           },
+          'gatsby-remark-responsive-iframe',
         ],
       },
     },
