@@ -301,7 +301,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                 <p>{props.thirdpitch.text}</p>
               </FlexContainer>
             </Column>
-            <Column sm={6} md={3} mdOffset={2}>
+            <Column sm={6}>
               <SectionImage src={props.thirdpitch.image.childImageSharp.fluid.src} alt="" />
             </Column>
           </Row>
