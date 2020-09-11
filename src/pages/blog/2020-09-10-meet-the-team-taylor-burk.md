@@ -35,6 +35,8 @@ Socotra Island, Yemen. It’s like something out of a Dr. Seuss book. Seriously,
 
 Backpacking, Biking, Backcountry skiing, Climbing, Running (love/hate), Hiking, Paddling. Pretty much anything that keeps me active and provides a challenge. 
 
+![](/img/chamonix-chrisbrinleejr-sep17-78.jpg)
+
 **What is one item that you couldn't live without?**
 
 Hats. Big hat guy, I never used to be but now I don't go anywhere or do anything without one. Definitely has nothing to do with my hair thinning out.
@@ -50,8 +52,6 @@ Inequality, across the board. Why can't we all just get along?
 **Is a hot dog a sandwich, and why?**
 
 It could be a cousin of the sandwich for sure, it's in the same family group. Same, same but different. 
-
-![](/img/l1001241.jpg)
 
 **What is your biggest dream in life?**
 
