@@ -13,7 +13,7 @@ tags:
 ---
 Meet Mack Carson, one of the co-founders of Packup. Mack is a ramen and pho aficionado, travel fanatic, avid alpinst, and finance whiz. After receiving his BComm in finance, Mack spent four years working in commercial real estate finance where his team sourced over $500 million in funds for clients. He recently traded in his suit and tie with the goal of getting more involved in the start-up world, as he has always been keen to continue his lifelong learning, and have the chance to grow a business from its infancy. Mack recently moved out west, and has been settling into his new home of Victoria, BC.
 
-
+![](/img/044a8714.jpg)
 
 **Worst experience in the backcountry?**
 
