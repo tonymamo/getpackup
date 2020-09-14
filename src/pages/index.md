@@ -18,7 +18,7 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: '#learn-more'
+heroCTALink: "#learn-more"
 heroCTAText: Sign Up
 mainpitch:
   image: /img/Screen Shot 2020-09-08 at 1.17.18 PM.png
@@ -43,7 +43,7 @@ thirdpitch:
 signupform:
   bgImage: /img/topo.png
   heading: Be the first to know when packup is live
-  text: Enter your name and email to get periodic updates about Packup
+  text: Enter your email to get periodic updates about Packup
 testimonials:
   - quote: This app is going to be a game changer. I can't wait to use it on
       upcoming hiking trips!
