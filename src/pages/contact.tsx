@@ -53,7 +53,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                 Have a question about the product we are building, or just want to get in touch?
                 Leave us a line!
               </p>
-              {sent && <Alert type="success">Thanks, we will get back to ya soon!</Alert>}
+              {sent && <Alert type="success" message="Thanks, we will get back to ya soon!" />}
               <Formik
                 validateOnMount
                 initialValues={initialValues}
