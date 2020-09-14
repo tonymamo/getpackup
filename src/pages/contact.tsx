@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { FaCaretRight } from 'react-icons/fa';
 
@@ -12,6 +12,7 @@ import {
   Input,
   Seo,
   Heading,
+  Alert,
 } from '../components';
 import { requiredEmail, requiredField } from '../utils/validations';
 import image from '../images/FemaleRockclimberLookingBackAtDaybreak copy.jpg';
@@ -19,6 +20,7 @@ import image from '../images/FemaleRockclimberLookingBackAtDaybreak copy.jpg';
 type ContactProps = {};
 
 const Contact: FunctionComponent<ContactProps> = () => {
+  const [sent, setSent] = useState(false);
   const initialValues = {
     email: '',
     firstName: '',
@@ -51,6 +53,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                 Have a question about the product we are building, or just want to get in touch?
                 Leave us a line!
               </p>
+              {sent && <Alert type="success">Thanks, we will get back to ya soon!</Alert>}
               <Formik
                 validateOnMount
                 initialValues={initialValues}
@@ -63,6 +66,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                       ...values,
                     }),
                   }).then(() => {
+                    setSent(true);
                     setSubmitting(false);
                     resetForm();
                   });

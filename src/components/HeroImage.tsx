@@ -9,11 +9,13 @@ import ClientOnly from './ClientOnly';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type FullBleedImageProps = {
-  imgSrc: {
-    childImageSharp: {
-      fluid: FluidObject;
-    };
-  };
+  imgSrc:
+    | {
+        childImageSharp: {
+          fluid: FluidObject;
+        };
+      }
+    | string;
   mobileImgSrc?: {
     childImageSharp: {
       fluid: FluidObject;
