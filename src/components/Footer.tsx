@@ -65,7 +65,6 @@ const Footer = () => (
             <p>Adventure made easy.</p>
           </Column>
           <Column sm={4} md={3} lg={2}>
-            <p>Product</p>
             <p>
               <Link to="/">Learn More</Link>
             </p>
@@ -74,7 +73,6 @@ const Footer = () => (
             </p>
           </Column>
           <Column sm={4} md={3} lg={2}>
-            <p>Company</p>
             <p>
               <Link to="/blog">Blog</Link>
             </p>
@@ -83,7 +81,6 @@ const Footer = () => (
             </p>
           </Column>
           <Column sm={4} md={3} lg={2}>
-            <p>Contact</p>
             <p>
               <a href="mailto:hello@getpackup.com">hello@getpackup.com</a>
             </p>
