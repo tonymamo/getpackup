@@ -55,7 +55,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                 validateOnMount
                 initialValues={initialValues}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
-                  fetch('https://getpackup.netlify.app/', {
+                  fetch('https://getpackup.com/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: encode({
