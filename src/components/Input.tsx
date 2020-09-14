@@ -19,16 +19,17 @@ import {
   brandPrimary,
   brandPrimaryRGB,
 } from '../styles/color';
-import { baseBorderStyle, disabledStyle } from '../styles/mixins';
+import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '../styles/mixins';
 
 type InputProps = {
   disabled?: boolean;
   id?: string;
   name: string;
   type: string;
-  label: string | JSX.Element;
+  label: string;
   helpText?: string | JSX.Element;
   required?: boolean;
+  hideLabel?: boolean;
 } & FieldMetaProps<string> &
   FormikHelpers<string>;
 
@@ -44,7 +45,7 @@ const sharedStyles = css`
   background-image: none;
   border: ${baseBorderStyle};
   border-radius: ${borderRadius};
-  transition: border-color .2s ease-in-out;
+  transition: border-color 0.2s ease-in-out;
 
   ${(meta: FieldMetaProps<string>) =>
     meta &&
@@ -53,16 +54,16 @@ const sharedStyles = css`
     `
       border-color: ${brandDanger};
       border-width: 2px;
-      // box-shadow: 0 0 0 ${borderRadius} rgba(${brandDangerRGB},.25);
+      box-shadow: 0 0 0 ${borderRadius} rgba(${brandDangerRGB},.25);
   `}
-  
+
   &:focus {
     border-color: ${brandPrimary};
     border-width: 2px;
     outline: 0;
-    /* box-shadow: 0 0 0 ${borderRadius} rgba(${brandPrimaryRGB},.25); */
+    box-shadow: 0 0 0 ${borderRadius} rgba(${brandPrimaryRGB}, 0.25);
   }
-  
+
   /* Disabled state */
   ${(props: InputProps) => props.disabled && disabledStyle}
 `;
@@ -87,7 +88,7 @@ const InputWrapper = styled.div`
 
 const StyledLabel = styled.label`
   margin: 0;
-  ${(props: { invalid: boolean; required: boolean }) =>
+  ${(props: { invalid: boolean; required: boolean; visuallyHidden?: boolean }) =>
     props.invalid &&
     `
     color: ${brandDanger};
@@ -100,6 +101,7 @@ const StyledLabel = styled.label`
       color: ${brandDanger};
     }
   `}
+  ${(props) => props.visuallyHidden && visuallyHiddenStyle}
 `;
 
 const Input: FunctionComponent<InputProps> = (props) => {
@@ -110,11 +112,12 @@ const Input: FunctionComponent<InputProps> = (props) => {
         htmlFor={props.id || props.name}
         invalid={meta && meta.touched && meta.error != null}
         required={props.required || false}
+        visuallyHidden={props.hideLabel}
       >
         {props.label}
       </StyledLabel>
 
-      <StyledInput id={props.name} {...field} {...props} {...meta} />
+      <StyledInput id={props.name} placeholder={props.label} {...field} {...props} {...meta} />
       {props.helpText && <small>{props.helpText}</small>}
       {meta && meta.touched && meta.error && <StyledErrorMessage>{meta.error}</StyledErrorMessage>}
     </InputWrapper>

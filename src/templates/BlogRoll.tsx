@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { FunctionComponent } from 'react';
 import { Link, graphql, StaticQuery } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
@@ -10,6 +11,9 @@ type BlogRollProps = {
       id: number;
       fields: {
         slug: string;
+        readingTime: {
+          text: string;
+        };
       };
       date: string;
       description: string;
@@ -29,13 +33,13 @@ type BlogRollProps = {
   count: number;
 };
 
-const BlogRoll: FunctionComponent<BlogRollProps> = ({ data }) => {
+const BlogRoll: FunctionComponent<BlogRollProps> = ({ data, count }) => {
   const { edges: posts } = data.allMarkdownRemark;
 
   return (
     <Row>
       {posts &&
-        posts.map(({ node: post }: any) => (
+        posts.slice(0, count).map(({ node: post }: any) => (
           <Column md={4} key={post.id}>
             <Box>
               {post.frontmatter.featuredimage && (
@@ -48,19 +52,17 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ data }) => {
                   />
                 </Link>
               )}
-              <small>{post.frontmatter.date}</small>
-              <Heading as="h2">
+              <small>
+                {post.frontmatter.date} - {post.fields.readingTime.text}
+              </small>
+              <Heading as="h2" noMargin>
                 <Link className="title has-text-primary is-size-4" to={post.fields.slug}>
                   {post.frontmatter.title}
                 </Link>
               </Heading>
               <HorizontalRule compact />
-              <p>
-                <small style={{ fontStyle: 'italic' }}>{post.frontmatter.description}</small>
-              </p>
-              <Link className="button" to={post.fields.slug}>
-                Keep Reading
-              </Link>
+
+              <small style={{ fontStyle: 'italic' }}>{post.frontmatter.description}</small>
             </Box>
           </Column>
         ))}
@@ -68,8 +70,8 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ data }) => {
   );
 };
 
-// eslint-disable-next-line react/display-name
-export default () => (
+// eslint-disable-next-line react/require-default-props
+export default (props: { count?: number }) => (
   <StaticQuery
     query={graphql`
       query BlogRollQuery {
@@ -83,6 +85,9 @@ export default () => (
               id
               fields {
                 slug
+                readingTime {
+                  text
+                }
               }
               frontmatter {
                 title
@@ -92,7 +97,7 @@ export default () => (
                 featuredpost
                 featuredimage {
                   childImageSharp {
-                    fluid(maxWidth: 400, quality: 100) {
+                    fluid(maxWidth: 400, quality: 60) {
                       ...GatsbyImageSharpFluid
                     }
                   }
@@ -103,6 +108,8 @@ export default () => (
         }
       }
     `}
-    render={(data: any, count: number) => <BlogRoll data={data} count={count} />}
+    render={(data: any) => (
+      <BlogRoll data={data} count={props.count || data.allMarkdownRemark.edges.length} />
+    )}
   />
 );

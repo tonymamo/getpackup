@@ -7,7 +7,7 @@ import FlexContainer from './FlexContainer';
 import Heading from './Heading';
 
 import { brandSecondary, white } from '../styles/color';
-import { quadrupleSpacer } from '../styles/size';
+import { halfSpacer, quadrupleSpacer } from '../styles/size';
 import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
 
 type NavbarProps = {};
@@ -34,6 +34,13 @@ const StyledNavbar = styled.nav`
   }
 `;
 
+const NavLink = styled(Link)`
+  padding: 0 ${halfSpacer};
+  &:last-child {
+    margin-right: -${halfSpacer};
+  }
+`;
+
 const Navbar: FunctionComponent<NavbarProps> = () => {
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation">
@@ -43,7 +50,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             <Link to="/">packup</Link>
           </Heading>
           <nav>
-            <Link to="/blog">Blog</Link>
+            <NavLink to="/blog">Blog</NavLink>
+            <NavLink to="/about">About</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
           </nav>
         </FlexContainer>
       </PageContainer>

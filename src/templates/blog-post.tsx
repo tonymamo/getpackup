@@ -15,10 +15,36 @@ import {
   FlexContainer,
   Pill,
   Seo,
+  RelatedBlogPost,
 } from '../components';
 import Content, { HTMLContent } from '../components/Content';
 
+type RelatedPostType = {
+  fields: {
+    slug: string;
+    readingTime: {
+      text: string;
+    };
+  };
+  frontmatter: {
+    date: string;
+    description: string;
+    title: string;
+    featuredimage: {
+      childImageSharp: {
+        fluid: {
+          src: string;
+        };
+      };
+    };
+  };
+};
+
 type BlogPostProps = {
+  pageContext: {
+    next?: RelatedPostType;
+    prev?: RelatedPostType;
+  };
   content: any;
   contentComponent: any;
   date: string;
@@ -64,26 +90,44 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
               <div>
                 <Heading>{props.title}</Heading>
                 <FlexContainer justifyContent="space-between">
-                  <small>{props.date}</small>
-
-                  <small>{props.readingTime.text}</small>
+                  <p>
+                    <small>{props.date}</small>
+                  </p>
+                  <p>
+                    <small>{props.readingTime.text}</small>
+                  </p>
                 </FlexContainer>
+                {props.tags && props.tags.length ? (
+                  <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
+                    {props.tags.map((tag: string) => (
+                      <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
+                    ))}
+                  </ul>
+                ) : null}
                 <HorizontalRule />
+
                 <p style={{ fontStyle: 'italic' }}>{props.description}</p>
                 <HorizontalRule />
                 <PostContent content={props.content} />
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (
-                  <>
-                    <h4>Tags</h4>
-                    <ul style={{ margin: 0, padding: 0 }}>
-                      {props.tags.map((tag: string) => (
-                        <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
-                      ))}
-                    </ul>
-                  </>
+                  <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
+                    {props.tags.map((tag: string) => (
+                      <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
+                    ))}
+                  </ul>
                 ) : null}
+                <HorizontalRule />
               </div>
+              <Heading as="h3">Keep Reading</Heading>
+              <Row>
+                <Column xs={6}>
+                  <RelatedBlogPost post={props.pageContext.prev} type="prev" />
+                </Column>
+                <Column xs={6}>
+                  <RelatedBlogPost post={props.pageContext.next} type="next" />
+                </Column>
+              </Row>
               <HorizontalRule />
               <Heading as="h3">Comments</Heading>
               <DiscussionEmbed {...disqusConfig} />
@@ -95,7 +139,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   );
 };
 
-const BlogPost = ({ data }: { data: any }) => {
+const BlogPost = ({ data, pageContext }: { data: any; pageContext: any }) => {
   const { markdownRemark: post } = data;
 
   return (
@@ -108,6 +152,7 @@ const BlogPost = ({ data }: { data: any }) => {
       featuredimage={post.frontmatter.featuredimage}
       readingTime={post.fields.readingTime}
       description={post.frontmatter.description}
+      pageContext={pageContext}
     />
   );
 };
@@ -131,10 +176,10 @@ export const pageQuery = graphql`
         tags
         featuredimage {
           childImageSharp {
-            fluid(maxWidth: 2400, quality: 100) {
+            fluid(maxWidth: 2400, quality: 60) {
               ...GatsbyImageSharpFluid
             }
-            fixed(width: 1080, quality: 100) {
+            fixed(width: 1080, quality: 60) {
               ...GatsbyImageSharpFixed
             }
           }

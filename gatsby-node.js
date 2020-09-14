@@ -27,16 +27,29 @@ exports.createPages = ({ actions, graphql }) => {
 
   return graphql(`
     {
-      allMarkdownRemark(limit: 1000) {
+      allMarkdownRemark(sort: { order: ASC, fields: [frontmatter___date] }) {
         edges {
           node {
             id
             fields {
               slug
+              readingTime {
+                text
+              }
             }
             frontmatter {
               tags
               templateKey
+              title
+              date(formatString: "MMMM DD, YYYY")
+              description
+              featuredimage {
+                childImageSharp {
+                  fluid(maxWidth: 400, quality: 60) {
+                    src
+                  }
+                }
+              }
             }
           }
         }
@@ -51,13 +64,18 @@ exports.createPages = ({ actions, graphql }) => {
         return Promise.reject(result.errors);
       }
 
-      const posts = result.data.allMarkdownRemark.edges;
+      const nonBlogPosts = result.data.allMarkdownRemark.edges.filter(
+        (p) => p.node.frontmatter.templateKey !== 'blog-post'
+      );
 
-      posts.forEach((edge) => {
+      const blogPosts = result.data.allMarkdownRemark.edges.filter(
+        (p) => p.node.frontmatter.templateKey === 'blog-post'
+      );
+
+      nonBlogPosts.forEach((edge) => {
         const { id } = edge.node;
         createPage({
           path: edge.node.fields.slug,
-          tags: edge.node.frontmatter.tags,
           component: path.resolve(`src/templates/${String(edge.node.frontmatter.templateKey)}.tsx`),
           // additional data can be passed via context
           context: {
@@ -66,10 +84,24 @@ exports.createPages = ({ actions, graphql }) => {
         });
       });
 
+      blogPosts.forEach((edge, index) => {
+        const { id } = edge.node;
+        createPage({
+          path: edge.node.fields.slug,
+          component: path.resolve(`src/templates/blog-post.tsx`),
+          // additional data can be passed via context
+          context: {
+            id,
+            prev: index === 0 ? blogPosts[blogPosts.length - 1].node : blogPosts[index - 1].node,
+            next: index === blogPosts.length - 1 ? blogPosts[0].node : blogPosts[index + 1].node,
+          },
+        });
+      });
+
       // Tag pages:
       let tags = [];
       // Iterate through each post, putting all found tags into `tags`
-      posts.forEach((edge) => {
+      blogPosts.forEach((edge) => {
         if (_.get(edge, 'node.frontmatter.tags')) {
           tags = tags.concat(edge.node.frontmatter.tags);
         }

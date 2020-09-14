@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 
 import { brandPrimary, white, brandPrimaryHover } from '../styles/color';
-import { doubleSpacer, quarterSpacer, halfSpacer, baseSpacer } from '../styles/size';
+import { doubleSpacer, quarterSpacer, baseSpacer } from '../styles/size';
 import { fontSizeSmall } from '../styles/typography';
 
 type PillProps = {
@@ -14,30 +14,35 @@ type PillProps = {
 const StyledPill = styled.li`
   list-style: none;
   display: inline-block;
+  padding: ${quarterSpacer} ${baseSpacer};
+  background-color: ${brandPrimary};
+  border-radius: ${doubleSpacer};
+  margin: ${quarterSpacer};
+  transition: all 0.2s ease-in-out;
 
-  & + & {
-    margin-left: ${halfSpacer};
+  &:hover {
+    background-color: ${brandPrimaryHover};
   }
 `;
 
 const StyledLink = styled(Link)`
-  background-color: ${brandPrimary};
-  border-radius: ${doubleSpacer};
-  padding: ${quarterSpacer} ${baseSpacer};
+  display: block;
   color: ${white};
   font-size: ${fontSizeSmall};
+  transition: all 0.2s ease-in-out;
 
   &:hover,
   &:focus {
     color: ${white};
-    background-color: ${brandPrimaryHover};
   }
 `;
 
 const Pill: FunctionComponent<PillProps> = (props) => {
   return (
     <StyledPill>
-      <StyledLink to={props.to}>{props.text}</StyledLink>
+      <small>
+        <StyledLink to={props.to}>{props.text}</StyledLink>
+      </small>
     </StyledPill>
   );
 };

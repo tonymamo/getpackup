@@ -1,8 +1,6 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
-import addToMailchimp, { MailchimpResponse } from 'gatsby-plugin-mailchimp';
-import { Formik, Form, Field } from 'formik';
 import Typewriter from 'typewriter-effect';
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import styled, { keyframes } from 'styled-components';
@@ -10,21 +8,19 @@ import Carousel from 'react-bootstrap/Carousel';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 import {
-  Alert,
   Seo,
   HeroImage,
-  Input,
+  SignupForm,
   Button,
   PageContainer,
   Row,
   Column,
   Heading,
   FlexContainer,
-  Box,
   Testimonial,
   ClientOnly,
 } from '../components';
-import { requiredEmail, requiredField } from '../utils/validations';
+import BlogRoll from './BlogRoll';
 import {
   textColor,
   white,
@@ -195,15 +191,8 @@ const CarouselWrapper = styled.div`
 `;
 
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
-  const [response, setResponse] = useState({ msg: '', result: '' });
   const size = useWindowSize();
   const isLargeScreen = Boolean(size && size.width && size.width > screenSizes.large);
-  const initialValues = { fname: '', lname: '', email: '' };
-
-  const getTextFromHtmlString = (s: string) => s.replace(/<.*?>*<\/.*?>/g, '');
-  const getHrefFromHtmlString = (s: string) => s.match(/href="([^"]*)/)?.[1];
-  const getLinkTextFromHtmlString = (s: string) => s.replace(/.*<.*?>(.*)<\/.*?>/g, '$1');
-  const error = response.result === 'error';
 
   return (
     <>
@@ -238,6 +227,12 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <Heading as="h1" align="center" inverse noMargin>
             {props.mainpitch.heading}
           </Heading>
+          <p>{props.signupform.text}</p>
+          <Row>
+            <Column md={8} mdOffset={2}>
+              <SignupForm location="homepage-header" />
+            </Column>
+          </Row>
         </PageContainer>
       </Section>
       <Section backgroundColor={white}>
@@ -296,96 +291,11 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxBackground bgImage={collage} />
         </ClientOnly>
       )}
-      <Section
-        backgroundColor={white}
-        id="signup"
-        style={{
-          backgroundImage: `url("${props.signupform.bgImage.childImageSharp.fluid.src}")`,
-          backgroundSize: 500,
-        }}
-      >
-        <PageContainer>
-          <Row>
-            <Column md={6} mdOffset={3}>
-              <Box>
-                <Heading>{props.signupform.heading}</Heading>
-                <p>{props.signupform.text}</p>
-                <Formik
-                  validateOnMount
-                  initialValues={initialValues}
-                  onSubmit={(values, { setSubmitting }) => {
-                    addToMailchimp(values.email, {
-                      FNAME: values.fname,
-                      LNAME: values.lname,
-                    }).then((res: MailchimpResponse) => {
-                      setSubmitting(false);
-                      setResponse(res);
-                      window.analytics.track('Signed Up For Newsletter', {
-                        firstName: values.fname,
-                        lastName: values.lname,
-                        email: values.email,
-                        response: res,
-                      });
-                    });
-                  }}
-                >
-                  {({ isSubmitting, isValid }) => (
-                    <Form>
-                      <Row>
-                        <Column sm={6}>
-                          <Field
-                            as={Input}
-                            type="text"
-                            name="fname"
-                            label="First Name"
-                            required
-                            validate={requiredField}
-                          />
-                        </Column>
-                        <Column sm={6}>
-                          <Field
-                            as={Input}
-                            type="text"
-                            name="lname"
-                            label="Last Name"
-                            required
-                            validate={requiredField}
-                          />
-                        </Column>
-                      </Row>
-                      <Field
-                        as={Input}
-                        type="email"
-                        name="email"
-                        label="Email"
-                        required
-                        validate={requiredEmail}
-                      />
-                      {response.msg ? (
-                        <Alert
-                          type={error ? 'danger' : 'success'}
-                          message={error ? getTextFromHtmlString(response.msg) : response.msg}
-                          callToActionLink={error ? getHrefFromHtmlString(response.msg) : undefined}
-                          callToActionLinkText={
-                            error ? getLinkTextFromHtmlString(response.msg) : undefined
-                          }
-                        />
-                      ) : (
-                        <Button type="submit" block disabled={isSubmitting || !isValid}>
-                          Submit
-                        </Button>
-                      )}
-                    </Form>
-                  )}
-                </Formik>
-              </Box>
-            </Column>
-          </Row>
-        </PageContainer>
-      </Section>
       <div style={{ backgroundColor: lightestGray, padding: `${doubleSpacer} 0` }}>
         <PageContainer>
-          <Heading align="center">Word on the trail about packup</Heading>
+          <Heading align="center" as="h3">
+            Word on the trail about packup
+          </Heading>
           <CarouselWrapper>
             <Carousel
               fade
@@ -401,6 +311,14 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </CarouselWrapper>
         </PageContainer>
       </div>
+      <Section style={{ textAlign: 'left' }}>
+        <PageContainer>
+          <Heading as="h3" align="center">
+            Latest Stories
+          </Heading>
+          <BlogRoll count={3} />
+        </PageContainer>
+      </Section>
     </>
   );
 };
@@ -435,14 +353,14 @@ export const pageQuery = graphql`
         title
         heroImage {
           childImageSharp {
-            fluid(maxWidth: 2048, quality: 100) {
+            fluid(maxWidth: 2048, quality: 60) {
               ...GatsbyImageSharpFluid
             }
           }
         }
         mobileHeroImage {
           childImageSharp {
-            fluid(maxWidth: 768, quality: 100) {
+            fluid(maxWidth: 768, quality: 60) {
               ...GatsbyImageSharpFluid
             }
           }
@@ -460,7 +378,7 @@ export const pageQuery = graphql`
           text
           image {
             childImageSharp {
-              fluid(maxWidth: 1000, quality: 100) {
+              fluid(maxWidth: 1000, quality: 60) {
                 ...GatsbyImageSharpFluid
               }
             }
@@ -472,7 +390,7 @@ export const pageQuery = graphql`
           text
           image {
             childImageSharp {
-              fluid(maxWidth: 1000, quality: 100) {
+              fluid(maxWidth: 1000, quality: 60) {
                 ...GatsbyImageSharpFluid
               }
             }
@@ -484,7 +402,7 @@ export const pageQuery = graphql`
           text
           image {
             childImageSharp {
-              fluid(maxWidth: 1000, quality: 100) {
+              fluid(maxWidth: 1000, quality: 60) {
                 ...GatsbyImageSharpFluid
               }
             }
@@ -495,7 +413,7 @@ export const pageQuery = graphql`
           text
           bgImage {
             childImageSharp {
-              fluid(maxWidth: 1000, quality: 100) {
+              fluid(maxWidth: 1000, quality: 60) {
                 ...GatsbyImageSharpFluid
               }
             }
@@ -507,7 +425,7 @@ export const pageQuery = graphql`
           location
           avatar {
             childImageSharp {
-              fluid(maxWidth: 300, quality: 100) {
+              fluid(maxWidth: 300, quality: 60) {
                 ...GatsbyImageSharpFluid
               }
             }

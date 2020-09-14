@@ -5,7 +5,7 @@ declare module 'gatsby-plugin-mailchimp' {
   }
   export default function addToMailchimp(
     email: string,
-    fields: {
+    fields?: {
       [key: string]: string;
     },
     endpointOverride?: string

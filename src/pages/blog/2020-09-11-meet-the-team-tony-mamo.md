@@ -18,7 +18,7 @@ Meet Tony Mamo, one of the co-founders of packup. Tony is a senior software engi
 
 **Worst experience in the backcountry?**
 
-My wife, dog, and I set out to do a quick overnight along the Pacific Coast Trail in the Cascades. After hiking a few miles and setting up camp in the rain, we discovered that we forgot to bring our stove, and decided to hike back out to our van at the trailhead instead of spending a miserable, wet night in the tent. The last few miles we felt like we were being followed by _something_, so we picked up the pace while keeping an eye over our shoulder. Once back at the trailhead, as I turned to get into the van, my headlamp reflected off the eyes of a mountain lion standing right at the beginning of the trail we just got off.
+My wife, dog, and I set out to do a quick overnight along the Pacific Coast Trail in the Cascades. After hiking a few miles and setting up camp in the rain, we discovered that we forgot to bring our stove, and decided to hike back out to our van at the trailhead instead of spending a miserable, wet, and hungry night in the tent. The last few miles we felt like we were being followed by _something_, so we picked up the pace while keeping an eye over our shoulder. Once back at the trailhead, as I turned to get into the van, my headlamp reflected off the eyes of a mountain lion standing right at the beginning of the trail we just got off.
 
 **Would you rather camp on a beach or on a mountain?**
 
@@ -48,7 +48,7 @@ The year-long road trip I took in the van during 2017-18 with my wife and dog wa
 
 **What injustices in the world make you angry?**
 
-Climate change, unchecked capitalism, racial, gender, and social inequality... they are all linked together and it just baffles me that we haven't as a society figured out how to move past it and live our best lives together.
+Climate change, unchecked capitalism, racial, gender, economic, and social inequality... they are all linked together and it just baffles me that we haven't as a society figured out how to move past it and live our best lives together.
 
 **Is a hot dog a sandwich, and why?**
 

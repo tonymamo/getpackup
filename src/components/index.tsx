@@ -18,8 +18,10 @@ import NegativeMarginContainer from './NegativeMarginContainer';
 import PageContainer from './PageContainer';
 import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
+import RelatedBlogPost from './RelatedBlogPost';
 import Row from './Row';
 import Seo from './Seo';
+import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
 import Testimonial from './Testimonial';
 import Wave from './wave';
@@ -45,8 +47,10 @@ export {
   PageContainer,
   Pill,
   PreviewCompatibleImage,
+  RelatedBlogPost,
   Row,
   Seo,
+  SignupForm,
   SiteMetadata,
   Testimonial,
   Wave,
