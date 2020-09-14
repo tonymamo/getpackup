@@ -80,7 +80,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
         imageWidth={props.featuredimage.childImageSharp.fixed.width}
         imageHeight={props.featuredimage.childImageSharp.fixed.height}
       />
-      <HeroImage imgSrc={props.featuredimage.childImageSharp.fluid.src}>
+      <HeroImage imgSrc={props.featuredimage}>
         <Heading inverse>{props.title}</Heading>
       </HeroImage>
       <PageContainer withVerticalPadding>

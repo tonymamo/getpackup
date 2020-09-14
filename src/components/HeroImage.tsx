@@ -1,3 +1,4 @@
+import { FluidObject } from 'gatsby-image';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
@@ -8,8 +9,16 @@ import ClientOnly from './ClientOnly';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type FullBleedImageProps = {
-  imgSrc: string;
-  mobileImgSrc?: string;
+  imgSrc: {
+    childImageSharp: {
+      fluid: FluidObject;
+    };
+  };
+  mobileImgSrc?: {
+    childImageSharp: {
+      fluid: FluidObject;
+    };
+  };
 };
 
 const HeroImageWrapper = styled.div`

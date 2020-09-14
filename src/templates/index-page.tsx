@@ -197,10 +197,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
   return (
     <>
       <Seo title={props.title} />
-      <HeroImage
-        imgSrc={props.heroImage.childImageSharp.fluid.src}
-        mobileImgSrc={props.mobileHeroImage.childImageSharp.fluid.src}
-      >
+      <HeroImage imgSrc={props.heroImage} mobileImgSrc={props.mobileHeroImage}>
         <PageContainer>
           <Heading inverse align="center" noMargin>
             <TypewriterWrapper>
