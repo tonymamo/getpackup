@@ -32,9 +32,7 @@ type RelatedPostType = {
     title: string;
     featuredimage: {
       childImageSharp: {
-        fluid: {
-          src: string;
-        };
+        fluid: FluidObject;
       };
     };
   };
@@ -42,8 +40,8 @@ type RelatedPostType = {
 
 type BlogPostProps = {
   pageContext: {
-    next?: RelatedPostType;
-    prev?: RelatedPostType;
+    next: RelatedPostType;
+    prev: RelatedPostType;
   };
   content: any;
   contentComponent: any;

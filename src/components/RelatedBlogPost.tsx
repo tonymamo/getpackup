@@ -1,11 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'gatsby';
-
-import PreviewCompatibleImage from './PreviewCompatibleImage';
+import { FluidObject } from 'gatsby-image';
 
 type RelatedBlogPostProps = {
   type: 'next' | 'prev';
-  post?: {
+  post: {
     fields: {
       slug: string;
       readingTime: {
@@ -18,9 +17,7 @@ type RelatedBlogPostProps = {
       title: string;
       featuredimage: {
         childImageSharp: {
-          fluid: {
-            src: string;
-          };
+          fluid: FluidObject;
         };
       };
     };
@@ -30,24 +27,16 @@ type RelatedBlogPostProps = {
 const RelatedBlogPost: FunctionComponent<RelatedBlogPostProps> = (props) => {
   return (
     <>
-      {props.post && (
-        <>
-          <Link to={props.post.fields.slug}>
-            <PreviewCompatibleImage
-              imageInfo={{
-                image: props.post.frontmatter.featuredimage,
-                alt: `featured image thumbnail for post ${props.post.frontmatter.title}`,
-              }}
-            />
-          </Link>
-
-          <small>{props.post.frontmatter.date}</small>
-
-          <p>
-            <Link to={props.post.fields.slug}>{props.post.frontmatter.title}</Link>
-          </p>
-        </>
-      )}
+      <Link to={props.post.fields.slug}>
+        <img
+          src={props.post.frontmatter.featuredimage.childImageSharp.fluid.src}
+          alt={`featured thumbnail for post ${props.post.frontmatter.title}`}
+        />
+      </Link>
+      <small>{props.post.frontmatter.date}</small>
+      <p>
+        <Link to={props.post.fields.slug}>{props.post.frontmatter.title}</Link>
+      </p>
     </>
   );
 };
