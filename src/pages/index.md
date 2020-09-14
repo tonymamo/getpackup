@@ -43,7 +43,7 @@ thirdpitch:
 signupform:
   bgImage: /img/topo.png
   heading: Be the first to know when packup is live
-  text: Enter your email to get periodic updates about Packup
+  text: Enter your email to get periodic updates about packup
 testimonials:
   - quote: This app is going to be a game changer. I can't wait to use it on
       upcoming hiking trips!
