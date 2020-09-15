@@ -185,6 +185,20 @@ collections:
             }
           - { label: Title, name: title, widget: string }
           - { label: Body, name: body, widget: markdown }
+          - { label: HeroImage, name: heroImage, widget: image }
+      - file: "src/pages/contact.md"
+        label: "Contact"
+        name: "contact"
+        fields:
+          - {
+              label: "Template Key",
+              name: "templateKey",
+              widget: "hidden",
+              default: "contact-page",
+            }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+          - { label: HeroImage, name: heroImage, widget: image }
       - file: "src/pages/terms.md"
         label: "Terms"
         name: "terms"

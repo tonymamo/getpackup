@@ -18,7 +18,7 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: "#learn-more"
+heroCTALink: '#learn-more'
 heroCTAText: Sign Up
 mainpitch:
   image: /img/Screen Shot 2020-09-08 at 1.17.18 PM.png

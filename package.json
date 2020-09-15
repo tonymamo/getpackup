@@ -123,7 +123,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
-    "start": "npm run develop",
+    "start": "gatsby clean && npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "jest",

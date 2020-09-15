@@ -98,7 +98,7 @@ export default (props: { count?: number }) => (
                 featuredimage {
                   childImageSharp {
                     fluid(maxWidth: 400, quality: 60) {
-                      ...GatsbyImageSharpFluid
+                      ...GatsbyImageSharpFluid_withWebp
                     }
                   }
                 }

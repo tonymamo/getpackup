@@ -242,7 +242,10 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               </FlexContainer>
             </Column>
             <Column sm={6} md={3} mdOffset={2}>
-              <SectionImage src={props.mainpitch.image.childImageSharp.fluid.src} alt="" />
+              <SectionImage
+                src={props.mainpitch.image.childImageSharp.fluid.src}
+                alt="mockup of packup app on iphone"
+              />
             </Column>
           </Row>
         </PageContainer>
@@ -252,7 +255,10 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
         <PageContainer>
           <Row>
             <Column sm={6} xsOrder={2} smOrder={1}>
-              <SectionImage src={props.secondpitch.image.childImageSharp.fluid.src} alt="" />
+              <SectionImage
+                src={props.secondpitch.image.childImageSharp.fluid.src}
+                alt="mockup of packup app on two iphones"
+              />
             </Column>
             <Column sm={6} xsOrder={1} smOrder={2}>
               <FlexContainer flexDirection="column" justifyContent="center" height="100%">
@@ -278,7 +284,10 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               </FlexContainer>
             </Column>
             <Column sm={6}>
-              <SectionImage src={props.thirdpitch.image.childImageSharp.fluid.src} alt="" />
+              <SectionImage
+                src={props.thirdpitch.image.childImageSharp.fluid.src}
+                alt="mockup of packup app on two iphones"
+              />
             </Column>
           </Row>
         </PageContainer>
@@ -351,14 +360,14 @@ export const pageQuery = graphql`
         heroImage {
           childImageSharp {
             fluid(maxWidth: 2048, quality: 60) {
-              ...GatsbyImageSharpFluid
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
         mobileHeroImage {
           childImageSharp {
             fluid(maxWidth: 768, quality: 60) {
-              ...GatsbyImageSharpFluid
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
@@ -376,7 +385,7 @@ export const pageQuery = graphql`
           image {
             childImageSharp {
               fluid(maxWidth: 1200, quality: 90) {
-                ...GatsbyImageSharpFluid
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -388,7 +397,7 @@ export const pageQuery = graphql`
           image {
             childImageSharp {
               fluid(maxWidth: 1200, quality: 90) {
-                ...GatsbyImageSharpFluid
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -400,7 +409,7 @@ export const pageQuery = graphql`
           image {
             childImageSharp {
               fluid(maxWidth: 1200, quality: 90) {
-                ...GatsbyImageSharpFluid
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -411,7 +420,7 @@ export const pageQuery = graphql`
           bgImage {
             childImageSharp {
               fluid(maxWidth: 1000, quality: 60) {
-                ...GatsbyImageSharpFluid
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -423,7 +432,7 @@ export const pageQuery = graphql`
           avatar {
             childImageSharp {
               fluid(maxWidth: 300, quality: 60) {
-                ...GatsbyImageSharpFluid
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }

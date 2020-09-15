@@ -27,7 +27,7 @@ const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
       validateOnMount
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
-        addToMailchimp(values.email).then((res: MailchimpResponse) => {
+        addToMailchimp(values[`email-${props.location}`]).then((res: MailchimpResponse) => {
           setSubmitting(false);
           setResponse(res);
           window.analytics.track('Signed Up For Newsletter', {

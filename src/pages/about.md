@@ -2,7 +2,7 @@
 templateKey: about-page
 path: /about
 title: Our Story
-heroImage: /img/mountains_day.jpg
+heroImage: /img/mountains_day.webp
 ---
 
 ## Where did the idea for packup come from?

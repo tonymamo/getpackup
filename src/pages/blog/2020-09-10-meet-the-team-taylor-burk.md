@@ -1,23 +1,24 @@
 ---
 templateKey: blog-post
-title: "Meet The Team - Taylor Burk "
+title: 'Meet The Team - Taylor Burk '
 date: 2020-09-10T19:45:07.805Z
-description: "A brief introduction to our team members. "
+description: 'A brief introduction to our team members. '
 featuredpost: true
-featuredimage: /img/j_kelsey_20191023_0625-2.jpg
+featuredimage: /img/j_kelsey_20191023_0625-2.webp
 tags:
   - Taylor Burk
   - meet the team
   - owners
   - packup
 ---
+
 Meet Taylor Burk, one of the co-founders of packup. Taylor is a full-time professional photographer in the outdoor adventure & travel space. Utilizing Instagram as a way to market himself, he has been able to gain popularity and secure many sponsors and clients from around the world. His work is not only a representation of his skill, but a testament to the deep affinity for nature he possesses. When he’s not traversing the globe, Burk keeps busy exploring his new home of Gibsons, British Columbia.
 
-![](/img/laventa-chrisbrinleejr-apr19-12.jpg)
+![](/img/laventa-chrisbrinleejr-apr19-12.webp)
 
 **Worst experience in the backcountry?**
 
-I’m not going to get into too much detail, I'll let your imagination wander but it involves rock climbing in Mexico, montezuma's revenge and sudden bowel movements which led to a very uncomfortable but memorable experience on a wall. If you're entertained by poo stories I'd be more than happy to share the full story with you! 
+I’m not going to get into too much detail, I'll let your imagination wander but it involves rock climbing in Mexico, montezuma's revenge and sudden bowel movements which led to a very uncomfortable but memorable experience on a wall. If you're entertained by poo stories I'd be more than happy to share the full story with you!
 
 **Would you rather camp on a beach or on a mountain?**
 
@@ -29,13 +30,13 @@ During the lockdown I have learned how to be more vulnerable and open up more. I
 
 **If you could camp anywhere in the world next weekend where would you go?**
 
-Socotra Island, Yemen. It’s like something out of a Dr. Seuss book. Seriously, Google it. I've never seen anything like it before and would love to visit. 
+Socotra Island, Yemen. It’s like something out of a Dr. Seuss book. Seriously, Google it. I've never seen anything like it before and would love to visit.
 
 **What are your favourite outdoor activities?**
 
-Backpacking, Biking, Backcountry skiing, Climbing, Running (love/hate), Hiking, Paddling. Pretty much anything that keeps me active and provides a challenge. 
+Backpacking, Biking, Backcountry skiing, Climbing, Running (love/hate), Hiking, Paddling. Pretty much anything that keeps me active and provides a challenge.
 
-![](/img/chamonix-chrisbrinleejr-sep17-78.jpg)
+![](/img/chamonix-chrisbrinleejr-sep17-78.webp)
 
 **What is one item that you couldn't live without?**
 
@@ -51,7 +52,7 @@ Inequality, across the board. Why can't we all just get along?
 
 **Is a hot dog a sandwich, and why?**
 
-It could be a cousin of the sandwich for sure, it's in the same family group. Same, same but different. 
+It could be a cousin of the sandwich for sure, it's in the same family group. Same, same but different.
 
 **What is your biggest dream in life?**
 
@@ -59,7 +60,7 @@ To be successful enough to easily and consistently spend quality time outdoors a
 
 **What motivates you to work hard?**
 
-I am the most driven when it comes to creating or building things that I am passionate about. Anything that will make life better for the people around me and myself. 
+I am the most driven when it comes to creating or building things that I am passionate about. Anything that will make life better for the people around me and myself.
 
 **Was the outdoor lifestyle something that you grew up in or was it discovered?**
 

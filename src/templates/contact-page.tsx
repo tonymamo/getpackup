@@ -1,7 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { FaCaretRight } from 'react-icons/fa';
+import { graphql } from 'gatsby';
+import { FluidObject } from 'gatsby-image';
 
+import Content, { HTMLContent } from '../components/Content';
 import {
   HeroImage,
   Row,
@@ -15,11 +18,15 @@ import {
   Alert,
 } from '../components';
 import { requiredEmail, requiredField } from '../utils/validations';
-import image from '../images/FemaleRockclimberLookingBackAtDaybreak copy.jpg';
 
-type ContactProps = {};
+type ContactProps = {
+  title: string;
+  content: any;
+  contentComponent: typeof HTMLContent;
+  heroImage: { childImageSharp: { fluid: FluidObject } };
+};
 
-const Contact: FunctionComponent<ContactProps> = () => {
+export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
   const [sent, setSent] = useState(false);
   const initialValues = {
     email: '',
@@ -27,6 +34,8 @@ const Contact: FunctionComponent<ContactProps> = () => {
     lastName: '',
     message: '',
   };
+
+  const PageContent = props.contentComponent || Content;
 
   const encode = (data: { [key: string]: string | boolean }) => {
     return Object.keys(data)
@@ -36,23 +45,19 @@ const Contact: FunctionComponent<ContactProps> = () => {
 
   return (
     <>
-      <HeroImage imgSrc={image}>
+      <HeroImage imgSrc={props.heroImage}>
         <PageContainer>
           <Heading as="h1" inverse align="center">
-            Contact Us
+            {props.title}
           </Heading>
         </PageContainer>
       </HeroImage>
       <PageContainer withVerticalPadding>
-        <Seo title="Contact Us" />
+        <Seo title={props.title} />
         <Row>
           <Column md={6} mdOffset={3}>
             <Box>
-              <Heading>Send a Message</Heading>
-              <p>
-                Have a question about the product we are building, or just want to get in touch?
-                Leave us a line!
-              </p>
+              <PageContent content={props.content} />
               {sent && <Alert type="success" message="Thanks, we will get back to ya soon!" />}
               <Formik
                 validateOnMount
@@ -137,4 +142,39 @@ const Contact: FunctionComponent<ContactProps> = () => {
   );
 };
 
-export default Contact;
+const ContactPage = ({
+  data,
+}: {
+  data: { markdownRemark: { frontmatter: ContactProps; html: any } };
+}) => {
+  const { markdownRemark: post } = data;
+
+  return (
+    <ContactPageTemplate
+      contentComponent={HTMLContent}
+      title={post.frontmatter.title}
+      heroImage={post.frontmatter.heroImage}
+      content={post.html}
+    />
+  );
+};
+
+export default ContactPage;
+
+export const contactPageQuery = graphql`
+  query ContactPage {
+    markdownRemark(frontmatter: { templateKey: { eq: "contact-page" } }) {
+      html
+      frontmatter {
+        title
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 2048, quality: 60) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    }
+  }
+`;
