@@ -45,6 +45,7 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => (
     src={props.src || profilePic}
     size={props.size || 'sm'}
     bottomMargin={props.bottomMargin || false}
+    alt="user profile picture"
   />
 );
 

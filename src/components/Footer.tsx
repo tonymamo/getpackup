@@ -13,6 +13,7 @@ import Heading from './Heading';
 import { brandPrimary, brandSecondary, white } from '../styles/color';
 import { quadrupleSpacer, baseSpacer, doubleSpacer } from '../styles/size';
 import { fontSizeSmall } from '../styles/typography';
+import { visuallyHiddenStyle } from '../styles/mixins';
 import SignupForm from './SignupForm';
 
 const StyledFooter = styled.footer`
@@ -34,6 +35,10 @@ const StyledFooter = styled.footer`
 
 const Social = styled.a`
   margin-right: ${baseSpacer};
+`;
+
+const HiddenText = styled.span`
+  ${visuallyHiddenStyle};
 `;
 
 const SignupFormWrapper = styled.div`
@@ -66,7 +71,7 @@ const Footer = () => (
           </Column>
           <Column sm={4} md={3} lg={2}>
             <p>
-              <Link to="/">Learn More</Link>
+              <Link to="/">Home</Link>
             </p>
             <p>
               <Link to="/#learn-more">Sign Up</Link>
@@ -92,14 +97,17 @@ const Footer = () => (
         <HorizontalRule />
         <FlexContainer justifyContent="space-between">
           <nav>
-            <Social href="https://www.facebook.com/getpackup" target="_blank">
-              <FaFacebook />
-            </Social>
-            <Social href="https://twitter.com/getpackup" target="_blank">
-              <FaTwitter />
-            </Social>
-            <Social href="https://www.instagram.com/getpackup/" target="_blank">
+            <Social href="https://www.instagram.com/getpackup/" target="_blank" rel="noopener">
               <FaInstagram />
+              <HiddenText>Instagram</HiddenText>
+            </Social>
+            <Social href="https://www.facebook.com/getpackup" target="_blank" rel="noopener">
+              <FaFacebook />
+              <HiddenText>Facebook</HiddenText>
+            </Social>
+            <Social href="https://twitter.com/getpackup" target="_blank" rel="noopener">
+              <FaTwitter />
+              <HiddenText>Twitter</HiddenText>
             </Social>
           </nav>
           <small>{`Copyright © Packup ${new Date().getFullYear()}`}</small>

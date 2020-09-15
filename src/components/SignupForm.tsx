@@ -16,7 +16,7 @@ type SignupFormProps = {
 
 const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
   const [response, setResponse] = useState({ msg: '', result: '' });
-  const initialValues = { email: '' };
+  const initialValues = { [`email-${props.location}`]: '' };
 
   const getTextFromHtmlString = (s: string) => s.replace(/<.*?>*<\/.*?>/g, '');
   const getHrefFromHtmlString = (s: string) => s.match(/href="([^"]*)/)?.[1];
@@ -31,7 +31,7 @@ const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
           setSubmitting(false);
           setResponse(res);
           window.analytics.track('Signed Up For Newsletter', {
-            email: values.email,
+            email: values[`email-${props.location}`],
             response: res,
             location: props.location,
           });
@@ -46,7 +46,7 @@ const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
                 as={Input}
                 hideLabel
                 type="email"
-                name="email"
+                name={`email-${props.location}`}
                 label="Email"
                 validate={requiredEmail}
               />

@@ -17,12 +17,12 @@
  * © 2020 MyFonts Inc
 */
 
-
 /* @import must be at top of file, otherwise CSS will not work */
-@import url("//hello.myfonts.net/count/3c21fd");
-  
+@import url('//hello.myfonts.net/count/3c21fd');
+
 @font-face {
   font-family: 'GlamourAbsolute-regular';
-  src: url('../fonts/GlamourAbsolute-regular/font.woff2') format('woff2'), url('../fonts/GlamourAbsolute-regular/font.woff') format('woff');
+  font-display: swap;
+  src: url('../fonts/GlamourAbsolute-regular/font.woff2') format('woff2'),
+    url('../fonts/GlamourAbsolute-regular/font.woff') format('woff');
 }
-
