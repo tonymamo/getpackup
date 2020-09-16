@@ -4,7 +4,7 @@ title: Where We Are Now - September 2020
 date: 2020-09-09T22:41:35.634Z
 description: 'Some insight to where we are as a company right now. '
 featuredpost: true
-featuredimage: /img/044a9077-2-2.webp
+featuredimage: /img/044a9077-2-2.jpg
 tags:
   - product
   - update

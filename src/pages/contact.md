@@ -2,7 +2,7 @@
 templateKey: contact-page
 path: /contact
 title: Contact Us
-heroImage: /img/FemaleRockclimberLookingBackAtDaybreak copy.webp
+heroImage: /img/FemaleRockclimberLookingBackAtDaybreak copy.jpg
 ---
 
 ## Send a Message

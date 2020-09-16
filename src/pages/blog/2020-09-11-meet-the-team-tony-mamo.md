@@ -4,7 +4,7 @@ title: 'Meet The Team - Tony Mamo '
 date: 2020-09-10T23:11:13.862Z
 description: 'A brief introduction to our team members. '
 featuredpost: true
-featuredimage: /img/tony.webp
+featuredimage: /img/tony.jpg
 tags:
   - Tony Mamo
   - meet the team
@@ -14,7 +14,7 @@ tags:
 
 Meet Tony Mamo, one of the co-founders of packup. Tony is a senior software engineer, designer, and outdoors enthusiast. A self-taught developer, he started out freelancing and eventually landed at a Fortune 10 company. After realizing the corporate life wasn't for him, he has since worked at several startups, working remotely, where he really found his ideal work-life balance. He enjoys the flexibility of being able to work from anywhere, which enabled him to spend a year on the road in a Sprinter van with his wife and dog, exploring all over North America. He has since settled down in Michigan, but is always dreaming up new travel locations, and is currently building out a cargo trailer as his next off-grid adventure vehicle.
 
-![](/img/20170827-dsc_0614.webp)
+![](/img/20170827-dsc_0614.jpeg)
 
 **Worst experience in the backcountry?**
 
@@ -44,7 +44,7 @@ No matter what the objective or trip is, I always end up with some sort of stash
 
 The year-long road trip I took in the van during 2017-18 with my wife and dog was the best thing I've ever done. I was able to work remotely the whole time, but basically live like a retired person and do what I loved when I wasn't working. Being able to finish up a day of work and then step outside to go explore all over the US and Canada to places I had never been was so amazing. It was truly the most free I've ever felt!
 
-![](/img/tonysvan.webp)
+![](/img/tonysvan.jpg)
 
 **What injustices in the world make you angry?**
 
