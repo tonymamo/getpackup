@@ -82,6 +82,7 @@ const CssReset = createGlobalStyle`
     margin-bottom: ${halfSpacer};
     color: ${headingsColor};
     font-family: ${headingsFontFamily};
+    text-rendering: geometricPrecision;
   }
 
   p {

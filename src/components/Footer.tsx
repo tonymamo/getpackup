@@ -50,7 +50,7 @@ const Footer = () => (
   <>
     <SignupFormWrapper id="signup">
       <PageContainer>
-        <Heading as="h5" inverse align="center">
+        <Heading as="h1" inverse align="center">
           Sign up for the newsletter
         </Heading>
         <Row>

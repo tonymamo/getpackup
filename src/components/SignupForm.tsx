@@ -53,7 +53,7 @@ const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
             </Column>
             <Column sm={4}>
               <Button color="secondary" type="submit" block disabled={isSubmitting || !isValid}>
-                Send
+                Subscribe
               </Button>
             </Column>
           </Row>

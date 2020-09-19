@@ -1,11 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import { Link, graphql } from 'gatsby';
+import { FluidObject } from 'gatsby-image';
 
 import { PageContainer, Box, Heading, Seo, HeroImage } from '../components';
-import image from '../images/TeslaLakeFloatPlane_TaylorBurk14.jpg';
 
 type TagRouteProps = {
   data: {
+    markdownRemark: {
+      frontmatter: {
+        heroImage: { childImageSharp: { fluid: FluidObject } };
+      };
+    };
     allMarkdownRemark: {
       totalCount: number;
       edges: Array<{
@@ -43,7 +48,7 @@ const TagRoute: FunctionComponent<TagRouteProps> = ({ data, pageContext }) => {
 
   return (
     <>
-      <HeroImage imgSrc={image}>
+      <HeroImage imgSrc={data.markdownRemark.frontmatter.heroImage}>
         <PageContainer>
           <Heading as="h1" inverse align="center">
             Posts tagged {tag}
@@ -81,6 +86,17 @@ export const tagPageQuery = graphql`
           }
           frontmatter {
             title
+          }
+        }
+      }
+    }
+    markdownRemark(frontmatter: { templateKey: { eq: "tags-index-page" } }) {
+      frontmatter {
+        heroImage {
+          childImageSharp {
+            fluid(maxWidth: 2048, quality: 60) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
           }
         }
       }

@@ -19,6 +19,7 @@ import {
   FlexContainer,
   Testimonial,
   ClientOnly,
+  PreviewCompatibleImage,
 } from '../components';
 import BlogRoll from './BlogRoll';
 import {
@@ -29,7 +30,13 @@ import {
   brandTertiary,
   lightestGray,
 } from '../styles/color';
-import { screenSizes, quadrupleSpacer, breakpoints, doubleSpacer } from '../styles/size';
+import {
+  screenSizes,
+  quadrupleSpacer,
+  breakpoints,
+  doubleSpacer,
+  baseSpacer,
+} from '../styles/size';
 import collage from '../images/Outdoorsman_Collage copy.jpg';
 import waveBismark from '../images/wave-bismark.svg';
 import waveDownriver from '../images/wave-downriver.svg';
@@ -103,6 +110,14 @@ const Section = styled.section`
   position: relative;
   color: ${(props) => (props.inverse ? white : textColor)};
 
+  & h3:after {
+    content: '';
+    border-bottom: 2px solid ${brandPrimary};
+    width: 80%;
+    margin: ${baseSpacer} auto;
+    display: block;
+  }
+
   @media only screen and (min-width: ${breakpoints.sm}) {
     padding: ${quadrupleSpacer} 0;
   }
@@ -175,8 +190,8 @@ const WavesAnimation = styled.div`
   }
 `;
 
-const SectionImage = styled.img`
-  max-height: 300px;
+const SectionImageWrapper = styled.div`
+  max-height: 450px;
   margin-bottom: ${doubleSpacer};
 
   @media only screen and (min-width: ${breakpoints.sm}) {
@@ -221,7 +236,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
       </HeroImage>
       <Section backgroundColor={brandPrimary} id="learn-more" inverse>
         <PageContainer>
-          <Heading as="h1" align="center" inverse noMargin>
+          <Heading as="h2" align="center" inverse noMargin>
             {props.mainpitch.heading}
           </Heading>
           <p>{props.signupform.text}</p>
@@ -241,11 +256,15 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                 <p>{props.mainpitch.text}</p>
               </FlexContainer>
             </Column>
-            <Column sm={6} md={3} mdOffset={2}>
-              <SectionImage
-                src={props.mainpitch.image.childImageSharp.fluid.src}
-                alt="mockup of packup app on iphone"
-              />
+            <Column xs={6} xsOffset={3} sm={4} smOffset={1} md={3} mdOffset={2}>
+              <SectionImageWrapper>
+                <PreviewCompatibleImage
+                  imageInfo={{
+                    image: props.mainpitch.image,
+                    alt: 'mockup of packup app on iphone',
+                  }}
+                />
+              </SectionImageWrapper>
             </Column>
           </Row>
         </PageContainer>
@@ -255,10 +274,14 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
         <PageContainer>
           <Row>
             <Column sm={6} xsOrder={2} smOrder={1}>
-              <SectionImage
-                src={props.secondpitch.image.childImageSharp.fluid.src}
-                alt="mockup of packup app on two iphones"
-              />
+              <SectionImageWrapper>
+                <PreviewCompatibleImage
+                  imageInfo={{
+                    image: props.secondpitch.image,
+                    alt: 'mockup of packup app on iphone',
+                  }}
+                />
+              </SectionImageWrapper>
             </Column>
             <Column sm={6} xsOrder={1} smOrder={2}>
               <FlexContainer flexDirection="column" justifyContent="center" height="100%">
@@ -284,10 +307,14 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               </FlexContainer>
             </Column>
             <Column sm={6}>
-              <SectionImage
-                src={props.thirdpitch.image.childImageSharp.fluid.src}
-                alt="mockup of packup app on two iphones"
-              />
+              <SectionImageWrapper>
+                <PreviewCompatibleImage
+                  imageInfo={{
+                    image: props.thirdpitch.image,
+                    alt: 'mockup of packup app on iphone',
+                  }}
+                />
+              </SectionImageWrapper>
             </Column>
           </Row>
         </PageContainer>
@@ -297,11 +324,15 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxBackground bgImage={collage} />
         </ClientOnly>
       )}
-      <div style={{ backgroundColor: lightestGray, padding: `${doubleSpacer} 0` }}>
+      <Section backgroundColor={lightestGray}>
         <PageContainer>
-          <Heading align="center" as="h3">
-            Word on the trail about packup
-          </Heading>
+          <Row>
+            <Column xs={6} xsOffset={3}>
+              <Heading align="center" as="h3">
+                Word on the trail about packup
+              </Heading>
+            </Column>
+          </Row>
           <CarouselWrapper>
             <Carousel
               fade
@@ -316,12 +347,16 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
             </Carousel>
           </CarouselWrapper>
         </PageContainer>
-      </div>
+      </Section>
       <Section style={{ textAlign: 'left' }}>
         <PageContainer>
-          <Heading as="h3" align="center">
-            Latest Stories
-          </Heading>
+          <Row>
+            <Column xs={6} xsOffset={3}>
+              <Heading as="h3" align="center">
+                Latest Stories
+              </Heading>
+            </Column>
+          </Row>
           <BlogRoll count={3} />
         </PageContainer>
       </Section>

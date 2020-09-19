@@ -86,7 +86,10 @@ module.exports = {
         background_color: '#0077CC',
         theme_color: '#0077CC',
         display: 'standalone',
-        icon: 'src/images/avatar.png', // This path is relative to the root of the site.
+        icon: 'src/images/maskable_icon.png', // This path is relative to the root of the site.
+        icon_options: {
+          purpose: `any maskable`,
+        },
       },
     },
     {

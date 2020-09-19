@@ -168,6 +168,7 @@ const allStyles = css`
   display: inline-flex;
   ${(props: ButtonProps) => props.block && 'width: 100%;'}
   font-family: ${fontFamilySansSerif};
+  font-weight: bold;
   font-size: ${fontSizeBase};
   justify-content: center;
   align-items: center;

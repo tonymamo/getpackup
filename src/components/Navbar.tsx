@@ -29,7 +29,6 @@ const StyledNavbar = styled.nav`
 
   & h1 a {
     font-family: ${headingsFontFamily};
-    letter-spacing: 1px;
     font-size: ${fontSizeSmall};
   }
 `;

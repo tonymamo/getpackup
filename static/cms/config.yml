@@ -199,6 +199,32 @@ collections:
           - { label: Title, name: title, widget: string }
           - { label: Body, name: body, widget: markdown }
           - { label: HeroImage, name: heroImage, widget: image }
+      - file: "src/pages/blog/index.md"
+        label: "Blog"
+        name: "blog"
+        fields:
+          - {
+              label: "Template Key",
+              name: "templateKey",
+              widget: "hidden",
+              default: "blog-index-page",
+            }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+          - { label: HeroImage, name: heroImage, widget: image }
+      - file: "src/pages/tags/index.md"
+        label: "Tags"
+        name: "tags"
+        fields:
+          - {
+              label: "Template Key",
+              name: "templateKey",
+              widget: "hidden",
+              default: "tags-index-page",
+            }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+          - { label: HeroImage, name: heroImage, widget: image }
       - file: "src/pages/terms.md"
         label: "Terms"
         name: "terms"

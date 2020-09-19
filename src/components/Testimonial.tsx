@@ -44,9 +44,9 @@ const Testimonial: FunctionComponent<TestimonialProps> = ({ testimonial }) => {
               </p>
               <div>
                 <FlexContainer justifyContent="start">
-                  <Avatar src={testimonial.avatar.childImageSharp.fluid.src} size="md" />
+                  <Avatar src={testimonial.avatar} size="md" />
                   <div style={{ marginLeft: baseSpacer }}>
-                    <Heading as="h6" noMargin>
+                    <Heading as="h4" noMargin>
                       {testimonial.author}
                     </Heading>
                     <p style={{ marginBottom: 0 }}>{testimonial.location}</p>

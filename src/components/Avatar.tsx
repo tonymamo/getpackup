@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import { FluidObject } from 'gatsby-image';
 
 import {
   baseSpacer,
@@ -9,9 +10,14 @@ import {
   quadrupleSpacer,
 } from '../styles/size';
 import profilePic from '../images/profile-pic.svg';
+import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type AvatarProps = {
-  src?: string;
+  src?:
+    | {
+        childImageSharp: { fluid: FluidObject };
+      }
+    | string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   bottomMargin?: boolean;
 };
@@ -32,8 +38,9 @@ const renderSize = (size: AvatarProps['size']) => {
   return doubleSpacer;
 };
 
-const AvatarImage = styled.img`
+const AvatarImageWrapper = styled.div`
   border-radius: 50%;
+  overflow: hidden;
   object-fit: cover;
   height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
   width: ${(props: AvatarProps) => props.size && renderSize(props.size)};
@@ -41,12 +48,14 @@ const AvatarImage = styled.img`
 `;
 
 const Avatar: FunctionComponent<AvatarProps> = (props) => (
-  <AvatarImage
-    src={props.src || profilePic}
-    size={props.size || 'sm'}
-    bottomMargin={props.bottomMargin || false}
-    alt="user profile picture"
-  />
+  <AvatarImageWrapper size={props.size || 'sm'} bottomMargin={props.bottomMargin || false}>
+    <PreviewCompatibleImage
+      imageInfo={{
+        image: props.src || profilePic,
+        alt: 'user profile picture',
+      }}
+    />
+  </AvatarImageWrapper>
 );
 
 export default Avatar;
