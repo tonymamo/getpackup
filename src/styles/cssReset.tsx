@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import {
   brandPrimary,
   brandPrimaryHover,
+  brandSecondary,
   textColor,
   headingsColor,
   lightGray,
@@ -74,7 +75,7 @@ const CssReset = createGlobalStyle`
     line-height: calc(16px + 1.05vw); /* Responsive Vertical Rhythm */
     color: ${textColor};
     overflow-x: hidden;
-    background-color: ${white};
+    background-color: ${brandSecondary};
   }
 
   h1, h2, h3, h4, h5, h6 {
