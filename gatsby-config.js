@@ -9,8 +9,8 @@ module.exports = {
     description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
     author: '@getpackup',
     url: 'https://getpackup.com',
-    image: '/img/collage.jpg', // Path to your image you placed in the 'static' folder
-
+    siteUrl: 'https://getpackup.com',
+    image: '/img/collage.jpg',
   },
   plugins: [
     'gatsby-plugin-typescript',
@@ -85,8 +85,8 @@ module.exports = {
         short_name: 'packup',
         lang: 'en',
         start_url: '/',
-        background_color: '#C46200',
-        theme_color: '#C46200',
+        background_color: '#f3f3f3',
+        theme_color: '#0E3757',
         display: 'standalone',
         icon: 'src/images/maskable_icon.png', // This path is relative to the root of the site.
         icon_options: {
