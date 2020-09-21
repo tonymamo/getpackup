@@ -12,7 +12,7 @@ import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
 
 type NavbarProps = {};
 
-const StyledNavbar = styled.nav`
+const StyledNavbar = styled.header`
   position: fixed;
   left: 0;
   right: 0;

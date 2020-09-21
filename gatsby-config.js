@@ -18,6 +18,8 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-eslint',
     'gatsby-plugin-smoothscroll',
+    'gatsby-plugin-advanced-sitemap',
+    'gatsby-plugin-robots-txt',
     {
       resolve: 'gatsby-plugin-hotjar-tracking',
       options: {
@@ -78,13 +80,13 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: 'packup: Adventure made easy',
+        name: 'packup',
         description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
         short_name: 'packup',
         lang: 'en',
         start_url: '/',
-        background_color: '#0077CC',
-        theme_color: '#0077CC',
+        background_color: '#C46200',
+        theme_color: '#C46200',
         display: 'standalone',
         icon: 'src/images/maskable_icon.png', // This path is relative to the root of the site.
         icon_options: {

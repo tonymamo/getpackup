@@ -125,6 +125,10 @@ const Seo: FunctionComponent<SeoType> = ({
           name: 'twitter:image',
           content: seo.image,
         },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'black-translucent',
+        },
       ].concat(meta || [])}
     />
   );

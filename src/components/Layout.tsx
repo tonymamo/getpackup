@@ -20,26 +20,28 @@ const LayoutWrapper = styled.div`
   overflow: hidden;
 `;
 
-const PageBody = styled.div`
+const PageBody = styled.main`
   flex: 1;
   margin-top: ${quadrupleSpacer};
-  background: url('${(props: { bgImg: string }) => props.bgImg}');
+  background: url('${topo}');
   background-size: 500px;
 `;
 
-type LayoutProps = { element: any };
+type LayoutProps = {};
 
-const Layout: FunctionComponent<LayoutProps> = ({ element }) => (
-  <>
-    <CssReset />
-    <IconContext.Provider value={{ style: { position: 'relative' } }}>
-      <LayoutWrapper>
-        <Navbar />
-        <PageBody bgImg={topo}>{element}</PageBody>
-        <Footer />
-      </LayoutWrapper>
-    </IconContext.Provider>
-  </>
-);
+const Layout: FunctionComponent<LayoutProps> = (props) => {
+  return (
+    <>
+      <CssReset />
+      <IconContext.Provider value={{ style: { position: 'relative' } }}>
+        <LayoutWrapper>
+          <Navbar />
+          <PageBody>{props.children}</PageBody>
+          <Footer />
+        </LayoutWrapper>
+      </IconContext.Provider>
+    </>
+  );
+};
 
 export default Layout;
