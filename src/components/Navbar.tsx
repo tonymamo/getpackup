@@ -18,7 +18,8 @@ const StyledNavbar = styled.header`
   right: 0;
   background: ${brandSecondary};
   color: ${white};
-  height: ${quadrupleSpacer};
+  min-height: ${quadrupleSpacer};
+  padding-top: env(safe-area-inset-top);
   line-height: ${quadrupleSpacer};
   z-index: 1000;
 

@@ -129,6 +129,14 @@ const Seo: FunctionComponent<SeoType> = ({
           name: 'apple-mobile-web-app-status-bar-style',
           content: 'black-translucent',
         },
+        {
+          name: 'apple-mobile-web-app-capable',
+          content: 'yes',
+        },
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover',
+        },
       ].concat(meta || [])}
     >
       {/* genereated from https://appsco.pe/developer/splash-screens */}
