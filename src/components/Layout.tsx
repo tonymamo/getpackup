@@ -9,6 +9,7 @@ import Navbar from './Navbar';
 import '../styles/webfonts.css';
 
 import { quadrupleSpacer } from '../styles/size';
+import { white } from '../styles/color';
 import CssReset from '../styles/cssReset';
 import topo from '../images/topo.png';
 
@@ -23,7 +24,8 @@ const LayoutWrapper = styled.div`
 const PageBody = styled.main`
   flex: 1;
   margin-top: ${quadrupleSpacer};
-  background: url('${topo}');
+  background-image: url('${topo}');
+  background-color: ${white};
   background-size: 500px;
 `;
 
