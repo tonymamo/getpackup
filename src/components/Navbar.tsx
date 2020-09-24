@@ -81,7 +81,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             {user && !loading && (
               <>
                 <Link to="/app/profile" style={{ display: 'inline-flex' }}>
-                  <Avatar src={user.photoURL as string} />
+                  <Avatar src={user.photoURL as string} gravatarEmail={user.email as string} />
                 </Link>
                 <NavLink to="/" onClick={logout}>
                   Log Out

@@ -12,7 +12,7 @@ const App = () => {
   if ((!user && !loading) || error) {
     navigate('/login');
   }
-  if (user) {
+  if (user && user.email) {
     return (
       <Router basepath="/app">
         <Profile path="/profile" user={user} />

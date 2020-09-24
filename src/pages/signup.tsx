@@ -25,9 +25,9 @@ import useAuthState from '../utils/useFirebaseAuth';
 type SignupProps = {};
 
 const Signup: FunctionComponent<SignupProps> = () => {
-  const [user, loading, error] = useAuthState(firebase);
+  const [authUser, authLoading, authError] = useAuthState(firebase);
 
-  if (!!user && !loading && !error) {
+  if (!!authUser && !authLoading && !authError) {
     navigate('/app/profile');
   }
 
@@ -60,15 +60,15 @@ const Signup: FunctionComponent<SignupProps> = () => {
                     .createUserWithEmailAndPassword(values.email, values.password)
                     .then((result: any) => {
                       if (result.user) {
-                        firebase
-                          .firestore()
-                          .collection('users')
-                          .doc(result.user.uid)
-                          .set({
-                            email: values.email,
-                            firstName: values.firstName,
-                            lastName: values.lastName,
-                          });
+                        // firebase
+                        //   .firestore()
+                        //   .collection('users')
+                        //   .doc(result.user.uid)
+                        //   .set({
+                        //     email: values.email,
+                        //     firstName: values.firstName,
+                        //     lastName: values.lastName,
+                        //   });
                       }
                     })
                     .catch((err: { message: string }) => {

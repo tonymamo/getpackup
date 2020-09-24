@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { FluidObject } from 'gatsby-image';
+import { Md5 } from 'ts-md5/dist/md5';
 
 import {
   baseSpacer,
@@ -9,7 +10,6 @@ import {
   sextupleSpacer,
   quadrupleSpacer,
 } from '../styles/size';
-import profilePic from '../images/profile-pic.svg';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type AvatarProps = {
@@ -19,6 +19,7 @@ type AvatarProps = {
       }
     | string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
+  gravatarEmail: string;
   bottomMargin?: boolean;
 };
 
@@ -43,20 +44,29 @@ const AvatarImageWrapper = styled.div`
   overflow: hidden;
   object-fit: cover;
   display: flex;
-  height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
-  width: ${(props: AvatarProps) => props.size && renderSize(props.size)};
-  ${(props: AvatarProps) => props.bottomMargin && `margin-bottom: ${baseSpacer}`}
+  height: ${(props: { size: AvatarProps['size']; bottomMargin: AvatarProps['bottomMargin'] }) =>
+    props.size && renderSize(props.size)};
+  width: ${(props) => props.size && renderSize(props.size)};
+  ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer}`}
 `;
 
-const Avatar: FunctionComponent<AvatarProps> = (props) => (
-  <AvatarImageWrapper size={props.size || 'sm'} bottomMargin={props.bottomMargin || false}>
-    <PreviewCompatibleImage
-      imageInfo={{
-        image: props.src || profilePic,
-        alt: 'user profile picture',
-      }}
-    />
-  </AvatarImageWrapper>
-);
-
+const Avatar: FunctionComponent<AvatarProps> = (props) => {
+  // https://en.gravatar.com/site/implement/images/
+  // hash users email address with md5
+  // default to an identicon and
+  // size of 192px(sextupleSpacer * 2x)
+  const gravatarUrl = `https://www.gravatar.com/avatar/${Md5.hashStr(
+    props.gravatarEmail
+  )}&d=identicon?s=192`;
+  return (
+    <AvatarImageWrapper size={props.size || 'sm'} bottomMargin={props.bottomMargin || false}>
+      <PreviewCompatibleImage
+        imageInfo={{
+          image: props.src || gravatarUrl,
+          alt: 'user profile picture',
+        }}
+      />
+    </AvatarImageWrapper>
+  );
+};
 export default Avatar;
