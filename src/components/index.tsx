@@ -5,6 +5,7 @@ import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
 import Content from './Content';
+import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
 import Heading from './Heading';
@@ -34,6 +35,7 @@ export {
   ClientOnly,
   Column,
   Content,
+  FirebaseAuthWrapper,
   FlexContainer,
   Footer,
   Heading,

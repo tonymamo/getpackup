@@ -21,6 +21,10 @@ module.exports = {
     'gatsby-plugin-advanced-sitemap',
     'gatsby-plugin-robots-txt',
     {
+      resolve: 'gatsby-plugin-create-client-paths',
+      options: { prefixes: [`/app/*`] },
+    },
+    {
       resolve: 'gatsby-plugin-hotjar-tracking',
       options: {
         id: process.env.GATSBY_HOTJAR_ID,

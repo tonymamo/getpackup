@@ -43,6 +43,7 @@ const CssReset = createGlobalStyle`
   button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
   button[disabled],html input[disabled]{cursor:not-allowed}
   button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+  form {width: 100%}
   input{line-height:normal}
   input[type="text"],input[type="password"],input[type="email"],input[type="url"],textarea{appearance:none}
   input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}

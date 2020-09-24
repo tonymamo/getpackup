@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 /**
  * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
  *
@@ -5,6 +6,9 @@
  */
 
 import React from 'react';
+import 'firebase/auth';
+import 'firebase/firestore';
+
 import Layout from './src/components/Layout';
 
 export { default as wrapRootElement } from './src/redux/ReduxWrapper';

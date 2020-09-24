@@ -132,6 +132,7 @@ const textButtonStyles = `
   color: ${brandPrimary};
   padding: 0;
   vertical-align: initial;
+  font-weight: normal;
 
   &:hover,
   &:focus {

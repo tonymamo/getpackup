@@ -1,10 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
+import firebase from 'gatsby-plugin-firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
 import Heading from './Heading';
+import Avatar from './Avatar';
 
 import { brandSecondary, white } from '../styles/color';
 import { halfSpacer, quadrupleSpacer } from '../styles/size';
@@ -42,6 +45,28 @@ const NavLink = styled(Link)`
 `;
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
+  const [user] = useAuthState(firebase.auth());
+  const logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        navigate('/');
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  if (user) {
+    user.providerData.forEach((profile) => {
+      console.log(`Sign-in provider: ${profile?.providerId}`);
+      console.log(`  Provider-specific UID: ${profile?.uid}`);
+      console.log(`  Name: ${profile?.displayName}`);
+      console.log(`  Email: ${profile?.email}`);
+      console.log(`  Photo URL: ${profile?.photoURL}`);
+    });
+  }
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <PageContainer>
@@ -53,6 +78,16 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>
+            {user && (
+              <>
+                <div style={{ display: 'inline-flex' }}>
+                  <Avatar src={user.photoURL as string} />
+                </div>
+                <NavLink to="/" onClick={logout}>
+                  Log Out
+                </NavLink>
+              </>
+            )}
           </nav>
         </FlexContainer>
       </PageContainer>

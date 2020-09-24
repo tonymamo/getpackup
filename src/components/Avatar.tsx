@@ -42,6 +42,7 @@ const AvatarImageWrapper = styled.div`
   border-radius: 50%;
   overflow: hidden;
   object-fit: cover;
+  display: flex;
   height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
   width: ${(props: AvatarProps) => props.size && renderSize(props.size)};
   ${(props: AvatarProps) => props.bottomMargin && `margin-bottom: ${baseSpacer}`}
