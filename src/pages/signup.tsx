@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { navigate, Link } from 'gatsby';
-import firebase from 'gatsby-plugin-firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { FaArrowRight } from 'react-icons/fa';
+import firebase from 'gatsby-plugin-firebase';
 
 import {
   Row,
@@ -21,13 +20,14 @@ import {
 import FirebaseAuthWrapper, { uiConfig } from '../components/FirebaseAuthWrapper';
 
 import { requiredField } from '../utils/validations';
+import useAuthState from '../utils/useFirebaseAuth';
 
 type SignupProps = {};
 
 const Signup: FunctionComponent<SignupProps> = () => {
-  const [user] = useAuthState(firebase.auth());
+  const [user, loading, error] = useAuthState(firebase);
 
-  if (user) {
+  if (!!user && !loading && !error) {
     navigate('/app/profile');
   }
 
@@ -153,9 +153,11 @@ const Signup: FunctionComponent<SignupProps> = () => {
               <p>
                 <small>Or, sign up with one of the following:</small>
               </p>
-              <FirebaseAuthWrapper>
-                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-              </FirebaseAuthWrapper>
+              {typeof window !== 'undefined' && (
+                <FirebaseAuthWrapper>
+                  <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                </FirebaseAuthWrapper>
+              )}
             </FlexContainer>
           </Column>
         </Row>

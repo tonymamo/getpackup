@@ -2,21 +2,23 @@ import React from 'react';
 import { navigate } from 'gatsby';
 import { Router } from '@reach/router';
 import firebase from 'gatsby-plugin-firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 import Profile from '../views/Profile';
+import useAuthState from '../utils/useFirebaseAuth';
 
 const App = () => {
-  const [user] = useAuthState(firebase.auth());
+  const [user, loading, error] = useAuthState(firebase);
 
-  if (!user) {
+  if ((!user && !loading) || error) {
     navigate('/login');
-    return null;
   }
-  return (
-    <Router basepath="/app">
-      <Profile path="/profile" user={user} />
-    </Router>
-  );
+  if (user) {
+    return (
+      <Router basepath="/app">
+        <Profile path="/profile" user={user} />
+      </Router>
+    );
+  }
+  return null;
 };
 export default App;

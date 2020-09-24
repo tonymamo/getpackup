@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 /**
  * Implement Gatsby's Browser APIs in this file.
  *
@@ -7,8 +6,8 @@
 
 // You can delete this file if you're not using it
 import React from 'react';
+import 'firebase/app';
 import 'firebase/auth';
-import 'firebase/firestore';
 
 import Layout from './src/components/Layout';
 

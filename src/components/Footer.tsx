@@ -64,9 +64,9 @@ const Footer = () => (
       <PageContainer>
         <Row>
           <Column md={3} lg={6}>
-            <h1>
+            <Heading>
               <Link to="/">packup</Link>
-            </h1>
+            </Heading>
             <p>Adventure made easy.</p>
           </Column>
           <Column sm={4} md={3} lg={2}>

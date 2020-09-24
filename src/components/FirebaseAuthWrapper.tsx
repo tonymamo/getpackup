@@ -42,14 +42,19 @@ const StyledFirebaseAuthWrapper = styled.div`
 
 type FirebaseAuthWrapperProps = {};
 
+const signInProviders =
+  typeof window !== 'undefined'
+    ? [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      ]
+    : [];
+
 export const uiConfig = {
   signInFlow: 'popup',
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-  ],
+  signInOptions: signInProviders,
   callbacks: {
     signInSuccessWithAuthResult: () => false,
   },

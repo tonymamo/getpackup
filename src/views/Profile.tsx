@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import firebase from 'gatsby-plugin-firebase';
 
 import { Heading, PageContainer, Box, Avatar } from '../components';
 

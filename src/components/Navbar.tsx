@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
@@ -12,6 +11,7 @@ import Avatar from './Avatar';
 import { brandSecondary, white } from '../styles/color';
 import { halfSpacer, quadrupleSpacer } from '../styles/size';
 import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
+import useAuthState from '../utils/useFirebaseAuth';
 
 type NavbarProps = {};
 
@@ -45,7 +45,7 @@ const NavLink = styled(Link)`
 `;
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
-  const [user] = useAuthState(firebase.auth());
+  const [user, loading] = useAuthState(firebase);
   const logout = () => {
     firebase
       .auth()
@@ -53,20 +53,20 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
       .then(() => {
         navigate('/');
       })
-      .catch((error) => {
-        alert(error.message);
+      .catch((err) => {
+        alert(err.message);
       });
   };
 
-  if (user) {
-    user.providerData.forEach((profile) => {
-      console.log(`Sign-in provider: ${profile?.providerId}`);
-      console.log(`  Provider-specific UID: ${profile?.uid}`);
-      console.log(`  Name: ${profile?.displayName}`);
-      console.log(`  Email: ${profile?.email}`);
-      console.log(`  Photo URL: ${profile?.photoURL}`);
-    });
-  }
+  // if (user) {
+  //   user.providerData.forEach((profile) => {
+  //     console.log(`Sign-in provider: ${profile?.providerId}`);
+  //     console.log(`  Provider-specific UID: ${profile?.uid}`);
+  //     console.log(`  Name: ${profile?.displayName}`);
+  //     console.log(`  Email: ${profile?.email}`);
+  //     console.log(`  Photo URL: ${profile?.photoURL}`);
+  //   });
+  // }
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <PageContainer>
@@ -78,11 +78,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>
-            {user && (
+            {user && !loading && (
               <>
-                <div style={{ display: 'inline-flex' }}>
+                <Link to="/app/profile" style={{ display: 'inline-flex' }}>
                   <Avatar src={user.photoURL as string} />
-                </div>
+                </Link>
                 <NavLink to="/" onClick={logout}>
                   Log Out
                 </NavLink>
