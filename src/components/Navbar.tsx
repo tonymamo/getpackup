@@ -93,24 +93,28 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             <NavLink to="/blog">Blog</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contact">Contact</NavLink>
-            {user && !loading && (
-              <>
-                <Link to="/app/profile" style={{ display: 'inline-flex' }}>
-                  <Avatar src={user.photoURL as string} gravatarEmail={user.email as string} />
-                </Link>
-                <NavLink to="/" onClick={logout}>
-                  Log Out
-                </NavLink>
-              </>
-            )}
-            {!user && !loading && (
-              <>
-                <NavLink to="/login">Login</NavLink>
-                <Button type="link" to="/signup">
-                  Sign Up
-                </Button>
-              </>
-            )}
+            {false &&
+            user &&
+            !loading && ( // TODO
+                <>
+                  <Link to="/app/profile" style={{ display: 'inline-flex' }}>
+                    <Avatar src={user.photoURL as string} gravatarEmail={user.email as string} />
+                  </Link>
+                  <NavLink to="/" onClick={logout}>
+                    Log Out
+                  </NavLink>
+                </>
+              )}
+            {false &&
+            !user &&
+            !loading && ( // TODO
+                <>
+                  <NavLink to="/login">Login</NavLink>
+                  <Button type="link" to="/signup">
+                    Sign Up
+                  </Button>
+                </>
+              )}
           </nav>
         </FlexContainer>
       </PageContainer>
