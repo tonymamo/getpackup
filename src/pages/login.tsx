@@ -4,6 +4,7 @@ import { navigate, Link } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { FaArrowRight } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
 
 import {
   Row,
@@ -20,14 +21,15 @@ import {
 import FirebaseAuthWrapper, { uiConfig } from '../components/FirebaseAuthWrapper';
 import { requiredField } from '../utils/validations';
 import useAuthState from '../utils/useFirebaseAuth';
+import { addAlert } from '../redux/ducks/globalAlerts';
 
 type LoginProps = {};
 
 const Login: FunctionComponent<LoginProps> = () => {
   const [user, loading, error] = useAuthState(firebase);
-
+  const dispatch = useDispatch();
   if (!!user && !loading && !error) {
-    navigate('/app/profile');
+    navigate('/app/trips');
   }
 
   const initialValues = {
@@ -50,14 +52,20 @@ const Login: FunctionComponent<LoginProps> = () => {
               <Formik
                 validateOnMount
                 initialValues={initialValues}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values, { setSubmitting, resetForm }) => {
                   firebase
                     .auth()
                     .signInWithEmailAndPassword(values.email, values.password)
-                    .catch((err: { message: string }) => {
-                      alert(err.message);
+                    .catch((err) => {
+                      dispatch(
+                        addAlert({
+                          type: 'danger',
+                          message: err.message,
+                        })
+                      );
                     });
                   setSubmitting(false);
+                  resetForm();
                 }}
               >
                 {({ isSubmitting, isValid }) => (

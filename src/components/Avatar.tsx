@@ -57,7 +57,7 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
   // size of 192px(sextupleSpacer * 2x)
   const gravatarUrl = `https://www.gravatar.com/avatar/${Md5.hashStr(
     props.gravatarEmail
-  )}&d=identicon?s=192`;
+  )}?d=identicon&s=192`;
   return (
     <AvatarImageWrapper size={props.size || 'sm'} bottomMargin={props.bottomMargin || false}>
       <PreviewCompatibleImage

@@ -4,6 +4,8 @@ import { Router } from '@reach/router';
 import firebase from 'gatsby-plugin-firebase';
 
 import Profile from '../views/Profile';
+import Trips from '../views/Trips';
+
 import useAuthState from '../utils/useFirebaseAuth';
 
 const App = () => {
@@ -16,6 +18,7 @@ const App = () => {
     return (
       <Router basepath="/app">
         <Profile path="/profile" user={user} />
+        <Trips path="/trips" />
       </Router>
     );
   }

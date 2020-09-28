@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({});
+import globalAlerts from './globalAlerts';
+
+const rootReducer = combineReducers({
+  globalAlerts,
+});
 
 export type RootState = ReturnType<typeof rootReducer>;
 

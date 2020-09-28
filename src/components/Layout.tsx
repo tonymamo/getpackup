@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Footer from './Footer';
 import Navbar from './Navbar';
+import GlobalAlerts from './GlobalAlerts';
 import '../styles/webfonts.css';
 
 import { quadrupleSpacer } from '../styles/size';
@@ -39,6 +40,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
         <LayoutWrapper>
           <Navbar />
           <PageBody>{props.children}</PageBody>
+          <GlobalAlerts />
           <Footer />
         </LayoutWrapper>
       </IconContext.Provider>

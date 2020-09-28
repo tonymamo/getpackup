@@ -2,16 +2,19 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
+import { useDispatch } from 'react-redux';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
 import Heading from './Heading';
 import Avatar from './Avatar';
+import Button from './Button';
 
 import { brandSecondary, white } from '../styles/color';
 import { halfSpacer, quadrupleSpacer } from '../styles/size';
 import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
 import useAuthState from '../utils/useFirebaseAuth';
+import { addAlert } from '../redux/ducks/globalAlerts';
 
 type NavbarProps = {};
 
@@ -46,7 +49,14 @@ const NavLink = styled(Link)`
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
   const [user, loading] = useAuthState(firebase);
+  const dispatch = useDispatch();
   const logout = () => {
+    dispatch(
+      addAlert({
+        type: 'success',
+        message: 'You have successfully logged out. See ya next time!',
+      })
+    );
     firebase
       .auth()
       .signOut()
@@ -54,7 +64,12 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
         navigate('/');
       })
       .catch((err) => {
-        alert(err.message);
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
       });
   };
 
@@ -86,6 +101,14 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 <NavLink to="/" onClick={logout}>
                   Log Out
                 </NavLink>
+              </>
+            )}
+            {!user && !loading && (
+              <>
+                <NavLink to="/login">Login</NavLink>
+                <Button type="link" to="/signup">
+                  Sign Up
+                </Button>
               </>
             )}
           </nav>

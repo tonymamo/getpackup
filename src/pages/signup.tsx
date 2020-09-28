@@ -4,6 +4,7 @@ import { navigate, Link } from 'gatsby';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { FaArrowRight } from 'react-icons/fa';
 import firebase from 'gatsby-plugin-firebase';
+import { useDispatch } from 'react-redux';
 
 import {
   Row,
@@ -21,14 +22,16 @@ import FirebaseAuthWrapper, { uiConfig } from '../components/FirebaseAuthWrapper
 
 import { requiredField } from '../utils/validations';
 import useAuthState from '../utils/useFirebaseAuth';
+import { addAlert } from '../redux/ducks/globalAlerts';
 
 type SignupProps = {};
 
 const Signup: FunctionComponent<SignupProps> = () => {
   const [authUser, authLoading, authError] = useAuthState(firebase);
+  const dispatch = useDispatch();
 
   if (!!authUser && !authLoading && !authError) {
-    navigate('/app/profile');
+    navigate('/app/trips');
   }
 
   const initialValues = {
@@ -71,8 +74,13 @@ const Signup: FunctionComponent<SignupProps> = () => {
                         //   });
                       }
                     })
-                    .catch((err: { message: string }) => {
-                      alert(err.message);
+                    .catch((err) => {
+                      dispatch(
+                        addAlert({
+                          type: 'danger',
+                          message: err.message,
+                        })
+                      );
                     });
                   setSubmitting(false);
                 }}
