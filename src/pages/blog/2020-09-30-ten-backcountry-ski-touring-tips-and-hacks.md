@@ -11,67 +11,64 @@ tags:
   - Backcountry
   - Ski Touring
   - Splitboarding
-  - education
+  - Education
 ---
+
 If you’re anything like us, you’re already thinking forward towards the upcoming winter ski touring season. Touring provides all of the strenuous fun of winter mobility into unique mountainous areas, with the reward of cashing in on untouched powder caches (or bulletproof ice!).
 
 We’ve summarized ten backcountry ski touring (and splitboarding) tips and hacks to improve your excursions this upcoming winter. Let us know in the comments if you have any pro tips of your own!
-
-
+<br/><br/>
 
 1. **Bottle flip**
 
 The best way to keep the threads of your water bottle from freezing shut is to store your bottle upside down to keep water circulating against the opening. To take things a step further, use warm or hot water to start the day with an electrolyte tab to flavour the water and rejuvenate your body while touring.
-
-
+<br/><br/>
 
 2. **Eat during transitions**
 
 Touring can be a sweaty and wet sport - the less time you spend at a standstill, the less likely you are to catch a chill. Eating during transitions throughout the day will prevent you from needing an extended lunch period, and will fuel your body more efficiently than a single large meal can. Be sure to keep your food warm against your body if it has a tendency to harden with cold (energy bars, gels, bloks, etc). This can be done by storing food in the pocket of a mid-layer, or in the sleeve area of a base layer.
-
-
+<br/><br/>
 
 3. **Pack skin wax**
 
 Dry skins are fast skins. Be sure to pack some skin wax to save your day, or the day of your friends, when things come to a gluey halt. Skin wax coats the fibres of your skins with a hydrophobic layer, keeping things light and dry when things get wet and gloppy.
 
-`<iframe width="560" height="315" src="https://www.youtube.com/embed/1no7kQGmc24" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1no7kQGmc24" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+lik
+&nbsp;
+<br/><br/>
 
 4. **Do your dishes!**
 
 Keeping with the theme of managing your gear during marginal snow conditions, [a pot scrubber](https://www.amazon.ca/MSR-Alpine-Dish-Brush-Scraper/dp/B00453MQXC) can assist in cleaning wet snow and ice out of frozen bindings, off of skins, and off of your ski bases when things get frustrating. The benefit of a pot scrubber over a plastic card, is that it comes with a rubberized scraping edge, a short plastic bristle brush, and won’t become brittle in the cold. Throw it in the front pocket of your touring pants.
-
-
+<br/><br/>
 
 5. **Ski straps**
 
-The pros pack up to 6 Voile ski straps when touring. They are infinitely useful for securing equipment, attaching frozen skins, locking heels down in broken bindings, fixing boots, splinting a broken bone, and ultimately saving your butt in countless situations. Keep a few in an easily accessible place, like having two wrapped around the shafts of your ski poles so that you can quickly put your planks in an A-frame on your pack. Also, be sure to pack different lengths!
-
-
+The pros pack up to 6 [Voile ski straps](https://smile.amazon.com/Voile-Straps-Aluminum-Buckle-Orange/dp/B000VE2MGU/ref=sr_1_2?dchild=1&keywords=voile+strap&qid=1601496469&sr=8-2) when touring. They are infinitely useful for securing equipment, attaching frozen skins, locking heels down in broken bindings, fixing boots, splinting a broken bone, and ultimately saving your butt in countless situations. Keep a few in an easily accessible place, like having two wrapped around the shafts of your ski poles so that you can quickly put your planks in an A-frame on your pack. Also, be sure to pack different lengths!
+<br/><br/>
 
 6. **Cheap seats**
 
 Packing a cheap piece of foam can be a great way to give yourself a dry and comfortable place to sit down when you do take extended breaks with your group. This will help to keep you both dry and warm.
 
 ![](/img/044a8633.jpg)
+<br/><br/>
 
 7. **Magic bag**
 
 Packing items that are going to be used most frequently or soonest closer to the top of the pack will reduce your transition speed and stoppage throughout the day. This can include using mini dry-bags for snacks in the top of your pack, having your puff jacket strategically placed for transitions, and planning where items need to come in useful such as crampons or bindings (splitboards).
-
-
+<br/><br/>
 
 8. **Be bold, start cold**
 
 Ski touring must be one of the most cardiovascular intensive winter sports you can get involved in, especially when things start to go uphill. If you’re a bit cold when getting ready at the trailhead, that’s ok, because it will save you from the inevitable “stop to strip” five minutes down trail and keep you from starting the day wet with sweat. Be bold, start cold.
-
-
+<br/><br/>
 
 9. **Hand warmers for electronic gear**
 
 Chemical hand warmers are great for frozen extremities like hands and feet, but are also great for managing the battery temperature of your electronic devices. When the going gets really cold, temps can have an enormous impact on the battery life of your critical devices - GPS, Radios, and camera gear. Packing a few activated hand warmers in your electronics compartments/baggage, or attaching it to the side of the electronics themselves can increase the battery life by hours.
-
-
+<br/><br/>
 
 10. **FSR Radios**
 
