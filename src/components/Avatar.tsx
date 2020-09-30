@@ -59,7 +59,11 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
     props.gravatarEmail
   )}?d=identicon&s=192`;
   return (
-    <AvatarImageWrapper size={props.size || 'sm'} bottomMargin={props.bottomMargin || false}>
+    <AvatarImageWrapper
+      size={props.size || 'sm'}
+      bottomMargin={props.bottomMargin || false}
+      {...props}
+    >
       <PreviewCompatibleImage
         imageInfo={{
           image: props.src || gravatarUrl,

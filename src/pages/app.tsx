@@ -1,27 +1,41 @@
-import React from 'react';
-import { navigate } from 'gatsby';
+import React, { useEffect } from 'react';
 import { Router } from '@reach/router';
-import firebase from 'gatsby-plugin-firebase';
+import { useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
 
 import Profile from '../views/Profile';
 import Trips from '../views/Trips';
-
-import useAuthState from '../utils/useFirebaseAuth';
+import NewTrip from '../views/NewTrip';
+import { RootState } from '../redux/ducks';
+import { PrivateRoute, LoadingPage } from '../components';
 
 const App = () => {
-  const [user, loading, error] = useAuthState(firebase);
+  const firebase = useFirebase();
+  const user = useSelector((state: RootState) => state.firebase.auth);
+  const profile = useSelector((state: RootState) => state.firebase.profile);
 
-  if ((!user && !loading) || error) {
-    navigate('/login');
+  useEffect(() => {
+    if (!user.isEmpty && profile.isEmpty) {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(user.uid)
+        .set({
+          email: user.email,
+        });
+    }
+  }, []);
+
+  if (!user.isLoaded) {
+    return <LoadingPage />;
   }
-  if (user && user.email) {
-    return (
-      <Router basepath="/app">
-        <Profile path="/profile" user={user} />
-        <Trips path="/trips" />
-      </Router>
-    );
-  }
-  return null;
+
+  return (
+    <Router basepath="/app">
+      <PrivateRoute path="/profile" component={Profile} />
+      <PrivateRoute path="/trips" component={Trips} />
+      <PrivateRoute path="/trips/new" component={NewTrip} />
+    </Router>
+  );
 };
 export default App;

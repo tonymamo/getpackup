@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { navigate, Link } from 'gatsby';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { FaArrowRight } from 'react-icons/fa';
-import firebase from 'gatsby-plugin-firebase';
-import { useDispatch } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Row,
@@ -17,20 +16,20 @@ import {
   Seo,
   Heading,
   FlexContainer,
+  FirebaseAuthWrapper,
 } from '../components';
-import FirebaseAuthWrapper, { uiConfig } from '../components/FirebaseAuthWrapper';
-
 import { requiredField } from '../utils/validations';
-import useAuthState from '../utils/useFirebaseAuth';
 import { addAlert } from '../redux/ducks/globalAlerts';
+import { RootState } from '../redux/ducks';
 
 type SignupProps = {};
 
 const Signup: FunctionComponent<SignupProps> = () => {
-  const [authUser, authLoading, authError] = useAuthState(firebase);
+  const firebase = useFirebase();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const dispatch = useDispatch();
 
-  if (!!authUser && !authLoading && !authError) {
+  if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
   }
 
@@ -63,15 +62,16 @@ const Signup: FunctionComponent<SignupProps> = () => {
                     .createUserWithEmailAndPassword(values.email, values.password)
                     .then((result: any) => {
                       if (result.user) {
-                        // firebase
-                        //   .firestore()
-                        //   .collection('users')
-                        //   .doc(result.user.uid)
-                        //   .set({
-                        //     email: values.email,
-                        //     firstName: values.firstName,
-                        //     lastName: values.lastName,
-                        //   });
+                        firebase
+                          .firestore()
+                          .collection('users')
+                          .doc(result.user.uid)
+                          .set({
+                            email: values.email,
+                            firstName: values.firstName,
+                            lastName: values.lastName,
+                          });
+                        navigate('/app/trips');
                       }
                     })
                     .catch((err) => {
@@ -161,11 +161,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
               <p>
                 <small>Or, sign up with one of the following:</small>
               </p>
-              {typeof window !== 'undefined' && (
-                <FirebaseAuthWrapper>
-                  <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-                </FirebaseAuthWrapper>
-              )}
+              {typeof window !== 'undefined' && <FirebaseAuthWrapper />}
             </FlexContainer>
           </Column>
         </Row>

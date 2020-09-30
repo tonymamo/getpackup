@@ -14,11 +14,13 @@ import HorizontalRule from './HorizontalRule';
 import Image from './Image';
 import Input from './Input';
 import Layout from './Layout';
+import LoadingPage from './LoadingPage';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
 import PageContainer from './PageContainer';
 import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
+import PrivateRoute from './PrivateRoute';
 import RelatedBlogPost from './RelatedBlogPost';
 import Row from './Row';
 import Seo from './Seo';
@@ -44,11 +46,13 @@ export {
   Image,
   Input,
   Layout,
+  LoadingPage,
   Navbar,
   NegativeMarginContainer,
   PageContainer,
   Pill,
   PreviewCompatibleImage,
+  PrivateRoute,
   RelatedBlogPost,
   Row,
   Seo,

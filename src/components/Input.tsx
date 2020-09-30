@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { useField, FieldMetaProps, FormikHelpers } from 'formik';
+import Geosuggest from 'react-geosuggest';
+import 'react-geosuggest/module/geosuggest.css';
 
 import {
   inputHeight,
@@ -13,13 +15,13 @@ import {
 import { fontSizeBase, lineHeightBase, fontSizeSmall } from '../styles/typography';
 import {
   textColor,
-  white,
   brandDanger,
   brandDangerRGB,
   brandPrimary,
   brandPrimaryRGB,
 } from '../styles/color';
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '../styles/mixins';
+import poweredByGoogle from '../images/powered_by_google_on_white_hdpi.png';
 
 type InputProps = {
   disabled?: boolean;
@@ -41,7 +43,7 @@ const sharedStyles = css`
   font-size: ${fontSizeBase};
   line-height: ${lineHeightBase};
   color: ${textColor};
-  background-color: ${white};
+  background-color: #ffffff;
   background-image: none;
   border: ${baseBorderStyle};
   border-radius: ${borderRadius};
@@ -72,6 +74,12 @@ const StyledInput = styled.input`
   ${sharedStyles}
 `;
 
+const StyledTextarea = styled.textarea`
+  resize: none;
+  min-height: ${inputHeight};
+  ${sharedStyles}
+`;
+
 const StyledErrorMessage = styled.div`
   color: ${brandDanger};
   font-size: ${fontSizeSmall};
@@ -83,6 +91,19 @@ const InputWrapper = styled.div`
   ${(props: { hidden?: boolean }) => props.hidden && `display: none;`}
   & .tooltip {
     padding: 0 ${halfSpacer};
+  }
+`;
+
+const StyledGeosuggest = styled(Geosuggest)`
+  & .geosuggest {
+    position: relative;
+    width: 100%;
+    margin: 0;
+  }
+
+  & .geosuggest__input {
+    box-shadow: none;
+    ${sharedStyles}
   }
 `;
 
@@ -105,7 +126,58 @@ const StyledLabel = styled.label`
 `;
 
 const Input: FunctionComponent<InputProps> = (props) => {
+  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
+  // which we can spread on <input> and also replace ErrorMessage entirely.
   const [field, meta] = useField<string>(props.name);
+
+  let inputTypeToRender;
+
+  switch (props.type) {
+    case 'textarea':
+      inputTypeToRender = (
+        <StyledTextarea
+          id={props.name}
+          placeholder={props.label}
+          rows={3}
+          {...field}
+          {...props}
+          {...meta}
+        />
+      );
+      break;
+    case 'geosuggest':
+      inputTypeToRender = (
+        <>
+          <StyledGeosuggest
+            placeDetailFields={['geometry']}
+            onSuggestSelect={(suggest: { label: string }) =>
+              suggest && suggest.label
+                ? props.setFieldValue(field.name, suggest.label)
+                : props.setFieldValue(field.name, '')
+            }
+            id={props.name}
+            {...field}
+            {...props}
+            {...meta}
+            minLength={3}
+            label={undefined}
+            inputType="text"
+          />
+          <p style={{ margin: 0, textAlign: 'right' }}>
+            <img src={poweredByGoogle} alt="powered by Google" style={{ height: 18 }} />
+          </p>
+        </>
+      );
+      break;
+    case 'hidden':
+      inputTypeToRender = <StyledInput id={props.name} {...field} {...props} {...meta} />;
+      break;
+    default:
+      inputTypeToRender = (
+        <StyledInput placeholder={props.label} id={props.name} {...field} {...props} {...meta} />
+      );
+      break;
+  }
   return (
     <InputWrapper>
       <StyledLabel
@@ -117,7 +189,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
         {props.label}
       </StyledLabel>
 
-      <StyledInput id={props.name} placeholder={props.label} {...field} {...props} {...meta} />
+      {inputTypeToRender}
       {props.helpText && <small>{props.helpText}</small>}
       {meta && meta.touched && meta.error && <StyledErrorMessage>{meta.error}</StyledErrorMessage>}
     </InputWrapper>

@@ -29,5 +29,6 @@ declare global {
     __REDUX_DEVTOOLS_EXTENSION__: Function;
     __INITIAL_STATE__: string;
     beforeinstallprompt: BeforeInstallPromptEvent;
+    google?: any;
   }
 }

@@ -17,6 +17,7 @@ import {
   Heading,
   Alert,
 } from '../components';
+import postFormUrlEncoded from '../utils/postFormUrlEncoded';
 import { requiredEmail, requiredField } from '../utils/validations';
 
 type ContactProps = {
@@ -63,14 +64,7 @@ export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
                 validateOnMount
                 initialValues={initialValues}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
-                  fetch('https://getpackup.com/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: encode({
-                      'form-name': 'contact',
-                      ...values,
-                    }),
-                  }).then(() => {
+                  postFormUrlEncoded('contact', values).then(() => {
                     setSent(true);
                     setSubmitting(false);
                     resetForm();

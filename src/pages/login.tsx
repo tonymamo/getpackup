@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import { Formik, Field, Form } from 'formik';
-import { navigate, Link } from 'gatsby';
-import firebase from 'gatsby-plugin-firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { Redirect, navigate, Link } from 'gatsby';
+import { useFirebase } from 'react-redux-firebase';
 import { FaArrowRight } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Row,
@@ -17,18 +16,22 @@ import {
   Seo,
   Heading,
   FlexContainer,
+  FirebaseAuthWrapper,
 } from '../components';
-import FirebaseAuthWrapper, { uiConfig } from '../components/FirebaseAuthWrapper';
 import { requiredField } from '../utils/validations';
-import useAuthState from '../utils/useFirebaseAuth';
 import { addAlert } from '../redux/ducks/globalAlerts';
+import { RootState } from '../redux/ducks';
+import { removeAttemptedPrivatePage } from '../redux/ducks/client';
 
 type LoginProps = {};
 
 const Login: FunctionComponent<LoginProps> = () => {
-  const [user, loading, error] = useAuthState(firebase);
+  const firebase = useFirebase();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const client = useSelector((state: RootState) => state.client);
   const dispatch = useDispatch();
-  if (!!user && !loading && !error) {
+
+  if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
   }
 
@@ -56,6 +59,14 @@ const Login: FunctionComponent<LoginProps> = () => {
                   firebase
                     .auth()
                     .signInWithEmailAndPassword(values.email, values.password)
+                    .then(() => {
+                      if (client.location) {
+                        dispatch(removeAttemptedPrivatePage());
+                        navigate(client.location);
+                      } else {
+                        navigate('/app/trips');
+                      }
+                    })
                     .catch((err) => {
                       dispatch(
                         addAlert({
@@ -111,11 +122,7 @@ const Login: FunctionComponent<LoginProps> = () => {
             </FlexContainer>
           </Column>
           <Column xs={10} xsOffset={1} sm={8} smOffset={2} md={5} lg={4} lgOffset={2}>
-            {typeof window !== 'undefined' && (
-              <FirebaseAuthWrapper>
-                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-              </FirebaseAuthWrapper>
-            )}
+            {typeof window !== 'undefined' && <FirebaseAuthWrapper />}
           </Column>
         </Row>
       </Box>

@@ -11,12 +11,14 @@ const Profile: FunctionComponent<ProfileProps> = ({ user }) => {
   return (
     <PageContainer withVerticalPadding>
       <Seo title="Profile" />
-      <Box>
-        <Heading>Hello there{user.displayName && `, ${user.displayName}`}!</Heading>
-        <Avatar src={user.photoURL as string} size="lg" gravatarEmail={user.email as string} />
-        <p>Email: {user.email}</p>
-        <p>ID: {user.uid}</p>
-      </Box>
+      {user && user.email && (
+        <Box>
+          <Heading>Hello there{user.displayName && `, ${user.displayName}`}!</Heading>
+          <Avatar src={user.photoURL as string} size="lg" gravatarEmail={user.email as string} />
+          <p>Email: {user.email}</p>
+          <p>ID: {user.uid}</p>
+        </Box>
+      )}
     </PageContainer>
   );
 };

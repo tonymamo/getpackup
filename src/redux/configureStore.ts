@@ -12,6 +12,7 @@ import logger from './middleware/logger';
 import oauth from './middleware/oauth';
 import requestHeaders from './middleware/requestHeaders';
 import errorCatcher from './middleware/errorCatcher';
+import { initialState as clientInitialState } from './ducks/client';
 import { initialState as globalAlertsInitialState } from './ducks/globalAlerts';
 
 export const getMiddlewares = () => [oauth, requestHeaders, apiMiddleware, errorCatcher, thunk];
@@ -46,7 +47,10 @@ const makeConfiguredStore = (reducer: any, initialState: any) => {
 };
 
 const configureStore = (
-  initialState: string | RootState = { globalAlerts: globalAlertsInitialState }
+  initialState: string | RootState = {
+    client: clientInitialState,
+    globalAlerts: globalAlertsInitialState,
+  }
 ) => {
   const store = { ...makeConfiguredStore(rootReducer, initialState) };
   const persistor = persistStore(store);

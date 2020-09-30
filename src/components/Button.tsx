@@ -220,7 +220,7 @@ const StyledButton = styled.button`
   ${allStyles}
 `;
 
-const StyledLink = styled.div`
+const StyledLink = styled.span`
   ${allStyles}
   padding: 0; /* remove padding from parent div and use in <a> below */
 

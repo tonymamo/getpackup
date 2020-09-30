@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
-import firebase from 'gatsby-plugin-firebase';
-import { useDispatch } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import { useDispatch, useSelector } from 'react-redux';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
@@ -13,8 +13,8 @@ import Button from './Button';
 import { brandSecondary, white } from '../styles/color';
 import { halfSpacer, quadrupleSpacer } from '../styles/size';
 import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
-import useAuthState from '../utils/useFirebaseAuth';
 import { addAlert } from '../redux/ducks/globalAlerts';
+import { RootState } from '../redux/ducks';
 
 type NavbarProps = {};
 
@@ -48,7 +48,8 @@ const NavLink = styled(Link)`
 `;
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
-  const [user, loading] = useAuthState(firebase);
+  const firebase = useFirebase();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const dispatch = useDispatch();
   const logout = () => {
     dispatch(
@@ -73,29 +74,41 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
       });
   };
 
+  const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
+
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <PageContainer>
-        <FlexContainer justifyContent="space-between">
+        <FlexContainer justifyContent="space-between" alignItems="center">
           <Heading noMargin>
-            <Link to="/">packup</Link>
+            <Link to={loggedInUser ? '/app/trips' : '/'}>packup</Link>
           </Heading>
           <nav>
-            <NavLink to="/blog">Blog</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-            {user && !loading && (
-              <>
-                <Link to="/app/profile" style={{ display: 'inline-flex' }}>
-                  <Avatar src={user.photoURL as string} gravatarEmail={user.email as string} />
-                </Link>
+            {loggedInUser && (
+              <FlexContainer alignItems="center">
+                <NavLink to="/app/trips">Trips</NavLink>
+                <NavLink to="/app/profile">
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      verticalAlign: 'text-bottom',
+                      marginRight: halfSpacer,
+                    }}
+                  >
+                    <Avatar src={auth.photoURL as string} gravatarEmail={auth.email as string} />
+                  </span>
+                  Profile
+                </NavLink>
                 <NavLink to="/" onClick={logout}>
                   Log Out
                 </NavLink>
-              </>
+              </FlexContainer>
             )}
-            {!user && !loading && (
+            {!loggedInUser && (
               <>
+                <NavLink to="/blog">Blog</NavLink>
+                <NavLink to="/about">About</NavLink>
+                <NavLink to="/contact">Contact</NavLink>
                 <NavLink to="/login">Login</NavLink>
                 <Button type="link" to="/signup">
                   Sign Up
