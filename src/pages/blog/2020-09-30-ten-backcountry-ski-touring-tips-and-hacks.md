@@ -35,11 +35,11 @@ Touring can be a sweaty and wet sport - the less time you spend at a standstill,
 
 Dry skins are fast skins. Be sure to pack some skin wax to save your day, or the day of your friends, when things come to a gluey halt. Skin wax coats the fibres of your skins with a hydrophobic layer, keeping things light and dry when things get wet and gloppy.
 
-
+`<iframe width="560" height="315" src="https://www.youtube.com/embed/1no7kQGmc24" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
 
 4. **Do your dishes!**
 
-Keeping with the theme of managing your gear during marginal snow conditions, a pot scrubber can assist in cleaning wet snow and ice out of frozen bindings, off of skins, and off of your ski bases when things get frustrating. The benefit of a pot scrubber over a plastic card, is that it comes with a rubberized scraping edge, a short plastic bristle brush, and won’t become brittle in the cold. Throw it in the front pocket of your touring pants.
+Keeping with the theme of managing your gear during marginal snow conditions, [a pot scrubber](https://www.amazon.ca/MSR-Alpine-Dish-Brush-Scraper/dp/B00453MQXC) can assist in cleaning wet snow and ice out of frozen bindings, off of skins, and off of your ski bases when things get frustrating. The benefit of a pot scrubber over a plastic card, is that it comes with a rubberized scraping edge, a short plastic bristle brush, and won’t become brittle in the cold. Throw it in the front pocket of your touring pants.
 
 
 
@@ -53,7 +53,7 @@ The pros pack up to 6 Voile ski straps when touring. They are infinitely useful 
 
 Packing a cheap piece of foam can be a great way to give yourself a dry and comfortable place to sit down when you do take extended breaks with your group. This will help to keep you both dry and warm.
 
-
+![](/img/044a8633.jpg)
 
 7. **Magic bag**
 
@@ -77,4 +77,4 @@ Chemical hand warmers are great for frozen extremities like hands and feet, but 
 
 Two way radios are an excellent piece of gear to have in your group - it allows communication between parties going at different speeds, members who were separated on the descent, and between party members when crossing terrain traps such as avalanche paths where separation is key.
 
-Beyond the improved benefits of communication within your party, some radios on the market can be programmed to receive and monitor other useful channels - forest service groups, ski hills, weather channels, and rescue services. Note that using and transmitting on these types of channels without permission can be an illegal offence in many areas and should not be abused, with the exception of an emergency situation.
+Beyond the improved benefits of communication within your party, [some radios on the market](https://www.amazon.com/BaoFeng-UV-5R-Dual-Radio-Black/dp/B007H4VT7A) can be programmed to receive and monitor other useful channels - forest service groups, ski hills, weather channels, and rescue services. Note that using and transmitting on these types of channels without permission can be an illegal offence in many areas and should not be abused or used for transmission, with the exception of an emergency situation.
