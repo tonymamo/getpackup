@@ -6,11 +6,11 @@ mobileHeroImage: /img/044a0010.jpg
 heroHeading: Never forget important gear again
 typewriterList:
   - text: tent poles
+  - text: ski boots
   - text: harness
   - text: sunscreen
   - text: ice axe
   - text: swim suit
-  - text: ski boots
   - text: first aid kit
   - text: passport
   - text: bug spray
@@ -18,7 +18,7 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: '#learn-more'
+heroCTALink: "#learn-more"
 heroCTAText: Sign Up
 mainpitch:
   image: /img/Screen Shot 2020-09-08 at 1.17.18 PM.png
