@@ -42,7 +42,7 @@ export const darkGray = '#3e3e3e';
 export const gray = riverbed;
 export const lightGray = submarine;
 export const lightestGray = '#E3E8E9';
-export const white = '#f3f3f3';
+export const white = '#f9f9f9';
 
 // Typography
 export const textColor = riverbed;

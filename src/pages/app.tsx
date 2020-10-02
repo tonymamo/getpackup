@@ -5,7 +5,9 @@ import { useFirebase } from 'react-redux-firebase';
 
 import Profile from '../views/Profile';
 import Trips from '../views/Trips';
-import NewTrip from '../views/NewTrip';
+import NewTripSummary from '../views/NewTripSummary';
+import EditTripSummary from '../views/EditTripSummary';
+import TripById from '../views/TripById';
 import { RootState } from '../redux/ducks';
 import { PrivateRoute, LoadingPage } from '../components';
 
@@ -34,7 +36,9 @@ const App = () => {
     <Router basepath="/app">
       <PrivateRoute path="/profile" component={Profile} />
       <PrivateRoute path="/trips" component={Trips} />
-      <PrivateRoute path="/trips/new" component={NewTrip} />
+      <PrivateRoute path="/trips/new" component={NewTripSummary} />
+      <PrivateRoute path="/trips/:id" component={TripById} />
+      <PrivateRoute path="/trips/:id/edit" component={EditTripSummary} />
     </Router>
   );
 };

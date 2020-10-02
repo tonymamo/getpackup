@@ -1,6 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useField, FieldMetaProps, FormikHelpers } from 'formik';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Select, { CommonProps } from 'react-select';
 import Geosuggest from 'react-geosuggest';
 import 'react-geosuggest/module/geosuggest.css';
 
@@ -11,29 +13,43 @@ import {
   halfSpacer,
   baseSpacer,
   borderRadius,
+  doubleSpacer,
+  sextupleSpacer,
+  quarterSpacer,
+  quadrupleSpacer,
 } from '../styles/size';
 import { fontSizeBase, lineHeightBase, fontSizeSmall } from '../styles/typography';
 import {
   textColor,
+  white,
+  lightestGray,
   brandDanger,
   brandDangerRGB,
   brandPrimary,
   brandPrimaryRGB,
+  lightGray,
 } from '../styles/color';
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '../styles/mixins';
 import poweredByGoogle from '../images/powered_by_google_on_white_hdpi.png';
+import { formatPhoneNumberValue } from '../utils/phoneNumber';
+
+type OptionType = { label: string; value: string };
 
 type InputProps = {
   disabled?: boolean;
   id?: string;
   name: string;
+  square?: boolean;
+  hiddenLabel?: boolean;
   type: string;
-  label: string;
+  label: string | JSX.Element;
   helpText?: string | JSX.Element;
+  checked?: boolean;
+  options?: OptionType[];
   required?: boolean;
-  hideLabel?: boolean;
 } & FieldMetaProps<string> &
-  FormikHelpers<string>;
+  FormikHelpers<string> &
+  CommonProps<OptionType | OptionType[]>;
 
 const sharedStyles = css`
   display: block;
@@ -85,6 +101,16 @@ const StyledErrorMessage = styled.div`
   font-size: ${fontSizeSmall};
 `;
 
+const StyledSelect = styled(Select)`
+  & > div:first-child {
+    ${(props: { invalid?: boolean }) =>
+      props.invalid &&
+      `
+      border: 2px solid ${brandDanger};
+  `}
+  }
+`;
+
 const InputWrapper = styled.div`
   margin-bottom: ${baseSpacer};
   text-align: left;
@@ -95,7 +121,7 @@ const InputWrapper = styled.div`
 `;
 
 const StyledGeosuggest = styled(Geosuggest)`
-  & .geosuggest {
+  &.geosuggest {
     position: relative;
     width: 100%;
     margin: 0;
@@ -107,9 +133,14 @@ const StyledGeosuggest = styled(Geosuggest)`
   }
 `;
 
-const StyledLabel = styled.label`
+const StyledLabel = styled.label<{
+  hiddenLabel?: boolean;
+  invalid?: boolean;
+  required?: boolean;
+}>`
   margin: 0;
-  ${(props: { invalid: boolean; required: boolean; visuallyHidden?: boolean }) =>
+  ${(props) => props.hiddenLabel && visuallyHiddenStyle}
+  ${(props) =>
     props.invalid &&
     `
     color: ${brandDanger};
@@ -122,22 +153,207 @@ const StyledLabel = styled.label`
       color: ${brandDanger};
     }
   `}
-  ${(props) => props.visuallyHidden && visuallyHiddenStyle}
 `;
+
+const StyledToggle = styled.input`
+  height: 0;
+  width: 0;
+  visibility: hidden;
+
+  &:checked + label {
+    background: ${brandPrimary};
+  }
+
+  &:checked + label:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+  }
+`;
+
+const StyledToggleLabel = styled.label<{
+  checked?: boolean;
+  disabled?: boolean;
+}>`
+  cursor: pointer;
+  width: ${sextupleSpacer};
+  height: 42px;
+  background: ${lightGray};
+  display: inline-block;
+  border-radius: 42px;
+  position: relative;
+  margin: 0;
+
+  &:after {
+    content: '${(props) => (props.checked ? 'Yes' : 'No')}';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: ${doubleSpacer};
+    height: ${doubleSpacer};
+    background: ${white};
+    border-radius: ${doubleSpacer};
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: ${fontSizeSmall};
+    color: ${(props) => (props.checked ? brandPrimary : textColor)};
+  }
+
+  /* Disabled state */
+  ${(props) => props.disabled && disabledStyle}
+`;
+
+const PasswordWrapper = styled.div`
+  position: relative;
+`;
+
+const PasswordToggle = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: ${quadrupleSpacer};
+  height: ${inputHeight};
+  background: ${lightestGray};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: ${baseBorderStyle};
+  padding: 0 ${quarterSpacer};
+  border-radius: 0 ${borderRadius} ${borderRadius} 0;
+`;
+
+const multiSelectStyles = {
+  option: (provided: any, state: { isFocused: boolean }) => ({
+    ...provided,
+    color: brandPrimary,
+    backgroundColor: state.isFocused ? lightestGray : white,
+  }),
+  control: (provided: any, state: { isFocused: boolean }) => ({
+    ...provided,
+    minHeight: inputHeight,
+    fontSize: fontSizeBase,
+    lineHeight: lineHeightBase,
+    color: textColor,
+    backgroundColor: white,
+    border: state.isFocused ? `2px solid ${brandPrimary}` : baseBorderStyle,
+    boxShadow: state.isFocused && 'none',
+    '&:hover': {
+      border: state.isFocused ? `2px solid ${brandPrimary}` : baseBorderStyle,
+    },
+  }),
+  multiValueRemove: (provided: any) => ({
+    ...provided,
+    '&:hover': {
+      backgroundColor: brandDanger,
+      color: white,
+    },
+  }),
+  placeholder: (provided: any) => ({
+    ...provided,
+    color: textColor,
+  }),
+};
 
 const Input: FunctionComponent<InputProps> = (props) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and also replace ErrorMessage entirely.
   const [field, meta] = useField<string>(props.name);
+  // state for toggling password visibility
+  const [passwordVisibility, setPasswordVisibiility] = useState(false);
 
   let inputTypeToRender;
 
   switch (props.type) {
+    case 'select':
+      {
+        const onChange = (option: OptionType[] | OptionType) => {
+          props.setFieldValue(
+            field.name,
+            // eslint-disable-next-line no-nested-ternary
+            props.isMulti
+              ? option
+                ? (option as OptionType[]).map((item: OptionType) => item.value)
+                : []
+              : (option as OptionType).value
+          );
+        };
+
+        const setValue = (value: string | Array<string>) => {
+          return props.isMulti
+            ? (value as Array<string>).map((item) =>
+                props.options.find((option) => option.value === item)
+              )
+            : props.options.find((option) => option.value === value);
+        };
+
+        inputTypeToRender = (
+          <StyledSelect
+            styles={multiSelectStyles}
+            isMulti={props.isMulti}
+            menuPlacement="auto"
+            value={setValue(field.value)}
+            options={props.options}
+            name={props.name}
+            onChange={(option: OptionType) => onChange(option)}
+            onBlur={() => props.setFieldTouched(props.name)}
+            isDisabled={props.disabled}
+            invalid={meta && meta.touched && meta.error}
+          />
+        );
+      }
+      break;
+    case 'checkbox':
+      inputTypeToRender = (
+        <>
+          <StyledLabel>{props.label}</StyledLabel>
+          <StyledToggle {...field} {...props} {...meta} id={props.name} checked={props.checked} />
+          <StyledToggleLabel
+            htmlFor={props.name}
+            disabled={props.disabled}
+            checked={props.checked}
+          />
+        </>
+      );
+      break;
+    case 'tel':
+      inputTypeToRender = (
+        <StyledInput
+          id={props.name}
+          placeholder={typeof props.label === 'string' ? props.label : ''}
+          {...field}
+          {...props}
+          {...meta}
+          onChange={(event) => {
+            field.onChange(event.target.name)(formatPhoneNumberValue(event.target.value));
+          }}
+        />
+      );
+      break;
+    case 'password':
+      inputTypeToRender = (
+        <PasswordWrapper>
+          <StyledInput
+            placeholder={typeof props.label === 'string' ? props.label : ''}
+            id={props.name}
+            {...field}
+            {...props}
+            {...meta}
+          />
+          <PasswordToggle onClick={() => setPasswordVisibiility(!passwordVisibility)}>
+            {passwordVisibility ? <FaEye /> : <FaEyeSlash />}
+          </PasswordToggle>
+          {passwordVisibility && field.value.length > 0 && (
+            <span style={{ marginLeft: baseSpacer }}>{field.value}</span>
+          )}
+        </PasswordWrapper>
+      );
+      break;
     case 'textarea':
       inputTypeToRender = (
         <StyledTextarea
           id={props.name}
-          placeholder={props.label}
+          placeholder={typeof props.label === 'string' ? props.label : ''}
           rows={3}
           {...field}
           {...props}
@@ -174,7 +390,13 @@ const Input: FunctionComponent<InputProps> = (props) => {
       break;
     default:
       inputTypeToRender = (
-        <StyledInput placeholder={props.label} id={props.name} {...field} {...props} {...meta} />
+        <StyledInput
+          placeholder={typeof props.label === 'string' ? props.label : ''}
+          id={props.name}
+          {...field}
+          {...props}
+          {...meta}
+        />
       );
       break;
   }
@@ -184,7 +406,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
         htmlFor={props.id || props.name}
         invalid={meta && meta.touched && meta.error != null}
         required={props.required || false}
-        visuallyHidden={props.hideLabel}
+        hiddenLabel={props.hiddenLabel}
       >
         {props.label}
       </StyledLabel>

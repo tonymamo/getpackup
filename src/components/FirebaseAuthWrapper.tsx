@@ -38,6 +38,8 @@ const StyledFirebaseAuthWrapper = styled.div`
     padding: ${halfSpacer} ${baseAndAHalfSpacer};
     max-width: 100%;
     font-size: ${fontSizeBase};
+    display: flex;
+    justify-content: center;
   }
 
   & .firebaseui-idp-text {

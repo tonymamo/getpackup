@@ -4,14 +4,14 @@ import { RouteComponentProps } from '@reach/router';
 import { Heading, PageContainer, Box, Avatar, Seo } from '../components';
 
 type ProfileProps = {
-  user: firebase.User;
+  user?: firebase.User;
 } & RouteComponentProps;
 
 const Profile: FunctionComponent<ProfileProps> = ({ user }) => {
   return (
     <PageContainer withVerticalPadding>
       <Seo title="Profile" />
-      {user && user.email && (
+      {user && (
         <Box>
           <Heading>Hello there{user.displayName && `, ${user.displayName}`}!</Heading>
           <Avatar src={user.photoURL as string} size="lg" gravatarEmail={user.email as string} />

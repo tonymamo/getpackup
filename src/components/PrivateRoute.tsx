@@ -34,7 +34,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
     }
   }, []);
 
-  if (auth.isLoaded && auth.isEmpty) {
+  if ((auth.isLoaded && auth.isEmpty) || !auth) {
     navigate('/login');
     return null;
   }

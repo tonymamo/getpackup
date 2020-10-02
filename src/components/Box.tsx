@@ -24,6 +24,7 @@ type BoxProps = {
       fluid: FluidObject;
     };
   };
+  onClick?: () => void;
 };
 
 const renderShadow = (zindex: number) => {
@@ -42,31 +43,36 @@ const renderShadow = (zindex: number) => {
   return z1Shadow;
 };
 
-const StyledBox = styled.div`
+const StyledBox = styled.div<BoxProps>`
   border-radius: ${borderRadius};
   padding: ${baseSpacer};
   margin-bottom: ${baseSpacer};
-  box-shadow: ${(props: BoxProps) => props.zindex && renderShadow(props.zindex)};
-  text-align: ${(props: BoxProps) => props.textAlign};
-  height: ${(props: BoxProps) =>
-    props.height ? `${props.height}px` : `calc(100% - ${baseSpacer})`};
-  background: ${(props: BoxProps) =>
+  box-shadow: ${(props) => props.zindex && renderShadow(props.zindex)};
+  text-align: ${(props) => props.textAlign};
+  height: ${(props) => (props.height ? `${props.height}px` : `calc(100% - ${baseSpacer})`)};
+  background: ${(props) =>
     props.bgSrc
       ? `url(${props.bgSrc.childImageSharp.fluid.src}) center center / cover no-repeat`
       : white};
-  ${(props: BoxProps) =>
+  cursor: ${(props) => (props.onClick ? 'pointer' : 'initial')};
+  transition: all 0.2s ease-in-out;
+  ${(props) =>
     props.footer &&
     css`
       position: relative;
       padding-bottom: ${quadrupleSpacer};
     `}
-  
+
+  &:hover {
+    box-shadow: ${(props) => props.zindex && props.onClick && renderShadow(props.zindex + 1)};
+  }
+
   @media only screen and (min-width: ${breakpoints.sm}) {
-    padding: ${(props: BoxProps) => (props.largePadding ? quadrupleSpacer : doubleSpacer)};
+    padding: ${(props) => (props.largePadding ? quadrupleSpacer : doubleSpacer)};
   }
 
   @media only screen and (min-width: ${breakpoints.md}) {
-    padding: ${(props: BoxProps) => (props.largePadding ? quadrupleSpacer : baseSpacer)};
+    padding: ${(props) => (props.largePadding ? quadrupleSpacer : baseSpacer)};
   }
 `;
 
@@ -97,6 +103,7 @@ const Box: FunctionComponent<BoxProps> = ({
   backgroundAccent,
   bgSrc,
   footer,
+  ...rest
 }) => (
   <StyledBox
     bgSrc={bgSrc}
@@ -105,6 +112,7 @@ const Box: FunctionComponent<BoxProps> = ({
     zindex={zindex}
     largePadding={largePadding}
     footer={footer}
+    {...rest}
   >
     {bgSrc && !backgroundAccent && <BackgroundImageOverlay>{children}</BackgroundImageOverlay>}
     {!bgSrc && backgroundAccent && <StyledBoxBackground>{children}</StyledBoxBackground>}

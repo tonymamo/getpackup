@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import { FluidObject } from 'gatsby-image';
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -10,6 +10,7 @@ import {
   sextupleSpacer,
   quadrupleSpacer,
 } from '../styles/size';
+import { lightestGray } from '../styles/color';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type AvatarProps = {
@@ -21,6 +22,7 @@ type AvatarProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg';
   gravatarEmail: string;
   bottomMargin?: boolean;
+  style?: CSSProperties;
 };
 
 const renderSize = (size: AvatarProps['size']) => {
@@ -48,6 +50,26 @@ const AvatarImageWrapper = styled.div`
     props.size && renderSize(props.size)};
   width: ${(props) => props.size && renderSize(props.size)};
   ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer}`}
+
+  /* If image fails to load, provide some fallback styling to make it look better */
+  & img {
+    position: relative;
+  }
+
+  & img:after {
+    content: '👤';
+    font-size: ${(props) => renderSize(props.size)};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%; /* slightly bigger to have emoji fully cover up bottom of avatar circle */
+    background-color: ${lightestGray};
+  }
 `;
 
 const Avatar: FunctionComponent<AvatarProps> = (props) => {
@@ -62,7 +84,7 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
     <AvatarImageWrapper
       size={props.size || 'sm'}
       bottomMargin={props.bottomMargin || false}
-      {...props}
+      style={props.style}
     >
       <PreviewCompatibleImage
         imageInfo={{

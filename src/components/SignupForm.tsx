@@ -44,7 +44,7 @@ const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
             <Column sm={8}>
               <Field
                 as={Input}
-                hideLabel
+                hiddenLabel
                 type="email"
                 name={`email-${props.location}`}
                 label="Email"

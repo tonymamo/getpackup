@@ -1,6 +1,6 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Formik, Field, Form } from 'formik';
-import { Redirect, navigate, Link } from 'gatsby';
+import { navigate, Link } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
 import { FaArrowRight } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,7 +88,7 @@ const Login: FunctionComponent<LoginProps> = () => {
                       label="Email"
                       validate={requiredField}
                       required
-                      hideLabel
+                      hiddenLabel
                     />
                     <Field
                       as={Input}
@@ -97,7 +97,7 @@ const Login: FunctionComponent<LoginProps> = () => {
                       label="Password"
                       validate={requiredField}
                       required
-                      hideLabel
+                      hiddenLabel
                     />
 
                     <Button type="submit" disabled={isSubmitting || !isValid} block>

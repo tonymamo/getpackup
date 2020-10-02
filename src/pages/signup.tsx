@@ -96,7 +96,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                           label="First Name"
                           validate={requiredField}
                           required
-                          hideLabel
+                          hiddenLabel
                         />
                       </Column>
                       <Column sm={6}>
@@ -107,7 +107,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                           label="Last Name"
                           validate={requiredField}
                           required
-                          hideLabel
+                          hiddenLabel
                         />
                       </Column>
                     </Row>
@@ -118,7 +118,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       label="Email"
                       validate={requiredField}
                       required
-                      hideLabel
+                      hiddenLabel
                     />
                     <Field
                       as={Input}
@@ -127,7 +127,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       label="Password"
                       validate={requiredField}
                       required
-                      hideLabel
+                      hiddenLabel
                     />
                     <Field
                       as={Input}
@@ -136,7 +136,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       label="Confirm Password"
                       validate={requiredField}
                       required
-                      hideLabel
+                      hiddenLabel
                     />
                     <p>
                       <Button type="submit" disabled={isSubmitting || !isValid} block>
