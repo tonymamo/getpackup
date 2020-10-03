@@ -37,7 +37,7 @@ type ButtonProps = {
     | 'dangerOutline'
     | 'secondary'
     | 'tertiary';
-  rightspacer?: boolean;
+  rightSpacer?: boolean;
   onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
   to?: string;
   disabled?: boolean;
@@ -206,8 +206,8 @@ const allStyles = css`
   /* Disabled state for all other variations: adds opacity and cursor/pointer-events styling */
   ${(props: ButtonProps) => props.disabled && disabledStyle}
 
-  /* When button is next to other items, use rightspacer give them some breathing room */
-  ${(props: ButtonProps) => props.rightspacer && `margin-right: ${baseSpacer};`}
+  /* When button is next to other items, use rightSpacer give them some breathing room */
+  ${(props: ButtonProps) => props.rightSpacer && `margin-right: ${baseSpacer};`}
   
   &:active,
   &:focus {
@@ -241,7 +241,7 @@ const StyledLink = styled.span`
 
 const Button: FunctionComponent<ButtonProps> = ({
   color,
-  rightspacer,
+  rightSpacer,
   to,
   children,
   type,
@@ -255,7 +255,7 @@ const Button: FunctionComponent<ButtonProps> = ({
     return (
       <StyledLink
         color={color}
-        rightspacer={rightspacer}
+        rightSpacer={rightSpacer}
         disabled={disabled}
         block={block}
         type={type}
@@ -272,7 +272,7 @@ const Button: FunctionComponent<ButtonProps> = ({
       <StyledButton
         type={type}
         color={color}
-        rightspacer={rightspacer}
+        rightSpacer={rightSpacer}
         onClick={onClick}
         disabled={disabled}
         block={block}

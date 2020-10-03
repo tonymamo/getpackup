@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import GlobalAlerts from './GlobalAlerts';
+import ErrorBoundary from './ErrorBoundary';
 import '../styles/webfonts.css';
 
 import { quadrupleSpacer } from '../styles/size';
@@ -40,7 +41,9 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
         <LayoutWrapper>
           <Navbar />
-          <PageBody>{props.children}</PageBody>
+          <PageBody>
+            <ErrorBoundary>{props.children}</ErrorBoundary>
+          </PageBody>
           <GlobalAlerts />
           <Footer />
         </LayoutWrapper>

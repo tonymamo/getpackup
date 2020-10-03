@@ -13,6 +13,7 @@ const GlobalAlertWrapper = styled.div`
   overflow: hidden;
   bottom: ${halfSpacer};
   padding-right: ${halfSpacer};
+  padding-left: ${halfSpacer};
   right: 0;
   z-index: 2222;
   width: auto;

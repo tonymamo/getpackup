@@ -24,6 +24,13 @@ module.exports = {
       resolve: 'gatsby-plugin-create-client-paths',
       options: { prefixes: [`/app/*`] },
     },
+    {
+      resolve: "@sentry/gatsby",
+      options: {
+        dsn: process.env.GATSBY_SENTRY_DSN,
+        sampleRate: 0.7,
+      },
+    },
     // {
     //   resolve: 'gatsby-plugin-hotjar-tracking',
     //   options: {
@@ -77,10 +84,6 @@ module.exports = {
     },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
-    // {
-    //   resolve: 'gatsby-plugin-create-client-paths',
-    //   options: { prefixes: ['/agent/*', '/consumer/*', '/admin/*', '/storybook/*'] },
-    // },
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
