@@ -9,7 +9,7 @@ import NewTripSummary from '../views/NewTripSummary';
 import EditTripSummary from '../views/EditTripSummary';
 import TripById from '../views/TripById';
 import { RootState } from '../redux/ducks';
-import { PrivateRoute, LoadingPage } from '../components';
+import { PrivateRoute, LoadingPage, ErrorBoundary } from '../components';
 
 const App = () => {
   const firebase = useFirebase();
@@ -33,13 +33,15 @@ const App = () => {
   }
 
   return (
-    <Router basepath="/app">
-      <PrivateRoute path="/profile" component={Profile} />
-      <PrivateRoute path="/trips" component={Trips} />
-      <PrivateRoute path="/trips/new" component={NewTripSummary} />
-      <PrivateRoute path="/trips/:id" component={TripById} />
-      <PrivateRoute path="/trips/:id/edit" component={EditTripSummary} />
-    </Router>
+    <ErrorBoundary>
+      <Router basepath="/app">
+        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/trips" component={Trips} />
+        <PrivateRoute path="/trips/new" component={NewTripSummary} />
+        <PrivateRoute path="/trips/:id" component={TripById} />
+        <PrivateRoute path="/trips/:id/edit" component={EditTripSummary} />
+      </Router>
+    </ErrorBoundary>
   );
 };
 export default App;

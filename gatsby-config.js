@@ -3,6 +3,7 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+
 module.exports = {
   siteMetadata: {
     title: 'Packup',
@@ -29,6 +30,7 @@ module.exports = {
       options: {
         dsn: process.env.GATSBY_SENTRY_DSN,
         sampleRate: 0.7,
+        normalizeDepth: 10,
       },
     },
     // {
