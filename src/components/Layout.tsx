@@ -25,6 +25,7 @@ const LayoutWrapper = styled.div`
 const PageBody = styled.main`
   flex: 1;
   margin-top: ${quadrupleSpacer};
+  padding-top: env(safe-area-inset-top);
   background-image: url('${topo}');
   background-color: ${white};
   background-size: 500px;
