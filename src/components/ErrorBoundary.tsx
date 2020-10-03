@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Sentry from '@sentry/gatsby';
 
 import { Row, Column, Button, Box, Heading, PageContainer } from '.';
 
@@ -6,89 +7,42 @@ type Props = {
   children: any;
 };
 
-type State = {
-  error: string;
-  errorInfo: {
-    componentStack: string;
-  };
-  hasError: boolean;
-};
-
-class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      error: '',
-      errorInfo: {
-        componentStack: '',
-      },
-      hasError: false,
-    };
-  }
-
-  static getDerivedStateFromError(error: string) {
-    return { hasError: true, error };
-  }
-
-  componentDidUpdate(_: Props, prevState: State) {
-    if (prevState.hasError) {
-      this.resetErrorState();
-    }
-  }
-
-  componentDidCatch(
-    error: Error,
-    errorInfo: {
-      componentStack: string;
-    }
-  ) {
-    // eslint-disable-next-line no-console
-    console.log({ error, errorInfo });
-    this.setState({ errorInfo });
-  }
-
-  resetErrorState = () => this.setState({ hasError: false });
-
+// eslint-disable-next-line react/prefer-stateless-function
+class ErrorBoundary extends Component<Props, {}> {
   render() {
-    const { error, hasError, errorInfo } = this.state;
-    if (hasError) {
-      return (
-        <PageContainer withVerticalPadding>
-          <Row>
-            <Column md={6} mdOffset={3}>
-              <Box>
-                <Heading as="h2">There was an error in loading this page.</Heading>
-                <p>
-                  An unhandled error has occurred. If this continues to occur, please contact
-                  hello@getpackup.com.
-                </p>
-                <p>
-                  {typeof window !== 'undefined' && (
-                    <Button
-                      type="button"
-                      rightSpacer
-                      onClick={() => {
-                        window.location.reload();
-                      }}
-                    >
-                      Reload this page
+    return (
+      <Sentry.ErrorBoundary
+        fallback={({ error, componentStack, resetError }) => (
+          <PageContainer withVerticalPadding>
+            <Row>
+              <Column md={6} mdOffset={3}>
+                <Box>
+                  <Heading as="h2">There was an error in loading this page.</Heading>
+                  <p>
+                    An unhandled error has occurred. If this continues to occur, please contact
+                    hello@getpackup.com.
+                  </p>
+                  <p>
+                    <Button type="button" rightSpacer onClick={() => resetError()}>
+                      Reset
                     </Button>
-                  )}
 
-                  <a href="/">Go to Home</a>
-                </p>
-                <details>
-                  <summary>Click for error details</summary>
-                  <code>{errorInfo && errorInfo.componentStack.toString()}</code>
-                  {error && <code>{error}</code>}
-                </details>
-              </Box>
-            </Column>
-          </Row>
-        </PageContainer>
-      );
-    }
-    return this.props.children;
+                    <a href="/">Go to Home</a>
+                  </p>
+                  <details>
+                    <summary>Click for error details</summary>
+                    <code>{error.toString()}</code>
+                    <code>{componentStack}</code>
+                  </details>
+                </Box>
+              </Column>
+            </Row>
+          </PageContainer>
+        )}
+      >
+        {this.props.children}
+      </Sentry.ErrorBoundary>
+    );
   }
 }
 
