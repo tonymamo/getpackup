@@ -11,9 +11,7 @@ import ErrorBoundary from './ErrorBoundary';
 import '../styles/webfonts.css';
 
 import { quadrupleSpacer } from '../styles/size';
-import { white } from '../styles/color';
 import CssReset from '../styles/cssReset';
-import topo from '../images/topo.png';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -25,11 +23,7 @@ const LayoutWrapper = styled.div`
 
 const PageBody = styled.main`
   flex: 1;
-  margin-top: ${quadrupleSpacer};
-  padding-top: env(safe-area-inset-top);
-  background-image: url('${topo}');
-  background-color: ${white};
-  background-size: 500px;
+  margin-top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
 `;
 
 type LayoutProps = {};

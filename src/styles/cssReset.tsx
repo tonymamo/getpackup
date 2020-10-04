@@ -9,6 +9,7 @@ import {
   lightGray,
   white,
 } from './color';
+import topo from '../images/topo.png';
 
 import { baseSpacer, halfSpacer } from './size';
 import { headingsFontFamily, fontFamilySansSerif } from './typography';
@@ -76,7 +77,9 @@ const CssReset = createGlobalStyle`
     line-height: calc(16px + 1.05vw); /* Responsive Vertical Rhythm */
     color: ${textColor};
     overflow-x: hidden;
-    background-color: ${brandSecondary};
+    background-color: ${white};
+    background-image: url('${topo}');
+    background-size: 500px;
   }
 
   h1, h2, h3, h4, h5, h6 {

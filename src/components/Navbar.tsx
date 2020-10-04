@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { Spin as Hamburger } from 'hamburger-react';
+import { Squash as Hamburger } from 'hamburger-react';
 import { FaCalendar, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
 import PageContainer from './PageContainer';
@@ -27,8 +27,8 @@ const StyledNavbar = styled.header`
   left: 0;
   right: 0;
   background: ${brandSecondary};
-  height: ${quadrupleSpacer};
-  line-height: ${quadrupleSpacer};
+  min-height: ${quadrupleSpacer};
+  line-height: 64px;
   padding-top: env(safe-area-inset-top);
   z-index: 1000;
 
@@ -66,12 +66,12 @@ const StyledMenu = styled.nav`
   right: 0;
   z-index: 10;
   transition: all 200ms linear;
-  width: 50vw;
+  width: 75vw;
   max-width: 300px;
+  line-height: initial;
 
   & a {
     padding: 0;
-    line-height: initial;
     display: block;
     color: ${brandTertiary};
   }
@@ -183,7 +183,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             </StyledMenu>
           )}
           {!loggedInUser && (
-            <nav>
+            <FlexContainer as="nav">
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
               <NavLink to="/contact">Contact</NavLink>
@@ -191,7 +191,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               <Button type="link" to="/signup">
                 Sign Up
               </Button>
-            </nav>
+            </FlexContainer>
           )}
         </FlexContainer>
       </PageContainer>

@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <ErrorBoundary>
-      <Router basepath="/app">
+      <Router basepath="/app" primary={false}>
         <PrivateRoute path="/profile" component={Profile} />
         <PrivateRoute path="/trips" component={Trips} />
         <PrivateRoute path="/trips/new" component={NewTripSummary} />

@@ -25,6 +25,7 @@ type FlexContainerProps = {
   flexWrap?: 'wrap' | 'nowrap';
   height?: string;
   style?: {};
+  as?: string;
 };
 
 const FlexContainer: FunctionComponent<FlexContainerProps> = styled.div`
