@@ -21,18 +21,11 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
     owner: auth.uid,
   };
 
-  const error = () => {
-    throw new Error('help');
-  };
-
   return (
     <PageContainer withVerticalPadding>
       <Seo title="New Trip" />
       <p>
         <Button type="link" to="/app/trips" iconLeft={<FaChevronCircleLeft />}>
-          Back to all trips
-        </Button>
-        <Button type="button" onClick={() => error()}>
           Back to all trips
         </Button>
       </p>

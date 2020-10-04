@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { graphql } from 'gatsby';
+import { navigate, graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 import Typewriter from 'typewriter-effect';
 import scrollTo from 'gatsby-plugin-smoothscroll';
 import styled, { keyframes } from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 import {
   Seo,
@@ -206,8 +207,13 @@ const CarouselWrapper = styled.div`
 `;
 
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const size = useWindowSize();
   const isLargeScreen = Boolean(size && size.width && size.width > screenSizes.large);
+
+  if (!!auth && auth.isLoaded && !auth.isEmpty) {
+    navigate('/app/trips');
+  }
 
   return (
     <>
