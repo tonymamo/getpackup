@@ -28,6 +28,7 @@ const StyledNavbar = styled.header`
   right: 0;
   background: ${brandSecondary};
   height: ${quadrupleSpacer};
+  line-height: ${quadrupleSpacer};
   padding-top: env(safe-area-inset-top);
   z-index: 1000;
 
@@ -70,6 +71,7 @@ const StyledMenu = styled.nav`
 
   & a {
     padding: 0;
+    line-height: initial;
     display: block;
     color: ${brandTertiary};
   }
