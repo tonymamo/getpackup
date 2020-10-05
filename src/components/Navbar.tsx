@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { Squash as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { Spin as Hamburger } from 'hamburger-react';
+import { FaCalendar, FaCog, FaSearch, FaShoppingCart, FaSignOutAlt, FaUser } from 'react-icons/fa';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
@@ -15,10 +15,11 @@ import Box from './Box';
 import HorizontalRule from './HorizontalRule';
 
 import { brandSecondary, brandTertiary, white, brandPrimary } from '../styles/color';
-import { halfSpacer, quadrupleSpacer, tripleSpacer } from '../styles/size';
+import { halfSpacer, quadrupleSpacer, screenSizes } from '../styles/size';
 import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
 import { addAlert } from '../redux/ducks/globalAlerts';
 import { RootState } from '../redux/ducks';
+import useWindowSize from '../utils/useWindowSize';
 
 type NavbarProps = {};
 
@@ -61,13 +62,12 @@ const StyledMenuToggle = styled.div`
 
 const StyledMenu = styled.nav`
   position: absolute;
-  transform: scale(${(props: { menuIsOpen: boolean }) => (props.menuIsOpen ? 1 : 0)});
-  top: ${tripleSpacer};
+  transform: translateX(${(props: { menuIsOpen: boolean }) => (props.menuIsOpen ? 0 : '100vw')});
+  top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
   right: 0;
-  z-index: 10;
+  left: 0;
+  height: 100vh;
   transition: all 200ms linear;
-  width: 75vw;
-  max-width: 300px;
   line-height: initial;
 
   & a {
@@ -90,6 +90,8 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const menuDropdown = useRef<HTMLDivElement>(null);
   const hamburgerButton = useRef<HTMLDivElement>(null);
+  const size = useWindowSize();
+  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.medium);
 
   const handleProfileDropownClick = (e: MouseEvent) => {
     if (menuDropdown && menuDropdown.current && menuDropdown.current.contains(e.target as Node)) {
@@ -140,15 +142,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <PageContainer>
-        <FlexContainer
-          justifyContent="space-between"
-          alignItems="center"
-          style={{ position: 'relative' }}
-        >
+        <FlexContainer justifyContent="space-between" alignItems="center">
           <Heading noMargin>
             <Link to={loggedInUser ? '/app/trips' : '/'}>packup</Link>
           </Heading>
-          {loggedInUser && (
+          {isSmallScreen && (
             <StyledMenuToggle ref={hamburgerButton}>
               <Hamburger
                 color={white}
@@ -157,32 +155,76 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               />
             </StyledMenuToggle>
           )}
-          {loggedInUser && (
+
+          {isSmallScreen && (
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
-                <FlexContainer flexDirection="column">
-                  <Avatar src={auth.photoURL as string} gravatarEmail={auth.email as string} />
-                  <small>{auth.displayName}</small>
-                  <small>
-                    <strong>{auth.email}</strong>
-                  </small>
-                </FlexContainer>
-                <HorizontalRule compact />
-                <NavLink to="/app/trips" onClick={() => toggleMenu()}>
-                  <FaCalendar /> Trips
-                </NavLink>
-                <HorizontalRule compact />
-                <NavLink to="/app/profile" onClick={() => toggleMenu()}>
-                  <FaUser /> Profile
-                </NavLink>
-                <HorizontalRule compact />
-                <NavLink to="/" onClick={logout}>
-                  <FaSignOutAlt /> Log Out
-                </NavLink>
+                {loggedInUser && (
+                  <>
+                    <FlexContainer flexDirection="column">
+                      <Avatar
+                        src={auth.photoURL as string}
+                        gravatarEmail={auth.email as string}
+                        size="md"
+                      />
+                      <small>{auth.displayName}</small>
+                      <small>
+                        <strong>{auth.email}</strong>
+                      </small>
+                    </FlexContainer>
+                    <HorizontalRule compact />
+                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
+                      <FaCalendar /> Trips
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
+                      <FaSearch /> Search
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
+                      <FaShoppingCart /> Shopping List
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/app/profile" onClick={() => toggleMenu()}>
+                      <FaUser /> Profile
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
+                      <FaCog /> Settings
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/" onClick={logout}>
+                      <FaSignOutAlt /> Log Out
+                    </NavLink>
+                  </>
+                )}
+                {!loggedInUser && (
+                  <>
+                    <NavLink to="/blog" onClick={() => toggleMenu()}>
+                      Blog
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/about" onClick={() => toggleMenu()}>
+                      About
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/contact" onClick={() => toggleMenu()}>
+                      Contact
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/login" onClick={() => toggleMenu()}>
+                      Login
+                    </NavLink>
+                    <HorizontalRule compact />
+                    <NavLink to="/signup" onClick={() => toggleMenu()}>
+                      Sign Up
+                    </NavLink>
+                  </>
+                )}
               </Box>
             </StyledMenu>
           )}
-          {!loggedInUser && (
+          {!isSmallScreen && !loggedInUser && (
             <FlexContainer as="nav">
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
@@ -191,6 +233,19 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               <Button type="link" to="/signup">
                 Sign Up
               </Button>
+            </FlexContainer>
+          )}
+          {!isSmallScreen && loggedInUser && (
+            <FlexContainer as="nav">
+              <NavLink to="/app/trips">
+                <FaCalendar /> Trips
+              </NavLink>
+              <NavLink to="/app/profile">
+                <FaUser /> Profile
+              </NavLink>
+              <NavLink to="/" onClick={logout}>
+                <FaSignOutAlt /> Log Out
+              </NavLink>
             </FlexContainer>
           )}
         </FlexContainer>
