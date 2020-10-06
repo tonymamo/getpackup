@@ -1,6 +1,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/24009d09-87ab-48e9-8eff-d7164c92eac2/deploy-status)](https://app.netlify.com/sites/getpackup/deploys)
 
 <p align="center">
+  <img src="https://getpackup.com/img/collage.jpg" />
   <a href="https://getpackup.com/">
     <img alt="Packup" src="https://getpackup.com/img/avatar.jpg" width="96px" />
   </a>
@@ -9,7 +10,7 @@
   Get Packup - Frontend
 </h1>
 
-A Gatsby project using React, Redux, Styled-Components, Storybook, Formik, and more.
+A Gatsby project using React, Redux, Styled-Components, Formik, and more.
 
 ## 🚀 Quick start
 
@@ -36,9 +37,9 @@ A Gatsby project using React, Redux, Styled-Components, Storybook, Formik, and m
 
 1.  **Open the source code and start editing!**
 
-    Your site is now running at `http://localhost:8000`!
+    Your site is now running at `http://localhost:1391`!
 
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+    _Note: You'll also see a second link: _`http://localhost:1391/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
 
 ## 🧐 What's inside?
 
