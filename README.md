@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://getpackup.com/">
-    <img alt="Packup" src="" width="96px" />
+    <img alt="Packup" src="https://getpackup.com/img/avatar.jpg" width="96px" />
   </a>
 </p>
 <h1 align="center">
@@ -94,10 +94,6 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 12. **`README.md`**: A text file containing useful reference information about your project.
 
 13. **`static/cms/config.yml`**: A yaml file for defining schemas to use in NetlifyCMS
-
-## 🎓 Learning the Components
-
-Looking for more guidance on the components available in this repo? Run `yarn storybook` and access `http://localhost:8001` to see the Storybook guide, which goes over the components and their available `props`.
 
 ## 💫 Deploy
 

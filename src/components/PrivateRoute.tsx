@@ -25,6 +25,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
       if (location) {
         dispatch(addAttemptedPrivatePage(location.pathname));
       }
+      navigate('/login');
       dispatch(
         addAlert({
           type: 'danger',
@@ -35,7 +36,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
   }, []);
 
   if ((auth.isLoaded && auth.isEmpty) || !auth) {
-    navigate('/login');
+    navigate('/');
     return null;
   }
   return <Component user={auth} {...rest} />;
