@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { FaChevronCircleLeft } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 
-import { Heading, PageContainer, Box, Button, Seo } from '../components';
+import { Heading, Box, Seo } from '../components';
 import { RootState } from '../redux/ducks';
 import { TripType } from './Trips';
 import { dateWithTimezoneOffset, formattedDateForDateInput } from '../utils/dateUtils';
@@ -40,13 +39,8 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
       };
 
   return (
-    <PageContainer withVerticalPadding>
-      <Seo title="New Trip" />
-      <p>
-        <Button type="link" to={`/app/trips/${props.id}`} iconLeft={<FaChevronCircleLeft />}>
-          Back to Trip Summary
-        </Button>
-      </p>
+    <>
+      <Seo title="Edit Trip" />
       <Box>
         {activeTrip && (
           <>
@@ -57,7 +51,7 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
           </>
         )}
       </Box>
-    </PageContainer>
+    </>
   );
 };
 

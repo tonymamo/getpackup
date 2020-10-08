@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { FaChevronCircleLeft, FaMapMarkerAlt, FaCalendar, FaPencilAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendar, FaPencilAlt } from 'react-icons/fa';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { Link } from 'gatsby';
 
-import { Button, Heading, PageContainer, Box, Seo, FlexContainer } from '../components';
+import { Heading, Box, Seo, FlexContainer } from '../components';
 import { RootState } from '../redux/ducks';
 import { TripType } from './Trips';
 import { formattedDateRange, isBeforeToday } from '../utils/dateUtils';
@@ -21,13 +21,8 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
 
   const activeTrip = trips && trips.find((trip) => trip.id === props.id);
   return (
-    <PageContainer withVerticalPadding>
+    <>
       <Seo title={activeTrip?.name || 'My Trip'} />
-      <p>
-        <Button type="link" to="/app/trips" iconLeft={<FaChevronCircleLeft />}>
-          Back to all trips
-        </Button>
-      </p>
 
       {activeTrip ? (
         <div>
@@ -62,7 +57,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       ) : (
         <p>No trip found</p>
       )}
-    </PageContainer>
+    </>
   );
 };
 

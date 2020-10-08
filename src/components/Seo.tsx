@@ -190,9 +190,6 @@ const Seo: FunctionComponent<SeoType> = ({
         media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
-      <script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places`}
-      />
     </Helmet>
   );
 };

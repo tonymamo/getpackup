@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
-import { Heading, PageContainer, Box, Avatar, Seo } from '../components';
+import { Heading, Box, Avatar, Seo } from '../components';
 
 type ProfileProps = {
   user?: firebase.User;
@@ -9,7 +9,7 @@ type ProfileProps = {
 
 const Profile: FunctionComponent<ProfileProps> = ({ user }) => {
   return (
-    <PageContainer withVerticalPadding>
+    <>
       <Seo title="Profile" />
       {user && (
         <Box>
@@ -19,7 +19,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ user }) => {
           <p>ID: {user.uid}</p>
         </Box>
       )}
-    </PageContainer>
+    </>
   );
 };
 

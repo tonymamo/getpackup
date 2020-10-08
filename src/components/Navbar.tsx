@@ -5,6 +5,7 @@ import { useFirebase } from 'react-redux-firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
 import { FaCalendar, FaCog, FaSearch, FaShoppingCart, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { Helmet } from 'react-helmet-async';
 
 import PageContainer from './PageContainer';
 import FlexContainer from './FlexContainer';
@@ -15,11 +16,12 @@ import Box from './Box';
 import HorizontalRule from './HorizontalRule';
 
 import { brandSecondary, brandTertiary, white, brandPrimary } from '../styles/color';
-import { halfSpacer, quadrupleSpacer, screenSizes } from '../styles/size';
-import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
+import { halfSpacer, quadrupleSpacer, screenSizes, tripleSpacer } from '../styles/size';
+import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '../styles/typography';
 import { addAlert } from '../redux/ducks/globalAlerts';
 import { RootState } from '../redux/ducks';
 import useWindowSize from '../utils/useWindowSize';
+import yak from '../images/yak.png';
 
 type NavbarProps = {};
 
@@ -41,6 +43,12 @@ const StyledNavbar = styled.header`
   & h1 a {
     font-family: ${headingsFontFamily};
     font-size: ${fontSizeSmall};
+  }
+
+  & h1 {
+    ${(props: { loggedInUser: boolean }) => props.loggedInUser && `font-size: ${fontSizeBase}`};
+    color: ${white};
+    flex: 1;
   }
 `;
 
@@ -88,6 +96,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const dispatch = useDispatch();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [pageTitle, setPageTitle] = useState('');
+  const onHelmetChange = ({ title }: { title: string }) => {
+    if (title !== undefined) {
+      setPageTitle(title.replace(' | Packup: Adventure made easy.', ''));
+    }
+  };
+
   const menuDropdown = useRef<HTMLDivElement>(null);
   const hamburgerButton = useRef<HTMLDivElement>(null);
   const size = useWindowSize();
@@ -137,14 +152,26 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
       });
   };
 
+  const truncatedPageTitle = () =>
+    pageTitle.length > 25 ? `${pageTitle.substring(0, 25)}...` : pageTitle;
+
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
 
   return (
-    <StyledNavbar role="navigation" aria-label="main-navigation">
+    <StyledNavbar role="navigation" aria-label="main-navigation" loggedInUser={loggedInUser}>
+      <Helmet onChangeClientState={onHelmetChange} />
       <PageContainer>
         <FlexContainer justifyContent="space-between" alignItems="center">
-          <Heading noMargin>
-            <Link to={loggedInUser ? '/app/trips' : '/'}>packup</Link>
+          <Heading noMargin altStyle={loggedInUser}>
+            {loggedInUser ? (
+              <>
+                <img src={yak} alt="" width={tripleSpacer} /> {truncatedPageTitle()}
+              </>
+            ) : (
+              <Link to={loggedInUser ? '/app/trips' : '/'}>
+                <img src={yak} alt="" width={tripleSpacer} /> packup
+              </Link>
+            )}
           </Heading>
           {isSmallScreen && (
             <StyledMenuToggle ref={hamburgerButton}>
