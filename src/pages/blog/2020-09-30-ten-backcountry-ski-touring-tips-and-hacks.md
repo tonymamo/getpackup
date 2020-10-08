@@ -24,7 +24,6 @@ The best way to keep the threads of your water bottle from freezing shut is to s
 
 ![](/img/044a8714.jpg)
 
-
 <br/><br/>
 
 2. **Eat during transitions**
@@ -40,14 +39,15 @@ Dry skins are fast skins. Be sure to [pack some skin wax ](https://www.amazon.ca
 lik
 &nbsp;
 
-![](/img/img_8778.jpg)
-
-
 <br/><br/>
 
 4. **Do your dishes!**
 
 Keeping with the theme of managing your gear during marginal snow conditions, [a pot scrubber](https://www.amazon.ca/MSR-Alpine-Dish-Brush-Scraper/dp/B00453MQXC) can assist in cleaning wet snow and ice out of frozen bindings, off of skins, and off of your ski bases when things get frustrating. The benefit of a pot scrubber over a plastic card, is that it comes with a rubberized scraping edge, a short plastic bristle brush, and won’t become brittle in the cold. Throw it in the front pocket of your touring pants.
+
+![](/img/img_8778.jpg)
+
+
 <br/><br/>
 
 5. **Ski straps**
@@ -55,7 +55,6 @@ Keeping with the theme of managing your gear during marginal snow conditions, [a
 The pros pack up to 6 [ski straps](https://www.rei.com/product/182995/voile-strap-with-aluminum-buckle-20-in) when touring. They are infinitely useful for securing equipment, attaching frozen skins, locking heels down in broken bindings, fixing boots, splinting a broken bone, and ultimately saving your butt in countless situations. Keep a few in an easily accessible place, like having two wrapped around the shafts of your ski poles so that you can quickly put your planks in an A-frame on your pack. Also, be sure to pack different lengths!
 
 ![](/img/044a8781.jpg)
-
 
 <br/><br/>
 
@@ -70,7 +69,6 @@ Packing items that are going to be used most frequently or soonest closer to the
 
 ![](/img/044A4171.jpg)
 
-
 <br/><br/>
 
 8. **Be bold, start cold**
@@ -83,7 +81,6 @@ Ski touring must be one of the most cardiovascular intensive winter sports you c
 Chemical [hand warmers](https://www.rei.com/product/160327/yaktrax-hand-warmers-10-pairs) are great for frozen extremities like hands and feet, but are also great for managing the battery temperature of your electronic devices. When the going gets really cold, temps can have an enormous impact on the battery life of your critical devices - GPS, Radios, and camera gear. Packing a few activated hand warmers in your electronics compartments/baggage, or attaching it to the side of the electronics themselves can increase the battery life by hours.
 
 ![](/img/dscf2292-2.jpg)
-
 
 <br/><br/>
 
