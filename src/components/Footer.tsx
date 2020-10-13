@@ -51,8 +51,11 @@ const Footer = () => (
     <SignupFormWrapper id="signup">
       <PageContainer>
         <Heading as="h1" inverse align="center">
-          Sign up for the newsletter
+          Be the first to know
         </Heading>
+        <p style={{ textAlign: 'center', color: white }}>
+          Enter your email to be notified when our beta is available
+        </p>
         <Row>
           <Column md={8} mdOffset={2}>
             <SignupForm location="footer" />
