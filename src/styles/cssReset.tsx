@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 import {
   brandPrimary,
   brandPrimaryHover,
-  brandSecondary,
   textColor,
   headingsColor,
   lightGray,
@@ -153,6 +152,10 @@ const CssReset = createGlobalStyle`
       outline: 1px dotted ${brandPrimaryHover};
       outline-offset: -2px;
       text-decoration: none;
+    }
+
+    &:active {
+      opacity: .8;
     }
   }
 

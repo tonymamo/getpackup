@@ -46,7 +46,7 @@ const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle
   if (as === 'h6') {
     return altStyle ? fontSizeSmall : fontSizeH6;
   }
-  return fontSizeH1;
+  return altStyle ? fontSizeH3 : fontSizeH1;
 };
 
 const StyledHeading = styled.h1`

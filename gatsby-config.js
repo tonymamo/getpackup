@@ -3,11 +3,11 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-
 module.exports = {
   siteMetadata: {
     title: 'Packup',
-    description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
+    description:
+      'Never forget your tentpoles again! Pack with confidence for outdoor adventures using our trip generator. Collaborate with your trip party. Learn what to bring from trusted experts.',
     author: '@getpackup',
     url: 'https://getpackup.com',
     siteUrl: 'https://getpackup.com',
@@ -26,7 +26,7 @@ module.exports = {
       options: { prefixes: [`/app/*`] },
     },
     {
-      resolve: "@sentry/gatsby",
+      resolve: '@sentry/gatsby',
       options: {
         dsn: process.env.GATSBY_SENTRY_DSN,
         sampleRate: 0.7,
@@ -90,7 +90,8 @@ module.exports = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'packup',
-        description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
+        description:
+          'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
         short_name: 'packup',
         lang: 'en',
         start_url: '/',
@@ -153,7 +154,7 @@ module.exports = {
         devKey: process.env.GATSBY_SEGMENT_API_KEY,
         trackPage: true,
         trackPageDelay: 50,
-      }
+      },
     },
     // {
     //   resolve: "gatsby-plugin-firebase",
@@ -171,6 +172,6 @@ module.exports = {
     // },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
-    'gatsby-plugin-offline'
+    'gatsby-plugin-offline',
   ],
 };

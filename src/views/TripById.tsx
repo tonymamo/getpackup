@@ -22,7 +22,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   const activeTrip = trips && trips.find((trip) => trip.id === props.id);
   return (
     <>
-      <Seo title={activeTrip?.name || 'My Trip'} />
+      <Seo title="Trip Summary" />
 
       {activeTrip ? (
         <div>

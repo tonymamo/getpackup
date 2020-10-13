@@ -1,7 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaCalendar,
+  FaSearch,
+  FaUser,
+  FaShoppingCart,
+} from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import PageContainer from './PageContainer';
@@ -11,12 +19,13 @@ import HorizontalRule from './HorizontalRule';
 import FlexContainer from './FlexContainer';
 import Heading from './Heading';
 
-import { brandPrimary, brandSecondary, white } from '../styles/color';
-import { quadrupleSpacer, baseSpacer, doubleSpacer } from '../styles/size';
+import { brandPrimary, brandSecondary, textColor, white } from '../styles/color';
+import { quadrupleSpacer, baseSpacer, doubleSpacer, screenSizes } from '../styles/size';
 import { fontSizeSmall } from '../styles/typography';
-import { visuallyHiddenStyle } from '../styles/mixins';
+import { baseBorderStyle, visuallyHiddenStyle } from '../styles/mixins';
 import SignupForm from './SignupForm';
 import { RootState } from '../redux/ducks';
+import useWindowSize from '../utils/useWindowSize';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
@@ -48,9 +57,41 @@ const SignupFormWrapper = styled.div`
   background-color: ${brandPrimary};
 `;
 
+const BottomNav = styled.nav`
+  position: fixed;
+  bottom: 0;
+  min-height: calc(${quadrupleSpacer} + 1px); /* min height plus 1px border top */
+  left: 0;
+  right: 0;
+  display: flex;
+  background-color: ${white};
+  border-top: ${baseBorderStyle};
+  padding-bottom: env(safe-area-inset-bottom);
+
+  & a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: ${quadrupleSpacer};
+    color: ${textColor};
+  }
+
+  & a.active {
+    color: ${brandPrimary};
+  }
+`;
+
 const Footer = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
+  const size = useWindowSize();
+  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.medium);
+
+  const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
+    return isPartiallyCurrent ? { className: 'active' } : {};
+  };
+
   return (
     <>
       {!loggedInUser && (
@@ -127,6 +168,22 @@ const Footer = () => {
             </PageContainer>
           </StyledFooter>
         </>
+      )}
+      {isSmallScreen && loggedInUser && (
+        <BottomNav>
+          <Link to="/app/trips" getProps={isPartiallyActive}>
+            <FaCalendar />
+          </Link>
+          <Link to="/app/search" getProps={isPartiallyActive}>
+            <FaSearch />
+          </Link>
+          <Link to="/app/shopping-list" getProps={isPartiallyActive}>
+            <FaShoppingCart />
+          </Link>
+          <Link to="/app/profile" getProps={isPartiallyActive}>
+            <FaUser />
+          </Link>
+        </BottomNav>
       )}
     </>
   );

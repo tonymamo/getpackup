@@ -8,9 +8,10 @@ import Trips from '../views/Trips';
 import NewTripSummary from '../views/NewTripSummary';
 import EditTripSummary from '../views/EditTripSummary';
 import TripById from '../views/TripById';
+import Search from '../views/Search';
+import ShoppingList from '../views/ShoppingList';
 import { RootState } from '../redux/ducks';
 import { PageContainer, PrivateRoute, LoadingPage, ErrorBoundary } from '../components';
-import BreadCrumbs from '../components/Breadcrumbs';
 
 const App = () => {
   const firebase = useFirebase();
@@ -35,7 +36,6 @@ const App = () => {
 
   return (
     <PageContainer withVerticalPadding>
-      <BreadCrumbs />
       <ErrorBoundary>
         <Router basepath="/app" primary={false}>
           <PrivateRoute path="/profile" component={Profile} />
@@ -43,6 +43,8 @@ const App = () => {
           <PrivateRoute path="/trips/new" component={NewTripSummary} />
           <PrivateRoute path="/trips/:id" component={TripById} />
           <PrivateRoute path="/trips/:id/edit" component={EditTripSummary} />
+          <PrivateRoute path="/search" component={Search} />
+          <PrivateRoute path="/shopping-list" component={ShoppingList} />
         </Router>
       </ErrorBoundary>
     </PageContainer>

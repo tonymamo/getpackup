@@ -1,6 +1,6 @@
 ---
 templateKey: index-page
-title: Get Packup
+title: Packup
 heroImage: /img/044A0009-2.jpg
 mobileHeroImage: /img/044a0010.jpg
 heroHeading: Never forget important gear again
@@ -18,7 +18,7 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Sign up below to become an early adopter
-heroCTALink: "#learn-more"
+heroCTALink: '#learn-more'
 heroCTAText: Sign Up
 mainpitch:
   image: /img/Screen Shot 2020-09-08 at 1.17.18 PM.png

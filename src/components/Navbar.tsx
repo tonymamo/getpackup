@@ -1,24 +1,25 @@
 import React, { useEffect, useRef, useState, FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { Link, navigate } from 'gatsby';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'gatsby';
+import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaCog, FaSearch, FaShoppingCart, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import {
+  FaCalendar,
+  FaChevronLeft,
+  FaEllipsisH,
+  FaSearch,
+  FaShoppingCart,
+  FaUser,
+  FaPlusCircle,
+} from 'react-icons/fa';
+import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 
-import PageContainer from './PageContainer';
-import FlexContainer from './FlexContainer';
-import Heading from './Heading';
-import Avatar from './Avatar';
-import Button from './Button';
-import Box from './Box';
-import HorizontalRule from './HorizontalRule';
+import { PageContainer, FlexContainer, Heading, Button, Box, HorizontalRule } from '.';
 
 import { brandSecondary, brandTertiary, white, brandPrimary } from '../styles/color';
 import { halfSpacer, quadrupleSpacer, screenSizes, tripleSpacer } from '../styles/size';
 import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '../styles/typography';
-import { addAlert } from '../redux/ducks/globalAlerts';
 import { RootState } from '../redux/ducks';
 import useWindowSize from '../utils/useWindowSize';
 import yak from '../images/yak.png';
@@ -48,7 +49,7 @@ const StyledNavbar = styled.header`
   & h1 {
     ${(props: { loggedInUser: boolean }) => props.loggedInUser && `font-size: ${fontSizeBase}`};
     color: ${white};
-    flex: 1;
+    line-height: ${quadrupleSpacer};
   }
 `;
 
@@ -91,15 +92,42 @@ const StyledMenu = styled.nav`
   }
 `;
 
+const IconLinkWrapper = styled.div`
+  display: flex;
+  width: ${tripleSpacer};
+  & a {
+    flex: 1;
+  }
+`;
+
+const TopNavIconWrapper = styled.nav`
+  display: flex;
+
+  & a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: ${quadrupleSpacer};
+    width: ${tripleSpacer};
+    color: ${white};
+  }
+
+  & a.active {
+    color: ${brandPrimary};
+  }
+`;
+
 const Navbar: FunctionComponent<NavbarProps> = () => {
-  const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const dispatch = useDispatch();
+  const { pathname } = useLocation();
+
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState('');
+
   const onHelmetChange = ({ title }: { title: string }) => {
     if (title !== undefined) {
-      setPageTitle(title.replace(' | Packup: Adventure made easy.', ''));
+      setPageTitle(title.replace(' | Adventure made easy.', ''));
     }
   };
 
@@ -134,46 +162,55 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     setMenuIsOpen(false);
   };
 
-  const logout = () => {
-    setMenuIsOpen(false);
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        navigate('/');
-      })
-      .catch((err) => {
-        dispatch(
-          addAlert({
-            type: 'danger',
-            message: err.message,
-          })
-        );
-      });
-  };
-
-  const truncatedPageTitle = () =>
-    pageTitle.length > 25 ? `${pageTitle.substring(0, 25)}...` : pageTitle;
-
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
+
+  const routeHasParent = pathname.split('/').length >= 4;
+
+  const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
+    return isPartiallyCurrent ? { className: 'active' } : {};
+  };
 
   return (
     <StyledNavbar role="navigation" aria-label="main-navigation" loggedInUser={loggedInUser}>
       <Helmet onChangeClientState={onHelmetChange} />
       <PageContainer>
-        <FlexContainer justifyContent="space-between" alignItems="center">
-          <Heading noMargin altStyle={loggedInUser}>
-            {loggedInUser ? (
-              <>
-                <img src={yak} alt="" width={tripleSpacer} /> {truncatedPageTitle()}
-              </>
-            ) : (
+        <FlexContainer justifyContent="space-between" alignItems="center" height="100%">
+          {!isSmallScreen && (
+            <Heading noMargin>
               <Link to={loggedInUser ? '/app/trips' : '/'}>
-                <img src={yak} alt="" width={tripleSpacer} /> packup
+                <img src={yak} alt="" width={tripleSpacer} /> {loggedInUser ? '' : 'packup'}
               </Link>
-            )}
-          </Heading>
-          {isSmallScreen && (
+            </Heading>
+          )}
+          {loggedInUser && isSmallScreen && (
+            <IconLinkWrapper>
+              {routeHasParent && (
+                <Link to="../">
+                  <FaChevronLeft />
+                </Link>
+              )}
+              {!routeHasParent && pathname === '/app/trips' && (
+                <Link to="/app/trips/new">
+                  <FaPlusCircle />
+                </Link>
+              )}
+            </IconLinkWrapper>
+          )}
+          {loggedInUser && isSmallScreen && (
+            <Heading noMargin altStyle>
+              {pageTitle}
+            </Heading>
+          )}
+          {loggedInUser && isSmallScreen && (
+            <IconLinkWrapper>
+              {false && (
+                <Link to="/app/profile">
+                  <FaEllipsisH />
+                </Link>
+              )}
+            </IconLinkWrapper>
+          )}
+          {isSmallScreen && !loggedInUser && (
             <StyledMenuToggle ref={hamburgerButton}>
               <Hamburger
                 color={white}
@@ -183,71 +220,28 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             </StyledMenuToggle>
           )}
 
-          {isSmallScreen && (
+          {isSmallScreen && !loggedInUser && (
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
-                {loggedInUser && (
-                  <>
-                    <FlexContainer flexDirection="column">
-                      <Avatar
-                        src={auth.photoURL as string}
-                        gravatarEmail={auth.email as string}
-                        size="md"
-                      />
-                      <small>{auth.displayName}</small>
-                      <small>
-                        <strong>{auth.email}</strong>
-                      </small>
-                    </FlexContainer>
-                    <HorizontalRule compact />
-                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
-                      <FaCalendar /> Trips
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
-                      <FaSearch /> Search
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
-                      <FaShoppingCart /> Shopping List
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/app/profile" onClick={() => toggleMenu()}>
-                      <FaUser /> Profile
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/app/trips" onClick={() => toggleMenu()}>
-                      <FaCog /> Settings
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/" onClick={logout}>
-                      <FaSignOutAlt /> Log Out
-                    </NavLink>
-                  </>
-                )}
-                {!loggedInUser && (
-                  <>
-                    <NavLink to="/blog" onClick={() => toggleMenu()}>
-                      Blog
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/about" onClick={() => toggleMenu()}>
-                      About
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/contact" onClick={() => toggleMenu()}>
-                      Contact
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/login" onClick={() => toggleMenu()}>
-                      Login
-                    </NavLink>
-                    <HorizontalRule compact />
-                    <NavLink to="/signup" onClick={() => toggleMenu()}>
-                      Sign Up
-                    </NavLink>
-                  </>
-                )}
+                <NavLink to="/blog" onClick={() => toggleMenu()}>
+                  Blog
+                </NavLink>
+                <HorizontalRule compact />
+                <NavLink to="/about" onClick={() => toggleMenu()}>
+                  About
+                </NavLink>
+                <HorizontalRule compact />
+                <NavLink to="/contact" onClick={() => toggleMenu()}>
+                  Contact
+                </NavLink>
+                <HorizontalRule compact />
+                <NavLink to="/login" onClick={() => toggleMenu()}>
+                  Login
+                </NavLink>
+                <HorizontalRule compact />
+                <NavLink to="/signup" onClick={() => toggleMenu()}>
+                  Sign Up
+                </NavLink>
               </Box>
             </StyledMenu>
           )}
@@ -263,17 +257,20 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             </FlexContainer>
           )}
           {!isSmallScreen && loggedInUser && (
-            <FlexContainer as="nav">
-              <NavLink to="/app/trips">
-                <FaCalendar /> Trips
-              </NavLink>
-              <NavLink to="/app/profile">
-                <FaUser /> Profile
-              </NavLink>
-              <NavLink to="/" onClick={logout}>
-                <FaSignOutAlt /> Log Out
-              </NavLink>
-            </FlexContainer>
+            <TopNavIconWrapper>
+              <Link to="/app/trips" getProps={isPartiallyActive}>
+                <FaCalendar />
+              </Link>
+              <Link to="/app/search" getProps={isPartiallyActive}>
+                <FaSearch />
+              </Link>
+              <Link to="/app/shopping-list" getProps={isPartiallyActive}>
+                <FaShoppingCart />
+              </Link>
+              <Link to="/app/profile" getProps={isPartiallyActive}>
+                <FaUser />
+              </Link>
+            </TopNavIconWrapper>
           )}
         </FlexContainer>
       </PageContainer>

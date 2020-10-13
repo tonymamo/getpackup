@@ -6,7 +6,7 @@ import { useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import TextTruncate from 'react-text-truncate';
 
-import { FlexContainer, Avatar, Heading, Box, Button, Seo } from '../components';
+import { Row, Column, FlexContainer, Avatar, Heading, Box, Button, Seo } from '../components';
 import { RootState } from '../redux/ducks';
 import { formattedDateRange, isAfterToday, isBeforeToday } from '../utils/dateUtils';
 
@@ -84,11 +84,16 @@ const Trips: FunctionComponent<TripsProps> = () => {
   return (
     <>
       <Seo title="My Trips" />
-      <p>
-        <Button type="link" to="/app/trips/new" iconLeft={<FaPlusCircle />}>
-          New Trip
-        </Button>
-      </p>
+      <Row>
+        <Column sm={4}>
+          <p>
+            <Button type="link" to="/app/trips/new" iconLeft={<FaPlusCircle />} block>
+              New Trip
+            </Button>
+          </p>
+        </Column>
+      </Row>
+
       {inProgressTrips && inProgressTrips.length > 0 ? (
         <>
           <Heading as="h2" altStyle>
