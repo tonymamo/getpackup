@@ -49,6 +49,8 @@ const AvatarImageWrapper = styled.div`
   height: ${(props: { size: AvatarProps['size']; bottomMargin: AvatarProps['bottomMargin'] }) =>
     props.size && renderSize(props.size)};
   width: ${(props) => props.size && renderSize(props.size)};
+  /* min-width ensures it doesnt get resized when in a flexed parent */
+  min-width: ${(props) => props.size && renderSize(props.size)};
   ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer}`}
 
   /* If image fails to load, provide some fallback styling to make it look better */
