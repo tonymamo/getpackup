@@ -42,13 +42,14 @@ Dry skins are fast skins. Be sure to [pack some skin wax ](https://www.amazon.ca
 &nbsp;
 <br />
 
-![](/img/img_8778.jpg)
-
 <br/><br/>
 
 **4. Do your dishes!**
 
 Keeping with the theme of managing your gear during marginal snow conditions, [a pot scrubber](https://www.amazon.ca/MSR-Alpine-Dish-Brush-Scraper/dp/B00453MQXC) can assist in cleaning wet snow and ice out of frozen bindings, off of skins, and off of your ski bases when things get frustrating. The benefit of a pot scrubber over a plastic card, is that it comes with a rubberized scraping edge, a short plastic bristle brush, and won’t become brittle in the cold. Throw it in the front pocket of your touring pants.
+
+![](/img/img_8778.jpg)
+
 <br/><br/>
 
 **5. Ski straps**
