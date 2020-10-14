@@ -6,7 +6,7 @@ import Box from './Box';
 import PageContainer from './PageContainer';
 
 const LoadingPage: FunctionComponent<RouteComponentProps> = () => (
-  <PageContainer>
+  <PageContainer withVerticalPadding>
     <Skeleton width={200} height={40} />
     <br />
     <br />

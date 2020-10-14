@@ -7,6 +7,7 @@ import {
   headingsColor,
   lightGray,
   white,
+  brandSecondary,
 } from './color';
 import topo from '../images/topo.png';
 
@@ -67,6 +68,7 @@ const CssReset = createGlobalStyle`
   html {
     font-size: 16px;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background-color: ${brandSecondary};
   }
 
   body {

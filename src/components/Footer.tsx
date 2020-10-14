@@ -69,15 +69,22 @@ const BottomNav = styled.nav`
   padding-bottom: env(safe-area-inset-bottom);
 
   & a {
+    border-top: 1px solid transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
     height: ${quadrupleSpacer};
     color: ${textColor};
+    transition: all 0.2s ease-in-out;
+  }
+
+  & a:focus {
+    outline: none;
   }
 
   & a.active {
+    border-top-color: ${brandPrimary};
     color: ${brandPrimary};
   }
 `;
@@ -91,6 +98,10 @@ const Footer = () => {
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
     return isPartiallyCurrent ? { className: 'active' } : {};
   };
+
+  if (!auth.isLoaded) {
+    return null;
+  }
 
   return (
     <>

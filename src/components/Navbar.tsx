@@ -9,13 +9,12 @@ import {
   FaEllipsisH,
   FaSearch,
   FaShoppingCart,
-  FaUser,
   FaPlusCircle,
 } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 
-import { PageContainer, FlexContainer, Heading, Button, Box, HorizontalRule } from '.';
+import { Avatar, PageContainer, FlexContainer, Heading, Button, Box, HorizontalRule } from '.';
 
 import { brandSecondary, brandTertiary, white, brandPrimary } from '../styles/color';
 import { halfSpacer, quadrupleSpacer, screenSizes, tripleSpacer } from '../styles/size';
@@ -37,8 +36,15 @@ const StyledNavbar = styled.header`
   z-index: 1000;
 
   & a,
-  & a:hover {
+  & a:hover,
+  & a:focus,
+  & a:visited,
+  & a:active {
     color: ${white};
+  }
+
+  & a:focus {
+    outline: none;
   }
 
   & h1 a {
@@ -46,8 +52,8 @@ const StyledNavbar = styled.header`
     font-size: ${fontSizeSmall};
   }
 
-  & h1 {
-    ${(props: { loggedInUser: boolean }) => props.loggedInUser && `font-size: ${fontSizeBase}`};
+  & h2 {
+    font-size: ${fontSizeBase};
     color: ${white};
     line-height: ${quadrupleSpacer};
   }
@@ -111,10 +117,22 @@ const TopNavIconWrapper = styled.nav`
     height: ${quadrupleSpacer};
     width: ${tripleSpacer};
     color: ${white};
+    transition: all 0.2s ease-in-out;
   }
 
-  & a.active {
+  & a:focus,
+  & a:active {
+    outline: none;
+  }
+
+  & a.active,
+  & a.active:visited {
     color: ${brandPrimary};
+  }
+
+  /* active avatar border */
+  & a.active div {
+    box-shadow: 0px 0px 0px 2px ${brandSecondary}, 0px 0px 0px 4px ${brandPrimary};
   }
 `;
 
@@ -162,7 +180,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     setMenuIsOpen(false);
   };
 
-  const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
+  const loggedInUser = auth && !auth.isEmpty;
 
   const routeHasParent = pathname.split('/').length >= 4;
 
@@ -171,18 +189,27 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   };
 
   return (
-    <StyledNavbar role="navigation" aria-label="main-navigation" loggedInUser={loggedInUser}>
+    <StyledNavbar role="navigation" aria-label="main-navigation">
       <Helmet onChangeClientState={onHelmetChange} />
       <PageContainer>
         <FlexContainer justifyContent="space-between" alignItems="center" height="100%">
-          {!isSmallScreen && (
+          {!isSmallScreen && auth.isLoaded && (
             <Heading noMargin>
               <Link to={loggedInUser ? '/app/trips' : '/'}>
-                <img src={yak} alt="" width={tripleSpacer} /> {loggedInUser ? '' : 'packup'}
+                <img src={yak} alt="" width={tripleSpacer} />{' '}
+                {isSmallScreen && !loggedInUser ? '' : 'packup'}
               </Link>
             </Heading>
           )}
-          {loggedInUser && isSmallScreen && (
+          {isSmallScreen && auth.isLoaded && !loggedInUser && (
+            <Heading noMargin>
+              <Link to="/">
+                <img src={yak} alt="" width={tripleSpacer} />
+                packup
+              </Link>
+            </Heading>
+          )}
+          {loggedInUser && isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {routeHasParent && (
                 <Link to="../">
@@ -196,12 +223,12 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               )}
             </IconLinkWrapper>
           )}
-          {loggedInUser && isSmallScreen && (
-            <Heading noMargin altStyle>
+          {loggedInUser && isSmallScreen && auth.isLoaded && (
+            <Heading noMargin altStyle as="h2">
               {pageTitle}
             </Heading>
           )}
-          {loggedInUser && isSmallScreen && (
+          {loggedInUser && isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {false && (
                 <Link to="/app/profile">
@@ -210,7 +237,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               )}
             </IconLinkWrapper>
           )}
-          {isSmallScreen && !loggedInUser && (
+          {isSmallScreen && !loggedInUser && auth.isLoaded && (
             <StyledMenuToggle ref={hamburgerButton}>
               <Hamburger
                 color={white}
@@ -220,7 +247,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             </StyledMenuToggle>
           )}
 
-          {isSmallScreen && !loggedInUser && (
+          {isSmallScreen && !loggedInUser && auth.isLoaded && (
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
                 <NavLink to="/blog" onClick={() => toggleMenu()}>
@@ -245,7 +272,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Box>
             </StyledMenu>
           )}
-          {!isSmallScreen && !loggedInUser && (
+          {!isSmallScreen && !loggedInUser && auth.isLoaded && (
             <FlexContainer as="nav">
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
@@ -256,7 +283,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Button>
             </FlexContainer>
           )}
-          {!isSmallScreen && loggedInUser && (
+          {!isSmallScreen && loggedInUser && auth.isLoaded && (
             <TopNavIconWrapper>
               <Link to="/app/trips" getProps={isPartiallyActive}>
                 <FaCalendar />
@@ -268,7 +295,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 <FaShoppingCart />
               </Link>
               <Link to="/app/profile" getProps={isPartiallyActive}>
-                <FaUser />
+                <Avatar
+                  src={auth.photoURL as string}
+                  size="sm"
+                  gravatarEmail={auth.email as string}
+                />
               </Link>
             </TopNavIconWrapper>
           )}
