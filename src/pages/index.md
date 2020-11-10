@@ -1,7 +1,7 @@
 ---
 templateKey: index-page
 title: Get Packup
-heroImage: /img/044a0009-2.jpg
+heroImage: /img/mountains_day.jpg
 mobileHeroImage: /img/044a0010.jpg
 heroHeading: Never forget important gear again
 typewriterList:
