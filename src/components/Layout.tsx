@@ -30,7 +30,9 @@ const PageBody = styled.main`
   background-size: 500px;
 `;
 
-type LayoutProps = {};
+type LayoutProps = {
+  hideFromCms?: boolean;
+};
 
 const Layout: FunctionComponent<LayoutProps> = (props) => {
   return (
@@ -38,9 +40,9 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
       <CssReset />
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
         <LayoutWrapper>
-          <Navbar />
+          {!props.hideFromCms && <Navbar />}
           <PageBody>{props.children}</PageBody>
-          <GlobalAlerts />
+          {!props.hideFromCms && <GlobalAlerts />}
           <Footer />
         </LayoutWrapper>
       </IconContext.Provider>

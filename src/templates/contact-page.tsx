@@ -20,6 +20,7 @@ import {
 import { requiredEmail, requiredField } from '../utils/validations';
 
 type ContactProps = {
+  hideFromCms?: boolean;
   title: string;
   content: any;
   contentComponent: typeof HTMLContent;
@@ -53,7 +54,7 @@ export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
         </PageContainer>
       </HeroImage>
       <PageContainer withVerticalPadding>
-        <Seo title={props.title} />
+        {!props.hideFromCms && <Seo title={props.title} />}
         <Row>
           <Column md={6} mdOffset={3}>
             <Box>

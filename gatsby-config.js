@@ -6,7 +6,8 @@ require('dotenv').config({
 module.exports = {
   siteMetadata: {
     title: 'Packup',
-    description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
+    description:
+      'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
     author: '@getpackup',
     url: 'https://getpackup.com',
     siteUrl: 'https://getpackup.com',
@@ -85,7 +86,8 @@ module.exports = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'packup',
-        description: 'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
+        description:
+          'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
         short_name: 'packup',
         lang: 'en',
         start_url: '/',
@@ -139,6 +141,7 @@ module.exports = {
       resolve: 'gatsby-plugin-netlify-cms',
       options: {
         publicPath: 'cms',
+        modulePath: `${__dirname}/src/cms/cms.ts`,
       },
     },
     {
@@ -148,10 +151,10 @@ module.exports = {
         devKey: process.env.GATSBY_SEGMENT_API_KEY,
         trackPage: true,
         trackPageDelay: 50,
-      }
+      },
     },
     {
-      resolve: "gatsby-plugin-firebase",
+      resolve: 'gatsby-plugin-firebase',
       options: {
         credentials: {
           apiKey: process.env.GATSBY_FIREBASE_API_KEY,
@@ -161,11 +164,11 @@ module.exports = {
           storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
           messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
           appId: process.env.GATSBY_FIREBASE_APP_ID,
-        }
-      }
+        },
+      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
-    'gatsby-plugin-offline'
+    'gatsby-plugin-offline',
   ],
 };

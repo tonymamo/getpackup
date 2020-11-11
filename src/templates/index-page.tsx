@@ -43,6 +43,7 @@ import waveDownriver from '../images/wave-downriver.svg';
 import useWindowSize from '../utils/useWindowSize';
 
 type IndexPageProps = {
+  hideFromCms?: boolean;
   title: string;
   heroHeading: string;
   typewriterList: Array<{ text: string }>;
@@ -211,7 +212,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
 
   return (
     <>
-      <Seo title={props.title} />
+      {!props.hideFromCms && <Seo title={props.title} />}
       <HeroImage imgSrc={props.heroImage} mobileImgSrc={props.mobileHeroImage}>
         <PageContainer>
           <Heading inverse align="center" noMargin>

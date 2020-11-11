@@ -39,6 +39,7 @@ type RelatedPostType = {
 };
 
 type BlogPostProps = {
+  hideFromCms?: boolean;
   pageContext: {
     next: RelatedPostType;
     prev: RelatedPostType;
@@ -71,13 +72,15 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
   return (
     <>
-      <Seo
-        title={props.title}
-        description={props.description}
-        image={props.featuredimage.childImageSharp.fixed.src}
-        imageWidth={props.featuredimage.childImageSharp.fixed.width}
-        imageHeight={props.featuredimage.childImageSharp.fixed.height}
-      />
+      {!props.hideFromCms && (
+        <Seo
+          title={props.title}
+          description={props.description}
+          image={props.featuredimage.childImageSharp.fixed.src}
+          imageWidth={props.featuredimage.childImageSharp.fixed.width}
+          imageHeight={props.featuredimage.childImageSharp.fixed.height}
+        />
+      )}
       <HeroImage imgSrc={props.featuredimage}>
         <Heading inverse>{props.title}</Heading>
       </HeroImage>
@@ -118,14 +121,17 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <HorizontalRule />
               </div>
               <Heading as="h3">Keep Reading</Heading>
-              <Row>
-                <Column xs={6}>
-                  <RelatedBlogPost post={props.pageContext.prev} type="prev" />
-                </Column>
-                <Column xs={6}>
-                  <RelatedBlogPost post={props.pageContext.next} type="next" />
-                </Column>
-              </Row>
+              {!props.hideFromCms && (
+                <Row>
+                  <Column xs={6}>
+                    <RelatedBlogPost post={props.pageContext.prev} type="prev" />
+                  </Column>
+                  <Column xs={6}>
+                    <RelatedBlogPost post={props.pageContext.next} type="next" />
+                  </Column>
+                </Row>
+              )}
+
               <HorizontalRule />
               <Heading as="h3">Comments</Heading>
               <DiscussionEmbed {...disqusConfig} />

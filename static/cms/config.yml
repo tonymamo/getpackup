@@ -16,7 +16,7 @@ public_folder: /img
 collections:
   - name: "blog"
     editor:
-      preview: false
+      preview: true
     label: "Blog"
     folder: "src/pages/blog"
     create: true
@@ -38,12 +38,12 @@ collections:
 
   - name: "pages"
     label: "Pages"
-    editor:
-      preview: false
     files:
       - file: "src/pages/index.md"
         label: "Home Page"
         name: "index"
+        editor:
+          preview: true
         fields:
           - {
               label: "Template Key",
@@ -126,6 +126,8 @@ collections:
       - file: "src/pages/frequently-asked-questions.md"
         label: "FAQ Page"
         name: "frequently-asked-questions"
+        editor:
+          preview: false
         fields:
           - {
               label: "Template Key",
@@ -176,6 +178,8 @@ collections:
       - file: "src/pages/about.md"
         label: "About"
         name: "about"
+        editor:
+          preview: true
         fields:
           - {
               label: "Template Key",
@@ -189,6 +193,8 @@ collections:
       - file: "src/pages/contact.md"
         label: "Contact"
         name: "contact"
+        editor:
+          preview: true
         fields:
           - {
               label: "Template Key",

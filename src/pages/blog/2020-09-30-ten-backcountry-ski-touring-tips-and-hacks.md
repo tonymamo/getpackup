@@ -13,6 +13,7 @@ tags:
   - Splitboarding
   - Education
 ---
+
 If you’re anything like us, you’re already thinking forward towards the upcoming winter ski touring season. Touring provides all of the strenuous fun of winter mobility into unique mountainous areas, with the reward of cashing in on untouched powder caches (or bulletproof ice!).
 
 We’ve summarized ten backcountry ski touring (and splitboarding) tips and hacks to improve your excursions this upcoming winter. Let us know in the comments if you have any pro tips of your own!
@@ -36,7 +37,7 @@ Touring can be a sweaty and wet sport - the less time you spend at a standstill,
 Dry skins are fast skins. Be sure to [pack some skin wax ](https://www.amazon.ca/mountainFLOW-eco-wax-Plant-Based-Biodegradable-Prevents/dp/B083JJYYGD/ref=sr_1_4?dchild=1&keywords=ski+skin+wax&qid=1602029539&sr=8-4)to save your day, or the day of your friends, when things come to a gluey halt. Skin wax coats the fibres of your skins with a hydrophobic layer, keeping things light and dry when things get wet and gloppy.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1no7kQGmc24" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-lik
+
 &nbsp;
 
 <br/><br/>
@@ -46,7 +47,6 @@ lik
 Keeping with the theme of managing your gear during marginal snow conditions, [a pot scrubber](https://www.amazon.ca/MSR-Alpine-Dish-Brush-Scraper/dp/B00453MQXC) can assist in cleaning wet snow and ice out of frozen bindings, off of skins, and off of your ski bases when things get frustrating. The benefit of a pot scrubber over a plastic card, is that it comes with a rubberized scraping edge, a short plastic bristle brush, and won’t become brittle in the cold. Throw it in the front pocket of your touring pants.
 
 ![](/img/img_8778.jpg)
-
 
 <br/><br/>
 
