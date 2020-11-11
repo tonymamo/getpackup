@@ -39,9 +39,9 @@ const ChildrenWrapper = styled.div`
   text-align: center;
   color: ${white};
 
-  & h1 {
+  /* & h1 {
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
-  }
+  } */
 `;
 
 const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
