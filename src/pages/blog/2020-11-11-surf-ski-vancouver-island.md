@@ -26,8 +26,6 @@ If you’re also looking to combine the two activities into one trip, the ideal 
 
 ![](/img/vancouverisland_taylorburk_backcountry-3.jpg)
 
-![](/img/vancouverisland_taylorburk_backcountry-8.jpg)
-
 ###### **Getting to Vancouver Island**
 
 If you’re starting from Vancouver, there are two ways of getting across the Strait of Georgia over to the island: you can either take your vehicle on a ferry or catch a float plane straight from downtown and rent a car when you land.
@@ -36,9 +34,11 @@ If you opt for the ferry, the most direct route is from Horseshoe Bay or Tsawwas
 
 Once you’ve arrived on the island, you can either stay at a lodge at Mount Washington Alpine Resort or in the nearby town of Courtenay, BC. If you’re into karaoke, there are a few bars in town that offer the opportunity to share your talents with the locals.
 
-***Travel Tip:** If you’re catching a ferry on the weekend, arrive early (at least one hour before your sailing time) or make a reservation—it books up fast.*
+**\*Travel Tip:** If you’re catching a ferry on the weekend, arrive early (at least one hour before your sailing time) or make a reservation—it books up fast.*
 
 ***Recommended Gear:*** *[Backcountry All Around 60L Duffel](https://www.backcountry.com/backcountry-trekker-60l-duffel-bag?skid=BCC00E3-VET-S60L&ti=U2VhcmNoIFJlc3VsdHM6KkJhY2tjb3VudHJ5IEFsbCBBcm91bmQgNjBMIER1ZmZlbCo6MToxOipCYWNrY291bnRyeSBBbGwgQXJvdW5kIDYwTCBEdWZmZWwq)*
+
+![](/img/vancouverisland_taylorburk_backcountry-8.jpg)
 
 ![](/img/vancouverisland_taylorburk_backcountry-2.jpg)
 
@@ -48,9 +48,9 @@ On the east side of the island, nestled between Strathcona Park and the Pacific 
 
 Mount Washington has six lifts that access 1,700 acres and 505 vertical meters of alpine terrain. If you’re new to skiing/snowboarding or want to improve your skills, you can take a lesson and rent gear directly from the resort. It was my first time there and my expectations were well exceeded!
 
-***Travel Tip:** Make sure you have winter tires or chains, the road in to the resort can be challenging in winter conditions, especially if you don’t have 4WD.*
+**\*Travel Tip:** Make sure you have winter tires or chains, the road in to the resort can be challenging in winter conditions, especially if you don’t have 4WD.*
 
-***Recommended Gear:** Backcountry Cottonwoods GORE-TEX Jacket ([Men’s](https://www.backcountry.com/backcountry-cottonwoods-gore-tex-jacket-mens?skid=BCC00EY-PIRBK-XL&INT_ID=AP_pdp%257Cpdp_NA-NA_NA_REC-RR_REC-BCC00EY_NA_20200112&ti=QVBfcGRwfHBkcF9OQS1OQV9OQV9SRUMtUlJfUkVDLUJDQzAwRVlfTkFfMjAyMDAxMTI=) /* *[Women’s](https://www.backcountry.com/backcountry-cottonwoods-gore-tex-jacket-womens?skid=BCC00F3-GIN-S&ti=U2VhcmNoIFJlc3VsdHM6Y290dG9ud29vZHM6MTo1OmNvdHRvbndvb2Rz))*
+**\*Recommended Gear:** Backcountry Cottonwoods GORE-TEX Jacket ([Men’s](https://www.backcountry.com/backcountry-cottonwoods-gore-tex-jacket-mens?skid=BCC00EY-PIRBK-XL&INT_ID=AP_pdp%257Cpdp_NA-NA_NA_REC-RR_REC-BCC00EY_NA_20200112&ti=QVBfcGRwfHBkcF9OQS1OQV9OQV9SRUMtUlJfUkVDLUJDQzAwRVlfTkFfMjAyMDAxMTI=) /* *[Women’s](https://www.backcountry.com/backcountry-cottonwoods-gore-tex-jacket-womens?skid=BCC00F3-GIN-S&ti=U2VhcmNoIFJlc3VsdHM6Y290dG9ud29vZHM6MTo1OmNvdHRvbndvb2Rz))*
 
 ![](/img/vancouverisland_taylorburk_backcountry-15.jpg)
 
@@ -68,8 +68,8 @@ There are plenty of places to stay in Tofino depending on your budget, but one o
 
 Before you retrace your steps back to the ferry terminal in Nanaimo, make a stop at Tacofino and grab a bite for the road—you won’t regret it.
 
-***Travel Tip:** Leave plenty of time for traffic and construction on the drive back if you want to make your ferry on time—it’s a busy and slow going single-lane highway.*
+**\*Travel Tip:** Leave plenty of time for traffic and construction on the drive back if you want to make your ferry on time—it’s a busy and slow going single-lane highway.*
 
-***Recommended Gear:** [Filson Dry Large Duffel Bag](https://www.backcountry.com/filson-large-dry-duffel?skid=FSN00DC-GN-ONESIZ&ti=U2VhcmNoIFJlc3VsdHM6Zmlsc29uIGJhZzoxOjY6Zmlsc29uIGJhZw==)*
+**\*Recommended Gear:** [Filson Dry Large Duffel Bag](https://www.backcountry.com/filson-large-dry-duffel?skid=FSN00DC-GN-ONESIZ&ti=U2VhcmNoIFJlc3VsdHM6Zmlsc29uIGJhZzoxOjY6Zmlsc29uIGJhZw==)*
 
 ![](/img/vancouverisland_taylorburk_backcountry.jpg)
