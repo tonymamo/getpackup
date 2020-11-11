@@ -30,7 +30,7 @@ If you’re also looking to combine the two activities into one trip, the ideal 
 
 If you’re starting from Vancouver, there are two ways of getting across the Strait of Georgia over to the island: you can either take your vehicle on a ferry or catch a float plane straight from downtown and rent a car when you land.
 
-If you opt for the ferry, the most direct route is from Horseshoe Bay or Tsawwassen to Nanaimo, however, on this trip we started in the town of Gibsons and opted for the longer but more scenic route via the Sunshine Coast—Gibsons to the Powell River to Comox.
+If you opt for the ferry, the most direct route is from Horseshoe Bay or Tsawwassen to Nanaimo, however, on this trip we started in the town of Gibsons and opted for the longer but more scenic route via the Sunshine Coast—Gibsons to Powell River to Comox.
 
 Once you’ve arrived on the island, you can either stay at a lodge at Mount Washington Alpine Resort or in the nearby town of Courtenay, BC. If you’re into karaoke, there are a few bars in town that offer the opportunity to share your talents with the locals.
 
