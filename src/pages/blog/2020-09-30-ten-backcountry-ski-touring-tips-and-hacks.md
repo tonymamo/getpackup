@@ -38,7 +38,6 @@ Dry skins are fast skins. Be sure to [pack some skin wax ](https://www.amazon.ca
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1no7kQGmc24" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<br />
 &nbsp;
 <br />
 

@@ -7,7 +7,7 @@ module.exports = {
   siteMetadata: {
     title: 'Packup',
     description:
-      'Never forget your tentpoles again! Pack with confidence for outdoor adventures using our trip generator. Collaborate with your trip party. Learn what to bring from trusted experts.',
+      'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
     author: '@getpackup',
     url: 'https://getpackup.com',
     siteUrl: 'https://getpackup.com',
@@ -95,7 +95,6 @@ module.exports = {
         short_name: 'packup',
         lang: 'en',
         start_url: '/',
-        scope: '/',
         background_color: '#f3f3f3',
         theme_color: '#0E3757',
         display: 'standalone',
@@ -145,6 +144,7 @@ module.exports = {
       resolve: 'gatsby-plugin-netlify-cms',
       options: {
         publicPath: 'cms',
+        modulePath: `${__dirname}/src/cms/cms.ts`,
       },
     },
     {
@@ -154,6 +154,20 @@ module.exports = {
         devKey: process.env.GATSBY_SEGMENT_API_KEY,
         trackPage: true,
         trackPageDelay: 50,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-firebase',
+      options: {
+        credentials: {
+          apiKey: process.env.GATSBY_FIREBASE_API_KEY,
+          authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
+          databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
+          projectId: process.env.GATSBY_FIREBASE_PROJECT_ID,
+          storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
+          messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
+          appId: process.env.GATSBY_FIREBASE_APP_ID,
+        },
       },
     },
     // {

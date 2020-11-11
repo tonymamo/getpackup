@@ -27,7 +27,9 @@ const PageBody = styled.main`
   padding-bottom: calc(${quadrupleSpacer} + env(safe-area-inset-bottom));
 `;
 
-type LayoutProps = {};
+type LayoutProps = {
+  hideFromCms?: boolean;
+};
 
 const Layout: FunctionComponent<LayoutProps> = (props) => {
   return (
@@ -35,11 +37,11 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
       <CssReset />
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
         <LayoutWrapper>
-          <Navbar />
+          {!props.hideFromCms && <Navbar />}
           <PageBody>
             <ErrorBoundary>{props.children}</ErrorBoundary>
           </PageBody>
-          <GlobalAlerts />
+          {!props.hideFromCms && <GlobalAlerts />}
           <Footer />
         </LayoutWrapper>
       </IconContext.Provider>

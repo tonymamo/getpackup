@@ -6,6 +6,7 @@ import Content, { HTMLContent } from '../components/Content';
 import { Box, PageContainer, Seo, HeroImage, Heading } from '../components';
 
 type AboutPageProps = {
+  hideFromCms?: boolean;
   title: string;
   content: any;
   contentComponent: typeof HTMLContent;
@@ -17,6 +18,7 @@ export const AboutPageTemplate: FunctionComponent<AboutPageProps> = ({
   content,
   contentComponent,
   heroImage,
+  hideFromCms,
 }) => {
   const PageContent = contentComponent || Content;
 
@@ -30,7 +32,7 @@ export const AboutPageTemplate: FunctionComponent<AboutPageProps> = ({
         </PageContainer>
       </HeroImage>
       <PageContainer withVerticalPadding>
-        <Seo title={title} />
+        {!hideFromCms && <Seo title={title} />}
         <Box>
           <Heading>{title}</Heading>
           <div>
