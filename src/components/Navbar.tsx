@@ -85,7 +85,8 @@ const StyledMenu = styled.nav`
   transition: all 200ms linear;
   line-height: initial;
 
-  & a {
+  & a,
+  & a:visited {
     padding: 0;
     display: block;
     color: ${brandTertiary};
