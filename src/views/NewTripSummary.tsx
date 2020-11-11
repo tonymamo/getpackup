@@ -15,8 +15,8 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
     name: '',
     description: '',
     startingPoint: '',
-    startDate: '',
-    endDate: '',
+    startDate: new Date(),
+    endDate: new Date(),
     owner: auth.uid,
   };
 

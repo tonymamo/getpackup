@@ -1,21 +1,25 @@
-import React, { FunctionComponent } from 'react';
-import { FaCheckCircle, FaPlusCircle } from 'react-icons/fa';
+import React, { FunctionComponent, useState } from 'react';
+import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { navigate } from 'gatsby';
+import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 
-import { Row, Column, Input, Button, HorizontalRule } from '../components';
+import { Input, Button, HorizontalRule, Column, Row } from '../components';
+import { StyledLabel } from '../components/Input';
 import { addAlert } from '../redux/ducks/globalAlerts';
 import { requiredField } from '../utils/validations';
+import ReactDatepickerTheme from '../styles/react-datepicker';
 
 type TripSummaryProps = {
   initialValues: {
     name: string;
     description: string;
     startingPoint: string;
-    startDate: string;
-    endDate: string;
+    startDate: string | Date;
+    endDate: string | Date;
     owner: string;
     tripId?: string;
   };
@@ -41,7 +45,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
           tripId: docRef.id,
           created: new Date(),
         });
-        navigate('/app/trips');
+        navigate(`/app/trips/${docRef.id}/generator`);
         dispatch(
           addAlert({
             type: 'success',
@@ -75,7 +79,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         dispatch(
           addAlert({
             type: 'success',
-            message: 'Successfully updated trip',
+            message: `Successfully updated ${values.name}`,
           })
         );
       })
@@ -89,87 +93,96 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       });
   };
 
-  return (
-    <Formik
-      validateOnMount
-      initialValues={props.initialValues}
-      onSubmit={(values, { setSubmitting }) => {
-        if (props.type === 'new') {
-          addNewTrip(values);
-        }
-        if (props.type === 'edit') {
-          updateTrip(values);
-        }
-        setSubmitting(false);
-      }}
-    >
-      {({ isSubmitting, isValid, ...rest }) => (
-        <Form>
-          <Field
-            as={Input}
-            type="text"
-            name="name"
-            label="Trip Name"
-            validate={requiredField}
-            required
-          />
+  const [dateRangeStart, setDateRangeStart] = useState(new Date(props.initialValues.startDate));
+  const [dateRangeEnd, setDateRangeEnd] = useState(new Date(props.initialValues.endDate));
 
-          <Field
-            as={Input}
-            type="textarea"
-            name="description"
-            label="Description"
-            validate={requiredField}
-            required
-          />
-          {typeof window !== 'undefined' && window.google && (
+  return (
+    <>
+      <ReactDatepickerTheme />
+      <Formik
+        validateOnMount
+        initialValues={props.initialValues}
+        onSubmit={(values, { setSubmitting }) => {
+          if (props.type === 'new') {
+            addNewTrip(values);
+          }
+          if (props.type === 'edit') {
+            updateTrip(values);
+          }
+          setSubmitting(false);
+        }}
+      >
+        {({ isSubmitting, isValid, values, setFieldValue, ...rest }) => (
+          <Form>
             <Field
               as={Input}
-              type="geosuggest"
-              name="startingPoint"
-              label="Starting Location"
+              type="text"
+              name="name"
+              label="Trip Name"
               validate={requiredField}
               required
-              {...rest}
             />
-          )}
 
-          <Row>
-            <Column xs={6}>
+            <Field
+              as={Input}
+              type="textarea"
+              name="description"
+              label="Description"
+              validate={requiredField}
+              required
+            />
+            {typeof window !== 'undefined' && window.google && (
               <Field
                 as={Input}
-                type="date"
-                name="startDate"
-                label="Start Date"
+                type="geosuggest"
+                name="startingPoint"
+                label="Starting Location"
                 validate={requiredField}
                 required
+                setFieldValue={setFieldValue}
+                {...rest}
               />
-            </Column>
-            <Column xs={6}>
-              <Field
-                as={Input}
-                type="date"
-                name="endDate"
-                label="End Date"
-                validate={requiredField}
-                required
-              />
-            </Column>
-          </Row>
+            )}
 
-          <HorizontalRule />
-          <p>
-            <Button
-              type="submit"
-              disabled={isSubmitting || !isValid}
-              iconLeft={props.type === 'new' ? <FaPlusCircle /> : <FaCheckCircle />}
-            >
-              {props.type === 'new' ? 'Create' : 'Update'} Trip
-            </Button>
-          </p>
-        </Form>
-      )}
-    </Formik>
+            <Row>
+              <Column xs={6}>
+                <StyledLabel required>Start Date</StyledLabel>
+                <DatePicker
+                  selected={dateRangeStart}
+                  onChange={(date: Date) => {
+                    setFieldValue('startDate', date);
+                    setDateRangeStart(date);
+                  }}
+                  minDate={new Date()}
+                />
+              </Column>
+              <Column xs={6}>
+                <StyledLabel required>End Date</StyledLabel>
+                <DatePicker
+                  selected={dateRangeEnd}
+                  onChange={(date: Date) => {
+                    setFieldValue('endDate', date);
+                    setDateRangeEnd(date);
+                  }}
+                  minDate={new Date(values.startDate)}
+                />
+              </Column>
+            </Row>
+
+            <HorizontalRule />
+            <p>
+              <Button
+                type="submit"
+                disabled={isSubmitting || !isValid}
+                iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
+              >
+                {props.type === 'new' ? 'Select Activites' : 'Update Trip'}
+              </Button>
+            </p>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

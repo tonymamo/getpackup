@@ -8,6 +8,7 @@ import Trips from '../views/Trips';
 import NewTripSummary from '../views/NewTripSummary';
 import EditTripSummary from '../views/EditTripSummary';
 import TripById from '../views/TripById';
+import TripGenerator from '../views/TripGenerator';
 import Search from '../views/Search';
 import ShoppingList from '../views/ShoppingList';
 import { RootState } from '../redux/ducks';
@@ -43,6 +44,7 @@ const App = () => {
           <PrivateRoute path="/trips/new" component={NewTripSummary} />
           <PrivateRoute path="/trips/:id" component={TripById} />
           <PrivateRoute path="/trips/:id/edit" component={EditTripSummary} />
+          <PrivateRoute path="/trips/:id/generator" component={TripGenerator} />
           <PrivateRoute path="/search" component={Search} />
           <PrivateRoute path="/shopping-list" component={ShoppingList} />
         </Router>

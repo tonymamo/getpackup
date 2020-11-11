@@ -12,6 +12,7 @@ import Footer from './Footer';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
 import HorizontalRule from './HorizontalRule';
+import IconCheckbox from './IconCheckbox';
 import Image from './Image';
 import Input from './Input';
 import Layout from './Layout';
@@ -45,6 +46,7 @@ export {
   Heading,
   HeroImage,
   HorizontalRule,
+  IconCheckbox,
   Image,
   Input,
   Layout,

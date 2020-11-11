@@ -18,7 +18,7 @@ const downriverVariant = '#264b67';
 
 // Tertiary
 const bismark = '#41688B';
-const bismarkVariant = '#547796';
+const bismarkVariant = '#6d8fad';
 
 // Brand Color Assignment
 // You can add new vars here, but keep the names abstracted.

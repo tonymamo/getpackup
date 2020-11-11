@@ -15,7 +15,7 @@ class ErrorBoundary extends Component<Props, {}> {
         fallback={({ error, componentStack, resetError }) => (
           <PageContainer withVerticalPadding>
             <Row>
-              <Column md={6} mdOffset={3}>
+              <Column md={8} mdOffset={2}>
                 <Box>
                   <Heading as="h2">There was an error in loading this page.</Heading>
                   <p>

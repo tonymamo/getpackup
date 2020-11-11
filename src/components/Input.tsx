@@ -51,7 +51,7 @@ type InputProps = {
   FormikHelpers<string> &
   CommonProps<OptionType | OptionType[]>;
 
-const sharedStyles = css`
+export const sharedStyles = css`
   display: block;
   width: 100%;
   height: ${(props: InputProps) => (props.type === 'textarea' ? 'auto' : inputHeight)};
@@ -133,7 +133,7 @@ const StyledGeosuggest = styled(Geosuggest)`
   }
 `;
 
-const StyledLabel = styled.label<{
+export const StyledLabel = styled.label<{
   hiddenLabel?: boolean;
   invalid?: boolean;
   required?: boolean;
@@ -235,7 +235,7 @@ const multiSelectStyles = {
     fontSize: fontSizeBase,
     lineHeight: lineHeightBase,
     color: textColor,
-    backgroundColor: white,
+    backgroundColor: 'white',
     border: state.isFocused ? `2px solid ${brandPrimary}` : baseBorderStyle,
     boxShadow: state.isFocused && 'none',
     '&:hover': {
