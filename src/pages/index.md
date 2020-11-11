@@ -1,8 +1,8 @@
 ---
 templateKey: index-page
 title: Packup
-heroImage: /img/044A0009-2.jpg
-mobileHeroImage: /img/044a0010.jpg
+heroImage: /img/0f1a2062-3.jpg
+mobileHeroImage: /img/0f1a2059-2.jpg
 heroHeading: Never forget important gear again
 typewriterList:
   - text: tent poles
