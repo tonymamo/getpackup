@@ -69,7 +69,7 @@ const BottomNav = styled.nav`
   padding-bottom: env(safe-area-inset-bottom);
 
   & a {
-    border-top: 1px solid transparent;
+    border-top: 2px solid transparent;
     display: flex;
     justify-content: center;
     align-items: center;

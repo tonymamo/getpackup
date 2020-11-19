@@ -30,11 +30,13 @@ const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
         addToMailchimp(values[`email-${props.location}`]).then((res: MailchimpResponse) => {
           setSubmitting(false);
           setResponse(res);
-          window.analytics.track('Signed Up For Newsletter', {
-            email: values[`email-${props.location}`],
-            response: res,
-            location: props.location,
-          });
+          if (window && window.analytics) {
+            window.analytics.track('Signed Up For Newsletter', {
+              email: values[`email-${props.location}`],
+              response: res,
+              location: props.location,
+            });
+          }
         });
       }}
     >

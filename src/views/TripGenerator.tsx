@@ -67,9 +67,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
         >
           {({ isSubmitting, isValid, values }) => (
             <Form>
-              <Heading altStyle as="h2">
+              <Heading altStyle as="h2" noMargin>
                 Accommodations
               </Heading>
+              <p>Select all that apply</p>
               <Row>
                 <Column xs={4} md={2}>
                   <Field
@@ -127,9 +128,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                 </Column>
               </Row>
               <HorizontalRule />
-              <Heading altStyle as="h2">
+              <Heading altStyle as="h2" noMargin>
                 Transportation
               </Heading>
+              <p>Select all that apply</p>
               <Row>
                 <Column xs={4} md={2}>
                   <Field
@@ -187,9 +189,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                 </Column>
               </Row>
               <HorizontalRule />
-              <Heading altStyle as="h2">
+              <Heading altStyle as="h2" noMargin>
                 Activities
               </Heading>
+              <p>Select all that apply</p>
               <Row>
                 <Column xs={4} md={2}>
                   <Field
