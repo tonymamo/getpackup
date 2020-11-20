@@ -183,6 +183,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 
   const loggedInUser = auth && !auth.isEmpty;
 
+  const truncatedPageTitle = pageTitle.length > 25 ? `${pageTitle.substring(0, 25)}...` : pageTitle;
   const routeHasParent = pathname.split('/').length >= 4;
 
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
@@ -226,7 +227,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {loggedInUser && isSmallScreen && auth.isLoaded && (
             <Heading noMargin altStyle as="h2">
-              {pageTitle}
+              {truncatedPageTitle}
             </Heading>
           )}
           {loggedInUser && isSmallScreen && auth.isLoaded && (
