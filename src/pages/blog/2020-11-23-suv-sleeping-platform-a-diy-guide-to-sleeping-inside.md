@@ -20,9 +20,9 @@ tags:
 
 Climbers, skiers, surfers, hikers, accountants… calling all dirtbags! Are you looking for a way to stealth camp and move quickly through regions? Have you spent too many miserable nights in a swimming pool of a tent? Is your boyfriend deathly afraid of racoons? Would your acquaintances describe you as homeless?
 
-If you answered “I guess?” to any of the questions above, you’re in luck! We’re about to walk you through a simple and awesome modular sleeping platform build for your car or SUV. After countless hours of planning, and several major rabbit holes, we’ve put together what we think is the best and simplest design for getting out car camping in comfort of a hard side vehicle. This design was created with three goals in mind:
+If you answered “I guess?” to any of the questions above, you’re in luck! We’re about to walk you through a simple and awesome modular sleeping platform build for your car or SUV. After countless hours of planning, and several major rabbit holes, we’ve put together what we think is the best and simplest design for getting out car camping in the comfort of a hard side vehicle. This design was created with three goals in mind:
 
-**Modular -** Twin platform sections allow for easy additional/removal from the vehicle and allow the rear seats to work with a single platform remaining in the trunk area. Removable legs allow for the platform to be easily stored when not in use.
+**Modular -** Twin platform sections allow for easy addition/removal from the vehicle, and allow the rear seats to work with a single platform remaining in the trunk area. Removable legs allow for the platform to be easily stored when not in use.
 
 **Space Efficient** - Raised sleeping platform allows for significant storage underneath. Under-bed storage containers work great with the build. Take the containers out and store them under your actual bed at home when not in use.
 
@@ -126,7 +126,7 @@ Rolling out the carpet with the corduroy side down, place your plywood platform 
 
 ![](/img/rug-stapling.png)
 
-As you begin stapling the carpet to the platform, make sure that the carpet underneath is tight without any creasing, pulling the carpet tight and stapling on alternating sides of the platform as if you were stretching an art canvas onto a frame. This should create a reasonably snug rug fit. To finish the corners, you will need to cut excess material out of corners of the fabric to fold it down cleanly. I’m sure there’s an elegant way of doing this, but its also not rocket science.
+As you begin stapling the carpet to the platform, make sure that the carpet underneath is tight without any creasing, pulling the carpet tight and stapling on alternating sides of the platform as if you were stretching an art canvas onto a frame. This should create a reasonably snug rug fit. To finish the corners, you will need to cut excess material out of corners of the fabric to fold it down cleanly. I’m sure there’s an elegant way of doing this, but it's also not rocket surgery.
 
 <br></br>
 
@@ -134,8 +134,8 @@ As you begin stapling the carpet to the platform, make sure that the carpet unde
 
 With your top carpet layer now stapled to your platform sections, it is now time to mount your 1x4 support beams crosswise. This comes with a few steps:
 
-1. Placing your 1x4 beam and 3/4" flanges into their confirmed locations (light brown wood and dark grey donuts in diagram below), use your drill and 1/8th drill bit to predrill screw holes approximately 1” to 1¼” deep, through the support beam and into the plywood below. To make sure you are consistent with your drilling depth, use a piece of tape on your drill-bit to mark the correct depth. You do NOT want to drill straight through the other side of the plywood into your carpet. Aim to have screws in pairs, every 6” or so along the beam.
-2. After predrilling holes for a single beam, take your screws, and affix your beams and flanges, again aiming to not drill through to the rug side of the platform by over-drilling.
+1. Placing your 1x4 beam and 3/4" flanges into their confirmed locations (light brown wood and dark grey donuts in diagram below), use your drill and 1/8th drill bit to pre-drill screw holes approximately 1” to 1¼” deep, through the support beam and into the plywood below. To make sure you are consistent with your drilling depth, use a piece of tape on your drill-bit to mark the correct depth. You do NOT want to drill straight through the other side of the plywood into your carpet. Aim to have screws in pairs, every 6” or so along the beam.
+2. After pre-drilling holes for a single beam, take your screws, and affix your beams and flanges, again aiming to not drill through to the rug side of the platform by over-drilling.
 
 ![](/img/screw-boards.png)
 
@@ -162,7 +162,7 @@ At this point, you should have at least one (or both) of your platform sections 
 2. Combine a turnbuckle, quick-link, and carabiner to form a chain that will be used to secure the platform to the cargo holds of the car.
 3. With the turnbuckle 50% loosened, use the hooked end to grab the cargo hold ring and the other end to estimate the location of the D-ring for the platform. Mark with a pencil.
 4. Remove platform from car. 
-5. Predrill screw holes for the D-rings.
+5. Pre-drill screw holes for the D-rings.
 6. Screw D-rings down into position, clipping carabiner onto the D-Ring
 7. Rebuild platform in car, cinching down turnbuckles to tighten the whole system and secure the platform.
 
@@ -174,14 +174,14 @@ At this point, you should have at least one (or both) of your platform sections 
 
 # **9. Other Considerations**
 
-If you want to take your car camping situation to another level, take a look at some of our other considerations:
+If you want to take your car camping situation to another level, take a look at some other great ways to improve this build:
 
 1. Using a folding foam mattress for your platform such as the [Milliard Full Tri Folding Mattress](https://www.amazon.ca/Milliard-Folding-Mattress-Removable-Non-Slip/dp/B00W67PAPK). The advantage to this mattress is the ability to fold it up for storage, but additionally, having the ability to fold a single section of the mattress up to allow the storage of coolers, water containers, and other camping/gear items on the rear of your platform while in transport.
 2. [Underbed storage containers](https://www.canadiantire.ca/en/pdp/sterilite-clearview-wheeled-tote-with-latch-58-l-1426058p.html#srp) can make quick work of storing car camping gear, activity gear, dry food, wet goods, and other things under the rear platform. I can have all my car camping gear/kitchen in them, which I actually store under my bed at home when not in use.
 3. [Under platform LED lighting](https://www.homedepot.ca/product/brilliant-evolution-wireless-led-puck-light-3-pack-with-remote/1001541054) is super super convenient when the sun goes down. Get 3 battery powered pucks, and place one under the tailgate end, and one under each side of the platform closest to the rear passenger doors.
 4. There are plenty of great [bug mesh options](https://www.amazon.ca/TFY-Universal-Side-Door-Square-Window-Sunshades/dp/B00YQO4X4U/ref=sr_1_3?dchild=1&keywords=car+door+bug+mesh&qid=1606113636&sr=8-3) out there to help you keep your windows throwing breeze in the summer months without letting in too many mosquitos. 
 
-If you enjoyed this post and want to see more videos detailing the build of this platform, be sure to [follow our instagram page getpackup](https://www.instagram.com/getpackup/), where you can look through our highlights on this build.
+If you enjoyed this post and want to see more videos detailing the build of this platform, be sure to [follow our instagram page](https://www.instagram.com/getpackup/), where you can look through our highlights on this build.
 
 #### HAPPY CAMPING!
 
