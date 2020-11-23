@@ -6,7 +6,7 @@ description: Build your own modular sleeping platform for your vehicle in a
   weekend for $275. Designed for the weekend warrior who still needs their seats
   during the week.
 featuredpost: true
-featuredimage: /img/banner-pic.jpg
+featuredimage: /img/dscf6808.jpg
 tags:
   - DIY
   - camping
@@ -30,9 +30,9 @@ If you answered “I guess?” to any of the questions above, you’re in luck! 
 
 This platform was designed around a foam tri-fold mattress that we knew would fit within the dimensions of our vehicle, would be comfortable, and easily removable with its tri-fold design: The [Milliard Full Size Tri Folding Mattress with Cover.](https://www.amazon.ca/Milliard-Folding-Mattress-Removable-Non-Slip/dp/B00W67PAPK) I would note that these guys have a variety of mattress sizes that should work for your individual situation.
 
-![](/img/img-3435.jpg)
+![](/img/img-3402.jpg)
 
-<br></br>
+![](/img/img-3403.jpg)
 
 # **1. Materials and Tools**
 
