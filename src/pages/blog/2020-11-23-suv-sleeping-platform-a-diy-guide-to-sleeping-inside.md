@@ -34,6 +34,8 @@ This platform was designed around a foam tri-fold mattress that we knew would fi
 
 ![](/img/img-3403.jpg)
 
+###### **<br></br>**
+
 # **1. Materials and Tools**
 
 ### Core Materials
@@ -68,6 +70,8 @@ This platform was designed around a foam tri-fold mattress that we knew would fi
 
 **IMPORTANT:** Home depot and other hardware stores can cut your plywood and lumber to required dimensions when you purchase it, which will greatly help you with avoiding long cuts.
 
+<br></br>
+
 # **2. Prototyping Your Platform**
 
 Begin the process of your platform build by prototyping the platform for your vehicle. At this stage, you’ll want your long bubble level, a tape measure, stacks of books or other objects to manipulate the height of the level, and your notebook and pencil.
@@ -88,6 +92,8 @@ Below is a high-level example of our platform design – **measurements will be 
 
 ![](/img/platform-prototype.png)
 
+<br></br>
+
 # **3. Picking up Materials & Initial Cuts**
 
 Wood and many of the required materials should be straightforward to pick up from any hardware store in your area. Most stores will be able to make the required wood cuts for you when you buy it, which can save a lot of headaches as far as required tools, and transporting it home. Note that while the lengths of your platform sections will be unique to your vehicle, the 1x4 lumber boards should all be cut to 48", to match the width of the plywood platform.
@@ -97,6 +103,8 @@ Wood and many of the required materials should be straightforward to pick up fro
 3/4" Galvanized steel pipe and flanges can be a bit more of a challenge to source – some hardware locations may have it and others won’t.  Try calling ahead or using the websites of different store locations to see if it is held as inventory. 
 
 The biggest challenge was finding an indoor-outdoor rug in a 8’ x 6’ size that we could use for covering the platform. We ended up finding ours at Canadian Tire for around $40.00, along with our under-platform storage bins and LED light pucks.
+
+<br></br>
 
 # **4. Dry Fit #1**
 
@@ -108,6 +116,8 @@ Note that on our rear platform, we needed to make two additional diagonal cuts t
 
 **This is also a good opportunity for you to confirm the potential locations of your 1x4 support beams, and the locations and length your legs.**
 
+<br></br>
+
 # **5. Carpet Covering**
 
 The platform sections can now be covered with the indoor/outdoor rug, and stapled down to provide a soft but durable sleeping platform that won’t snag on any of your soft goods or mattress. This material is great because it is designed for dirty environments and can be cleaned or vacuumed easily after going through the rigors of camping. 
@@ -117,6 +127,8 @@ Rolling out the carpet with the corduroy side down, place your plywood platform 
 ![](/img/rug-stapling.png)
 
 As you begin stapling the carpet to the platform, make sure that the carpet underneath is tight without any creasing, pulling the carpet tight and stapling on alternating sides of the platform as if you were stretching an art canvas onto a frame. This should create a reasonably snug rug fit. To finish the corners, you will need to cut excess material out of corners of the fabric to fold it down cleanly. I’m sure there’s an elegant way of doing this, but its also not rocket science.
+
+<br></br>
 
 # **6. Support Beam & Flange Attachment**
 
@@ -129,6 +141,8 @@ With your top carpet layer now stapled to your platform sections, it is now time
 
 You may find that you want to complete your first trunk platform section initially with legs in the next step, before progressing to the second rear seat section. It might make your beam and leg location assumptions easier to make for your second platform if you do.
 
+<br></br>
+
 # **7. Legs**
 
 Things are taking shape at this point! We are going to now size our legs for each section.
@@ -137,6 +151,8 @@ Things are taking shape at this point! We are going to now size our legs for eac
 2. Factoring in how the tips, support beams, and flanges impact the height of your platform, measure and mark your steel legs, and use a pipe-cutter (rated for thin steel) to cut your legs to length for your section.
 3. Transfer the rubber furniture tip to the cut end of the pipe, and screw into the associated flange.
 4. IF YOUR LEG LENGTH IS INCORRECT, you can use a 3/4" wooden dowel spacer within the cup of the furniture tip to lengthen the leg, or additional wood pieces under the steel flange if it is really far out. Everyone makes mistakes!
+
+<br></br>
 
 # **8. Dry Fit #2 & Turnbuckles**
 
@@ -154,6 +170,8 @@ At this point, you should have at least one (or both) of your platform sections 
 
 ![](/img/turnbuckles.jpg)
 
+<br></br>
+
 # **9. Other Considerations**
 
 If you want to take your car camping situation to another level, take a look at some of our other considerations:
@@ -163,6 +181,8 @@ If you want to take your car camping situation to another level, take a look at 
 3. [Under platform LED lighting](https://www.homedepot.ca/product/brilliant-evolution-wireless-led-puck-light-3-pack-with-remote/1001541054) is super super convenient when the sun goes down. Get 3 battery powered pucks, and place one under the tailgate end, and one under each side of the platform closest to the rear passenger doors.
 4. There are plenty of great [bug mesh options](https://www.amazon.ca/TFY-Universal-Side-Door-Square-Window-Sunshades/dp/B00YQO4X4U/ref=sr_1_3?dchild=1&keywords=car+door+bug+mesh&qid=1606113636&sr=8-3) out there to help you keep your windows throwing breeze in the summer months without letting in too many mosquitos. 
 
+If you enjoyed this post and want to see more videos detailing the build of this platform, be sure to [follow our instagram page getpackup](https://www.instagram.com/getpackup/), where you can look through our highlights on this build.
+
 #### HAPPY CAMPING!
 
-![](/img/img-3665.jpg)
+![Loaded up for the road.](/img/img-3665.jpg)
