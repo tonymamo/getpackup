@@ -181,7 +181,7 @@ If you want to take your car camping situation to another level, take a look at 
 3. [Under platform LED lighting](https://www.homedepot.ca/product/brilliant-evolution-wireless-led-puck-light-3-pack-with-remote/1001541054) is super super convenient when the sun goes down. Get 3 battery powered pucks, and place one under the tailgate end, and one under each side of the platform closest to the rear passenger doors.
 4. There are plenty of great [bug mesh options](https://www.amazon.ca/TFY-Universal-Side-Door-Square-Window-Sunshades/dp/B00YQO4X4U/ref=sr_1_3?dchild=1&keywords=car+door+bug+mesh&qid=1606113636&sr=8-3) out there to help you keep your windows throwing breeze in the summer months without letting in too many mosquitos. 
 
-If you enjoyed this post and want to see more videos detailing the build of this platform, be sure to [follow our instagram page](https://www.instagram.com/getpackup/), where you can look through our highlights on this build.
+If you enjoyed this post and want to see more videos detailing the build of this platform, be sure to [follow our instagram page](https://www.instagram.com/getpackup/), where you can look through our highlights on this build. Also - sign up for our mailing list to know when our app platform is ready for your adventures!
 
 #### HAPPY CAMPING!
 
