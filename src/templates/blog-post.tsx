@@ -88,7 +88,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           imageHeight={props.featuredimage.childImageSharp.fixed.height}
         />
       )}
-      {!isSmallScreen && (
+      {typeof window !== 'undefined' && !isSmallScreen && (
         <Share
           url={props.pageContext.slug}
           title={props.title}
