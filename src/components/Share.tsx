@@ -102,15 +102,10 @@ const Share: FunctionComponent<ShareProps> = ({
     );
   };
 
-  if (vertical) {
-    return <VerticalShareWrapper>{renderIcons()}</VerticalShareWrapper>;
-  }
-
-  return (
-    <ShareWrapper>
-      <small>Share This Post:</small>
-      {renderIcons()}
-    </ShareWrapper>
+  return vertical ? (
+    <VerticalShareWrapper>{renderIcons()}</VerticalShareWrapper>
+  ) : (
+    <ShareWrapper>{renderIcons()}</ShareWrapper>
   );
 };
 
