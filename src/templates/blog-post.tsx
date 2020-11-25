@@ -17,6 +17,7 @@ import {
   Seo,
   RelatedBlogPost,
   Share,
+  ClientOnly,
 } from '../components';
 import Content, { HTMLContent } from '../components/Content';
 import useWindowSize from '../utils/useWindowSize';
@@ -89,14 +90,16 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
         />
       )}
       {typeof window !== 'undefined' && !isSmallScreen && (
-        <Share
-          url={props.pageContext.slug}
-          title={props.title}
-          tags={props.tags}
-          vertical
-          media={props.featuredimage.childImageSharp.fixed.src}
-          description={props.description}
-        />
+        <ClientOnly>
+          <Share
+            url={props.pageContext.slug}
+            title={props.title}
+            tags={props.tags}
+            vertical
+            media={props.featuredimage.childImageSharp.fixed.src}
+            description={props.description}
+          />
+        </ClientOnly>
       )}
       <HeroImage imgSrc={props.featuredimage}>
         <Heading inverse>{props.title}</Heading>
