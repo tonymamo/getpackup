@@ -16,8 +16,11 @@ import {
   Pill,
   Seo,
   RelatedBlogPost,
+  Share,
 } from '../components';
 import Content, { HTMLContent } from '../components/Content';
+import useWindowSize from '../utils/useWindowSize';
+import { screenSizes } from '../styles/size';
 
 type RelatedPostType = {
   fields: {
@@ -41,6 +44,7 @@ type RelatedPostType = {
 type BlogPostProps = {
   hideFromCms?: boolean;
   pageContext: {
+    slug: string;
     next: RelatedPostType;
     prev: RelatedPostType;
   };
@@ -64,6 +68,9 @@ type BlogPostProps = {
 export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   const PostContent = props.contentComponent || Content;
 
+  const size = useWindowSize();
+  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
+
   const disqusConfig = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     shortname: process.env.GATSBY_DISQUS_NAME!,
@@ -80,6 +87,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           imageWidth={props.featuredimage.childImageSharp.fixed.width}
           imageHeight={props.featuredimage.childImageSharp.fixed.height}
         />
+      )}
+      {!isSmallScreen && (
+        <Share url={props.pageContext.slug} title={props.title} tags={props.tags} vertical />
       )}
       <HeroImage imgSrc={props.featuredimage}>
         <Heading inverse>{props.title}</Heading>
@@ -98,6 +108,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     <small>{props.readingTime.text}</small>
                   </p>
                 </FlexContainer>
+
+                <Share url={props.pageContext.slug} title={props.title} tags={props.tags} />
+
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
                     {props.tags.map((tag: string) => (
@@ -110,6 +123,11 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <p style={{ fontStyle: 'italic' }}>{props.description}</p>
                 <HorizontalRule />
                 <PostContent content={props.content} />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Share url={props.pageContext.slug} title={props.title} tags={props.tags} />
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>

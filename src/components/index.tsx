@@ -22,6 +22,7 @@ import PreviewCompatibleImage from './PreviewCompatibleImage';
 import RelatedBlogPost from './RelatedBlogPost';
 import Row from './Row';
 import Seo from './Seo';
+import Share from './Share';
 import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
 import Testimonial from './Testimonial';
@@ -52,6 +53,7 @@ export {
   RelatedBlogPost,
   Row,
   Seo,
+  Share,
   SignupForm,
   SiteMetadata,
   Testimonial,
