@@ -12,6 +12,8 @@ import {
   TelegramIcon,
   EmailIcon,
   RedditIcon,
+  PinterestShareButton,
+  PinterestIcon,
 } from 'react-share';
 import styled from 'styled-components';
 
@@ -24,6 +26,8 @@ type ShareProps = {
   title: string;
   tags: Array<string>;
   vertical?: boolean;
+  media: string;
+  description: string;
 };
 
 const ShareWrapper = styled.div`
@@ -52,7 +56,14 @@ const VerticalShareWrapper = styled.div`
   }
 `;
 
-const Share: FunctionComponent<ShareProps> = ({ url, title, tags, vertical }) => {
+const Share: FunctionComponent<ShareProps> = ({
+  url,
+  title,
+  tags,
+  vertical,
+  media,
+  description,
+}) => {
   const shareUrl = `https://getpackup.com${url}`;
 
   const renderIcons = () => {
@@ -71,8 +82,15 @@ const Share: FunctionComponent<ShareProps> = ({ url, title, tags, vertical }) =>
           <TelegramIcon size={32} round />
         </TelegramShareButton>
         <RedditShareButton url={shareUrl} title={title}>
-          <RedditIcon size={32} round />
+          <RedditIcon size={32} round bgStyle={{ fill: '#FF4500' }} />
         </RedditShareButton>
+        <PinterestShareButton
+          url={shareUrl}
+          media={`https://getpackup.com${media}`}
+          description={description}
+        >
+          <PinterestIcon size={32} round />
+        </PinterestShareButton>
         <EmailShareButton
           url={shareUrl}
           subject={`Check out this article on Packup: ${title}`}

@@ -89,7 +89,14 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
         />
       )}
       {!isSmallScreen && (
-        <Share url={props.pageContext.slug} title={props.title} tags={props.tags} vertical />
+        <Share
+          url={props.pageContext.slug}
+          title={props.title}
+          tags={props.tags}
+          vertical
+          media={props.featuredimage.childImageSharp.fixed.src}
+          description={props.description}
+        />
       )}
       <HeroImage imgSrc={props.featuredimage}>
         <Heading inverse>{props.title}</Heading>
@@ -109,7 +116,13 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                   </p>
                 </FlexContainer>
 
-                <Share url={props.pageContext.slug} title={props.title} tags={props.tags} />
+                <Share
+                  url={props.pageContext.slug}
+                  title={props.title}
+                  tags={props.tags}
+                  media={props.featuredimage.childImageSharp.fixed.src}
+                  description={props.description}
+                />
 
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
@@ -127,7 +140,13 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <br />
                 <br />
                 <br />
-                <Share url={props.pageContext.slug} title={props.title} tags={props.tags} />
+                <Share
+                  url={props.pageContext.slug}
+                  title={props.title}
+                  tags={props.tags}
+                  media={props.featuredimage.childImageSharp.fixed.src}
+                  description={props.description}
+                />
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
