@@ -42,8 +42,8 @@ const VerticalShareWrapper = styled.div`
   position: fixed;
   z-index: 1;
   left: 0;
-  height: 232px; /* height of rendered div */
-  margin-top: -116px; /* half of above */
+  height: 270px; /* height of rendered div */
+  margin-top: -135px; /* half of above */
   top: 50%;
   width: 40px;
   background: ${white};
