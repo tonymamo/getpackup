@@ -186,3 +186,7 @@ If you enjoyed this post and want to see more videos detailing the build of this
 #### HAPPY CAMPING!
 
 ![Loaded up for the road.](/img/img-3665.jpg)
+
+### <br></br>
+
+### If you find our posts useful, wait till you see the app we are developing.[ Please consider signing up for the beta of our app](www.getpackup.com), which aims to help you get outside on excursions faster and safer!
