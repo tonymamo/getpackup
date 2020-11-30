@@ -16,6 +16,10 @@ tags:
   - hacks
   - guides
 ---
+#### If you find our posts useful for getting out, wait till you see the app we are developing. [Please consider signing up for the beta of our app](https://getpackup.com/), which aims to help you get outside on excursions faster and safer!
+
+<br></br>
+
 # **Introduction**
 
 Climbers, skiers, surfers, hikers, accountants… calling all dirtbags! Are you looking for a way to stealth camp and move quickly through regions? Have you spent too many miserable nights in a swimming pool of a tent? Is your boyfriend deathly afraid of racoons? Would your acquaintances describe you as homeless?
@@ -189,4 +193,4 @@ If you enjoyed this post and want to see more videos detailing the build of this
 
 ### <br></br>
 
-### If you find our posts useful, wait till you see the app we are developing.[ Please consider signing up for the beta of our app](www.getpackup.com), which aims to help you get outside on excursions faster and safer!
+### If you find our posts useful for getting outside, wait till you see the app we are developing. [Please consider signing up for the beta of our app](https://getpackup.com/), which aims to help you get outside on excursions faster and safer!
