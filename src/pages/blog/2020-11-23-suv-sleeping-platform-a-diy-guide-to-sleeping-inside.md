@@ -184,13 +184,14 @@ If you want to take your car camping situation to another level, take a look at 
 2. [Underbed storage containers](https://www.canadiantire.ca/en/pdp/sterilite-clearview-wheeled-tote-with-latch-58-l-1426058p.html#srp) can make quick work of storing car camping gear, activity gear, dry food, wet goods, and other things under the rear platform. I can have all my car camping gear/kitchen in them, which I actually store under my bed at home when not in use.
 3. [Under platform LED lighting](https://amzn.to/3g3l6u4) is super super convenient when the sun goes down. Get 3 battery powered pucks, and place one under the tailgate end, and one under each side of the platform closest to the rear passenger doors. Get your own 3M brand velcro mount tape for these so you can remove them when you want.
 4. There are plenty of [great bug mesh options](https://amzn.to/2VAZQSQ) out there to help you keep your windows throwing breeze in the summer months without letting in any mosquitos. These also serve to provide additional privacy by tinting the window when up.
+5. Given that many vehicles will not provide an electrical flow while turned off (and you don't want to kill your car battery), it can be a good idea to have some secondary power sources for charging phones/lights/electronics. Jackery makes an affordable option that has lots of capacity, and can recharge from your vehicle while running or various solar options out there. This could easily power a heated blanket through a colder night in your vehicle too. Check it out: [Jackery Portable Power Station Explorer 240](https://amzn.to/3mCJDIZ)
 
 If you enjoyed this post and want to see more videos detailing the build of this platform, be sure to [follow our instagram page](https://www.instagram.com/getpackup/), where you can look through our highlights on this build. Also - sign up for our mailing list to know when our app platform is ready for your adventures!
 
-#### HAPPY CAMPING!
+# HAPPY CAMPING!
 
 ![Loaded up for the road.](/img/img-3665.jpg)
 
 ### <br></br>
 
-### If you find our posts useful for getting outside, wait till you see the app we are developing. [Please consider signing up for the beta of our app](https://getpackup.com/), which aims to help you get outside on excursions faster and safer!
+#### While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!
