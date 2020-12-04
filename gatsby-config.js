@@ -152,12 +152,12 @@ module.exports = {
         trackPageDelay: 50,
       },
     },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_TRACKING_ID,
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-google-analytics`,
+    //   options: {
+    //     trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_TRACKING_ID,
+    //   },
+    // },
     {
       resolve: 'gatsby-plugin-firebase',
       options: {
