@@ -32,7 +32,7 @@ If you answered “I guess?” to any of the questions above, you’re in luck! 
 
 **Cost Effective -** You should be able to put this together for between $275 to $535 (CAD, before tax) depending on how many nice-to-haves you add, and how many tools you can borrow. Not bad!
 
-This platform was designed around a foam tri-fold mattress that we knew would fit within the dimensions of our vehicle, would be comfortable, and easily removable with its tri-fold design: [The Milliard Full Tri Folding Mattress with Washable Cover (73 inches x 52 inches x 4 inches)](https://amzn.to/3fTZRed). We've been super happy with it so far, and the folding design allows us to store more gear while in transit. I would note that these guys have a variety of mattress sizes that should work for your individual situation.
+This platform was designed around a foam tri-fold mattress that we knew would fit within the dimensions of our vehicle, would be comfortable, and easily removable with its tri-fold design: [Milliard Full Tri Folding Mattress](https://amzn.to/3ga5sNj). We've been super happy with it so far, and the folding design allows us to store more gear while in transit. I would note that these guys have a variety of mattress sizes that should work for your individual situation.
 
 ![](/img/img-3402.jpg)
 
