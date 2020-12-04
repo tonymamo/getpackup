@@ -16,6 +16,10 @@ tags:
   - hacks
   - guides
 ---
+#### If you find our posts useful for getting out, wait till you see the app we are developing. [Please consider signing up for the beta of our app](https://getpackup.com/), which aims to help you get outside on excursions faster and safer!
+
+<br></br>
+
 # **Introduction**
 
 Climbers, skiers, surfers, hikers, accountants… calling all dirtbags! Are you looking for a way to stealth camp and move quickly through regions? Have you spent too many miserable nights in a swimming pool of a tent? Is your boyfriend deathly afraid of racoons? Would your acquaintances describe you as homeless?
@@ -28,7 +32,7 @@ If you answered “I guess?” to any of the questions above, you’re in luck! 
 
 **Cost Effective -** You should be able to put this together for between $275 to $535 (CAD, before tax) depending on how many nice-to-haves you add, and how many tools you can borrow. Not bad!
 
-This platform was designed around a foam tri-fold mattress that we knew would fit within the dimensions of our vehicle, would be comfortable, and easily removable with its tri-fold design: The [Milliard Full Size Tri Folding Mattress with Cover.](https://www.amazon.ca/Milliard-Folding-Mattress-Removable-Non-Slip/dp/B00W67PAPK) I would note that these guys have a variety of mattress sizes that should work for your individual situation.
+This platform was designed around a foam tri-fold mattress that we knew would fit within the dimensions of our vehicle, would be comfortable, and easily removable with its tri-fold design: [The Milliard Full Tri Folding Mattress with Washable Cover (73 inches x 52 inches x 4 inches)](https://amzn.to/3fTZRed). We've been super happy with it so far, and the folding design allows us to store more gear while in transit. I would note that these guys have a variety of mattress sizes that should work for your individual situation.
 
 ![](/img/img-3402.jpg)
 
@@ -176,13 +180,18 @@ At this point, you should have at least one (or both) of your platform sections 
 
 If you want to take your car camping situation to another level, take a look at some other great ways to improve this build:
 
-1. Using a folding foam mattress for your platform such as the [Milliard Full Tri Folding Mattress](https://www.amazon.ca/Milliard-Folding-Mattress-Removable-Non-Slip/dp/B00W67PAPK). The advantage to this mattress is the ability to fold it up for storage, but additionally, having the ability to fold a single section of the mattress up to allow the storage of coolers, water containers, and other camping/gear items on the rear of your platform while in transport.
+1. Using a folding foam mattress for your platform such as the [The Milliard Full Tri Folding Mattress with Washable Cover (73 inches x 52 inches x 4 inches)](https://amzn.to/3fTZRed).[](https://www.amazon.ca/Milliard-Folding-Mattress-Removable-Non-Slip/dp/B00W67PAPK) The advantage to this mattress is the ability to fold it up for storage, but additionally, having the ability to fold a single section of the mattress up to allow the storage of coolers, water containers, and other camping/gear items on the rear of your platform while in transport.
 2. [Underbed storage containers](https://www.canadiantire.ca/en/pdp/sterilite-clearview-wheeled-tote-with-latch-58-l-1426058p.html#srp) can make quick work of storing car camping gear, activity gear, dry food, wet goods, and other things under the rear platform. I can have all my car camping gear/kitchen in them, which I actually store under my bed at home when not in use.
-3. [Under platform LED lighting](https://www.homedepot.ca/product/brilliant-evolution-wireless-led-puck-light-3-pack-with-remote/1001541054) is super super convenient when the sun goes down. Get 3 battery powered pucks, and place one under the tailgate end, and one under each side of the platform closest to the rear passenger doors.
-4. There are plenty of great [bug mesh options](https://www.amazon.ca/TFY-Universal-Side-Door-Square-Window-Sunshades/dp/B00YQO4X4U/ref=sr_1_3?dchild=1&keywords=car+door+bug+mesh&qid=1606113636&sr=8-3) out there to help you keep your windows throwing breeze in the summer months without letting in too many mosquitos. 
+3. [Under platform LED lighting](https://amzn.to/3g3l6u4) is super super convenient when the sun goes down. Get 3 battery powered pucks, and place one under the tailgate end, and one under each side of the platform closest to the rear passenger doors. Get your own 3M brand velcro mount tape for these so you can remove them when you want.
+4. There are plenty of [great bug mesh options](https://amzn.to/2VAZQSQ) out there to help you keep your windows throwing breeze in the summer months without letting in any mosquitos. These also serve to provide additional privacy by tinting the window when up.
+5. Given that many vehicles will not provide an electrical flow while turned off (and you don't want to kill your car battery), it can be a good idea to have some secondary power sources for charging phones/lights/electronics. Jackery makes an affordable option that has lots of charge capacity, and can recharge from your running vehicle or solar panels. You could definitely use to power an electric blanket too depending on wattage. Check it out: [Jackery Portable Power Station Explorer 240](https://amzn.to/3mCJDIZ)
 
 If you enjoyed this post and want to see more videos detailing the build of this platform, be sure to [follow our instagram page](https://www.instagram.com/getpackup/), where you can look through our highlights on this build. Also - sign up for our mailing list to know when our app platform is ready for your adventures!
 
-#### HAPPY CAMPING!
+# HAPPY CAMPING!
 
 ![Loaded up for the road.](/img/img-3665.jpg)
+
+### <br></br>
+
+###### While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!
