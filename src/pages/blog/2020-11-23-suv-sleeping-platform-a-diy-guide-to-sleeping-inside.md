@@ -198,8 +198,4 @@ If you enjoyed this post and want to see more videos detailing the build of this
 
 # HAPPY CAMPING!
 
-![Loaded up for the road.](/img/img-3665.jpg)
-
-### <br></br>
-
 ###### While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!
