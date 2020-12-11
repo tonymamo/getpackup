@@ -34,7 +34,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
       basicHut: '',
       tent: '',
     },
-    transporation: {
+    transportation: {
       airplane: '',
       car: '',
       bus: '',
@@ -63,7 +63,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
             const getValues = (
               list:
                 | typeof initialValues['accommodations']
-                | typeof initialValues['transporation']
+                | typeof initialValues['transportation']
                 | typeof initialValues['activities']
             ) =>
               Object.entries(list)
@@ -79,7 +79,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   tripGeneratorOptions: {
                     accommodations: getValues(values.accommodations),
                     activities: getValues(values.activities),
-                    transporation: getValues(values.transporation),
+                    transportation: getValues(values.transportation),
                   },
                   updated: new Date(),
                 },
@@ -242,8 +242,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaPlane"
-                    checked={values.transporation.airplane ?? false}
-                    name="transporation.airplane"
+                    checked={values.transportation.airplane ?? false}
+                    name="transportation.airplane"
                     label="Airplane"
                   />
                 </Column>
@@ -251,8 +251,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaCar"
-                    checked={values.transporation.car ?? false}
-                    name="transporation.car"
+                    checked={values.transportation.car ?? false}
+                    name="transportation.car"
                     label="Car"
                   />
                 </Column>
@@ -260,8 +260,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaBusAlt"
-                    checked={values.transporation.bus ?? false}
-                    name="transporation.bus"
+                    checked={values.transportation.bus ?? false}
+                    name="transportation.bus"
                     label="Bus"
                   />
                 </Column>
@@ -269,8 +269,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaShip"
-                    checked={values.transporation.boat ?? false}
-                    name="transporation.boat"
+                    checked={values.transportation.boat ?? false}
+                    name="transportation.boat"
                     label="Boat"
                   />
                 </Column>
@@ -278,8 +278,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaTrain"
-                    checked={values.transporation.train ?? false}
-                    name="transporation.train"
+                    checked={values.transportation.train ?? false}
+                    name="transportation.train"
                     label="Train"
                   />
                 </Column>
@@ -287,8 +287,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaMotorcycle"
-                    checked={values.transporation.motorcycle ?? false}
-                    name="transporation.motorcycle"
+                    checked={values.transportation.motorcycle ?? false}
+                    name="transportation.motorcycle"
                     label="Motorcycle"
                   />
                 </Column>

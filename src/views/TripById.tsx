@@ -139,7 +139,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                   <li key={option}>{option}</li>
                 ))
               ) : (
-                <li>No transporation methods</li>
+                <li>No transportation methods</li>
               )}
             </ul>
           </Box>
