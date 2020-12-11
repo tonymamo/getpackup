@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
+import { useFirebase } from 'react-redux-firebase';
+import { useDispatch } from 'react-redux';
+import { navigate } from 'gatsby';
 
 import {
   Heading,
@@ -13,21 +15,42 @@ import {
   Row,
   Column,
 } from '../components';
-import { RootState } from '../redux/ducks';
+import { addAlert } from '../redux/ducks/globalAlerts';
 
-type TripGeneratorProps = {} & RouteComponentProps;
+type TripGeneratorProps = {
+  id: string; // reach router param
+} & RouteComponentProps;
 
-const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
-  // const auth = useSelector((state: RootState) => state.firebase.auth);
+const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
+  const firebase = useFirebase();
+  const dispatch = useDispatch();
 
-  // const initialValues = {
-  //   name: '',
-  //   description: '',
-  //   startingPoint: '',
-  //   startDate: new Date(),
-  //   endDate: new Date(),
-  //   owner: auth.uid,
-  // };
+  const initialValues = {
+    accommodations: {
+      hotel: '',
+      hostel: '',
+      carCamp: '',
+      servicedHut: '',
+      basicHut: '',
+      tent: '',
+    },
+    transporation: {
+      airplane: '',
+      car: '',
+      bus: '',
+      boat: '',
+      train: '',
+      motorcycle: '',
+    },
+    activities: {
+      hike: '',
+      bike: '',
+      climb: '',
+      ski: '',
+      snowboard: '',
+      paddle: '',
+    },
+  };
 
   return (
     <>
@@ -35,49 +58,132 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
       <Box>
         <Formik
           validateOnMount
-          initialValues={{
-            hotel: '',
-            hostel: '',
-            carCamp: '',
-            servicedHut: '',
-            basicHut: '',
-            tent: '',
-            airplane: '',
-            car: '',
-            bus: '',
-            boat: '',
-            train: '',
-            motorcycle: '',
-            hike: '',
-            bike: '',
-            climb: '',
-            ski: '',
-            snowboard: '',
-            paddle: '',
-          }}
+          initialValues={initialValues}
           onSubmit={(values, { setSubmitting }) => {
-            // if (props.type === 'new') {
-            //   addNewTrip(values);
-            // }
-            // if (props.type === 'edit') {
-            //   updateTrip(values);
-            // }
+            const getValues = (
+              list:
+                | typeof initialValues['accommodations']
+                | typeof initialValues['transporation']
+                | typeof initialValues['activities']
+            ) =>
+              Object.entries(list)
+                .filter((entry) => entry[1])
+                .map((key) => key[0]);
+
+            firebase
+              .firestore()
+              .collection('trips')
+              .doc(props.id)
+              .set(
+                {
+                  tripGeneratorOptions: {
+                    accommodations: getValues(values.accommodations),
+                    activities: getValues(values.activities),
+                    transporation: getValues(values.transporation),
+                  },
+                  updated: new Date(),
+                },
+                { merge: true }
+              )
+              .then(() => {
+                navigate(`/app/trips/${props.id}`);
+                dispatch(
+                  addAlert({
+                    type: 'success',
+                    message: `Successfully generated trip based on selections`,
+                  })
+                );
+              })
+              .catch((err) => {
+                dispatch(
+                  addAlert({
+                    type: 'danger',
+                    message: err.message,
+                  })
+                );
+              });
             setSubmitting(false);
           }}
         >
           {({ isSubmitting, isValid, values }) => (
             <Form>
+              <p>
+                <small>
+                  Select all that apply so we can pre-populate your packing list. Missing an option?
+                  That&apos;s ok, you can add it later.
+                </small>
+              </p>
+              <HorizontalRule />
+              <Heading altStyle as="h2" noMargin>
+                Activities
+              </Heading>
+              <Row>
+                <Column xs={4} md={2}>
+                  <Field
+                    as={IconCheckbox}
+                    icon="fa/FaHiking"
+                    checked={values.activities.hike ?? false}
+                    name="activities.hike"
+                    label="Hike"
+                  />
+                </Column>
+                <Column xs={4} md={2}>
+                  <Field
+                    as={IconCheckbox}
+                    icon="fa/FaBicycle"
+                    checked={values.activities.bike ?? false}
+                    name="activities.bike"
+                    label="Ride"
+                  />
+                </Column>
+                <Column xs={4} md={2}>
+                  <Field
+                    as={IconCheckbox}
+                    icon="fa/FaMountain"
+                    checked={values.activities.climb ?? false}
+                    name="activities.climb"
+                    label="Climb"
+                  />
+                </Column>
+                <Column xs={4} md={2}>
+                  <Field
+                    as={IconCheckbox}
+                    icon="fa/FaWater"
+                    checked={values.activities.paddle ?? false}
+                    name="activities.paddle"
+                    label="Paddle"
+                  />
+                </Column>
+                <Column xs={4} md={2}>
+                  <Field
+                    as={IconCheckbox}
+                    icon="fa/FaSkiing"
+                    checked={values.activities.ski ?? false}
+                    name="activities.ski"
+                    label="Ski"
+                  />
+                </Column>
+                <Column xs={4} md={2}>
+                  <Field
+                    as={IconCheckbox}
+                    icon="fa/FaSnowboarding"
+                    checked={values.activities.snowboard ?? false}
+                    name="activities.snowboard"
+                    label="Snowboard"
+                  />
+                </Column>
+              </Row>
+              <HorizontalRule />
               <Heading altStyle as="h2" noMargin>
                 Accommodations
               </Heading>
-              <p>Select all that apply</p>
               <Row>
                 <Column xs={4} md={2}>
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaHotel"
-                    checked={values.hotel ?? false}
-                    name="hotel"
+                    checked={values.accommodations.hotel ?? false}
+                    name="accommodations.hotel"
                     label="Hotel"
                   />
                 </Column>
@@ -85,8 +191,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaBed"
-                    checked={values.hostel ?? false}
-                    name="hostel"
+                    checked={values.accommodations.hostel ?? false}
+                    name="accommodations.hostel"
                     label="Hostel"
                   />
                 </Column>
@@ -94,8 +200,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaCaravan"
-                    checked={values.carCamp ?? false}
-                    name="carCamp"
+                    checked={values.accommodations.carCamp ?? false}
+                    name="accommodations.carCamp"
                     label="Camper/Car"
                   />
                 </Column>
@@ -103,8 +209,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaWarehouse"
-                    checked={values.servicedHut ?? false}
-                    name="servicedHut"
+                    checked={values.accommodations.servicedHut ?? false}
+                    name="accommodations.servicedHut"
                     label="Serviced Hut"
                   />
                 </Column>
@@ -112,8 +218,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaHome"
-                    checked={values.basicHut ?? false}
-                    name="basicHut"
+                    checked={values.accommodations.basicHut ?? false}
+                    name="accommodations.basicHut"
                     label="Basic Hut"
                   />
                 </Column>
@@ -121,8 +227,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaCampground"
-                    checked={values.tent ?? false}
-                    name="tent"
+                    checked={values.accommodations.tent ?? false}
+                    name="accommodations.tent"
                     label="Tent"
                   />
                 </Column>
@@ -131,14 +237,13 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
               <Heading altStyle as="h2" noMargin>
                 Transportation
               </Heading>
-              <p>Select all that apply</p>
               <Row>
                 <Column xs={4} md={2}>
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaPlane"
-                    checked={values.airplane ?? false}
-                    name="airplane"
+                    checked={values.transporation.airplane ?? false}
+                    name="transporation.airplane"
                     label="Airplane"
                   />
                 </Column>
@@ -146,8 +251,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaCar"
-                    checked={values.car ?? false}
-                    name="car"
+                    checked={values.transporation.car ?? false}
+                    name="transporation.car"
                     label="Car"
                   />
                 </Column>
@@ -155,8 +260,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaBusAlt"
-                    checked={values.bus ?? false}
-                    name="bus"
+                    checked={values.transporation.bus ?? false}
+                    name="transporation.bus"
                     label="Bus"
                   />
                 </Column>
@@ -164,8 +269,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaShip"
-                    checked={values.boat ?? false}
-                    name="boat"
+                    checked={values.transporation.boat ?? false}
+                    name="transporation.boat"
                     label="Boat"
                   />
                 </Column>
@@ -173,8 +278,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaTrain"
-                    checked={values.train ?? false}
-                    name="train"
+                    checked={values.transporation.train ?? false}
+                    name="transporation.train"
                     label="Train"
                   />
                 </Column>
@@ -182,77 +287,19 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = () => {
                   <Field
                     as={IconCheckbox}
                     icon="fa/FaMotorcycle"
-                    checked={values.motorcycle ?? false}
-                    name="motorcycle"
+                    checked={values.transporation.motorcycle ?? false}
+                    name="transporation.motorcycle"
                     label="Motorcycle"
                   />
                 </Column>
               </Row>
               <HorizontalRule />
-              <Heading altStyle as="h2" noMargin>
-                Activities
-              </Heading>
-              <p>Select all that apply</p>
-              <Row>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaHiking"
-                    checked={values.hike ?? false}
-                    name="hike"
-                    label="Hike"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaBicycle"
-                    checked={values.bike ?? false}
-                    name="bike"
-                    label="Ride"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaMountain"
-                    checked={values.climb ?? false}
-                    name="climb"
-                    label="Climb"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaWater"
-                    checked={values.paddle ?? false}
-                    name="paddle"
-                    label="Paddle"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaSkiing"
-                    checked={values.ski ?? false}
-                    name="ski"
-                    label="Ski"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaSnowboarding"
-                    checked={values.snowboard ?? false}
-                    name="snowboard"
-                    label="Snowboard"
-                  />
-                </Column>
-              </Row>
-              <HorizontalRule />
               <p>
-                <Button type="submit" disabled={isSubmitting || !isValid}>
+                <Button type="submit" disabled={isSubmitting || !isValid} rightSpacer>
                   Submit
+                </Button>
+                <Button type="link" to={`/app/trips/${props.id}`} color="primaryOutline">
+                  Skip
                 </Button>
               </p>
             </Form>

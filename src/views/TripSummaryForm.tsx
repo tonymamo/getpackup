@@ -145,7 +145,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
             )}
 
             <Row>
-              <Column xs={6}>
+              <Column sm={6}>
                 <StyledLabel required>Start Date</StyledLabel>
                 <DatePicker
                   selected={dateRangeStart}
@@ -156,7 +156,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                   minDate={new Date()}
                 />
               </Column>
-              <Column xs={6}>
+              <Column sm={6}>
                 <StyledLabel required>End Date</StyledLabel>
                 <DatePicker
                   selected={dateRangeEnd}

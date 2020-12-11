@@ -77,6 +77,7 @@ const ReactDatepickerTheme = createGlobalStyle`
   padding: 0;
   border: 0;
   width: 100%;
+  margin-bottom: 16px;
 }
 
 .react-datepicker {

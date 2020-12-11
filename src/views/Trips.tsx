@@ -25,6 +25,11 @@ export type TripType = {
   endDate: firebase.firestore.Timestamp;
   timezoneOffset: number;
   created: firebase.firestore.Timestamp;
+  tripGeneratorOptions?: {
+    accommodations: Array<string>;
+    transportation: Array<string>;
+    activities: Array<string>;
+  };
 };
 
 const Trips: FunctionComponent<TripsProps> = () => {

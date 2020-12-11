@@ -88,8 +88,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
               </FlexContainer>
 
               <p>{activeTrip.description}</p>
-            </Box>
-            <Box>
+
               <p>
                 <FaMapMarkerAlt /> {activeTrip.startingPoint}
               </p>
@@ -109,15 +108,39 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             <strong>To-do</strong>
           </Box>
           <Box>
-            <strong>Hiking Gear</strong>
+            <p>you selected:</p>
+            <p>accommodations:</p>
             <ul>
-              <li>50-75 L backpack</li>
-              <li>Raincover</li>
+              {activeTrip.tripGeneratorOptions?.accommodations &&
+              activeTrip.tripGeneratorOptions?.accommodations.length > 0 ? (
+                activeTrip.tripGeneratorOptions?.accommodations.map((option) => (
+                  <li key={option}>{option}</li>
+                ))
+              ) : (
+                <li>No accommodations</li>
+              )}
             </ul>
-            <strong>Safety Gear</strong>
+            <p>activities:</p>
             <ul>
-              <li>Headlamp</li>
-              <li>Sunscreen</li>
+              {activeTrip.tripGeneratorOptions?.activities &&
+              activeTrip.tripGeneratorOptions?.activities?.length > 0 ? (
+                activeTrip.tripGeneratorOptions?.activities.map((option) => (
+                  <li key={option}>{option}</li>
+                ))
+              ) : (
+                <li>No activites</li>
+              )}
+            </ul>
+            <p>transportation</p>
+            <ul>
+              {activeTrip.tripGeneratorOptions?.transportation &&
+              activeTrip.tripGeneratorOptions?.transportation?.length > 0 ? (
+                activeTrip.tripGeneratorOptions?.transportation.map((option) => (
+                  <li key={option}>{option}</li>
+                ))
+              ) : (
+                <li>No transporation methods</li>
+              )}
             </ul>
           </Box>
         </SwipeableViews>
