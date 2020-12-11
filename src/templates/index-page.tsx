@@ -21,6 +21,7 @@ import {
   Testimonial,
   ClientOnly,
   PreviewCompatibleImage,
+  LoadingPage,
 } from '../components';
 import BlogRoll from './BlogRoll';
 import {
@@ -42,6 +43,7 @@ import collage from '../images/Outdoorsman_Collage copy.jpg';
 import waveBismark from '../images/wave-bismark.svg';
 import waveDownriver from '../images/wave-downriver.svg';
 import useWindowSize from '../utils/useWindowSize';
+import { RootState } from '../redux/ducks';
 
 type IndexPageProps = {
   hideFromCms?: boolean;
@@ -214,6 +216,10 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
 
   if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
+  }
+
+  if (!auth.isLoaded) {
+    return <LoadingPage />;
   }
 
   return (
