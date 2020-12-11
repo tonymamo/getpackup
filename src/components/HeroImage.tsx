@@ -25,6 +25,7 @@ type FullBleedImageProps = {
 
 const HeroImageWrapper = styled.div`
   position: relative;
+  min-height: 200px;
 `;
 
 const ChildrenWrapper = styled.div`

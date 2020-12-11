@@ -92,6 +92,7 @@ exports.createPages = ({ actions, graphql }) => {
           // additional data can be passed via context
           context: {
             id,
+            slug: edge.node.fields.slug,
             prev: index === 0 ? blogPosts[blogPosts.length - 1].node : blogPosts[index - 1].node,
             next: index === blogPosts.length - 1 ? blogPosts[0].node : blogPosts[index + 1].node,
           },

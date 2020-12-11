@@ -262,6 +262,10 @@ const CssReset = createGlobalStyle`
   .accordion *:focus {
     outline: none;
   }
+
+  .instagram-media {
+    margin: 0 auto !important;
+  }
 `;
 
 export default CssReset;

@@ -21,17 +21,10 @@ module.exports = {
     'gatsby-plugin-smoothscroll',
     'gatsby-plugin-advanced-sitemap',
     'gatsby-plugin-robots-txt',
+    'gatsby-plugin-instagram-embed',
     {
       resolve: 'gatsby-plugin-create-client-paths',
       options: { prefixes: [`/app/*`] },
-    },
-    {
-      resolve: '@sentry/gatsby',
-      options: {
-        dsn: process.env.GATSBY_SENTRY_DSN,
-        sampleRate: 0.7,
-        normalizeDepth: 10,
-      },
     },
     // {
     //   resolve: 'gatsby-plugin-hotjar-tracking',
@@ -156,6 +149,12 @@ module.exports = {
         trackPageDelay: 50,
       },
     },
+    // {
+    //   resolve: `gatsby-plugin-google-analytics`,
+    //   options: {
+    //     trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_TRACKING_ID,
+    //   },
+    // },
     {
       resolve: 'gatsby-plugin-firebase',
       options: {
@@ -170,20 +169,6 @@ module.exports = {
         },
       },
     },
-    // {
-    //   resolve: "gatsby-plugin-firebase",
-    //   options: {
-    //     credentials: {
-    //       apiKey: process.env.GATSBY_FIREBASE_API_KEY,
-    //       authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
-    //       databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
-    //       projectId: process.env.GATSBY_FIREBASE_PROJECT_ID,
-    //       storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
-    //       messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
-    //       appId: process.env.GATSBY_FIREBASE_APP_ID,
-    //     }
-    //   }
-    // },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     'gatsby-plugin-offline',

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { kebabCase } from 'lodash';
 import { graphql } from 'gatsby';
 import { FluidObject, FixedObject } from 'gatsby-image';
@@ -16,8 +16,12 @@ import {
   Pill,
   Seo,
   RelatedBlogPost,
+  Share,
+  ClientOnly,
 } from '../components';
 import Content, { HTMLContent } from '../components/Content';
+import useWindowSize from '../utils/useWindowSize';
+import { screenSizes } from '../styles/size';
 
 type RelatedPostType = {
   fields: {
@@ -41,6 +45,7 @@ type RelatedPostType = {
 type BlogPostProps = {
   hideFromCms?: boolean;
   pageContext: {
+    slug: string;
     next: RelatedPostType;
     prev: RelatedPostType;
   };
@@ -64,11 +69,20 @@ type BlogPostProps = {
 export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   const PostContent = props.contentComponent || Content;
 
+  const size = useWindowSize();
+  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
+
   const disqusConfig = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     shortname: process.env.GATSBY_DISQUS_NAME!,
     config: { identifier: props.title },
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.instgrm) {
+      window.instgrm.Embeds.process();
+    }
+  }, []);
 
   return (
     <>
@@ -80,6 +94,18 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           imageWidth={props.featuredimage.childImageSharp.fixed.width}
           imageHeight={props.featuredimage.childImageSharp.fixed.height}
         />
+      )}
+      {typeof window !== 'undefined' && !isSmallScreen && (
+        <ClientOnly>
+          <Share
+            url={props.pageContext.slug}
+            title={props.title}
+            tags={props.tags}
+            vertical
+            media={props.featuredimage.childImageSharp.fixed.src}
+            description={props.description}
+          />
+        </ClientOnly>
       )}
       <HeroImage imgSrc={props.featuredimage}>
         <Heading inverse>{props.title}</Heading>
@@ -98,6 +124,15 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     <small>{props.readingTime.text}</small>
                   </p>
                 </FlexContainer>
+
+                <Share
+                  url={props.pageContext.slug}
+                  title={props.title}
+                  tags={props.tags}
+                  media={props.featuredimage.childImageSharp.fixed.src}
+                  description={props.description}
+                />
+
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
                     {props.tags.map((tag: string) => (
@@ -110,6 +145,17 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <p style={{ fontStyle: 'italic' }}>{props.description}</p>
                 <HorizontalRule />
                 <PostContent content={props.content} />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Share
+                  url={props.pageContext.slug}
+                  title={props.title}
+                  tags={props.tags}
+                  media={props.featuredimage.childImageSharp.fixed.src}
+                  description={props.description}
+                />
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>

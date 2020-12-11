@@ -13,14 +13,14 @@ class ErrorBoundary extends Component<Props, {}> {
     return (
       <Sentry.ErrorBoundary
         fallback={({ error, componentStack, resetError }) => (
-          <PageContainer withVerticalPadding>
+          <PageContainer>
             <Row>
-              <Column md={8} mdOffset={2}>
+              <Column md={6} mdOffset={3}>
                 <Box>
                   <Heading as="h2">There was an error in loading this page.</Heading>
                   <p>
-                    An unhandled error has occurred. If this continues to occur, please contact
-                    hello@getpackup.com.
+                    An unhandled error has occurred. If this continues to occur, please contact:{' '}
+                    <a href="mailto:hello@getpackup.com">hello@getpackup.com</a>.
                   </p>
                   <p>
                     <Button type="button" rightSpacer onClick={() => resetError()}>
