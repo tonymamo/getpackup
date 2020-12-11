@@ -21,17 +21,18 @@ module.exports = {
     'gatsby-plugin-smoothscroll',
     'gatsby-plugin-advanced-sitemap',
     'gatsby-plugin-robots-txt',
+    'gatsby-plugin-instagram-embed',
     {
       resolve: 'gatsby-plugin-create-client-paths',
       options: { prefixes: [`/app/*`] },
     },
-    {
-      resolve: 'gatsby-plugin-hotjar-tracking',
-      options: {
-        id: process.env.GATSBY_HOTJAR_ID,
-        sv: process.env.GATSBY_HOTJAR_SV,
-      },
-    },
+    // {
+    //   resolve: 'gatsby-plugin-hotjar-tracking',
+    //   options: {
+    //     id: process.env.GATSBY_HOTJAR_ID,
+    //     sv: process.env.GATSBY_HOTJAR_SV,
+    //   },
+    // },
     {
       resolve: 'gatsby-plugin-mailchimp',
       options: {
@@ -172,14 +173,14 @@ module.exports = {
         },
       },
     },
-    {
-      resolve: '@sentry/gatsby',
-      options: {
-        dsn: process.env.GATSBY_SENTRY_DSN,
-        sampleRate: 0.7,
-        normalizeDepth: 10,
-      },
-    },
+    // {
+    //   resolve: '@sentry/gatsby',
+    //   options: {
+    //     dsn: process.env.GATSBY_SENTRY_DSN,
+    //     sampleRate: 0.7,
+    //     normalizeDepth: 10,
+    //   },
+    // },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     'gatsby-plugin-offline',

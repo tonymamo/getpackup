@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { kebabCase } from 'lodash';
 import { graphql } from 'gatsby';
 import { FluidObject, FixedObject } from 'gatsby-image';
@@ -77,6 +77,12 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
     shortname: process.env.GATSBY_DISQUS_NAME!,
     config: { identifier: props.title },
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.instgrm) {
+      window.instgrm.Embeds.process();
+    }
+  }, []);
 
   return (
     <>
