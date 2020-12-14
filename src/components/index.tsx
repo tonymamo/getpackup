@@ -5,6 +5,7 @@ import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
 import Content from './Content';
+import EditableTable from './EditableTable';
 import ErrorBoundary from './ErrorBoundary';
 import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
@@ -40,6 +41,7 @@ export {
   ClientOnly,
   Column,
   Content,
+  EditableTable,
   ErrorBoundary,
   FirebaseAuthWrapper,
   FlexContainer,

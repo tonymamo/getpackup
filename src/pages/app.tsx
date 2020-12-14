@@ -20,12 +20,13 @@ const App = () => {
   const profile = useSelector((state: RootState) => state.firebase.profile);
 
   useEffect(() => {
-    if (!user.isEmpty && profile.isEmpty) {
+    if (!user.isEmpty && !profile.email) {
       firebase
         .firestore()
         .collection('users')
         .doc(user.uid)
         .set({
+          isAdmin: profile.isAdmin || false,
           email: user.email,
         });
     }

@@ -25,7 +25,7 @@ import {
 } from '../styles/color';
 import { disabledStyle } from '../styles/mixins';
 
-type ButtonProps = {
+export type ButtonProps = {
   type: 'submit' | 'button' | 'reset' | 'link';
   color?:
     | 'text'

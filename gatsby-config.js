@@ -24,7 +24,7 @@ module.exports = {
     'gatsby-plugin-instagram-embed',
     {
       resolve: 'gatsby-plugin-create-client-paths',
-      options: { prefixes: [`/app/*`] },
+      options: { prefixes: [`/app/*`, `/admin/*`] },
     },
     // {
     //   resolve: 'gatsby-plugin-hotjar-tracking',

@@ -18,7 +18,7 @@ import {
 import { addAlert } from '../redux/ducks/globalAlerts';
 
 type TripGeneratorProps = {
-  id: string; // reach router param
+  id?: string; // reach router param
 } & RouteComponentProps;
 
 const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {

@@ -10,6 +10,7 @@ import {
   FaSearch,
   FaShoppingCart,
   FaPlusCircle,
+  FaUserLock,
 } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
@@ -139,6 +140,7 @@ const TopNavIconWrapper = styled.nav`
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const profile = useSelector((state: RootState) => state.firebase.profile);
   const { pathname } = useLocation();
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -303,6 +305,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   gravatarEmail={auth.email as string}
                 />
               </Link>
+              {profile.isAdmin && (
+                <Link to="/admin/gear-list" getProps={isPartiallyActive}>
+                  <FaUserLock />
+                </Link>
+              )}
             </TopNavIconWrapper>
           )}
         </FlexContainer>
