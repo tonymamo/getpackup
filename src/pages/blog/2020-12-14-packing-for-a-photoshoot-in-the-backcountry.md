@@ -14,7 +14,7 @@ tags:
   - outdoors
   - off the grid
 ---
-When it comes to packing, everyone has their own ways of doing things that they have refined over the years. Some like to go ultra light while others don't mind the weight; I find myself somewhere in between. Before I got into photography my backpack was much lighter and I was a lot faster, now there’s a lot more thought involved when it comes to weight management and making sure that I have everything needed to stay charged up and ready to shoot at any given moment. I am going to go into detail about the products that I personally use, love and have tested over the years that make life easier when taking photos in the backcountry and off the grid.
+When it comes to packing, everyone has their own ways of doing things that they have refined over the years. Some like to go ultra light while others don't mind the weight; I find myself somewhere in between. Before I got into photography my backpack was much lighter and I was a lot faster, now there’s a lot more thought involved when it comes to weight management and making sure that I have everything needed to stay charged up and ready to shoot at any given moment. I am going to go into detail about the products that I personally use, love and have tested over the years that make life easier when taking photos in the backcountry and off the grid. 
 
 ![Photo by Chris Clark](/img/l1009450-4.jpg)
 
@@ -47,5 +47,7 @@ If I’m on a single day outdoor shoot I pack all of my camera gear in a waterpr
 ![](/img/l1000540.jpg "Photo by Kalum Ko")
 
 I could go on and on about gear but I wanted to keep this directed to shooting in the backcountry. If you have any questions or alternative suggestions please let me know in the comments!
+
+If you'd like to see more of my work you can [follow along on instagram](instagram.com/taylormichaelburk) or check out my [website](www.taylorburk.com). Thanks for your interest! 
 
 > *You’ll see that I have added links to each product, if you do find yourself in the market to purchase I would really appreciate it if you did so directly via the link, a small percentage from that sale that will help fund the packup app and it’s at no extra cost to you! Think of it as a thank you or a tip for putting this blog post together.*
