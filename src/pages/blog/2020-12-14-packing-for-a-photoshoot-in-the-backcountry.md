@@ -40,6 +40,12 @@ When it comes to carrying a camera while hiking I used to always just keep mine 
 
 ![](/img/img_2411.jpg "Photo by Chris Brinlee Jr.")
 
+
+
+
+
+![](/img/044a8754.jpg)
+
 When it comes to keeping my camera lenses safe in the pack I usually just wrap them in a jacket or longsleeve shirt that I am packing and keep it at the top of my bag. Alternatively you can use these [neoprene protective lens cases](https://amzn.to/3mg3Pzb). I tend to keep a 24mm-70mm lens on when I'm hiking so that I don’t have to change lenses often; it’s a versatile workhorse.
 
 If I’m on a single day outdoor shoot, I have access to a generator or I am not going to be on my feet at all times then I pack all of my camera gear in a waterproof and travel friendly [Pelican case](https://bit.ly/2KoDK3I). I also keep my laptop in there and utilize the top of the case as a workspace to back images up. I backup my photos to two different external hard drives, one of them always being this rugged [SanDisk 1TB Extreme Portable SSD](https://amzn.to/3micQI0), which is water, dust and shock resistant. I tend to keep it in my pocket since it’s so small, this also helps for redundancy not keeping the two drives together. It would be a shame to lose all of your hard earned images! 
