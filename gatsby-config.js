@@ -119,6 +119,13 @@ module.exports = {
             },
           },
           {
+            resolve: 'gatsby-remark-external-links',
+            options: {
+              target: '_blank',
+              rel: 'noreferrer noopener',
+            },
+          },
+          {
             resolve: 'gatsby-remark-images',
             options: {
               // It's important to specify the maxWidth (in pixels) of
@@ -145,7 +152,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-segment-js`,
+      resolve: 'gatsby-plugin-segment-js',
       options: {
         prodKey: process.env.GATSBY_SEGMENT_API_KEY,
         devKey: process.env.GATSBY_SEGMENT_API_KEY,
@@ -154,12 +161,12 @@ module.exports = {
       },
     },
     // {
-    //   resolve: `gatsby-plugin-google-analytics`,
+    //   resolve: 'gatsby-plugin-google-analytics',
     //   options: {
-    //     trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_TRACKING_ID,
     //   },
-    // },
+    //     trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_TRACKING_ID,
     {
+      // },
       resolve: 'gatsby-plugin-firebase',
       options: {
         credentials: {
