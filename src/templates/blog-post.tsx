@@ -85,7 +85,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   }, []);
 
   return (
-    <>
+    <div className="blog-content">
       {!props.hideFromCms && (
         <Seo
           title={props.title}
@@ -185,7 +185,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           </Column>
         </Row>
       </PageContainer>
-    </>
+    </div>
   );
 };
 

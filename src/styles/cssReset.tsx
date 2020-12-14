@@ -1,4 +1,7 @@
-import { createGlobalStyle } from 'styled-components';
+import React from 'react';
+import { createGlobalStyle, css } from 'styled-components';
+import { renderToStaticMarkup as rtsm } from 'react-dom/server';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import {
   brandPrimary,
@@ -10,8 +13,12 @@ import {
   white,
 } from './color';
 
-import { baseSpacer, halfSpacer } from './size';
+import { baseSpacer, halfSpacer, quarterSpacer } from './size';
 import { headingsFontFamily, fontFamilySansSerif } from './typography';
+
+const externalLinkIcon = css`
+  ${rtsm(<FaExternalLinkAlt color="darkgray" size={12} />).replace(/"/g, "'")}
+`;
 
 /* eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }] */
 const CssReset = createGlobalStyle`
@@ -258,6 +265,13 @@ const CssReset = createGlobalStyle`
 
   .instagram-media {
     margin: 0 auto !important;
+  }
+
+  /* https://github.com/react-icons/react-icons/issues/246#issuecomment-667147241 */
+  /* add svg icon from react-icons to external links in blogs */
+  .blog-content a[target="_blank"]:after {
+    content: url("data:image/svg+xml; utf8,${externalLinkIcon}");
+    margin-left: ${quarterSpacer};
   }
 `;
 
