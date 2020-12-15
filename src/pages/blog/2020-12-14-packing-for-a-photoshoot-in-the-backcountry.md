@@ -54,6 +54,6 @@ If I’m on a single day outdoor shoot, I have access to a generator or I am not
 
 I could go on and on about gear but I wanted to keep this directed to shooting in the backcountry and off the grid. If you have any questions or alternative suggestions please let me know in the comments, I'd love to hear them!
 
-If you'd like to see more of my work you can [follow along on instagram](http://www.instagram.com/taylormichaelburk) or check out my [website](http://www.taylorburk.com). I also have two photography workshops that will be taking place in the British Columbia wilderness in the summer of 2021, you can learn more about those [here](taylorburk.com/workshops). Thanks for your interest! 
+If you'd like to see more of my work you can [follow along on instagram](http://www.instagram.com/taylormichaelburk) or check out my [website](http://www.taylorburk.com). I also have two photography workshops that will be taking place in the British Columbia wilderness in the summer of 2021, you can learn more about those [here](https://www.taylorburk.com/workshops). Thanks for your interest! 
 
 > *You’ll see that I have added links to each product, if you do find yourself in the market to purchase I would really appreciate it if you did so directly via the link, a small percentage from that sale that will help fund the packup app and it’s at no extra cost to you! Think of it as a thank you or a tip for putting this blog post together.*
