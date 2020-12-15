@@ -34,7 +34,7 @@ Touring can be a sweaty and wet sport - the less time you spend at a standstill,
 
 3. **Pack skin wax**
 
-Dry skins are fast skins. Be sure to [pack some skin wax ](https://www.amazon.ca/mountainFLOW-eco-wax-Plant-Based-Biodegradable-Prevents/dp/B083JJYYGD/ref=sr_1_4?dchild=1&keywords=ski+skin+wax&qid=1602029539&sr=8-4)to save your day, or the day of your friends, when things come to a gluey halt. Skin wax coats the fibres of your skins with a hydrophobic layer, keeping things light and dry when things get wet and gloppy.
+Dry skins are fast skins. Be sure to [pack some skin wax ](https://www.amazon.ca/mountainFLOW-eco-wax-Plant-Based-Biodegradable-Prevents/dp/B083JJYYGD/ref=sr_1_4?dchild=1&keywords=ski+skin+wax&qid=1602029539&sr=8-4) to save your day, or the day of your friends, when things come to a gluey halt. Skin wax coats the fibres of your skins with a hydrophobic layer, keeping things light and dry when things get wet and gloppy.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/1no7kQGmc24" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

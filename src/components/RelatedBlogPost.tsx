@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
+import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type RelatedBlogPostProps = {
   type: 'next' | 'prev';
@@ -28,9 +29,12 @@ const RelatedBlogPost: FunctionComponent<RelatedBlogPostProps> = (props) => {
   return (
     <>
       <Link to={props.post.fields.slug}>
-        <img
-          src={props.post.frontmatter.featuredimage.childImageSharp.fluid.src}
-          alt={`featured thumbnail for post ${props.post.frontmatter.title}`}
+        <PreviewCompatibleImage
+          style={{ height: 200 }}
+          imageInfo={{
+            image: props.post.frontmatter.featuredimage,
+            alt: `featured image thumbnail for post ${props.post.frontmatter.title}`,
+          }}
         />
       </Link>
       <small>{props.post.frontmatter.date}</small>

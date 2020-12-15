@@ -49,6 +49,7 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ data, count }) => {
                       image: post.frontmatter.featuredimage,
                       alt: `featured image thumbnail for post ${post.frontmatter.title}`,
                     }}
+                    style={{ height: 200 }}
                   />
                 </Link>
               )}
