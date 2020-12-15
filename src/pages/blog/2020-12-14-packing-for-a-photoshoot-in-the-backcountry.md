@@ -14,7 +14,7 @@ tags:
   - outdoors
   - off the grid
 ---
-When it comes to packing, everyone has their own ways of doing things that they have refined over the years. Some like to go ultra light while others don't mind the weight; I find myself somewhere in between. Before I got into photography my backpack was much lighter and I was a lot faster, now there’s a lot more thought involved when it comes to weight management and making sure that I have everything needed to stay charged up and ready to shoot at any given moment. I am going to go into detail about the products that I personally use, love and have tested over the years that make life easier when taking photos in the backcountry and off the grid. 
+When it comes to packing, everyone has their own ways of doing things that they have refined over the years. Some like to go ultra light while others don't mind the weight; I find myself somewhere in between. Before I got into photography my backpack was much lighter and I was a lot faster, now there’s a lot more thought involved when it comes to weight management and making sure that I have everything needed to stay charged up and ready to shoot at any given moment. I am going to go into detail about the products that I personally use, love and have tested over the years that make life easier when taking photos in the backcountry and off the grid. Keep in mind that what may work for me may not work for you of course, however I do hope that youre able to benefit from this and maybe learn a new tip or trick!
 
 ![Mont blanc, Italy, France, climbing, climbing photography, Taylor Burk, Taylor, Burk, photograph backcountry, backcountry ](/img/l1009450-4.jpg "Photo By Chris Clark")
 
