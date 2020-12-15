@@ -3,7 +3,7 @@ templateKey: blog-post
 title: Packing For A Photoshoot In The Backcountry
 date: 2020-12-14T18:20:56.388Z
 description: "An in-depth breakdown and gear list from photographer Taylor Burk
-  on how he packs his camera gear for extended periods of time in the
+  on what and how he packs his camera gear for extended periods of time in the
   backcountry. "
 featuredpost: true
 featuredimage: /img/dscf2292-2.jpg
@@ -18,7 +18,7 @@ When it comes to packing, everyone has their own ways of doing things that they 
 
 ![Photo by Chris Clark](/img/l1009450-4.jpg)
 
-To start off, I shoot with a [Canon 5D Mark IV.](https://amzn.to/2Kjuhe1) I have been using it for years and it’s done a great job in cold, wet and other harsh environments. If you're getting into photographing multi day trips then mirrorless cameras probably make the most sense these days due to their small size and light weight. My favorite lenses for hiking are the Canon 24mm-70mm f/2.8 and the 70mm-200mm f/2.8, they are a lot heavier than the f/4 versions but I don’t mind the extra weight and size, it helps to keep me in good shape, or at least that’s what I tell myself. I typically bring up to 3 or 4 lenses to be able to get a diverse range of photos, once again it takes up a lot of space but it helps me get unique photos!
+To start off, I shoot with a [Canon 5D Mark IV.](https://amzn.to/2Kjuhe1) I have been using it for years and it’s done a great job in cold, wet and other harsh environments. If you're getting into photographing multi day trips then mirrorless cameras probably make the most sense these days due to their small size and light weight. My favorite lenses for hiking are the Canon 24mm-70mm f/2.8 and the 70mm-200mm f/2.8, they are a lot heavier than the f/4 versions but I don’t mind the extra weight and size, it helps to keep me in good shape, or at least that’s what I tell myself. I typically bring up to 3 or 4 lenses along with a [carbon fiber tripod](https://amzn.to/3aaPjX3) and [ND filters](https://amzn.to/3qSHifz) to be able to get a diverse range of photos, once again it takes up a lot of space but it helps me get unique photos!
 
 ![](/img/grosmornenfld_taylorburk-35.jpg)
 
@@ -39,10 +39,6 @@ I like to keep all of my accessories organized and easily accessible. To do so, 
 When it comes to carrying a camera while hiking I used to always just keep mine in [my backpack](https://bit.ly/382qbz1) until I needed it, however I often found myself getting lazy and missing a lot of fleeting photo opportunities. I was given a [Peak Design Capture Clip](https://amzn.to/387gyiR) a few years ago and it changed everything. Instead of having my camera in my bag I now have it easily accessible on my backpack strap, ready to go whenever the moments present themselves without having to annoyingly take off my pack every time.
 
 ![](/img/img_2411.jpg "Photo by Chris Brinlee Jr.")
-
-
-
-
 
 ![](/img/044a8754.jpg)
 
