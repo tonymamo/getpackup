@@ -23,6 +23,20 @@ module.exports = {
     'gatsby-plugin-robots-txt',
     'gatsby-plugin-instagram-embed',
     {
+      resolve: 'gatsby-plugin-alias-imports',
+      options: {
+        alias: {
+          '@components': `${__dirname}/src/components`,
+          '@images': `${__dirname}/src/images`,
+          '@redux': `${__dirname}/src/redux`,
+          '@styles': `${__dirname}/src/styles`,
+          '@utils': `${__dirname}/src/utils`,
+          '@views': `${__dirname}/src/views`,
+        },
+        extensions: [],
+      },
+    },
+    {
       resolve: 'gatsby-plugin-create-client-paths',
       options: { prefixes: [`/app/*`] },
     },
