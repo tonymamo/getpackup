@@ -184,7 +184,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
               <HorizontalRule />
               <Heading as="h3">Comments</Heading>
-              <DiscussionEmbed {...disqusConfig} />
+              {!props.hideFromCms && <DiscussionEmbed {...disqusConfig} />}
             </Box>
           </Column>
         </Row>
