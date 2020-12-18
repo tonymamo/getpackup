@@ -45,7 +45,7 @@ type RelatedPostType = {
 
 type BlogPostProps = {
   hideFromCms?: boolean;
-  pageContext: {
+  pageContext?: {
     slug: string;
     next: RelatedPostType;
     prev: RelatedPostType;
@@ -96,7 +96,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           imageHeight={props.featuredimage.childImageSharp.fixed.height}
         />
       )}
-      {typeof window !== 'undefined' && !isSmallScreen && !props.hideFromCms && (
+      {typeof window !== 'undefined' && !isSmallScreen && !props.hideFromCms && props.pageContext && (
         <ClientOnly>
           <Share
             url={props.pageContext.slug}
@@ -125,7 +125,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     <small>{props.readingTime.text}</small>
                   </p>
                 </FlexContainer>
-                {!props.hideFromCms && (
+                {!props.hideFromCms && props.pageContext && (
                   <Share
                     url={props.pageContext.slug}
                     title={props.title}
@@ -151,7 +151,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <br />
                 <br />
                 <br />
-                {!props.hideFromCms && (
+                {!props.hideFromCms && props.pageContext && (
                   <Share
                     url={props.pageContext.slug}
                     title={props.title}
@@ -172,7 +172,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <HorizontalRule />
               </div>
               <Heading as="h3">Keep Reading</Heading>
-              {!props.hideFromCms && (
+              {!props.hideFromCms && props.pageContext && (
                 <Row>
                   <Column xs={6}>
                     <RelatedBlogPost post={props.pageContext.prev} type="prev" />

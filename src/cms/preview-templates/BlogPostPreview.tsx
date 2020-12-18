@@ -18,7 +18,7 @@ const BlogPostPreview = ({ entry }: { entry: any }) => {
           featuredimage={data.featuredimage}
           readingTime={{ text: '' }}
           description={data.description}
-          pageContext={data.pageContext}
+          pageContext={undefined}
         />
       </Layout>
     );
