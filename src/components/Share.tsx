@@ -1,25 +1,25 @@
 import React, { FunctionComponent } from 'react';
 import {
-  FacebookShareButton,
-  FacebookMessengerShareButton,
-  TwitterShareButton,
-  TelegramShareButton,
+  EmailIcon,
   EmailShareButton,
-  RedditShareButton,
   FacebookIcon,
   FacebookMessengerIcon,
-  TwitterIcon,
-  TelegramIcon,
-  EmailIcon,
-  RedditIcon,
-  PinterestShareButton,
+  FacebookMessengerShareButton,
+  FacebookShareButton,
   PinterestIcon,
+  PinterestShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
 } from 'react-share';
 import styled from 'styled-components';
 
-import { z1Shadow } from '../styles/mixins';
-import { white } from '../styles/color';
-import { baseSpacer, borderRadius, halfSpacer, quarterSpacer } from '../styles/size';
+import { z1Shadow } from '@styles/mixins';
+import { white } from '@styles/color';
+import { baseSpacer, borderRadius, halfSpacer, quarterSpacer } from '@styles/size';
 
 type ShareProps = {
   url: string;

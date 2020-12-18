@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as Sentry from '@sentry/gatsby';
 
-import { Row, Column, Button, Box, Heading, PageContainer } from '.';
+import { Box, Button, Column, Heading, PageContainer, Row } from '@components';
 
 type Props = {
   children: any;

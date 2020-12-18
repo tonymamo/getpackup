@@ -6,9 +6,9 @@ import { useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import TextTruncate from 'react-text-truncate';
 
-import { Row, Column, FlexContainer, Avatar, Heading, Box, Button, Seo } from '../components';
-import { RootState } from '../redux/ducks';
-import { formattedDateRange, isAfterToday, isBeforeToday } from '../utils/dateUtils';
+import { Row, Column, FlexContainer, Avatar, Heading, Box, Button, Seo } from '@components';
+import { RootState } from '@redux/ducks';
+import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
 
 type TripsProps = {
   user?: firebase.User;

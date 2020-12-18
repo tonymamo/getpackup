@@ -1,24 +1,24 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { useField, FieldMetaProps, FormikHelpers } from 'formik';
+import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Select, { CommonProps } from 'react-select';
 import Geosuggest from 'react-geosuggest';
 import 'react-geosuggest/module/geosuggest.css';
 
 import {
-  inputHeight,
-  inputPaddingY,
-  inputPaddingX,
-  halfSpacer,
   baseSpacer,
   borderRadius,
   doubleSpacer,
+  halfSpacer,
   sextupleSpacer,
   quarterSpacer,
   quadrupleSpacer,
-} from '../styles/size';
-import { fontSizeBase, lineHeightBase, fontSizeSmall } from '../styles/typography';
+  inputHeight,
+  inputPaddingX,
+  inputPaddingY,
+} from '@styles/size';
+import { fontSizeBase, lineHeightBase, fontSizeSmall } from '@styles/typography';
 import {
   textColor,
   white,
@@ -28,10 +28,10 @@ import {
   brandPrimary,
   brandPrimaryRGB,
   lightGray,
-} from '../styles/color';
-import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '../styles/mixins';
-import poweredByGoogle from '../images/powered_by_google_on_white_hdpi.png';
-import { formatPhoneNumberValue } from '../utils/phoneNumber';
+} from '@styles/color';
+import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
+import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
+import { formatPhoneNumberValue } from '@utils/phoneNumber';
 
 type OptionType = { label: string; value: string };
 

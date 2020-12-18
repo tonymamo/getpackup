@@ -17,11 +17,11 @@ import {
   Heading,
   FlexContainer,
   FirebaseAuthWrapper,
-} from '../components';
-import { requiredField } from '../utils/validations';
-import { addAlert } from '../redux/ducks/globalAlerts';
-import { RootState } from '../redux/ducks';
-import { removeAttemptedPrivatePage } from '../redux/ducks/client';
+} from '@components';
+import { requiredField } from '@utils/validations';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
+import { removeAttemptedPrivatePage } from '@redux/ducks/client';
 
 type LoginProps = {};
 

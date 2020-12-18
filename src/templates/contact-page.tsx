@@ -4,8 +4,9 @@ import { FaCaretRight } from 'react-icons/fa';
 import { graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import Content, { HTMLContent } from '../components/Content';
 import {
+  Content,
+  HTMLContent,
   HeroImage,
   Row,
   Box,
@@ -16,9 +17,9 @@ import {
   Seo,
   Heading,
   Alert,
-} from '../components';
-import postFormUrlEncoded from '../utils/postFormUrlEncoded';
-import { requiredEmail, requiredField } from '../utils/validations';
+} from '@components';
+import postFormUrlEncoded from '@utils/postFormUrlEncoded';
+import { requiredEmail, requiredField } from '@utils/validations';
 
 type ContactProps = {
   hideFromCms?: boolean;
@@ -38,12 +39,6 @@ export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
   };
 
   const PageContent = props.contentComponent || Content;
-
-  const encode = (data: { [key: string]: string | boolean }) => {
-    return Object.keys(data)
-      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-      .join('&');
-  };
 
   return (
     <>

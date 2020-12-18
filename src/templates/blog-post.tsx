@@ -18,10 +18,11 @@ import {
   RelatedBlogPost,
   Share,
   ClientOnly,
-} from '../components';
-import Content, { HTMLContent } from '../components/Content';
-import useWindowSize from '../utils/useWindowSize';
-import { screenSizes } from '../styles/size';
+  Content,
+  HTMLContent,
+} from '@components';
+import useWindowSize from '@utils/useWindowSize';
+import { screenSizes } from '@styles/size';
 
 type RelatedPostType = {
   fields: {
@@ -44,7 +45,7 @@ type RelatedPostType = {
 
 type BlogPostProps = {
   hideFromCms?: boolean;
-  pageContext: {
+  pageContext?: {
     slug: string;
     next: RelatedPostType;
     prev: RelatedPostType;
@@ -85,7 +86,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   }, []);
 
   return (
-    <>
+    <div className="blog-content">
       {!props.hideFromCms && (
         <Seo
           title={props.title}
@@ -95,7 +96,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           imageHeight={props.featuredimage.childImageSharp.fixed.height}
         />
       )}
-      {typeof window !== 'undefined' && !isSmallScreen && (
+      {typeof window !== 'undefined' && !isSmallScreen && !props.hideFromCms && props.pageContext && (
         <ClientOnly>
           <Share
             url={props.pageContext.slug}
@@ -124,14 +125,15 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     <small>{props.readingTime.text}</small>
                   </p>
                 </FlexContainer>
-
-                <Share
-                  url={props.pageContext.slug}
-                  title={props.title}
-                  tags={props.tags}
-                  media={props.featuredimage.childImageSharp.fixed.src}
-                  description={props.description}
-                />
+                {!props.hideFromCms && props.pageContext && (
+                  <Share
+                    url={props.pageContext.slug}
+                    title={props.title}
+                    tags={props.tags}
+                    media={props.featuredimage.childImageSharp.fixed.src}
+                    description={props.description}
+                  />
+                )}
 
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
@@ -149,13 +151,16 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <br />
                 <br />
                 <br />
-                <Share
-                  url={props.pageContext.slug}
-                  title={props.title}
-                  tags={props.tags}
-                  media={props.featuredimage.childImageSharp.fixed.src}
-                  description={props.description}
-                />
+                {!props.hideFromCms && props.pageContext && (
+                  <Share
+                    url={props.pageContext.slug}
+                    title={props.title}
+                    tags={props.tags}
+                    media={props.featuredimage.childImageSharp.fixed.src}
+                    description={props.description}
+                  />
+                )}
+
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (
                   <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
@@ -167,7 +172,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 <HorizontalRule />
               </div>
               <Heading as="h3">Keep Reading</Heading>
-              {!props.hideFromCms && (
+              {!props.hideFromCms && props.pageContext && (
                 <Row>
                   <Column xs={6}>
                     <RelatedBlogPost post={props.pageContext.prev} type="prev" />
@@ -180,12 +185,12 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
               <HorizontalRule />
               <Heading as="h3">Comments</Heading>
-              <DiscussionEmbed {...disqusConfig} />
+              {!props.hideFromCms && <DiscussionEmbed {...disqusConfig} />}
             </Box>
           </Column>
         </Row>
       </PageContainer>
-    </>
+    </div>
   );
 };
 

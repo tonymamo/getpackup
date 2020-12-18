@@ -17,10 +17,10 @@ import {
   Heading,
   FlexContainer,
   FirebaseAuthWrapper,
-} from '../components';
-import { requiredField } from '../utils/validations';
-import { addAlert } from '../redux/ducks/globalAlerts';
-import { RootState } from '../redux/ducks';
+} from '@components';
+import { requiredField } from '@utils/validations';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
 
 type SignupProps = {};
 

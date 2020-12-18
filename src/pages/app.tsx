@@ -3,16 +3,16 @@ import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 
-import Profile from '../views/Profile';
-import Trips from '../views/Trips';
-import NewTripSummary from '../views/NewTripSummary';
-import EditTripSummary from '../views/EditTripSummary';
-import TripById from '../views/TripById';
-import TripGenerator from '../views/TripGenerator';
-import Search from '../views/Search';
-import ShoppingList from '../views/ShoppingList';
-import { RootState } from '../redux/ducks';
-import { PageContainer, PrivateRoute, LoadingPage, ErrorBoundary } from '../components';
+import Profile from '@views/Profile';
+import Trips from '@views/Trips';
+import NewTripSummary from '@views/NewTripSummary';
+import EditTripSummary from '@views/EditTripSummary';
+import TripById from '@views/TripById';
+import TripGenerator from '@views/TripGenerator';
+import Search from '@views/Search';
+import ShoppingList from '@views/ShoppingList';
+import { RootState } from '@redux/ducks';
+import { PageContainer, PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
 
 const App = () => {
   const firebase = useFirebase();
@@ -20,7 +20,7 @@ const App = () => {
   const profile = useSelector((state: RootState) => state.firebase.profile);
 
   useEffect(() => {
-    if (!user.isEmpty && !profile.email) {
+    if (!user.isEmpty && profile.isLoaded && !profile.email) {
       firebase
         .firestore()
         .collection('users')

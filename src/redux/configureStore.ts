@@ -8,13 +8,13 @@ import * as Sentry from '@sentry/gatsby';
 // Note: imported 'isomorphic-fetch' this way so that in reducer tests we can mock Fetch/Response
 import 'isomorphic-fetch';
 
-import rootReducer, { RootState } from './ducks/index';
-import logger from './middleware/logger';
-import oauth from './middleware/oauth';
-import requestHeaders from './middleware/requestHeaders';
-import errorCatcher from './middleware/errorCatcher';
-import { initialState as clientInitialState } from './ducks/client';
-import { initialState as globalAlertsInitialState } from './ducks/globalAlerts';
+import rootReducer, { RootState } from '@redux/ducks/index';
+import logger from '@redux/middleware/logger';
+import oauth from '@redux/middleware/oauth';
+import requestHeaders from '@redux/middleware/requestHeaders';
+import errorCatcher from '@redux/middleware/errorCatcher';
+import { initialState as clientInitialState } from '@redux/ducks/client';
+import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
 
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, FunctionComponent } from 'react';
 import styled from 'styled-components';
+
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
@@ -15,14 +16,21 @@ import {
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 
-import { Avatar, PageContainer, FlexContainer, Heading, Button, Box, HorizontalRule } from '.';
-
-import { brandSecondary, brandTertiary, white, brandPrimary } from '../styles/color';
-import { halfSpacer, quadrupleSpacer, screenSizes, tripleSpacer } from '../styles/size';
-import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '../styles/typography';
-import { RootState } from '../redux/ducks';
-import useWindowSize from '../utils/useWindowSize';
-import yak from '../images/yak.png';
+import {
+  Avatar,
+  PageContainer,
+  FlexContainer,
+  Heading,
+  Button,
+  Box,
+  HorizontalRule,
+} from '@components';
+import { brandSecondary, brandTertiary, white, brandPrimary } from '@styles/color';
+import { halfSpacer, quadrupleSpacer, screenSizes, tripleSpacer } from '@styles/size';
+import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typography';
+import { RootState } from '@redux/ducks';
+import useWindowSize from '@utils/useWindowSize';
+import yak from '@images/yak.png';
 
 type NavbarProps = {};
 
@@ -298,6 +306,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               <Link to="/app/shopping-list" getProps={isPartiallyActive}>
                 <FaShoppingCart />
               </Link>
+              {profile.isAdmin && (
+                <Link to="/admin/gear-list" getProps={isPartiallyActive}>
+                  <FaUserLock />
+                </Link>
+              )}
               <Link to="/app/profile" getProps={isPartiallyActive}>
                 <Avatar
                   src={auth.photoURL as string}
@@ -305,11 +318,6 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   gravatarEmail={auth.email as string}
                 />
               </Link>
-              {profile.isAdmin && (
-                <Link to="/admin/gear-list" getProps={isPartiallyActive}>
-                  <FaUserLock />
-                </Link>
-              )}
             </TopNavIconWrapper>
           )}
         </FlexContainer>

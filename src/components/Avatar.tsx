@@ -4,14 +4,14 @@ import { FluidObject } from 'gatsby-image';
 import { Md5 } from 'ts-md5/dist/md5';
 
 import {
-  baseSpacer,
   baseAndAHalfSpacer,
+  baseSpacer,
   doubleSpacer,
-  sextupleSpacer,
   quadrupleSpacer,
-} from '../styles/size';
-import { lightestGray } from '../styles/color';
-import PreviewCompatibleImage from './PreviewCompatibleImage';
+  sextupleSpacer,
+} from '@styles/size';
+import { lightestGray } from '@styles/color';
+import { PreviewCompatibleImage } from '@components';
 
 type AvatarProps = {
   src?:

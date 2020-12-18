@@ -5,10 +5,10 @@ import { useFirebase } from 'react-redux-firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fontFamilySansSerif, fontSizeBase } from '../styles/typography';
-import { halfSpacer, baseAndAHalfSpacer, borderRadius } from '../styles/size';
-import { RootState } from '../redux/ducks';
-import { removeAttemptedPrivatePage } from '../redux/ducks/client';
+import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
+import { halfSpacer, baseAndAHalfSpacer, borderRadius } from '@styles/size';
+import { RootState } from '@redux/ducks';
+import { removeAttemptedPrivatePage } from '@redux/ducks/client';
 
 // Wrapper around 'react-firebaseui/StyledFirebaseAuth' just to modify some styling
 // to make buttons match better to Button.tsx
@@ -63,6 +63,7 @@ const FirebaseAuthWrapper: FunctionComponent<FirebaseAuthWrapperProps> = () => {
           firebase.auth.GithubAuthProvider.PROVIDER_ID,
         ]
       : [];
+
   const uiConfig = {
     signInFlow: 'popup',
     signInOptions: signInProviders,

@@ -5,8 +5,8 @@ import { navigate } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
 import { FaSignOutAlt } from 'react-icons/fa';
 
-import { Button, Heading, Box, Avatar, Seo } from '../components';
-import { addAlert } from '../redux/ducks/globalAlerts';
+import { Button, Heading, Box, Avatar, Seo } from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
 
 type ProfileProps = {
   user?: firebase.User;

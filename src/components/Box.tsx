@@ -2,15 +2,9 @@ import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { FluidObject } from 'gatsby-image';
 
-import {
-  baseSpacer,
-  doubleSpacer,
-  quadrupleSpacer,
-  borderRadius,
-  breakpoints,
-} from '../styles/size';
-import { white } from '../styles/color';
-import { z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '../styles/mixins';
+import { baseSpacer, borderRadius, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
+import { white } from '@styles/color';
+import { z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';
 
 type BoxProps = {
   textAlign?: 'center' | 'left' | 'right';

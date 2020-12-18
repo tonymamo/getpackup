@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { baseSpacer } from '../styles/size';
-import { white, headingsColor } from '../styles/color';
+import { baseSpacer } from '@styles/size';
+import { headingsColor, white } from '@styles/color';
 import {
   fontSizeH1,
   fontSizeH2,
@@ -15,7 +15,7 @@ import {
   fontFamilySansSerif,
   fontSizeBase,
   fontSizeSmall,
-} from '../styles/typography';
+} from '@styles/typography';
 
 type HeadingProps = {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';

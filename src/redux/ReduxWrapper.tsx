@@ -5,9 +5,9 @@ import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import firebase from 'firebase/app';
 
-import configureStore from './configureStore';
-import { initialState as clientInitialState } from './ducks/client';
-import { initialState as globalAlertsInitialState } from './ducks/globalAlerts';
+import configureStore from '@redux/configureStore';
+import { initialState as clientInitialState } from '@redux/ducks/client';
+import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
 
 export const initialState = process.env.BROWSER // eslint-disable-next-line no-underscore-dangle
   ? window.__INITIAL_STATE__

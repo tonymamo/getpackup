@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { halfSpacer, doubleSpacer } from '../styles/size';
-import { baseBorderStyle } from '../styles/mixins';
+import { doubleSpacer, halfSpacer } from '@styles/size';
+import { baseBorderStyle } from '@styles/mixins';
 
 type HRProps = {
   compact?: boolean;

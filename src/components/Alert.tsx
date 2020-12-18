@@ -2,15 +2,15 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { animated } from 'react-spring';
 import {
-  FaExclamationCircle,
   FaCheckCircle,
+  FaExclamationCircle,
   FaInfoCircle,
   FaLongArrowAltRight,
   FaTimes,
 } from 'react-icons/fa';
 
-import { halfSpacer, baseSpacer, borderRadius, doubleSpacer } from '../styles/size';
-import { brandDanger, brandSuccess, white, brandTertiary } from '../styles/color';
+import { baseSpacer, borderRadius, doubleSpacer, halfSpacer } from '@styles/size';
+import { brandDanger, brandSuccess, brandTertiary, white } from '@styles/color';
 
 export type AlertProps = {
   type: 'success' | 'danger' | 'info';

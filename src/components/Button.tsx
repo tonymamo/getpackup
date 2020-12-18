@@ -3,27 +3,27 @@ import styled, { css } from 'styled-components';
 import { Link } from 'gatsby';
 
 import {
-  baseSpacer,
   baseAndAHalfSpacer,
+  baseSpacer,
+  borderRadius,
   borderWidth,
   halfSpacer,
-  borderRadius,
-} from '../styles/size';
-import { fontFamilySansSerif, fontSizeBase } from '../styles/typography';
+} from '@styles/size';
+import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
 import {
+  brandDanger,
   brandPrimary,
   brandPrimaryHover,
-  brandDanger,
-  white,
-  brandSuccess,
-  lightGray,
-  gray,
-  brandTertiary,
-  brandTertiaryHover,
   brandSecondary,
   brandSecondaryHover,
-} from '../styles/color';
-import { disabledStyle } from '../styles/mixins';
+  brandSuccess,
+  brandTertiary,
+  brandTertiaryHover,
+  gray,
+  lightGray,
+  white,
+} from '@styles/color';
+import { disabledStyle } from '@styles/mixins';
 
 export type ButtonProps = {
   type: 'submit' | 'button' | 'reset' | 'link';

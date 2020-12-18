@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import { PageContainer, Box, Heading, Seo, HeroImage } from '../components';
+import { PageContainer, Box, Heading, Seo, HeroImage } from '@components';
 
 type TagRouteProps = {
   data: {

@@ -1,14 +1,9 @@
 import React, { FunctionComponent, useState } from 'react';
 import addToMailchimp, { MailchimpResponse } from 'gatsby-plugin-mailchimp';
-import { Formik, Form, Field } from 'formik';
+import { Field, Form, Formik } from 'formik';
 
-import Alert from './Alert';
-import Button from './Button';
-import Row from './Row';
-import Column from './Column';
-import Input from './Input';
-
-import { requiredEmail } from '../utils/validations';
+import { Alert, Button, Row, Column, Input } from '@components';
+import { requiredEmail } from '@utils/validations';
 
 type SignupFormProps = {
   location: string;

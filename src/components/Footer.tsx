@@ -12,20 +12,21 @@ import {
 } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
-import PageContainer from './PageContainer';
-import Row from './Row';
-import Column from './Column';
-import HorizontalRule from './HorizontalRule';
-import FlexContainer from './FlexContainer';
-import Heading from './Heading';
-
-import { brandPrimary, brandSecondary, textColor, white } from '../styles/color';
-import { quadrupleSpacer, baseSpacer, doubleSpacer, screenSizes } from '../styles/size';
-import { fontSizeSmall } from '../styles/typography';
-import { baseBorderStyle, visuallyHiddenStyle } from '../styles/mixins';
-import SignupForm from './SignupForm';
-import { RootState } from '../redux/ducks';
-import useWindowSize from '../utils/useWindowSize';
+import {
+  PageContainer,
+  Row,
+  Column,
+  HorizontalRule,
+  FlexContainer,
+  Heading,
+  SignupForm,
+} from '@components';
+import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
+import { quadrupleSpacer, baseSpacer, doubleSpacer, screenSizes } from '@styles/size';
+import { fontSizeSmall } from '@styles/typography';
+import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
+import { RootState } from '@redux/ducks';
+import useWindowSize from '@utils/useWindowSize';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
