@@ -4,8 +4,9 @@ import { FaCaretRight } from 'react-icons/fa';
 import { graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import Content, { HTMLContent } from '../components/Content';
 import {
+  Content,
+  HTMLContent,
   HeroImage,
   Row,
   Box,
@@ -16,8 +17,8 @@ import {
   Seo,
   Heading,
   Alert,
-} from '../components';
-import { requiredEmail, requiredField } from '../utils/validations';
+} from '@components';
+import { requiredEmail, requiredField } from '@utils/validations';
 
 type ContactProps = {
   hideFromCms?: boolean;

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
-import { PageContainer, Button, Box, Seo, Heading } from '../components';
+import { PageContainer, Button, Box, Seo, Heading } from '@components';
 
 const NotFoundPage: FunctionComponent<RouteComponentProps> = () => (
   <PageContainer withVerticalPadding>

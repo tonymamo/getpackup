@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import { HeroImage, Seo, PageContainer, Heading } from '../components';
+import { HeroImage, Seo, PageContainer, Heading } from '@components';
 import BlogRoll from './BlogRoll';
 
 type BlogIndexProps = {

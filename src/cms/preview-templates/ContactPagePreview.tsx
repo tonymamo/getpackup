@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { MarkdownContent, Layout } from '@components';
-import { ContactPageTemplate } from '@templates/contact-page';
+import { ContactPageTemplate } from '../../templates/contact-page';
 
 const ContactPagePreview = ({ entry }: { entry: any }) => {
   const data = entry.getIn(['data']).toJS();

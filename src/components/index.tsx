@@ -4,8 +4,8 @@ import Box from './Box';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
-import Content, { MarkdownContent } from './Content';
-import FirebaseAuthWrapper from './FirebaseAuthWrapper';
+import Content, { MarkdownContent, HTMLContent } from './Content';
+import FirebaseAuthWrapper, { uiConfig } from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
 import GlobalAlerts from './GlobalAlerts';
@@ -39,12 +39,14 @@ export {
   Column,
   Content,
   FirebaseAuthWrapper,
+  uiConfig,
   FlexContainer,
   Footer,
   GlobalAlerts,
   Heading,
   HeroImage,
   HorizontalRule,
+  HTMLContent,
   Image,
   Input,
   Layout,

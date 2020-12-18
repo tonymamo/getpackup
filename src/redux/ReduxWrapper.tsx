@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import configureStore from './configureStore';
-import { initialState as globalAlertsInitialState } from './ducks/globalAlerts';
+import configureStore from '@redux/configureStore';
+import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
 
 export const initialState = process.env.BROWSER // eslint-disable-next-line no-underscore-dangle
   ? window.__INITIAL_STATE__

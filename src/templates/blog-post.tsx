@@ -18,10 +18,11 @@ import {
   RelatedBlogPost,
   Share,
   ClientOnly,
-} from '../components';
-import Content, { HTMLContent } from '../components/Content';
-import useWindowSize from '../utils/useWindowSize';
-import { screenSizes } from '../styles/size';
+  Content,
+  HTMLContent,
+} from '@components';
+import useWindowSize from '@utils/useWindowSize';
+import { screenSizes } from '@styles/size';
 
 type RelatedPostType = {
   fields: {

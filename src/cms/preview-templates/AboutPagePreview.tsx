@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { AboutPageTemplate } from '@templates/about-page';
 import { MarkdownContent, Layout } from '@components';
+import { AboutPageTemplate } from '../../templates/about-page';
 
 const AboutPagePreview = ({ entry }: { entry: any }) => {
   const data = entry.getIn(['data']).toJS();

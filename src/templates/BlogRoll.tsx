@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, graphql, StaticQuery } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import { Box, HorizontalRule, Heading, Row, Column, PreviewCompatibleImage } from '../components';
+import { Box, HorizontalRule, Heading, Row, Column, PreviewCompatibleImage } from '@components';
 
 type BlogRollProps = {
   data: {

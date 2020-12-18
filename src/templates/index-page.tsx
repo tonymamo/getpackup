@@ -20,8 +20,7 @@ import {
   Testimonial,
   ClientOnly,
   PreviewCompatibleImage,
-} from '../components';
-import BlogRoll from './BlogRoll';
+} from '@components';
 import {
   textColor,
   white,
@@ -29,18 +28,13 @@ import {
   brandSecondary,
   brandTertiary,
   lightestGray,
-} from '../styles/color';
-import {
-  screenSizes,
-  quadrupleSpacer,
-  breakpoints,
-  doubleSpacer,
-  baseSpacer,
-} from '../styles/size';
-import collage from '../images/Outdoorsman_Collage copy.jpg';
-import waveBismark from '../images/wave-bismark.svg';
-import waveDownriver from '../images/wave-downriver.svg';
-import useWindowSize from '../utils/useWindowSize';
+} from '@styles/color';
+import { screenSizes, quadrupleSpacer, breakpoints, doubleSpacer, baseSpacer } from '@styles/size';
+import collage from '@images/Outdoorsman_Collage copy.jpg';
+import waveBismark from '@images/wave-bismark.svg';
+import waveDownriver from '@images/wave-downriver.svg';
+import useWindowSize from '@utils/useWindowSize';
+import BlogRoll from './BlogRoll';
 
 type IndexPageProps = {
   hideFromCms?: boolean;
