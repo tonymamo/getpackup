@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { navigate } from 'gatsby';
 
-import { ActionResponseType } from '../constants';
+import { ActionResponseType } from '@redux/constants';
 
 export default (store: { dispatch: Function }) => (next: any) => (action: ActionResponseType) => {
   if (action && action.payload) {

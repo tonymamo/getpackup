@@ -3,10 +3,10 @@ import { navigate } from 'gatsby';
 import { Router } from '@reach/router';
 import firebase from 'gatsby-plugin-firebase';
 
-import Profile from '../views/Profile';
-import Trips from '../views/Trips';
+import Profile from '@views/Profile';
+import Trips from '@views/Trips';
 
-import useAuthState from '../utils/useFirebaseAuth';
+import useAuthState from '@utils/useFirebaseAuth';
 
 const App = () => {
   const [user, loading, error] = useAuthState(firebase);

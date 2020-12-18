@@ -4,15 +4,13 @@ import { IconContext } from 'react-icons';
 import 'typeface-open-sans';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Footer from './Footer';
-import Navbar from './Navbar';
-import GlobalAlerts from './GlobalAlerts';
-import '../styles/webfonts.css';
+import { Footer, Navbar, GlobalAlerts } from '@components';
+import '@styles/webfonts.css';
 
-import { quadrupleSpacer } from '../styles/size';
-import { white } from '../styles/color';
-import CssReset from '../styles/cssReset';
-import topo from '../images/topo.png';
+import { quadrupleSpacer } from '@styles/size';
+import { white } from '@styles/color';
+import CssReset from '@styles/cssReset';
+import topo from '@images/topo.png';
 
 const LayoutWrapper = styled.div`
   display: flex;

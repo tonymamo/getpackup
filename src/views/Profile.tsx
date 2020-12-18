@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
-import { Heading, PageContainer, Box, Avatar, Seo } from '../components';
+import { Heading, PageContainer, Box, Avatar, Seo } from '@components';
 
 type ProfileProps = {
   user: firebase.User;

@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import firebase from 'gatsby-plugin-firebase';
 
-import { fontFamilySansSerif, fontSizeBase } from '../styles/typography';
-import { halfSpacer, baseAndAHalfSpacer, borderRadius } from '../styles/size';
+import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
+import { baseAndAHalfSpacer, borderRadius, halfSpacer } from '@styles/size';
 
 // Wrapper around 'react-firebaseui/StyledFirebaseAuth' just to modify some styling
 // to make buttons match better to Button.tsx

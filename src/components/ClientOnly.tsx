@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 
 // used to help prevent Flash of Unstyled Content (FOUC) by not rendering anything initially
 // when compiled in a Gatsby build, but immediately trigger a re-render with useEffect

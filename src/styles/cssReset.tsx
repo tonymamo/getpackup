@@ -13,8 +13,8 @@ import {
   white,
 } from './color';
 
-import { baseSpacer, halfSpacer, quarterSpacer } from './size';
-import { headingsFontFamily, fontFamilySansSerif } from './typography';
+import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
+import { headingsFontFamily, fontFamilySansSerif } from '@styles/typography';
 
 const externalLinkIcon = css`
   ${rtsm(<FaExternalLinkAlt color="darkgray" size={12} />).replace(/"/g, "'")}

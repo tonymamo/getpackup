@@ -4,17 +4,13 @@ import { Link, navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import { useDispatch } from 'react-redux';
 
-import PageContainer from './PageContainer';
-import FlexContainer from './FlexContainer';
-import Heading from './Heading';
-import Avatar from './Avatar';
-import Button from './Button';
+import { PageContainer, FlexContainer, Heading, Avatar, Button } from '@components';
 
-import { brandSecondary, white } from '../styles/color';
-import { halfSpacer, quadrupleSpacer } from '../styles/size';
-import { headingsFontFamily, fontSizeSmall } from '../styles/typography';
-import useAuthState from '../utils/useFirebaseAuth';
-import { addAlert } from '../redux/ducks/globalAlerts';
+import { brandSecondary, white } from '@styles/color';
+import { halfSpacer, quadrupleSpacer } from '@styles/size';
+import { fontSizeSmall, headingsFontFamily } from '@styles/typography';
+import useAuthState from '@utils/useFirebaseAuth';
+import { addAlert } from '@redux/ducks/globalAlerts';
 
 type NavbarProps = {};
 

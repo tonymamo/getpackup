@@ -3,7 +3,7 @@ import { kebabCase } from 'lodash';
 import { Link, graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import { PageContainer, Box, Heading, Seo, HeroImage } from '../components';
+import { PageContainer, Box, Heading, Seo, HeroImage } from '@components';
 
 type TagsIndexProps = {
   title: string;

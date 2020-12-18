@@ -7,7 +7,7 @@
 
 import React, { FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useStaticQuery, graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 import { useLocation } from '@reach/router';
 
 type SeoType = {
