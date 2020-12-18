@@ -22,7 +22,8 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "@components": ["./components"]
+      "@components": ["./components"],
+      "@styles/*": ["./styles/*"]
     },
     "typeRoots": ["./node_modules/@types", "./custom_types"],
     "esModuleInterop": true

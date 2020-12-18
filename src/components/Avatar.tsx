@@ -9,7 +9,7 @@ import {
   doubleSpacer,
   sextupleSpacer,
   quadrupleSpacer,
-} from '../styles/size';
+} from '@styles/size';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 
 type AvatarProps = {
