@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { BlogPostTemplate } from '../../templates/blog-post';
-import { MarkdownContent } from '../../components/Content';
-import { Layout } from '../../components';
+import { MarkdownContent, Layout } from '@components';
+import { BlogPostTemplate } from '@templates/blog-post';
 
 const BlogPostPreview = ({ entry }: { entry: any }) => {
   const data = entry.getIn(['data']).toJS();

@@ -2,11 +2,10 @@ import { FluidObject } from 'gatsby-image';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { white } from '../styles/color';
-import { screenSizes } from '../styles/size';
-import useWindowSize from '../utils/useWindowSize';
-import ClientOnly from './ClientOnly';
-import PreviewCompatibleImage from './PreviewCompatibleImage';
+import { white } from '@styles/color';
+import { screenSizes } from '@styles/size';
+import useWindowSize from '@utils/useWindowSize';
+import { ClientOnly, PreviewCompatibleImage } from '@components';
 
 type FullBleedImageProps = {
   imgSrc:

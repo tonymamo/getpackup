@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
 
-import { brandPrimary, white, brandPrimaryHover } from '../styles/color';
-import { doubleSpacer, quarterSpacer, baseSpacer } from '../styles/size';
-import { fontSizeSmall } from '../styles/typography';
+import { brandPrimary, brandPrimaryHover, white } from '@styles/color';
+import { baseSpacer, doubleSpacer, quarterSpacer } from '@styles/size';
+import { fontSizeSmall } from '@styles/typography';
 
 type PillProps = {
   to: string;

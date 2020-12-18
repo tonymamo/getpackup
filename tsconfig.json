@@ -23,11 +23,13 @@
     "baseUrl": "./src",
     "paths": {
       "@components": ["./components"],
-      "@images": ["./images/*"],
-      "@redux": ["./redux/*"],
+      "@cms/*": ["./cms/*"],
+      "@images/*": ["./images/*"],
+      "@redux/*": ["./redux/*"],
       "@styles/*": ["./styles/*"],
       "@utils/*": ["./utils/*"],
-      "@views/*": ["./views/*"]
+      "@views/*": ["./views/*"],
+      "@templates/*": ["./templates/*"]
     },
     "typeRoots": ["./node_modules/@types", "./custom_types"],
     "esModuleInterop": true

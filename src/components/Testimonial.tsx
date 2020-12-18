@@ -2,14 +2,11 @@ import React, { FunctionComponent } from 'react';
 import { FluidObject } from 'gatsby-image';
 import { FaQuoteRight } from 'react-icons/fa';
 
-import Avatar from './Avatar';
-import Heading from './Heading';
-import FlexContainer from './FlexContainer';
-import Row from './Row';
-import Column from './Column';
-import { baseSpacer, doubleSpacer, quadrupleSpacer } from '../styles/size';
-import { fontSizeH6 } from '../styles/typography';
-import { brandPrimary } from '../styles/color';
+import { Avatar, Heading, FlexContainer, Row, Column } from '@components';
+
+import { baseSpacer, doubleSpacer, quadrupleSpacer } from '@styles/size';
+import { fontSizeH6 } from '@styles/typography';
+import { brandPrimary } from '@styles/color';
 
 type TestimonialProps = {
   testimonial: {

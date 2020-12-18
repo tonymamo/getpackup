@@ -1,20 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
-import PageContainer from './PageContainer';
-import Row from './Row';
-import Column from './Column';
-import HorizontalRule from './HorizontalRule';
-import FlexContainer from './FlexContainer';
-import Heading from './Heading';
+import {
+  PageContainer,
+  Row,
+  Column,
+  HorizontalRule,
+  FlexContainer,
+  Heading,
+  SignupForm
+} from '@components';
 
-import { brandPrimary, brandSecondary, white } from '../styles/color';
-import { quadrupleSpacer, baseSpacer, doubleSpacer } from '../styles/size';
-import { fontSizeSmall } from '../styles/typography';
-import { visuallyHiddenStyle } from '../styles/mixins';
-import SignupForm from './SignupForm';
+import { brandPrimary, brandSecondary, white } from '@styles/color';
+import { baseSpacer, doubleSpacer, quadrupleSpacer } from '@styles/size';
+import { fontSizeSmall } from '@styles/typography';
+import { visuallyHiddenStyle } from '@styles/mixins';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};

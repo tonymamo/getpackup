@@ -1,25 +1,25 @@
 import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
-import { useField, FieldMetaProps, FormikHelpers } from 'formik';
+import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 
 import {
-  inputHeight,
-  inputPaddingY,
-  inputPaddingX,
-  halfSpacer,
   baseSpacer,
   borderRadius,
-} from '../styles/size';
-import { fontSizeBase, lineHeightBase, fontSizeSmall } from '../styles/typography';
+  halfSpacer,
+  inputHeight,
+  inputPaddingX,
+  inputPaddingY,
+} from '@styles/size';
+import { fontSizeBase, fontSizeSmall, lineHeightBase } from '@styles/typography';
 import {
-  textColor,
-  white,
   brandDanger,
   brandDangerRGB,
   brandPrimary,
   brandPrimaryRGB,
-} from '../styles/color';
-import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '../styles/mixins';
+  textColor,
+  white,
+} from '@styles/color';
+import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
 
 type InputProps = {
   disabled?: boolean;

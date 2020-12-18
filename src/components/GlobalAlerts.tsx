@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { useTransition, animated } from 'react-spring';
-import { useSelector, useDispatch } from 'react-redux';
+import { animated, useTransition } from 'react-spring';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Alert, { AlertProps } from './Alert';
-import { closeAlert } from '../redux/ducks/globalAlerts';
-import { RootState } from '../redux/ducks';
-import { halfSpacer } from '../styles/size';
+import { Alert, AlertProps } from '@components';
+import { closeAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
+import { halfSpacer } from '@styles/size';
 
 const GlobalAlertWrapper = styled.div`
   position: fixed;

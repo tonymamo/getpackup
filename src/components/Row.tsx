@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { baseSpacerUnit } from '../styles/size';
+import { baseSpacerUnit } from '@styles/size';
 
 const Row: FunctionComponent<{}> = styled.div`
   display: flex;

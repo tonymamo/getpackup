@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
-import PreviewCompatibleImage from './PreviewCompatibleImage';
+
+import { PreviewCompatibleImage } from '@components';
 
 type RelatedBlogPostProps = {
   type: 'next' | 'prev';

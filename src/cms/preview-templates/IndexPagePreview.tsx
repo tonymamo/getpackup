@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { IndexPageTemplate } from '../../templates/index-page';
-
-import { Layout } from '../../components';
+import { IndexPageTemplate } from '@templates/index-page';
+import { Layout } from '@components';
 
 const IndexPagePreview = ({ entry }: { entry: any }) => {
   const data = entry.getIn(['data']).toJS();

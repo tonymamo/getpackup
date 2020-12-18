@@ -1,13 +1,14 @@
-import Alert from './Alert';
+import Alert, { AlertProps } from './Alert';
 import Avatar from './Avatar';
 import Box from './Box';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
-import Content from './Content';
+import Content, { MarkdownContent } from './Content';
 import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
+import GlobalAlerts from './GlobalAlerts';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
 import HorizontalRule from './HorizontalRule';
@@ -30,6 +31,7 @@ import Wave from './wave';
 
 export {
   Alert,
+  AlertProps,
   Avatar,
   Box,
   Button,
@@ -39,12 +41,14 @@ export {
   FirebaseAuthWrapper,
   FlexContainer,
   Footer,
+  GlobalAlerts,
   Heading,
   HeroImage,
   HorizontalRule,
   Image,
   Input,
   Layout,
+  MarkdownContent,
   Navbar,
   NegativeMarginContainer,
   PageContainer,

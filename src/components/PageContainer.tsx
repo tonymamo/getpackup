@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { breakpoints, baseSpacer, halfSpacer, quadrupleSpacer } from '../styles/size';
+import { baseSpacer, breakpoints, halfSpacer, quadrupleSpacer } from '@styles/size';
 
 const PageContainer = styled.div`
   margin-right: auto;
