@@ -23,7 +23,11 @@
     "baseUrl": "./src",
     "paths": {
       "@components": ["./components"],
-      "@styles/*": ["./styles/*"]
+      "@images": ["./images/*"],
+      "@redux": ["./redux/*"],
+      "@styles/*": ["./styles/*"],
+      "@utils/*": ["./utils/*"],
+      "@views/*": ["./views/*"]
     },
     "typeRoots": ["./node_modules/@types", "./custom_types"],
     "esModuleInterop": true
