@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { FaPlusCircle } from 'react-icons/fa';
 
-import { Heading, PageContainer, Box, Button, Seo, HorizontalRule } from '@/components';
+import { Heading, PageContainer, Box, Button, Seo, HorizontalRule } from '@components';
 
 type TripsProps = {} & RouteComponentProps;
 

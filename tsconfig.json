@@ -22,7 +22,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@components": ["./src/components/index.tsx"]
     },
     "typeRoots": ["./node_modules/@types", "./custom_types"],
     "esModuleInterop": true
