@@ -19,18 +19,13 @@
     /* Module Resolution Options */
     "allowSyntheticDefaultImports": true /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */,
     "rootDirs": ["src"],
-    "baseUrl": "./src",
+    "moduleResolution": "node",
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/*"],
-      "@images/*": ["images/*"],
-      "@redux/*": ["redux/*"],
-      "@styles/*": ["styles/*"],
-      "@utils/*": ["utils/*"],
-      "@views/*": ["views/*"],
+      "@/*": ["./src/*"]
     },
     "typeRoots": ["./node_modules/@types", "./custom_types"],
     "esModuleInterop": true
   },
-  "include": ["./src/**/*"],
   "exclude": ["*.test.js", "_this_is_virtual_fs_path_/**/*"]
 }

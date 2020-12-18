@@ -15,7 +15,7 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".tsx"]
+        "extensions": [".ts", ".tsx"]
       }
     ],
     "import/extensions": [0, "never"],
