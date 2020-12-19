@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
 
-import { Heading, Box, Seo } from '../components';
-import { RootState } from '../redux/ducks';
-import TripSummaryForm from './TripSummaryForm';
+import { Heading, Box, Seo } from '@components';
+import { RootState } from '@redux/ducks';
+import TripSummaryForm from '@views/TripSummaryForm';
 
 type NewTripSummaryProps = {} & RouteComponentProps;
 

@@ -3,9 +3,9 @@ import { navigate } from 'gatsby';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
 
-import { RootState } from '../redux/ducks';
-import { addAlert } from '../redux/ducks/globalAlerts';
-import { addAttemptedPrivatePage } from '../redux/ducks/client';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { addAttemptedPrivatePage } from '@redux/ducks/client';
 
 type PrivateRouteProps = {
   location?: WindowLocation;

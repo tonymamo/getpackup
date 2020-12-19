@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { useField, FieldMetaProps, FormikHelpers } from 'formik';
 import * as icons from 'react-icons/all';
 
-import { brandPrimary, lightGray, textColor } from '../styles/color';
-import { doubleSpacer, baseSpacer } from '../styles/size';
+import { brandPrimary, lightGray, textColor } from '@styles/color';
+import { doubleSpacer, baseSpacer } from '@styles/size';
 
 type IconCheckboxProps = {
   id?: string;

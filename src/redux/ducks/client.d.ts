@@ -1,4 +1,4 @@
-import { ADD_ATTEMPTED_PRIVATE_PAGE, REMOVE_ATTEMPTED_PRIVATE_PAGE } from './client';
+import { ADD_ATTEMPTED_PRIVATE_PAGE, REMOVE_ATTEMPTED_PRIVATE_PAGE } from '@redux/ducks/client';
 
 export type ClientStoreType = {
   location?: string;

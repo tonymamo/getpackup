@@ -11,9 +11,8 @@ import {
   lightGray,
   white,
   brandSecondary,
-} from './color';
-import topo from '../images/topo.png';
-
+} from '@styles/color';
+import topo from '@images/topo.png';
 import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { headingsFontFamily, fontFamilySansSerif } from '@styles/typography';
 

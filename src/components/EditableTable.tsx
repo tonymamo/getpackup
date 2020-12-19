@@ -2,11 +2,11 @@ import React, { FunctionComponent } from 'react';
 import { useTable, usePagination, useSortBy } from 'react-table';
 import styled from 'styled-components';
 
-import { quarterSpacer, baseSpacer } from '../styles/size';
-import { baseBorderStyle } from '../styles/mixins';
-import { lightestGray, white } from '../styles/color';
-import Button, { ButtonProps } from './Button';
-import FlexContainer from './FlexContainer';
+import { quarterSpacer, baseSpacer } from '@styles/size';
+import { baseBorderStyle } from '@styles/mixins';
+import { lightestGray, white } from '@styles/color';
+import Button, { ButtonProps } from '@components/Button';
+import FlexContainer from '@components/FlexContainer';
 
 type EditableTableActionType = {
   to?: string;

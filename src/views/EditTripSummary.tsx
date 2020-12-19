@@ -3,11 +3,11 @@ import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 
-import { Heading, Box, Seo } from '../components';
-import { RootState } from '../redux/ducks';
-import { TripType } from './Trips';
-import { dateWithTimezoneOffset, formattedDateForDateInput } from '../utils/dateUtils';
-import TripSummaryForm from './TripSummaryForm';
+import { Heading, Box, Seo } from '@components';
+import { RootState } from '@redux/ducks';
+import { dateWithTimezoneOffset, formattedDateForDateInput } from '@utils/dateUtils';
+import { TripType } from '@views/Trips';
+import TripSummaryForm from '@views/TripSummaryForm';
 
 type EditTripSummaryProps = {
   id?: string;

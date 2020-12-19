@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 import styled from 'styled-components';
 import { FaChevronRight } from 'react-icons/fa';
 
-import { halfSpacer } from '../styles/size';
+import { halfSpacer } from '@styles/size';
 
 type BreadCrumbsProps = {
   url: string;

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, FunctionComponent } from 'react';
 import styled from 'styled-components';
-
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';

@@ -2,8 +2,8 @@ import React, { FunctionComponent, useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 
-import { RootState } from '../../redux/ducks';
-import { EditableTable } from '../../components';
+import { RootState } from '@redux/ducks';
+import { EditableTable } from '@components';
 
 type GearListProps = {};
 

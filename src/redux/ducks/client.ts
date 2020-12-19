@@ -1,4 +1,4 @@
-import { ClientStoreType, ClientActions } from './client.d';
+import { ClientStoreType, ClientActions } from '@redux/ducks/client.d';
 
 export const ADD_ATTEMPTED_PRIVATE_PAGE = 'ADD_ATTEMPTED_PRIVATE_PAGE';
 export const REMOVE_ATTEMPTED_PRIVATE_PAGE = 'REMOVE_ATTEMPTED_PRIVATE_PAGE';

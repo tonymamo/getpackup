@@ -17,6 +17,7 @@ export { default as wrapRootElement } from './src/redux/ReduxWrapper';
 // wrapping with React Fragment here so we can use hooks in Layout
 export const wrapPageElement = ({ element }) => {
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <>
       <Layout>{element}</Layout>
     </>

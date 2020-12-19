@@ -7,11 +7,11 @@ import { navigate } from 'gatsby';
 import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 
-import { Input, Button, HorizontalRule, Column, Row } from '../components';
-import { StyledLabel } from '../components/Input';
-import { addAlert } from '../redux/ducks/globalAlerts';
-import { requiredField } from '../utils/validations';
-import ReactDatepickerTheme from '../styles/react-datepicker';
+import { Input, Button, HorizontalRule, Column, Row } from '@components';
+import { StyledLabel } from '@components/Input';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { requiredField } from '@utils/validations';
+import ReactDatepickerTheme from '@styles/react-datepicker';
 
 type TripSummaryProps = {
   initialValues: {

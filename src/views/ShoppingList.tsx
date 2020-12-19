@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { Seo, Heading } from '../components';
+import { Seo, Heading } from '@components';
 
 type ShoppingListProps = {};
 

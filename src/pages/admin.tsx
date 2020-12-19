@@ -3,9 +3,9 @@ import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { navigate } from 'gatsby';
 
-import { RootState } from '../redux/ducks';
-import { PageContainer, PrivateRoute, LoadingPage, ErrorBoundary } from '../components';
-import GearList from '../views/Admin/GearList';
+import { RootState } from '@redux/ducks';
+import { PageContainer, PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
+import GearList from '@views/Admin/GearList';
 
 const Admin = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);

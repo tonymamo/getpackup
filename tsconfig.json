@@ -22,7 +22,8 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "@components": ["./components"],
+      "@components": ["./components/index.tsx"],
+      "@components/*": ["./components/*"],
       "@cms/*": ["./cms/*"],
       "@images/*": ["./images/*"],
       "@redux/*": ["./redux/*"],

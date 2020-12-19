@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
-import { brandSecondary, brandTertiary, brandTertiaryHover } from './color';
-import { sharedStyles } from '../components/Input';
+import { brandSecondary, brandTertiary, brandTertiaryHover } from '@styles/color';
+import { sharedStyles } from '@components/Input';
 
 /* eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }] */
 const ReactDatepickerTheme = createGlobalStyle`

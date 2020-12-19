@@ -43,9 +43,11 @@
       "alias": {
         "map": [
           ["@components", "./src/components"],
+          ["@cms", "./src/cms"],
           ["@images", "./src/images"],
           ["@redux", "./src/redux"],
           ["@styles", "./src/styles"],
+          ["@templates","./src/templates"],
           ["@utils", "./src/utils"],
           ["@views", "./src/views"]
         ],

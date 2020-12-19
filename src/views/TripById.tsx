@@ -7,13 +7,13 @@ import { Link } from 'gatsby';
 import SwipeableViews from 'react-swipeable-views';
 import styled from 'styled-components';
 
-import { Heading, Box, Seo, FlexContainer, HorizontalRule } from '../components';
-import { RootState } from '../redux/ducks';
-import { TripType } from './Trips';
-import { formattedDateRange, isBeforeToday } from '../utils/dateUtils';
-import { brandPrimary, white, textColor } from '../styles/color';
-import { baseSpacer, doubleSpacer } from '../styles/size';
-import { baseBorderStyle } from '../styles/mixins';
+import { Heading, Box, Seo, FlexContainer, HorizontalRule } from '@components';
+import { RootState } from '@redux/ducks';
+import { TripType } from '@views/Trips';
+import { formattedDateRange, isBeforeToday } from '@utils/dateUtils';
+import { brandPrimary, white, textColor } from '@styles/color';
+import { baseSpacer, doubleSpacer } from '@styles/size';
+import { baseBorderStyle } from '@styles/mixins';
 
 type TripByIdProps = {
   user?: firebase.User;

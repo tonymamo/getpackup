@@ -2,8 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { RouteComponentProps } from '@reach/router';
 
-import Box from './Box';
-import PageContainer from './PageContainer';
+import { Box, PageContainer } from '@components';
 
 const LoadingPage: FunctionComponent<RouteComponentProps> = () => (
   <PageContainer withVerticalPadding>

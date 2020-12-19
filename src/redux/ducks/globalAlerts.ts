@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { GlobalAlertsStoreType, AlertType, GlobalAlertsActions } from './globalAlerts.d';
+import { GlobalAlertsStoreType, AlertType, GlobalAlertsActions } from '@redux/ducks/globalAlerts.d';
 
 export const ADD_GLOBAL_ALERT = 'ADD_GLOBAL_ALERT';
 export const CLOSE_GLOBAL_ALERT = 'CLOSE_GLOBAL_ALERT';

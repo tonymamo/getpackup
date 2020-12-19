@@ -5,17 +5,8 @@ import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 
-import {
-  Heading,
-  Box,
-  Seo,
-  Button,
-  HorizontalRule,
-  IconCheckbox,
-  Row,
-  Column,
-} from '../components';
-import { addAlert } from '../redux/ducks/globalAlerts';
+import { Heading, Box, Seo, Button, HorizontalRule, IconCheckbox, Row, Column } from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
