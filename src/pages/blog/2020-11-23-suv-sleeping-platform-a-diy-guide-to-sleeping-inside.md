@@ -1,6 +1,6 @@
 ---
 templateKey: blog-post
-title: SUV Sleeping Platform - A DIY Guide to Sleeping Inside
+title: Modular SUV Sleeping Platform - A DIY Guide to Sleeping Inside
 date: 2020-11-23T07:00:50.239Z
 description: Build your own modular sleeping platform for your vehicle in a
   weekend for $275. Designed for the weekend warrior who still needs their seats
