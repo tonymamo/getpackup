@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { animated, useTransition } from 'react-spring';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Alert, AlertProps } from '@components';
 import { closeAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { halfSpacer } from '@styles/size';
+import Alert, { AlertProps } from './Alert';
 
 const GlobalAlertWrapper = styled.div`
   position: fixed;

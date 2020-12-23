@@ -1,4 +1,4 @@
-import Alert, { AlertProps } from './Alert';
+import Alert from './Alert';
 import Avatar from './Avatar';
 import Box from './Box';
 import Button from './Button';
@@ -32,7 +32,6 @@ import Wave from './wave';
 
 export {
   Alert,
-  AlertProps,
   Avatar,
   Box,
   Button,

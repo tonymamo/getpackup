@@ -271,6 +271,8 @@ collections:
               label: LinksList,
               name: linksList,
               widget: list,
+              summary: '{{fields.linkText}}',
+              label_singular: 'New Link',
               fields: [
                   { label: LinkURL, name: linkUrl, widget: string, hint: 'For internal links (pages on our website, like blogs), dont include the domain name, just start with the / after getpackup.com' },
                   { label: LinkText, name: linkText, widget: string },
