@@ -94,7 +94,7 @@ const Seo: FunctionComponent<SeoType> = ({
         },
         {
           property: 'og:title',
-          content: `${seo.title} | ${site.siteMetadata.title}.`,
+          content: `${seo.title} | ${site.siteMetadata.title}`,
         },
 
         {
@@ -115,7 +115,7 @@ const Seo: FunctionComponent<SeoType> = ({
         },
         {
           name: 'twitter:title',
-          content: `${seo.title} | ${site.siteMetadata.title}.`,
+          content: `${seo.title} | ${site.siteMetadata.title}`,
         },
         {
           name: 'twitter:description',
