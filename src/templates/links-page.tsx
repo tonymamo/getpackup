@@ -3,7 +3,6 @@ import { graphql, Link } from 'gatsby';
 import { FixedObject } from 'gatsby-image';
 import styled from 'styled-components';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
-import { isBefore, isAfter } from 'date-fns';
 
 import {
   Box,
@@ -26,8 +25,6 @@ type LinksPageProps = {
     linkUrl: string;
     linkText: string;
     thumbnail: { childImageSharp: { fixed: FixedObject } };
-    startDate?: string;
-    endDate?: string;
   }>;
 };
 
@@ -70,39 +67,31 @@ export const LinksPageTemplate: FunctionComponent<LinksPageProps> = ({
         <div>
           {linksList &&
             linksList.length > 0 &&
-            linksList.map((link) => {
-              if (
-                (link.startDate && isBefore(new Date(), new Date(link.startDate))) ||
-                (link.endDate && isAfter(new Date(), new Date(link.endDate)))
-              ) {
-                return null;
-              }
-              return (
-                <Row key={link.linkUrl}>
-                  <Column md={8} mdOffset={2}>
-                    <Box>
-                      <FlexContainer justifyContent="flex-start" flexWrap="nowrap">
-                        <ThumbnailWrapper>
-                          <RelativeOrExternalLink to={link.linkUrl}>
-                            <PreviewCompatibleImage
-                              imageInfo={{
-                                image: link.thumbnail,
-                                alt: '',
-                              }}
-                            />
-                          </RelativeOrExternalLink>
-                        </ThumbnailWrapper>
-                        <div>
-                          <RelativeOrExternalLink to={link.linkUrl}>
-                            {link.linkText}
-                          </RelativeOrExternalLink>
-                        </div>
-                      </FlexContainer>
-                    </Box>
-                  </Column>
-                </Row>
-              );
-            })}
+            linksList.map((link) => (
+              <Row key={link.linkUrl}>
+                <Column md={8} mdOffset={2}>
+                  <Box>
+                    <FlexContainer justifyContent="flex-start" flexWrap="nowrap">
+                      <ThumbnailWrapper>
+                        <RelativeOrExternalLink to={link.linkUrl}>
+                          <PreviewCompatibleImage
+                            imageInfo={{
+                              image: link.thumbnail,
+                              alt: '',
+                            }}
+                          />
+                        </RelativeOrExternalLink>
+                      </ThumbnailWrapper>
+                      <div>
+                        <RelativeOrExternalLink to={link.linkUrl}>
+                          {link.linkText}
+                        </RelativeOrExternalLink>
+                      </div>
+                    </FlexContainer>
+                  </Box>
+                </Column>
+              </Row>
+            ))}
         </div>
         <Row>
           <Column md={8} mdOffset={2}>
@@ -145,8 +134,6 @@ export const linksPageQuery = graphql`
         linksList {
           linkUrl
           linkText
-          startDate
-          endDate
           thumbnail {
             childImageSharp {
               fixed(width: 100, height: 100) {
