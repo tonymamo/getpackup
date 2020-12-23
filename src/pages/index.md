@@ -1,6 +1,6 @@
 ---
 templateKey: index-page
-title: Packup
+title: Never forget important gear again
 heroImage: /img/0f1a2062-3.jpg
 mobileHeroImage: /img/0f1a2059-4.jpg
 heroHeading: Never forget important gear again
