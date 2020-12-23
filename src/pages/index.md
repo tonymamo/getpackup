@@ -1,6 +1,6 @@
 ---
 templateKey: index-page
-title: Never forget important gear again
+title: Packup | Expert packing lists for camping and outdoor adventure
 heroImage: /img/0f1a2062-3.jpg
 mobileHeroImage: /img/0f1a2059-4.jpg
 heroHeading: Never forget important gear again
