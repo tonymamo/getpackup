@@ -255,3 +255,43 @@ collections:
             }
           - { label: Title, name: title, widget: string }
           - { label: Body, name: body, widget: markdown }
+      - file: "src/pages/links.md"
+        label: "Links Page"
+        name: "links"
+        editor:
+          preview: true
+        fields:
+          - {
+              label: "Template Key",
+              name: "templateKey",
+              widget: "hidden",
+              default: "links-page",
+            }
+          - {
+              label: LinksList,
+              name: linksList,
+              widget: list,
+              fields: [
+                  { label: LinkURL, name: linkUrl, widget: string, hint: 'For internal links (pages on our website, like blogs), dont include the domain name, just start with the / after getpackup.com' },
+                  { label: LinkText, name: linkText, widget: string },
+                  { label: ThumbnailImage, name: thumbnail, widget: image },
+                  {
+                    label: StartDate,
+                    name: startDate,
+                    widget: datetime,
+                    required: false,
+                    date_format: "MM.DD.YYYY",
+                    time_format: "HH:mm",
+                    default: '',
+                  },
+                  {
+                    label: EndDate,
+                    name: endDate,
+                    widget: datetime,
+                    required: false,
+                    date_format: "MM.DD.YYYY",
+                    time_format: "HH:mm",
+                    default: '',
+                  },
+                ],
+            }

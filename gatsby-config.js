@@ -7,7 +7,7 @@ module.exports = {
   siteMetadata: {
     title: 'Packup',
     description:
-      'Adventure made easy. Pack with confidence with a trip generator for any occasion, create and share collaborative packing lists, and learn from others and view the trips they packed for.',
+      'Get outside faster and safer with the Packup app. Use the trip generator to build your packing list, collaborate and plan with your friends, and learn from what the pros and other users have packed on their trips.',
     author: '@getpackup',
     url: 'https://getpackup.com',
     siteUrl: 'https://getpackup.com',

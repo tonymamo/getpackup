@@ -66,7 +66,7 @@ const Seo: FunctionComponent<SeoType> = ({
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}: Adventure made easy.`}
+      titleTemplate={`%s | ${site.siteMetadata.title}: Expert packing lists for camping and outdoor adventure.`}
       meta={[
         {
           property: 'og:url',

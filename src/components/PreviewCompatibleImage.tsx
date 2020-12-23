@@ -1,13 +1,13 @@
 import React from 'react';
-import Img, { FluidObject } from 'gatsby-image';
+import Img, { FixedObject, FluidObject } from 'gatsby-image';
 
 const PreviewCompatibleImage = ({
   imageInfo,
   ...rest
 }: {
   imageInfo: {
-    childImageSharp?: { fluid: FluidObject };
-    image: { childImageSharp: { fluid: FluidObject } } | string;
+    childImageSharp?: { fluid?: FluidObject; fixed?: FixedObject };
+    image: { childImageSharp: { fluid?: FluidObject; fixed?: FixedObject } } | string;
     alt?: string;
   };
   // eslint-disable-next-line react/require-default-props
@@ -16,12 +16,30 @@ const PreviewCompatibleImage = ({
   const imageStyle = { width: '100%' };
   const { alt = '', childImageSharp, image } = imageInfo;
 
-  if (!!image && typeof image !== 'string' && !!image.childImageSharp) {
+  if (
+    !!image &&
+    typeof image !== 'string' &&
+    !!image.childImageSharp &&
+    image.childImageSharp.fluid
+  ) {
     return <Img style={imageStyle} fluid={image.childImageSharp.fluid} alt={alt} {...rest} />;
   }
 
-  if (childImageSharp) {
+  if (
+    !!image &&
+    typeof image !== 'string' &&
+    !!image.childImageSharp &&
+    image.childImageSharp.fixed
+  ) {
+    return <Img style={imageStyle} fixed={image.childImageSharp.fixed} alt={alt} {...rest} />;
+  }
+
+  if (childImageSharp && childImageSharp.fluid) {
     return <Img style={imageStyle} fluid={childImageSharp.fluid} alt={alt} {...rest} />;
+  }
+
+  if (childImageSharp && childImageSharp.fixed) {
+    return <Img style={imageStyle} fixed={childImageSharp.fixed} alt={alt} {...rest} />;
   }
 
   if (!!image && typeof image === 'string') {

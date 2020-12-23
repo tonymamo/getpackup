@@ -10,7 +10,7 @@ import {
   HorizontalRule,
   FlexContainer,
   Heading,
-  SignupForm
+  SignupForm,
 } from '@components';
 
 import { brandPrimary, brandSecondary, white } from '@styles/color';

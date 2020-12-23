@@ -2,14 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 
-import {
-  baseSpacer,
-  borderRadius,
-  halfSpacer,
-  inputHeight,
-  inputPaddingX,
-  inputPaddingY,
-} from '@styles/size';
+import { baseSpacer, borderRadius, halfSpacer, inputPaddingX, inputPaddingY } from '@styles/size';
 import { fontSizeBase, fontSizeSmall, lineHeightBase } from '@styles/typography';
 import {
   brandDanger,
@@ -36,7 +29,7 @@ type InputProps = {
 const sharedStyles = css`
   display: block;
   width: 100%;
-  height: ${(props: InputProps) => (props.type === 'textarea' ? 'auto' : inputHeight)};
+  height: auto;
   padding: ${inputPaddingY} ${inputPaddingX};
   font-size: ${fontSizeBase};
   line-height: ${lineHeightBase};

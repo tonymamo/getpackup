@@ -7,7 +7,7 @@
   </a>
 </p>
 <h1 align="center">
-  Get Packup - Frontend
+  Packup - Frontend
 </h1>
 
 A Gatsby project using React, Redux, Styled-Components, Formik, and more.

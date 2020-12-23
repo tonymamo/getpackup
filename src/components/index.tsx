@@ -21,6 +21,7 @@ import PageContainer from './PageContainer';
 import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 import RelatedBlogPost from './RelatedBlogPost';
+import RelativeOrExternalLink from './RelativeOrExternalLink';
 import Row from './Row';
 import Seo from './Seo';
 import Share from './Share';
@@ -57,6 +58,7 @@ export {
   Pill,
   PreviewCompatibleImage,
   RelatedBlogPost,
+  RelativeOrExternalLink,
   Row,
   Seo,
   Share,

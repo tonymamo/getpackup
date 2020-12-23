@@ -17,7 +17,7 @@ tags:
   - guides
 ---
 
-#### If you find our posts useful for getting out, wait till you see the app we are developing. [Please consider signing up for the beta of our app](https://getpackup.com/), which aims to help you get outside on excursions faster and safer!
+#### If you find our posts useful for getting out, wait till you see the app we are developing. [Please consider signing up for the beta of our app](/), which aims to help you get outside on excursions faster and safer!
 
 <br></br>
 
