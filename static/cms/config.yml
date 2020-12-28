@@ -255,3 +255,27 @@ collections:
             }
           - { label: Title, name: title, widget: string }
           - { label: Body, name: body, widget: markdown }
+      - file: "src/pages/links.md"
+        label: "Links Page"
+        name: "links"
+        editor:
+          preview: true
+        fields:
+          - {
+              label: "Template Key",
+              name: "templateKey",
+              widget: "hidden",
+              default: "links-page",
+            }
+          - {
+              label: LinksList,
+              name: linksList,
+              widget: list,
+              summary: '{{fields.linkText}}',
+              label_singular: 'New Link',
+              fields: [
+                  { label: LinkURL, name: linkUrl, widget: string, hint: 'For internal links (pages on our website, like blogs), dont include the domain name, just start with the / after getpackup.com' },
+                  { label: LinkText, name: linkText, widget: string },
+                  { label: ThumbnailImage, name: thumbnail, widget: image },
+                ],
+            }

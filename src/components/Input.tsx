@@ -54,7 +54,7 @@ type InputProps = {
 export const sharedStyles = css`
   display: block;
   width: 100%;
-  height: ${(props: InputProps) => (props.type === 'textarea' ? 'auto' : inputHeight)};
+  height: auto;
   padding: ${inputPaddingY} ${inputPaddingX};
   font-size: ${fontSizeBase};
   line-height: ${lineHeightBase};

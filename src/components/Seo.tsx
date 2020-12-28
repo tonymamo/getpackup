@@ -66,7 +66,7 @@ const Seo: FunctionComponent<SeoType> = ({
         lang,
       }}
       title={title}
-      titleTemplate="%s | Adventure made easy."
+      titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
         {
           property: 'og:url',
@@ -94,7 +94,7 @@ const Seo: FunctionComponent<SeoType> = ({
         },
         {
           property: 'og:title',
-          content: seo.title,
+          content: `${seo.title} | ${site.siteMetadata.title}`,
         },
 
         {
@@ -115,7 +115,7 @@ const Seo: FunctionComponent<SeoType> = ({
         },
         {
           name: 'twitter:title',
-          content: title,
+          content: `${seo.title} | ${site.siteMetadata.title}`,
         },
         {
           name: 'twitter:description',

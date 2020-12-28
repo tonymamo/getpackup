@@ -1,4 +1,4 @@
-import Alert, { AlertProps } from './Alert';
+import Alert from './Alert';
 import Avatar from './Avatar';
 import Box from './Box';
 import Button from './Button';
@@ -26,6 +26,7 @@ import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 import PrivateRoute from './PrivateRoute';
 import RelatedBlogPost from './RelatedBlogPost';
+import RelativeOrExternalLink from './RelativeOrExternalLink';
 import Row from './Row';
 import Seo from './Seo';
 import Share from './Share';
@@ -36,7 +37,6 @@ import Wave from './wave';
 
 export {
   Alert,
-  AlertProps,
   Avatar,
   Box,
   Button,
@@ -66,6 +66,7 @@ export {
   PreviewCompatibleImage,
   PrivateRoute,
   RelatedBlogPost,
+  RelativeOrExternalLink,
   Row,
   Seo,
   Share,

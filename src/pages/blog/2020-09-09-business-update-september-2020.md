@@ -29,7 +29,7 @@ Throughout June - August, we have been diving into the prototyping process, begi
 
 ## Next Steps
 
-We are going to be moving from the prototyping process to our initial product development (minimum viable product) in the next three months, focusing on a web-based version of Packup that is usable on desktop and mobile browsers to try and accelerate our iteration cycle. From there, we aim to move into creating a native app that can be downloaded to your device, allowing you to sync your account with all platforms. If you have any interest in spending some time testing our initial product and giving us feedback, please get in touch with us [here](https://getpackup.com/contact).
+We are going to be moving from the prototyping process to our initial product development (minimum viable product) in the next three months, focusing on a web-based version of Packup that is usable on desktop and mobile browsers to try and accelerate our iteration cycle. From there, we aim to move into creating a native app that can be downloaded to your device, allowing you to sync your account with all platforms. If you have any interest in spending some time testing our initial product and giving us feedback, please get in touch with us [here](/contact).
 
 Very excited to see what we can share with you in the future. Connect with us on our [instagram](https://www.instagram.com/getpackup/) to keep up to date with what we’re working on.
 
