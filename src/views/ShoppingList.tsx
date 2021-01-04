@@ -1,17 +1,18 @@
 import React, { FunctionComponent } from 'react';
 
-import { Seo, Heading } from '@components';
+import { Seo, Heading, PageContainer, Box } from '@components';
 
 type ShoppingListProps = {};
 
 const ShoppingList: FunctionComponent<ShoppingListProps> = () => {
   return (
-    <div>
+    <PageContainer>
       <Seo title="Shopping List" />
       <Heading as="h2" altStyle>
         Shopping List
       </Heading>
-    </div>
+      <Box></Box>
+    </PageContainer>
   );
 };
 

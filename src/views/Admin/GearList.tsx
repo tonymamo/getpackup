@@ -1,48 +1,40 @@
-import React, { FunctionComponent, useEffect, useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { useFirestoreConnect } from 'react-redux-firebase';
+import React, { FunctionComponent, useMemo, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useFirebase, useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
 
 import { RootState } from '@redux/ducks';
-import { EditableTable } from '@components';
+import {
+  Seo,
+  Button,
+  FlexContainer,
+  Heading,
+  LoadingPage,
+  Table,
+  Modal,
+  Row,
+  Column,
+  Box,
+} from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
 
 type GearListProps = {};
 
+export type GearItem = {
+  id: string;
+  name: string;
+  category: string;
+  lastEditedBy?: string;
+  [key: string]: boolean | string | undefined; // all the rest... TODO: move all items to a master list somewhere?
+};
+
 const GearList: FunctionComponent<GearListProps> = () => {
+  const firebase = useFirebase();
+  const dispatch = useDispatch();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItem | undefined>(undefined);
   const gear = useSelector((state: RootState) => state.firestore.ordered.gear);
   useFirestoreConnect([{ collection: 'gear' }]);
-
-  const [skipPageReset, setSkipPageReset] = useState(false);
-
-  // We need to keep the table from resetting the pageIndex when we
-  // Update data. So we can keep track of that flag with a ref.
-
-  // When our cell renderer calls updateMyData, we'll use
-  // the rowIndex, columnId and new value to update the
-  // original data
-  const updateMyData = (rowIndex, columnId, value) => {
-    // We also turn on the flag to not reset the page
-    setSkipPageReset(true);
-    console.log(rowIndex, columnId, value);
-
-    // setData((old) =>
-    //   old.map((row, index) => {
-    //     if (index === rowIndex) {
-    //       return {
-    //         ...old[rowIndex],
-    //         [columnId]: value,
-    //       };
-    //     }
-    //     return row;
-    //   })
-    // );
-  };
-
-  // After data chagnes, we turn the flag back off
-  // so that if data actually changes when we're not
-  // editing it, the page is reset
-  useEffect(() => {
-    setSkipPageReset(false);
-  }, [gear]);
 
   const columns = useMemo(
     () => [
@@ -55,46 +47,125 @@ const GearList: FunctionComponent<GearListProps> = () => {
         accessor: 'category',
       },
       {
-        header: 'Day Trip',
-        accessor: 'dayTrip',
-      },
-      {
-        header: 'Multi-Day Trip',
-        accessor: 'multidayTrip',
-      },
-      {
-        header: 'Hiking',
-        accessor: 'hiking',
+        header: 'Action',
+        accessor: 'action',
       },
     ],
     []
   );
 
+  const deleteItem = (item: GearItem) => {
+    firebase
+      .firestore()
+      .collection('gear')
+      .doc(item.id)
+      .delete()
+      .then(() => {
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: `Successfully deleted ${item.name}`,
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+    setItemToBeDeleted(undefined);
+    setModalIsOpen(false);
+  };
+
   const data =
     gear &&
     gear.length > 0 &&
-    gear.map((item) => {
+    gear.map((item: GearItem) => {
       return {
         ...item,
-        dayTrip: item.dayTrip.toString(),
-        multidayTrip: item.multidayTrip.toString(),
-        hiking: item.multidayTrip.toString(),
+        actions: [
+          {
+            label: <FaPencilAlt />,
+            to: `/admin/gear-list/${item.id}`,
+            color: 'primaryOutline',
+          },
+          {
+            label: <FaTrash />,
+            color: 'danger',
+            onClick: () => {
+              setModalIsOpen(true);
+              setItemToBeDeleted(item);
+            },
+          },
+        ],
       };
     });
 
   return (
-    <div>
+    <Box>
+      <Seo title="Master Gear List" />
+      <FlexContainer justifyContent="space-between">
+        <Heading>Master Gear List</Heading>
+        <Button type="link" to="/admin/gear-list/new" iconLeft={<FaPlusCircle />}>
+          Add New Item
+        </Button>
+      </FlexContainer>
       {gear && (
-        <EditableTable
+        <Table
           columns={columns}
           data={data}
           hasPagination
           hasSorting
-          updateMyData={updateMyData}
-          skipPageReset={skipPageReset}
+          hasFiltering
+          rowsPerPage={25}
         />
       )}
-    </div>
+      {(!isLoaded(gear) || !isEmpty(gear)) && <LoadingPage />}
+      {itemToBeDeleted && (
+        <Modal
+          toggleModal={() => {
+            setItemToBeDeleted(undefined);
+            setModalIsOpen(false);
+          }}
+          isOpen={modalIsOpen}
+        >
+          <Heading>Are you sure?</Heading>
+          <p>
+            Are you sure you want to delete <strong>{itemToBeDeleted.name}</strong>? This action
+            cannot be undone.
+          </p>
+          <Row>
+            <Column xs={6}>
+              <Button
+                type="button"
+                onClick={() => {
+                  setItemToBeDeleted(undefined);
+                  setModalIsOpen(false);
+                }}
+                color="primaryOutline"
+                block
+              >
+                Cancel
+              </Button>
+            </Column>
+            <Column xs={6}>
+              <Button
+                type="button"
+                onClick={() => deleteItem(itemToBeDeleted)}
+                block
+                color="danger"
+                iconLeft={<FaTrash />}
+              >
+                Delete
+              </Button>
+            </Column>
+          </Row>
+        </Modal>
+      )}
+    </Box>
   );
 };
 

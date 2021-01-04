@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 import Profile from '@views/Profile';
 import Trips from '@views/Trips';
@@ -12,32 +13,53 @@ import TripGenerator from '@views/TripGenerator';
 import Search from '@views/Search';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
-import { PageContainer, PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
+import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
+import { breakpoints, baseSpacer } from '@styles/size';
+import { offWhite } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
+
+const AppContainer = styled.div`
+  padding: ${baseSpacer} 0;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: ${breakpoints.xl};
+  background-color: ${offWhite};
+  border: ${baseBorderStyle};
+  min-height: 100vh;
+`;
 
 const App = () => {
   const firebase = useFirebase();
-  const user = useSelector((state: RootState) => state.firebase.auth);
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
 
   useEffect(() => {
-    if (!user.isEmpty && profile.isLoaded && !profile.email) {
+    // update user profile in firestore so we can sync name/id/photo for pulling in that data later
+    // on things like shared trips
+    // TODO: only update if auth has new email, displayName, photoUrl etc
+    // eventually, split out photourl and handle profile photos ourselves,
+    // but have auth.photoUrl has backup if empty when using Avatar component maybe
+    if (!auth.isEmpty && profile.isLoaded) {
       firebase
         .firestore()
         .collection('users')
-        .doc(user.uid)
-        .set({
+        .doc(auth.uid)
+        .update({
           isAdmin: profile.isAdmin || false,
-          email: user.email,
+          email: auth.email,
+          uid: auth.uid,
+          displayName: auth.displayName,
+          photoURL: auth.photoURL,
         });
     }
-  }, []);
+  }, [auth]);
 
-  if (!user.isLoaded) {
+  if (!auth.isLoaded) {
     return <LoadingPage />;
   }
 
   return (
-    <PageContainer withVerticalPadding>
+    <AppContainer>
       <ErrorBoundary>
         <Router basepath="/app" primary={false}>
           <PrivateRoute path="/profile" component={Profile} />
@@ -50,7 +72,7 @@ const App = () => {
           <PrivateRoute path="/shopping-list" component={ShoppingList} />
         </Router>
       </ErrorBoundary>
-    </PageContainer>
+    </AppContainer>
   );
 };
 export default App;

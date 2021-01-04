@@ -24,6 +24,7 @@ import {
   white,
 } from '@styles/color';
 import { disabledStyle } from '@styles/mixins';
+import LoadingSpinner from './LoadingSpinner';
 
 export type ButtonProps = {
   type: 'submit' | 'button' | 'reset' | 'link';
@@ -44,6 +45,7 @@ export type ButtonProps = {
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   block?: boolean;
+  isLoading?: boolean;
 };
 
 const primaryButtonStyles = `
@@ -117,6 +119,7 @@ const dangerButtonStyles = `
 `;
 
 const dangerOutlineButtonStyles = `
+  background-color: ${white};
   border-color: ${brandDanger};
   color: ${brandDanger};
   
@@ -138,7 +141,7 @@ const textButtonStyles = `
   &:focus {
     background-color: transparent;
     color: ${brandPrimaryHover};
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 
@@ -250,6 +253,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   iconLeft,
   iconRight,
   block,
+  isLoading,
 }) => {
   if (type === 'link' && to) {
     return (
@@ -274,9 +278,10 @@ const Button: FunctionComponent<ButtonProps> = ({
         color={color}
         rightSpacer={rightSpacer}
         onClick={onClick}
-        disabled={disabled}
         block={block}
+        disabled={disabled || isLoading}
       >
+        {isLoading && <LoadingSpinner />}
         {iconLeft}&nbsp;{children}&nbsp;{iconRight}
       </StyledButton>
     );

@@ -1,17 +1,20 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
+import { useFirebase, useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { navigate } from 'gatsby';
 import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
+import { startOfDay, endOfDay } from 'date-fns';
+import { components } from 'react-select';
 
-import { Input, Button, HorizontalRule, Column, Row } from '@components';
+import { Avatar, Input, Button, HorizontalRule, Column, Row, FlexContainer } from '@components';
 import { StyledLabel } from '@components/Input';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
+import { RootState } from '@redux/ducks';
 import ReactDatepickerTheme from '@styles/react-datepicker';
+import { textColorLight } from '@styles/color';
 
 type TripSummaryProps = {
   initialValues: {
@@ -22,6 +25,7 @@ type TripSummaryProps = {
     endDate: string | Date;
     owner: string;
     tripId?: string;
+    tripMembers?: Array<string>;
   };
   type: 'new' | 'edit';
 };
@@ -29,6 +33,10 @@ type TripSummaryProps = {
 const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const users: Array<any> = useSelector((state: RootState) => state.firestore.ordered.users);
+
+  useFirestoreConnect([{ collection: 'users' }]);
 
   const addNewTrip = (values: TripSummaryProps['initialValues']) => {
     firebase
@@ -36,8 +44,8 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       .collection('trips')
       .add({
         ...values,
-        startDate: new Date(values.startDate),
-        endDate: new Date(values.endDate),
+        startDate: startOfDay(new Date(values.startDate)),
+        endDate: endOfDay(new Date(values.endDate)),
         timezoneOffset: new Date().getTimezoneOffset(),
       })
       .then((docRef) => {
@@ -70,8 +78,8 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       .doc(props.initialValues.tripId)
       .set({
         ...values,
-        startDate: new Date(values.startDate),
-        endDate: new Date(values.endDate),
+        startDate: startOfDay(new Date(values.startDate)),
+        endDate: endOfDay(new Date(values.endDate)),
         updated: new Date(),
       })
       .then(() => {
@@ -95,6 +103,72 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
 
   const [dateRangeStart, setDateRangeStart] = useState(new Date(props.initialValues.startDate));
   const [dateRangeEnd, setDateRangeEnd] = useState(new Date(props.initialValues.endDate));
+
+  const loadUsers = async (inputValue: string) => {
+    const response = await firebase
+      .firestore()
+      .collection('users')
+      .where('displayName', '>=', inputValue) // document field is greater than search string
+      .where('displayName', '<=', `${inputValue}\uf8ff`) // https://stackoverflow.com/a/56815787/6095128
+      .limit(10)
+      .get();
+    const usersOptions: Array<any> = [];
+    if (!response.empty) {
+      inputValue.charAt(0).toUpperCase();
+      response.forEach((doc) => usersOptions.push(doc.data()));
+    }
+
+    return usersOptions
+      .filter((u) => u.uid !== auth.uid) // remove yourself from results
+      .map((user) => {
+        return {
+          value: user.uid,
+          label: user.displayName,
+          photoURL: user.photoURL,
+          email: user.email,
+          username: user.username,
+        };
+      });
+  };
+
+  const Option = ({
+    children,
+    data,
+    ...option
+  }: {
+    children: string;
+    data: { photoURL: string; email: string; username: string };
+  }) => {
+    return (
+      <components.Option {...option}>
+        <FlexContainer justifyContent="flex-start">
+          <Avatar src={data.photoURL} gravatarEmail={data.email} rightMargin />
+          <div>
+            <div>{data.username}</div>
+            <small style={{ color: textColorLight }}>{children}</small>
+          </div>
+        </FlexContainer>
+      </components.Option>
+    );
+  };
+
+  const MultiValueLabel = ({
+    data,
+    ...option
+  }: {
+    data: { photoURL: string; email: string; username: string };
+  }) => {
+    return (
+      <components.MultiValueLabel {...option}>
+        <FlexContainer justifyContent="flex-start">
+          <Avatar src={data.photoURL} gravatarEmail={data.email} rightMargin size="xs" />
+          <div>
+            <div>{data.username}</div>
+          </div>
+        </FlexContainer>
+      </components.MultiValueLabel>
+    );
+  };
 
   return (
     <>
@@ -122,7 +196,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               validate={requiredField}
               required
             />
-
             <Field
               as={Input}
               type="textarea"
@@ -168,16 +241,35 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 />
               </Column>
             </Row>
+            {users && isLoaded(users) && !isEmpty(users) && users.length > 0 && (
+              <Field
+                as={Input}
+                type="async-select"
+                loadOptions={loadUsers}
+                name="tripMembers"
+                label="Trip Members"
+                setFieldValue={setFieldValue}
+                isMulti
+                components={{ Option, MultiValueLabel }}
+                {...rest}
+              />
+            )}
 
             <HorizontalRule />
             <p>
               <Button
                 type="submit"
+                rightSpacer
                 disabled={isSubmitting || !isValid}
                 iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
               >
                 {props.type === 'new' ? 'Select Activites' : 'Update Trip'}
               </Button>
+              {props.type === 'new' && (
+                <Button type="link" to="/app/trips" color="dangerOutline">
+                  Cancel
+                </Button>
+              )}
             </p>
           </Form>
         )}

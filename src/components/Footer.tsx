@@ -9,6 +9,7 @@ import {
   FaSearch,
   FaUser,
   FaShoppingCart,
+  FaUserLock,
 } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -92,6 +93,7 @@ const BottomNav = styled.nav`
 
 const Footer = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
   const size = useWindowSize();
   const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.medium);
@@ -195,6 +197,11 @@ const Footer = () => {
           <Link to="/app/shopping-list" getProps={isPartiallyActive}>
             <FaShoppingCart />
           </Link>
+          {profile.isAdmin && (
+            <Link to="/admin/gear-list" getProps={isPartiallyActive}>
+              <FaUserLock />
+            </Link>
+          )}
           <Link to="/app/profile" getProps={isPartiallyActive}>
             <FaUser />
           </Link>

@@ -10,14 +10,13 @@ const PageContainer = styled.div`
   width: 100%;
   max-width: ${breakpoints.xl};
   ${(props: { withVerticalPadding?: boolean }) =>
-    props.withVerticalPadding && `padding-top: ${doubleSpacer}; padding-bottom: ${doubleSpacer};`}
+    props.withVerticalPadding && `padding-top: ${doubleSpacer};`}
 
   @media only screen and (min-width: ${breakpoints.sm}) {
     padding-right: ${baseSpacer};
     padding-left: ${baseSpacer};
     ${(props: { withVerticalPadding?: boolean }) =>
-      props.withVerticalPadding &&
-      `padding-top: ${quadrupleSpacer}; padding-bottom: ${quadrupleSpacer};`}
+      props.withVerticalPadding && `padding-top: ${quadrupleSpacer};`}
   }
 `;
 

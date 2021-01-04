@@ -4,7 +4,7 @@ import { brandSecondary, brandTertiary, brandTertiaryHover } from '@styles/color
 import { sharedStyles } from '@components/Input';
 
 /* eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }] */
-const ReactDatepickerTheme = createGlobalStyle`
+const ReactDatepickerTheme: any = createGlobalStyle`
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow,
 .react-datepicker__month-year-read-view--down-arrow {

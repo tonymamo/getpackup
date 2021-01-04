@@ -4,7 +4,7 @@ import { FluidObject } from 'gatsby-image';
 
 import { baseSpacer, borderRadius, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
 import { white } from '@styles/color';
-import { z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';
+import { baseBorderStyle, z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';
 
 type BoxProps = {
   textAlign?: 'center' | 'left' | 'right';
@@ -38,10 +38,11 @@ const renderShadow = (zindex: number) => {
 };
 
 const StyledBox = styled.div<BoxProps>`
-  border-radius: ${borderRadius};
+  /* border-radius: ${borderRadius}; */
   padding: ${baseSpacer};
   margin-bottom: ${baseSpacer};
-  box-shadow: ${(props) => props.zindex && renderShadow(props.zindex)};
+  border: ${baseBorderStyle};
+  /* box-shadow: ${(props) => props.zindex && renderShadow(props.zindex)}; */
   text-align: ${(props) => props.textAlign};
   height: ${(props) => (props.height ? `${props.height}px` : `calc(100% - ${baseSpacer})`)};
   background: ${(props) =>
@@ -58,7 +59,7 @@ const StyledBox = styled.div<BoxProps>`
     `}
 
   &:hover {
-    box-shadow: ${(props) => props.zindex && props.onClick && renderShadow(props.zindex + 1)};
+    /* box-shadow: ${(props) => props.zindex && props.onClick && renderShadow(props.zindex + 1)}; */
   }
 
   @media only screen and (min-width: ${breakpoints.sm}) {

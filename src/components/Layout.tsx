@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
+import Modal from 'react-modal';
 import 'typeface-open-sans';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,6 +27,8 @@ const PageBody = styled.main`
 type LayoutProps = {
   hideFromCms?: boolean;
 };
+
+Modal.setAppElement('#___gatsby');
 
 const Layout: FunctionComponent<LayoutProps> = (props) => {
   return (

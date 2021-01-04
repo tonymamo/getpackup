@@ -137,6 +137,10 @@ const Seo: FunctionComponent<SeoType> = ({
           name: 'viewport',
           content: 'width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover',
         },
+        {
+          'http-equiv': 'ScreenOrientation',
+          content: 'autoRotate:disabled',
+        },
       ].concat(meta || [])}
     >
       {/* genereated from https://appsco.pe/developer/splash-screens */}

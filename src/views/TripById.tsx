@@ -1,33 +1,40 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { FaMapMarkerAlt, FaCalendar, FaPencilAlt } from 'react-icons/fa';
-import { useFirestoreConnect } from 'react-redux-firebase';
+import { useFirestoreConnect, useFirebase, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { Link } from 'gatsby';
 import SwipeableViews from 'react-swipeable-views';
 import styled from 'styled-components';
+import uniqBy from 'lodash/uniqBy';
+import Skeleton from 'react-loading-skeleton';
 
-import { Heading, Box, Seo, FlexContainer, HorizontalRule } from '@components';
+import {
+  Heading,
+  Seo,
+  FlexContainer,
+  HorizontalRule,
+  PageContainer,
+  Avatar,
+  Box,
+} from '@components';
 import { RootState } from '@redux/ducks';
-import { TripType } from '@views/Trips';
+import { TripType, TripMember } from '@views/Trips';
 import { formattedDateRange, isBeforeToday } from '@utils/dateUtils';
 import { brandPrimary, white, textColor } from '@styles/color';
-import { baseSpacer, doubleSpacer } from '@styles/size';
+import { baseSpacer } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
 
 type TripByIdProps = {
-  user?: firebase.User;
   id?: string;
 } & RouteComponentProps;
 
 const Tabs = styled.div`
+  margin-top: -${baseSpacer};
+  margin-bottom: ${baseSpacer};
   background-color: ${white};
   display: flex;
   justify-content: space-between;
-  margin-top: -${doubleSpacer};
-  margin-left: -${baseSpacer};
-  margin-right: -${baseSpacer};
-  margin-bottom: ${baseSpacer};
   cursor: pointer;
   border-bottom: ${baseBorderStyle};
 `;
@@ -44,12 +51,54 @@ const Tab = styled.div`
 `;
 
 const TripById: FunctionComponent<TripByIdProps> = (props) => {
-  const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
-  useFirestoreConnect([{ collection: 'trips', where: ['owner', '==', props.user?.uid] }]);
+  const firebase = useFirebase();
+
+  const activeTripById: Array<TripType> = useSelector(
+    (state: RootState) => state.firestore.ordered.activeTripById
+  );
+  const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
+
+  useFirestoreConnect([
+    {
+      collection: 'trips',
+      doc: props.id,
+      storeAs: 'activeTripById',
+    },
+    {
+      collection: 'trips',
+      doc: props.id,
+      subcollections: [{ collection: 'packing-list' }],
+      storeAs: 'packingList',
+    },
+  ]);
 
   const [activeTab, setActiveTab] = useState(0);
+  const [tripMembers, setTripMembers] = useState<TripType['tripMembers']>([]);
 
-  const activeTrip = trips && trips.find((trip) => trip.id === props.id);
+  const activeTrip: TripType | undefined =
+    activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
+
+  const getMatchingUsers = async () => {
+    if (activeTrip !== undefined && isLoaded(activeTrip) && activeTrip.tripMembers?.length > 0) {
+      const matchingUsers = await firebase
+        .firestore()
+        .collection('users')
+        .where('uid', 'in', activeTrip.tripMembers)
+        .get();
+      if (!matchingUsers.empty) {
+        matchingUsers.forEach((doc) =>
+          setTripMembers((arr) => uniqBy([...arr, doc.data() as TripMember], 'uid'))
+        );
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (isLoaded(activeTrip) && activeTrip.id === props.id) {
+      getMatchingUsers();
+    }
+  }, [activeTrip]);
+
   return (
     <>
       <Seo title={activeTrip?.name || 'Trip Summary'} />
@@ -68,7 +117,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
 
       {activeTrip ? (
         <SwipeableViews index={activeTab} onChangeIndex={(i) => setActiveTab(i)}>
-          <div>
+          <PageContainer>
             <Box>
               <FlexContainer
                 justifyContent="space-between"
@@ -86,9 +135,10 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                   </div>
                 )}
               </FlexContainer>
-
+              <HorizontalRule compact />
               <p>{activeTrip.description}</p>
-
+            </Box>
+            <Box>
               <p>
                 <FaMapMarkerAlt /> {activeTrip.startingPoint}
               </p>
@@ -101,48 +151,41 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                   activeTrip.timezoneOffset
                 )}
               </p>
-              <HorizontalRule compact />
             </Box>
-          </div>
-          <Box>
+
+            <Box>
+              <Heading as="h4" altStyle>
+                Trip Party
+              </Heading>
+              {(!isLoaded(activeTrip) || !tripMembers.length) && <Skeleton count={3} />}
+              {isLoaded(activeTrip) && tripMembers.length === 0 && 'no party members'}
+              {tripMembers.length > 0 &&
+                tripMembers.map((member, index) => (
+                  <Fragment key={member.uid}>
+                    <FlexContainer justifyContent="flex-start">
+                      <Avatar src={member.photoURL} gravatarEmail={member.email} rightMargin />
+                      <span>{member.displayName}</span>
+                    </FlexContainer>
+                    {index !== tripMembers.length - 1 && <HorizontalRule compact />}
+                  </Fragment>
+                ))}
+            </Box>
+          </PageContainer>
+
+          <PageContainer>
             <strong>To-do</strong>
-          </Box>
-          <Box>
-            <p>you selected:</p>
-            <p>accommodations:</p>
+          </PageContainer>
+          <PageContainer>
             <ul>
-              {activeTrip.tripGeneratorOptions?.accommodations &&
-              activeTrip.tripGeneratorOptions?.accommodations.length > 0 ? (
-                activeTrip.tripGeneratorOptions?.accommodations.map((option) => (
-                  <li key={option}>{option}</li>
-                ))
-              ) : (
-                <li>No accommodations</li>
-              )}
+              {packingList &&
+                packingList.length > 0 &&
+                packingList.map((item: { id: string; name: string; isPacked: boolean }) => (
+                  <li key={item.id}>
+                    {item.name} - {item.isPacked ? 'packed' : 'not packed'}
+                  </li>
+                ))}
             </ul>
-            <p>activities:</p>
-            <ul>
-              {activeTrip.tripGeneratorOptions?.activities &&
-              activeTrip.tripGeneratorOptions?.activities?.length > 0 ? (
-                activeTrip.tripGeneratorOptions?.activities.map((option) => (
-                  <li key={option}>{option}</li>
-                ))
-              ) : (
-                <li>No activites</li>
-              )}
-            </ul>
-            <p>transportation</p>
-            <ul>
-              {activeTrip.tripGeneratorOptions?.transportation &&
-              activeTrip.tripGeneratorOptions?.transportation?.length > 0 ? (
-                activeTrip.tripGeneratorOptions?.transportation.map((option) => (
-                  <li key={option}>{option}</li>
-                ))
-              ) : (
-                <li>No transportation methods</li>
-              )}
-            </ul>
-          </Box>
+          </PageContainer>
         </SwipeableViews>
       ) : (
         <p>No trip found</p>

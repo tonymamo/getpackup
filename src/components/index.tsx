@@ -5,7 +5,6 @@ import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
-import EditableTable from './EditableTable';
 import ErrorBoundary from './ErrorBoundary';
 import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
@@ -19,6 +18,8 @@ import Image from './Image';
 import Input from './Input';
 import Layout from './Layout';
 import LoadingPage from './LoadingPage';
+import LoadingSpinner from './LoadingSpinner';
+import Modal from './Modal';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
 import PageContainer from './PageContainer';
@@ -32,6 +33,7 @@ import Seo from './Seo';
 import Share from './Share';
 import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
+import Table from './Table';
 import Testimonial from './Testimonial';
 import Wave from './wave';
 
@@ -43,7 +45,6 @@ export {
   ClientOnly,
   Column,
   Content,
-  EditableTable,
   ErrorBoundary,
   FirebaseAuthWrapper,
   FlexContainer,
@@ -58,7 +59,9 @@ export {
   Input,
   Layout,
   LoadingPage,
+  LoadingSpinner,
   MarkdownContent,
+  Modal,
   Navbar,
   NegativeMarginContainer,
   PageContainer,
@@ -72,6 +75,7 @@ export {
   Share,
   SignupForm,
   SiteMetadata,
+  Table,
   Testimonial,
   Wave,
 };

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Select, { CommonProps } from 'react-select';
+import AsyncSelect from 'react-select/async';
 import Geosuggest from 'react-geosuggest';
 import 'react-geosuggest/module/geosuggest.css';
 
@@ -28,6 +29,7 @@ import {
   brandPrimary,
   brandPrimaryRGB,
   lightGray,
+  offWhite,
 } from '@styles/color';
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
 import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
@@ -47,6 +49,7 @@ type InputProps = {
   checked?: boolean;
   options?: OptionType[];
   required?: boolean;
+  loadOptions?: () => void;
 } & FieldMetaProps<string> &
   FormikHelpers<string> &
   CommonProps<OptionType | OptionType[]>;
@@ -54,7 +57,7 @@ type InputProps = {
 export const sharedStyles = css`
   display: block;
   width: 100%;
-  height: auto;
+  height: ${inputHeight};
   padding: ${inputPaddingY} ${inputPaddingX};
   font-size: ${fontSizeBase};
   line-height: ${lineHeightBase};
@@ -86,7 +89,7 @@ export const sharedStyles = css`
   ${(props: InputProps) => props.disabled && disabledStyle}
 `;
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
   ${sharedStyles}
 `;
 
@@ -111,7 +114,17 @@ const StyledSelect = styled(Select)`
   }
 `;
 
-const InputWrapper = styled.div`
+const StyledAsyncSelect = styled(AsyncSelect)`
+  & > div:first-child {
+    ${(props: { invalid?: boolean }) =>
+      props.invalid &&
+      `
+      border: 2px solid ${brandDanger};
+  `}
+  }
+`;
+
+export const InputWrapper = styled.div`
   margin-bottom: ${baseSpacer};
   text-align: left;
   ${(props: { hidden?: boolean }) => props.hidden && `display: none;`}
@@ -226,8 +239,9 @@ const PasswordToggle = styled.div`
 const multiSelectStyles = {
   option: (provided: any, state: { isFocused: boolean }) => ({
     ...provided,
-    color: brandPrimary,
-    backgroundColor: state.isFocused ? lightestGray : white,
+    color: textColor,
+    backgroundColor: state.isFocused ? offWhite : white,
+    width: 'auto',
   }),
   control: (provided: any, state: { isFocused: boolean }) => ({
     ...provided,
@@ -289,6 +303,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
 
         inputTypeToRender = (
           <StyledSelect
+            className="react-select"
             styles={multiSelectStyles}
             isMulti={props.isMulti}
             menuPlacement="auto"
@@ -303,11 +318,61 @@ const Input: FunctionComponent<InputProps> = (props) => {
         );
       }
       break;
+    case 'async-select':
+      {
+        const onChange = (option: OptionType[] | OptionType) => {
+          props.setFieldValue(
+            field.name,
+            // eslint-disable-next-line no-nested-ternary
+            props.isMulti
+              ? option
+                ? (option as OptionType[]).map((item: OptionType) => item.value)
+                : []
+              : (option as OptionType).value
+          );
+        };
+
+        inputTypeToRender = (
+          <StyledAsyncSelect
+            components={props.components}
+            className="react-select"
+            cacheOptions
+            defaultMenuIsOpen
+            loadOptions={props.loadOptions}
+            defaultOptions
+            styles={multiSelectStyles}
+            isMulti={props.isMulti}
+            menuPlacement="auto"
+            onChange={(option: OptionType) => onChange(option)}
+            name={props.name}
+            onBlur={() => props.setFieldTouched(props.name)}
+            isDisabled={props.disabled}
+            invalid={meta && meta.touched && meta.error}
+          />
+        );
+      }
+      break;
     case 'checkbox':
       inputTypeToRender = (
         <>
-          <StyledLabel>{props.label}</StyledLabel>
-          <StyledToggle {...field} {...props} {...meta} id={props.name} checked={props.checked} />
+          <StyledLabel htmlFor={props.id || props.name}>
+            <input {...field} {...props} id={props.name} checked={props.checked} /> {props.label}
+          </StyledLabel>
+        </>
+      );
+      break;
+    case 'toggle':
+      inputTypeToRender = (
+        <>
+          <StyledLabel htmlFor={props.id || props.name}>{props.label}</StyledLabel>
+          <StyledToggle
+            {...field}
+            {...props}
+            {...meta}
+            id={props.name}
+            checked={props.checked}
+            type="checkbox"
+          />
           <StyledToggleLabel
             htmlFor={props.name}
             disabled={props.disabled}
@@ -401,19 +466,22 @@ const Input: FunctionComponent<InputProps> = (props) => {
       break;
   }
   return (
-    <InputWrapper>
-      <StyledLabel
-        htmlFor={props.id || props.name}
-        invalid={meta && meta.touched && meta.error != null}
-        required={props.required || false}
-        hiddenLabel={props.hiddenLabel}
-      >
-        {props.label}
-      </StyledLabel>
-
+    <InputWrapper hidden={props.type === 'hidden'}>
+      {props.label && props.type !== 'toggle' && props.type !== 'checkbox' && (
+        <StyledLabel
+          htmlFor={props.id || props.name}
+          hiddenLabel={props.hiddenLabel}
+          invalid={meta && meta.touched && meta.error != null}
+          required={props.required || false}
+        >
+          {props.label}
+        </StyledLabel>
+      )}
       {inputTypeToRender}
       {props.helpText && <small>{props.helpText}</small>}
-      {meta && meta.touched && meta.error && <StyledErrorMessage>{meta.error}</StyledErrorMessage>}
+      {meta && meta.touched && meta.error && !props.square && (
+        <StyledErrorMessage>{meta.error}</StyledErrorMessage>
+      )}
     </InputWrapper>
   );
 };

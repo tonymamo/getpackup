@@ -22,12 +22,11 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
   const initialValues = activeTrip
     ? {
         ...activeTrip,
-        startDate: formattedDateForDateInput(
-          dateWithTimezoneOffset(activeTrip.startDate.seconds * 1000, activeTrip.timezoneOffset)
-        ),
+        startDate: formattedDateForDateInput(new Date(activeTrip.startDate.seconds * 1000)),
         endDate: formattedDateForDateInput(
           dateWithTimezoneOffset(activeTrip.endDate.seconds * 1000, activeTrip.timezoneOffset)
         ),
+        tripMembers: [],
       }
     : {
         name: '',
@@ -36,6 +35,7 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
         startDate: '',
         endDate: '',
         owner: auth.uid,
+        tripMembers: [],
       };
 
   return (

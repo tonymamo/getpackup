@@ -39,7 +39,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
     navigate('/');
     return null;
   }
-  return <Component user={auth} {...rest} />;
+  return <Component {...rest} />;
 };
 
 export default PrivateRoute;

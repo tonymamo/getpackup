@@ -1,18 +1,18 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
 import { FaSignOutAlt } from 'react-icons/fa';
 
-import { Button, Heading, Box, Avatar, Seo } from '@components';
+import { Button, Heading, Box, Avatar, Seo, PageContainer } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
 
-type ProfileProps = {
-  user?: firebase.User;
-} & RouteComponentProps;
+type ProfileProps = {} & RouteComponentProps;
 
-const Profile: FunctionComponent<ProfileProps> = ({ user }) => {
+const Profile: FunctionComponent<ProfileProps> = () => {
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -34,22 +34,22 @@ const Profile: FunctionComponent<ProfileProps> = ({ user }) => {
   };
 
   return (
-    <>
+    <PageContainer withVerticalPadding>
       <Seo title="Profile" />
-      {user && (
+      {auth && (
         <>
-          <Heading altStyle>Hello there{user.displayName && `, ${user.displayName}`}!</Heading>
+          <Heading altStyle>Hello there{auth.displayName && `, ${auth.displayName}`}!</Heading>
           <Box>
-            <Avatar src={user.photoURL as string} size="lg" gravatarEmail={user.email as string} />
-            <p>Email: {user.email}</p>
-            <p>ID: {user.uid}</p>
+            <Avatar src={auth.photoURL as string} size="lg" gravatarEmail={auth.email as string} />
+            <p>Email: {auth.email}</p>
+            <p>ID: {auth.uid}</p>
             <Button type="button" onClick={logout} iconLeft={<FaSignOutAlt />}>
               Logout
             </Button>
           </Box>
         </>
       )}
-    </>
+    </PageContainer>
   );
 };
 

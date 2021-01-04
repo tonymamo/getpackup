@@ -9,7 +9,6 @@ import {
   FaEllipsisH,
   FaSearch,
   FaShoppingCart,
-  FaPlusCircle,
   FaUserLock,
 } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
@@ -41,7 +40,7 @@ const StyledNavbar = styled.header`
   min-height: ${quadrupleSpacer};
   line-height: 64px;
   padding-top: env(safe-area-inset-top);
-  z-index: 1000;
+  z-index: 1;
 
   & a,
   & a:hover,
@@ -155,7 +154,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 
   const onHelmetChange = ({ title }: { title: string }) => {
     if (title !== undefined) {
-      setPageTitle(title.replace(' | Adventure made easy.', ''));
+      setPageTitle(title.replace(' | Packup', ''));
     }
   };
 
@@ -225,11 +224,6 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               {routeHasParent && (
                 <Link to="../">
                   <FaChevronLeft />
-                </Link>
-              )}
-              {!routeHasParent && pathname === '/app/trips' && (
-                <Link to="/app/trips/new">
-                  <FaPlusCircle />
                 </Link>
               )}
             </IconLinkWrapper>

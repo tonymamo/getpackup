@@ -6,13 +6,23 @@ import { useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import TextTruncate from 'react-text-truncate';
 
-import { Row, Column, FlexContainer, Avatar, Heading, Box, Button, Seo } from '@components';
+import {
+  Row,
+  Column,
+  FlexContainer,
+  Avatar,
+  Heading,
+  Box,
+  Button,
+  Seo,
+  PageContainer,
+} from '@components';
 import { RootState } from '@redux/ducks';
 import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
 
-type TripsProps = {
-  user?: firebase.User;
-} & RouteComponentProps;
+type TripsProps = {} & RouteComponentProps;
+
+export type TripMember = { uid: string; displayName: string; photoURL: string; email: string };
 
 export type TripType = {
   id: string;
@@ -25,11 +35,7 @@ export type TripType = {
   endDate: firebase.firestore.Timestamp;
   timezoneOffset: number;
   created: firebase.firestore.Timestamp;
-  tripGeneratorOptions?: {
-    accommodations: Array<string>;
-    transportation: Array<string>;
-    activities: Array<string>;
-  };
+  tripMembers: Array<TripMember>;
 };
 
 const Trips: FunctionComponent<TripsProps> = () => {
@@ -69,6 +75,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
         <Heading as="h3" altStyle>
           <Link to={`/app/trips/${trip.tripId}`}>{trip.name}</Link>
         </Heading>
+        {/* TODO: show all trip members avatars instead */}
         <Avatar src={auth.photoURL as string} gravatarEmail={auth.email as string} size="sm" />
       </FlexContainer>
       <p style={{ marginBottom: 0 }}>
@@ -89,46 +96,64 @@ const Trips: FunctionComponent<TripsProps> = () => {
   return (
     <>
       <Seo title="My Trips" />
-      <Row>
-        <Column sm={4}>
-          <p>
-            <Button type="link" to="/app/trips/new" iconLeft={<FaPlusCircle />} block>
-              New Trip
-            </Button>
-          </p>
-        </Column>
-      </Row>
+      <PageContainer>
+        <Row>
+          <Column sm={4}>
+            <p>
+              <Button type="link" to="/app/trips/new" iconLeft={<FaPlusCircle />} block>
+                New Trip
+              </Button>
+            </p>
+          </Column>
+        </Row>
+      </PageContainer>
 
-      {inProgressTrips && inProgressTrips.length > 0 ? (
-        <>
+      {Array.isArray(inProgressTrips) && !!inProgressTrips.length && inProgressTrips.length > 0 && (
+        <PageContainer>
           <Heading as="h2" altStyle>
             Trips in Progress
           </Heading>
           {inProgressTrips.map((trip) => renderTrip(trip))}
-        </>
-      ) : null}
-
-      <Heading as="h2" altStyle>
-        Upcoming
-      </Heading>
-      {upcomingTrips && upcomingTrips.length > 0 ? (
-        <div>{upcomingTrips.map((trip) => renderTrip(trip))}</div>
+        </PageContainer>
+      )}
+      <PageContainer>
+        <Heading as="h2" altStyle>
+          Upcoming
+        </Heading>
+      </PageContainer>
+      {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 ? (
+        <PageContainer>{upcomingTrips.map((trip) => renderTrip(trip))}</PageContainer>
       ) : (
-        <p>
-          No upcoming trips,{' '}
-          <Link to="/app/trips/new">
-            create one now <FaArrowRight />
-          </Link>
-        </p>
+        <PageContainer>
+          <Box>
+            {trips && trips.length === 0 ? (
+              <>
+                Looks like it&apos;s your first time here,{' '}
+                <Link to="/app/trips/new">
+                  let&apos;s get started! <FaArrowRight />
+                </Link>
+              </>
+            ) : (
+              <>
+                No upcoming trips planned currently,{' '}
+                <Link to="/app/trips/new">
+                  create one now! <FaArrowRight />
+                </Link>
+              </>
+            )}
+          </Box>
+        </PageContainer>
       )}
 
-      <Heading as="h2" altStyle>
-        Past
-      </Heading>
-      {pastTrips && pastTrips.length > 0 ? (
-        <div>{pastTrips.map((trip) => renderTrip(trip))}</div>
-      ) : (
-        <p>No past trips... Time to get out there!</p>
+      {Array.isArray(pastTrips) && !!pastTrips.length && pastTrips.length > 0 && (
+        <PageContainer>
+          <PageContainer>
+            <Heading as="h2" altStyle>
+              Past
+            </Heading>
+          </PageContainer>
+          <div>{pastTrips.map((trip) => renderTrip(trip))}</div>
+        </PageContainer>
       )}
     </>
   );

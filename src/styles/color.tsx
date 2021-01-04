@@ -41,12 +41,13 @@ export const black = '#000A19';
 export const darkGray = '#3e3e3e';
 export const gray = riverbed;
 export const lightGray = submarine;
-export const lightestGray = '#E3E8E9';
-export const white = '#f9f9f9';
+export const lightestGray = '#dbdbdb';
+export const offWhite = '#fafafa';
+export const white = '#ffffff';
 
 // Typography
 export const textColor = riverbed;
-export const textColorLight = lightestGray;
+export const textColorLight = lightGray;
 export const headingsColor = downriver;
 
 // RGB for form focus styling
@@ -54,4 +55,4 @@ export const brandPrimaryRGB = '196,98,0';
 export const brandDangerRGB = '125,38,0';
 
 // Borders
-export const borderColor = submarine;
+export const borderColor = lightestGray;

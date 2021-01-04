@@ -1,47 +1,41 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { Formik, Form, Field } from 'formik';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
+import uniqBy from 'lodash/uniqBy';
+import SwipeableViews from 'react-swipeable-views';
 
-import { Heading, Box, Seo, Button, HorizontalRule, IconCheckbox, Row, Column } from '@components';
+import { Heading, Box, Seo, Button, IconCheckbox, Row, Column, FlexContainer } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
+import { GearItem } from '@views/Admin/GearList';
+import {
+  gearListActivities,
+  gearListAccommodations,
+  gearListTransportation,
+  gearListKeys,
+} from '@utils/gearListItemEnum';
+import { FaCaretLeft, FaCaretRight, FaCheckCircle } from 'react-icons/fa';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
 } & RouteComponentProps;
 
 const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
+  const gear = useSelector((state: RootState) => state.firestore.ordered.gear);
+  useFirestoreConnect([{ collection: 'gear' }]);
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
-  const initialValues = {
-    accommodations: {
-      hotel: '',
-      hostel: '',
-      carCamp: '',
-      servicedHut: '',
-      basicHut: '',
-      tent: '',
-    },
-    transportation: {
-      airplane: '',
-      car: '',
-      bus: '',
-      boat: '',
-      train: '',
-      motorcycle: '',
-    },
-    activities: {
-      hike: '',
-      bike: '',
-      climb: '',
-      ski: '',
-      snowboard: '',
-      paddle: '',
-    },
-  };
+  const [activeTab, setActiveTab] = useState(0);
+
+  const initialValues: { [key: string]: boolean } = {};
+
+  gearListKeys.forEach((item) => {
+    initialValues[item] = false;
+  });
 
   return (
     <>
@@ -51,31 +45,35 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
           validateOnMount
           initialValues={initialValues}
           onSubmit={(values, { setSubmitting }) => {
-            const getValues = (
-              list:
-                | typeof initialValues['accommodations']
-                | typeof initialValues['transportation']
-                | typeof initialValues['activities']
-            ) =>
+            const getValues = (list: typeof initialValues) =>
               Object.entries(list)
                 .filter((entry) => entry[1])
                 .map((key) => key[0]);
 
-            firebase
-              .firestore()
-              .collection('trips')
-              .doc(props.id)
-              .set(
-                {
-                  tripGeneratorOptions: {
-                    accommodations: getValues(values.accommodations),
-                    activities: getValues(values.activities),
-                    transportation: getValues(values.transportation),
-                  },
-                  updated: new Date(),
-                },
-                { merge: true }
-              )
+            const matches: Array<GearItem> = [];
+
+            getValues(values).forEach((val) => {
+              matches.push(...gear.filter((item: GearItem) => item[val] === true));
+            });
+
+            const generatedPackingList = uniqBy(matches, 'name').map((item: GearItem) => {
+              return { name: item.name, isPacked: false, category: item.category };
+            });
+
+            const promises: Array<Promise<any>> = [];
+
+            generatedPackingList.forEach((item) => {
+              promises.push(
+                firebase
+                  .firestore()
+                  .collection('trips')
+                  .doc(props.id)
+                  .collection('packing-list')
+                  .add(item)
+              );
+            });
+
+            Promise.all(promises)
               .then(() => {
                 navigate(`/app/trips/${props.id}`);
                 dispatch(
@@ -104,195 +102,151 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   That&apos;s ok, you can add it later.
                 </small>
               </p>
-              <HorizontalRule />
-              <Heading altStyle as="h2" noMargin>
-                Activities
-              </Heading>
-              <Row>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaHiking"
-                    checked={values.activities.hike ?? false}
-                    name="activities.hike"
-                    label="Hike"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaBicycle"
-                    checked={values.activities.bike ?? false}
-                    name="activities.bike"
-                    label="Ride"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaMountain"
-                    checked={values.activities.climb ?? false}
-                    name="activities.climb"
-                    label="Climb"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaWater"
-                    checked={values.activities.paddle ?? false}
-                    name="activities.paddle"
-                    label="Paddle"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaSkiing"
-                    checked={values.activities.ski ?? false}
-                    name="activities.ski"
-                    label="Ski"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaSnowboarding"
-                    checked={values.activities.snowboard ?? false}
-                    name="activities.snowboard"
-                    label="Snowboard"
-                  />
-                </Column>
-              </Row>
-              <HorizontalRule />
-              <Heading altStyle as="h2" noMargin>
-                Accommodations
-              </Heading>
-              <Row>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaHotel"
-                    checked={values.accommodations.hotel ?? false}
-                    name="accommodations.hotel"
-                    label="Hotel"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaBed"
-                    checked={values.accommodations.hostel ?? false}
-                    name="accommodations.hostel"
-                    label="Hostel"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaCaravan"
-                    checked={values.accommodations.carCamp ?? false}
-                    name="accommodations.carCamp"
-                    label="Camper/Car"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaWarehouse"
-                    checked={values.accommodations.servicedHut ?? false}
-                    name="accommodations.servicedHut"
-                    label="Serviced Hut"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaHome"
-                    checked={values.accommodations.basicHut ?? false}
-                    name="accommodations.basicHut"
-                    label="Basic Hut"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaCampground"
-                    checked={values.accommodations.tent ?? false}
-                    name="accommodations.tent"
-                    label="Tent"
-                  />
-                </Column>
-              </Row>
-              <HorizontalRule />
-              <Heading altStyle as="h2" noMargin>
-                Transportation
-              </Heading>
-              <Row>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaPlane"
-                    checked={values.transportation.airplane ?? false}
-                    name="transportation.airplane"
-                    label="Airplane"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaCar"
-                    checked={values.transportation.car ?? false}
-                    name="transportation.car"
-                    label="Car"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaBusAlt"
-                    checked={values.transportation.bus ?? false}
-                    name="transportation.bus"
-                    label="Bus"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaShip"
-                    checked={values.transportation.boat ?? false}
-                    name="transportation.boat"
-                    label="Boat"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaTrain"
-                    checked={values.transportation.train ?? false}
-                    name="transportation.train"
-                    label="Train"
-                  />
-                </Column>
-                <Column xs={4} md={2}>
-                  <Field
-                    as={IconCheckbox}
-                    icon="fa/FaMotorcycle"
-                    checked={values.transportation.motorcycle ?? false}
-                    name="transportation.motorcycle"
-                    label="Motorcycle"
-                  />
-                </Column>
-              </Row>
-              <HorizontalRule />
-              <p>
-                <Button type="submit" disabled={isSubmitting || !isValid} rightSpacer>
-                  Submit
-                </Button>
-                <Button type="link" to={`/app/trips/${props.id}`} color="primaryOutline">
-                  Skip
-                </Button>
-              </p>
+              <SwipeableViews index={activeTab} onChangeIndex={(i) => setActiveTab(i)}>
+                <div>
+                  <FlexContainer
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    height="100%"
+                  >
+                    <div>
+                      <Heading altStyle as="h2" noMargin align="center">
+                        Activities
+                      </Heading>
+                      <Row>
+                        {gearListActivities.map((item) => (
+                          <Column xs={4} md={2} key={item.name}>
+                            <Field
+                              as={IconCheckbox}
+                              icon={item.icon}
+                              checked={values[item.name] ?? false}
+                              name={item.name}
+                              label={item.label}
+                            />
+                          </Column>
+                        ))}
+                      </Row>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <Row>
+                        <Column xs={6} xsOffset={6}>
+                          <Button
+                            type="button"
+                            onClick={() => setActiveTab(1)}
+                            block
+                            iconRight={<FaCaretRight />}
+                          >
+                            Next
+                          </Button>
+                        </Column>
+                      </Row>
+                    </div>
+                  </FlexContainer>
+                </div>
+                <div>
+                  <FlexContainer
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    height="100%"
+                  >
+                    <div>
+                      <Heading altStyle as="h2" noMargin align="center">
+                        Accommodations
+                      </Heading>
+                      <Row>
+                        {gearListAccommodations.map((item) => (
+                          <Column xs={4} md={2} key={item.name}>
+                            <Field
+                              as={IconCheckbox}
+                              icon={item.icon}
+                              checked={values[item.name] ?? false}
+                              name={item.name}
+                              label={item.label}
+                            />
+                          </Column>
+                        ))}
+                      </Row>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <Row>
+                        <Column xs={6}>
+                          <Button
+                            type="button"
+                            onClick={() => setActiveTab(0)}
+                            color="primaryOutline"
+                            block
+                            iconLeft={<FaCaretLeft />}
+                          >
+                            Previous
+                          </Button>
+                        </Column>
+                        <Column xs={6}>
+                          <Button
+                            type="button"
+                            onClick={() => setActiveTab(2)}
+                            block
+                            iconRight={<FaCaretRight />}
+                          >
+                            Next
+                          </Button>
+                        </Column>
+                      </Row>
+                    </div>
+                  </FlexContainer>
+                </div>
+                <div>
+                  <FlexContainer
+                    flexDirection="column"
+                    justifyContent="space-between"
+                    height="100%"
+                  >
+                    <div>
+                      <Heading altStyle as="h2" noMargin align="center">
+                        Transportation
+                      </Heading>
+                      <Row>
+                        {gearListTransportation.map((item) => (
+                          <Column xs={4} md={2} key={item.name}>
+                            <Field
+                              as={IconCheckbox}
+                              icon={item.icon}
+                              checked={values[item.name] ?? false}
+                              name={item.name}
+                              label={item.label}
+                            />
+                          </Column>
+                        ))}
+                      </Row>
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <Row>
+                        <Column xs={6}>
+                          <Button
+                            type="button"
+                            onClick={() => setActiveTab(1)}
+                            color="primaryOutline"
+                            block
+                            iconLeft={<FaCaretLeft />}
+                          >
+                            Previous
+                          </Button>
+                        </Column>
+                        <Column xs={6}>
+                          <Button
+                            type="submit"
+                            disabled={isSubmitting || !isValid}
+                            block
+                            color="success"
+                            iconLeft={<FaCheckCircle />}
+                          >
+                            Save
+                          </Button>
+                        </Column>
+                      </Row>
+                    </div>
+                  </FlexContainer>
+                </div>
+              </SwipeableViews>
             </Form>
           )}
         </Formik>

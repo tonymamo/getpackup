@@ -4,9 +4,8 @@ import { utcToZonedTime } from 'date-fns-tz';
 export const formattedDate = (date: Date) => format(date, 'MMM d, y');
 export const formattedDateForDateInput = (date: Date) => format(date, 'yyyy-MM-dd');
 
-export const dateWithTimezoneOffset = (date: number, timezoneOffset: number) => {
-  return utcToZonedTime(date, String(timezoneOffset));
-};
+export const dateWithTimezoneOffset = (date: number, timezoneOffset: number) =>
+  utcToZonedTime(date, String(timezoneOffset));
 
 export const isBeforeToday = (date: number, timezoneOffset: number) =>
   isBefore(dateWithTimezoneOffset(date, timezoneOffset), new Date());

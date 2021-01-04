@@ -7,6 +7,7 @@ import {
   baseAndAHalfSpacer,
   baseSpacer,
   doubleSpacer,
+  halfSpacer,
   quadrupleSpacer,
   sextupleSpacer,
 } from '@styles/size';
@@ -22,6 +23,7 @@ type AvatarProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg';
   gravatarEmail: string;
   bottomMargin?: boolean;
+  rightMargin?: boolean;
   style?: CSSProperties;
 };
 
@@ -46,12 +48,16 @@ const AvatarImageWrapper = styled.div`
   overflow: hidden;
   object-fit: cover;
   display: flex;
-  height: ${(props: { size: AvatarProps['size']; bottomMargin: AvatarProps['bottomMargin'] }) =>
-    props.size && renderSize(props.size)};
+  height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
   width: ${(props) => props.size && renderSize(props.size)};
   /* min-width ensures it doesnt get resized when in a flexed parent */
   min-width: ${(props) => props.size && renderSize(props.size)};
-  ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer}`}
+  ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer};`}
+  ${(props) =>
+    props.rightMargin &&
+    `margin-right: ${
+      props.size === 'md' || props.size === 'lg' ? baseSpacer : halfSpacer
+    };`}
 
   /* If image fails to load, provide some fallback styling to make it look better */
   & img {
@@ -86,7 +92,9 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
     <AvatarImageWrapper
       size={props.size || 'sm'}
       bottomMargin={props.bottomMargin || false}
+      rightMargin={props.rightMargin || false}
       style={props.style}
+      {...props}
     >
       <PreviewCompatibleImage
         imageInfo={{
