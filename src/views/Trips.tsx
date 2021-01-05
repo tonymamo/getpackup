@@ -20,7 +20,7 @@ import {
 import { RootState } from '@redux/ducks';
 import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
 
-type TripsProps = {} & RouteComponentProps;
+type TripsProps = { loggedInUser?: any } & RouteComponentProps;
 
 export type TripMember = { uid: string; displayName: string; photoURL: string; email: string };
 
@@ -38,7 +38,7 @@ export type TripType = {
   tripMembers: Array<TripMember>;
 };
 
-const Trips: FunctionComponent<TripsProps> = () => {
+const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
 
@@ -76,7 +76,11 @@ const Trips: FunctionComponent<TripsProps> = () => {
           <Link to={`/app/trips/${trip.tripId}`}>{trip.name}</Link>
         </Heading>
         {/* TODO: show all trip members avatars instead */}
-        <Avatar src={auth.photoURL as string} gravatarEmail={auth.email as string} size="sm" />
+        <Avatar
+          src={loggedInUser.photoURL as string}
+          gravatarEmail={loggedInUser.email as string}
+          size="sm"
+        />
       </FlexContainer>
       <p style={{ marginBottom: 0 }}>
         <FaRegCalendar />{' '}

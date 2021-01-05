@@ -9,6 +9,7 @@ import React from 'react';
 import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 import Layout from './src/components/Layout';
 

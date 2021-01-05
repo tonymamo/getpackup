@@ -13,6 +13,7 @@ import {
 } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
+import { useFirestoreConnect } from 'react-redux-firebase';
 
 import {
   Avatar,
@@ -147,6 +148,12 @@ const TopNavIconWrapper = styled.nav`
 const Navbar: FunctionComponent<NavbarProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
+  const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+
+  useFirestoreConnect([
+    { collection: 'users', where: ['uid', '==', auth.uid || ''], storeAs: 'loggedInUser' },
+  ]);
+
   const { pathname } = useLocation();
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -189,7 +196,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     setMenuIsOpen(false);
   };
 
-  const loggedInUser = auth && !auth.isEmpty;
+  const isAuthenticated = auth && !auth.isEmpty;
 
   const truncatedPageTitle = pageTitle.length > 25 ? `${pageTitle.substring(0, 25)}...` : pageTitle;
   const routeHasParent = pathname.split('/').length >= 4;
@@ -205,13 +212,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
         <FlexContainer justifyContent="space-between" alignItems="center" height="100%">
           {!isSmallScreen && auth.isLoaded && (
             <Heading noMargin>
-              <Link to={loggedInUser ? '/app/trips' : '/'}>
+              <Link to={isAuthenticated ? '/app/trips' : '/'}>
                 <img src={yak} alt="" width={tripleSpacer} />{' '}
-                {isSmallScreen && !loggedInUser ? '' : 'packup'}
+                {isSmallScreen && !isAuthenticated ? '' : 'packup'}
               </Link>
             </Heading>
           )}
-          {isSmallScreen && auth.isLoaded && !loggedInUser && (
+          {isSmallScreen && auth.isLoaded && !isAuthenticated && (
             <Heading noMargin>
               <Link to="/">
                 <img src={yak} alt="" width={tripleSpacer} />
@@ -219,7 +226,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Link>
             </Heading>
           )}
-          {loggedInUser && isSmallScreen && auth.isLoaded && (
+          {isAuthenticated && isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {routeHasParent && (
                 <Link to="../">
@@ -228,12 +235,12 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               )}
             </IconLinkWrapper>
           )}
-          {loggedInUser && isSmallScreen && auth.isLoaded && (
+          {isAuthenticated && isSmallScreen && auth.isLoaded && (
             <Heading noMargin altStyle as="h2">
               {truncatedPageTitle}
             </Heading>
           )}
-          {loggedInUser && isSmallScreen && auth.isLoaded && (
+          {isAuthenticated && isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {false && (
                 <Link to="/app/profile">
@@ -242,7 +249,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               )}
             </IconLinkWrapper>
           )}
-          {isSmallScreen && !loggedInUser && auth.isLoaded && (
+          {isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <StyledMenuToggle ref={hamburgerButton}>
               <Hamburger
                 color={white}
@@ -252,7 +259,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             </StyledMenuToggle>
           )}
 
-          {isSmallScreen && !loggedInUser && auth.isLoaded && (
+          {isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
                 <NavLink to="/blog" onClick={() => toggleMenu()}>
@@ -277,7 +284,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Box>
             </StyledMenu>
           )}
-          {!isSmallScreen && !loggedInUser && auth.isLoaded && (
+          {!isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <FlexContainer as="nav">
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
@@ -288,7 +295,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Button>
             </FlexContainer>
           )}
-          {!isSmallScreen && loggedInUser && auth.isLoaded && (
+          {!isSmallScreen && isAuthenticated && auth.isLoaded && (
             <TopNavIconWrapper>
               <Link to="/app/trips" getProps={isPartiallyActive}>
                 <FaCalendar />
@@ -304,13 +311,15 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   <FaUserLock />
                 </Link>
               )}
-              <Link to="/app/profile" getProps={isPartiallyActive}>
-                <Avatar
-                  src={auth.photoURL as string}
-                  size="sm"
-                  gravatarEmail={auth.email as string}
-                />
-              </Link>
+              {loggedInUser && loggedInUser.length > 0 && (
+                <Link to="/app/profile" getProps={isPartiallyActive}>
+                  <Avatar
+                    src={loggedInUser[0].photoURL as string}
+                    size="sm"
+                    gravatarEmail={loggedInUser[0].email as string}
+                  />
+                </Link>
+              )}
             </TopNavIconWrapper>
           )}
         </FlexContainer>

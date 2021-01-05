@@ -11,11 +11,19 @@ type PrivateRouteProps = {
   location?: WindowLocation;
   component: ComponentType & RouteComponentProps;
   path: string;
+  loggedInUser: {
+    displayName: string;
+    photoURL: string;
+    email: string;
+    bio: string;
+    website: string;
+  };
 };
 
 const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
   location,
   component: Component,
+  loggedInUser,
   ...rest
 }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
@@ -39,7 +47,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
     navigate('/');
     return null;
   }
-  return <Component {...rest} />;
+  return <Component loggedInUser={loggedInUser} {...rest} />;
 };
 
 export default PrivateRoute;

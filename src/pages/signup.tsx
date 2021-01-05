@@ -38,6 +38,10 @@ const Signup: FunctionComponent<SignupProps> = () => {
     username: '',
     email: '',
     password: '',
+    photoURL: '',
+    bio: '',
+    website: '',
+    location: '',
   };
 
   const validateUsername = async (value: string) => {
@@ -96,34 +100,24 @@ const Signup: FunctionComponent<SignupProps> = () => {
                           .collection('users')
                           .doc(result.user.uid)
                           .set({
+                            // don't spread, we dont want password in here
                             uid: result.user.uid,
                             email: values.email,
                             displayName: values.displayName,
                             username: values.username,
+                            photoURL: '',
+                            bio: '',
+                            website: '',
+                            location: '',
                           })
                           .then(() => {
-                            firebase
-                              .firestore()
-                              .collection('users')
-                              .doc(result.user.uid)
-                              .update({ username: values.username })
-                              .then(() => {
-                                navigate('/app/trips');
-                                dispatch(
-                                  addAlert({
-                                    type: 'success',
-                                    message: `Successfully created profile`,
-                                  })
-                                );
+                            navigate('/app/trips');
+                            dispatch(
+                              addAlert({
+                                type: 'success',
+                                message: `Successfully created profile`,
                               })
-                              .catch((err) => {
-                                dispatch(
-                                  addAlert({
-                                    type: 'danger',
-                                    message: err.message,
-                                  })
-                                );
-                              });
+                            );
                           })
                           .catch((err) => {
                             dispatch(

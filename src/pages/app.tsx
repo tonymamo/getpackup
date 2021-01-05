@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
+import { useFirestoreConnect } from 'react-redux-firebase';
 import styled from 'styled-components';
 
 import Profile from '@views/Profile';
@@ -29,32 +29,14 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
-  const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const profile = useSelector((state: RootState) => state.firebase.profile);
+  const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
 
-  useEffect(() => {
-    // update user profile in firestore so we can sync name/id/photo for pulling in that data later
-    // on things like shared trips
-    // TODO: only update if auth has new email, displayName, photoUrl etc
-    // eventually, split out photourl and handle profile photos ourselves,
-    // but have auth.photoUrl has backup if empty when using Avatar component maybe
-    // if (!auth.isEmpty && profile.isLoaded) {
-    //   firebase
-    //     .firestore()
-    //     .collection('users')
-    //     .doc(auth.uid)
-    //     .update({
-    //       isAdmin: profile.isAdmin || false,
-    //       email: auth.email,
-    //       uid: auth.uid,
-    //       displayName: auth.displayName,
-    //       photoURL: auth.photoURL,
-    //     });
-    // }
-  }, [auth]);
+  useFirestoreConnect([
+    { collection: 'users', where: ['uid', '==', auth.uid], storeAs: 'loggedInUser' },
+  ]);
 
-  if (!auth.isLoaded) {
+  if (!auth.isLoaded || !loggedInUser || loggedInUser.length === 0) {
     return <LoadingPage />;
   }
 
@@ -62,14 +44,30 @@ const App = () => {
     <AppContainer>
       <ErrorBoundary>
         <Router basepath="/app" primary={false}>
-          <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/trips" component={Trips} />
-          <PrivateRoute path="/trips/new" component={NewTripSummary} />
-          <PrivateRoute path="/trips/:id" component={TripById} />
-          <PrivateRoute path="/trips/:id/edit" component={EditTripSummary} />
-          <PrivateRoute path="/trips/:id/generator" component={TripGenerator} />
-          <PrivateRoute path="/search" component={Search} />
-          <PrivateRoute path="/shopping-list" component={ShoppingList} />
+          <PrivateRoute path="/profile" component={Profile} loggedInUser={loggedInUser[0]} />
+          <PrivateRoute path="/trips" component={Trips} loggedInUser={loggedInUser[0]} />
+          <PrivateRoute
+            path="/trips/new"
+            component={NewTripSummary}
+            loggedInUser={loggedInUser[0]}
+          />
+          <PrivateRoute path="/trips/:id" component={TripById} loggedInUser={loggedInUser[0]} />
+          <PrivateRoute
+            path="/trips/:id/edit"
+            component={EditTripSummary}
+            loggedInUser={loggedInUser[0]}
+          />
+          <PrivateRoute
+            path="/trips/:id/generator"
+            component={TripGenerator}
+            loggedInUser={loggedInUser[0]}
+          />
+          <PrivateRoute path="/search" component={Search} loggedInUser={loggedInUser[0]} />
+          <PrivateRoute
+            path="/shopping-list"
+            component={ShoppingList}
+            loggedInUser={loggedInUser[0]}
+          />
         </Router>
       </ErrorBoundary>
     </AppContainer>

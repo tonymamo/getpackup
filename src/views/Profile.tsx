@@ -2,37 +2,24 @@ import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import { useFirebase } from 'react-redux-firebase';
 import { actionTypes } from 'redux-firestore';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 
-import {
-  Input,
-  Button,
-  Box,
-  Avatar,
-  Seo,
-  PageContainer,
-  FlexContainer,
-  Row,
-  Column,
-} from '@components';
+import { Input, Button, Box, Seo, PageContainer, Row, Column, FileUpload } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { requiredField } from '@utils/validations';
 
-type ProfileProps = {} & RouteComponentProps;
+type ProfileProps = {
+  loggedInUser?: any;
+} & RouteComponentProps;
 
-const Profile: FunctionComponent<ProfileProps> = () => {
+const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
   const firebase = useFirebase();
   const dispatch = useDispatch();
-
-  useFirestoreConnect([
-    { collection: 'users', where: ['uid', '==', auth.uid], storeAs: 'loggedInUser' },
-  ]);
 
   const logout = () => {
     // log out the user
@@ -90,13 +77,13 @@ const Profile: FunctionComponent<ProfileProps> = () => {
   return (
     <PageContainer>
       <Seo title="Edit Profile" />
-      {auth && loggedInUser && loggedInUser.length > 0 && (
+      {auth && loggedInUser && (
         <Row>
           <Column md={8} mdOffset={2}>
             <Formik
               validateOnMount
               initialValues={{
-                ...loggedInUser[0],
+                ...loggedInUser,
               }}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 firebase
@@ -130,14 +117,7 @@ const Profile: FunctionComponent<ProfileProps> = () => {
               {({ isSubmitting, isValid, setFieldValue, dirty, ...rest }) => (
                 <Form>
                   <Box>
-                    <FlexContainer>
-                      <Avatar
-                        src={auth.photoURL as string}
-                        size="lg"
-                        gravatarEmail={auth.email as string}
-                        bottomMargin
-                      />
-                    </FlexContainer>
+                    <FileUpload loggedInUser={loggedInUser} />
                     <Field
                       as={Input}
                       type="text"

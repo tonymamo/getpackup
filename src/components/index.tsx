@@ -6,6 +6,7 @@ import ClientOnly from './ClientOnly';
 import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
 import ErrorBoundary from './ErrorBoundary';
+import FileUpload from './FileUpload';
 import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
@@ -46,6 +47,7 @@ export {
   Column,
   Content,
   ErrorBoundary,
+  FileUpload,
   FirebaseAuthWrapper,
   FlexContainer,
   Footer,
