@@ -34,11 +34,40 @@ const Signup: FunctionComponent<SignupProps> = () => {
   }
 
   const initialValues = {
-    firstName: '',
-    lastName: '',
+    displayName: '',
+    username: '',
     email: '',
     password: '',
-    confirmPassword: '',
+  };
+
+  const validateUsername = async (value: string) => {
+    if (value === '') {
+      // return out early to avoid api calls below
+      return undefined;
+    }
+
+    const searchValue = value.toLowerCase();
+
+    const response = await firebase
+      .firestore()
+      .collection('users')
+      .orderBy(`searchableIndex.${searchValue}`)
+      .limit(5)
+      .get();
+    const existingUsernames: Array<any> = [];
+
+    if (!response.empty) {
+      response.forEach((doc) => existingUsernames.push(doc.data()));
+    }
+
+    let error;
+    if (
+      existingUsernames.filter((user) => user.uid !== auth.uid && user.username === value).length >
+      0
+    ) {
+      error = `Sorry, ${value} is unavailable`;
+    }
+    return error;
   };
 
   return (
@@ -67,11 +96,43 @@ const Signup: FunctionComponent<SignupProps> = () => {
                           .collection('users')
                           .doc(result.user.uid)
                           .set({
+                            uid: result.user.uid,
                             email: values.email,
-                            firstName: values.firstName,
-                            lastName: values.lastName,
+                            displayName: values.displayName,
+                            username: values.username,
+                          })
+                          .then(() => {
+                            firebase
+                              .firestore()
+                              .collection('users')
+                              .doc(result.user.uid)
+                              .update({ username: values.username })
+                              .then(() => {
+                                navigate('/app/trips');
+                                dispatch(
+                                  addAlert({
+                                    type: 'success',
+                                    message: `Successfully created profile`,
+                                  })
+                                );
+                              })
+                              .catch((err) => {
+                                dispatch(
+                                  addAlert({
+                                    type: 'danger',
+                                    message: err.message,
+                                  })
+                                );
+                              });
+                          })
+                          .catch((err) => {
+                            dispatch(
+                              addAlert({
+                                type: 'danger',
+                                message: err.message,
+                              })
+                            );
                           });
-                        navigate('/app/trips');
                       }
                     })
                     .catch((err) => {
@@ -87,30 +148,26 @@ const Signup: FunctionComponent<SignupProps> = () => {
               >
                 {({ isSubmitting, isValid }) => (
                   <Form>
-                    <Row>
-                      <Column sm={6}>
-                        <Field
-                          as={Input}
-                          type="text"
-                          name="firstName"
-                          label="First Name"
-                          validate={requiredField}
-                          required
-                          hiddenLabel
-                        />
-                      </Column>
-                      <Column sm={6}>
-                        <Field
-                          as={Input}
-                          type="text"
-                          name="lastName"
-                          label="Last Name"
-                          validate={requiredField}
-                          required
-                          hiddenLabel
-                        />
-                      </Column>
-                    </Row>
+                    <Field
+                      as={Input}
+                      type="text"
+                      name="displayName"
+                      label="Full Name"
+                      validate={requiredField}
+                      required
+                      hiddenLabel
+                    />
+
+                    <Field
+                      as={Input}
+                      type="text"
+                      name="username"
+                      label="Username"
+                      validate={validateUsername}
+                      required
+                      hiddenLabel
+                    />
+
                     <Field
                       as={Input}
                       type="email"
@@ -129,27 +186,10 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       required
                       hiddenLabel
                     />
-                    <Field
-                      as={Input}
-                      type="password"
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      validate={requiredField}
-                      required
-                      hiddenLabel
-                    />
                     <p>
                       <Button type="submit" disabled={isSubmitting || !isValid} block>
                         Sign Up
                       </Button>
-                    </p>
-                    <p style={{ textAlign: 'center' }}>
-                      <small>
-                        Already have an account?{' '}
-                        <Link to="/login">
-                          Login now <FaArrowRight />
-                        </Link>
-                      </small>
                     </p>
                   </Form>
                 )}
@@ -165,6 +205,14 @@ const Signup: FunctionComponent<SignupProps> = () => {
             </FlexContainer>
           </Column>
         </Row>
+        <p style={{ textAlign: 'center' }}>
+          <small>
+            Already have an account?{' '}
+            <Link to="/login">
+              Login now <FaArrowRight />
+            </Link>
+          </small>
+        </p>
       </Box>
     </PageContainer>
   );

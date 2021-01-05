@@ -105,16 +105,17 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const [dateRangeEnd, setDateRangeEnd] = useState(new Date(props.initialValues.endDate));
 
   const loadUsers = async (inputValue: string) => {
+    const searchValue = inputValue.toLowerCase();
     const response = await firebase
       .firestore()
       .collection('users')
-      .where('displayName', '>=', inputValue) // document field is greater than search string
-      .where('displayName', '<=', `${inputValue}\uf8ff`) // https://stackoverflow.com/a/56815787/6095128
-      .limit(10)
+      .orderBy(`searchableIndex.${searchValue}`)
+      // .where('searchableIndex', '>=', searchValue) // document field is greater than search string
+      // .where('displayName', '<=', `${searchValue}\uf8ff`) // https://stackoverflow.com/a/56815787/6095128
+      .limit(5)
       .get();
     const usersOptions: Array<any> = [];
     if (!response.empty) {
-      inputValue.charAt(0).toUpperCase();
       response.forEach((doc) => usersOptions.push(doc.data()));
     }
 
@@ -208,6 +209,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               <Field
                 as={Input}
                 type="geosuggest"
+                types={[]}
                 name="startingPoint"
                 label="Starting Location"
                 validate={requiredField}

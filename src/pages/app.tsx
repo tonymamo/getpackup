@@ -39,19 +39,19 @@ const App = () => {
     // TODO: only update if auth has new email, displayName, photoUrl etc
     // eventually, split out photourl and handle profile photos ourselves,
     // but have auth.photoUrl has backup if empty when using Avatar component maybe
-    if (!auth.isEmpty && profile.isLoaded) {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(auth.uid)
-        .update({
-          isAdmin: profile.isAdmin || false,
-          email: auth.email,
-          uid: auth.uid,
-          displayName: auth.displayName,
-          photoURL: auth.photoURL,
-        });
-    }
+    // if (!auth.isEmpty && profile.isLoaded) {
+    //   firebase
+    //     .firestore()
+    //     .collection('users')
+    //     .doc(auth.uid)
+    //     .update({
+    //       isAdmin: profile.isAdmin || false,
+    //       email: auth.email,
+    //       uid: auth.uid,
+    //       displayName: auth.displayName,
+    //       photoURL: auth.photoURL,
+    //     });
+    // }
   }, [auth]);
 
   if (!auth.isLoaded) {

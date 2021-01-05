@@ -23,9 +23,8 @@ const rrfConfig = {
   userProfile: 'users',
   useFirestoreForProfile: true,
   profileFactory: (userData: firebase.User) => {
-    // how profiles are stored in database
     return {
-      email: userData?.email,
+      ...userData,
     };
   },
 };

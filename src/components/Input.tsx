@@ -4,7 +4,7 @@ import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Select, { CommonProps } from 'react-select';
 import AsyncSelect from 'react-select/async';
-import Geosuggest from 'react-geosuggest';
+import Geosuggest, { QueryType } from 'react-geosuggest';
 import 'react-geosuggest/module/geosuggest.css';
 
 import {
@@ -50,6 +50,8 @@ type InputProps = {
   options?: OptionType[];
   required?: boolean;
   loadOptions?: () => void;
+  components?: any;
+  geosuggestTypes?: QueryType[];
 } & FieldMetaProps<string> &
   FormikHelpers<string> &
   CommonProps<OptionType | OptionType[]>;
@@ -95,7 +97,7 @@ export const StyledInput = styled.input`
 
 const StyledTextarea = styled.textarea`
   resize: none;
-  min-height: ${inputHeight};
+  min-height: ${`${Number(inputHeight.replace('px', '')) * 3}px`};
   ${sharedStyles}
 `;
 
@@ -337,7 +339,6 @@ const Input: FunctionComponent<InputProps> = (props) => {
             components={props.components}
             className="react-select"
             cacheOptions
-            defaultMenuIsOpen
             loadOptions={props.loadOptions}
             defaultOptions
             styles={multiSelectStyles}
@@ -423,6 +424,12 @@ const Input: FunctionComponent<InputProps> = (props) => {
           {...field}
           {...props}
           {...meta}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              // stops form from being submitted if user hits enter key
+              event.preventDefault();
+            }
+          }}
         />
       );
       break;
@@ -430,7 +437,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
       inputTypeToRender = (
         <>
           <StyledGeosuggest
-            placeDetailFields={['geometry']}
+            types={props.geosuggestTypes || []}
             onSuggestSelect={(suggest: { label: string }) =>
               suggest && suggest.label
                 ? props.setFieldValue(field.name, suggest.label)
@@ -441,8 +448,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
             {...props}
             {...meta}
             minLength={3}
-            label={undefined}
-            inputType="text"
+            label=""
           />
           <p style={{ margin: 0, textAlign: 'right' }}>
             <img src={poweredByGoogle} alt="powered by Google" style={{ height: 18 }} />
