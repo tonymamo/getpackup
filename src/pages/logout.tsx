@@ -15,7 +15,7 @@ const Logout: FunctionComponent<LogoutProps> = () => {
   const dispatch = useDispatch();
   const firebase = useFirebase();
 
-  const logout = () => {
+  useEffect(() => {
     firebase
       .auth()
       .signOut()
@@ -35,17 +35,12 @@ const Logout: FunctionComponent<LogoutProps> = () => {
       // https://github.com/prescottprue/redux-firestore/issues/114
       dispatch({ type: actionTypes.CLEAR_DATA });
     });
-  };
-
-  useEffect(() => {
-    if (!auth.isEmpty) {
-      logout();
-      if (window && window.analytics) {
-        window.analytics.track('Logout', {
-          location: 'Logout page',
-        });
-      }
+    if (window && window.analytics) {
+      window.analytics.track('Logout', {
+        location: 'Logout page',
+      });
     }
+
     navigate('/');
   }, []);
 

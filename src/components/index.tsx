@@ -23,6 +23,7 @@ import LoadingSpinner from './LoadingSpinner';
 import Modal from './Modal';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
+import PackingListItem from './PackingListItem';
 import PageContainer from './PageContainer';
 import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
@@ -66,6 +67,7 @@ export {
   Modal,
   Navbar,
   NegativeMarginContainer,
+  PackingListItem,
   PageContainer,
   Pill,
   PreviewCompatibleImage,

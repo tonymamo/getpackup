@@ -17,6 +17,7 @@ import {
   PageContainer,
   Avatar,
   Box,
+  PackingListItem,
 } from '@components';
 import { RootState } from '@redux/ducks';
 import { TripType, TripMember } from '@views/Trips';
@@ -179,11 +180,11 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             <ul>
               {packingList &&
                 packingList.length > 0 &&
-                packingList.map((item: { id: string; name: string; isPacked: boolean }) => (
-                  <li key={item.id}>
-                    {item.name} - {item.isPacked ? 'packed' : 'not packed'}
-                  </li>
-                ))}
+                packingList.map(
+                  (item: { id: string; name: string; isPacked: boolean; category: string }) => (
+                    <PackingListItem key={item.name} {...item} />
+                  )
+                )}
             </ul>
           </PageContainer>
         </SwipeableViews>

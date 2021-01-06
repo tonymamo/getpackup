@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { FieldMetaProps, FormikHelpers, useField } from 'formik';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
 import Select, { CommonProps } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import Geosuggest, { QueryType } from 'react-geosuggest';
@@ -30,6 +30,7 @@ import {
   brandPrimaryRGB,
   lightGray,
   offWhite,
+  brandSuccess,
 } from '@styles/color';
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
 import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
@@ -357,7 +358,16 @@ const Input: FunctionComponent<InputProps> = (props) => {
       inputTypeToRender = (
         <>
           <StyledLabel htmlFor={props.id || props.name}>
-            <input {...field} {...props} id={props.name} checked={props.checked} /> {props.label}
+            <StyledToggle
+              {...field}
+              {...props}
+              {...meta}
+              id={props.name}
+              checked={props.checked}
+              type="checkbox"
+            />
+            {props.checked ? <FaCheckCircle color={brandSuccess} /> : <FaRegCircle />}
+            {props.label}
           </StyledLabel>
         </>
       );

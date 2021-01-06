@@ -83,26 +83,28 @@ const GearList: FunctionComponent<GearListProps> = () => {
   const data =
     gear &&
     gear.length > 0 &&
-    gear.map((item: GearItem) => {
-      return {
-        ...item,
-        actions: [
-          {
-            label: <FaPencilAlt />,
-            to: `/admin/gear-list/${item.id}`,
-            color: 'primaryOutline',
-          },
-          {
-            label: <FaTrash />,
-            color: 'danger',
-            onClick: () => {
-              setModalIsOpen(true);
-              setItemToBeDeleted(item);
+    gear
+      .sort((a: GearItem, b: GearItem) => a.name.localeCompare(b.name))
+      .map((item: GearItem) => {
+        return {
+          ...item,
+          actions: [
+            {
+              label: <FaPencilAlt />,
+              to: `/admin/gear-list/${item.id}`,
+              color: 'primaryOutline',
             },
-          },
-        ],
-      };
-    });
+            {
+              label: <FaTrash />,
+              color: 'danger',
+              onClick: () => {
+                setModalIsOpen(true);
+                setItemToBeDeleted(item);
+              },
+            },
+          ],
+        };
+      });
 
   return (
     <Box>
@@ -123,7 +125,7 @@ const GearList: FunctionComponent<GearListProps> = () => {
           rowsPerPage={25}
         />
       )}
-      {(!isLoaded(gear) || !isEmpty(gear)) && <LoadingPage />}
+      {(!isLoaded(gear) || isEmpty(gear)) && <LoadingPage />}
       {itemToBeDeleted && (
         <Modal
           toggleModal={() => {
