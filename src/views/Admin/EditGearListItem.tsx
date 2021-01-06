@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
-import { Seo, Box, Heading, LoadingPage } from '@components';
+import { Seo, Heading, LoadingPage, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
 import GearListItemForm from './GearListItemForm';
 import { GearItem } from './GearList';
@@ -21,18 +21,17 @@ const EditGearListItem: FunctionComponent<EditGearListItemProps> = (props) => {
   const initialValues: GearItem = activeItem;
 
   return (
-    <>
+    <PageContainer>
       <Seo title="Edit Gear Item" />
-      <Box>
-        {activeItem && (
-          <>
-            <Heading>Edit Item</Heading>
-            <GearListItemForm initialValues={initialValues} type="edit" />
-          </>
-        )}
-        {(!activeItem || !isLoaded) && <LoadingPage />}
-      </Box>
-    </>
+
+      {activeItem && (
+        <>
+          <Heading>Edit Item</Heading>
+          <GearListItemForm initialValues={initialValues} type="edit" />
+        </>
+      )}
+      {(!activeItem || !isLoaded) && <LoadingPage />}
+    </PageContainer>
   );
 };
 

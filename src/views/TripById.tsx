@@ -18,6 +18,7 @@ import {
   Avatar,
   Box,
   PackingListItem,
+  Pill,
 } from '@components';
 import { RootState } from '@redux/ducks';
 import { TripType, TripMember } from '@views/Trips';
@@ -75,6 +76,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
 
   const [activeTab, setActiveTab] = useState(0);
   const [tripMembers, setTripMembers] = useState<TripType['tripMembers']>([]);
+  const [tripMembersLoading, setTripMembersLoading] = useState(true);
 
   const activeTrip: TripType | undefined =
     activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
@@ -87,10 +89,16 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         .where('uid', 'in', activeTrip.tripMembers)
         .get();
       if (!matchingUsers.empty) {
-        matchingUsers.forEach((doc) =>
-          setTripMembers((arr) => uniqBy([...arr, doc.data() as TripMember], 'uid'))
-        );
+        matchingUsers.forEach((doc) => {
+          setTripMembers((arr) => uniqBy([...arr, doc.data() as TripMember], 'uid'));
+          setTripMembersLoading(false);
+        });
       }
+      if (matchingUsers.empty) {
+        setTripMembersLoading(false);
+      }
+    } else {
+      setTripMembersLoading(false);
     }
   };
 
@@ -128,7 +136,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                 <Heading as="h3" altStyle>
                   {activeTrip.name}
                 </Heading>
-                {!isBeforeToday(activeTrip.endDate.seconds * 1000, activeTrip.timezoneOffset) && (
+                {!isBeforeToday(activeTrip.endDate.seconds * 1000) && (
                   <div>
                     <Link to={`/app/trips/${activeTrip.id}/edit`}>
                       <FaPencilAlt /> Edit
@@ -148,18 +156,38 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                 <FaCalendar />{' '}
                 {formattedDateRange(
                   activeTrip.startDate.seconds * 1000,
-                  activeTrip.endDate.seconds * 1000,
-                  activeTrip.timezoneOffset
+                  activeTrip.endDate.seconds * 1000
                 )}
               </p>
+              <HorizontalRule compact />
+              {activeTrip.tags && activeTrip.tags.length ? (
+                <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
+                  {activeTrip.tags.map((tag: string) => (
+                    <Pill
+                      key={`${tag}tag`}
+                      to={`/search/tags/${tag.replace(' ', '-')}`}
+                      text={tag}
+                    />
+                  ))}
+                </ul>
+              ) : null}
             </Box>
 
             <Box>
               <Heading as="h4" altStyle>
                 Trip Party
               </Heading>
-              {(!isLoaded(activeTrip) || !tripMembers.length) && <Skeleton count={3} />}
-              {isLoaded(activeTrip) && tripMembers.length === 0 && 'no party members'}
+              {(!isLoaded(activeTrip) || tripMembersLoading) &&
+                activeTrip.tripMembers.map((member) => (
+                  <FlexContainer justifyContent="flex-start" key={member.uid}>
+                    <Skeleton circle height={32} width={32} />
+                    <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
+                  </FlexContainer>
+                ))}
+              {isLoaded(activeTrip) &&
+                !tripMembersLoading &&
+                tripMembers.length === 0 &&
+                'no party members'}
               {tripMembers.length > 0 &&
                 tripMembers.map((member, index) => (
                   <Fragment key={member.uid}>

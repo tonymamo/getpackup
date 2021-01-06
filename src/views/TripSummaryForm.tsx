@@ -5,8 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { navigate } from 'gatsby';
 import DatePicker from 'react-datepicker';
-import { startOfDay, endOfDay } from 'date-fns';
+import { startOfDay, endOfDay, addDays } from 'date-fns';
 import { components } from 'react-select';
+import styled from 'styled-components';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 
 import { Avatar, Input, Button, HorizontalRule, Column, Row, FlexContainer } from '@components';
 import { StyledLabel } from '@components/Input';
@@ -14,21 +17,64 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
 import { RootState } from '@redux/ducks';
 import ReactDatepickerTheme from '@styles/react-datepicker';
-import { textColorLight } from '@styles/color';
+import { textColor, textColorLight, white } from '@styles/color';
+import { fontSizeSmall } from '@styles/typography';
+import { TripMember } from './Trips';
 
 type TripSummaryProps = {
   initialValues: {
+    owner: string;
+    tripId?: string;
     name: string;
     description: string;
     startingPoint: string;
     startDate: string | Date;
     endDate: string | Date;
-    owner: string;
-    tripId?: string;
-    tripMembers?: Array<string>;
+    timezoneOffset: number;
+    tripMembers: Array<TripMember>;
+    tags: Array<string>;
+    tripLength: number;
   };
   type: 'new' | 'edit';
 };
+
+const SliderWrapper = styled.div`
+  & .rangeslider {
+    font-size: ${fontSizeSmall};
+    box-shadow: none;
+    background-color: ${textColorLight};
+  }
+
+  & .rangeslider-horizontal .rangeslider__fill {
+    background-color: ${textColor};
+    box-shadow: none;
+  }
+
+  & .rangeslider .rangeslider__handle {
+    background: ${textColor};
+    border-color: ${textColor};
+    box-shadow: none;
+    outline: none;
+  }
+
+  & .rangeslider-horizontal .rangeslider__handle:after {
+    content: none;
+  }
+
+  & .rangeslider .rangeslider__handle-tooltip {
+    width: 75px;
+  }
+
+  & .rangeslider__handle-label {
+    color: ${white};
+    text-align: center;
+    font-size: ${fontSizeSmall};
+  }
+
+  & .rangeslider__labels .rangeslider__label-item {
+    font-size: ${fontSizeSmall};
+  }
+`;
 
 const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const firebase = useFirebase();
@@ -38,6 +84,9 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
 
   useFirestoreConnect([{ collection: 'users' }]);
 
+  const formatTripLengthAsString = (value: number) =>
+    `${value === 21 ? '20+ Days' : `${value === 1 ? 'Day Trip' : `${value} days`}`}`;
+
   const addNewTrip = (values: TripSummaryProps['initialValues']) => {
     firebase
       .firestore()
@@ -46,7 +95,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         ...values,
         startDate: startOfDay(new Date(values.startDate)),
         endDate: endOfDay(new Date(values.endDate)),
-        timezoneOffset: new Date().getTimezoneOffset(),
+        tags: [formatTripLengthAsString(values.tripLength)],
       })
       .then((docRef) => {
         docRef.update({
@@ -81,6 +130,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         startDate: startOfDay(new Date(values.startDate)),
         endDate: endOfDay(new Date(values.endDate)),
         updated: new Date(),
+        tags: [...props.initialValues.tags, formatTripLengthAsString(values.tripLength)],
       })
       .then(() => {
         navigate('/app/trips');
@@ -102,7 +152,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   };
 
   const [dateRangeStart, setDateRangeStart] = useState(new Date(props.initialValues.startDate));
-  const [dateRangeEnd, setDateRangeEnd] = useState(new Date(props.initialValues.endDate));
 
   const loadUsers = async (inputValue: string) => {
     const searchValue = inputValue.toLowerCase();
@@ -232,15 +281,27 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 />
               </Column>
               <Column sm={6}>
-                <StyledLabel required>End Date</StyledLabel>
-                <DatePicker
-                  selected={dateRangeEnd}
-                  onChange={(date: Date) => {
-                    setFieldValue('endDate', date);
-                    setDateRangeEnd(date);
-                  }}
-                  minDate={new Date(values.startDate)}
-                />
+                <StyledLabel required>Trip Length</StyledLabel>
+                <SliderWrapper>
+                  <Slider
+                    min={1}
+                    max={21}
+                    step={1}
+                    value={values.tripLength ?? 1}
+                    tooltip
+                    format={(value) => formatTripLengthAsString(value)}
+                    handleLabel={values.tripLength === 21 ? '20+' : String(values.tripLength)}
+                    labels={{
+                      1: 'Day Trip',
+                      10: '10 Days',
+                      21: '20+',
+                    }}
+                    onChange={(value) => {
+                      setFieldValue('tripLength', value);
+                      setFieldValue('endDate', addDays(new Date(values.startDate), value));
+                    }}
+                  />
+                </SliderWrapper>
               </Column>
             </Row>
             {users && isLoaded(users) && !isEmpty(users) && users.length > 0 && (

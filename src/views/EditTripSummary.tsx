@@ -3,9 +3,9 @@ import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 
-import { Heading, Box, Seo } from '@components';
+import { Heading, Seo, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
-import { dateWithTimezoneOffset, formattedDateForDateInput } from '@utils/dateUtils';
+import { formattedDateForDateInput } from '@utils/dateUtils';
 import { TripType } from '@views/Trips';
 import TripSummaryForm from '@views/TripSummaryForm';
 
@@ -23,9 +23,7 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
     ? {
         ...activeTrip,
         startDate: formattedDateForDateInput(new Date(activeTrip.startDate.seconds * 1000)),
-        endDate: formattedDateForDateInput(
-          dateWithTimezoneOffset(activeTrip.endDate.seconds * 1000, activeTrip.timezoneOffset)
-        ),
+        endDate: formattedDateForDateInput(new Date(activeTrip.endDate.seconds * 1000)),
         tripMembers: [],
       }
     : {
@@ -36,12 +34,13 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
         endDate: '',
         owner: auth.uid,
         tripMembers: [],
+        tripLength: 1,
       };
 
   return (
     <>
       <Seo title="Edit Trip" />
-      <Box>
+      <PageContainer>
         {activeTrip && (
           <>
             <Heading altStyle as="h2">
@@ -50,7 +49,7 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
             <TripSummaryForm initialValues={initialValues} type="edit" />
           </>
         )}
-      </Box>
+      </PageContainer>
     </>
   );
 };

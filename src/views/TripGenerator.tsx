@@ -16,8 +16,10 @@ import {
   gearListAccommodations,
   gearListTransportation,
   gearListKeys,
+  allGearListItems,
 } from '@utils/gearListItemEnum';
 import { FaCaretLeft, FaCaretRight, FaCheckCircle } from 'react-icons/fa';
+import { TripType } from './Trips';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -25,7 +27,17 @@ type TripGeneratorProps = {
 
 const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   const gear = useSelector((state: RootState) => state.firestore.ordered.gear);
-  useFirestoreConnect([{ collection: 'gear' }]);
+  const activeTripById: Array<TripType> = useSelector(
+    (state: RootState) => state.firestore.ordered.activeTripById
+  );
+  useFirestoreConnect([
+    { collection: 'gear' },
+    {
+      collection: 'trips',
+      doc: props.id,
+      storeAs: 'activeTripById',
+    },
+  ]);
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -36,6 +48,9 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   gearListKeys.forEach((item) => {
     initialValues[item] = false;
   });
+
+  const activeTrip: TripType | undefined =
+    activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
 
   return (
     <>
@@ -51,9 +66,15 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                 .map((key) => key[0]);
 
             const matches: Array<GearItem> = [];
+            const tagMatches: Array<string> = [];
 
             getValues(values).forEach((val) => {
               matches.push(...gear.filter((item: GearItem) => item[val] === true));
+              tagMatches.push(
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                allGearListItems.find((item: { name: string; label: string }) => item.name === val)
+                  ?.label!
+              );
             });
 
             const generatedPackingList = uniqBy(matches, 'name').map((item: GearItem) => {
@@ -61,6 +82,18 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
             });
 
             const promises: Array<Promise<any>> = [];
+
+            // TODO: use tagMatches to use human-readable label instead of camelCase
+            // add all of the selected icons from generator as strings to a tags array
+            promises.push(
+              firebase
+                .firestore()
+                .collection('trips')
+                .doc(props.id)
+                .update({
+                  tags: [...(activeTrip?.tags || []), ...tagMatches],
+                })
+            );
 
             generatedPackingList.forEach((item) => {
               promises.push(

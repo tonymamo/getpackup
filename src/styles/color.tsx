@@ -6,7 +6,8 @@
 const submarine = '#BAC3C8';
 const riverbed = '#4A555A';
 const red = '#7d2600';
-const green = '#37570e';
+// const green = '#37570e';
+const green = '#578220';
 
 // Primary
 const orange = '#C46200';

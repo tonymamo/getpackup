@@ -42,10 +42,12 @@ export const gearListTransportation = [
   { name: 'motorcycle', label: 'Motorcycle', icon: 'fa/FaMotorcycle' },
 ];
 
-export const gearListKeys = [
+export const allGearListItems = [
   ...gearListTripType,
   ...gearListActivities,
   ...gearListAccommodations,
   ...gearListCampKitchen,
   ...gearListTransportation,
-].map((item) => item.name);
+];
+
+export const gearListKeys = [...allGearListItems].map((item) => item.name);

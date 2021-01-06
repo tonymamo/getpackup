@@ -18,7 +18,7 @@ import { breakpoints, baseSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 
-const AppContainer = styled.div`
+export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
   margin-right: auto;
   margin-left: auto;
@@ -30,7 +30,15 @@ const AppContainer = styled.div`
 
 const App = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const [loggedInUser, setLoggedInUser] = useState(null);
+  // TODO: common type
+  const [loggedInUser, setLoggedInUser] = useState<{
+    displayName: string;
+    photoURL: string;
+    email: string;
+    bio: string;
+    website: string;
+    isAdmin: boolean;
+  } | null>(null);
   const firebase = useFirebase();
 
   const getLoggedInUser = async () => {

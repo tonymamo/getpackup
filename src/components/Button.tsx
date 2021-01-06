@@ -92,6 +92,7 @@ const successButtonStyles = `
   
   &:hover,
   &:focus {
+    background-color: ${brandSuccess};
     filter: brightness(115%);
   }
 `;

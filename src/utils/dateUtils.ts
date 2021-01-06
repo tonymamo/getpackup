@@ -7,29 +7,27 @@ export const formattedDateForDateInput = (date: Date) => format(date, 'yyyy-MM-d
 export const dateWithTimezoneOffset = (date: number, timezoneOffset: number) =>
   utcToZonedTime(date, String(timezoneOffset));
 
-export const isBeforeToday = (date: number, timezoneOffset: number) =>
-  isBefore(dateWithTimezoneOffset(date, timezoneOffset), new Date());
+export const isBeforeToday = (date: number) => isBefore(date, new Date());
 
-export const isAfterToday = (date: number, timezoneOffset: number) =>
-  isAfter(dateWithTimezoneOffset(date, timezoneOffset), new Date());
+export const isAfterToday = (date: number) => isAfter(date, new Date());
 
-export const formattedDateRange = (start: number, end: number, timezoneOffset: number) => {
-  const localizedStart = dateWithTimezoneOffset(start, timezoneOffset);
-  const localizedEnd = dateWithTimezoneOffset(end, timezoneOffset);
-  const sameMonth = isSameMonth(localizedStart, localizedEnd);
-  const sameYear = isSameYear(localizedStart, localizedEnd);
+export const formattedDateRange = (start: number, end: number) => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const sameMonth = isSameMonth(startDate, endDate);
+  const sameYear = isSameYear(startDate, endDate);
   if (sameYear) {
     if (sameMonth) {
-      return `${format(localizedStart, 'MMM')} ${format(localizedStart, 'd')}–${format(
-        localizedEnd,
+      return `${format(startDate, 'MMM')} ${format(startDate, 'd')}–${format(
+        endDate,
         'd'
-      )}, ${format(localizedStart, 'y')}`;
+      )}, ${format(startDate, 'y')}`;
     }
 
-    return `${format(localizedStart, 'MMM')} ${format(localizedStart, 'd')}–${format(
-      localizedEnd,
+    return `${format(startDate, 'MMM')} ${format(startDate, 'd')}–${format(
+      endDate,
       'MMM'
-    )} ${format(localizedEnd, 'd')}, ${format(localizedStart, 'y')}`;
+    )} ${format(endDate, 'd')}, ${format(startDate, 'y')}`;
   }
-  return `${formattedDate(localizedStart)}–${formattedDate(localizedEnd)}`;
+  return `${formattedDate(startDate)}–${formattedDate(endDate)}`;
 };

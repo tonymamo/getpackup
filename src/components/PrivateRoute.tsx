@@ -12,11 +12,13 @@ type PrivateRouteProps = {
   component: ComponentType & RouteComponentProps;
   path: string;
   loggedInUser: {
+    // TODO: common type
     displayName: string;
     photoURL: string;
     email: string;
     bio: string;
     website: string;
+    isAdmin: boolean;
   };
 };
 

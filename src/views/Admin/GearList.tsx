@@ -14,7 +14,7 @@ import {
   Modal,
   Row,
   Column,
-  Box,
+  PageContainer,
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 
@@ -80,36 +80,41 @@ const GearList: FunctionComponent<GearListProps> = () => {
     setModalIsOpen(false);
   };
 
+  const sortedGearList =
+    isLoaded(gear) &&
+    !isEmpty(gear) &&
+    gear &&
+    gear.length > 0 &&
+    [...gear].sort((a: GearItem, b: GearItem) => a.name.localeCompare(b.name));
+
   const data =
     isLoaded(gear) &&
     !isEmpty(gear) &&
     gear &&
     gear.length > 0 &&
-    gear
-      .sort((a: GearItem, b: GearItem) => a.name.localeCompare(b.name))
-      .map((item: GearItem) => {
-        return {
-          ...item,
-          actions: [
-            {
-              label: <FaPencilAlt />,
-              to: `/admin/gear-list/${item.id}`,
-              color: 'primaryOutline',
+    sortedGearList.map((item: GearItem) => {
+      return {
+        ...item,
+        actions: [
+          {
+            label: <FaPencilAlt />,
+            to: `/admin/gear-list/${item.id}`,
+            color: 'primaryOutline',
+          },
+          {
+            label: <FaTrash />,
+            color: 'danger',
+            onClick: () => {
+              setModalIsOpen(true);
+              setItemToBeDeleted(item);
             },
-            {
-              label: <FaTrash />,
-              color: 'danger',
-              onClick: () => {
-                setModalIsOpen(true);
-                setItemToBeDeleted(item);
-              },
-            },
-          ],
-        };
-      });
+          },
+        ],
+      };
+    });
 
   return (
-    <Box>
+    <PageContainer>
       <Seo title="Master Gear List" />
       <FlexContainer justifyContent="space-between">
         <Heading>Master Gear List</Heading>
@@ -169,7 +174,7 @@ const GearList: FunctionComponent<GearListProps> = () => {
           </Row>
         </Modal>
       )}
-    </Box>
+    </PageContainer>
   );
 };
 

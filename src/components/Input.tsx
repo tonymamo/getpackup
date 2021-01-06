@@ -31,6 +31,7 @@ import {
   lightGray,
   offWhite,
   brandSuccess,
+  textColorLight,
 } from '@styles/color';
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
 import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
@@ -268,7 +269,7 @@ const multiSelectStyles = {
   }),
   placeholder: (provided: any) => ({
     ...provided,
-    color: textColor,
+    color: textColorLight,
   }),
 };
 
@@ -345,6 +346,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
             styles={multiSelectStyles}
             isMulti={props.isMulti}
             menuPlacement="auto"
+            placeholder="Start Typing..."
             onChange={(option: OptionType) => onChange(option)}
             name={props.name}
             onBlur={() => props.setFieldTouched(props.name)}
@@ -366,8 +368,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
               checked={props.checked}
               type="checkbox"
             />
-            {props.checked ? <FaCheckCircle color={brandSuccess} /> : <FaRegCircle />}
-            {props.label}
+            {props.checked ? <FaCheckCircle color={brandSuccess} /> : <FaRegCircle />} {props.label}
           </StyledLabel>
         </>
       );

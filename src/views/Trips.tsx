@@ -36,6 +36,8 @@ export type TripType = {
   timezoneOffset: number;
   created: firebase.firestore.Timestamp;
   tripMembers: Array<TripMember>;
+  tags: Array<string>;
+  tripLength: number;
 };
 
 const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
@@ -50,8 +52,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     trips
       .filter(
         (trip) =>
-          isBeforeToday(trip.startDate.seconds * 1000, trip.timezoneOffset) &&
-          isAfterToday(trip.endDate.seconds * 1000, trip.timezoneOffset)
+          isBeforeToday(trip.startDate.seconds * 1000) && isAfterToday(trip.endDate.seconds * 1000)
       )
       .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
@@ -59,14 +60,14 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     trips &&
     trips.length &&
     trips
-      .filter((trip) => isAfterToday(trip.startDate.seconds * 1000, trip.timezoneOffset))
+      .filter((trip) => isAfterToday(trip.startDate.seconds * 1000))
       .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
 
   const pastTrips =
     trips &&
     trips.length &&
     trips
-      .filter((trip) => isBeforeToday(trip.endDate.seconds * 1000, trip.timezoneOffset))
+      .filter((trip) => isBeforeToday(trip.endDate.seconds * 1000))
       .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
   const renderTrip = (trip: TripType) => (
@@ -84,11 +85,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       </FlexContainer>
       <p style={{ marginBottom: 0 }}>
         <FaRegCalendar />{' '}
-        {formattedDateRange(
-          trip.startDate.seconds * 1000,
-          trip.endDate.seconds * 1000,
-          trip.timezoneOffset
-        )}
+        {formattedDateRange(trip.startDate.seconds * 1000, trip.endDate.seconds * 1000)}
       </p>
       <p>
         <FaMapMarkerAlt /> {trip.startingPoint}
