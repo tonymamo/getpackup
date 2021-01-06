@@ -81,6 +81,8 @@ const GearList: FunctionComponent<GearListProps> = () => {
   };
 
   const data =
+    isLoaded(gear) &&
+    !isEmpty(gear) &&
     gear &&
     gear.length > 0 &&
     gear
