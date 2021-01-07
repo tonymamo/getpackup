@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
 import styled from 'styled-components';
 
 import Profile from '@views/Profile';
@@ -30,34 +29,8 @@ export const AppContainer = styled.div`
 
 const App = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  // TODO: common type
-  const [loggedInUser, setLoggedInUser] = useState<{
-    displayName: string;
-    photoURL: string;
-    email: string;
-    bio: string;
-    website: string;
-    isAdmin: boolean;
-  } | null>(null);
-  const firebase = useFirebase();
-
-  const getLoggedInUser = async () => {
-    const response = await firebase
-      .firestore()
-      .collection('users')
-      .where('uid', '==', auth.uid)
-      .limit(1)
-      .get();
-    if (!response.empty) {
-      setLoggedInUser(response.docs[0].data());
-    }
-  };
-
-  useEffect(() => {
-    if (auth.uid) {
-      getLoggedInUser();
-    }
-  }, [auth]);
+  let loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  loggedInUser = loggedInUser ? loggedInUser[0] : undefined;
 
   if (!auth.isLoaded || !loggedInUser) {
     return <LoadingPage />;

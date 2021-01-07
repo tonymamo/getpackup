@@ -86,13 +86,16 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                 ...loggedInUser,
               }}
               onSubmit={(values, { setSubmitting, resetForm }) => {
+                // Note: This prevents photo url from overwriting any change as the avatar
+                // file uploader handles saving itself.
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { photoURL, ...updateValues } = values;
+
                 firebase
                   .firestore()
                   .collection('users')
                   .doc(auth.uid)
-                  .update({
-                    ...values,
-                  })
+                  .update(updateValues)
                   .then(() => {
                     setSubmitting(false);
                     resetForm({ values });
