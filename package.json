@@ -58,6 +58,7 @@
     "gatsby-remark-relative-images": "^0.3.0",
     "gatsby-remark-responsive-iframe": "^2.4.13",
     "gatsby-source-filesystem": "^2.1.55",
+    "gatsby-source-firestore-easy": "^1.0.0",
     "gatsby-transformer-remark": "^2.6.58",
     "gatsby-transformer-sharp": "^2.3.18",
     "hamburger-react": "^1.2.0",

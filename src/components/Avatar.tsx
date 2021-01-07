@@ -10,6 +10,8 @@ import {
   halfSpacer,
   quadrupleSpacer,
   sextupleSpacer,
+  borderRadiusCircle,
+  octupleSpacer,
 } from '@styles/size';
 import { lightestGray } from '@styles/color';
 import { PreviewCompatibleImage } from '@components';
@@ -21,7 +23,7 @@ type AvatarProps = {
         childImageSharp: { fluid: FluidObject };
       }
     | string;
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   gravatarEmail: string;
   bottomMargin?: boolean;
   rightMargin?: boolean;
@@ -29,23 +31,24 @@ type AvatarProps = {
 };
 
 const renderSize = (size: AvatarProps['size']) => {
-  if (size === 'xs') {
-    return baseAndAHalfSpacer;
+  switch (size) {
+    case 'xs':
+      return baseAndAHalfSpacer;
+    case 'sm':
+      return doubleSpacer;
+    case 'md':
+      return quadrupleSpacer;
+    case 'lg':
+      return sextupleSpacer;
+    case 'xl':
+      return octupleSpacer;
+    default:
+      return doubleSpacer;
   }
-  if (size === 'sm') {
-    return doubleSpacer;
-  }
-  if (size === 'md') {
-    return quadrupleSpacer;
-  }
-  if (size === 'lg') {
-    return sextupleSpacer;
-  }
-  return doubleSpacer;
 };
 
 const AvatarImageWrapper = styled.div`
-  border-radius: 50%;
+  border-radius: ${borderRadiusCircle};
   overflow: hidden;
   object-fit: cover;
   display: flex;

@@ -54,6 +54,13 @@ exports.createPages = ({ actions, graphql }) => {
           }
         }
       }
+      allUsers {
+        edges {
+          node {
+            username
+          }
+        }
+      }
     }
   `).then(
     // eslint-disable-next-line consistent-return
@@ -95,6 +102,19 @@ exports.createPages = ({ actions, graphql }) => {
             slug: edge.node.fields.slug,
             prev: index === 0 ? blogPosts[blogPosts.length - 1].node : blogPosts[index - 1].node,
             next: index === blogPosts.length - 1 ? blogPosts[0].node : blogPosts[index + 1].node,
+          },
+        });
+      });
+
+      result.data.allUsers.edges.forEach((edge) => {
+        const { username } = edge.node;
+
+        createPage({
+          path: `/profile/${username}`,
+          component: path.resolve(`src/templates/public-profile.tsx`),
+          // additional data can be passed via context
+          context: {
+            username,
           },
         });
       });

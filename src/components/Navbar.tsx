@@ -25,7 +25,7 @@ import {
   HorizontalRule,
 } from '@components';
 import { brandSecondary, brandTertiary, white, brandPrimary } from '@styles/color';
-import { halfSpacer, quadrupleSpacer, screenSizes, tripleSpacer } from '@styles/size';
+import { halfSpacer, quadrupleSpacer, tripleSpacer } from '@styles/size';
 import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typography';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
@@ -172,7 +172,6 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const menuDropdown = useRef<HTMLDivElement>(null);
   const hamburgerButton = useRef<HTMLDivElement>(null);
   const size = useWindowSize();
-  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.medium);
 
   const handleProfileDropownClick = (e: MouseEvent) => {
     if (menuDropdown && menuDropdown.current && menuDropdown.current.contains(e.target as Node)) {
@@ -214,15 +213,15 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
       <Helmet onChangeClientState={onHelmetChange} />
       <PageContainer>
         <FlexContainer justifyContent="space-between" alignItems="center" height="100%">
-          {!isSmallScreen && auth.isLoaded && (
+          {!size.isSmallScreen && auth.isLoaded && (
             <Heading noMargin>
               <Link to={isAuthenticated ? '/app/trips' : '/'}>
                 <img src={yak} alt="" width={tripleSpacer} />{' '}
-                {isSmallScreen && !isAuthenticated ? '' : 'packup'}
+                {size.isSmallScreen && !isAuthenticated ? '' : 'packup'}
               </Link>
             </Heading>
           )}
-          {isSmallScreen && auth.isLoaded && !isAuthenticated && (
+          {size.isSmallScreen && auth.isLoaded && !isAuthenticated && (
             <Heading noMargin>
               <Link to="/">
                 <img src={yak} alt="" width={tripleSpacer} />
@@ -230,7 +229,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Link>
             </Heading>
           )}
-          {isAuthenticated && isSmallScreen && auth.isLoaded && (
+          {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {routeHasParent && (
                 <Link to="../">
@@ -239,19 +238,19 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               )}
             </IconLinkWrapper>
           )}
-          {isAuthenticated && isSmallScreen && auth.isLoaded && (
+          {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
             <Heading noMargin altStyle as="h2">
               {truncatedPageTitle}
             </Heading>
           )}
-          {isAuthenticated && isSmallScreen && auth.isLoaded && (
+          {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {/* <Link to="/feedback">
                 <FaBullhorn />
               </Link> */}
             </IconLinkWrapper>
           )}
-          {isSmallScreen && !isAuthenticated && auth.isLoaded && (
+          {size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <StyledMenuToggle ref={hamburgerButton}>
               <Hamburger
                 color={white}
@@ -261,7 +260,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             </StyledMenuToggle>
           )}
 
-          {isSmallScreen && !isAuthenticated && auth.isLoaded && (
+          {size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
                 <NavLink to="/blog" onClick={() => toggleMenu()}>
@@ -286,7 +285,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Box>
             </StyledMenu>
           )}
-          {!isSmallScreen && !isAuthenticated && auth.isLoaded && (
+          {!size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <FlexContainer as="nav">
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
@@ -297,7 +296,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Button>
             </FlexContainer>
           )}
-          {!isSmallScreen && isAuthenticated && auth.isLoaded && (
+          {!size.isSmallScreen && isAuthenticated && auth.isLoaded && (
             <TopNavIconWrapper>
               <Link to="/app/trips" getProps={isPartiallyActive}>
                 <FaCalendar />

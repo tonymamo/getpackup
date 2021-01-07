@@ -3,7 +3,6 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import { white } from '@styles/color';
-import { screenSizes } from '@styles/size';
 import useWindowSize from '@utils/useWindowSize';
 import { ClientOnly, PreviewCompatibleImage } from '@components';
 
@@ -45,20 +44,15 @@ const ChildrenWrapper = styled.div`
   }
 `;
 
-const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
-  imgSrc,
-  children,
-  mobileImgSrc,
-}) => {
+const HeroImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, mobileImgSrc }) => {
   const size = useWindowSize();
-  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
 
   return (
     <HeroImageWrapper>
       <ClientOnly>
         <PreviewCompatibleImage
           imageInfo={{
-            image: isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc,
+            image: size.isExtraSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc,
             alt: '',
           }}
         />
@@ -68,4 +62,4 @@ const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
   );
 };
 
-export default FullBleedImage;
+export default HeroImage;

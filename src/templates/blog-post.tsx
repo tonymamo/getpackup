@@ -22,7 +22,6 @@ import {
   HTMLContent,
 } from '@components';
 import useWindowSize from '@utils/useWindowSize';
-import { screenSizes } from '@styles/size';
 
 type RelatedPostType = {
   fields: {
@@ -69,9 +68,7 @@ type BlogPostProps = {
 
 export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   const PostContent = props.contentComponent || Content;
-
   const size = useWindowSize();
-  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
 
   const disqusConfig = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -96,18 +93,21 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
           imageHeight={props.featuredimage.childImageSharp.fixed.height}
         />
       )}
-      {typeof window !== 'undefined' && !isSmallScreen && !props.hideFromCms && props.pageContext && (
-        <ClientOnly>
-          <Share
-            url={props.pageContext.slug}
-            title={props.title}
-            tags={props.tags}
-            vertical
-            media={props.featuredimage.childImageSharp.fixed.src}
-            description={props.description}
-          />
-        </ClientOnly>
-      )}
+      {typeof window !== 'undefined' &&
+        !size.isExtraSmallScreen &&
+        !props.hideFromCms &&
+        props.pageContext && (
+          <ClientOnly>
+            <Share
+              url={props.pageContext.slug}
+              title={props.title}
+              tags={props.tags}
+              vertical
+              media={props.featuredimage.childImageSharp.fixed.src}
+              description={props.description}
+            />
+          </ClientOnly>
+        )}
       <HeroImage imgSrc={props.featuredimage}>
         <Heading inverse>{props.title}</Heading>
       </HeroImage>

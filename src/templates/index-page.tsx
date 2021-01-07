@@ -29,7 +29,7 @@ import {
   brandTertiary,
   lightestGray,
 } from '@styles/color';
-import { screenSizes, quadrupleSpacer, breakpoints, doubleSpacer, baseSpacer } from '@styles/size';
+import { quadrupleSpacer, breakpoints, doubleSpacer, baseSpacer } from '@styles/size';
 import collage from '@images/Outdoorsman_Collage copy.jpg';
 import waveBismark from '@images/wave-bismark.svg';
 import waveDownriver from '@images/wave-downriver.svg';
@@ -204,7 +204,6 @@ const CarouselWrapper = styled.div`
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const size = useWindowSize();
-  const isLargeScreen = Boolean(size && size.width && size.width > screenSizes.large);
 
   if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
@@ -318,7 +317,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Row>
         </PageContainer>
       </Section>
-      {isLargeScreen && (
+      {size.isLargeScreen && (
         <ClientOnly>
           <ParallaxBackground bgImage={collage} />
         </ClientOnly>

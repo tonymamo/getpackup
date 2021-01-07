@@ -12,12 +12,15 @@ export const tripleSpacer = `${baseSpacerUnit * 3}px`;
 export const quadrupleSpacer = `${baseSpacerUnit * 4}px`;
 export const sextupleSpacer = `${baseSpacerUnit * 6}px`;
 export const octupleSpacer = `${baseSpacerUnit * 8}px`;
+export const decupleSpacer = `${baseSpacerUnit * 10}px`;
 
 // Borders
 export const borderWidth = '1px';
 
 // Radius
 export const borderRadius = '3px';
+export const borderRadiusRound = '15px';
+export const borderRadiusCircle = '50%';
 
 // Input Heights
 export const inputHeight = `${baseSpacerUnit + baseSpacerUnit + baseSpacerUnit + 2}px`;
