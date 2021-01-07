@@ -2,11 +2,22 @@
 import React, { FunctionComponent, useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { Uppload, en, Local, Crop } from 'uppload';
-import 'uppload/dist/uppload.css';
-import 'uppload/dist/themes/light.css';
+import {
+  Uppload,
+  en,
+  Local,
+  Camera,
+  Crop,
+  Instagram,
+  Facebook,
+  Twitter,
+  URL,
+  Reddit,
+  Flip,
+} from 'uppload';
 
 import { RootState } from '@redux/ducks';
+import UpploadTheme from '@styles/upploadTheme';
 import Button from './Button';
 import Avatar from './Avatar';
 import FlexContainer from './FlexContainer';
@@ -55,11 +66,15 @@ const FileUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }) 
 
   useEffect(() => {
     uploader.use([
-      new Local({
-        mimeTypes: ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'],
-      }),
+      new Local(),
+      new Camera(),
+      new Instagram(),
+      new Facebook(),
+      new Reddit(),
+      new Twitter(),
+      new URL(),
     ]);
-    uploader.use([new Crop({ aspectRatio: 1 })]);
+    uploader.use([new Crop({ aspectRatio: 1 }), new Flip()]);
   }, [uploader]);
 
   uploader.on('before-upload', () => {
@@ -80,6 +95,7 @@ const FileUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }) 
 
   return (
     <FlexContainer flexDirection="column">
+      <UpploadTheme />
       <Avatar src={loggedInUser.photoURL} size="lg" gravatarEmail={loggedInUser.email} />
       <Button
         type="button"
