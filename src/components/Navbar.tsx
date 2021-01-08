@@ -30,6 +30,7 @@ import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typogra
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import yak from '@images/yak.png';
+import { zIndexNavbar } from '@styles/layers';
 
 type NavbarProps = {};
 
@@ -41,7 +42,7 @@ const StyledNavbar = styled.header`
   min-height: ${quadrupleSpacer};
   line-height: 64px;
   padding-top: env(safe-area-inset-top);
-  z-index: 1;
+  z-index: ${zIndexNavbar};
 
   & a,
   & a:hover,

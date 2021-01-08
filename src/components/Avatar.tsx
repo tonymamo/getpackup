@@ -13,6 +13,7 @@ import {
 } from '@styles/size';
 import { lightestGray } from '@styles/color';
 import { PreviewCompatibleImage } from '@components';
+import { zIndexAvatarImageAfter } from '@styles/layers';
 
 type AvatarProps = {
   src?:
@@ -71,7 +72,7 @@ const AvatarImageWrapper = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    z-index: 2;
+    z-index: ${zIndexAvatarImageAfter};
     top: 0;
     left: 0;
     width: 100%;
