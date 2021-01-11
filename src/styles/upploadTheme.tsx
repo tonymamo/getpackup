@@ -1206,6 +1206,8 @@ const UpploadTheme = createGlobalStyle`
  */
 .uppload-modal-bg {
   background-color: rgba(0, 0, 0, 0.85);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .uppload-modal {
