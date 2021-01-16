@@ -55,6 +55,9 @@ const SliderWrapper = styled.div`
     border-color: ${textColor};
     box-shadow: none;
     outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   & .rangeslider-horizontal .rangeslider__handle:after {
@@ -82,12 +85,16 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const users: Array<any> = useSelector((state: RootState) => state.firestore.ordered.users);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [dateRangeStart, setDateRangeStart] = useState(new Date(props.initialValues.startDate));
+
   useFirestoreConnect([{ collection: 'users' }]);
 
   const formatTripLengthAsString = (value: number) =>
     `${value === 21 ? '20+ Days' : `${value === 1 ? 'Day Trip' : `${value} days`}`}`;
 
   const addNewTrip = (values: TripSummaryProps['initialValues']) => {
+    setIsLoading(true);
     firebase
       .firestore()
       .collection('trips')
@@ -121,6 +128,10 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   };
 
   const updateTrip = (values: TripSummaryProps['initialValues']) => {
+    setIsLoading(true);
+    const existingTagsWithoutTripLengthTag = props.initialValues.tags.filter(
+      (tag) => !tag.includes('day')
+    );
     firebase
       .firestore()
       .collection('trips')
@@ -130,7 +141,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         startDate: startOfDay(new Date(values.startDate)),
         endDate: endOfDay(new Date(values.endDate)),
         updated: new Date(),
-        tags: [...props.initialValues.tags, formatTripLengthAsString(values.tripLength)],
+        tags: [...existingTagsWithoutTripLengthTag, formatTripLengthAsString(values.tripLength)],
       })
       .then(() => {
         navigate('/app/trips');
@@ -150,8 +161,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         );
       });
   };
-
-  const [dateRangeStart, setDateRangeStart] = useState(new Date(props.initialValues.startDate));
 
   const loadUsers = async (inputValue: string) => {
     const searchValue = inputValue.toLowerCase();
@@ -323,7 +332,8 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               <Button
                 type="submit"
                 rightSpacer
-                disabled={isSubmitting || !isValid}
+                disabled={isSubmitting || !isValid || isLoading}
+                isLoading={isLoading}
                 iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
               >
                 {props.type === 'new' ? 'Select Activites' : 'Update Trip'}

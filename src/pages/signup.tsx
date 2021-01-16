@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { navigate, Link } from 'gatsby';
 import { FaArrowRight } from 'react-icons/fa';
@@ -28,6 +28,8 @@ const Signup: FunctionComponent<SignupProps> = () => {
   const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
@@ -90,6 +92,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                 validateOnMount
                 initialValues={initialValues}
                 onSubmit={(values, { setSubmitting }) => {
+                  setIsLoading(true);
                   firebase
                     .auth()
                     .createUserWithEmailAndPassword(values.email, values.password)
@@ -111,7 +114,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             location: '',
                           })
                           .then(() => {
-                            navigate('/app/trips');
+                            setIsLoading(false);
                             dispatch(
                               addAlert({
                                 type: 'success',
@@ -158,7 +161,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       name="username"
                       label="Username"
                       validate={validateUsername}
-                      required
+                      // required
                       hiddenLabel
                     />
 
@@ -181,8 +184,13 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       hiddenLabel
                     />
                     <p>
-                      <Button type="submit" disabled={isSubmitting || !isValid} block>
-                        Sign Up
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting || !isValid || isLoading}
+                        isLoading={isLoading}
+                        block
+                      >
+                        {isLoading ? 'Loading' : 'Sign Up'}
                       </Button>
                     </p>
                   </Form>

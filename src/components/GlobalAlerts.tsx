@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { halfSpacer } from '@styles/size';
+import { zIndexGlobalAlert } from '@styles/layers';
 import Alert, { AlertProps } from './Alert';
 
 const GlobalAlertWrapper = styled.div`
@@ -15,7 +16,7 @@ const GlobalAlertWrapper = styled.div`
   padding-right: ${halfSpacer};
   padding-left: ${halfSpacer};
   right: 0;
-  z-index: 2222;
+  z-index: ${zIndexGlobalAlert};
   width: auto;
   & > div {
     margin-bottom: ${halfSpacer};

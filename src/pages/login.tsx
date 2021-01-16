@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { navigate, Link } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
@@ -31,6 +31,8 @@ const Login: FunctionComponent<LoginProps> = () => {
   const client = useSelector((state: RootState) => state.client);
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
   }
@@ -56,10 +58,12 @@ const Login: FunctionComponent<LoginProps> = () => {
                 validateOnMount
                 initialValues={initialValues}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
+                  setIsLoading(true);
                   firebase
                     .auth()
                     .signInWithEmailAndPassword(values.email, values.password)
                     .then(() => {
+                      setIsLoading(false);
                       if (client.location) {
                         dispatch(removeAttemptedPrivatePage());
                         navigate(client.location);
@@ -100,8 +104,13 @@ const Login: FunctionComponent<LoginProps> = () => {
                       hiddenLabel
                     />
 
-                    <Button type="submit" disabled={isSubmitting || !isValid} block>
-                      Log In
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || !isValid || isLoading}
+                      isLoading={isLoading}
+                      block
+                    >
+                      {isLoading ? 'Logging In' : 'Log In'}
                     </Button>
 
                     <Button type="link" to="/forgot-password" color="text" block>

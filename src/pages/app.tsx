@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { useFirebase, isLoaded } from 'react-redux-firebase';
 
 import Profile from '@views/Profile';
 import Trips from '@views/Trips';
@@ -28,9 +29,35 @@ export const AppContainer = styled.div`
 `;
 
 const App = () => {
+  const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   let loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
-  loggedInUser = loggedInUser ? loggedInUser[0] : undefined;
+  loggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
+
+  useEffect(() => {
+    // if (isLoaded(auth) && auth.uid && (!loggedInUser || !loggedInUser.username)) {
+    if (isLoaded(auth) && auth.uid && isLoaded(loggedInUser) && !loggedInUser.username) {
+      console.log('here');
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(auth.uid)
+        .set({
+          uid: loggedInUser ? loggedInUser.uid : auth.uid,
+          email: loggedInUser ? loggedInUser.email : auth.email,
+          displayName: loggedInUser ? loggedInUser.displayName : auth.displayName,
+          photoURL: loggedInUser ? loggedInUser.photoURL : auth.photoURL,
+          username: loggedInUser.displayName
+            ? `${loggedInUser.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(
+                100000 + Math.random() * 900000
+              )}`
+            : auth.uid,
+          bio: loggedInUser ? loggedInUser.bio : '',
+          website: loggedInUser ? loggedInUser.website : '',
+          location: loggedInUser ? loggedInUser.location : '',
+        });
+    }
+  }, [auth, loggedInUser]);
 
   if (!auth.isLoaded || !loggedInUser) {
     return <LoadingPage />;

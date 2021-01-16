@@ -17,7 +17,6 @@ import {
 } from 'uppload';
 
 import { RootState } from '@redux/ducks';
-import UpploadTheme from '@styles/upploadTheme';
 import Button from './Button';
 import Avatar from './Avatar';
 import FlexContainer from './FlexContainer';
@@ -95,7 +94,6 @@ const FileUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }) 
 
   return (
     <FlexContainer flexDirection="column">
-      <UpploadTheme />
       <Avatar src={loggedInUser.photoURL} size="lg" gravatarEmail={loggedInUser.email} />
       <Button
         type="button"

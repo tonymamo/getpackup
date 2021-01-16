@@ -6,6 +6,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
+import { brandPrimary } from '@styles/color';
 import { halfSpacer, baseAndAHalfSpacer, borderRadius } from '@styles/size';
 import { RootState } from '@redux/ducks';
 import { removeAttemptedPrivatePage } from '@redux/ducks/client';
@@ -45,6 +46,10 @@ const StyledFirebaseAuthWrapper = styled.div`
   & .firebaseui-idp-text {
     font-size: ${fontSizeBase};
   }
+
+  & .firebaseui-link {
+    color: ${brandPrimary};
+  }
 `;
 
 type FirebaseAuthWrapperProps = {};
@@ -77,6 +82,8 @@ const FirebaseAuthWrapper: FunctionComponent<FirebaseAuthWrapperProps> = () => {
         }
       },
     },
+    tosUrl: 'https://getpackup.com/terms',
+    privacyPolicyUrl: 'https://getpackup.com/privacy',
   };
 
   return (

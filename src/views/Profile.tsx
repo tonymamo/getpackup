@@ -144,8 +144,6 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         geosuggestTypes={['(cities)']}
                         name="location"
                         label="Location"
-                        validate={requiredField}
-                        required
                         setFieldValue={setFieldValue}
                         {...rest}
                       />

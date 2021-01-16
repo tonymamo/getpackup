@@ -22,11 +22,6 @@ const { store, persistor } = configureStore(initialState);
 const rrfConfig = {
   userProfile: 'users',
   useFirestoreForProfile: true,
-  profileFactory: (userData: firebase.User) => {
-    return {
-      ...userData,
-    };
-  },
 };
 
 const rrfProps = {

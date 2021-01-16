@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'gatsby';
 import SwipeableViews from 'react-swipeable-views';
 import styled from 'styled-components';
-import uniqBy from 'lodash/uniqBy';
+import lodash from 'lodash';
 import Skeleton from 'react-loading-skeleton';
 
 import {
@@ -71,6 +71,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       doc: props.id,
       subcollections: [{ collection: 'packing-list' }],
       storeAs: 'packingList',
+      orderBy: ['category', 'asc'],
     },
   ]);
 
@@ -90,7 +91,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         .get();
       if (!matchingUsers.empty) {
         matchingUsers.forEach((doc) => {
-          setTripMembers((arr) => uniqBy([...arr, doc.data() as TripMember], 'uid'));
+          setTripMembers((arr) => lodash.uniqBy([...arr, doc.data() as TripMember], 'uid'));
           setTripMembersLoading(false);
         });
       }
@@ -179,7 +180,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
               </Heading>
               {(!isLoaded(activeTrip) || tripMembersLoading) &&
                 activeTrip.tripMembers.map((member) => (
-                  <FlexContainer justifyContent="flex-start" key={member.uid}>
+                  <FlexContainer justifyContent="flex-start" key={member.toString()}>
                     <Skeleton circle height={32} width={32} />
                     <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
                   </FlexContainer>
@@ -205,15 +206,29 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             <strong>To-do</strong>
           </PageContainer>
           <PageContainer>
-            <ul>
-              {packingList &&
-                packingList.length > 0 &&
-                packingList.map(
-                  (item: { id: string; name: string; isPacked: boolean; category: string }) => (
-                    <PackingListItem key={item.name} {...item} />
-                  )
-                )}
-            </ul>
+            {packingList &&
+              packingList.length > 0 &&
+              Object.entries(lodash.groupBy(packingList, 'category')).map((category) => (
+                <Box key={category[0]}>
+                  <Heading as="h3" altStyle>
+                    {category[0]}
+                  </Heading>
+                  <ul>
+                    {category[1]
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map(
+                        (item: {
+                          id: string;
+                          name: string;
+                          isPacked: boolean;
+                          category: string;
+                        }) => (
+                          <PackingListItem key={item.name} tripId={props.id as string} {...item} />
+                        )
+                      )}
+                  </ul>
+                </Box>
+              ))}
           </PageContainer>
         </SwipeableViews>
       ) : (

@@ -18,13 +18,13 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
   const activeTrip = trips && trips.find((trip) => trip.id === props.id);
   useFirestoreConnect([{ collection: 'trips', where: ['owner', '==', auth.uid] }]);
+  useFirestoreConnect([{ collection: 'users', where: ['owner', '==', auth.uid] }]);
 
   const initialValues = activeTrip
     ? {
         ...activeTrip,
         startDate: formattedDateForDateInput(new Date(activeTrip.startDate.seconds * 1000)),
         endDate: formattedDateForDateInput(new Date(activeTrip.endDate.seconds * 1000)),
-        tripMembers: [],
       }
     : {
         name: '',
@@ -36,6 +36,8 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
         tripMembers: [],
         tripLength: 1,
       };
+
+  // TODO: initialize trip members
 
   return (
     <>

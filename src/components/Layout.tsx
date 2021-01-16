@@ -9,6 +9,7 @@ import { ErrorBoundary, Footer, Navbar, GlobalAlerts } from '@components';
 import '@styles/webfonts.css';
 import { quadrupleSpacer } from '@styles/size';
 import CssReset from '@styles/cssReset';
+import UpploadTheme from '@styles/upploadTheme';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -34,6 +35,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
   return (
     <>
       <CssReset />
+      <UpploadTheme />
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
         <LayoutWrapper>
           {!props.hideFromCms && <Navbar />}

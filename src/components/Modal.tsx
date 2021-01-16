@@ -3,8 +3,9 @@ import ReactModal from 'react-modal';
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 
-import { baseBorderStyle, z1Shadow } from '../styles/mixins';
-import { borderRadius, halfSpacer, screenSizes, doubleSpacer } from '../styles/size';
+import { baseBorderStyle, z1Shadow } from '@styles/mixins';
+import { borderRadius, halfSpacer, screenSizes, doubleSpacer } from '@styles/size';
+import { zIndexModal } from '@styles/layers';
 
 type ModalProps = {
   isOpen: boolean;
@@ -43,7 +44,7 @@ const Modal: FunctionComponent<ModalProps> = (props) => (
         position: 'fixed',
         height: '100%',
         overflow: 'auto',
-        zIndex: 1,
+        zIndex: zIndexModal,
       },
     }}
   >

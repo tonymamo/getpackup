@@ -16,6 +16,7 @@ import {
   gearListActivities,
   gearListCampKitchen,
   gearListTransportation,
+  gearListCategories,
 } from '@utils/gearListItemEnum';
 
 type GearListItemFormProps = {
@@ -126,16 +127,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
                   type="select"
                   name="category"
                   label="Category"
-                  options={[
-                    { value: 'Activity Gear', label: 'Activity Gear' },
-                    { value: 'Safety & Tools', label: 'Safety & Tools' },
-                    { value: 'Clothing & Footwear', label: 'Clothing & Footwear' },
-                    { value: 'Food & Water', label: 'Food & Water' },
-                    { value: 'Personal', label: 'Personal' },
-                    { value: 'Accomodation', label: 'Accomodation' },
-                    { value: 'Camp Kitchen', label: 'Camp Kitchen' },
-                    { value: 'Transportation', label: 'Transportation' },
-                  ]}
+                  options={gearListCategories}
                   validate={requiredSelect}
                   setFieldValue={setFieldValue}
                   {...rest}
