@@ -1,7 +1,7 @@
 export const gearListCategories = [
   { value: 'Activity Gear', label: 'Activity Gear' },
   { value: 'Safety & Tools', label: 'Safety & Tools' },
-  { value: 'Clothing & Footwear', label: 'Clothing & Footwear' },
+  { value: 'Outerwear', label: 'Outerwear' },
   { value: 'Food & Water', label: 'Food & Water' },
   { value: 'Personal', label: 'Personal' },
   { value: 'Accomodation', label: 'Accomodation' },

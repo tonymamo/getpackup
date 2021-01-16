@@ -161,7 +161,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       name="username"
                       label="Username"
                       validate={validateUsername}
-                      // required
+                      required
                       hiddenLabel
                     />
 
