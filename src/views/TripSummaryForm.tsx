@@ -4,37 +4,32 @@ import { useFirebase, useFirestoreConnect, isLoaded, isEmpty } from 'react-redux
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { navigate } from 'gatsby';
-import DatePicker from 'react-datepicker';
-import { startOfDay, endOfDay, addDays } from 'date-fns';
+import {
+  startOfDay,
+  endOfDay,
+  addDays,
+  format as dateFnsFormat,
+  parse as dateFnsParse,
+} from 'date-fns';
 import { components } from 'react-select';
 import styled from 'styled-components';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { DateUtils } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 import { Avatar, Input, Button, HorizontalRule, Column, Row, FlexContainer } from '@components';
 import { StyledLabel } from '@components/Input';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
 import { RootState } from '@redux/ducks';
-import ReactDatepickerTheme from '@styles/react-datepicker';
 import { textColor, textColorLight, white } from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
-import { TripMember } from './Trips';
+import { TripType } from '@common/trip';
 
 type TripSummaryProps = {
-  initialValues: {
-    owner: string;
-    tripId?: string;
-    name: string;
-    description: string;
-    startingPoint: string;
-    startDate: string | Date;
-    endDate: string | Date;
-    timezoneOffset: number;
-    tripMembers: Array<TripMember>;
-    tags: Array<string>;
-    tripLength: number;
-  };
+  initialValues: TripType;
   type: 'new' | 'edit';
 };
 
@@ -86,14 +81,18 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const users: Array<any> = useSelector((state: RootState) => state.firestore.ordered.users);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [dateRangeStart, setDateRangeStart] = useState(new Date(props.initialValues.startDate));
 
   useFirestoreConnect([{ collection: 'users' }]);
 
   const formatTripLengthAsString = (value: number) =>
     `${value === 21 ? '20+ Days' : `${value === 1 ? 'Day Trip' : `${value} days`}`}`;
 
-  const addNewTrip = (values: TripSummaryProps['initialValues']) => {
+  type ValuesType = Omit<TripType, 'startDate' | 'endDate'> & {
+    startDate: string;
+    endDate: string;
+  };
+
+  const addNewTrip = (values: ValuesType) => {
     setIsLoading(true);
     firebase
       .firestore()
@@ -127,7 +126,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       });
   };
 
-  const updateTrip = (values: TripSummaryProps['initialValues']) => {
+  const updateTrip = (values: ValuesType) => {
     setIsLoading(true);
     const existingTagsWithoutTripLengthTag = props.initialValues.tags.filter(
       (tag) => !tag.includes('day')
@@ -190,21 +189,14 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       });
   };
 
-  const Option = ({
-    children,
-    data,
-    ...option
-  }: {
-    children: string;
-    data: { photoURL: string; email: string; username: string };
-  }) => {
+  const Option = (option: any) => {
     return (
       <components.Option {...option}>
         <FlexContainer justifyContent="flex-start">
-          <Avatar src={data.photoURL} gravatarEmail={data.email} rightMargin />
+          <Avatar src={option.data.photoURL} gravatarEmail={option.data.email} rightMargin />
           <div>
-            <div>{data.username}</div>
-            <small style={{ color: textColorLight }}>{children}</small>
+            <div>{option.data.username}</div>
+            <small style={{ color: textColorLight }}>{option.data.label}</small>
           </div>
         </FlexContainer>
       </components.Option>
@@ -229,12 +221,35 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
     );
   };
 
+  const dateFormat = 'MM/dd/yyyy';
+
+  const parseDate = (str: string) => {
+    const parsed = dateFnsParse(str, dateFormat, new Date());
+    if (DateUtils.isDate(parsed)) {
+      return parsed;
+    }
+    return undefined;
+  };
+
+  const formatDate = (date: number | Date) => {
+    return dateFnsFormat(date, dateFormat);
+  };
+
   return (
     <>
-      <ReactDatepickerTheme />
       <Formik
         validateOnMount
-        initialValues={props.initialValues}
+        initialValues={{
+          ...props.initialValues,
+          startDate:
+            props.initialValues.startDate.seconds && props.type === 'edit'
+              ? formatDate(new Date(props.initialValues.startDate.seconds * 1000))
+              : formatDate(new Date()),
+          endDate:
+            props.initialValues.endDate.seconds && props.type === 'edit'
+              ? formatDate(new Date(props.initialValues.endDate.seconds * 1000))
+              : formatDate(addDays(new Date(), 1)),
+        }}
         onSubmit={(values, { setSubmitting }) => {
           if (props.type === 'new') {
             addNewTrip(values);
@@ -280,13 +295,19 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
             <Row>
               <Column sm={6}>
                 <StyledLabel required>Start Date</StyledLabel>
-                <DatePicker
-                  selected={dateRangeStart}
-                  onChange={(date: Date) => {
-                    setFieldValue('startDate', date);
-                    setDateRangeStart(date);
+                <DayPickerInput
+                  formatDate={formatDate}
+                  format={dateFormat}
+                  parseDate={parseDate}
+                  placeholder={`${dateFnsFormat(new Date(), dateFormat)}`}
+                  onDayChange={(day) => {
+                    setFieldValue('startDate', dateFnsFormat(new Date(day), dateFormat));
+                    setFieldValue(
+                      'endDate',
+                      dateFnsFormat(addDays(new Date(day), values.tripLength), dateFormat)
+                    );
                   }}
-                  minDate={new Date()}
+                  value={dateFnsFormat(new Date(values.startDate), dateFormat)}
                 />
               </Column>
               <Column sm={6}>
@@ -307,7 +328,13 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                     }}
                     onChange={(value) => {
                       setFieldValue('tripLength', value);
-                      setFieldValue('endDate', addDays(new Date(values.startDate), value));
+                      setFieldValue(
+                        'endDate',
+                        dateFnsFormat(
+                          addDays(new Date(values.startDate), value === 1 ? 0 : value),
+                          dateFormat
+                        )
+                      );
                     }}
                   />
                 </SliderWrapper>

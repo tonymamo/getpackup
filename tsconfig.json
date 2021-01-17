@@ -22,6 +22,7 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
+      "@common/*": ["./common/*"],
       "@components": ["./components/index.tsx"],
       "@components/*": ["./components/*"],
       "@cms/*": ["./cms/*"],
@@ -32,7 +33,7 @@
       "@views/*": ["./views/*"],
       "@templates/*": ["./templates/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./custom_types"],
+    "typeRoots": ["./node_modules/@types", "./custom_types", "src/common"],
     "esModuleInterop": true
   },
   "exclude": ["*.test.js", "_this_is_virtual_fs_path_/**/*"]

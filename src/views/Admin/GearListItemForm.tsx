@@ -15,7 +15,7 @@ import {
   gearListAccommodations,
   gearListActivities,
   gearListCampKitchen,
-  gearListTransportation,
+  gearListOtherConsiderations,
   gearListCategories,
 } from '@utils/gearListItemEnum';
 
@@ -173,7 +173,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
 
             <Heading as="h2">Transporation</Heading>
             <Row>
-              {gearListTransportation.map((item) => (
+              {gearListOtherConsiderations.map((item) => (
                 <Column xs={6} sm={4} md={3} key={item.name}>
                   <Field as={Input} type="checkbox" name={item.name} label={item.label} />
                 </Column>

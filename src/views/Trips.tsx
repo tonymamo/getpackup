@@ -19,26 +19,10 @@ import {
 } from '@components';
 import { RootState } from '@redux/ducks';
 import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
+import { UserType } from '@common/user';
+import { TripType } from '@common/trip';
 
-type TripsProps = { loggedInUser?: any } & RouteComponentProps;
-
-export type TripMember = { uid: string; displayName: string; photoURL: string; email: string };
-
-export type TripType = {
-  id: string;
-  owner: string;
-  tripId: string;
-  name: string;
-  description: string;
-  startingPoint: string;
-  startDate: firebase.firestore.Timestamp;
-  endDate: firebase.firestore.Timestamp;
-  timezoneOffset: number;
-  created: firebase.firestore.Timestamp;
-  tripMembers: Array<TripMember>;
-  tags: Array<string>;
-  tripLength: number;
-};
+type TripsProps = { loggedInUser: UserType } & RouteComponentProps;
 
 const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);

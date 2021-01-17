@@ -21,7 +21,7 @@ import {
   Pill,
 } from '@components';
 import { RootState } from '@redux/ducks';
-import { TripType, TripMember } from '@views/Trips';
+import { TripType, TripMember } from '@common/trip';
 import { formattedDateRange, isBeforeToday } from '@utils/dateUtils';
 import { brandPrimary, white, textColor } from '@styles/color';
 import { baseSpacer } from '@styles/size';

@@ -44,6 +44,7 @@
         "map": [
           ["@components", "./src/components"],
           ["@cms", "./src/cms"],
+          ["@common","./src/common"],
           ["@images", "./src/images"],
           ["@redux", "./src/redux"],
           ["@styles", "./src/styles"],

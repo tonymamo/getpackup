@@ -2,7 +2,6 @@ import { format, isSameMonth, isSameYear, isBefore, isAfter } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 
 export const formattedDate = (date: Date) => format(date, 'MMM d, y');
-export const formattedDateForDateInput = (date: Date) => format(date, 'yyyy-MM-dd');
 
 export const dateWithTimezoneOffset = (date: number, timezoneOffset: number) =>
   utcToZonedTime(date, String(timezoneOffset));

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import uniqBy from 'lodash/uniqBy';
 import SwipeableViews from 'react-swipeable-views';
+import { FaCaretLeft, FaCaretRight, FaCheckCircle } from 'react-icons/fa';
 
 import {
   Heading,
@@ -24,12 +25,11 @@ import { GearItem } from '@views/Admin/GearList';
 import {
   gearListActivities,
   gearListAccommodations,
-  gearListTransportation,
+  gearListOtherConsiderations,
   gearListKeys,
   allGearListItems,
 } from '@utils/gearListItemEnum';
-import { FaCaretLeft, FaCaretRight, FaCheckCircle } from 'react-icons/fa';
-import { TripType } from './Trips';
+import { TripType } from '@common/trip';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -236,20 +236,23 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                 <FlexContainer flexDirection="column" justifyContent="space-between" height="100%">
                   <div>
                     <Heading altStyle as="h2" noMargin align="center">
-                      Transportation
+                      Other Considerations
                     </Heading>
                     <Row>
-                      {gearListTransportation.map((item) => (
-                        <Column xs={4} md={2} key={item.name}>
-                          <Field
-                            as={IconCheckbox}
-                            icon={item.icon}
-                            checked={values[item.name] ?? false}
-                            name={item.name}
-                            label={item.label}
-                          />
-                        </Column>
-                      ))}
+                      {gearListOtherConsiderations
+                        // filter out Essential as we will include them always
+                        .filter((i) => i.name !== 'essential')
+                        .map((item) => (
+                          <Column xs={4} md={2} key={item.name}>
+                            <Field
+                              as={IconCheckbox}
+                              icon={item.icon}
+                              checked={values[item.name] ?? false}
+                              name={item.name}
+                              label={item.label}
+                            />
+                          </Column>
+                        ))}
                     </Row>
                   </div>
                   <div style={{ width: '100%' }}>

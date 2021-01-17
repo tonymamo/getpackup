@@ -35,9 +35,7 @@ const App = () => {
   loggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
 
   useEffect(() => {
-    // if (isLoaded(auth) && auth.uid && (!loggedInUser || !loggedInUser.username)) {
     if (isLoaded(auth) && auth.uid && isLoaded(loggedInUser) && !loggedInUser.username) {
-      console.log('here');
       firebase
         .firestore()
         .collection('users')

@@ -26,11 +26,13 @@ module.exports = {
       resolve: 'gatsby-plugin-alias-imports',
       options: {
         alias: {
+          '@common': `${__dirname}/src/common`,
           '@components': `${__dirname}/src/components`,
           '@images': `${__dirname}/src/images`,
           '@redux': `${__dirname}/src/redux`,
           '@styles': `${__dirname}/src/styles`,
           '@utils': `${__dirname}/src/utils`,
+          '@templates': `${__dirname}/src/templates`,
           '@views': `${__dirname}/src/views`,
         },
         extensions: [],

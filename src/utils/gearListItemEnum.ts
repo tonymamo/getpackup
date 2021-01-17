@@ -48,13 +48,16 @@ export const gearListCampKitchen = [
   { name: 'carCamping', label: 'Car Camping' },
 ];
 
-export const gearListTransportation = [
+export const gearListOtherConsiderations = [
   { name: 'airplane', label: 'Airplane', icon: 'fa/FaPlane' },
   { name: 'car', label: 'Car', icon: 'fa/FaCar' },
   { name: 'bus', label: 'Bus', icon: 'fa/FaBusAlt' },
   { name: 'boat', label: 'Boat', icon: 'fa/FaShip' },
   { name: 'train', label: 'Train', icon: 'fa/FaTrain' },
   { name: 'motorcycle', label: 'Motorcycle', icon: 'fa/FaMotorcycle' },
+  { name: 'casual', label: 'Casual', icon: 'fa/FaTshirt' },
+  { name: 'international', label: 'International', icon: 'fa/FaGlobeAmericas' },
+  { name: 'essential', label: '10 Essentials', icon: 'fa/FaExclamationTriangle' },
 ];
 
 export const allGearListItems = [
@@ -62,7 +65,7 @@ export const allGearListItems = [
   ...gearListActivities,
   ...gearListAccommodations,
   ...gearListCampKitchen,
-  ...gearListTransportation,
+  ...gearListOtherConsiderations,
 ];
 
 export const gearListKeys = [...allGearListItems].map((item) => item.name);
