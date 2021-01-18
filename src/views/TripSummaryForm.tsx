@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
 import { useFirebase, useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,20 +18,59 @@ import 'react-rangeslider/lib/index.css';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
+// import uniqBy from 'lodash/uniqBy';
 
 import { Avatar, Input, Button, HorizontalRule, Column, Row, FlexContainer } from '@components';
-import { StyledLabel } from '@components/Input';
+import { StyledLabel, sharedStyles } from '@components/Input';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
 import { RootState } from '@redux/ducks';
-import { textColor, textColorLight, white } from '@styles/color';
+import {
+  brandPrimary,
+  textColor,
+  textColorLight,
+  white,
+  brandPrimaryRGB,
+  brandSecondaryRGB,
+  brandSecondary,
+} from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
-import { TripType } from '@common/trip';
+import { TripType, TripMember } from '@common/trip';
+import { baseSpacer, halfSpacer } from '@styles/size';
 
 type TripSummaryProps = {
   initialValues: TripType;
   type: 'new' | 'edit';
 };
+
+const DayPickerInputWrapper = styled.div<any>`
+  margin-bottom: ${baseSpacer};
+
+  & .DayPickerInput {
+    display: block;
+  }
+
+  & input {
+    ${sharedStyles}
+  }
+
+  & .DayPicker-Day--today {
+    color: ${textColor};
+    font-weight: 700;
+  }
+
+  & .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    position: relative;
+    background-color: ${brandPrimary};
+    color: ${white};
+  }
+
+  &
+    .DayPicker:not(.DayPicker--interactionDisabled)
+    .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+    background-color: rgba(${brandPrimaryRGB}, 0.25);
+  }
+`;
 
 const SliderWrapper = styled.div`
   & .rangeslider {
@@ -41,18 +80,24 @@ const SliderWrapper = styled.div`
   }
 
   & .rangeslider-horizontal .rangeslider__fill {
-    background-color: ${textColor};
+    background-color: ${brandSecondary};
     box-shadow: none;
   }
 
   & .rangeslider .rangeslider__handle {
-    background: ${textColor};
-    border-color: ${textColor};
+    background: ${brandSecondary};
+    border-color: ${brandSecondary};
     box-shadow: none;
     outline: none;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: 0 0 0 4px rgba(${brandSecondaryRGB}, 0.5);
+    }
   }
 
   & .rangeslider-horizontal .rangeslider__handle:after {
@@ -140,6 +185,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         startDate: startOfDay(new Date(values.startDate)),
         endDate: endOfDay(new Date(values.endDate)),
         updated: new Date(),
+        tripMembers: [...props.initialValues.tripMembers, ...values.tripMembers],
         tags: [...existingTagsWithoutTripLengthTag, formatTripLengthAsString(values.tripLength)],
       })
       .then(() => {
@@ -161,8 +207,48 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       });
   };
 
+  type UserOptionsType = Array<TripMember & { value: string; label: string }>;
+
+  const [existingTripMembers, setExistingTripMembers] = useState<UserOptionsType>([]);
+
+  const getMatchingUsers = async () => {
+    // const existingTripMembers: UserOptionsType = [];
+    if (props.initialValues.tripMembers.length === 0) {
+      return null;
+    }
+    const matchingUsers = await firebase
+      .firestore()
+      .collection('users')
+      .where('uid', 'in', props.initialValues.tripMembers)
+      .get();
+    if (!matchingUsers.empty) {
+      return matchingUsers.forEach((doc) => {
+        const user = doc.data() as TripMember;
+        setExistingTripMembers((arr) => [
+          ...arr,
+          {
+            ...user,
+            value: user.uid,
+            label: user.displayName,
+            photoURL: user.photoURL,
+            email: user.email,
+            username: user.username,
+          },
+        ]);
+      });
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    // TODO: change getMatchingUsers to be users you follow only
+    getMatchingUsers();
+  }, []);
+
   const loadUsers = async (inputValue: string) => {
     const searchValue = inputValue.toLowerCase();
+    const usersOptions: UserOptionsType = [];
+
     const response = await firebase
       .firestore()
       .collection('users')
@@ -171,22 +257,32 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       // .where('displayName', '<=', `${searchValue}\uf8ff`) // https://stackoverflow.com/a/56815787/6095128
       .limit(5)
       .get();
-    const usersOptions: Array<any> = [];
-    if (!response.empty) {
-      response.forEach((doc) => usersOptions.push(doc.data()));
-    }
 
-    return usersOptions
-      .filter((u) => u.uid !== auth.uid) // remove yourself from results
-      .map((user) => {
-        return {
+    if (!response.empty) {
+      response.forEach((doc) => {
+        const user = doc.data() as TripMember;
+        return usersOptions.push({
+          ...user,
           value: user.uid,
           label: user.displayName,
           photoURL: user.photoURL,
           email: user.email,
           username: user.username,
-        };
+        });
       });
+    }
+
+    // if (props.type === 'edit') {
+    //   const initializedUsers = await getMatchingUsers();
+    //   if (Array.isArray(initializedUsers)) {
+    //     usersOptions.push(...initializedUsers);
+    //   }
+    //   console.log(initializedUsers);
+    // }
+
+    // remove yourself from results just in case
+    // TODO: also remove existing trip members from results
+    return usersOptions.filter((u) => u.uid !== auth.uid);
   };
 
   const Option = (option: any) => {
@@ -292,23 +388,66 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               />
             )}
 
+            {props.type === 'edit' && existingTripMembers.length > 0 && (
+              <>
+                <StyledLabel>Trip Party</StyledLabel>
+                <div style={{ margin: `${halfSpacer} 0 ${baseSpacer}` }}>
+                  {existingTripMembers.map((tripMember) => (
+                    <div key={tripMember.uid}>
+                      <FlexContainer justifyContent="flex-start">
+                        <Avatar
+                          src={tripMember.photoURL}
+                          gravatarEmail={tripMember.email}
+                          rightMargin
+                        />
+                        <div>
+                          <div>{tripMember.username}</div>
+                          <small style={{ color: textColorLight }}>{tripMember.label}</small>
+                        </div>
+                      </FlexContainer>
+                      <HorizontalRule compact />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {users && isLoaded(users) && !isEmpty(users) && users.length > 0 && (
+              <Field
+                as={Input}
+                type="async-select"
+                // TODO: change to only be users you are following
+                // defaultOptions={uniqBy(existingTripMembers, 'uid')}
+                loadOptions={loadUsers}
+                name="tripMembers"
+                label={props.type === 'edit' ? 'Add Trip Members' : 'Trip Members'}
+                setFieldValue={setFieldValue}
+                isMulti
+                value={values.tripMembers}
+                components={{ Option, MultiValueLabel }}
+                {...rest}
+              />
+            )}
+
             <Row>
               <Column sm={6}>
                 <StyledLabel required>Start Date</StyledLabel>
-                <DayPickerInput
-                  formatDate={formatDate}
-                  format={dateFormat}
-                  parseDate={parseDate}
-                  placeholder={`${dateFnsFormat(new Date(), dateFormat)}`}
-                  onDayChange={(day) => {
-                    setFieldValue('startDate', dateFnsFormat(new Date(day), dateFormat));
-                    setFieldValue(
-                      'endDate',
-                      dateFnsFormat(addDays(new Date(day), values.tripLength), dateFormat)
-                    );
-                  }}
-                  value={dateFnsFormat(new Date(values.startDate), dateFormat)}
-                />
+                <DayPickerInputWrapper>
+                  <DayPickerInput
+                    formatDate={formatDate}
+                    format={dateFormat}
+                    parseDate={parseDate}
+                    placeholder={`${dateFnsFormat(new Date(), dateFormat)}`}
+                    onDayChange={(day) => {
+                      setFieldValue('startDate', dateFnsFormat(new Date(day), dateFormat));
+                      setFieldValue(
+                        'endDate',
+                        dateFnsFormat(addDays(new Date(day), values.tripLength), dateFormat)
+                      );
+                    }}
+                    value={dateFnsFormat(new Date(values.startDate), dateFormat)}
+                  />
+                </DayPickerInputWrapper>
               </Column>
               <Column sm={6}>
                 <StyledLabel required>Trip Length</StyledLabel>
@@ -340,19 +479,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 </SliderWrapper>
               </Column>
             </Row>
-            {users && isLoaded(users) && !isEmpty(users) && users.length > 0 && (
-              <Field
-                as={Input}
-                type="async-select"
-                loadOptions={loadUsers}
-                name="tripMembers"
-                label="Trip Members"
-                setFieldValue={setFieldValue}
-                isMulti
-                components={{ Option, MultiValueLabel }}
-                {...rest}
-              />
-            )}
 
             <HorizontalRule />
             <p>

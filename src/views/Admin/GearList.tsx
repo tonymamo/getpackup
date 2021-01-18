@@ -17,16 +17,9 @@ import {
   PageContainer,
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { GearItem } from '@common/gearItem';
 
 type GearListProps = {};
-
-export type GearItem = {
-  id: string;
-  name: string;
-  category: string;
-  lastEditedBy?: string;
-  [key: string]: boolean | string | undefined; // all the rest... TODO: move all items to a master list somewhere?
-};
 
 const GearList: FunctionComponent<GearListProps> = () => {
   const firebase = useFirebase();

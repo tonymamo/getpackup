@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 
 import { Seo, Heading, PageContainer } from '@components';
 import GearListItemForm from '@views/Admin/GearListItemForm';
-import { GearItem } from '@views/Admin/GearList';
+import { GearItem } from '@common/gearItem';
 import { gearListKeys } from '@utils/gearListItemEnum';
 
 type NewGearListItemProps = {} & RouteComponentProps;

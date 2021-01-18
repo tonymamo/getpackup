@@ -52,6 +52,7 @@ type InputProps = {
   options?: OptionType[];
   required?: boolean;
   loadOptions?: () => void;
+  defaultOptions?: OptionType[] | boolean;
   components?: any;
   geosuggestTypes?: QueryType[];
 } & FieldMetaProps<string> &
@@ -340,9 +341,9 @@ const Input: FunctionComponent<InputProps> = (props) => {
           <StyledAsyncSelect
             components={props.components}
             className="react-select"
-            cacheOptions
             loadOptions={props.loadOptions}
-            defaultOptions
+            cacheOptions
+            defaultOptions={props.defaultOptions || true}
             styles={multiSelectStyles}
             isMulti={props.isMulti}
             menuPlacement="auto"

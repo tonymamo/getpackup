@@ -279,6 +279,11 @@ const CssReset = createGlobalStyle`
     content: url("data:image/svg+xml; utf8,${externalLinkIcon}");
     margin-left: ${quarterSpacer};
   }
+
+  .tooltip.customTooltip {
+    white-space: nowrap;
+    padding: ${halfSpacer};
+  }
 `;
 
 export default CssReset;

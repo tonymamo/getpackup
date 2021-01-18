@@ -34,7 +34,7 @@ export const brandTertiaryHover = bismarkVariant;
 
 // Validation Colors
 export const brandSuccess = green;
-export const brandInfo = brandPrimary;
+export const brandInfo = bismark;
 export const brandDanger = red;
 
 // Grayscale for UI (borders, shadows, etc)
@@ -53,6 +53,7 @@ export const headingsColor = downriver;
 
 // RGB for form focus styling
 export const brandPrimaryRGB = '196,98,0';
+export const brandSecondaryRGB = '14, 55, 87';
 export const brandDangerRGB = '125,38,0';
 
 // Borders

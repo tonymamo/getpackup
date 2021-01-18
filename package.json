@@ -85,6 +85,7 @@
     "react-swipeable-views": "^0.13.9",
     "react-table": "^7.6.2",
     "react-text-truncate": "^0.16.0",
+    "react-tooltip": "^4.2.13",
     "redux": "^4.0.5",
     "redux-api-middleware": "^3.2.0",
     "redux-firestore": "^0.13.0",

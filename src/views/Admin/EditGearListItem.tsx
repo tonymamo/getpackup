@@ -5,8 +5,8 @@ import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
 import { Seo, Heading, LoadingPage, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
+import { GearItem } from '@common/gearItem';
 import GearListItemForm from './GearListItemForm';
-import { GearItem } from './GearList';
 
 type EditGearListItemProps = {
   id?: string;

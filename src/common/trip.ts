@@ -1,4 +1,6 @@
-export type TripMember = { uid: string; displayName: string; photoURL: string; email: string };
+import { UserType } from './user';
+
+export type TripMember = UserType;
 
 export type TripType = {
   id: string;
@@ -15,5 +17,3 @@ export type TripType = {
   tags: Array<string>;
   tripLength: number;
 };
-
-export const trip = 'hello';

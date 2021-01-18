@@ -3,11 +3,14 @@ import { Formik, Field, Form } from 'formik';
 import styled from 'styled-components';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 import { baseBorderStyle } from '@styles/mixins';
-import { baseSpacer } from '@styles/size';
+import { baseSpacer, halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import Input from './Input';
+import { Input, FlexContainer } from '@components';
+import { brandDanger } from '@styles/color';
 
 type PackingListItemProps = {
   id: string;
@@ -15,11 +18,18 @@ type PackingListItemProps = {
   name: string;
   category: string;
   tripId: string;
+  isEssential: boolean;
 };
 
 const PackingListItemWrapper = styled.div`
   border-bottom: ${baseBorderStyle};
   padding-top: ${baseSpacer};
+`;
+
+const TooltipWrapper = styled.div`
+  /* margin bottom to match Input's margin */
+  margin-bottom: ${baseSpacer};
+  margin-left: ${halfSpacer};
 `;
 
 const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
@@ -56,13 +66,32 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
       >
         {({ values, handleSubmit }) => (
           <Form onChange={handleSubmit}>
-            <Field
-              as={Input}
-              name={`${props.name}.isPacked`}
-              type="checkbox"
-              checked={values[props.name].isPacked}
-              label={props.name}
-            />
+            <FlexContainer justifyContent="flex-start">
+              <Field
+                as={Input}
+                name={`${props.name}.isPacked`}
+                type="checkbox"
+                checked={values[props.name].isPacked}
+                label={props.name}
+              />
+              {props.isEssential && (
+                <TooltipWrapper>
+                  <FaExclamationTriangle
+                    data-tip="This is an essential item"
+                    data-for="essentialItem"
+                    color={brandDanger}
+                  />
+                  <ReactTooltip
+                    id="essentialItem"
+                    place="top"
+                    type="dark"
+                    effect="solid"
+                    className="tooltip customTooltip"
+                    delayShow={500}
+                  />
+                </TooltipWrapper>
+              )}
+            </FlexContainer>
           </Form>
         )}
       </Formik>

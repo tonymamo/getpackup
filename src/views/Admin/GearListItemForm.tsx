@@ -9,7 +9,7 @@ import { Input, Button, HorizontalRule, Row, Column, Heading } from '@components
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField, requiredSelect } from '@utils/validations';
 import { RootState } from '@redux/ducks';
-import { GearItem } from '@views/Admin/GearList';
+import { GearItem } from '@common/gearItem';
 import {
   gearListTripType,
   gearListAccommodations,
@@ -40,6 +40,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
         lastEditedBy: auth.uid,
       })
       .then((docRef) => {
+        setIsLoading(false);
         docRef.update({
           id: docRef.id,
           created: new Date(),
@@ -74,6 +75,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
         updated: new Date(),
       })
       .then(() => {
+        setIsLoading(false);
         navigate('/admin/gear-list');
         dispatch(
           addAlert({
@@ -171,7 +173,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
               ))}
             </Row>
 
-            <Heading as="h2">Transporation</Heading>
+            <Heading as="h2">Other Considerations</Heading>
             <Row>
               {gearListOtherConsiderations.map((item) => (
                 <Column xs={6} sm={4} md={3} key={item.name}>
@@ -184,7 +186,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
               <Button
                 rightSpacer
                 type="submit"
-                disabled={isSubmitting || !isValid || isLoading || !dirty}
+                disabled={isSubmitting || !isValid || !dirty}
                 isLoading={isLoading}
                 iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
               >

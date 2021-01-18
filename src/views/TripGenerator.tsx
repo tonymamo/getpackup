@@ -21,7 +21,7 @@ import {
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
-import { GearItem } from '@views/Admin/GearList';
+import { GearItem } from '@common/gearItem';
 import {
   gearListActivities,
   gearListAccommodations,
@@ -93,7 +93,12 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
           });
 
           const generatedPackingList = uniqBy(matches, 'name').map((item: GearItem) => {
-            return { name: item.name, isPacked: false, category: item.category };
+            return {
+              name: item.name,
+              isPacked: false,
+              category: item.category,
+              isEssential: Boolean(item.essential),
+            };
           });
 
           const promises: Array<Promise<any>> = [];

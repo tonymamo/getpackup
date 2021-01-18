@@ -179,11 +179,14 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                 Trip Party
               </Heading>
               {(!isLoaded(activeTrip) || tripMembersLoading) &&
-                activeTrip.tripMembers.map((member) => (
-                  <FlexContainer justifyContent="flex-start" key={member.toString()}>
-                    <Skeleton circle height={32} width={32} />
-                    <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
-                  </FlexContainer>
+                activeTrip.tripMembers.map((member, index) => (
+                  <Fragment key={member.toString()}>
+                    <FlexContainer justifyContent="flex-start">
+                      <Skeleton circle height={32} width={32} />
+                      <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
+                    </FlexContainer>
+                    {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
+                  </Fragment>
                 ))}
               {isLoaded(activeTrip) &&
                 !tripMembersLoading &&
@@ -215,13 +218,20 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                   </Heading>
                   <ul>
                     {category[1]
-                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .sort((a, b) => {
+                        // put essentials at the top, and sort alphabetical
+                        if (a.isEssential === b.isEssential) {
+                          return a.name.localeCompare(b.name);
+                        }
+                        return a.isEssential > b.isEssential ? -1 : 1;
+                      })
                       .map(
                         (item: {
                           id: string;
                           name: string;
                           isPacked: boolean;
                           category: string;
+                          isEssential: boolean;
                         }) => (
                           <PackingListItem key={item.name} tripId={props.id as string} {...item} />
                         )
