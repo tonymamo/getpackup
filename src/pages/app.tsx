@@ -31,33 +31,38 @@ export const AppContainer = styled.div`
 const App = () => {
   const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  let loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
-  loggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
+  const profile = useSelector((state: RootState) => state.firebase.profile);
+  const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
 
   useEffect(() => {
-    if (isLoaded(auth) && auth.uid && isLoaded(loggedInUser) && !loggedInUser.username) {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(auth.uid)
-        .set({
-          uid: loggedInUser ? loggedInUser.uid : auth.uid,
-          email: loggedInUser ? loggedInUser.email : auth.email,
-          displayName: loggedInUser ? loggedInUser.displayName : auth.displayName,
-          photoURL: loggedInUser ? loggedInUser.photoURL : auth.photoURL,
-          username: loggedInUser.displayName
-            ? `${loggedInUser.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(
-                100000 + Math.random() * 900000
-              )}`
-            : auth.uid,
-          bio: loggedInUser ? loggedInUser.bio : '',
-          website: loggedInUser ? loggedInUser.website : '',
-          location: loggedInUser ? loggedInUser.location : '',
-        });
+    if (isLoaded(auth) && auth.uid) {
+      if (
+        ((activeLoggedInUser !== undefined && !activeLoggedInUser.username) ||
+          activeLoggedInUser === undefined) &&
+        isLoaded(profile)
+      ) {
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(auth.uid)
+          .set({
+            uid: auth.uid,
+            email: auth.email,
+            displayName: auth.displayName,
+            photoURL: auth.photoURL,
+            username: `${auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(
+              100000 + Math.random() * 900000
+            )}`,
+            bio: '',
+            website: '',
+            location: '',
+          });
+      }
     }
   }, [auth, loggedInUser]);
 
-  if (!auth.isLoaded || !loggedInUser) {
+  if (!auth.isLoaded || !loggedInUser || activeLoggedInUser === undefined) {
     return <LoadingPage />;
   }
 
@@ -65,25 +70,29 @@ const App = () => {
     <AppContainer>
       <ErrorBoundary>
         <Router basepath="/app" primary={false}>
-          <PrivateRoute path="/profile" component={Profile} loggedInUser={loggedInUser} />
-          <PrivateRoute path="/trips" component={Trips} loggedInUser={loggedInUser} />
-          <PrivateRoute path="/trips/new" component={NewTripSummary} loggedInUser={loggedInUser} />
-          <PrivateRoute path="/trips/:id" component={TripById} loggedInUser={loggedInUser} />
+          <PrivateRoute path="/profile" component={Profile} loggedInUser={activeLoggedInUser} />
+          <PrivateRoute path="/trips" component={Trips} loggedInUser={activeLoggedInUser} />
+          <PrivateRoute
+            path="/trips/new"
+            component={NewTripSummary}
+            loggedInUser={activeLoggedInUser}
+          />
+          <PrivateRoute path="/trips/:id" component={TripById} loggedInUser={activeLoggedInUser} />
           <PrivateRoute
             path="/trips/:id/edit"
             component={EditTripSummary}
-            loggedInUser={loggedInUser}
+            loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute
             path="/trips/:id/generator"
             component={TripGenerator}
-            loggedInUser={loggedInUser}
+            loggedInUser={activeLoggedInUser}
           />
-          <PrivateRoute path="/search" component={Search} loggedInUser={loggedInUser} />
+          <PrivateRoute path="/search" component={Search} loggedInUser={activeLoggedInUser} />
           <PrivateRoute
             path="/shopping-list"
             component={ShoppingList}
-            loggedInUser={loggedInUser}
+            loggedInUser={activeLoggedInUser}
           />
         </Router>
       </ErrorBoundary>

@@ -45,7 +45,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
   };
 
   const validateUsername = async (value: string) => {
-    if (value === '') {
+    if (value === '' || value === loggedInUser.username) {
       // return out early to avoid api calls below
       return undefined;
     }

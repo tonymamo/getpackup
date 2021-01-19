@@ -6,20 +6,13 @@ import { RouteComponentProps, WindowLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
+import { UserType } from '@common/user';
 
 type PrivateRouteProps = {
   location?: WindowLocation;
   component: ComponentType & RouteComponentProps;
   path: string;
-  loggedInUser: {
-    // TODO: common type
-    displayName: string;
-    photoURL: string;
-    email: string;
-    bio: string;
-    website: string;
-    isAdmin: boolean;
-  };
+  loggedInUser: UserType;
 };
 
 const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({

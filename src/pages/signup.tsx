@@ -52,6 +52,10 @@ const Signup: FunctionComponent<SignupProps> = () => {
       return undefined;
     }
 
+    if (value.length < 3) {
+      return 'Username must be at least 3 characters long';
+    }
+
     const searchValue = value.toLowerCase();
 
     const response = await firebase
@@ -143,7 +147,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                   setSubmitting(false);
                 }}
               >
-                {({ isSubmitting, isValid }) => (
+                {({ isSubmitting, isValid, errors, values }) => (
                   <Form>
                     <Field
                       as={Input}
@@ -163,6 +167,11 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       validate={validateUsername}
                       required
                       hiddenLabel
+                      helpText={
+                        values.username.length > 3 && !errors.username
+                          ? `${values.username} is available!`
+                          : ''
+                      }
                     />
 
                     <Field
