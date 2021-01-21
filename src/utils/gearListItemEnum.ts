@@ -11,6 +11,10 @@ export const gearListCategories = [
   { value: 'International', label: 'International' },
   { value: 'Miscellaneous', label: 'Miscellaneous' },
   { value: '10 Essentials', label: '10 Essentials' },
+  { value: 'Photography', label: 'Photography' },
+  { value: 'Kids', label: 'Kids' },
+  { value: 'Baby', label: 'Baby' },
+  { value: 'Pets', label: 'Pets' },
 ];
 
 export const gearListTripType = [
