@@ -55,6 +55,7 @@ type InputProps = {
   defaultOptions?: OptionType[] | boolean;
   components?: any;
   geosuggestTypes?: QueryType[];
+  placeholder?: string;
 } & FieldMetaProps<string> &
   FormikHelpers<string> &
   CommonProps<OptionType | OptionType[]>;
@@ -347,7 +348,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
             styles={multiSelectStyles}
             isMulti={props.isMulti}
             menuPlacement="auto"
-            placeholder="Start Typing..."
+            placeholder={props.placeholder || 'Start typing...'}
             onChange={(option: OptionType) => onChange(option)}
             name={props.name}
             onBlur={() => props.setFieldTouched(props.name)}

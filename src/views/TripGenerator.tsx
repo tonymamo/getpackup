@@ -28,6 +28,7 @@ import {
   gearListOtherConsiderations,
   gearListKeys,
   allGearListItems,
+  gearListCampKitchen,
 } from '@utils/gearListItemEnum';
 import { TripType } from '@common/trip';
 
@@ -198,6 +199,23 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                     </Heading>
                     <Row>
                       {gearListAccommodations.map((item) => (
+                        <Column xs={4} md={2} key={item.name}>
+                          <Field
+                            as={IconCheckbox}
+                            icon={item.icon}
+                            checked={values[item.name] ?? false}
+                            name={item.name}
+                            label={item.label}
+                          />
+                        </Column>
+                      ))}
+                    </Row>
+                    <Heading altStyle as="h2" noMargin align="center">
+                      Camp Kitchen
+                    </Heading>
+
+                    <Row>
+                      {gearListCampKitchen.map((item) => (
                         <Column xs={4} md={2} key={item.name}>
                           <Field
                             as={IconCheckbox}

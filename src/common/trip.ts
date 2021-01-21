@@ -12,7 +12,7 @@ export type TripType = {
   startDate: firebase.firestore.Timestamp;
   endDate: firebase.firestore.Timestamp;
   timezoneOffset: number;
-  created: firebase.firestore.Timestamp;
+  created?: firebase.firestore.Timestamp;
   tripMembers: Array<TripMember>;
   tags: Array<string>;
   tripLength: number;

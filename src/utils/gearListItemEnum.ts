@@ -20,15 +20,15 @@ export const gearListTripType = [
 
 export const gearListActivities = [
   { name: 'hiking', label: 'Hiking', icon: 'fa/FaHiking' },
-  { name: 'biking', label: 'Biking', icon: 'fa/FaBicycle' },
+  // { name: 'biking', label: 'Biking', icon: 'fa/FaBicycle' },
   { name: 'paddling', label: 'Paddling', icon: 'fa/FaWater' },
   { name: 'bouldering', label: 'Bouldering', icon: 'fa/FaRegHandRock' },
   { name: 'sportClimbing', label: 'Sport Climbing', icon: 'fa/FaMountain' },
   { name: 'tradClimbing', label: 'Trad Climbing', icon: 'fa/FaMountain' },
   { name: 'iceClimbing', label: 'Ice Climbing', icon: 'fa/FaIcicles' },
-  { name: 'skiTouring', label: 'Ski Touring', icon: 'fa/FaSkiing' },
-  { name: 'resortSkiing', label: 'Resort Skiing', icon: 'fa/FaSkiing' },
-  { name: 'snowboarding', label: 'Snowboarding', icon: 'fa/FaSnowboarding' },
+  { name: 'touring', label: 'Touring', icon: 'fa/FaSkiing' },
+  { name: 'resort', label: 'Resort', icon: 'fa/FaSkiing' },
+  // { name: 'snowboarding', label: 'Snowboarding', icon: 'fa/FaSnowboarding' },
   { name: 'snowshoeing', label: 'Snowshoeing', icon: 'fa/FaSnowflake' },
 ];
 
@@ -43,20 +43,24 @@ export const gearListAccommodations = [
 ];
 
 export const gearListCampKitchen = [
-  { name: 'backcountryThreeSeason', label: 'Backcountry 3-Season' },
-  { name: 'backcountryWinter', label: 'Backcountry Winter' },
-  { name: 'carCamping', label: 'Car Camping' },
+  { name: 'backcountryThreeSeason', label: 'Backcountry 3-Season', icon: 'fa/FaCampground' },
+  { name: 'backcountryWinter', label: 'Backcountry Winter', icon: 'fa/FaSnowflake' },
+  { name: 'carCamping', label: 'Car Camping', icon: 'fa/FaCaravan' },
 ];
 
 export const gearListOtherConsiderations = [
+  { name: 'casual', label: 'Casual', icon: 'fa/FaTshirt' },
+  { name: 'international', label: 'International', icon: 'fa/FaGlobeAmericas' },
+  { name: 'photography', label: 'Photography', icon: 'fa/FaCamera' },
+  { name: 'kids', label: 'Kids', icon: 'fa/FaChild' },
+  { name: 'baby', label: 'Baby', icon: 'fa/FaBaby' },
+  { name: 'pets', label: 'Pets', icon: 'fa/FaPaw' },
   { name: 'airplane', label: 'Airplane', icon: 'fa/FaPlane' },
   { name: 'car', label: 'Car', icon: 'fa/FaCar' },
   { name: 'bus', label: 'Bus', icon: 'fa/FaBusAlt' },
-  { name: 'boat', label: 'Boat', icon: 'fa/FaShip' },
-  { name: 'train', label: 'Train', icon: 'fa/FaTrain' },
+  // { name: 'boat', label: 'Boat', icon: 'fa/FaShip' },
+  // { name: 'train', label: 'Train', icon: 'fa/FaTrain' },
   { name: 'motorcycle', label: 'Motorcycle', icon: 'fa/FaMotorcycle' },
-  { name: 'casual', label: 'Casual', icon: 'fa/FaTshirt' },
-  { name: 'international', label: 'International', icon: 'fa/FaGlobeAmericas' },
   { name: 'essential', label: '10 Essentials', icon: 'fa/FaExclamationTriangle' },
 ];
 

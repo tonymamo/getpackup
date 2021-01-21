@@ -1,17 +1,15 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { navigate } from 'gatsby';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { actionTypes } from 'redux-firestore';
 
 import { PageContainer, LoadingPage, Seo } from '@components';
-import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
 
 type LogoutProps = {};
 
 const Logout: FunctionComponent<LogoutProps> = () => {
-  const auth = useSelector((state: RootState) => state.firebase.auth);
   const dispatch = useDispatch();
   const firebase = useFirebase();
 

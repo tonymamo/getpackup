@@ -32,6 +32,8 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
             <TripSummaryForm
               initialValues={{
                 ...activeTrip,
+                startDate: new Date(activeTrip.startDate.seconds * 1000),
+                endDate: new Date(activeTrip.endDate.seconds * 1000),
               }}
               type="edit"
             />

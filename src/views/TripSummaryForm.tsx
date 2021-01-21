@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
+import { FaCheckCircle, FaChevronCircleRight, FaTrash } from 'react-icons/fa';
 import { useFirebase, useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
@@ -20,7 +20,17 @@ import { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 // import uniqBy from 'lodash/uniqBy';
 
-import { Avatar, Input, Button, HorizontalRule, Column, Row, FlexContainer } from '@components';
+import {
+  Avatar,
+  Input,
+  Button,
+  HorizontalRule,
+  Column,
+  Row,
+  FlexContainer,
+  Modal,
+  Heading,
+} from '@components';
 import { StyledLabel, sharedStyles } from '@components/Input';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
@@ -36,10 +46,15 @@ import {
 } from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
 import { TripType, TripMember } from '@common/trip';
-import { baseSpacer, halfSpacer } from '@styles/size';
+import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
+
+type ValuesType = Omit<TripType, 'startDate' | 'endDate'> & {
+  startDate: Date;
+  endDate: Date;
+};
 
 type TripSummaryProps = {
-  initialValues: TripType;
+  initialValues: ValuesType;
   type: 'new' | 'edit';
 };
 
@@ -77,6 +92,7 @@ const SliderWrapper = styled.div`
     font-size: ${fontSizeSmall};
     box-shadow: none;
     background-color: ${textColorLight};
+    margin-bottom: ${doubleSpacer};
   }
 
   & .rangeslider-horizontal .rangeslider__fill {
@@ -126,16 +142,12 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const users: Array<any> = useSelector((state: RootState) => state.firestore.ordered.users);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useFirestoreConnect([{ collection: 'users' }]);
 
   const formatTripLengthAsString = (value: number) =>
     `${value === 21 ? '20+ Days' : `${value === 1 ? 'Day Trip' : `${value} days`}`}`;
-
-  type ValuesType = Omit<TripType, 'startDate' | 'endDate'> & {
-    startDate: string;
-    endDate: string;
-  };
 
   const addNewTrip = (values: ValuesType) => {
     setIsLoading(true);
@@ -194,6 +206,31 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
           addAlert({
             type: 'success',
             message: `Successfully updated ${values.name}`,
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+  };
+
+  const deleteTrip = () => {
+    firebase
+      .firestore()
+      .collection('trips')
+      .doc(props.initialValues.tripId)
+      .delete()
+      .then(() => {
+        navigate('/app/trips');
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: 'Successfully deleted trip',
           })
         );
       })
@@ -337,14 +374,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         validateOnMount
         initialValues={{
           ...props.initialValues,
-          startDate:
-            props.initialValues.startDate.seconds && props.type === 'edit'
-              ? formatDate(new Date(props.initialValues.startDate.seconds * 1000))
-              : formatDate(new Date()),
-          endDate:
-            props.initialValues.endDate.seconds && props.type === 'edit'
-              ? formatDate(new Date(props.initialValues.endDate.seconds * 1000))
-              : formatDate(addDays(new Date(), 1)),
         }}
         onSubmit={(values, { setSubmitting }) => {
           if (props.type === 'new') {
@@ -366,69 +395,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               validate={requiredField}
               required
             />
-            <Field
-              as={Input}
-              type="textarea"
-              name="description"
-              label="Description"
-              validate={requiredField}
-              required
-            />
-            {typeof window !== 'undefined' && window.google && (
-              <Field
-                as={Input}
-                type="geosuggest"
-                types={[]}
-                name="startingPoint"
-                label="Starting Location"
-                validate={requiredField}
-                required
-                setFieldValue={setFieldValue}
-                {...rest}
-              />
-            )}
-
-            {props.type === 'edit' && existingTripMembers.length > 0 && (
-              <>
-                <StyledLabel>Trip Party</StyledLabel>
-                <div style={{ margin: `${halfSpacer} 0 ${baseSpacer}` }}>
-                  {existingTripMembers.map((tripMember) => (
-                    <div key={tripMember.uid}>
-                      <FlexContainer justifyContent="flex-start">
-                        <Avatar
-                          src={tripMember.photoURL}
-                          gravatarEmail={tripMember.email}
-                          rightMargin
-                        />
-                        <div>
-                          <div>{tripMember.username}</div>
-                          <small style={{ color: textColorLight }}>{tripMember.label}</small>
-                        </div>
-                      </FlexContainer>
-                      <HorizontalRule compact />
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {users && isLoaded(users) && !isEmpty(users) && users.length > 0 && (
-              <Field
-                as={Input}
-                type="async-select"
-                // TODO: change to only be users you are following
-                // defaultOptions={uniqBy(existingTripMembers, 'uid')}
-                loadOptions={loadUsers}
-                name="tripMembers"
-                label={props.type === 'edit' ? 'Add Trip Members' : 'Trip Members'}
-                setFieldValue={setFieldValue}
-                isMulti
-                value={values.tripMembers}
-                components={{ Option, MultiValueLabel }}
-                {...rest}
-              />
-            )}
-
             <Row>
               <Column sm={6}>
                 <StyledLabel required>Start Date</StyledLabel>
@@ -479,24 +445,134 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 </SliderWrapper>
               </Column>
             </Row>
+            <Field
+              as={Input}
+              type="textarea"
+              name="description"
+              label="Description"
+              validate={requiredField}
+              required
+            />
+            {typeof window !== 'undefined' && window.google && (
+              <Field
+                as={Input}
+                type="geosuggest"
+                types={[]}
+                name="startingPoint"
+                label="Starting Location"
+                validate={requiredField}
+                required
+                setFieldValue={setFieldValue}
+                {...rest}
+              />
+            )}
+
+            {props.type === 'edit' && existingTripMembers.length > 0 && (
+              <>
+                <StyledLabel>Trip Party</StyledLabel>
+                <div style={{ margin: `${halfSpacer} 0 ${baseSpacer}` }}>
+                  {existingTripMembers.map((tripMember) => (
+                    <div key={tripMember.uid}>
+                      <FlexContainer justifyContent="flex-start">
+                        <Avatar
+                          src={tripMember.photoURL}
+                          gravatarEmail={tripMember.email}
+                          rightMargin
+                        />
+                        <div>
+                          <div>{tripMember.username}</div>
+                          <small style={{ color: textColorLight }}>{tripMember.label}</small>
+                        </div>
+                      </FlexContainer>
+                      <HorizontalRule compact />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {users && isLoaded(users) && !isEmpty(users) && users.length > 0 && (
+              <Field
+                as={Input}
+                type="async-select"
+                placeholder="Search by username"
+                // TODO: change to only be users you are following
+                // defaultOptions={uniqBy(existingTripMembers, 'uid')}
+                loadOptions={loadUsers}
+                name="tripMembers"
+                label={props.type === 'edit' ? 'Add Trip Members' : 'Trip Members'}
+                setFieldValue={setFieldValue}
+                isMulti
+                value={values.tripMembers}
+                components={{ Option, MultiValueLabel }}
+                {...rest}
+              />
+            )}
 
             <HorizontalRule />
-            <p>
-              <Button
-                type="submit"
-                rightSpacer
-                disabled={isSubmitting || !isValid || isLoading}
-                isLoading={isLoading}
-                iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
-              >
-                {props.type === 'new' ? 'Select Activites' : 'Update Trip'}
-              </Button>
-              {props.type === 'new' && (
-                <Button type="link" to="/app/trips" color="dangerOutline">
+            <FlexContainer justifyContent="space-between">
+              <p>
+                <Button
+                  type="submit"
+                  rightSpacer
+                  disabled={isSubmitting || !isValid || isLoading}
+                  isLoading={isLoading}
+                  iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
+                >
+                  {props.type === 'new' ? 'Select Activites' : 'Update Trip'}
+                </Button>
+
+                <Button type="link" to="../" color="text">
                   Cancel
                 </Button>
+              </p>
+              {props.type === 'edit' && (
+                <p>
+                  <Button
+                    type="button"
+                    color="danger"
+                    onClick={() => setModalIsOpen(true)}
+                    iconLeft={<FaTrash />}
+                  >
+                    Delete Trip
+                  </Button>
+                </p>
               )}
-            </p>
+            </FlexContainer>
+            <Modal
+              toggleModal={() => {
+                setModalIsOpen(false);
+              }}
+              isOpen={modalIsOpen}
+            >
+              <Heading>Are you sure?</Heading>
+              <p>Are you sure you want to delete this trip? This action cannot be undone.</p>
+              <Row>
+                <Column xs={6}>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setModalIsOpen(false);
+                    }}
+                    color="primaryOutline"
+                    block
+                  >
+                    Cancel
+                  </Button>
+                </Column>
+                <Column xs={6}>
+                  <Button
+                    type="button"
+                    onClick={() => deleteTrip()}
+                    block
+                    color="danger"
+                    iconLeft={<FaTrash />}
+                  >
+                    Delete
+                  </Button>
+                </Column>
+              </Row>
+            </Modal>
           </Form>
         )}
       </Formik>

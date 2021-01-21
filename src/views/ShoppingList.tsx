@@ -11,7 +11,7 @@ const ShoppingList: FunctionComponent<ShoppingListProps> = () => {
       <Heading as="h2" altStyle>
         Shopping List
       </Heading>
-      <Box></Box>
+      <Box>Coming Soon!</Box>
     </PageContainer>
   );
 };

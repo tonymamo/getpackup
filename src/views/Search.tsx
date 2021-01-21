@@ -11,7 +11,7 @@ const Search: FunctionComponent<SearchProps> = () => {
       <Heading as="h2" altStyle>
         Search
       </Heading>
-      <Box></Box>
+      <Box>Coming Soon!</Box>
     </PageContainer>
   );
 };

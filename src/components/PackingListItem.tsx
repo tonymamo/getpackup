@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
-import { FaExclamationTriangle } from 'react-icons/fa';
+import { FaChevronRight, FaExclamationTriangle } from 'react-icons/fa';
 
 import { baseBorderStyle } from '@styles/mixins';
 import { baseSpacer, halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Input, FlexContainer } from '@components';
-import { brandDanger } from '@styles/color';
+import { brandDanger, brandPrimary, offWhite } from '@styles/color';
 
 type PackingListItemProps = {
   id: string;
@@ -21,15 +21,28 @@ type PackingListItemProps = {
   isEssential: boolean;
 };
 
-const PackingListItemWrapper = styled.div`
+const PackingListItemWrapper = styled.li`
   border-bottom: ${baseBorderStyle};
-  padding-top: ${baseSpacer};
+  padding: ${baseSpacer} ${halfSpacer} 0;
+  margin: 0 -${halfSpacer};
+
+  &:hover {
+    background-color: ${offWhite};
+  }
 `;
 
-const TooltipWrapper = styled.div`
+const ItemInputWrapper = styled.div`
+  flex: 1;
+`;
+
+const IconWrapper = styled.div`
   /* margin bottom to match Input's margin */
   margin-bottom: ${baseSpacer};
-  margin-left: ${halfSpacer};
+  margin-left: ${baseSpacer};
+  cursor: pointer;
+  &:hover {
+    color: ${brandPrimary};
+  }
 `;
 
 const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
@@ -66,16 +79,19 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
       >
         {({ values, handleSubmit }) => (
           <Form onChange={handleSubmit}>
-            <FlexContainer justifyContent="flex-start">
-              <Field
-                as={Input}
-                name={`${props.name}.isPacked`}
-                type="checkbox"
-                checked={values[props.name].isPacked}
-                label={props.name}
-              />
+            <FlexContainer justifyContent="space-between">
+              <ItemInputWrapper>
+                <Field
+                  as={Input}
+                  name={`${props.name}.isPacked`}
+                  type="checkbox"
+                  checked={values[props.name].isPacked}
+                  label={props.name}
+                />
+              </ItemInputWrapper>
+
               {props.isEssential && (
-                <TooltipWrapper>
+                <IconWrapper>
                   <FaExclamationTriangle
                     data-tip="This is an essential item"
                     data-for="essentialItem"
@@ -89,8 +105,11 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                     className="tooltip customTooltip"
                     delayShow={500}
                   />
-                </TooltipWrapper>
+                </IconWrapper>
               )}
+              <IconWrapper onClick={() => alert('Edit coming soon!')}>
+                <FaChevronRight />
+              </IconWrapper>
             </FlexContainer>
           </Form>
         )}
