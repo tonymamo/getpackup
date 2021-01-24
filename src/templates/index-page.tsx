@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { navigate, graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 import Typewriter from 'typewriter-effect';
-import scrollTo from 'gatsby-plugin-smoothscroll';
 import styled, { keyframes } from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
@@ -11,7 +10,6 @@ import { useSelector } from 'react-redux';
 import {
   Seo,
   HeroImage,
-  SignupForm,
   Button,
   PageContainer,
   Row,
@@ -236,7 +234,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Heading>
 
           <p>{props.heroSubheading}</p>
-          <Button type="button" onClick={() => scrollTo(props.heroCTALink)}>
+          <Button type="link" to={props.heroCTALink}>
             {props.heroCTAText}
           </Button>
         </PageContainer>
@@ -246,12 +244,6 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <Heading as="h2" align="center" inverse noMargin>
             {props.mainpitch.heading}
           </Heading>
-          <p>{props.signupform.text}</p>
-          <Row>
-            <Column md={8} mdOffset={2}>
-              <SignupForm location="homepage-header" />
-            </Column>
-          </Row>
         </PageContainer>
       </Section>
       <Section backgroundColor={white}>

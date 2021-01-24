@@ -245,12 +245,12 @@ const CssReset = createGlobalStyle`
 
   ::-moz-selection {
       color: ${white};
-      background: ${brandPrimary};
+      background: ${brandPrimaryHover};
   }
 
   ::selection {
       color: ${white};
-      background: ${brandPrimary};
+      background: ${brandPrimaryHover};
   }
 
   :-ms-input-placeholder {

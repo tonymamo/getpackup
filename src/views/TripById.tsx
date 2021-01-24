@@ -144,141 +144,148 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         </Tab>
       </Tabs>
 
-      {isLoaded(activeTripById) && activeTrip ? (
-        <SwipeableViews index={activeTab} onChangeIndex={(i) => setActiveTab(i)} animateHeight>
-          <SwipeableViewInner>
-            <PageContainer>
-              <Box>
-                <FlexContainer
-                  justifyContent="space-between"
-                  alignItems="flex-start"
-                  flexWrap="nowrap"
-                >
+      {/* {isLoaded(activeTripById) && activeTrip ? ( */}
+      <SwipeableViews index={activeTab} onChangeIndex={(i) => setActiveTab(i)} animateHeight>
+        <SwipeableViewInner>
+          <PageContainer>
+            <Box>
+              <FlexContainer
+                justifyContent="space-between"
+                alignItems="flex-start"
+                flexWrap="nowrap"
+              >
+                {activeTrip ? (
                   <Heading as="h3" altStyle>
                     {activeTrip.name}
                   </Heading>
-                  {!isBeforeToday(activeTrip.endDate.seconds * 1000) && (
-                    <div>
-                      <Link to={`/app/trips/${activeTrip.id}/edit`}>
-                        <FaPencilAlt /> Edit
-                      </Link>
-                    </div>
-                  )}
-                </FlexContainer>
-                <HorizontalRule compact />
-                <p>{activeTrip.description}</p>
-              </Box>
-              <Box>
-                <p>
-                  <FaMapMarkerAlt /> {activeTrip.startingPoint}
-                </p>
-                <HorizontalRule compact />
-                <p>
-                  <FaCalendar />{' '}
-                  {formattedDateRange(
+                ) : (
+                  <Skeleton width={200} />
+                )}
+                {activeTrip && !isBeforeToday(activeTrip.endDate.seconds * 1000) && (
+                  <div>
+                    <Link to={`/app/trips/${activeTrip.id}/edit`}>
+                      <FaPencilAlt /> Edit
+                    </Link>
+                  </div>
+                )}
+              </FlexContainer>
+              <HorizontalRule compact />
+              <p>{activeTrip ? activeTrip.description : <Skeleton />}</p>
+            </Box>
+            <Box>
+              <FlexContainer justifyContent="flex-start">
+                <FaMapMarkerAlt /> {!activeTrip ? 'activeTrip.startingPoint' : <Skeleton />}
+              </FlexContainer>
+              <HorizontalRule compact />
+              <p>
+                <FaCalendar />{' '}
+                {activeTrip ? (
+                  formattedDateRange(
                     activeTrip.startDate.seconds * 1000,
                     activeTrip.endDate.seconds * 1000
-                  )}
-                </p>
-                <HorizontalRule compact />
-                {activeTrip.tags && activeTrip.tags.length ? (
-                  <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
-                    {activeTrip.tags.map((tag: string) => (
-                      <Pill
-                        key={`${tag}tag`}
-                        to={`/search/tags/${tag.replace(' ', '-')}`}
-                        text={tag}
-                      />
-                    ))}
-                  </ul>
-                ) : null}
-              </Box>
-
-              <Box>
-                <Heading as="h4" altStyle>
-                  Trip Party
-                </Heading>
-                {(!isLoaded(activeTrip) || tripMembersLoading) &&
-                  activeTrip.tripMembers.map((member, index) => (
-                    <Fragment key={member.toString()}>
-                      <FlexContainer justifyContent="flex-start">
-                        <Skeleton circle height={32} width={32} />
-                        <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
-                      </FlexContainer>
-                      {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
-                    </Fragment>
-                  ))}
-                {isLoaded(activeTrip) &&
-                  !tripMembersLoading &&
-                  tripMembers.length === 0 &&
-                  'no party members'}
-                {tripMembers.length > 0 &&
-                  tripMembers.map((member, index) => (
-                    <Fragment key={member.uid}>
-                      <FlexContainer justifyContent="flex-start">
-                        <Avatar src={member.photoURL} gravatarEmail={member.email} rightMargin />
-                        <span>{member.displayName}</span>
-                      </FlexContainer>
-                      {index !== tripMembers.length - 1 && <HorizontalRule compact />}
-                    </Fragment>
-                  ))}
-              </Box>
-            </PageContainer>
-          </SwipeableViewInner>
-
-          <SwipeableViewInner>
-            <PageContainer>
-              <Heading as="h2" altStyle>
-                Coming Soon!
-              </Heading>
-              <p>
-                Create a checklist of to-do items to reminder yourself to get permits, camp site
-                reservations, charge your batteries, and more...
+                  )
+                ) : (
+                  <Skeleton />
+                )}
               </p>
-            </PageContainer>
-          </SwipeableViewInner>
-          <SwipeableViewInner>
-            <PageContainer>
-              {packingList &&
-                packingList.length > 0 &&
-                Object.entries(lodash.groupBy(packingList, 'category')).map((category) => (
-                  <Box key={category[0]}>
-                    <Heading as="h3" altStyle>
-                      {category[0]}
-                    </Heading>
-                    <ul style={{ padding: 0, listStyle: 'none' }}>
-                      {category[1]
-                        .sort((a, b) => {
-                          // put essentials at the top, and sort alphabetical
-                          if (a.isEssential === b.isEssential) {
-                            return a.name.localeCompare(b.name);
-                          }
-                          return a.isEssential > b.isEssential ? -1 : 1;
-                        })
-                        .map(
-                          (item: {
-                            id: string;
-                            name: string;
-                            isPacked: boolean;
-                            category: string;
-                            isEssential: boolean;
-                          }) => (
-                            <PackingListItem
-                              key={item.name}
-                              tripId={props.id as string}
-                              {...item}
-                            />
-                          )
-                        )}
-                    </ul>
-                  </Box>
+              <HorizontalRule compact />
+              {activeTrip && activeTrip.tags && activeTrip.tags.length ? (
+                <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
+                  {activeTrip.tags.map((tag: string) => (
+                    <Pill
+                      key={`${tag}tag`}
+                      to={`/search/tags/${tag.replace(' ', '-')}`}
+                      text={tag}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <Skeleton />
+              )}
+            </Box>
+
+            <Box>
+              <Heading as="h4" altStyle>
+                Trip Party
+              </Heading>
+              {(!isLoaded(activeTrip) || tripMembersLoading) &&
+                activeTrip &&
+                activeTrip.tripMembers.map((member, index) => (
+                  <Fragment key={member.toString()}>
+                    <FlexContainer justifyContent="flex-start">
+                      <Skeleton circle height={32} width={32} />
+                      <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
+                    </FlexContainer>
+                    {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
+                  </Fragment>
                 ))}
-            </PageContainer>
-          </SwipeableViewInner>
-        </SwipeableViews>
-      ) : (
+              {isLoaded(activeTrip) &&
+                !tripMembersLoading &&
+                tripMembers.length === 0 &&
+                'no party members'}
+              {tripMembers.length > 0 &&
+                tripMembers.map((member, index) => (
+                  <Fragment key={member.uid}>
+                    <FlexContainer justifyContent="flex-start">
+                      <Avatar src={member.photoURL} gravatarEmail={member.email} rightMargin />
+                      <span>{member.displayName}</span>
+                    </FlexContainer>
+                    {index !== tripMembers.length - 1 && <HorizontalRule compact />}
+                  </Fragment>
+                ))}
+            </Box>
+          </PageContainer>
+        </SwipeableViewInner>
+
+        <SwipeableViewInner>
+          <PageContainer>
+            <Heading as="h2" altStyle>
+              Coming Soon!
+            </Heading>
+            <p>
+              Create a checklist of to-do items to reminder yourself to get permits, camp site
+              reservations, charge your batteries, and more...
+            </p>
+          </PageContainer>
+        </SwipeableViewInner>
+        <SwipeableViewInner>
+          <PageContainer>
+            {packingList &&
+              packingList.length > 0 &&
+              Object.entries(lodash.groupBy(packingList, 'category')).map((category) => (
+                <Box key={category[0]}>
+                  <Heading as="h3" altStyle>
+                    {category[0]}
+                  </Heading>
+                  <ul style={{ padding: 0, listStyle: 'none' }}>
+                    {category[1]
+                      .sort((a, b) => {
+                        // put essentials at the top, and sort alphabetical
+                        if (a.isEssential === b.isEssential) {
+                          return a.name.localeCompare(b.name);
+                        }
+                        return a.isEssential > b.isEssential ? -1 : 1;
+                      })
+                      .map(
+                        (item: {
+                          id: string;
+                          name: string;
+                          isPacked: boolean;
+                          category: string;
+                          isEssential: boolean;
+                        }) => (
+                          <PackingListItem key={item.name} tripId={props.id as string} {...item} />
+                        )
+                      )}
+                  </ul>
+                </Box>
+              ))}
+          </PageContainer>
+        </SwipeableViewInner>
+      </SwipeableViews>
+      {/* ) : (
         <LoadingPage />
-      )}
+      )} */}
       {isLoaded(activeTripById) && isEmpty(activeTripById) && <p>No trip found</p>}
     </>
   );

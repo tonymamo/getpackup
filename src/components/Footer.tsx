@@ -113,10 +113,10 @@ const Footer = () => {
           <SignupFormWrapper id="signup">
             <PageContainer>
               <Heading as="h1" inverse align="center">
-                Be the first to know
+                Sign up for the newsletter
               </Heading>
               <p style={{ textAlign: 'center', color: white }}>
-                Enter your email to be notified when our beta is available
+                Enter your email to receive periodic updates about Packup
               </p>
               <Row>
                 <Column md={8} mdOffset={2}>
@@ -140,7 +140,7 @@ const Footer = () => {
                     <Link to="/">Home</Link>
                   </p>
                   <p>
-                    <Link to="/#learn-more">Sign Up</Link>
+                    <Link to="/signup">Sign Up</Link>
                   </p>
                 </Column>
                 <Column sm={4} md={3} lg={2}>
