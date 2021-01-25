@@ -3,7 +3,6 @@ import { UserType } from './user';
 export type TripMember = UserType;
 
 export type TripType = {
-  id: string;
   owner: string;
   tripId: string;
   name: string;

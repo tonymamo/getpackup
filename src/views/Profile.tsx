@@ -11,6 +11,7 @@ import { Input, Button, Box, Seo, PageContainer, Row, Column, FileUpload } from 
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { requiredField } from '@utils/validations';
+import validateUsername from '@utils/validateUsername';
 
 type ProfileProps = {
   loggedInUser?: any;
@@ -42,36 +43,6 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
       // https://github.com/prescottprue/redux-firestore/issues/114
       dispatch({ type: actionTypes.CLEAR_DATA });
     });
-  };
-
-  const validateUsername = async (value: string) => {
-    if (value === '' || value === loggedInUser.username) {
-      // return out early to avoid api calls below
-      return undefined;
-    }
-
-    const searchValue = value.toLowerCase();
-
-    const response = await firebase
-      .firestore()
-      .collection('users')
-      .orderBy(`searchableIndex.${searchValue}`)
-      .limit(5)
-      .get();
-    const existingUsernames: Array<any> = [];
-
-    if (!response.empty) {
-      response.forEach((doc) => existingUsernames.push(doc.data()));
-    }
-
-    let error;
-    if (
-      existingUsernames.filter((user) => user.uid !== auth.uid && user.username === value).length >
-      0
-    ) {
-      error = `Sorry, ${value} is unavailable`;
-    }
-    return error;
   };
 
   return (
@@ -117,7 +88,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                   });
               }}
             >
-              {({ isSubmitting, isValid, setFieldValue, dirty, ...rest }) => (
+              {({ isSubmitting, isValid, setFieldValue, dirty, values, errors, ...rest }) => (
                 <Form>
                   <Box>
                     <FileUpload loggedInUser={loggedInUser} />
@@ -134,8 +105,15 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                       type="text"
                       name="username"
                       label="Username"
-                      validate={validateUsername}
+                      validate={(value: string) => validateUsername(value, firebase, '')}
                       required
+                      helpText={
+                        values.username.length > 3 &&
+                        !errors.username &&
+                        loggedInUser.username !== values.username // initialValues is set from loggedInUser
+                          ? `${values.username} is available!`
+                          : ''
+                      }
                     />
                     {typeof window !== 'undefined' && window.google && (
                       <Field

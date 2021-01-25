@@ -20,13 +20,12 @@ import {
   Box,
   PackingListItem,
   Pill,
-  LoadingPage,
 } from '@components';
 import { RootState } from '@redux/ducks';
 import { TripType, TripMember } from '@common/trip';
 import { formattedDateRange, isBeforeToday } from '@utils/dateUtils';
 import { brandPrimary, white, textColor } from '@styles/color';
-import { baseSpacer } from '@styles/size';
+import { baseSpacer, halfSpacer } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
 
 type TripByIdProps = {
@@ -34,7 +33,7 @@ type TripByIdProps = {
 } & RouteComponentProps;
 
 const Tabs = styled.div`
-  margin-top: -${baseSpacer};
+  margin-top: calc(-${baseSpacer} - 1px);
   background-color: ${white};
   display: flex;
   justify-content: space-between;
@@ -163,44 +162,60 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                 )}
                 {activeTrip && !isBeforeToday(activeTrip.endDate.seconds * 1000) && (
                   <div>
-                    <Link to={`/app/trips/${activeTrip.id}/edit`}>
+                    <Link to={`/app/trips/${activeTrip.tripId}/edit`}>
                       <FaPencilAlt /> Edit
                     </Link>
                   </div>
                 )}
               </FlexContainer>
               <HorizontalRule compact />
-              <p>{activeTrip ? activeTrip.description : <Skeleton />}</p>
+              {activeTrip ? (
+                <p style={{ whiteSpace: 'pre-line' }}>{activeTrip.description}</p>
+              ) : (
+                <Skeleton count={5} />
+              )}
             </Box>
             <Box>
               <FlexContainer justifyContent="flex-start">
-                <FaMapMarkerAlt /> {!activeTrip ? 'activeTrip.startingPoint' : <Skeleton />}
+                <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />{' '}
+                {activeTrip ? activeTrip.startingPoint : <Skeleton width={225} />}
               </FlexContainer>
               <HorizontalRule compact />
-              <p>
-                <FaCalendar />{' '}
+              <FlexContainer justifyContent="flex-start">
+                <FaCalendar style={{ marginRight: halfSpacer }} />{' '}
                 {activeTrip ? (
                   formattedDateRange(
                     activeTrip.startDate.seconds * 1000,
                     activeTrip.endDate.seconds * 1000
                   )
                 ) : (
-                  <Skeleton />
+                  <Skeleton width={200} />
                 )}
-              </p>
+              </FlexContainer>
               <HorizontalRule compact />
               {activeTrip && activeTrip.tags && activeTrip.tags.length ? (
                 <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
                   {activeTrip.tags.map((tag: string) => (
                     <Pill
                       key={`${tag}tag`}
-                      to={`/search/tags/${tag.replace(' ', '-')}`}
+                      // TODO: link to tags
+                      // to={`/search/tags/${tag.replace(' ', '-')}`}
                       text={tag}
                     />
                   ))}
                 </ul>
               ) : (
-                <Skeleton />
+                <FlexContainer justifyContent="flex-start">
+                  {/* Generate some tag placeholders and make widths dynamic with Math */}
+                  {['a', 'b', 'c', 'd', 'e', 'f', 'g'].map((i) => (
+                    <Skeleton
+                      key={i}
+                      // random widths between 48 and 128
+                      width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
+                      style={{ marginRight: halfSpacer }}
+                    />
+                  ))}
+                </FlexContainer>
               )}
             </Box>
 
@@ -208,36 +223,40 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
               <Heading as="h4" altStyle>
                 Trip Party
               </Heading>
-              {(!isLoaded(activeTrip) || tripMembersLoading) &&
-                activeTrip &&
-                activeTrip.tripMembers.map((member, index) => (
-                  <Fragment key={member.toString()}>
-                    <FlexContainer justifyContent="flex-start">
-                      <Skeleton circle height={32} width={32} />
-                      <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
-                    </FlexContainer>
-                    {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
-                  </Fragment>
-                ))}
-              {isLoaded(activeTrip) &&
-                !tripMembersLoading &&
-                tripMembers.length === 0 &&
-                'no party members'}
-              {tripMembers.length > 0 &&
-                tripMembers.map((member, index) => (
-                  <Fragment key={member.uid}>
-                    <FlexContainer justifyContent="flex-start">
-                      <Avatar src={member.photoURL} gravatarEmail={member.email} rightMargin />
-                      <span>{member.displayName}</span>
-                    </FlexContainer>
-                    {index !== tripMembers.length - 1 && <HorizontalRule compact />}
-                  </Fragment>
-                ))}
+              {!tripMembersLoading ? (
+                <>
+                  {activeTrip && tripMembers.length === 0 && 'no party members'}
+                  {activeTrip &&
+                    tripMembers.length > 0 &&
+                    tripMembers.map((member, index) => (
+                      <Fragment key={member.uid}>
+                        <FlexContainer justifyContent="flex-start">
+                          <Avatar src={member.photoURL} gravatarEmail={member.email} rightMargin />
+                          <span>{member.displayName}</span>
+                        </FlexContainer>
+                        {index !== tripMembers.length - 1 && <HorizontalRule compact />}
+                      </Fragment>
+                    ))}
+                </>
+              ) : (
+                <>
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Fragment key={i}>
+                      <FlexContainer justifyContent="flex-start">
+                        <Skeleton circle height={32} width={32} />
+                        <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
+                      </FlexContainer>
+                      <HorizontalRule compact />
+                    </Fragment>
+                  ))}
+                </>
+              )}
             </Box>
           </PageContainer>
         </SwipeableViewInner>
 
         <SwipeableViewInner>
+          {/* TODO: refactor section to new file */}
           <PageContainer>
             <Heading as="h2" altStyle>
               Coming Soon!
@@ -249,6 +268,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
           </PageContainer>
         </SwipeableViewInner>
         <SwipeableViewInner>
+          {/* TODO: refactor section to new file */}
           <PageContainer>
             {packingList &&
               packingList.length > 0 &&
@@ -283,9 +303,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
           </PageContainer>
         </SwipeableViewInner>
       </SwipeableViews>
-      {/* ) : (
-        <LoadingPage />
-      )} */}
+
       {isLoaded(activeTripById) && isEmpty(activeTripById) && <p>No trip found</p>}
     </>
   );

@@ -186,7 +186,7 @@ const allStyles = css`
   letter-spacing: 1px;
   line-height: 1.5;
   padding: ${halfSpacer} ${baseAndAHalfSpacer};
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   text-decoration: none;
   border-radius: ${borderRadius};
   

@@ -440,7 +440,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               // stops form from being submitted if user hits enter key
-              event.preventDefault();
+              event.stopPropagation();
             }
           }}
         />

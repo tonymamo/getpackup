@@ -15,7 +15,7 @@ type EditTripSummaryProps = {
 const EditTripSummary: FunctionComponent<EditTripSummaryProps> = (props) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
-  const activeTrip = trips && trips.find((trip) => trip.id === props.id);
+  const activeTrip = trips && trips.find((trip) => trip.tripId === props.id);
   useFirestoreConnect([{ collection: 'trips', where: ['owner', '==', auth.uid] }]);
 
   // TODO: initialize trip members

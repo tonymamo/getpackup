@@ -21,6 +21,7 @@ import { RootState } from '@redux/ducks';
 import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
 import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
+import { halfSpacer } from '@styles/size';
 
 type TripsProps = { loggedInUser: UserType } & RouteComponentProps;
 
@@ -68,11 +69,11 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         />
       </FlexContainer>
       <p style={{ marginBottom: 0 }}>
-        <FaRegCalendar />{' '}
+        <FaRegCalendar style={{ marginRight: halfSpacer }} />
         {formattedDateRange(trip.startDate.seconds * 1000, trip.endDate.seconds * 1000)}
       </p>
       <p>
-        <FaMapMarkerAlt /> {trip.startingPoint}
+        <FaMapMarkerAlt style={{ marginRight: halfSpacer }} /> {trip.startingPoint}
       </p>
       <TextTruncate line={1} element="p" truncateText="…" text={trip.description} />
     </Box>

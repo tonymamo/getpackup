@@ -13,7 +13,6 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
 
   const initialValues = {
-    id: '',
     owner: auth.uid,
     tripId: '',
     name: '',

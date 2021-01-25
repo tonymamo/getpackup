@@ -4,19 +4,12 @@ import { useFirebase, useFirestoreConnect, isLoaded, isEmpty } from 'react-redux
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { navigate } from 'gatsby';
-import {
-  startOfDay,
-  endOfDay,
-  addDays,
-  format as dateFnsFormat,
-  parse as dateFnsParse,
-} from 'date-fns';
+import { startOfDay, endOfDay, addDays, format as dateFnsFormat } from 'date-fns';
 import { components } from 'react-select';
 import styled from 'styled-components';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import { DateUtils } from 'react-day-picker';
+import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 // import uniqBy from 'lodash/uniqBy';
 
@@ -31,7 +24,7 @@ import {
   Modal,
   Heading,
 } from '@components';
-import { StyledLabel, sharedStyles } from '@components/Input';
+import { StyledLabel } from '@components/Input';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
 import { RootState } from '@redux/ducks';
@@ -46,7 +39,8 @@ import {
 } from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
 import { TripType, TripMember } from '@common/trip';
-import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
+import { baseSpacer, borderRadius, doubleSpacer, halfSpacer } from '@styles/size';
+import { baseBorderStyle } from '@styles/mixins';
 
 type ValuesType = Omit<TripType, 'startDate' | 'endDate'> & {
   startDate: Date;
@@ -60,13 +54,14 @@ type TripSummaryProps = {
 
 const DayPickerInputWrapper = styled.div<any>`
   margin-bottom: ${baseSpacer};
+  background-color: ${white};
+  border: ${baseBorderStyle};
+  border-radius: ${borderRadius};
 
-  & .DayPickerInput {
-    display: block;
-  }
-
-  & input {
-    ${sharedStyles}
+  & .DayPicker {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
   }
 
   & .DayPicker-Day--today {
@@ -88,6 +83,8 @@ const DayPickerInputWrapper = styled.div<any>`
 `;
 
 const SliderWrapper = styled.div`
+  margin: 0 ${baseSpacer};
+
   & .rangeslider {
     font-size: ${fontSizeSmall};
     box-shadow: none;
@@ -356,18 +353,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
 
   const dateFormat = 'MM/dd/yyyy';
 
-  const parseDate = (str: string) => {
-    const parsed = dateFnsParse(str, dateFormat, new Date());
-    if (DateUtils.isDate(parsed)) {
-      return parsed;
-    }
-    return undefined;
-  };
-
-  const formatDate = (date: number | Date) => {
-    return dateFnsFormat(date, dateFormat);
-  };
-
   return (
     <>
       <Formik
@@ -396,26 +381,22 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               required
             />
             <Row>
-              <Column sm={6}>
+              <Column md={6}>
                 <StyledLabel required>Start Date</StyledLabel>
                 <DayPickerInputWrapper>
-                  <DayPickerInput
-                    formatDate={formatDate}
-                    format={dateFormat}
-                    parseDate={parseDate}
-                    placeholder={`${dateFnsFormat(new Date(), dateFormat)}`}
-                    onDayChange={(day) => {
+                  <DayPicker
+                    selectedDays={new Date(values.startDate)}
+                    onDayClick={(day: Date) => {
                       setFieldValue('startDate', dateFnsFormat(new Date(day), dateFormat));
                       setFieldValue(
                         'endDate',
                         dateFnsFormat(addDays(new Date(day), values.tripLength), dateFormat)
                       );
                     }}
-                    value={dateFnsFormat(new Date(values.startDate), dateFormat)}
                   />
                 </DayPickerInputWrapper>
               </Column>
-              <Column sm={6}>
+              <Column md={6}>
                 <StyledLabel required>Trip Length</StyledLabel>
                 <SliderWrapper>
                   <Slider

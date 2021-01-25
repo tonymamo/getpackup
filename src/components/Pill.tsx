@@ -7,7 +7,7 @@ import { baseSpacer, doubleSpacer, quarterSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
 
 type PillProps = {
-  to: string;
+  to?: string;
   text: string;
 };
 
@@ -19,6 +19,7 @@ const StyledPill = styled.li`
   border-radius: ${doubleSpacer};
   margin: ${quarterSpacer};
   transition: all 0.2s ease-in-out;
+  color: ${white};
 
   &:hover {
     background-color: ${brandPrimaryHover};
@@ -40,9 +41,7 @@ const StyledLink = styled(Link)`
 const Pill: FunctionComponent<PillProps> = (props) => {
   return (
     <StyledPill>
-      <small>
-        <StyledLink to={props.to}>{props.text}</StyledLink>
-      </small>
+      <small>{props.to ? <StyledLink to={props.to}>{props.text}</StyledLink> : props.text}</small>
     </StyledPill>
   );
 };

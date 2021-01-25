@@ -91,7 +91,7 @@ const StyledMenu = styled.nav`
   right: 0;
   left: 0;
   height: 100vh;
-  transition: all 200ms linear;
+  transition: all 0.2s ease-in-out;
   line-height: initial;
 
   & a,

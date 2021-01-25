@@ -3,6 +3,7 @@ import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
+import { Link } from 'gatsby';
 
 import Profile from '@views/Profile';
 import Trips from '@views/Trips';
@@ -14,9 +15,18 @@ import Search from '@views/Search';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
-import { breakpoints, baseSpacer } from '@styles/size';
-import { offWhite } from '@styles/color';
-import { baseBorderStyle } from '@styles/mixins';
+import {
+  breakpoints,
+  baseSpacer,
+  quarterSpacer,
+  borderRadius,
+  quadrupleSpacer,
+  octupleSpacer,
+  baseAndAHalfSpacer,
+} from '@styles/size';
+import { brandTertiary, brandTertiaryHover, offWhite, white } from '@styles/color';
+import { baseBorderStyle, z1Shadow } from '@styles/mixins';
+import { FaBullhorn } from 'react-icons/fa';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -28,7 +38,31 @@ export const AppContainer = styled.div`
   min-height: 100vh;
 `;
 
-const App = () => {
+const FeedbackLink = styled(Link)`
+  position: fixed;
+  z-index: 1;
+  right: -${quadrupleSpacer};
+  height: ${quadrupleSpacer};
+  margin-top: -${baseAndAHalfSpacer}; /* half of above */
+  top: 50%;
+  width: ${octupleSpacer};
+  background: ${brandTertiary};
+  color: ${white};
+  padding: ${quarterSpacer};
+  box-shadow: ${z1Shadow};
+  border-radius: ${borderRadius} ${borderRadius} 0 0;
+  transform: rotate(-90deg);
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: ${white};
+    background-color: ${brandTertiaryHover};
+    right: calc(-${quadrupleSpacer} + ${quarterSpacer});
+  }
+`;
+
+const App = (props) => {
   const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
@@ -96,6 +130,9 @@ const App = () => {
           />
         </Router>
       </ErrorBoundary>
+      <FeedbackLink to="/feedback" state={{ pathname: props.location.pathname }}>
+        <FaBullhorn /> Feedback
+      </FeedbackLink>
     </AppContainer>
   );
 };
