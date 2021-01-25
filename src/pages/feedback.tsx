@@ -127,7 +127,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                       <Field
                         as={Input}
                         type="textarea"
-                        name="liked"
+                        name="missing"
                         label="Is there anything we are missing or not thinking of that you would add?"
                       />
                       <Field
