@@ -5,9 +5,8 @@ const encode = (data: { [key: string]: any }) => {
 };
 
 export default async (formName: string, values: any) =>
-  // https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables
-  // process.env.DEPLOY_PRIME_URL is from Netlify
-  fetch(process.env.DEPLOY_PRIME_URL ? process.env.DEPLOY_PRIME_URL : 'https://getpackup.com/', {
+  // use GATSBY_SITE_URL from netlify.toml if available
+  fetch(process.env.GATSBY_SITE_URL ? process.env.GATSBY_SITE_URL : 'https://getpackup.com/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: encode({
