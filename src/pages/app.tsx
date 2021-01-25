@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Router } from '@reach/router';
+import React, { FunctionComponent, useEffect } from 'react';
+import { RouteComponentProps, Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
@@ -15,15 +15,7 @@ import Search from '@views/Search';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
-import {
-  breakpoints,
-  baseSpacer,
-  quarterSpacer,
-  borderRadius,
-  quadrupleSpacer,
-  octupleSpacer,
-  baseAndAHalfSpacer,
-} from '@styles/size';
+import { breakpoints, baseSpacer, quarterSpacer, doubleSpacer, tripleSpacer } from '@styles/size';
 import { brandTertiary, brandTertiaryHover, offWhite, white } from '@styles/color';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import { FaBullhorn } from 'react-icons/fa';
@@ -41,28 +33,41 @@ export const AppContainer = styled.div`
 const FeedbackLink = styled(Link)`
   position: fixed;
   z-index: 1;
-  right: -${quadrupleSpacer};
-  height: ${quadrupleSpacer};
-  margin-top: -${baseAndAHalfSpacer}; /* half of above */
-  top: 50%;
-  width: ${octupleSpacer};
+  right: ${baseSpacer};
+  bottom: ${tripleSpacer};
   background: ${brandTertiary};
   color: ${white};
-  padding: ${quarterSpacer};
+  padding: 0 ${baseSpacer};
   box-shadow: ${z1Shadow};
-  border-radius: ${borderRadius} ${borderRadius} 0 0;
-  transform: rotate(-90deg);
-  text-align: center;
-  transition: all 0.2s ease-in-out;
+  border-radius: ${doubleSpacer};
+  transition: width 0.2s ease-in-out;
+  width: ${tripleSpacer};
+  height: ${tripleSpacer};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 
   &:hover {
+    transition: all 0.2s ease-in-out;
+    width: 140px;
     color: ${white};
     background-color: ${brandTertiaryHover};
-    right: calc(-${quadrupleSpacer} + ${quarterSpacer});
+  }
+
+  & span {
+    display: block;
+    width: 0px;
+    overflow: hidden;
+  }
+
+  &:hover span {
+    margin-left: ${quarterSpacer};
+    width: auto;
   }
 `;
 
-const App = (props) => {
+const App: FunctionComponent<RouteComponentProps> = (props) => {
   const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
@@ -130,8 +135,8 @@ const App = (props) => {
           />
         </Router>
       </ErrorBoundary>
-      <FeedbackLink to="/feedback" state={{ pathname: props.location.pathname }}>
-        <FaBullhorn /> Feedback
+      <FeedbackLink to="/feedback" state={{ pathname: props.location?.pathname }}>
+        <FaBullhorn /> <span>Feedback</span>
       </FeedbackLink>
     </AppContainer>
   );

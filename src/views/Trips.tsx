@@ -23,7 +23,7 @@ import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
 import { halfSpacer } from '@styles/size';
 
-type TripsProps = { loggedInUser: UserType } & RouteComponentProps;
+type TripsProps = { loggedInUser?: UserType } & RouteComponentProps;
 
 const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
@@ -63,8 +63,8 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         </Heading>
         {/* TODO: show all trip members avatars instead */}
         <Avatar
-          src={loggedInUser.photoURL as string}
-          gravatarEmail={loggedInUser.email as string}
+          src={loggedInUser?.photoURL as string}
+          gravatarEmail={loggedInUser?.email as string}
           size="sm"
         />
       </FlexContainer>
