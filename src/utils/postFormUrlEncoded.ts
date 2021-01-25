@@ -5,7 +5,9 @@ const encode = (data: { [key: string]: any }) => {
 };
 
 export default async (formName: string, values: any) =>
-  fetch(process.env.URL ? process.env.URL : 'https://getpackup.com/', {
+  // https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables
+  // process.env.DEPLOY_PRIME_URL is from Netlify
+  fetch(process.env.DEPLOY_PRIME_URL ? process.env.DEPLOY_PRIME_URL : 'https://getpackup.com/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: encode({
