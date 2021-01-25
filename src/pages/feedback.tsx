@@ -24,7 +24,13 @@ import logo from '@images/maskable_icon.png';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
 
-type FeedbackProps = {} & RouteComponentProps;
+type FeedbackProps = {
+  location?: {
+    state: {
+      pathname: string;
+    };
+  };
+} & RouteComponentProps;
 
 export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
@@ -35,6 +41,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
   const initialValues = {
     email: auth.email || '',
     displayName: auth.displayName || '',
+    page: props.location?.state?.pathname || '',
     liked: '',
     disliked: '',
     differently: '',
@@ -92,7 +99,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                       });
                   }}
                 >
-                  {({ isSubmitting, isValid, dirty }) => (
+                  {({ isSubmitting, isValid, dirty, values }) => (
                     <Form
                       name="feedback"
                       method="post"
@@ -100,6 +107,9 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                       data-netlify="true"
                     >
                       <input type="hidden" name="form-name" value="feedback" />
+                      <input type="hidden" name="email" value={values.email} />
+                      <input type="hidden" name="displayName" value={values.displayName} />
+                      <input type="hidden" name="page" value={values.page} />
                       <Heading as="h2">Thank you! 🤝</Heading>
                       <p>
                         We really appreciate you taking the time to provide us feedback on our app.

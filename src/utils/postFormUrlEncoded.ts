@@ -5,7 +5,7 @@ const encode = (data: { [key: string]: any }) => {
 };
 
 export default async (formName: string, values: any) =>
-  fetch('https://getpackup.com/', {
+  fetch(process.env.URL ? process.env.URL : 'https://getpackup.com/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: encode({
