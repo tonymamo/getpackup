@@ -65,7 +65,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         <Avatar
           src={loggedInUser?.photoURL as string}
           gravatarEmail={loggedInUser?.email as string}
-          size="lg"
+          size="sm"
         />
       </FlexContainer>
       <p style={{ marginBottom: 0 }}>
