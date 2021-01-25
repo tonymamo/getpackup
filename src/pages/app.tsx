@@ -1,9 +1,8 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { RouteComponentProps, Router } from '@reach/router';
+import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
-import { Link } from 'gatsby';
 
 import Profile from '@views/Profile';
 import Trips from '@views/Trips';
@@ -15,10 +14,9 @@ import Search from '@views/Search';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
-import { breakpoints, baseSpacer, quarterSpacer, doubleSpacer, tripleSpacer } from '@styles/size';
-import { brandTertiary, brandTertiaryHover, offWhite, white } from '@styles/color';
-import { baseBorderStyle, z1Shadow } from '@styles/mixins';
-import { FaBullhorn } from 'react-icons/fa';
+import { breakpoints, baseSpacer } from '@styles/size';
+import { offWhite } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -30,44 +28,7 @@ export const AppContainer = styled.div`
   min-height: 100vh;
 `;
 
-const FeedbackLink = styled(Link)`
-  position: fixed;
-  z-index: 1;
-  right: ${baseSpacer};
-  bottom: ${tripleSpacer};
-  background: ${brandTertiary};
-  color: ${white};
-  padding: 0 ${baseSpacer};
-  box-shadow: ${z1Shadow};
-  border-radius: ${doubleSpacer};
-  transition: width 0.2s ease-in-out;
-  width: ${tripleSpacer};
-  height: ${tripleSpacer};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    width: 140px;
-    color: ${white};
-    background-color: ${brandTertiaryHover};
-  }
-
-  & span {
-    display: block;
-    width: 0px;
-    overflow: hidden;
-  }
-
-  &:hover span {
-    margin-left: ${quarterSpacer};
-    width: auto;
-  }
-`;
-
-const App: FunctionComponent<RouteComponentProps> = (props) => {
+const App: FunctionComponent<{}> = () => {
   const firebase = useFirebase();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
@@ -135,9 +96,6 @@ const App: FunctionComponent<RouteComponentProps> = (props) => {
           />
         </Router>
       </ErrorBoundary>
-      <FeedbackLink to="/feedback" state={{ pathname: props.location?.pathname }}>
-        <FaBullhorn /> <span>Feedback</span>
-      </FeedbackLink>
     </AppContainer>
   );
 };
