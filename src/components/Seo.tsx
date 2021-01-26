@@ -143,6 +143,11 @@ const Seo: FunctionComponent<SeoType> = ({
         },
       ].concat(meta || [])}
     >
+      {/* suggestions from https://realfavicongenerator.net/ */}
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#c46200" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+      <meta name="msapplication-TileColor" content="#c46200" />
+      <meta name="theme-color" content="#ffffff" />
       {/* genereated from https://appsco.pe/developer/splash-screens */}
       <link
         href="img/splashscreens/iphone5_splash.png"
