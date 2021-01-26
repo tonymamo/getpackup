@@ -14,6 +14,7 @@ module.exports = {
     image: '/img/collage.jpg',
   },
   plugins: [
+    'gatsby-plugin-remove-fingerprints',
     'gatsby-plugin-typescript',
     'gatsby-plugin-react-helmet-async',
     'gatsby-plugin-styled-components',
