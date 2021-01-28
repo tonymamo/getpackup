@@ -53,7 +53,7 @@ export const PublicProfileTemplate: FunctionComponent<PublicProfileProps> = ({
 
       <PageContainer withVerticalPadding>
         <BioWrapper>
-          <Box roundedCorners>
+          <Box>
             <FlexContainer flexDirection="column">
               <PublicProfileAvatarWrapper>
                 <Avatar size="xl" src={photoURL} gravatarEmail="" />
@@ -70,7 +70,7 @@ export const PublicProfileTemplate: FunctionComponent<PublicProfileProps> = ({
             </FlexContainer>
           </Box>
         </BioWrapper>
-        <Box roundedCorners>trips and stuff</Box>
+        <Box>trips and stuff</Box>
       </PageContainer>
     </>
   );

@@ -25,7 +25,6 @@ type BoxProps = {
     };
   };
   onClick?: () => void;
-  roundedCorners?: boolean;
 };
 
 const renderShadow = (zindex: number) => {
@@ -44,7 +43,7 @@ const renderShadow = (zindex: number) => {
 };
 
 const StyledBox = styled.div<BoxProps>`
-  ${({ roundedCorners }) => (roundedCorners ? `border-radius: ${borderRadiusRound};` : '')}
+  /* border-radius: ${borderRadius}; */
   padding: ${baseSpacer};
   margin-bottom: ${baseSpacer};
   border: ${baseBorderStyle};
