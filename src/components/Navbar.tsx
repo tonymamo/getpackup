@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
 import {
-  FaBullhorn,
+  // FaBullhorn,
   FaCalendar,
   FaChevronLeft,
   FaSearch,
@@ -246,9 +246,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {isAuthenticated && isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
-              <Link to="/feedback">
+              {/* <Link to="/feedback">
                 <FaBullhorn />
-              </Link>
+              </Link> */}
             </IconLinkWrapper>
           )}
           {isSmallScreen && !isAuthenticated && auth.isLoaded && (
@@ -313,9 +313,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   <FaUserLock />
                 </Link>
               )}
-              <Link to="/feedback" getProps={isPartiallyActive}>
+              {/* <Link to="/feedback" getProps={isPartiallyActive}>
                 <FaBullhorn />
-              </Link>
+              </Link> */}
               {loggedInUser && loggedInUser.length > 0 && (
                 <Link to="/app/profile" getProps={isPartiallyActive}>
                   <Avatar

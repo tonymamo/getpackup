@@ -19,7 +19,7 @@ import {
   inputPaddingX,
   inputPaddingY,
 } from '@styles/size';
-import { fontSizeBase, lineHeightBase, fontSizeSmall } from '@styles/typography';
+import { fontSizeBase, lineHeightBase, fontSizeSmall, fontSizeH6 } from '@styles/typography';
 import {
   textColor,
   white,
@@ -65,7 +65,9 @@ export const sharedStyles = css`
   width: 100%;
   height: ${inputHeight};
   padding: ${inputPaddingY} ${inputPaddingX};
-  font-size: ${fontSizeBase};
+  /* helps prevent zooming when inputs are focused on mobile safari to have it be above 16px */
+  /* https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone */
+  font-size: ${fontSizeH6};
   line-height: ${lineHeightBase};
   color: ${textColor};
   background-color: #ffffff;
