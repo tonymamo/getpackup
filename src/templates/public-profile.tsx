@@ -13,6 +13,7 @@ import {
 } from '@styles/size';
 import { white } from '@styles/color';
 import { z1Shadow } from '@styles/mixins';
+import { UserType } from '@common/user';
 
 const BioWrapper = styled.div`
   margin: -${decupleSpacer} 0 ${baseSpacer};
@@ -26,15 +27,7 @@ const PublicProfileAvatarWrapper = styled.div`
 `;
 
 type PublicProfileProps = {
-  user: {
-    id: string;
-    username: string;
-    photoURL: string;
-    displayName: string;
-    location: string;
-    website: string;
-    bio: string;
-  };
+  user: UserType;
   heroImage: { childImageSharp: { fluid: FluidObject } };
 };
 
