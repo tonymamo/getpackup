@@ -21,7 +21,7 @@ import Button from './Button';
 import Avatar from './Avatar';
 import FlexContainer from './FlexContainer';
 
-const FileUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }) => {
+const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
 
@@ -107,4 +107,4 @@ const FileUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }) 
   );
 };
 
-export default FileUpload;
+export default AvatarUpload;

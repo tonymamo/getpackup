@@ -7,7 +7,7 @@ import { actionTypes } from 'redux-firestore';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 
-import { Input, Button, Box, Seo, PageContainer, Row, Column, FileUpload } from '@components';
+import { Input, Button, Box, Seo, PageContainer, Row, Column, AvatarUpload } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { requiredField } from '@utils/validations';
@@ -91,7 +91,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
               {({ isSubmitting, isValid, setFieldValue, dirty, values, errors, ...rest }) => (
                 <Form>
                   <Box>
-                    <FileUpload loggedInUser={loggedInUser} />
+                    <AvatarUpload loggedInUser={loggedInUser} />
                     <Field
                       as={Input}
                       type="text"

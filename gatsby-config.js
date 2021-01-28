@@ -172,6 +172,16 @@ module.exports = {
         trackPageDelay: 50,
       },
     },
+    {
+      resolve: `gatsby-source-firestore-easy`,
+      options: {
+        adminCredential: {
+          credential: Buffer.from(process.env.FIREBASE_ADMIN_CREDENTIAL, 'base64').toString(),
+          databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
+        },
+        collections: ['users'],
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     'gatsby-plugin-offline',

@@ -23,7 +23,7 @@ import {
   SignupForm,
 } from '@components';
 import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
-import { quadrupleSpacer, baseSpacer, doubleSpacer, screenSizes } from '@styles/size';
+import { quadrupleSpacer, baseSpacer, doubleSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
 import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
 import { RootState } from '@redux/ducks';
@@ -96,7 +96,6 @@ const Footer = () => {
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
   const size = useWindowSize();
-  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.medium);
 
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
     return isPartiallyCurrent ? { className: 'active' } : {};
@@ -186,7 +185,7 @@ const Footer = () => {
           </StyledFooter>
         </>
       )}
-      {isSmallScreen && loggedInUser && (
+      {size.isSmallScreen && loggedInUser && (
         <BottomNav>
           <Link to="/app/trips" getProps={isPartiallyActive}>
             <FaCalendar />

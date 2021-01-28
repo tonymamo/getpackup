@@ -2,7 +2,12 @@ import React, { FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { FluidObject } from 'gatsby-image';
 
-import { baseSpacer, borderRadius, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
+import {
+  baseSpacer,
+  breakpoints,
+  doubleSpacer,
+  quadrupleSpacer,
+} from '@styles/size';
 import { white } from '@styles/color';
 import { baseBorderStyle, z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';
 
@@ -22,19 +27,18 @@ type BoxProps = {
 };
 
 const renderShadow = (zindex: number) => {
-  if (zindex === 1) {
-    return z1Shadow;
+  switch (zindex) {
+    case 1:
+      return z1Shadow;
+    case 2:
+      return z2Shadow;
+    case 3:
+      return z3Shadow;
+    case 4:
+      return z4Shadow;
+    default:
+      return z1Shadow;
   }
-  if (zindex === 2) {
-    return z2Shadow;
-  }
-  if (zindex === 3) {
-    return z3Shadow;
-  }
-  if (zindex === 4) {
-    return z4Shadow;
-  }
-  return z1Shadow;
 };
 
 const StyledBox = styled.div<BoxProps>`

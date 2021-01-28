@@ -1,5 +1,22 @@
 import { ExtendedFirebaseInstance } from 'react-redux-firebase';
 
+const reservedRouteNamesThatCannotBeUsernames = [
+  'about',
+  'links',
+  'contact',
+  'terms',
+  'privacy',
+  'tags',
+  'blog',
+  '404',
+  'feedback',
+  'login',
+  'signup',
+  'logout',
+  'admin',
+  'app',
+];
+
 const validateUsername = async (
   value: string,
   firebase: ExtendedFirebaseInstance,
@@ -30,6 +47,7 @@ const validateUsername = async (
 
   let error;
   if (
+    reservedRouteNamesThatCannotBeUsernames.includes(searchValue) ||
     existingUsernames.filter((user) => user.uid !== loggedInUserUID && user.username === value)
       .length > 0
   ) {

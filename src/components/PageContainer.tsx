@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { breakpoints, doubleSpacer, baseSpacer, halfSpacer, quadrupleSpacer } from '@styles/size';
 
 const PageContainer = styled.div`
+  position: relative;
   margin-right: auto;
   margin-left: auto;
   padding-right: ${halfSpacer};

@@ -4,53 +4,59 @@ backend:
   api_root: https://api.github.com
   branch: master
   commit_messages:
-    create: "Create {{collection}} “{{slug}}”"
-    update: "Update {{collection}} “{{slug}}”"
-    delete: "Delete {{collection}} “{{slug}}”"
-    uploadMedia: "[skip ci] Upload “{{path}}”"
-    deleteMedia: "[skip ci] Delete “{{path}}”"
+    create: 'Create {{collection}} “{{slug}}”'
+    update: 'Update {{collection}} “{{slug}}”'
+    delete: 'Delete {{collection}} “{{slug}}”'
+    uploadMedia: '[skip ci] Upload “{{path}}”'
+    deleteMedia: '[skip ci] Delete “{{path}}”'
 
 media_folder: static/img
 public_folder: /img
 
 collections:
-  - name: "blog"
+  - name: 'blog'
     editor:
       preview: true
-    label: "Blog"
-    folder: "src/pages/blog"
+    label: 'Blog'
+    folder: 'src/pages/blog'
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     fields:
-      - {
-          label: "Template Key",
-          name: "templateKey",
-          widget: "hidden",
-          default: "blog-post",
-        }
+      - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'blog-post' }
       - { label: Title, name: title, widget: string }
-      - { label: "Publish Date", name: date, widget: datetime }
+      - { label: 'Publish Date', name: date, widget: datetime }
       - { label: Description, name: description, widget: text }
-      - { label: "Featured Post", name: featuredpost, widget: boolean }
-      - { label: "Featured Image", name: featuredimage, widget: image }
+      - { label: 'Featured Post', name: featuredpost, widget: boolean }
+      - { label: 'Featured Image', name: featuredimage, widget: image }
       - { label: Body, name: body, widget: markdown }
       - { label: Tags, name: tags, widget: list }
 
-  - name: "pages"
-    label: "Pages"
+  - name: 'profile'
+    editor:
+      preview: true
+    label: 'Profile'
+    folder: 'src/pages/profile'
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'public-profile' }
+      - { label: Title, name: title, widget: string }
+      - { label: 'Publish Date', name: date, widget: datetime }
+      - { label: Description, name: description, widget: text }
+      - { label: 'Featured Post', name: featuredpost, widget: boolean }
+      - { label: 'Featured Image', name: featuredimage, widget: image }
+      - { label: Body, name: body, widget: markdown }
+      - { label: Tags, name: tags, widget: list }
+
+  - name: 'pages'
+    label: 'Pages'
     files:
-      - file: "src/pages/index.md"
-        label: "Home Page"
-        name: "index"
+      - file: 'src/pages/index.md'
+        label: 'Home Page'
+        name: 'index'
         editor:
           preview: true
         fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "index-page",
-            }
+          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'index-page' }
           - { label: Title, name: title, widget: string }
           - { label: HeroImage, name: heroImage, widget: image }
           - { label: HeroMobileImage, name: mobileHeroImage, widget: image }
@@ -112,7 +118,7 @@ collections:
                 ],
             }
           - {
-              label: "Testimonial",
+              label: 'Testimonial',
               name: testimonials,
               widget: list,
               fields:
@@ -123,30 +129,30 @@ collections:
                   { label: Avatar, name: avatar, widget: image },
                 ],
             }
-      - file: "src/pages/frequently-asked-questions.md"
-        label: "FAQ Page"
-        name: "frequently-asked-questions"
+      - file: 'src/pages/frequently-asked-questions.md'
+        label: 'FAQ Page'
+        name: 'frequently-asked-questions'
         editor:
           preview: false
         fields:
           - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "frequently-asked-questions",
+              label: 'Template Key',
+              name: 'templateKey',
+              widget: 'hidden',
+              default: 'frequently-asked-questions',
             }
           - { label: Title, name: title, widget: string }
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Heading", name: heroHeading, widget: string }
-          - { label: "Hero Subheading", name: heroSubheading, widget: string }
+          - { label: 'Hero Image', name: heroImage, widget: image }
+          - { label: 'Hero Heading', name: heroHeading, widget: string }
+          - { label: 'Hero Subheading', name: heroSubheading, widget: string }
           - {
-              label: "Consumer FAQ",
+              label: 'Consumer FAQ',
               name: consumerFaq,
               widget: object,
               fields:
                 [
                   {
-                    label: "FAQ Item",
+                    label: 'FAQ Item',
                     name: items,
                     widget: list,
                     fields:
@@ -158,13 +164,13 @@ collections:
                 ],
             }
           - {
-              label: "Agent FAQ",
+              label: 'Agent FAQ',
               name: agentFaq,
               widget: object,
               fields:
                 [
                   {
-                    label: "FAQ Item",
+                    label: 'FAQ Item',
                     name: items,
                     widget: list,
                     fields:
@@ -175,106 +181,92 @@ collections:
                   },
                 ],
             }
-      - file: "src/pages/about.md"
-        label: "About"
-        name: "about"
+      - file: 'src/pages/about.md'
+        label: 'About'
+        name: 'about'
+        editor:
+          preview: true
+        fields:
+          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'about-page' }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+          - { label: HeroImage, name: heroImage, widget: image }
+      - file: 'src/pages/contact.md'
+        label: 'Contact'
+        name: 'contact'
         editor:
           preview: true
         fields:
           - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "about-page",
+              label: 'Template Key',
+              name: 'templateKey',
+              widget: 'hidden',
+              default: 'contact-page',
             }
           - { label: Title, name: title, widget: string }
           - { label: Body, name: body, widget: markdown }
           - { label: HeroImage, name: heroImage, widget: image }
-      - file: "src/pages/contact.md"
-        label: "Contact"
-        name: "contact"
+      - file: 'src/pages/blog/index.md'
+        label: 'Blog'
+        name: 'blog'
+        fields:
+          - {
+              label: 'Template Key',
+              name: 'templateKey',
+              widget: 'hidden',
+              default: 'blog-index-page',
+            }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+          - { label: HeroImage, name: heroImage, widget: image }
+      - file: 'src/pages/tags/index.md'
+        label: 'Tags'
+        name: 'tags'
+        fields:
+          - {
+              label: 'Template Key',
+              name: 'templateKey',
+              widget: 'hidden',
+              default: 'tags-index-page',
+            }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+          - { label: HeroImage, name: heroImage, widget: image }
+      - file: 'src/pages/terms.md'
+        label: 'Terms'
+        name: 'terms'
+        fields:
+          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'terms' }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+      - file: 'src/pages/privacy.md'
+        label: 'Privacy'
+        name: 'privacy'
+        fields:
+          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'privacy' }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+      - file: 'src/pages/links.md'
+        label: 'Links Page'
+        name: 'links'
         editor:
           preview: true
         fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "contact-page",
-            }
-          - { label: Title, name: title, widget: string }
-          - { label: Body, name: body, widget: markdown }
-          - { label: HeroImage, name: heroImage, widget: image }
-      - file: "src/pages/blog/index.md"
-        label: "Blog"
-        name: "blog"
-        fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "blog-index-page",
-            }
-          - { label: Title, name: title, widget: string }
-          - { label: Body, name: body, widget: markdown }
-          - { label: HeroImage, name: heroImage, widget: image }
-      - file: "src/pages/tags/index.md"
-        label: "Tags"
-        name: "tags"
-        fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "tags-index-page",
-            }
-          - { label: Title, name: title, widget: string }
-          - { label: Body, name: body, widget: markdown }
-          - { label: HeroImage, name: heroImage, widget: image }
-      - file: "src/pages/terms.md"
-        label: "Terms"
-        name: "terms"
-        fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "terms",
-            }
-          - { label: Title, name: title, widget: string }
-          - { label: Body, name: body, widget: markdown }
-      - file: "src/pages/privacy.md"
-        label: "Privacy"
-        name: "privacy"
-        fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "privacy",
-            }
-          - { label: Title, name: title, widget: string }
-          - { label: Body, name: body, widget: markdown }
-      - file: "src/pages/links.md"
-        label: "Links Page"
-        name: "links"
-        editor:
-          preview: true
-        fields:
-          - {
-              label: "Template Key",
-              name: "templateKey",
-              widget: "hidden",
-              default: "links-page",
-            }
+          - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'links-page' }
           - {
               label: LinksList,
               name: linksList,
               widget: list,
               summary: '{{fields.linkText}}',
               label_singular: 'New Link',
-              fields: [
-                  { label: LinkURL, name: linkUrl, widget: string, hint: 'For internal links (pages on our website, like blogs), dont include the domain name, just start with the / after getpackup.com' },
+              fields:
+                [
+                  {
+                    label: LinkURL,
+                    name: linkUrl,
+                    widget: string,
+                    hint: 'For internal links (pages on our website, like blogs), dont include the domain name, just start with the / after getpackup.com',
+                  },
                   { label: LinkText, name: linkText, widget: string },
                   { label: ThumbnailImage, name: thumbnail, widget: image },
                 ],
