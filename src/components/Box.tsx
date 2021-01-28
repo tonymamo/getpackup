@@ -7,7 +7,6 @@ import {
   breakpoints,
   doubleSpacer,
   quadrupleSpacer,
-  borderRadiusRound,
 } from '@styles/size';
 import { white } from '@styles/color';
 import { baseBorderStyle, z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';

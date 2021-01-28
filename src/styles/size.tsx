@@ -19,7 +19,6 @@ export const borderWidth = '1px';
 
 // Radius
 export const borderRadius = '3px';
-export const borderRadiusRound = '15px';
 export const borderRadiusCircle = '50%';
 
 // Input Heights
