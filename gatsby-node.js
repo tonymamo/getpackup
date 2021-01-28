@@ -110,7 +110,7 @@ exports.createPages = ({ actions, graphql }) => {
         const { username } = edge.node;
 
         createPage({
-          path: `/profile/${username}`,
+          path: `/${username}`,
           component: path.resolve(`src/templates/public-profile.tsx`),
           // additional data can be passed via context
           context: {
