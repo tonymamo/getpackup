@@ -6,7 +6,7 @@ import { white } from '@styles/color';
 import useWindowSize from '@utils/useWindowSize';
 import { ClientOnly, PreviewCompatibleImage } from '@components';
 
-type FullBleedImageProps = {
+type HeroImageProps = {
   imgSrc:
     | {
         childImageSharp: {
@@ -44,7 +44,7 @@ const ChildrenWrapper = styled.div`
   }
 `;
 
-const HeroImage: FunctionComponent<FullBleedImageProps> = ({ imgSrc, children, mobileImgSrc }) => {
+const HeroImage: FunctionComponent<HeroImageProps> = ({ imgSrc, children, mobileImgSrc }) => {
   const size = useWindowSize();
 
   return (
