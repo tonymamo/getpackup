@@ -177,6 +177,10 @@ const App: FunctionComponent<{
             email: auth.email || '',
             displayName: auth.displayName || '',
             page: props.location?.state?.pathname || '',
+            liked: '',
+            disliked: '',
+            differently: '',
+            missing: '',
             message: '',
           }}
           onSubmit={(values, { resetForm, setSubmitting }) => {
@@ -226,7 +230,7 @@ const App: FunctionComponent<{
                   <Field
                     as={Input}
                     type="textarea"
-                    name="feedback"
+                    name="message"
                     label="We'd love to hear it. What are your thoughts?"
                     validate={requiredField}
                     required
