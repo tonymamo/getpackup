@@ -104,7 +104,6 @@ module.exports = {
         short_name: 'packup',
         lang: 'en',
         start_url: '/',
-        orientation: 'portrait',
         background_color: '#f3f3f3',
         theme_color: '#0E3757',
         display: 'standalone',
