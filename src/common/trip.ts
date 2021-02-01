@@ -1,7 +1,3 @@
-import { UserType } from './user';
-
-export type TripMember = UserType;
-
 export type TripType = {
   owner: string;
   tripId: string;
@@ -12,7 +8,7 @@ export type TripType = {
   endDate: firebase.firestore.Timestamp;
   timezoneOffset: number;
   created?: firebase.firestore.Timestamp;
-  tripMembers: Array<TripMember>;
+  tripMembers: Array<string>;
   tags: Array<string>;
   tripLength: number;
 };

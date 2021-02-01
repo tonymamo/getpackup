@@ -1,13 +1,12 @@
 import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { FaMapMarkerAlt, FaCalendar, FaPencilAlt } from 'react-icons/fa';
-import { useFirestoreConnect, useFirebase, isLoaded } from 'react-redux-firebase';
+import { useFirestoreConnect, useFirebase, isLoaded, isEmpty } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
-import { Link } from 'gatsby';
 import SwipeableViews from 'react-swipeable-views';
 import styled from 'styled-components';
-import lodash, { isEmpty } from 'lodash';
+import lodash from 'lodash';
 import Skeleton from 'react-loading-skeleton';
 
 import {
@@ -20,13 +19,15 @@ import {
   Box,
   PackingListItem,
   Pill,
+  Button,
 } from '@components';
 import { RootState } from '@redux/ducks';
-import { TripType, TripMember } from '@common/trip';
-import { formattedDateRange, isBeforeToday } from '@utils/dateUtils';
+import { TripType } from '@common/trip';
+import { formattedDateRange } from '@utils/dateUtils';
 import { brandPrimary, white, textColor } from '@styles/color';
 import { baseSpacer, halfSpacer } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
+import { UserType } from '@common/user';
 
 type TripByIdProps = {
   id?: string;
@@ -85,7 +86,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   ]);
 
   const [activeTab, setActiveTab] = useState(0);
-  const [tripMembers, setTripMembers] = useState<TripType['tripMembers']>([]);
+  const [tripMembers, setTripMembers] = useState<UserType[]>([]);
   const [tripMembersLoading, setTripMembersLoading] = useState(true);
 
   const activeTrip: TripType | undefined =
@@ -100,7 +101,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         .get();
       if (!matchingUsers.empty) {
         matchingUsers.forEach((doc) => {
-          setTripMembers((arr) => lodash.uniqBy([...arr, doc.data() as TripMember], 'uid'));
+          setTripMembers((arr) => lodash.uniqBy([...arr, doc.data() as UserType], 'uid'));
           setTripMembersLoading(false);
         });
       }
@@ -154,17 +155,22 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
                 flexWrap="nowrap"
               >
                 {activeTrip ? (
-                  <Heading as="h3" altStyle>
+                  <Heading as="h3" altStyle noMargin>
                     {activeTrip.name}
                   </Heading>
                 ) : (
                   <Skeleton width={200} />
                 )}
-                {activeTrip && !isBeforeToday(activeTrip.endDate.seconds * 1000) && (
+                {activeTrip && (
                   <div>
-                    <Link to={`/app/trips/${activeTrip.tripId}/edit`}>
-                      <FaPencilAlt /> Edit
-                    </Link>
+                    <Button
+                      type="link"
+                      color="text"
+                      to={`/app/trips/${activeTrip.tripId}/edit`}
+                      iconLeft={<FaPencilAlt />}
+                    >
+                      Edit
+                    </Button>
                   </div>
                 )}
               </FlexContainer>

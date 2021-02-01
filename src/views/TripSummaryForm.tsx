@@ -38,9 +38,10 @@ import {
   brandSecondary,
 } from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
-import { TripType, TripMember } from '@common/trip';
+import { TripType } from '@common/trip';
 import { baseSpacer, borderRadius, doubleSpacer, halfSpacer } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
+import { UserType } from '@common/user';
 
 type ValuesType = Omit<TripType, 'startDate' | 'endDate'> & {
   startDate: Date;
@@ -241,7 +242,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       });
   };
 
-  type UserOptionsType = Array<TripMember & { value: string; label: string }>;
+  type UserOptionsType = Array<UserType & { value: string; label: string }>;
 
   const [existingTripMembers, setExistingTripMembers] = useState<UserOptionsType>([]);
 
@@ -257,7 +258,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       .get();
     if (!matchingUsers.empty) {
       return matchingUsers.forEach((doc) => {
-        const user = doc.data() as TripMember;
+        const user = doc.data() as UserType;
         setExistingTripMembers((arr) => [
           ...arr,
           {
@@ -294,7 +295,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
 
     if (!response.empty) {
       response.forEach((doc) => {
-        const user = doc.data() as TripMember;
+        const user = doc.data() as UserType;
         return usersOptions.push({
           ...user,
           value: user.uid,
