@@ -9,8 +9,8 @@ import { FaChevronRight, FaExclamationTriangle } from 'react-icons/fa';
 import { baseBorderStyle } from '@styles/mixins';
 import { baseSpacer, halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { Input, FlexContainer, Pill } from '@components';
-import { brandDanger, brandPrimary, offWhite } from '@styles/color';
+import { Input, FlexContainer, Pill, IconWrapper } from '@components';
+import { brandDanger, offWhite } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 
 type PackingListItemProps = {
@@ -32,16 +32,6 @@ const PackingListItemWrapper = styled.li`
 
 const ItemInputWrapper = styled.div`
   flex: 1;
-`;
-
-const IconWrapper = styled.div`
-  /* margin bottom to match Input's margin */
-  margin-bottom: ${baseSpacer};
-  margin-left: ${baseSpacer};
-  cursor: pointer;
-  &:hover {
-    color: ${brandPrimary};
-  }
 `;
 
 const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
