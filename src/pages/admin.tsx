@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
-import { navigate } from 'gatsby';
-import { useFirebase } from 'react-redux-firebase';
 
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
@@ -13,37 +11,8 @@ import { AppContainer } from './app';
 
 const Admin = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  // TODO: common type
-  const [loggedInUser, setLoggedInUser] = useState<{
-    displayName: string;
-    photoURL: string;
-    email: string;
-    bio: string;
-    website: string;
-    isAdmin: boolean;
-  } | null>(null);
-  const firebase = useFirebase();
-
-  const getLoggedInUser = async () => {
-    const response = await firebase
-      .firestore()
-      .collection('users')
-      .where('uid', '==', auth.uid)
-      .limit(1)
-      .get();
-    if (!response.empty) {
-      setLoggedInUser(response.docs[0].data());
-    }
-  };
-
-  useEffect(() => {
-    if (auth.uid) {
-      getLoggedInUser();
-    }
-    if (auth.isLoaded && loggedInUser && !loggedInUser?.isAdmin) {
-      navigate('/app');
-    }
-  }, [auth]);
+  const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
 
   if (!auth.isLoaded || !loggedInUser) {
     return <LoadingPage />;
@@ -52,17 +21,17 @@ const Admin = () => {
   return (
     <AppContainer>
       <ErrorBoundary>
-        <Router basepath="/admin" primary={false}>
-          <PrivateRoute path="/gear-list" component={GearList} loggedInUser={loggedInUser} />
+        <Router basepath="/admin">
+          <PrivateRoute path="/gear-list" component={GearList} loggedInUser={activeLoggedInUser} />
           <PrivateRoute
             path="/gear-list/new"
             component={NewGearListItem}
-            loggedInUser={loggedInUser}
+            loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute
             path="/gear-list/:id"
             component={EditGearListItem}
-            loggedInUser={loggedInUser}
+            loggedInUser={activeLoggedInUser}
           />
         </Router>
       </ErrorBoundary>

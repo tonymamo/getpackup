@@ -11,14 +11,13 @@ import { baseSpacer, halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Input, FlexContainer } from '@components';
 import { brandDanger, brandPrimary, offWhite } from '@styles/color';
+import { PackingListItemType } from '@common/packingListItem';
 
 type PackingListItemProps = {
-  id: string;
-  isPacked: boolean;
-  name: string;
-  category: string;
   tripId: string;
-  isEssential: boolean;
+  item: PackingListItemType;
+  editPackingItemClick: () => void;
+  setActivePackingListItem: (value: PackingListItemType) => void;
 };
 
 const PackingListItemWrapper = styled.li`
@@ -53,16 +52,16 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
     <PackingListItemWrapper>
       <Formik
         validateOnMount
-        initialValues={{ [props.name]: { isPacked: props.isPacked } }}
+        initialValues={{ [props.item.name]: { isPacked: props.item.isPacked } }}
         onSubmit={(values, { resetForm }) => {
           firebase
             .firestore()
             .collection('trips')
             .doc(props.tripId)
             .collection('packing-list')
-            .doc(props.id)
+            .doc(props.item.id)
             .update({
-              isPacked: values[props.name].isPacked,
+              isPacked: values[props.item.name].isPacked,
             })
             .then(() => {
               resetForm({ values });
@@ -83,14 +82,14 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
               <ItemInputWrapper>
                 <Field
                   as={Input}
-                  name={`${props.name}.isPacked`}
+                  name={`${props.item.name}.isPacked`}
                   type="checkbox"
-                  checked={values[props.name].isPacked}
-                  label={props.name}
+                  checked={values[props.item.name].isPacked}
+                  label={props.item.name}
                 />
               </ItemInputWrapper>
 
-              {props.isEssential && (
+              {props.item.isEssential && (
                 <IconWrapper>
                   <FaExclamationTriangle
                     data-tip="This is an essential item"
@@ -107,7 +106,12 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   />
                 </IconWrapper>
               )}
-              <IconWrapper onClick={() => alert('Edit coming soon!')}>
+              <IconWrapper
+                onClick={() => {
+                  props.setActivePackingListItem(props.item);
+                  props.editPackingItemClick();
+                }}
+              >
                 <FaChevronRight />
               </IconWrapper>
             </FlexContainer>

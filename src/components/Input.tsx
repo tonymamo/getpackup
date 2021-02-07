@@ -103,7 +103,7 @@ export const StyledInput = styled.input`
 
 const StyledTextarea = styled.textarea`
   resize: none;
-  min-height: ${`${Number(inputHeight.replace('px', '')) * 3}px`};
+  min-height: ${`${Number(inputHeight.replace('px', '')) * 2}px`};
   ${sharedStyles}
 `;
 
@@ -435,7 +435,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
         <StyledTextarea
           id={props.name}
           placeholder={typeof props.label === 'string' ? props.label : ''}
-          rows={3}
+          rows={2}
           {...field}
           {...props}
           {...meta}

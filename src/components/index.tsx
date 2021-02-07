@@ -7,6 +7,7 @@ import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
 import ErrorBoundary from './ErrorBoundary';
 import AvatarUpload from './AvatarUpload';
+import FeedbackModal from './FeedbackModal';
 import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
@@ -49,6 +50,7 @@ export {
   Content,
   ErrorBoundary,
   AvatarUpload,
+  FeedbackModal,
   FirebaseAuthWrapper,
   FlexContainer,
   Footer,
