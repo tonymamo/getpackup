@@ -2672,6 +2672,13 @@
     "@babel/runtime" "^7.7.2"
     regenerator-runtime "^0.13.3"
 
+"@material-ui/types@^4.0.0":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/types/-/types-4.1.1.tgz#b65e002d926089970a3271213a3ad7a21b17f02b"
+  integrity sha512-AN+GZNXytX9yxGi0JOfxHrRTbhFybjUJ05rnsBVjcB+16e466Z0Xe5IxawuOayVZgTBNDxmPKo5j4V6OnMtaSQ==
+  dependencies:
+    "@types/react" "*"
+
 "@mdx-js/mdx@^1.5.7":
   version "1.6.21"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.6.21.tgz#d3651b4802db7bdc399270c0ffa9e2aa99dd4b00"
@@ -3401,6 +3408,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-numeric-input@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@types/react-numeric-input/-/react-numeric-input-2.2.3.tgz#fbb0e8f24a4775374eda9cdce2355679d40f9e92"
+  integrity sha512-TQtZ+0PM3/Pk15YYY3xJGOmfwETFQYHGydMaY42OvAbRTBmYJSmGPL7f/Yi/9FfXWb4m4T8FrZborccZX6VXDw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-rangeslider@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@types/react-rangeslider/-/react-rangeslider-2.2.3.tgz#b116483679b720f19fadf793067f3dd41b4f15e6"
@@ -3427,7 +3441,16 @@
     "@types/react-dom" "*"
     "@types/react-transition-group" "*"
 
-"@types/react-swipeable-views@^0.13.0":
+"@types/react-swipeable-views-utils@^0.13.2":
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/@types/react-swipeable-views-utils/-/react-swipeable-views-utils-0.13.2.tgz#74c247ab62665d0a5b4f3c30dea7e3d82d5fdc7d"
+  integrity sha512-/EdlhYN7K62XS853ULfLS9adOFtdDVjo7a56U2/Knc233HR+cOoKQHn/qv3APFxQjuOWnF1bc7Kwx3LlEv4PlQ==
+  dependencies:
+    "@material-ui/types" "^4.0.0"
+    "@types/react" "*"
+    "@types/react-swipeable-views" "*"
+
+"@types/react-swipeable-views@*", "@types/react-swipeable-views@^0.13.0":
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/@types/react-swipeable-views/-/react-swipeable-views-0.13.0.tgz#9e5f2efa51380886f3f73014ac8b15546d337210"
   integrity sha512-orrreCcXev6IUXDuHf07RDDCAoIZRMSr95eyWmYNRfjic7w/O+68iPu0NCysVls+UygRNvoqZMuXI72N/58E1w==
@@ -16594,6 +16617,11 @@ react-modal@^3.8.1:
     prop-types "^15.5.10"
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
+
+react-numeric-input@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-numeric-input/-/react-numeric-input-2.2.3.tgz#4bf5918c3eafed851a80df1eb992d941002bb552"
+  integrity sha1-S/WRjD6v7YUagN8euZLZQQArtVI=
 
 react-onclickoutside@^6.5.0:
   version "6.9.0"

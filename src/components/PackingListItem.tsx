@@ -9,7 +9,7 @@ import { FaChevronRight, FaExclamationTriangle } from 'react-icons/fa';
 import { baseBorderStyle } from '@styles/mixins';
 import { baseSpacer, halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { Input, FlexContainer } from '@components';
+import { Input, FlexContainer, Pill } from '@components';
 import { brandDanger, brandPrimary, offWhite } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 
@@ -85,7 +85,15 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   name={`${props.item.name}.isPacked`}
                   type="checkbox"
                   checked={values[props.item.name].isPacked}
-                  label={props.item.name}
+                  label={
+                    props.item.quantity && props.item.quantity !== 1 ? (
+                      <>
+                        {props.item.name} <Pill text={`× ${props.item.quantity}`} />
+                      </>
+                    ) : (
+                      props.item.name
+                    )
+                  }
                 />
               </ItemInputWrapper>
 

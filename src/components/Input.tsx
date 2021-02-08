@@ -6,6 +6,7 @@ import Select, { CommonProps } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import Geosuggest, { QueryType } from 'react-geosuggest';
 import 'react-geosuggest/module/geosuggest.css';
+import NumericInput from 'react-numeric-input';
 
 import {
   baseSpacer,
@@ -18,6 +19,7 @@ import {
   inputHeight,
   inputPaddingX,
   inputPaddingY,
+  baseAndAHalfSpacer,
 } from '@styles/size';
 import { fontSizeBase, lineHeightBase, fontSizeSmall, fontSizeH6 } from '@styles/typography';
 import {
@@ -243,6 +245,92 @@ const PasswordToggle = styled.div`
   padding: 0 ${quarterSpacer};
   border-radius: 0 ${borderRadius} ${borderRadius} 0;
 `;
+//             input: {
+//               borderRadius,
+//               width: '100%',
+//               color: textColor,
+//               borderWidth: 1,
+//               borderColor,
+//               display: 'block',
+//               height: inputHeight,
+//               padding: `0 ${inputHeight}`,
+//             },
+//             'input:focus': {
+//               outline: 'none',
+//               borderColor: brandPrimary,
+//               borderWidth: '2px',
+//               boxShadow: `0 0 0 ${borderRadius} rgba(${brandPrimaryRGB}, 0.25)`,
+//             },
+//             b: {
+//               width: inputHeight,
+//             },
+//           }}
+const StyledNumericInputWrapper = styled.div`
+  & .react-numeric-input {
+    background: ${white};
+    border-radius: ${borderRadius};
+    width: 100%;
+    height: ${inputHeight};
+    position: relative;
+    display: block;
+  }
+
+  & input {
+    border-radius: ${borderRadius};
+    width: 100%;
+    color: ${textColor};
+    border: ${baseBorderStyle};
+    display: block;
+    height: ${inputHeight};
+    padding: 0 ${inputHeight};
+    text-align: center;
+  }
+
+  & input:focus {
+    outline: none;
+    border-color: ${brandPrimary};
+    border-width: 2px;
+    box-shadow: 0 0 0 ${borderRadius} rgba(${brandPrimaryRGB}, 0.25);
+  }
+
+  & b {
+    position: absolute;
+    top: 2px;
+    height: 46px;
+    width: 46px;
+    background-color: ${lightestGray};
+    border-radius: ${borderRadius};
+    color: ${textColor};
+  }
+
+  & b:nth-of-type(1) {
+    right: 2px;
+  }
+
+  & b:nth-of-type(2) {
+    left: 2px;
+  }
+
+  & b i:nth-child(1) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 2px;
+    background: ${textColor};
+    margin: -1px 0px 0px -5px;
+  }
+
+  & b i:nth-child(2) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 10px;
+    background: ${textColor};
+    margin: -5px 0px 0px -1px;
+  }
+`;
 
 const multiSelectStyles = {
   option: (provided: any, state: { isFocused: boolean }) => ({
@@ -259,7 +347,7 @@ const multiSelectStyles = {
     color: textColor,
     backgroundColor: 'white',
     border: state.isFocused ? `2px solid ${brandPrimary}` : baseBorderStyle,
-    boxShadow: state.isFocused && 'none',
+    boxShadow: state.isFocused ? `0 0 0 ${borderRadius} rgba(${brandPrimaryRGB}, 0.25)` : 'none',
     '&:hover': {
       border: state.isFocused ? `2px solid ${brandPrimary}` : baseBorderStyle,
     },
@@ -287,6 +375,24 @@ const Input: FunctionComponent<InputProps> = (props) => {
   let inputTypeToRender;
 
   switch (props.type) {
+    case 'number':
+      inputTypeToRender = (
+        <StyledNumericInputWrapper>
+          <NumericInput
+            mobile
+            strict
+            step={1}
+            min={1}
+            max={99}
+            // eslint-disable-next-line react/style-prop-object
+            style={false}
+            id={props.name}
+            value={props.value}
+            onChange={(value) => props.setFieldValue(field.name, String(value))}
+          />
+        </StyledNumericInputWrapper>
+      );
+      break;
     case 'select':
       {
         const onChange = (option: OptionType[] | OptionType) => {
@@ -372,7 +478,13 @@ const Input: FunctionComponent<InputProps> = (props) => {
               checked={props.checked}
               type="checkbox"
             />
-            {props.checked ? <FaCheckCircle color={brandSuccess} /> : <FaRegCircle />} {props.label}
+            {props.checked ? (
+              <FaCheckCircle color={brandSuccess} size={baseAndAHalfSpacer} />
+            ) : (
+              <FaRegCircle size={baseAndAHalfSpacer} />
+            )}
+            &nbsp;&nbsp;
+            {props.label}
           </StyledLabel>
         </>
       );

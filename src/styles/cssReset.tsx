@@ -235,7 +235,8 @@ const CssReset = createGlobalStyle`
     line-height: inherit;
   }
 
-  input[type="search"] {
+  input[type="search"],
+  input[type="number"] {
     -webkit-appearance: none;
   }
 

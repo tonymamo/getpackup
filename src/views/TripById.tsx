@@ -128,6 +128,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         <SwipeableViewInner key={key}>
           <PageContainer>
             <EditPackingListItem
+              tripId={props.id as string}
               backToPackingListClick={() => setActiveTab(1)}
               activeItem={activePackingListItem}
               setActivePackingListItem={() => setActivePackingListItem(undefined)}
@@ -147,7 +148,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         <Tab active={activeTab === 0} onClick={() => setActiveTab(0)}>
           Summary
         </Tab>
-        <Tab active={activeTab === 1} onClick={() => setActiveTab(1)}>
+        <Tab active={activeTab === 1 || activeTab === 2} onClick={() => setActiveTab(1)}>
           Checklist
         </Tab>
       </Tabs>

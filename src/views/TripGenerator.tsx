@@ -99,6 +99,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
               isPacked: false,
               category: item.category,
               isEssential: Boolean(item.essential),
+              quantity: 1,
+              description: '',
             };
           });
 

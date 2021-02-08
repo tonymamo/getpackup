@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-unused-expressions */
 import React, { FunctionComponent, Fragment, useState, useEffect } from 'react';
 import lodash from 'lodash';
 import Skeleton from 'react-loading-skeleton';
@@ -22,30 +24,36 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
 
   const getMatchingUsers = async () => {
     if (activeTrip !== undefined && isLoaded(activeTrip) && activeTrip.tripMembers?.length > 0) {
-      const matchingUsers = await firebase
+      return firebase
         .firestore()
         .collection('users')
         .where('uid', 'in', activeTrip.tripMembers)
         .get();
-      if (!matchingUsers.empty) {
-        matchingUsers.forEach((doc) => {
-          setTripMembers((arr) => lodash.uniqBy([...arr, doc.data() as UserType], 'uid'));
-          setTripMembersLoading(false);
-        });
-      }
-      if (matchingUsers.empty) {
-        setTripMembersLoading(false);
-      }
-    } else {
-      setTripMembersLoading(false);
     }
+    return null;
   };
 
+  // In the useEffect we want to get matching users, but an error about cancelling asynchronous
+  // tasks was appearing because we are async/awaiting in getMatchingUsers, so instead we
+  // set a variable (isFetchingTripMembers) and then use the return in useEffect as a cleanup
+  // https://juliangaramendy.dev/blog/use-promise-subscription
   useEffect(() => {
-    if (isLoaded(activeTrip)) {
-      getMatchingUsers();
-    }
-  }, [activeTrip]);
+    let isFetchingTripMembers = true;
+    getMatchingUsers().then((matchingUsers) => {
+      if (isFetchingTripMembers) {
+        if (!matchingUsers?.empty) {
+          matchingUsers?.forEach((doc) => {
+            setTripMembers((arr) => lodash.uniqBy([...arr, doc.data() as UserType], 'uid'));
+            setTripMembersLoading(false);
+          });
+        }
+        if (matchingUsers?.empty) {
+          setTripMembersLoading(false);
+        }
+      }
+    });
+    return () => (isFetchingTripMembers = false);
+  }, []);
 
   return (
     <>
