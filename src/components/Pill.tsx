@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 
 import { brandPrimary, brandPrimaryHover, white, lightestGray, textColor } from '@styles/color';
-import { doubleSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
+import { threeQuarterSpacer, doubleSpacer, quarterSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
 
 type PillProps = {
@@ -12,18 +12,41 @@ type PillProps = {
   color?: 'neutral' | 'primary';
 };
 
+const renderColor = (color: PillProps['color']) => {
+  switch (color) {
+    case 'neutral':
+      return {
+        backgroundColor: lightestGray,
+        hoverBackgroundColor: lightestGray,
+        color: textColor,
+      };
+    case 'primary':
+      return {
+        backgroundColor: brandPrimary,
+        hoverBackgroundColor: brandPrimaryHover,
+        color: white,
+      };
+    default:
+      return {
+        backgroundColor: brandPrimary,
+        hoverBackgroundColor: brandPrimaryHover,
+        color: white,
+      };
+  }
+};
+
 const StyledPill = styled.span`
   display: inline-block;
   padding: ${quarterSpacer} ${threeQuarterSpacer};
   background-color: ${(props: { color: PillProps['color'] }) =>
-    props.color === 'neutral' ? lightestGray : brandPrimary};
+    props.color && renderColor(props.color).backgroundColor};
   border-radius: ${doubleSpacer};
   margin: ${quarterSpacer};
   transition: all 0.2s ease-in-out;
-  color: ${(props) => (props.color === 'neutral' ? textColor : white)};
+  color: ${(props) => props.color && renderColor(props.color).color};
 
   &:hover {
-    background-color: ${brandPrimaryHover};
+    background-color: ${(props) => props.color && renderColor(props.color).hoverBackgroundColor};
   }
 `;
 

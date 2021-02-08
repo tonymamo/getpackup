@@ -37,10 +37,6 @@ const App: FunctionComponent<{}> = (props) => {
   const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
 
   useEffect(() => {
-    console.log(process.env.NODE_ENV);
-  }, []);
-
-  useEffect(() => {
     if (isLoaded(auth) && auth.uid) {
       if (
         ((activeLoggedInUser !== undefined && !activeLoggedInUser.username) ||
