@@ -36,7 +36,7 @@ type RelatedPostType = {
     title: string;
     featuredimage: {
       childImageSharp: {
-        fluid: FluidObject;
+        fixed: FixedObject;
       };
     };
   };
@@ -136,11 +136,11 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 )}
 
                 {props.tags && props.tags.length ? (
-                  <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
+                  <>
                     {props.tags.map((tag: string) => (
                       <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
                     ))}
-                  </ul>
+                  </>
                 ) : null}
                 <HorizontalRule />
 
@@ -163,11 +163,11 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
 
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (
-                  <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
+                  <>
                     {props.tags.map((tag: string) => (
                       <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
                     ))}
-                  </ul>
+                  </>
                 ) : null}
                 <HorizontalRule />
               </div>

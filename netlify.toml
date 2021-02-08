@@ -2,10 +2,12 @@
 # deploy contexts will inherit these settings. We use 'master' branch for this project
 [context.production.environment]
   ENVIRONMENT = "PRODUCTION"
+  NODE_ENV = "production"
   GATSBY_SITE_URL = "https://getpackup.com"
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
 [context.test.environment] # 'test' is a branch name
   ENVIRONMENT = "PRODUCTION"
+  NODE_ENV = "development"
   GATSBY_SITE_URL = "https://test.getpackup.com"

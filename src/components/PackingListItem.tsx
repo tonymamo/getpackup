@@ -87,8 +87,13 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   checked={values[props.item.name].isPacked}
                   label={
                     props.item.quantity && props.item.quantity !== 1 ? (
+                      // <>
+                      //   <strong>{props.item.quantity} × </strong>
+                      //   {props.item.name}
+                      // </>
                       <>
-                        {props.item.name} <Pill text={`× ${props.item.quantity}`} />
+                        <Pill text={`${props.item.quantity} ×`} color="neutral" />
+                        {props.item.name}
                       </>
                     ) : (
                       props.item.name

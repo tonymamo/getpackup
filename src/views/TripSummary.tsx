@@ -88,11 +88,6 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
       </Box>
       <Box>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-          <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />{' '}
-          {activeTrip ? activeTrip.startingPoint : <Skeleton width={225} />}
-        </FlexContainer>
-        <HorizontalRule compact />
-        <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
           <FaCalendar style={{ marginRight: halfSpacer }} />{' '}
           {activeTrip ? (
             formattedDateRange(
@@ -104,8 +99,13 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
           )}
         </FlexContainer>
         <HorizontalRule compact />
+        <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
+          <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />{' '}
+          {activeTrip ? activeTrip.startingPoint : <Skeleton width={225} />}
+        </FlexContainer>
+        <HorizontalRule compact />
         {activeTrip && activeTrip.tags && activeTrip.tags.length ? (
-          <ul style={{ margin: '0 0 0 -4px', padding: 0 }}>
+          <>
             {activeTrip.tags.map((tag: string) => (
               <Pill
                 key={`${tag}tag`}
@@ -114,7 +114,7 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
                 text={tag}
               />
             ))}
-          </ul>
+          </>
         ) : (
           <FlexContainer justifyContent="flex-start">
             {/* Generate some tag placeholders and make widths dynamic with Math */}

@@ -2,24 +2,25 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
 
-import { brandPrimary, brandPrimaryHover, white } from '@styles/color';
-import { baseSpacer, doubleSpacer, quarterSpacer } from '@styles/size';
+import { brandPrimary, brandPrimaryHover, white, lightestGray, textColor } from '@styles/color';
+import { doubleSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
 
 type PillProps = {
   to?: string;
   text: string;
+  color?: 'neutral' | 'primary';
 };
 
-const StyledPill = styled.li`
-  list-style: none;
+const StyledPill = styled.span`
   display: inline-block;
-  padding: ${quarterSpacer} ${baseSpacer};
-  background-color: ${brandPrimary};
+  padding: ${quarterSpacer} ${threeQuarterSpacer};
+  background-color: ${(props: { color: PillProps['color'] }) =>
+    props.color === 'neutral' ? lightestGray : brandPrimary};
   border-radius: ${doubleSpacer};
   margin: ${quarterSpacer};
   transition: all 0.2s ease-in-out;
-  color: ${white};
+  color: ${(props) => (props.color === 'neutral' ? textColor : white)};
 
   &:hover {
     background-color: ${brandPrimaryHover};
@@ -40,7 +41,7 @@ const StyledLink = styled(Link)`
 
 const Pill: FunctionComponent<PillProps> = (props) => {
   return (
-    <StyledPill>
+    <StyledPill color={props.color}>
       <small>{props.to ? <StyledLink to={props.to}>{props.text}</StyledLink> : props.text}</small>
     </StyledPill>
   );
