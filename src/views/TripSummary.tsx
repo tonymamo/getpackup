@@ -87,12 +87,12 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
         )}
       </Box>
       <Box>
-        <FlexContainer justifyContent="flex-start">
+        <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
           <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />{' '}
           {activeTrip ? activeTrip.startingPoint : <Skeleton width={225} />}
         </FlexContainer>
         <HorizontalRule compact />
-        <FlexContainer justifyContent="flex-start">
+        <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
           <FaCalendar style={{ marginRight: halfSpacer }} />{' '}
           {activeTrip ? (
             formattedDateRange(

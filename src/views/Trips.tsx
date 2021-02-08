@@ -16,6 +16,7 @@ import {
   Button,
   Seo,
   PageContainer,
+  HorizontalRule,
 } from '@components';
 import { RootState } from '@redux/ducks';
 import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
@@ -68,13 +69,15 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
           size="sm"
         />
       </FlexContainer>
-      <p style={{ marginBottom: 0 }}>
+      <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
         <FaRegCalendar style={{ marginRight: halfSpacer }} />
         {formattedDateRange(trip.startDate.seconds * 1000, trip.endDate.seconds * 1000)}
-      </p>
-      <p>
+      </FlexContainer>
+      <HorizontalRule compact />
+      <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
         <FaMapMarkerAlt style={{ marginRight: halfSpacer }} /> {trip.startingPoint}
-      </p>
+      </FlexContainer>
+      <HorizontalRule compact />
       <TextTruncate line={1} element="p" truncateText="…" text={trip.description} />
     </Box>
   );
