@@ -112,6 +112,7 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
                 // TODO: link to tags
                 // to={`/search/tags/${tag.replace(' ', '-')}`}
                 text={tag}
+                color="primary"
               />
             ))}
           </>

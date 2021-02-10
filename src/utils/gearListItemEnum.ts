@@ -15,6 +15,7 @@ export const gearListCategories = [
   { value: 'Kids', label: 'Kids' },
   { value: 'Baby', label: 'Baby' },
   { value: 'Pets', label: 'Pets' },
+  { value: 'Pre-Trip', label: 'Pre-Trip' },
 ];
 
 export const gearListTripType = [

@@ -138,7 +138,12 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 {props.tags && props.tags.length ? (
                   <>
                     {props.tags.map((tag: string) => (
-                      <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
+                      <Pill
+                        key={`${tag}tag`}
+                        to={`/tags/${kebabCase(tag)}/`}
+                        text={tag}
+                        color="primary"
+                      />
                     ))}
                   </>
                 ) : null}
@@ -165,7 +170,12 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                 {props.tags && props.tags.length ? (
                   <>
                     {props.tags.map((tag: string) => (
-                      <Pill key={`${tag}tag`} to={`/tags/${kebabCase(tag)}/`} text={tag} />
+                      <Pill
+                        key={`${tag}tag`}
+                        to={`/tags/${kebabCase(tag)}/`}
+                        text={tag}
+                        color="primary"
+                      />
                     ))}
                   </>
                 ) : null}
