@@ -20,12 +20,6 @@ tags:
 
 <br></br>
 
-<!--StartFragment-->
-
-Cover photo by [Jimmy Conover](https://unsplash.com/@jimmy_conover?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/camping?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
-
-<!--EndFragment-->
-
 # **Introduction**
 
 Climbers, skiers, surfers, hikers, accountants… calling all dirtbags! Are you looking for a way to stealth camp and move quickly through regions? Have you spent too many miserable nights in a swimming pool of a tent? Is your boyfriend deathly afraid of racoons? Would your acquaintances describe you as homeless?
@@ -213,3 +207,5 @@ If you enjoyed this post and want to see more videos detailing the build of this
 # HAPPY CAMPING!
 
 > *While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!*
+>
+> *Cover photo by [Jimmy Conover](https://unsplash.com/@jimmy_conover?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/camping?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)*
