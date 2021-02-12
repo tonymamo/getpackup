@@ -6,7 +6,7 @@ description: Build your own modular sleeping platform for your vehicle in a
   weekend for $275. Designed for the weekend warrior who still needs their seats
   during the week.
 featuredpost: true
-featuredimage: /img/dscf6808.jpg
+featuredimage: /img/jimmy-conover-j_xuxx9m0km-unsplash.jpg
 tags:
   - DIY
   - camping
@@ -16,10 +16,15 @@ tags:
   - hacks
   - guides
 ---
-
 #### If you find our posts useful for getting out, wait till you see the app we are developing. [Please consider signing up for the beta of our app](/), which aims to help you get outside on excursions faster and safer!
 
 <br></br>
+
+<!--StartFragment-->
+
+Cover photo by [Jimmy Conover](https://unsplash.com/@jimmy_conover?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/camping?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+<!--EndFragment-->
 
 # **Introduction**
 
@@ -32,6 +37,8 @@ If you answered “I guess?” to any of the questions above, you’re in luck! 
 **Space Efficient** - Raised sleeping platform allows for significant storage underneath. Under-bed storage containers work great with the build. Take the containers out and store them under your actual bed at home when not in use.
 
 **Cost Effective -** You should be able to put this together for between $275 to $535 (CAD, before tax) depending on how many nice-to-haves you add, and how many tools you can borrow. Not bad!
+
+![](/img/dscf6808.jpg)
 
 This platform was designed around a foam tri-fold mattress that we knew would fit within the dimensions of our vehicle, would be comfortable, and easily removable with its tri-fold design: [Milliard Full Tri Folding Mattress](https://amzn.to/3ga5sNj). We've been super happy with it so far, and the folding design allows us to store more gear while in transit. I would note that these guys have a variety of mattress sizes that should work for your individual situation.
 
@@ -107,7 +114,7 @@ Wood and many of the required materials should be straightforward to pick up fro
 
 3/4" Galvanized steel pipe and flanges can be a bit more of a challenge to source – some hardware locations may have it and others won’t. Try calling ahead or using the websites of different store locations to see if it is held as inventory.
 
-The biggest challenge was finding an indoor-outdoor rug in a 8’ x 6’ size that we could use for covering the platform. We ended up finding ours at Canadian Tire for around \$40.00, along with our under-platform storage bins and LED light pucks.
+The biggest challenge was finding an indoor-outdoor rug in a 8’ x 6’ size that we could use for covering the platform. We ended up finding ours at Canadian Tire for around $40.00, along with our under-platform storage bins and LED light pucks.
 
 <br></br>
 
@@ -205,4 +212,4 @@ If you enjoyed this post and want to see more videos detailing the build of this
 
 # HAPPY CAMPING!
 
-> _While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!_
+> *While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!*
