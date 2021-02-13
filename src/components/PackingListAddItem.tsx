@@ -42,7 +42,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
       {showAddForm && (
         <Formik
           validateOnMount
-          initialValues={{ quantity: 1 }}
+          initialValues={{}}
           onSubmit={async (values, { resetForm }) => {
             try {
               await firebase
@@ -50,7 +50,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                 .collection('trips')
                 .doc(tripId)
                 .collection('packing-list')
-                .add({ ...values, category: categoryName });
+                .add({ ...values, quantity: 1, category: categoryName });
 
               resetForm({});
             } catch (err) {
@@ -75,7 +75,6 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                     validate={requiredField}
                     required
                   />
-                  <Field as={Input} type="number" name="quantity" label="Quantity" />
                 </FlexContainer>
                 <IconWrapper onClick={handleSubmit}>
                   <FaPlus />
