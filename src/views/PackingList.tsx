@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import lodash from 'lodash';
 
-import { Box, Heading, PackingListItem } from '@components';
+import { Box, Heading, PackingListItem, PackingListAddItem } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 
 type PackingListProps = {
@@ -17,6 +17,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   editPackingItemClick,
   setActivePackingListItem,
 }) => {
+  let groupedCategories: [string, PackingListItemType[]][] = [];
+
+  if (packingList?.length) {
+    groupedCategories = Object.entries(lodash.groupBy(packingList, 'category'));
+  }
+
   return (
     <>
       <Box>
@@ -24,23 +30,24 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           Pre-Trip
         </Heading>
       </Box>
-      {packingList &&
-        packingList.length > 0 &&
-        Object.entries(lodash.groupBy(packingList, 'category')).map((category) => (
-          <Box key={category[0]}>
-            <Heading as="h3" altStyle>
-              {category[0]}
-            </Heading>
-            <ul style={{ padding: 0, listStyle: 'none' }}>
-              {category[1]
-                .sort((a, b) => {
-                  // put essentials at the top, and sort alphabetical
-                  if (a.isEssential === b.isEssential) {
-                    return a.name.localeCompare(b.name);
-                  }
-                  return a.isEssential > b.isEssential ? -1 : 1;
-                })
-                .map((item) => (
+      {groupedCategories.map(
+        ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
+          const sortedItems = packingListItems.sort((a, b) => {
+            // put essentials at the top, and sort alphabetical
+            if (a.isEssential === b.isEssential) {
+              return a.name.localeCompare(b.name);
+            }
+
+            return a.isEssential > b.isEssential ? -1 : 1;
+          });
+
+          return (
+            <Box key={categoryName}>
+              <Heading as="h3" altStyle>
+                {categoryName}
+              </Heading>
+              <ul style={{ padding: 0, listStyle: 'none' }}>
+                {sortedItems.map((item) => (
                   <PackingListItem
                     key={item.name}
                     tripId={tripId}
@@ -49,9 +56,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                     item={item}
                   />
                 ))}
-            </ul>
-          </Box>
-        ))}
+                <PackingListAddItem tripId={tripId} categoryName={categoryName} />
+              </ul>
+            </Box>
+          );
+        }
+      )}
     </>
   );
 };

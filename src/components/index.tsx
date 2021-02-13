@@ -16,6 +16,7 @@ import Heading from './Heading';
 import HeroImage from './HeroImage';
 import HorizontalRule from './HorizontalRule';
 import IconCheckbox from './IconCheckbox';
+import IconWrapper from './IconWrapper';
 import Image from './Image';
 import Input from './Input';
 import Layout from './Layout';
@@ -25,6 +26,7 @@ import Modal from './Modal';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
 import PackingListItem from './PackingListItem';
+import PackingListAddItem from './PackingListAddItem';
 import PageContainer from './PageContainer';
 import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
@@ -60,6 +62,7 @@ export {
   HorizontalRule,
   HTMLContent,
   IconCheckbox,
+  IconWrapper,
   Image,
   Input,
   Layout,
@@ -70,6 +73,7 @@ export {
   Navbar,
   NegativeMarginContainer,
   PackingListItem,
+  PackingListAddItem,
   PageContainer,
   Pill,
   PreviewCompatibleImage,
