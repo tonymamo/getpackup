@@ -36,14 +36,21 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
       <Formik
         validateOnMount
         initialValues={{}}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async ({ name }, { resetForm }) => {
           try {
             await firebase
               .firestore()
               .collection('trips')
               .doc(tripId)
               .collection('packing-list')
-              .add({ ...values, quantity: 1, category: categoryName });
+              .add({
+                name,
+                category: categoryName,
+                quantity: 1,
+                isPacked: false,
+                isEssential: false,
+                description: '',
+              });
 
             resetForm({});
           } catch (err) {
