@@ -1,12 +1,12 @@
 ---
 templateKey: blog-post
-title: Ultimate Car Camping Checklist
+title: The Ultimate Car Camping Checklist
 date: 2021-02-12T21:40:15.546Z
 description: Our expert packing lists will get you out the door faster with
   peace of mind. Try our interactive adventure packing app today and never
   forget a thing.
 featuredpost: true
-featuredimage: /img/tentyukon_taylorburk.jpg
+featuredimage: /img/robson-hatsukami-morgan-17qv-gmycz0-unsplash.jpg
 tags:
   - packing-list
   - checklist
@@ -14,7 +14,7 @@ tags:
   - camping
   - guides
 ---
-We've provided our quick summary of what to bring when going car camping in our blog post below. [Our app](https://getpackup.com/) also allows you to add other activities like hiking and climbing and item sets such as casualwear, or international travel, giving you a fully customizable packing list at your finger tips, synced to the cloud. [Try our app packup today!](https://getpackup.com/) 
+We've provided our quick summary of what to bring when going car camping in our blog post below. [Our app](/) also allows you to add other activities like hiking and climbing and item sets such as casualwear, or international travel, giving you a fully customizable packing list at your finger tips, synced to the cloud. [Try our app packup today! ](/)
 
 ![](/img/screenshot-2021-02-12-155656.png)
 
@@ -140,8 +140,8 @@ Try our app out and create your adventure checklist today! Our trip generator al
 
 Get outside faster, [and try it today!](https://getpackup.com/)
 
-
-
 <br></br>
 
 *While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!*
+
+*Cover Photo by [Robson Hatsukami Morgan](https://unsplash.com/@robsonhmorgan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)*
