@@ -66,17 +66,15 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <FlexContainer justifyContent="space-between">
-              <FlexContainer justifyContent="space-between" flexDirection="column">
-                <Field
-                  as={Input}
-                  type="text"
-                  name="name"
-                  label="Add Item"
-                  validate={requiredField}
-                  hiddenLabel
-                  required
-                />
-              </FlexContainer>
+              <Field
+                as={Input}
+                type="text"
+                name="name"
+                label="Add Item"
+                validate={requiredField}
+                hiddenLabel
+                required
+              />
               <IconWrapper onClick={handleSubmit}>
                 <FaPlus />
               </IconWrapper>
