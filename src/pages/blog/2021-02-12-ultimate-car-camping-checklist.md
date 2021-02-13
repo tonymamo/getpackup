@@ -14,6 +14,10 @@ tags:
   - camping
   - guides
 ---
+We've provided our quick summary of what to bring when going car camping in our blog post below. [Our app](https://getpackup.com/) also allows you to add other activities like hiking and climbing and item sets such as casualwear, or international travel, giving you a fully customizable packing list at your finger tips, synced to the cloud. [Try our app packup today!](https://getpackup.com/) 
+
+![](/img/screenshot-2021-02-12-155656.png)
+
 # Pre-Trip
 
 * Have you booked your campsite (and saved/printed your registration?)
@@ -124,7 +128,7 @@ And don’t forget your:
 * Urinary/menstral products
 * Wet wipes
 
-# What about everything else? 
+# What about everything else?
 
 > Alright alright alright, so this is a lot of items, and I can’t check them off without printing this sheet and using a pencil! And now I need to plan for my activities I want to do, the clothes I need to bring, and other considerations!
 
@@ -134,6 +138,10 @@ Try our app out and create your adventure checklist today! Our trip generator al
 
 ![Trip generator allows you to create and customize your packing list for adventure.](/img/product-shots.png)
 
+Get outside faster, [and try it today!](https://getpackup.com/)
 
 
-Get outside faster, and sign up today!
+
+<br></br>
+
+*While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!*
