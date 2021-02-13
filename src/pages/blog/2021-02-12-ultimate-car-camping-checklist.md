@@ -14,9 +14,11 @@ tags:
   - camping
   - guides
 ---
-We've provided our quick summary of what to bring when going car camping in our blog post below. [Our app](/) also allows you to add other activities like hiking and climbing and item sets such as casualwear, or international travel, giving you a fully customizable packing list at your finger tips, synced to the cloud. [Try our app packup today! ](/)
+We've provided our quick summary of what to bring when going car camping in our blog post below. [Our app](/) uses a lot of the same listed info below,  and allows you to choose your outdoor activities, your accommodation, kitchen type, and other item sets, giving you a fully customizable packing list at your finger tips. Never forget anything again. [Try our app packup today! ](/)
 
 ![](/img/screenshot-2021-02-12-155656.png)
+
+<br></br>
 
 # Pre-Trip
 
@@ -45,6 +47,8 @@ Car camping can entail being in a tent, or sleeping in your car at a site. If yo
 * Hatchet
 * Tarp & rope
 * Hammer/mallet for stakes
+
+![](/img/stefan-widua-mshs-9yzyvo-unsplash.jpg)
 
 # Camp Kitchen
 
@@ -78,6 +82,8 @@ The requirements for your camp kitchen will vary depending on the facilities ava
 * Table cloth and clips
 * Collapsible wash bin (facility dependent)
 
+![](/img/myles-tan-iwcljyv1tjw-unsplash.jpg)
+
 # Food & Water
 
 The beauty of car camping is that you can go heavy and are really unlimited compared to backcountry cooking. Need ideas for your meals? Check out some blogs such as [Fresh Off the Grid](https://www.freshoffthegrid.com/) or [Dirty Gourmet](https://www.dirtygourmet.com/) for great ideas on what to eat while car camping. Remember to NEVER leave food, trash, or other smelly things (other than you!) in your tent, and to absolutely minimize leaving your food unattended. Food and coolers should be stored in your car, metal food lockers, or in a bear canister/hung from a bear pole while not being consumed and supervised. 
@@ -106,6 +112,8 @@ And don’t forget your:
 * Lighter/matches & fire-starter
 * Gear repair kits (duct-tape, spare parts, buckles, glue, patches)
 * Bear spray
+
+![](/img/tim-foster-z9lpimzfyfo-unsplash.jpg)
 
 #  Personal Items
 
