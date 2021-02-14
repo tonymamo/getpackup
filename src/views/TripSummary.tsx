@@ -3,7 +3,7 @@
 import React, { FunctionComponent, Fragment, useState, useEffect } from 'react';
 import lodash from 'lodash';
 import Skeleton from 'react-loading-skeleton';
-import { FaMapMarkerAlt, FaCalendar, FaPencilAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendar, FaPencilAlt, FaEllipsisH } from 'react-icons/fa';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
 
 import { formattedDateRange } from '@utils/dateUtils';
@@ -68,13 +68,9 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
           )}
           {activeTrip && (
             <div>
-              <Button
-                type="link"
-                color="text"
-                to={`/app/trips/${activeTrip.tripId}/edit`}
-                iconLeft={<FaPencilAlt />}
-              >
-                Edit
+              <Button type="link" color="text" to={`/app/trips/${activeTrip.tripId}/edit`}>
+                {/* TODO: better styling for this */}
+                <FaEllipsisH />
               </Button>
             </div>
           )}

@@ -38,13 +38,10 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
       .add({
         ...values,
         lastEditedBy: auth.uid,
+        created: new Date(),
       })
-      .then((docRef) => {
+      .then(() => {
         setIsLoading(false);
-        docRef.update({
-          id: docRef.id,
-          created: new Date(),
-        });
         navigate('/admin/gear-list');
         dispatch(
           addAlert({

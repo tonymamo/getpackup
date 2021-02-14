@@ -101,6 +101,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
               isEssential: Boolean(item.essential),
               quantity: 1,
               description: '',
+              created: new Date(),
             };
           });
 

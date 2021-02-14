@@ -60,7 +60,7 @@ type InputProps = {
   placeholder?: string;
 } & FieldMetaProps<string> &
   FormikHelpers<string> &
-  CommonProps<OptionType | OptionType[]>;
+  CommonProps<OptionType | OptionType[], boolean>;
 
 export const sharedStyles = css`
   display: block;
@@ -149,7 +149,6 @@ const StyledGeosuggest = styled(Geosuggest)`
     width: 100%;
     margin: 0;
   }
-
   & .geosuggest__input {
     box-shadow: none;
     ${sharedStyles}
@@ -182,11 +181,9 @@ const StyledToggle = styled.input`
   height: 0;
   width: 0;
   visibility: hidden;
-
   &:checked + label {
     background: ${brandPrimary};
   }
-
   &:checked + label:after {
     left: calc(100% - 5px);
     transform: translateX(-100%);
@@ -245,26 +242,7 @@ const PasswordToggle = styled.div`
   padding: 0 ${quarterSpacer};
   border-radius: 0 ${borderRadius} ${borderRadius} 0;
 `;
-//             input: {
-//               borderRadius,
-//               width: '100%',
-//               color: textColor,
-//               borderWidth: 1,
-//               borderColor,
-//               display: 'block',
-//               height: inputHeight,
-//               padding: `0 ${inputHeight}`,
-//             },
-//             'input:focus': {
-//               outline: 'none',
-//               borderColor: brandPrimary,
-//               borderWidth: '2px',
-//               boxShadow: `0 0 0 ${borderRadius} rgba(${brandPrimaryRGB}, 0.25)`,
-//             },
-//             b: {
-//               width: inputHeight,
-//             },
-//           }}
+
 const StyledNumericInputWrapper = styled.div`
   & .react-numeric-input {
     background: ${white};
@@ -274,7 +252,6 @@ const StyledNumericInputWrapper = styled.div`
     position: relative;
     display: block;
   }
-
   & input {
     border-radius: ${borderRadius};
     width: 100%;
@@ -285,14 +262,12 @@ const StyledNumericInputWrapper = styled.div`
     padding: 0 ${inputHeight};
     text-align: center;
   }
-
   & input:focus {
     outline: none;
     border-color: ${brandPrimary};
     border-width: 2px;
     box-shadow: 0 0 0 ${borderRadius} rgba(${brandPrimaryRGB}, 0.25);
   }
-
   & b {
     position: absolute;
     top: 2px;
@@ -302,15 +277,12 @@ const StyledNumericInputWrapper = styled.div`
     border-radius: ${borderRadius};
     color: ${textColor};
   }
-
   & b:nth-of-type(1) {
     right: 2px;
   }
-
   & b:nth-of-type(2) {
     left: 2px;
   }
-
   & b i:nth-child(1) {
     position: absolute;
     top: 50%;
@@ -320,7 +292,6 @@ const StyledNumericInputWrapper = styled.div`
     background: ${textColor};
     margin: -1px 0px 0px -5px;
   }
-
   & b i:nth-child(2) {
     position: absolute;
     top: 50%;

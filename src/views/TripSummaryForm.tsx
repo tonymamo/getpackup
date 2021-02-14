@@ -58,24 +58,20 @@ const DayPickerInputWrapper = styled.div<any>`
   background-color: ${white};
   border: ${baseBorderStyle};
   border-radius: ${borderRadius};
-
   & .DayPicker {
     margin: 0 auto;
     display: flex;
     justify-content: center;
   }
-
   & .DayPicker-Day--today {
     color: ${textColor};
     font-weight: 700;
   }
-
   & .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
     position: relative;
     background-color: ${brandPrimary};
     color: ${white};
   }
-
   &
     .DayPicker:not(.DayPicker--interactionDisabled)
     .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
@@ -85,19 +81,16 @@ const DayPickerInputWrapper = styled.div<any>`
 
 const SliderWrapper = styled.div`
   margin: 0 ${baseSpacer};
-
   & .rangeslider {
     font-size: ${fontSizeSmall};
     box-shadow: none;
     background-color: ${textColorLight};
     margin-bottom: ${doubleSpacer};
   }
-
   & .rangeslider-horizontal .rangeslider__fill {
     background-color: ${brandSecondary};
     box-shadow: none;
   }
-
   & .rangeslider .rangeslider__handle {
     background: ${brandSecondary};
     border-color: ${brandSecondary};
@@ -106,28 +99,23 @@ const SliderWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     &:hover,
     &:focus,
     &:active {
       box-shadow: 0 0 0 4px rgba(${brandSecondaryRGB}, 0.5);
     }
   }
-
   & .rangeslider-horizontal .rangeslider__handle:after {
     content: none;
   }
-
   & .rangeslider .rangeslider__handle-tooltip {
     width: 75px;
   }
-
   & .rangeslider__handle-label {
     color: ${white};
     text-align: center;
     font-size: ${fontSizeSmall};
   }
-
   & .rangeslider__labels .rangeslider__label-item {
     font-size: ${fontSizeSmall};
   }
@@ -157,12 +145,9 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         startDate: startOfDay(new Date(values.startDate)),
         endDate: endOfDay(new Date(values.endDate)),
         tags: [formatTripLengthAsString(values.tripLength)],
+        created: new Date(),
       })
       .then((docRef) => {
-        docRef.update({
-          tripId: docRef.id,
-          created: new Date(),
-        });
         navigate(`/app/trips/${docRef.id}/generator`);
         dispatch(
           addAlert({

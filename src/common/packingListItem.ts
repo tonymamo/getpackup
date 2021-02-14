@@ -6,4 +6,5 @@ export type PackingListItemType = {
   isEssential: boolean;
   quantity: number;
   description?: string;
+  created: firebase.firestore.Timestamp;
 };

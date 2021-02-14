@@ -33,9 +33,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       {groupedCategories.map(
         ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
           const sortedItems = packingListItems.sort((a, b) => {
-            // put essentials at the top, and sort alphabetical
+            // put essentials at the top, and sort by created timestamp (newest goes last)
             if (a.isEssential === b.isEssential) {
-              return a.name.localeCompare(b.name);
+              return b.created.toDate() > a.created.toDate() ? -1 : 1;
             }
 
             return a.isEssential > b.isEssential ? -1 : 1;
@@ -49,7 +49,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
               <ul style={{ padding: 0, listStyle: 'none' }}>
                 {sortedItems.map((item) => (
                   <PackingListItem
-                    key={item.name}
+                    key={item.id}
                     tripId={tripId}
                     editPackingItemClick={editPackingItemClick}
                     setActivePackingListItem={setActivePackingListItem}
