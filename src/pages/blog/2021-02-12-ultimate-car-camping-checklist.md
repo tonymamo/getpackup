@@ -14,7 +14,11 @@ tags:
   - camping
   - guides
 ---
-We've provided our quick summary of what to bring when going car camping in our blog post below. [Our app](/) uses a lot of the same listed info below,  and allows you to choose your outdoor activities, your accommodation, kitchen type, and other item sets, giving you a fully customizable packing list at your finger tips. Never forget anything again. [Try our app packup today! ](/)
+We've provided our quick summary of what to bring when going car camping in our blog post below. 
+
+[Our app](/) uses a lot of the same listed info below,  and allows you to choose your outdoor activities, your accommodation, kitchen type, and other item sets, giving you a fully customizable packing list at your finger tips. 
+
+Never forget anything again. [Try our app packup today! ](/)
 
 ![](/img/screenshot-2021-02-12-155656.png)
 
@@ -52,7 +56,9 @@ Car camping can entail being in a tent, or sleeping in your car at a site. If yo
 
 # Camp Kitchen
 
-The requirements for your camp kitchen will vary depending on the facilities available in proximity to your camp. Be prepared to bring and/or treat water if clean water is not available in your area, and dispose of garbage and greywater waste appropriately following the principles of [LNT (Leave No Trace)](https://www.leavenotrace.ca/). Minimizing environmental impact and the attraction of wildlife is of utmost importance - many bears who learn to scavenge human camps end up being killed by animal control due to continued negative human interactions! Key items: 
+The requirements for your camp kitchen will vary depending on the facilities available in proximity to your camp. Be prepared to bring and/or treat water if clean water is not available in your area, and dispose of garbage and greywater waste appropriately following the principles of [LNT (Leave No Trace)](https://www.leavenotrace.ca/). 
+
+Minimizing environmental impact and the attraction of wildlife is of utmost importance - many bears who learn to scavenge human camps end up being killed by animal control due to continued negative human interactions! Key items: 
 
 * [Camping stove/grill](https://bit.ly/379MJOO)
 * Fuel (pack extra, and suitable to stove type)
@@ -86,7 +92,9 @@ The requirements for your camp kitchen will vary depending on the facilities ava
 
 # Food & Water
 
-The beauty of car camping is that you can go heavy and are really unlimited compared to backcountry cooking. Need ideas for your meals? Check out some blogs such as [Fresh Off the Grid](https://www.freshoffthegrid.com/) or [Dirty Gourmet](https://www.dirtygourmet.com/) for great ideas on what to eat while car camping. Remember to NEVER leave food, trash, or other smelly things (other than you!) in your tent, and to absolutely minimize leaving your food unattended. Food and coolers should be stored in your car, metal food lockers, or in a bear canister/hung from a bear pole while not being consumed and supervised. 
+The beauty of car camping is that you can go heavy and are really unlimited compared to backcountry cooking. Need ideas for your meals? Check out some blogs such as [Fresh Off the Grid](https://www.freshoffthegrid.com/) or [Dirty Gourmet](https://www.dirtygourmet.com/) for great ideas on what to eat while car camping. 
+
+Remember to NEVER leave food, trash, or other smelly things (other than you!) in your tent, and to absolutely minimize leaving your food unattended. Food and coolers should be stored in your car, metal food lockers, or in a bear canister/hung from a bear pole while not being consumed and supervised. 
 
 It is always nice to have the following items with you in [mini nalgene containers](https://www.mec.ca/en/product/4005-479/Small-Travel-Kit):
 
@@ -136,15 +144,15 @@ And don’t forget your:
 * Urinary/menstral products
 * Wet wipes
 
-
-
 # What about everything else?
 
 > Alright alright alright, so this is a lot of items, and I can’t check them off without printing this sheet and using a pencil! And now I need to plan for my activities I want to do, the clothes I need to bring, and other considerations!
 
 # Introducing packup
 
-[Try our app out](/) and create your adventure checklist today! Our trip generator allows you to select your activities, accommodations, kitchen, and all types of other considerations to form the foundation of a packing list that you can save and customize. Check the items off as you pack, right from your phone.
+[Try our app out](/) and create your adventure checklist today! 
+
+Our trip generator allows you to select your activities, accommodations, kitchen, and all types of other considerations to form the foundation of a packing list that you can save and customize. Check the items off as you pack, right from your phone.
 
 ![Trip generator allows you to create and customize your packing list for adventure.](/img/product-shots.png)
 
