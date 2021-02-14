@@ -6,7 +6,7 @@ description: Build your own modular sleeping platform for your vehicle in a
   weekend for $275. Designed for the weekend warrior who still needs their seats
   during the week.
 featuredpost: true
-featuredimage: /img/jimmy-conover-j_xuxx9m0km-unsplash.jpg
+featuredimage: /img/tyler-lillico-pru6-3v8n7i-unsplash.jpg
 tags:
   - DIY
   - camping
