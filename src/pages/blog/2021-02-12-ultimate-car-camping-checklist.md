@@ -29,7 +29,7 @@ We've provided our quick summary of what to bring when going car camping in our 
 
 # Campsite Items
 
-Car camping can entail being in a tent, or sleeping in your car at a site. If you want some ideas on how you can sleep in your car for more protection from the elements, check out our blog post on [building a DIY sleeping platform for your car](https://getpackup.com/blog/2020-11-23-suv-sleeping-platform-a-diy-guide-to-sleeping-inside/). Key campsite items:
+Car camping can entail being in a tent, or sleeping in your car at a site. If you want some ideas on how you can sleep in your car for more protection from the elements, check out our blog post on [building a DIY sleeping platform for your car](blog/2020-11-23-suv-sleeping-platform-a-diy-guide-to-sleeping-inside/). Key campsite items:
 
 * [Tent](https://bit.ly/3qh0P8p)
 
@@ -136,13 +136,15 @@ And don’t forget your:
 * Urinary/menstral products
 * Wet wipes
 
+
+
 # What about everything else?
 
 > Alright alright alright, so this is a lot of items, and I can’t check them off without printing this sheet and using a pencil! And now I need to plan for my activities I want to do, the clothes I need to bring, and other considerations!
 
 # Introducing packup
 
-Try our app out and create your adventure checklist today! Our trip generator allows you to select your activities, accommodations, kitchen, and all types of other considerations to form the foundation of a packing list that you can save and customize. Check the items off as you pack, right from your phone.
+[Try our app out](/) and create your adventure checklist today! Our trip generator allows you to select your activities, accommodations, kitchen, and all types of other considerations to form the foundation of a packing list that you can save and customize. Check the items off as you pack, right from your phone.
 
 ![Trip generator allows you to create and customize your packing list for adventure.](/img/product-shots.png)
 
