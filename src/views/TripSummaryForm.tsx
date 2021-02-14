@@ -148,6 +148,9 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         created: new Date(),
       })
       .then((docRef) => {
+        docRef.update({
+          tripId: docRef.id,
+        });
         navigate(`/app/trips/${docRef.id}/generator`);
         dispatch(
           addAlert({
