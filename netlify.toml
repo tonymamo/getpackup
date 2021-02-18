@@ -1,0 +1,9 @@
+# Production context: all deploys from the Production branch set in your site's
+# deploy contexts will inherit these settings. We use 'master' branch for this project
+[context.production.environment]
+  GATSBY_SITE_URL = "https://getpackup.com"
+
+# Specific branch context: all deploys from this specific branch will inherit
+# these settings.
+[context.test.environment] # 'test' is a branch name
+  GATSBY_SITE_URL = "https://test.getpackup.com"

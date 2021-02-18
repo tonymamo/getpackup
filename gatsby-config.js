@@ -168,8 +168,11 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-segment-js',
       options: {
-        prodKey: process.env.GATSBY_SEGMENT_API_KEY,
-        devKey: process.env.GATSBY_SEGMENT_API_KEY,
+        prodKey:
+          process.env.GATSBY_SITE_URL === 'https://test.getpackup.com'
+            ? process.env.GATSBY_TEST_SEGMENT_API_KEY
+            : process.env.GATSBY_PROD_SEGMENT_API_KEY,
+        devKey: process.env.GATSBY_TEST_SEGMENT_API_KEY,
         trackPage: true,
         trackPageDelay: 50,
       },
