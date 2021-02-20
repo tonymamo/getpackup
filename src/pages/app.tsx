@@ -88,12 +88,16 @@ const App: FunctionComponent<{}> = (props) => {
             component={TripGenerator}
             loggedInUser={activeLoggedInUser}
           />
-          <PrivateRoute path="/trips/:id" component={TripById} loggedInUser={activeLoggedInUser} />
           <PrivateRoute
-            path="/trips/:id/item/*"
+            path="/trips/:id/*"
             component={TripById}
             loggedInUser={activeLoggedInUser}
           />
+          {/* <PrivateRoute
+            path="/trips/:id/item/*"
+            component={TripById}
+            loggedInUser={activeLoggedInUser}
+          /> */}
           <PrivateRoute path="/search" component={Search} loggedInUser={activeLoggedInUser} />
           <PrivateRoute
             path="/shopping-list"

@@ -1,96 +1,96 @@
-import React, { FunctionComponent, useState } from 'react';
-import { FaCheck, FaChevronLeft, FaTrash } from 'react-icons/fa';
+import React, { FunctionComponent } from 'react';
+import { FaChevronLeft, FaTrash } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
+import { navigate } from 'gatsby';
+import { RouteComponentProps } from '@reach/router';
 
-import {
-  Button,
-  Column,
-  FlexContainer,
-  Heading,
-  HorizontalRule,
-  Input,
-  Modal,
-  Row,
-} from '@components';
+import { AutoSave, Button, FlexContainer, Heading, Input, DropdownMenu } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { requiredField, requiredSelect } from '@utils/validations';
 import { gearListCategories } from '@utils/gearListItemEnum';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
+import useWindowSize from '@utils/useWindowSize';
 
 type EditPackingListItemProps = {
-  tripId: string;
-  activeItem?: PackingListItemType;
-  backToPackingListClick: () => void;
-  setActivePackingListItem: (value: undefined) => void;
-};
+  tripId?: string;
+  id?: string;
+} & RouteComponentProps;
 
 const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props) => {
   const dispatch = useDispatch();
   const firebase = useFirebase();
+  const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const size = useWindowSize();
+
+  const activeItem =
+    packingList && packingList.find((item: PackingListItemType) => item.id === props.id);
 
   const removeItem = () => {
-    firebase
-      .firestore()
-      .collection('trips')
-      .doc(props.tripId)
-      .collection('packing-list')
-      .doc(props.activeItem?.id)
-      .delete()
-      .then(() => {
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Successfully removed item',
-          })
-        );
-        props.setActivePackingListItem(undefined);
-        props.backToPackingListClick();
-      })
-      .catch((err) => {
-        dispatch(
-          addAlert({
-            type: 'danger',
-            message: err.message,
-          })
-        );
-      });
+    if (activeItem) {
+      firebase
+        .firestore()
+        .collection('trips')
+        .doc(props.tripId)
+        .collection('packing-list')
+        .doc(activeItem?.id)
+        .delete()
+        .then(() => {
+          dispatch(
+            addAlert({
+              type: 'success',
+              message: 'Successfully removed item',
+            })
+          );
+          navigate(`/app/trips/${props.tripId}/checklist`);
+        })
+        .catch((err) => {
+          dispatch(
+            addAlert({
+              type: 'danger',
+              message: err.message,
+            })
+          );
+        });
+    }
   };
 
   return (
     <div>
-      {props.activeItem ? (
+      {!size.isSmallScreen && (
+        <Button
+          type="button"
+          onClick={() => navigate(-1)}
+          color="text"
+          iconLeft={<FaChevronLeft />}
+        >
+          Back
+        </Button>
+      )}
+      {activeItem ? (
         <Formik
           validateOnMount
           initialValues={{
-            ...props.activeItem,
+            ...activeItem,
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            if (props.activeItem) {
+            if (activeItem) {
               firebase
                 .firestore()
                 .collection('trips')
                 .doc(props.tripId)
                 .collection('packing-list')
-                .doc(props.activeItem?.id)
+                .doc(activeItem?.id)
                 .update({
-                  ...props.activeItem,
+                  ...activeItem,
                   ...values,
                   quantity: Number(values.quantity),
                 })
                 .then(() => {
                   resetForm({ values });
-                  dispatch(
-                    addAlert({
-                      type: 'success',
-                      message: `Updated ${values.name}`,
-                    })
-                  );
-                  props.setActivePackingListItem(undefined);
-                  props.backToPackingListClick();
                 })
                 .catch((err) => {
                   dispatch(
@@ -104,11 +104,25 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
             }
           }}
         >
-          {({ isSubmitting, isValid, values, setFieldValue, ...rest }) => (
+          {({ setFieldValue, ...rest }) => (
             <Form>
-              <Heading altStyle as="h2">
-                Edit Item
-              </Heading>
+              <FlexContainer justifyContent="space-between">
+                <Heading altStyle as="h2">
+                  Edit Item
+                </Heading>
+                <DropdownMenu>
+                  <Button
+                    type="button"
+                    onClick={() => removeItem()}
+                    block
+                    color="danger"
+                    iconLeft={<FaTrash />}
+                  >
+                    Remove
+                  </Button>
+                </DropdownMenu>
+              </FlexContainer>
+              <AutoSave />
               <Field
                 as={Input}
                 type="text"
@@ -136,82 +150,6 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 {...rest}
                 required
               />
-
-              <Row>
-                <Column xs={6}>
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting || !isValid}
-                    block
-                    color="success"
-                    iconLeft={<FaCheck />}
-                  >
-                    Update
-                  </Button>
-                </Column>
-                <Column xs={6}>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      props.setActivePackingListItem(undefined);
-                      props.backToPackingListClick();
-                    }}
-                    block
-                    color="primaryOutline"
-                    iconLeft={<FaChevronLeft />}
-                  >
-                    Cancel
-                  </Button>
-                </Column>
-              </Row>
-
-              <HorizontalRule />
-              <Button
-                type="button"
-                onClick={() => setModalIsOpen(true)}
-                block
-                color="danger"
-                iconLeft={<FaTrash />}
-              >
-                Remove
-              </Button>
-              <Modal
-                toggleModal={() => {
-                  setModalIsOpen(false);
-                }}
-                isOpen={modalIsOpen}
-              >
-                <Heading altStyle>Are you sure?</Heading>
-                <p>
-                  Are you sure you want to remove <strong>{values.name}</strong> from your packing
-                  list? This action cannot be undone.
-                </p>
-                <Row>
-                  <Column xs={6}>
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        setModalIsOpen(false);
-                      }}
-                      color="primaryOutline"
-                      block
-                    >
-                      Cancel
-                    </Button>
-                  </Column>
-                  <Column xs={6}>
-                    <Button
-                      type="button"
-                      onClick={() => removeItem()}
-                      block
-                      color="danger"
-                      iconLeft={<FaTrash />}
-                    >
-                      Remove
-                    </Button>
-                  </Column>
-                </Row>
-              </Modal>
             </Form>
           )}
         </Formik>

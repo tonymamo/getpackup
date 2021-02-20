@@ -3,8 +3,9 @@
 import React, { FunctionComponent, Fragment, useState, useEffect } from 'react';
 import lodash from 'lodash';
 import Skeleton from 'react-loading-skeleton';
-import { FaMapMarkerAlt, FaCalendar, FaPencilAlt, FaEllipsisH } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendar, FaEllipsisH } from 'react-icons/fa';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
+import { RouteComponentProps } from '@reach/router';
 
 import { formattedDateRange } from '@utils/dateUtils';
 import { Heading, FlexContainer, HorizontalRule, Avatar, Box, Pill, Button } from '@components';
@@ -14,7 +15,7 @@ import { TripType } from '@common/trip';
 
 type TripSummaryProps = {
   activeTrip?: TripType;
-};
+} & RouteComponentProps;
 
 const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
   const firebase = useFirebase();

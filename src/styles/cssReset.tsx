@@ -94,6 +94,7 @@ const CssReset = createGlobalStyle`
     margin-bottom: ${halfSpacer};
     color: ${headingsColor};
     font-family: ${headingsFontFamily};
+    font-weight: 700;
   }
 
   p {

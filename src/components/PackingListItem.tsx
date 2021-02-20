@@ -5,6 +5,7 @@ import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { FaChevronRight, FaExclamationTriangle } from 'react-icons/fa';
+import { navigate } from 'gatsby';
 
 import { baseBorderStyle } from '@styles/mixins';
 import { baseSpacer, halfSpacer } from '@styles/size';
@@ -16,8 +17,6 @@ import { PackingListItemType } from '@common/packingListItem';
 type PackingListItemProps = {
   tripId: string;
   item: PackingListItemType;
-  editPackingItemClick: () => void;
-  setActivePackingListItem: (value: PackingListItemType) => void;
 };
 
 const PackingListItemWrapper = styled.li`
@@ -105,10 +104,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                 </IconWrapper>
               )}
               <IconWrapper
-                onClick={() => {
-                  props.setActivePackingListItem(props.item);
-                  props.editPackingItemClick();
-                }}
+                onClick={() => navigate(`/app/trips/${props.tripId}/checklist/${props.item.id}`)}
               >
                 <FaChevronRight />
               </IconWrapper>

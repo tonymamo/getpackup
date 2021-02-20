@@ -1,10 +1,12 @@
 import Alert from './Alert';
+import AutoSave from './AutoSave';
 import Avatar from './Avatar';
 import Box from './Box';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
+import DropdownMenu from './DropdownMenu';
 import ErrorBoundary from './ErrorBoundary';
 import AvatarUpload from './AvatarUpload';
 import FeedbackModal from './FeedbackModal';
@@ -44,12 +46,14 @@ import Wave from './wave';
 
 export {
   Alert,
+  AutoSave,
   Avatar,
   Box,
   Button,
   ClientOnly,
   Column,
   Content,
+  DropdownMenu,
   ErrorBoundary,
   AvatarUpload,
   FeedbackModal,

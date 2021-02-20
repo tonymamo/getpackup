@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import lodash from 'lodash';
+import { RouteComponentProps } from '@reach/router';
 
 import { Box, Heading, PackingListItem, PackingListAddItem } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
@@ -7,29 +8,23 @@ import { PackingListItemType } from '@common/packingListItem';
 type PackingListProps = {
   tripId: string;
   packingList: PackingListItemType[];
-  editPackingItemClick: () => void;
-  setActivePackingListItem: (value: PackingListItemType) => void;
-};
+} & RouteComponentProps;
 
-const PackingList: FunctionComponent<PackingListProps> = ({
-  packingList,
-  tripId,
-  editPackingItemClick,
-  setActivePackingListItem,
-}) => {
+const PackingList: FunctionComponent<PackingListProps> = ({ packingList, tripId }) => {
   let groupedCategories: [string, PackingListItemType[]][] = [];
 
   if (packingList?.length) {
-    groupedCategories = Object.entries(lodash.groupBy(packingList, 'category'));
+    const entries = Object.entries(lodash.groupBy(packingList, 'category'));
+
+    groupedCategories = [
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      entries.find((item) => item[0] === 'Pre-Trip')!,
+      ...entries.filter((item) => item[0] !== 'Pre-Trip'),
+    ];
   }
 
   return (
     <>
-      <Box>
-        <Heading as="h3" altStyle>
-          Pre-Trip
-        </Heading>
-      </Box>
       {groupedCategories.map(
         ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
           const sortedItems = packingListItems.sort((a, b) => {
@@ -46,15 +41,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
               <Heading as="h3" altStyle>
                 {categoryName}
               </Heading>
-              <ul style={{ padding: 0, listStyle: 'none' }}>
+              <ul style={{ padding: 0, listStyle: 'none', margin: 0 }}>
                 {sortedItems.map((item) => (
-                  <PackingListItem
-                    key={item.id}
-                    tripId={tripId}
-                    editPackingItemClick={editPackingItemClick}
-                    setActivePackingListItem={setActivePackingListItem}
-                    item={item}
-                  />
+                  <PackingListItem key={item.id} tripId={tripId} item={item} />
                 ))}
                 <PackingListAddItem tripId={tripId} categoryName={categoryName} />
               </ul>

@@ -60,7 +60,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     <Box key={trip.tripId} onClick={() => navigate(`/app/trips/${trip.tripId}`)}>
       <FlexContainer justifyContent="space-between" flexWrap="nowrap" alignItems="flex-start">
         <Heading as="h3" altStyle>
-          <Link to={`/app/trips/${trip.tripId}`}>{trip.name}</Link>
+          <Link to={`/app/trips/${trip.tripId}/`}>{trip.name}</Link>
         </Heading>
         {/* TODO: show all trip members avatars instead */}
         <Avatar

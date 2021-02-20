@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
 import {
@@ -49,6 +49,8 @@ const StyledNavbar = styled.header`
   & a:focus,
   & a:visited,
   & a:active {
+    font-family: ${headingsFontFamily};
+    font-weight: 700;
     color: ${white};
   }
 
@@ -59,6 +61,7 @@ const StyledNavbar = styled.header`
   & h1 a {
     font-family: ${headingsFontFamily};
     font-size: ${fontSizeSmall};
+    font-weight: 700;
   }
 
   & h2 {
@@ -204,6 +207,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const truncatedPageTitle = pageTitle.length > 25 ? `${pageTitle.substring(0, 25)}...` : pageTitle;
   const routeHasParent = pathname.split('/').length >= 4;
 
+  // TODO: better way to do this?
+  // if on a checklist item page, we want to be able to do navigate(-1) on the back button below
+  const checklistItemRegex = new RegExp('/checklist/*');
+  const routeIsChecklistItem = checklistItemRegex.test(pathname);
+
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
     return isPartiallyCurrent ? { className: 'active' } : {};
   };
@@ -232,7 +240,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {routeHasParent && (
-                <Link to="../">
+                <Link to="../" onClick={() => (routeIsChecklistItem ? navigate(-1) : undefined)}>
                   <FaChevronLeft />
                 </Link>
               )}
