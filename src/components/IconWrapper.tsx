@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import { baseSpacer } from '@styles/size';
+import { doubleSpacer } from '@styles/size';
 import { brandPrimary } from '@styles/color';
 
 const IconWrapper = styled.div`
-  /* margin bottom to match Input's margin */
-  margin-bottom: ${baseSpacer};
-  margin-left: ${baseSpacer};
   cursor: pointer;
+  width: ${doubleSpacer};
+  height: ${doubleSpacer};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     color: ${brandPrimary};
   }

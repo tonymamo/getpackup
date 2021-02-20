@@ -39,12 +39,6 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
         .doc(activeItem?.id)
         .delete()
         .then(() => {
-          dispatch(
-            addAlert({
-              type: 'success',
-              message: 'Successfully removed item',
-            })
-          );
           navigate(`/app/trips/${props.tripId}/checklist`);
         })
         .catch((err) => {

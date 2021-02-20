@@ -37,11 +37,15 @@ const Tab = styled.div`
   transition: all 0.2s ease-in-out;
   flex: 1;
   text-align: center;
-  padding: ${baseSpacer};
   border-bottom: 2px solid;
   border-bottom-color: ${(props: { active: boolean }) =>
     props.active ? brandPrimary : 'transparent'};
   color: ${(props) => (props.active ? brandPrimary : textColor)};
+
+  & a {
+    display: block;
+    padding: ${baseSpacer};
+  }
 `;
 
 const TripById: FunctionComponent<TripByIdProps> = (props) => {

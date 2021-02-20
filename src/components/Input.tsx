@@ -58,6 +58,7 @@ type InputProps = {
   components?: any;
   geosuggestTypes?: QueryType[];
   placeholder?: string;
+  noMarginOnWrapper?: boolean;
 } & FieldMetaProps<string> &
   FormikHelpers<string> &
   CommonProps<OptionType | OptionType[], boolean>;
@@ -135,9 +136,10 @@ const StyledAsyncSelect = styled(AsyncSelect)`
 `;
 
 export const InputWrapper = styled.div`
-  margin-bottom: ${baseSpacer};
+  margin-bottom: ${(props: { noMarginOnWrapper?: boolean; hidden?: boolean }) =>
+    props.noMarginOnWrapper ? 0 : baseSpacer};
   text-align: left;
-  ${(props: { hidden?: boolean }) => props.hidden && `display: none;`}
+  ${(props) => props.hidden && `display: none;`}
   & .tooltip {
     padding: 0 ${halfSpacer};
   }
@@ -450,9 +452,13 @@ const Input: FunctionComponent<InputProps> = (props) => {
               type="checkbox"
             />
             {props.checked ? (
-              <FaCheckCircle color={brandSuccess} size={baseAndAHalfSpacer} />
+              <FaCheckCircle
+                color={brandSuccess}
+                size={baseAndAHalfSpacer}
+                style={{ cursor: 'pointer' }}
+              />
             ) : (
-              <FaRegCircle size={baseAndAHalfSpacer} />
+              <FaRegCircle size={baseAndAHalfSpacer} style={{ cursor: 'pointer' }} />
             )}
             &nbsp;&nbsp;
             {props.label}
@@ -570,7 +576,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
       break;
   }
   return (
-    <InputWrapper hidden={props.type === 'hidden'}>
+    <InputWrapper hidden={props.type === 'hidden'} noMarginOnWrapper={props.noMarginOnWrapper}>
       {props.label && props.type !== 'toggle' && props.type !== 'checkbox' && (
         <StyledLabel
           htmlFor={props.id || props.name}

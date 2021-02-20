@@ -21,8 +21,7 @@ type PackingListItemProps = {
 
 const PackingListItemWrapper = styled.li`
   border-bottom: ${baseBorderStyle};
-  padding: ${baseSpacer} ${halfSpacer} 0;
-  margin: 0 -${halfSpacer};
+  padding: ${baseSpacer} ${halfSpacer};
 
   &:hover {
     background-color: ${offWhite};
@@ -30,6 +29,10 @@ const PackingListItemWrapper = styled.li`
 `;
 
 const ItemInputWrapper = styled.div`
+  /* flex: 1; */
+`;
+
+const ItemText = styled.div`
   flex: 1;
 `;
 
@@ -71,21 +74,22 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
               <ItemInputWrapper>
                 <Field
                   as={Input}
+                  noMarginOnWrapper
                   name={`${props.item.name}.isPacked`}
                   type="checkbox"
                   checked={values[props.item.name].isPacked}
-                  label={
-                    props.item.quantity && props.item.quantity !== 1 ? (
-                      <>
-                        {props.item.name} <Pill text={`× ${props.item.quantity}`} color="neutral" />
-                      </>
-                    ) : (
-                      props.item.name
-                    )
-                  }
+                  label=""
                 />
               </ItemInputWrapper>
-
+              <ItemText>
+                {props.item.quantity && props.item.quantity !== 1 ? (
+                  <>
+                    {props.item.name} <Pill text={`× ${props.item.quantity}`} color="neutral" />
+                  </>
+                ) : (
+                  props.item.name
+                )}
+              </ItemText>
               {props.item.isEssential && (
                 <IconWrapper>
                   <FaExclamationTriangle

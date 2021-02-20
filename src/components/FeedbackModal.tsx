@@ -8,7 +8,6 @@ import { FirebaseReducer } from 'react-redux-firebase';
 
 import { Input, Row, Button, Column, Modal, Heading } from '@components';
 import { brandTertiary, brandTertiaryHover, white } from '@styles/color';
-import { z1Shadow, z2Shadow } from '@styles/mixins';
 import { requiredField } from '@utils/validations';
 import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -36,12 +35,10 @@ const FeedbackLink = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: ${z1Shadow};
   z-index: ${zIndexFeedbackButton};
 
   &:hover {
     background-color: ${brandTertiaryHover};
-    box-shadow: ${z2Shadow};
   }
 
   @media only screen and (min-width: ${breakpoints.md}) {

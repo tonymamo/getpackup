@@ -13,6 +13,7 @@ import {
   IconWrapper,
 } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
+import { halfSpacer } from '@styles/size';
 
 type PackingListCategoryProps = {
   categoryName: string;
@@ -68,7 +69,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
           {collapsed ? <FaChevronDown /> : <FaChevronUp />}
         </IconWrapper>
       </FlexContainer>
-      <animated.div style={{ overflow: 'hidden', ...expand }}>
+      <animated.div style={{ overflow: 'hidden', ...expand, margin: `0 -${halfSpacer}` }}>
         <ItemsWrapper ref={ref}>
           {sortedItems.map((item) => (
             <PackingListItem key={item.id} tripId={tripId} item={item} />
