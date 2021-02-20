@@ -3,12 +3,21 @@
 import React, { FunctionComponent, Fragment, useState, useEffect } from 'react';
 import lodash from 'lodash';
 import Skeleton from 'react-loading-skeleton';
-import { FaMapMarkerAlt, FaCalendar, FaEllipsisH } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendar, FaPencilAlt, FaTrash } from 'react-icons/fa';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
 import { RouteComponentProps } from '@reach/router';
 
 import { formattedDateRange } from '@utils/dateUtils';
-import { Heading, FlexContainer, HorizontalRule, Avatar, Box, Pill, Button } from '@components';
+import {
+  Heading,
+  FlexContainer,
+  HorizontalRule,
+  Avatar,
+  Box,
+  Pill,
+  Button,
+  DropdownMenu,
+} from '@components';
 import { halfSpacer } from '@styles/size';
 import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
@@ -68,12 +77,17 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
             <Skeleton width={200} />
           )}
           {activeTrip && (
-            <div>
-              <Button type="link" color="text" to={`/app/trips/${activeTrip.tripId}/edit`}>
-                {/* TODO: better styling for this */}
-                <FaEllipsisH />
+            <DropdownMenu>
+              <Button
+                type="link"
+                color="text"
+                to={`/app/trips/${activeTrip.tripId}/edit`}
+                iconLeft={<FaPencilAlt />}
+                block
+              >
+                Edit
               </Button>
-            </div>
+            </DropdownMenu>
           )}
         </FlexContainer>
         <HorizontalRule compact />

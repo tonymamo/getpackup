@@ -18,6 +18,8 @@ const StyledDropdown = styled.div`
   width: 250px;
   z-index: 1;
   padding: ${halfSpacer};
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledDropdownWrapper = styled.div`

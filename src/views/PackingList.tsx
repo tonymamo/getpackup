@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import lodash from 'lodash';
 import { RouteComponentProps } from '@reach/router';
 
-import { Box, Heading, PackingListItem, PackingListAddItem } from '@components';
+import { PackingListCategory } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 
 type PackingListProps = {
@@ -37,17 +37,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({ packingList, tripId 
           });
 
           return (
-            <Box key={categoryName}>
-              <Heading as="h3" altStyle>
-                {categoryName}
-              </Heading>
-              <ul style={{ padding: 0, listStyle: 'none', margin: 0 }}>
-                {sortedItems.map((item) => (
-                  <PackingListItem key={item.id} tripId={tripId} item={item} />
-                ))}
-                <PackingListAddItem tripId={tripId} categoryName={categoryName} />
-              </ul>
-            </Box>
+            <PackingListCategory
+              key={categoryName}
+              categoryName={categoryName}
+              sortedItems={sortedItems}
+              tripId={tripId}
+            />
           );
         }
       )}
