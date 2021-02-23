@@ -109,7 +109,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                     type="button"
                     onClick={() => removeItem()}
                     block
-                    color="danger"
+                    color="text"
                     iconLeft={<FaTrash />}
                   >
                     Remove
@@ -125,7 +125,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 validate={requiredField}
                 required
               />
-              <Field as={Input} type="textarea" name="description" label="Description" />
+
               <Field
                 as={Input}
                 type="number"
@@ -144,6 +144,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 {...rest}
                 required
               />
+              <Field as={Input} type="textarea" name="description" label="Description" />
             </Form>
           )}
         </Formik>

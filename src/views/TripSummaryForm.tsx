@@ -368,6 +368,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               label="Trip Name"
               validate={requiredField}
               required
+              autocomplete="off"
             />
             <Row>
               <Column md={6}>
