@@ -7,10 +7,11 @@ import { useDispatch } from 'react-redux';
 import { PageContainer, FlexContainer, Heading, Avatar, Button } from '@components';
 
 import { brandSecondary, white } from '@styles/color';
-import { halfSpacer, quadrupleSpacer } from '@styles/size';
+import { halfSpacer, tripleSpacer, quadrupleSpacer } from '@styles/size';
 import { fontSizeSmall, headingsFontFamily } from '@styles/typography';
 import useAuthState from '@utils/useFirebaseAuth';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import yak from '@images/yak.png';
 
 type NavbarProps = {};
 
@@ -27,12 +28,15 @@ const StyledNavbar = styled.header`
 
   & a,
   & a:hover {
+    font-family: ${headingsFontFamily};
+    font-weight: 700;
     color: ${white};
   }
 
   & h1 a {
     font-family: ${headingsFontFamily};
     font-size: ${fontSizeSmall};
+    font-weight: 700;
   }
 `;
 
@@ -83,7 +87,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
       <PageContainer>
         <FlexContainer justifyContent="space-between">
           <Heading noMargin>
-            <Link to="/">packup</Link>
+            <Link to="/">
+              <img src={yak} alt="" width={tripleSpacer} /> packup
+            </Link>
           </Heading>
           <nav>
             <NavLink to="/blog">Blog</NavLink>
