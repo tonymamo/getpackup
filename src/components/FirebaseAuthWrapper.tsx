@@ -10,6 +10,7 @@ import { brandPrimary } from '@styles/color';
 import { halfSpacer, baseAndAHalfSpacer, borderRadius } from '@styles/size';
 import { RootState } from '@redux/ducks';
 import { removeAttemptedPrivatePage } from '@redux/ducks/client';
+import { baseBorderStyle } from '@styles/mixins';
 
 // Wrapper around 'react-firebaseui/StyledFirebaseAuth' just to modify some styling
 // to make buttons match better to Button.tsx
@@ -31,6 +32,7 @@ const StyledFirebaseAuthWrapper = styled.div`
   & .firebaseui-idp-button {
     border-radius: ${borderRadius};
     box-shadow: none;
+    border: ${baseBorderStyle};
   }
 
   & .mdl-button {

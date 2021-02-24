@@ -29,10 +29,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({ packingList, tripId 
         ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
           const sortedItems = packingListItems.sort((a, b) => {
             // put essentials at the top, and sort by created timestamp (newest goes last)
-            if (a.isEssential === b.isEssential) {
+            if (!a.isEssential && !b.isEssential) {
+              if (a.created.seconds === b.created.seconds) {
+                return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+              }
               return b.created.toDate() > a.created.toDate() ? -1 : 1;
             }
-
             return a.isEssential > b.isEssential ? -1 : 1;
           });
 

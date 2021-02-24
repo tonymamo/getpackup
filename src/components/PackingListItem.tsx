@@ -11,7 +11,7 @@ import { baseBorderStyle } from '@styles/mixins';
 import { baseSpacer, halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Input, FlexContainer, Pill, IconWrapper } from '@components';
-import { brandDanger, offWhite } from '@styles/color';
+import { brandInfo, offWhite } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 
 type PackingListItemProps = {
@@ -91,12 +91,8 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                 )}
               </ItemText>
               {props.item.isEssential && (
-                <IconWrapper>
-                  <FaExclamationTriangle
-                    data-tip="This is an essential item"
-                    data-for="essentialItem"
-                    color={brandDanger}
-                  />
+                <IconWrapper data-tip="Essential Item" data-for="essentialItem">
+                  <FaExclamationTriangle color={brandInfo} />
                   <ReactTooltip
                     id="essentialItem"
                     place="top"

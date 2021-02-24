@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from 'react';
-import { FaChevronLeft, FaTrash } from 'react-icons/fa';
+import { FaChevronLeft, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 
-import { AutoSave, Button, FlexContainer, Heading, Input, DropdownMenu } from '@components';
+import { Alert, AutoSave, Button, DropdownMenu, FlexContainer, Heading, Input } from '@components';
+import { brandDanger, brandInfo } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 import { requiredField, requiredSelect } from '@utils/validations';
 import { gearListCategories } from '@utils/gearListItemEnum';
@@ -31,6 +32,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
 
   const removeItem = () => {
     if (activeItem) {
+      navigate(-1);
       firebase
         .firestore()
         .collection('trips')
@@ -39,7 +41,12 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
         .doc(activeItem?.id)
         .delete()
         .then(() => {
-          navigate(`/app/trips/${props.tripId}/checklist`);
+          dispatch(
+            addAlert({
+              type: 'success',
+              message: `${activeItem.name} has been removed`,
+            })
+          );
         })
         .catch((err) => {
           dispatch(
@@ -108,15 +115,22 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                   <Button
                     type="button"
                     onClick={() => removeItem()}
-                    block
                     color="text"
                     iconLeft={<FaTrash />}
                   >
-                    Remove
+                    Remove Item
                   </Button>
                 </DropdownMenu>
               </FlexContainer>
               <AutoSave />
+              {activeItem.isEssential && (
+                <Alert
+                  type="info"
+                  message="This item is considered one of the 10 Essential items."
+                  callToActionLink="https://www.nps.gov/articles/10essentials.htm"
+                  callToActionLinkText="Learn more"
+                />
+              )}
               <Field
                 as={Input}
                 type="text"

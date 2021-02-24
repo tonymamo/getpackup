@@ -1,6 +1,6 @@
 import Alert from './Alert';
 import AutoSave from './AutoSave';
-import Avatar from './Avatar';
+import Avatar, { StackedAvatars } from './Avatar';
 import Box from './Box';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
@@ -91,6 +91,7 @@ export {
   Share,
   SignupForm,
   SiteMetadata,
+  StackedAvatars,
   Table,
   Testimonial,
   Wave,

@@ -46,7 +46,7 @@ const Login: FunctionComponent<LoginProps> = () => {
     <PageContainer withVerticalPadding>
       <Seo title="Log In" />
       <Box>
-        <Heading align="center">Login</Heading>
+        <Heading align="center">Log In</Heading>
         <p style={{ textAlign: 'center' }}>
           Adventure made easy&mdash;never forget important gear again!
         </p>

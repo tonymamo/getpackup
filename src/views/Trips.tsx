@@ -17,6 +17,7 @@ import {
   Seo,
   PageContainer,
   HorizontalRule,
+  StackedAvatars,
 } from '@components';
 import { RootState } from '@redux/ducks';
 import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
@@ -29,8 +30,15 @@ type TripsProps = { loggedInUser?: UserType } & RouteComponentProps;
 const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
+  const users = useSelector((state: RootState) => state.firestore.data.users);
 
-  useFirestoreConnect([{ collection: 'trips', where: ['owner', '==', auth.uid] }]);
+  useFirestoreConnect([
+    {
+      collection: 'trips',
+      where: ['owner', '==', auth.uid],
+      populates: [{ child: 'tripMembers', root: 'users' }],
+    },
+  ]);
 
   const inProgressTrips =
     trips &&
@@ -62,12 +70,26 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         <Heading as="h3" altStyle>
           <Link to={`/app/trips/${trip.tripId}/`}>{trip.name}</Link>
         </Heading>
-        {/* TODO: show all trip members avatars instead */}
-        <Avatar
-          src={loggedInUser?.photoURL as string}
-          gravatarEmail={loggedInUser?.email as string}
-          size="sm"
-        />
+        <StackedAvatars>
+          <Avatar
+            src={loggedInUser?.photoURL as string}
+            gravatarEmail={loggedInUser?.email as string}
+            size="sm"
+          />
+          {users &&
+            trip.tripMembers.map((tripMember: any) => {
+              const matchingUser: UserType = users[tripMember] ? users[tripMember] : undefined;
+              if (!matchingUser) return null;
+              return (
+                <Avatar
+                  src={matchingUser?.photoURL as string}
+                  gravatarEmail={matchingUser?.email as string}
+                  size="sm"
+                  key={matchingUser.uid}
+                />
+              );
+            })}
+        </StackedAvatars>
       </FlexContainer>
       <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
         <FaRegCalendar style={{ marginRight: halfSpacer }} />

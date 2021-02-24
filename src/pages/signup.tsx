@@ -187,7 +187,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
           <small>
             Already have an account?{' '}
             <Link to="/login">
-              Login now <FaArrowRight />
+              Log in now <FaArrowRight />
             </Link>
           </small>
         </p>

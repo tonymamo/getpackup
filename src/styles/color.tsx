@@ -34,7 +34,7 @@ export const brandTertiaryHover = bismarkVariant;
 
 // Validation Colors
 export const brandSuccess = green;
-export const brandInfo = bismark;
+export const brandInfo = '#e29d03';
 export const brandDanger = red;
 
 // Grayscale for UI (borders, shadows, etc)

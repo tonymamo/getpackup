@@ -1,11 +1,8 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable no-unused-expressions */
-import React, { FunctionComponent, Fragment, useState, useEffect } from 'react';
-import lodash from 'lodash';
+import React, { FunctionComponent, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { FaMapMarkerAlt, FaCalendar, FaPencilAlt, FaTrash } from 'react-icons/fa';
-import { useFirebase, isLoaded } from 'react-redux-firebase';
+import { FaMapMarkerAlt, FaCalendar, FaPencilAlt } from 'react-icons/fa';
 import { RouteComponentProps } from '@reach/router';
+import { useSelector } from 'react-redux';
 
 import { formattedDateRange } from '@utils/dateUtils';
 import {
@@ -19,51 +16,16 @@ import {
   DropdownMenu,
 } from '@components';
 import { halfSpacer } from '@styles/size';
-import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
+import { RootState } from '@redux/ducks';
+import { UserType } from '@common/user';
 
 type TripSummaryProps = {
   activeTrip?: TripType;
 } & RouteComponentProps;
 
 const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
-  const firebase = useFirebase();
-
-  const [tripMembers, setTripMembers] = useState<UserType[]>([]);
-  const [tripMembersLoading, setTripMembersLoading] = useState(true);
-
-  const getMatchingUsers = async () => {
-    if (activeTrip !== undefined && isLoaded(activeTrip) && activeTrip.tripMembers?.length > 0) {
-      return firebase
-        .firestore()
-        .collection('users')
-        .where('uid', 'in', activeTrip.tripMembers)
-        .get();
-    }
-    return null;
-  };
-
-  // In the useEffect we want to get matching users, but an error about cancelling asynchronous
-  // tasks was appearing because we are async/awaiting in getMatchingUsers, so instead we
-  // set a variable (isFetchingTripMembers) and then use the return in useEffect as a cleanup
-  // https://juliangaramendy.dev/blog/use-promise-subscription
-  useEffect(() => {
-    let isFetchingTripMembers = true;
-    getMatchingUsers().then((matchingUsers) => {
-      if (isFetchingTripMembers) {
-        if (!matchingUsers?.empty) {
-          matchingUsers?.forEach((doc) => {
-            setTripMembers((arr) => lodash.uniqBy([...arr, doc.data() as UserType], 'uid'));
-            setTripMembersLoading(false);
-          });
-        }
-        if (matchingUsers?.empty) {
-          setTripMembersLoading(false);
-        }
-      }
-    });
-    return () => (isFetchingTripMembers = false);
-  }, []);
+  const users = useSelector((state: RootState) => state.firestore.data.users);
 
   return (
     <>
@@ -142,39 +104,34 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
         )}
       </Box>
 
-      <Box>
-        <Heading as="h4" altStyle>
-          Trip Party
-        </Heading>
-        {!tripMembersLoading ? (
-          <>
-            {activeTrip && tripMembers.length === 0 && 'no party members'}
-            {activeTrip &&
-              tripMembers.length > 0 &&
-              tripMembers.map((member, index) => (
-                <Fragment key={member.uid}>
+      {activeTrip && activeTrip.tripMembers.length > 0 && (
+        <Box>
+          <Heading as="h4" altStyle>
+            Trip Party
+          </Heading>
+
+          {activeTrip &&
+            activeTrip.tripMembers.length > 0 &&
+            activeTrip.tripMembers.map((tripMember, index) => {
+              const matchingUser: UserType =
+                users && users[tripMember] ? users[tripMember] : undefined;
+              if (!matchingUser) return null;
+              return (
+                <Fragment key={matchingUser.uid}>
                   <FlexContainer justifyContent="flex-start">
-                    <Avatar src={member.photoURL} gravatarEmail={member.email} rightMargin />
-                    <span>{member.displayName}</span>
+                    <Avatar
+                      src={matchingUser.photoURL}
+                      gravatarEmail={matchingUser.email}
+                      rightMargin
+                    />
+                    <span>{matchingUser.displayName}</span>
                   </FlexContainer>
-                  {index !== tripMembers.length - 1 && <HorizontalRule compact />}
+                  {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
                 </Fragment>
-              ))}
-          </>
-        ) : (
-          <>
-            {[1, 2, 3, 4, 5].map((i) => (
-              <Fragment key={i}>
-                <FlexContainer justifyContent="flex-start">
-                  <Skeleton circle height={32} width={32} />
-                  <Skeleton count={1} width={200} style={{ marginLeft: 16 }} />
-                </FlexContainer>
-                <HorizontalRule compact />
-              </Fragment>
-            ))}
-          </>
-        )}
-      </Box>
+              );
+            })}
+        </Box>
+      )}
     </>
   );
 };

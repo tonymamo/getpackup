@@ -84,6 +84,13 @@ const AvatarImageWrapper = styled.div`
   }
 `;
 
+export const StackedAvatars = styled.div`
+  & ${AvatarImageWrapper} {
+    margin-right: -${halfSpacer};
+    display: inline-flex;
+  }
+`;
+
 const Avatar: FunctionComponent<AvatarProps> = (props) => {
   // https://en.gravatar.com/site/implement/images/
   // hash users email address with md5

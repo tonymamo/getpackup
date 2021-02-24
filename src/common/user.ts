@@ -2,7 +2,7 @@ export type UserType = {
   bio?: string;
   displayName: string;
   email: string;
-  id: string; // dont use this, prefer uid instead
+  // id: string; // dont use this, prefer uid instead
   isAdmin?: boolean;
   location?: string;
   photoURL?: string;

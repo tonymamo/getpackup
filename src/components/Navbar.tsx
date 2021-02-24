@@ -284,7 +284,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </NavLink>
                 <HorizontalRule compact />
                 <NavLink to="/login" onClick={() => toggleMenu()}>
-                  Login
+                  Log In
                 </NavLink>
                 <HorizontalRule compact />
                 <NavLink to="/signup" onClick={() => toggleMenu()}>
@@ -298,7 +298,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
               <NavLink to="/contact">Contact</NavLink>
-              <NavLink to="/login">Login</NavLink>
+              <NavLink to="/login">Log In</NavLink>
               <Button type="link" to="/signup">
                 Sign Up
               </Button>

@@ -10,7 +10,7 @@ import {
 } from 'react-icons/fa';
 
 import { baseSpacer, borderRadius, doubleSpacer, halfSpacer } from '@styles/size';
-import { brandDanger, brandSuccess, brandTertiary, white } from '@styles/color';
+import { brandDanger, brandSuccess, brandInfo, white } from '@styles/color';
 
 export type AlertProps = {
   type: 'success' | 'danger' | 'info';
@@ -34,7 +34,7 @@ const renderColor = (type: AlertProps['type']) => {
     return brandDanger;
   }
   if (type === 'info') {
-    return brandTertiary;
+    return brandInfo;
   }
   return brandDanger;
 };

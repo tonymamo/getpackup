@@ -63,6 +63,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       collection: 'trips',
       doc: props.id,
       storeAs: 'activeTripById',
+      populates: [{ child: 'tripMembers', root: 'users' }],
     },
     {
       collection: 'trips',
@@ -84,7 +85,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       dispatch({
         type: actionTypes.CLEAR_DATA,
         preserve: {
-          data: ['loggedInUser', 'trips'],
+          data: ['loggedInUser', 'trips', 'users'],
           ordered: ['loggedInUser', 'trips'],
         },
       });
@@ -108,7 +109,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         </Tab>
       </Tabs>
       <PageContainer>
-        <Router basepath={`/app/trips/${props.id}`} style={{ paddingTop: 54 }}>
+        <Router basepath={`/app/trips/${props.id}`} style={{ paddingTop: 54 }} primary={false}>
           <TripSummary path="/" activeTrip={activeTrip} />
           <PackingList path="/checklist" packingList={packingList} tripId={props.id} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />

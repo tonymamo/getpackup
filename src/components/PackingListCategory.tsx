@@ -32,32 +32,32 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
 }) => {
-  const defaultHeight = 0;
+  // const defaultHeight = 0;
 
   // Manages the collapsed state of the accordion
-  const [collapsed, setCollapsed] = useState(false);
+  // const [collapsed, setCollapsed] = useState(false);
 
   // The height of the content inside of the accordion
-  const [contentHeight, setContentHeight] = useState(defaultHeight);
+  // const [contentHeight, setContentHeight] = useState(defaultHeight);
 
   // Gets the height of the element (ref)
-  const [ref, { height }] = useMeasure();
+  // const [ref, { height }] = useMeasure();
 
   // Animations
-  const expand = useSpring({
-    height: !collapsed ? `${contentHeight}px` : `${defaultHeight}px`,
-  });
+  // const expand = useSpring({
+  //   height: collapsed ? `${defaultHeight}px` : `${contentHeight}px`,
+  // });
 
-  useEffect(() => {
-    // Sets initial height
-    setContentHeight(height);
+  // useEffect(() => {
+  //   // Sets initial height
+  //   setContentHeight(height);
 
-    // Adds resize event listener
-    window.addEventListener('resize', () => setContentHeight(height));
+  //   // Adds resize event listener
+  //   window.addEventListener('resize', () => setContentHeight(height));
 
-    // Clean-up
-    return window.removeEventListener('resize', () => setContentHeight(height));
-  }, [height]);
+  //   // Clean-up
+  //   return window.removeEventListener('resize', () => setContentHeight(height));
+  // }, [height]);
 
   return (
     <Box key={categoryName}>
@@ -65,18 +65,19 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
         <Heading as="h3" altStyle>
           {categoryName}
         </Heading>
-        <IconWrapper onClick={() => setCollapsed(!collapsed)}>
+        {/* <IconWrapper onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? <FaChevronDown /> : <FaChevronUp />}
-        </IconWrapper>
+        </IconWrapper> */}
       </FlexContainer>
-      <animated.div style={{ overflow: 'hidden', ...expand, margin: `0 -${halfSpacer}` }}>
-        <ItemsWrapper ref={ref}>
-          {sortedItems.map((item) => (
-            <PackingListItem key={item.id} tripId={tripId} item={item} />
-          ))}
-          <PackingListAddItem tripId={tripId} categoryName={categoryName} />
-        </ItemsWrapper>
-      </animated.div>
+      {/* <animated.div style={{ overflow: 'hidden', ...expand, margin: `0 -${halfSpacer}` }}> */}
+      {/* <ItemsWrapper ref={ref}> */}
+      <ItemsWrapper>
+        {sortedItems.map((item) => (
+          <PackingListItem key={item.id} tripId={tripId} item={item} />
+        ))}
+        <PackingListAddItem tripId={tripId} categoryName={categoryName} />
+      </ItemsWrapper>
+      {/* </animated.div> */}
     </Box>
   );
 };
