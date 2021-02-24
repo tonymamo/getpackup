@@ -15,6 +15,7 @@ import { baseBorderStyle } from '@styles/mixins';
 import PackingList from '@views/PackingList';
 import TripSummary from '@views/TripSummary';
 import EditPackingListItem from '@views/EditPackingListItem';
+import EditTripSummary from '@views/EditTripSummary';
 
 type TripByIdProps = {
   id?: string;
@@ -111,6 +112,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       <PageContainer>
         <Router basepath={`/app/trips/${props.id}`} style={{ paddingTop: 54 }} primary={false}>
           <TripSummary path="/" activeTrip={activeTrip} />
+          <EditTripSummary path="/edit" activeTrip={activeTrip} />
           <PackingList path="/checklist" packingList={packingList} tripId={props.id} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
         </Router>

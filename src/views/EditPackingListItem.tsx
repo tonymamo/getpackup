@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { FaChevronLeft, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
+import { FaChevronLeft, FaTrash } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
@@ -7,7 +7,6 @@ import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 
 import { Alert, AutoSave, Button, DropdownMenu, FlexContainer, Heading, Input } from '@components';
-import { brandDanger, brandInfo } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 import { requiredField, requiredSelect } from '@utils/validations';
 import { gearListCategories } from '@utils/gearListItemEnum';
@@ -115,7 +114,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                   <Button
                     type="button"
                     onClick={() => removeItem()}
-                    color="text"
+                    color="danger"
                     iconLeft={<FaTrash />}
                   >
                     Remove Item
@@ -127,7 +126,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 <Alert
                   type="info"
                   message="This item is considered one of the 10 Essential items."
-                  callToActionLink="https://www.nps.gov/articles/10essentials.htm"
+                  callToActionLink="https://www.mountaineers.org/blog/what-are-the-ten-essentials"
                   callToActionLinkText="Learn more"
                 />
               )}

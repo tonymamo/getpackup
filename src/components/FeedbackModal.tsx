@@ -92,6 +92,10 @@ const FeedbackModal: FunctionComponent<FeedbackModalProps> = (props) => {
             postFormUrlEncoded('feedback', values)
               .then(() => {
                 setSent(true);
+                setTimeout(() => {
+                  setSent(false);
+                  setModalIsOpen(false);
+                }, 10000);
                 setSubmitting(false);
                 resetForm();
               })

@@ -1,7 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
+import { useMeasure } from 'react-use';
 
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import { borderRadius, halfSpacer, screenSizes, doubleSpacer } from '@styles/size';
@@ -19,40 +20,63 @@ const CloseIcon = styled.span`
   cursor: pointer;
 `;
 
-const Modal: FunctionComponent<ModalProps> = (props) => (
-  <ReactModal
-    isOpen={props.isOpen}
-    onRequestClose={props.toggleModal}
-    shouldCloseOnOverlayClick
-    shouldCloseOnEsc
-    style={{
-      content: {
-        border: baseBorderStyle,
-        boxShadow: z1Shadow,
-        borderRadius,
-        maxWidth: screenSizes.medium,
-        margin: '0 auto',
-        top: doubleSpacer,
-        right: doubleSpacer,
-        left: doubleSpacer,
-        bottom: 'initial',
-        marginBottom: doubleSpacer,
-        WebkitOverflowScrolling: 'touch',
-      },
-      overlay: {
-        backgroundColor: 'rgba(0,0,0,.75)',
-        position: 'fixed',
-        height: '100%',
-        overflow: 'auto',
-        zIndex: zIndexModal,
-      },
-    }}
-  >
-    <CloseIcon onClick={props.toggleModal}>
-      <FaTimes />
-    </CloseIcon>
-    {props.children}
-  </ReactModal>
-);
+const Modal: FunctionComponent<ModalProps> = (props) => {
+  const defaultHeight = 0;
+
+  // The height of the modal
+  const [contentHeight, setContentHeight] = useState(defaultHeight);
+
+  // Gets the height of the element (ref)
+
+  const [ref, { height }] = useMeasure();
+
+  useEffect(() => {
+    // Sets initial height
+    setContentHeight(height);
+
+    // Adds resize event listener
+    window.addEventListener('resize', () => setContentHeight(height));
+
+    // Clean-up
+    return window.removeEventListener('resize', () => setContentHeight(height));
+  }, [height]);
+
+  return (
+    <ReactModal
+      contentRef={ref}
+      isOpen={props.isOpen}
+      onRequestClose={props.toggleModal}
+      shouldCloseOnOverlayClick
+      shouldCloseOnEsc
+      style={{
+        content: {
+          border: baseBorderStyle,
+          boxShadow: z1Shadow,
+          borderRadius,
+          maxWidth: screenSizes.medium,
+          margin: '0 auto',
+          top: contentHeight ? `calc(50vh - ${contentHeight}px)` : doubleSpacer,
+          right: doubleSpacer,
+          left: doubleSpacer,
+          bottom: 'initial',
+          marginBottom: doubleSpacer,
+          WebkitOverflowScrolling: 'touch',
+        },
+        overlay: {
+          backgroundColor: 'rgba(0,0,0,.75)',
+          position: 'fixed',
+          height: '100%',
+          overflow: 'auto',
+          zIndex: zIndexModal,
+        },
+      }}
+    >
+      <CloseIcon onClick={props.toggleModal}>
+        <FaTimes />
+      </CloseIcon>
+      {props.children}
+    </ReactModal>
+  );
+};
 
 export default Modal;

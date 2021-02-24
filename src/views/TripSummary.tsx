@@ -4,7 +4,7 @@ import { FaMapMarkerAlt, FaCalendar, FaPencilAlt } from 'react-icons/fa';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
 
-import { formattedDateRange } from '@utils/dateUtils';
+import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import {
   Heading,
   FlexContainer,
@@ -63,10 +63,14 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
           <FaCalendar style={{ marginRight: halfSpacer }} />{' '}
           {activeTrip ? (
-            formattedDateRange(
-              activeTrip.startDate.seconds * 1000,
-              activeTrip.endDate.seconds * 1000
-            )
+            <>
+              {activeTrip.tripLength === 21
+                ? formattedDate(new Date(activeTrip.startDate.seconds * 1000))
+                : formattedDateRange(
+                    activeTrip.startDate.seconds * 1000,
+                    activeTrip.endDate.seconds * 1000
+                  )}
+            </>
           ) : (
             <Skeleton width={200} />
           )}

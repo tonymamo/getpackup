@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { FaCheckCircle, FaChevronCircleRight, FaTrash } from 'react-icons/fa';
+import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
@@ -12,17 +12,7 @@ import 'react-rangeslider/lib/index.css';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import {
-  Avatar,
-  Input,
-  Button,
-  HorizontalRule,
-  Column,
-  Row,
-  FlexContainer,
-  Modal,
-  Heading,
-} from '@components';
+import { Avatar, Input, Button, HorizontalRule, Column, Row, FlexContainer } from '@components';
 import { StyledLabel } from '@components/Input';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
@@ -127,12 +117,11 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useFirestoreConnect([{ collection: 'users' }]);
 
   const formatTripLengthAsString = (value: number) =>
-    `${value === 21 ? '20+ Days' : `${value === 1 ? 'Day Trip' : `${value} days`}`}`;
+    `${value === 21 ? '20+ Days' : `${value === 1 ? 'Day Trip' : `${value} Days`}`}`;
 
   const addNewTrip = (values: ValuesType) => {
     setIsLoading(true);
@@ -171,7 +160,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const updateTrip = (values: ValuesType) => {
     setIsLoading(true);
     const existingTagsWithoutTripLengthTag = props.initialValues.tags.filter(
-      (tag) => !tag.includes('day')
+      (tag) => !tag.includes('Day') // case is important here
     );
     firebase
       .firestore()
@@ -184,9 +173,10 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         updated: new Date(),
         tripMembers: [...props.initialValues.tripMembers, ...values.tripMembers],
         tags: [...existingTagsWithoutTripLengthTag, formatTripLengthAsString(values.tripLength)],
+        tripLength: values.tripLength,
       })
       .then(() => {
-        navigate('/app/trips');
+        navigate(`/app/trips/${props.initialValues.tripId}`);
         dispatch(
           addAlert({
             type: 'success',
@@ -204,34 +194,16 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       });
   };
 
-  const deleteTrip = () => {
-    firebase
-      .firestore()
-      .collection('trips')
-      .doc(props.initialValues.tripId)
-      .delete()
-      .then(() => {
-        navigate('/app/trips');
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Successfully deleted trip',
-          })
-        );
-      })
-      .catch((err) => {
-        dispatch(
-          addAlert({
-            type: 'danger',
-            message: err.message,
-          })
-        );
-      });
-  };
+  type UserOptionsType = Array<
+    UserType & {
+      value: string;
+      label: string;
+    }
+  >;
 
   const loadUsers = async (inputValue: string) => {
     const searchValue = inputValue.toLowerCase();
-    const usersOptions: UserType[] = [];
+    const usersOptions: UserOptionsType = [];
 
     const response = await firebase
       .firestore()
@@ -245,7 +217,14 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
     if (!response.empty) {
       response.forEach((doc) => {
         const user = doc.data() as UserType;
-        return usersOptions.push(user);
+        return usersOptions.push({
+          ...user,
+          value: user.uid,
+          label: user.displayName,
+          photoURL: user.photoURL,
+          email: user.email,
+          username: user.username,
+        });
       });
     }
 
@@ -263,7 +242,13 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
           <Avatar src={option.data.photoURL} gravatarEmail={option.data.email} rightMargin />
           <div>
             <div>{option.data.username}</div>
-            <small style={{ color: textColorLight }}>{option.data.label}</small>
+            <small
+              style={{
+                color: textColorLight,
+              }}
+            >
+              {option.data.label}
+            </small>
           </div>
         </FlexContainer>
       </components.Option>
@@ -274,7 +259,11 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
     data,
     ...option
   }: {
-    data: { photoURL: string; email: string; username: string };
+    data: {
+      photoURL: string;
+      email: string;
+      username: string;
+    };
   }) => {
     return (
       <components.MultiValueLabel {...option}>
@@ -296,6 +285,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         validateOnMount
         initialValues={{
           ...props.initialValues,
+          tripMembers: [],
         }}
         onSubmit={(values, { setSubmitting }) => {
           if (props.type === 'new') {
@@ -307,7 +297,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
           setSubmitting(false);
         }}
       >
-        {({ isSubmitting, isValid, values, setFieldValue, ...rest }) => (
+        {({ isSubmitting, isValid, values, setFieldValue, dirty, ...rest }) => (
           <Form autoComplete="off">
             <Field
               as={Input}
@@ -323,6 +313,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 <StyledLabel required>Start Date</StyledLabel>
                 <DayPickerInputWrapper>
                   <DayPicker
+                    month={new Date(values.startDate)}
                     selectedDays={new Date(values.startDate)}
                     onDayClick={(day: Date) => {
                       setFieldValue('startDate', dateFnsFormat(new Date(day), dateFormat));
@@ -389,7 +380,11 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
             {props.type === 'edit' && props.initialValues.tripMembers.length > 0 && (
               <>
                 <StyledLabel>Trip Party</StyledLabel>
-                <div style={{ margin: `${halfSpacer} 0 ${baseSpacer}` }}>
+                <div
+                  style={{
+                    margin: `${halfSpacer} 0 ${baseSpacer}`,
+                  }}
+                >
                   {props.initialValues.tripMembers.map((tripMember) => {
                     const matchingUser: UserType =
                       users && users[tripMember] ? users[tripMember] : undefined;
@@ -404,7 +399,11 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                           />
                           <div>
                             <div>{matchingUser.username}</div>
-                            <small style={{ color: textColorLight }}>
+                            <small
+                              style={{
+                                color: textColorLight,
+                              }}
+                            >
                               {matchingUser.displayName}
                             </small>
                           </div>
@@ -422,81 +421,35 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               type="async-select"
               placeholder="Search by username"
               // TODO: change to only be users you are following
-              defaultOptions={false}
+              // defaultOptions={false}
               loadOptions={loadUsers}
               name="tripMembers"
               label={props.type === 'edit' ? 'Add Trip Members' : 'Trip Members'}
               setFieldValue={setFieldValue}
               isMulti
               value={values.tripMembers}
-              components={{ Option, MultiValueLabel }}
+              components={{
+                Option,
+                MultiValueLabel,
+              }}
               {...rest}
             />
 
             <HorizontalRule />
-            <FlexContainer justifyContent="space-between">
-              <p>
-                <Button
-                  type="submit"
-                  rightSpacer
-                  disabled={isSubmitting || !isValid || isLoading}
-                  isLoading={isLoading}
-                  iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
-                >
-                  {props.type === 'new' ? 'Select Activites' : 'Update Trip'}
-                </Button>
 
-                <Button type="link" to="../" color="text">
-                  Cancel
-                </Button>
-              </p>
-              {props.type === 'edit' && (
-                <p>
-                  <Button
-                    type="button"
-                    color="danger"
-                    onClick={() => setModalIsOpen(true)}
-                    iconLeft={<FaTrash />}
-                  >
-                    Delete Trip
-                  </Button>
-                </p>
-              )}
-            </FlexContainer>
-            <Modal
-              toggleModal={() => {
-                setModalIsOpen(false);
-              }}
-              isOpen={modalIsOpen}
+            <Button
+              type="submit"
+              rightSpacer
+              disabled={isSubmitting || !isValid || isLoading || !dirty}
+              isLoading={isLoading}
+              iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
             >
-              <Heading>Are you sure?</Heading>
-              <p>Are you sure you want to delete this trip? This action cannot be undone.</p>
-              <Row>
-                <Column xs={6}>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setModalIsOpen(false);
-                    }}
-                    color="primaryOutline"
-                    block
-                  >
-                    Cancel
-                  </Button>
-                </Column>
-                <Column xs={6}>
-                  <Button
-                    type="button"
-                    onClick={() => deleteTrip()}
-                    block
-                    color="danger"
-                    iconLeft={<FaTrash />}
-                  >
-                    Delete
-                  </Button>
-                </Column>
-              </Row>
-            </Modal>
+              {props.type === 'new' ? 'Select Activites' : 'Update Trip'}
+            </Button>
+
+            <Button type="link" to="../" color="text">
+              Cancel
+            </Button>
           </Form>
         )}
       </Formik>

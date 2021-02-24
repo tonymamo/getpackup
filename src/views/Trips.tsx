@@ -20,7 +20,7 @@ import {
   StackedAvatars,
 } from '@components';
 import { RootState } from '@redux/ducks';
-import { formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
+import { formattedDate, formattedDateRange, isAfterToday, isBeforeToday } from '@utils/dateUtils';
 import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
 import { halfSpacer } from '@styles/size';
@@ -64,6 +64,8 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       .filter((trip) => isBeforeToday(trip.endDate.seconds * 1000))
       .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
+  const numberOfAvatarsToShow = 4;
+
   const renderTrip = (trip: TripType) => (
     <Box key={trip.tripId} onClick={() => navigate(`/app/trips/${trip.tripId}`)}>
       <FlexContainer justifyContent="space-between" flexWrap="nowrap" alignItems="flex-start">
@@ -76,8 +78,9 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
             gravatarEmail={loggedInUser?.email as string}
             size="sm"
           />
-          {users &&
-            trip.tripMembers.map((tripMember: any) => {
+          {// subtract 1 so we can always show at least +2 below
+          users &&
+            trip.tripMembers.slice(0, numberOfAvatarsToShow - 1).map((tripMember: any) => {
               const matchingUser: UserType = users[tripMember] ? users[tripMember] : undefined;
               if (!matchingUser) return null;
               return (
@@ -89,11 +92,21 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
                 />
               );
             })}
+          {users && trip.tripMembers.length > numberOfAvatarsToShow && (
+            <Avatar
+              // never want to show +1, because then we could have just rendered the photo.
+              // Instead, lets add another so its always at least +2
+              staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
+              size="sm"
+            />
+          )}
         </StackedAvatars>
       </FlexContainer>
       <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
         <FaRegCalendar style={{ marginRight: halfSpacer }} />
-        {formattedDateRange(trip.startDate.seconds * 1000, trip.endDate.seconds * 1000)}
+        {trip.tripLength === 21
+          ? formattedDate(new Date(trip.startDate.seconds * 1000))
+          : formattedDateRange(trip.startDate.seconds * 1000, trip.endDate.seconds * 1000)}
       </FlexContainer>
       <HorizontalRule compact />
       <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">

@@ -16,6 +16,7 @@ import {
 import { lightestGray } from '@styles/color';
 import { PreviewCompatibleImage } from '@components';
 import { zIndexAvatarImageAfter } from '@styles/layers';
+import { fontSizeSmall } from '@styles/typography';
 
 type AvatarProps = {
   src?:
@@ -24,9 +25,10 @@ type AvatarProps = {
       }
     | string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  gravatarEmail: string;
+  gravatarEmail?: string;
   bottomMargin?: boolean;
   rightMargin?: boolean;
+  staticContent?: string;
   style?: CSSProperties;
 };
 
@@ -84,8 +86,22 @@ const AvatarImageWrapper = styled.div`
   }
 `;
 
+const StaticContentWrapper = styled.div`
+  background-color: ${lightestGray};
+  height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
+  width: ${(props) => props.size && renderSize(props.size)};
+  /* min-width ensures it doesnt get resized when in a flexed parent */
+  min-width: ${(props) => props.size && renderSize(props.size)};
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  font-size: ${fontSizeSmall};
+`;
+
 export const StackedAvatars = styled.div`
-  & ${AvatarImageWrapper} {
+  display: flex;
+
+  & ${AvatarImageWrapper}, & ${StaticContentWrapper} {
     margin-right: -${halfSpacer};
     display: inline-flex;
   }
@@ -96,9 +112,9 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
   // hash users email address with md5
   // default to an identicon and
   // size of 192px(sextupleSpacer * 2x)
-  const gravatarUrl = `https://www.gravatar.com/avatar/${Md5.hashStr(
-    props.gravatarEmail
-  )}?d=identicon&s=192`;
+  const gravatarUrl =
+    props.gravatarEmail &&
+    `https://www.gravatar.com/avatar/${Md5.hashStr(props.gravatarEmail)}?d=identicon&s=192`;
   return (
     <AvatarImageWrapper
       size={props.size || 'sm'}
@@ -107,12 +123,19 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
       style={props.style}
       {...props}
     >
-      <PreviewCompatibleImage
-        imageInfo={{
-          image: props.src || gravatarUrl,
-          alt: 'user profile picture',
-        }}
-      />
+      {props.staticContent && (!props.src || !gravatarUrl) ? (
+        <StaticContentWrapper size={props.size || 'sm'}>
+          <small>{props.staticContent}</small>
+        </StaticContentWrapper>
+      ) : (
+        <PreviewCompatibleImage
+          imageInfo={{
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            image: (props.src || gravatarUrl)!,
+            alt: 'user profile picture',
+          }}
+        />
+      )}
     </AvatarImageWrapper>
   );
 };

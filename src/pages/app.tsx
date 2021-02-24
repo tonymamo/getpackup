@@ -7,7 +7,6 @@ import { useFirebase, isLoaded } from 'react-redux-firebase';
 import Profile from '@views/Profile';
 import Trips from '@views/Trips';
 import NewTripSummary from '@views/NewTripSummary';
-import EditTripSummary from '@views/EditTripSummary';
 import TripById from '@views/TripById';
 import TripGenerator from '@views/TripGenerator';
 import Search from '@views/Search';
@@ -76,11 +75,6 @@ const App: FunctionComponent<{}> = (props) => {
           <PrivateRoute
             path="/trips/new"
             component={NewTripSummary}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/trips/:id/edit"
-            component={EditTripSummary}
             loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute
