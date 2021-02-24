@@ -55,7 +55,8 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
 
   useEffect(() => {
     if (location.origin.includes('www.test') && typeof window !== 'undefined') {
-      location.href = 'https://test.getpackup.com';
+      console.log('redirecting to TEST');
+      window.open('https://test.getpackup.com', '_self');
     }
   }, []);
 
