@@ -1,6 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
+import { useLocation } from '@reach/router';
 import firebase from 'gatsby-plugin-firebase';
 import { useDispatch } from 'react-redux';
 
@@ -49,7 +50,15 @@ const NavLink = styled(Link)`
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
   const [user, loading] = useAuthState(firebase);
+  const location = useLocation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (location.origin.includes('www.test') && typeof window !== 'undefined') {
+      location.href = 'https://test.getpackup.com';
+    }
+  }, []);
+
   const logout = () => {
     dispatch(
       addAlert({
