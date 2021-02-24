@@ -166,7 +166,7 @@ const FeedbackModal: FunctionComponent<FeedbackModalProps> = (props) => {
                         color="success"
                         iconLeft={<FaCheck />}
                       >
-                        Send Feedback
+                        Send
                       </Button>
                     </Column>
                   </Row>
