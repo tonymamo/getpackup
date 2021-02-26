@@ -131,7 +131,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       type="text"
                       name="username"
                       label="Username"
-                      validate={(value: string) => validateUsername(value, firebase, auth.uid)}
+                      validate={(value: string) => validateUsername(value, firebase, auth.uid, '')}
                       required
                       hiddenLabel
                       helpText={

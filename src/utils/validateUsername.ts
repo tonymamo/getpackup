@@ -20,9 +20,10 @@ const reservedRouteNamesThatCannotBeUsernames = [
 const validateUsername = async (
   value: string,
   firebase: ExtendedFirebaseInstance,
-  loggedInUserUID: string
+  loggedInUserUID: string,
+  initialValue: string
 ) => {
-  if (value === '') {
+  if (value === '' || value === initialValue) {
     // return out early to avoid api calls below
     return undefined;
   }

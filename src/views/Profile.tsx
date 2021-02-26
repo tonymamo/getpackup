@@ -88,7 +88,16 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                   });
               }}
             >
-              {({ isSubmitting, isValid, setFieldValue, dirty, values, errors, ...rest }) => (
+              {({
+                isSubmitting,
+                isValid,
+                setFieldValue,
+                dirty,
+                values,
+                initialValues,
+                errors,
+                ...rest
+              }) => (
                 <Form>
                   <Box>
                     <AvatarUpload loggedInUser={loggedInUser} />
@@ -105,7 +114,9 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                       type="text"
                       name="username"
                       label="Username"
-                      validate={(value: string) => validateUsername(value, firebase, '')}
+                      validate={(value: string) =>
+                        validateUsername(value, firebase, '', initialValues.username)
+                      }
                       required
                       helpText={
                         values.username.length > 3 &&
