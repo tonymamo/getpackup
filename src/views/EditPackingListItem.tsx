@@ -6,7 +6,16 @@ import { useFirebase } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 
-import { Alert, AutoSave, Button, DropdownMenu, FlexContainer, Heading, Input } from '@components';
+import {
+  Alert,
+  AutoSave,
+  Button,
+  FlexContainer,
+  Heading,
+  HorizontalRule,
+  Input,
+  Seo,
+} from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { requiredField, requiredSelect } from '@utils/validations';
 import { gearListCategories } from '@utils/gearListItemEnum';
@@ -60,6 +69,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
 
   return (
     <div>
+      <Seo title="Edit Item" />
       {!size.isSmallScreen && (
         <Button
           type="button"
@@ -104,24 +114,12 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
             }
           }}
         >
-          {({ setFieldValue, ...rest }) => (
+          {({ setFieldValue, values, ...rest }) => (
             <Form>
-              <FlexContainer justifyContent="space-between">
-                <Heading altStyle as="h2">
-                  Edit Item
-                </Heading>
-                <DropdownMenu>
-                  <Button
-                    type="button"
-                    onClick={() => removeItem()}
-                    color="danger"
-                    iconLeft={<FaTrash />}
-                  >
-                    Remove Item
-                  </Button>
-                </DropdownMenu>
-              </FlexContainer>
-              <AutoSave />
+              <Heading altStyle as="h2">
+                {values.name}
+              </Heading>
+
               {activeItem.isEssential && (
                 <Alert
                   type="info"
@@ -158,6 +156,17 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 required
               />
               <Field as={Input} type="textarea" name="description" label="Description" />
+              <AutoSave />
+
+              <HorizontalRule />
+              <Button
+                type="button"
+                onClick={() => removeItem()}
+                color="danger"
+                iconLeft={<FaTrash />}
+              >
+                Remove Item
+              </Button>
             </Form>
           )}
         </Formik>

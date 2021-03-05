@@ -8,7 +8,7 @@ import { FaChevronRight, FaExclamationTriangle } from 'react-icons/fa';
 import { navigate } from 'gatsby';
 
 import { baseBorderStyle } from '@styles/mixins';
-import { baseSpacer, halfSpacer } from '@styles/size';
+import { halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Input, FlexContainer, Pill, IconWrapper } from '@components';
 import { brandInfo, offWhite } from '@styles/color';
@@ -21,7 +21,7 @@ type PackingListItemProps = {
 
 const PackingListItemWrapper = styled.li`
   border-bottom: ${baseBorderStyle};
-  padding: ${baseSpacer} ${halfSpacer};
+  padding: ${halfSpacer};
 
   &:hover {
     background-color: ${offWhite};
