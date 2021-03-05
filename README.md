@@ -10,7 +10,7 @@
   Packup - Frontend
 </h1>
 
-A Gatsby project using React, Redux, Styled-Components, Formik, and more.
+A Gatsby project using React, Firebase, Redux, Styled-Components, Formik, NetlifyCMS, and more.
 
 ## 🚀 Quick start
 
@@ -24,6 +24,9 @@ A Gatsby project using React, Redux, Styled-Components, Formik, and more.
     cd getpackup
     yarn
     ```
+
+1.  **Get environment set up**
+    Ask @tonymamo for a .env.development and .env.production file to put in the root of your project
 
 1.  **Start developing.**
 
@@ -48,54 +51,71 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
     .
     ├── node_modules
     ├── src
+      ├── cms
+      ├── common
       ├── components
+      ├── custom_types
+      ├── images
       ├── pages
       ├── redux
-      ├── stories
       ├── styles
       ├── templates
       ├── utils
       ├── views
+      ├── html.js
     ├── static
       ├── cms
         ├── config.yml
-    ├── .gitignore
-    ├── .prettierrc
+      ├── fonts
+      ├── img
     ├── gatsby-browser.js
     ├── gatsby-config.js
     ├── gatsby-node.js
     ├── gatsby-ssr.js
-    ├── LICENSE
-    ├── package-lock.json
+    ├── netlify.toml
     ├── package.json
     └── README.md
 
 1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
 
-2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
+1.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
 
-3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
+1.  **`/src/cms`**: This directory contains files needed for Netlify CMS.
 
-4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
+1.  **`/src/common`**: This directory has exported Typescript Types.
 
-5.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
+1.  **`/src/compoments`**: This directory contains all of the more atomic components to be used in Pages and Views. You can import named components from the `@components` directory utilizing the index.tsx file which exports everything in this directory.
 
-6.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
+1.  **`/src/custom_types`**: Custom types for npm packages that don't have Typescript support.
 
-7.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
+1.  **`/src/images`**: Images directory for files that get imported via JS imports in `src` files.
 
-8.  **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
+1.  **`/src/pages`**: A Gatsby convention, any file in here generates a Statically Generated Page with a matching route. For `*.md` files, these create routes that get rendered by files in the `src/templates` directory in conjunction with NetlifyCMS using the `templateKey`.
 
-9.  **`LICENSE`**: Gatsby is licensed under the MIT license.
+1.  **`/src/redux`**: Global state management using Redux "Ducks" pattern and some middlewares.
 
-10. **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
+1.  **`/src/styles`**: Directory of global variables files, a reset file, and related to be imported elsewhere.
 
-11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
+1.  **`/src/templates`**: Files that are used for rendering the markdown files in the `src/pages` directory for NetlifyCMS-driven content.
 
-12. **`README.md`**: A text file containing useful reference information about your project.
+1.  **`/src/utils`**: Miscellaneous javascript functions and React hooks.
 
-13. **`static/cms/config.yml`**: A yaml file for defining schemas to use in NetlifyCMS
+1.  **`/src/views`**: Non-static routes that Gatsby doesn't handle during buildtime. This is a hybrid app, so all views are the client-side routes that get pulled into the Router in `src/pages/app.tsx`.
+
+1.  **`/src/html.js`**: Gatsby-specific override to inject things into `<head>`
+
+1.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.org/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
+
+1.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
+
+1.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
+
+1.  **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.org/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
+
+1.  **`netlify.toml`**: Netlify config file for using different contexts and setting environment variables based on context.
+
+1.  **`static/cms/config.yml`**: A yaml file for defining schemas to use in NetlifyCMS
 
 ## 💫 Deploy
 
-This project is automatically deployed to Netlify via commits to the `master` branch.
+This project is automatically deployed to Netlify via commits. Any commits to `master` branch deploy the production getpackup.com website, and `test` updates test.getpackup.com. Other branches and PR's currently do not get a Netlify deploy but that is an option should it be needed later.
