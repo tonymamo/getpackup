@@ -8,17 +8,7 @@ import uniqBy from 'lodash/uniqBy';
 import SwipeableViews from 'react-swipeable-views';
 import { FaCaretLeft, FaCaretRight, FaCheckCircle } from 'react-icons/fa';
 
-import {
-  Heading,
-  PageContainer,
-  Seo,
-  Button,
-  IconCheckbox,
-  Row,
-  Column,
-  FlexContainer,
-  Modal,
-} from '@components';
+import { Heading, PageContainer, Seo, Button, IconCheckbox, Row, Column, Modal } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { GearItem } from '@common/gearItem';
@@ -151,164 +141,152 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
       >
         {({ isSubmitting, isValid, values }) => (
           <Form>
-            <p>
-              <small>
-                Select all that apply so we can pre-populate your packing list. Missing an option?
-                That&apos;s ok, you can add it later.
-              </small>
-            </p>
             <SwipeableViews index={activeTab} onChangeIndex={(i) => setActiveTab(i)}>
               <div>
-                <FlexContainer flexDirection="column" justifyContent="space-between" height="100%">
-                  <div>
-                    <Heading altStyle as="h2" noMargin align="center">
-                      Activities
-                    </Heading>
-                    <Row>
-                      {gearListActivities.map((item) => (
-                        <Column xs={4} md={2} key={item.name}>
-                          <Field
-                            as={IconCheckbox}
-                            icon={item.icon}
-                            checked={values[item.name] ?? false}
-                            name={item.name}
-                            label={item.label}
-                          />
-                        </Column>
-                      ))}
-                    </Row>
-                  </div>
-                  <div style={{ width: '100%' }}>
-                    <Row>
-                      <Column xs={6} xsOffset={6}>
-                        <Button
-                          type="button"
-                          onClick={() => setActiveTab(1)}
-                          block
-                          iconRight={<FaCaretRight />}
-                        >
-                          Next
-                        </Button>
-                      </Column>
-                    </Row>
-                  </div>
-                </FlexContainer>
-              </div>
-              <div>
-                <FlexContainer flexDirection="column" justifyContent="space-between" height="100%">
-                  <div>
-                    <Heading altStyle as="h2" noMargin align="center">
-                      Accommodations
-                    </Heading>
-                    <Row>
-                      {gearListAccommodations.map((item) => (
-                        <Column xs={4} md={2} key={item.name}>
-                          <Field
-                            as={IconCheckbox}
-                            icon={item.icon}
-                            checked={values[item.name] ?? false}
-                            name={item.name}
-                            label={item.label}
-                          />
-                        </Column>
-                      ))}
-                    </Row>
-                    <Heading altStyle as="h2" noMargin align="center">
-                      Camp Kitchen
-                    </Heading>
+                <Heading altStyle as="h2" noMargin align="center">
+                  Activities
+                </Heading>
+                <p style={{ textAlign: 'center' }}>
+                  <small>Select all that apply so we can pre-populate your packing list.</small>
+                </p>
+                <Row>
+                  {gearListActivities.map((item) => (
+                    <Column xs={4} lg={3} key={item.name}>
+                      <Field
+                        as={IconCheckbox}
+                        icon={item.icon}
+                        checked={values[item.name] ?? false}
+                        name={item.name}
+                        label={item.label}
+                      />
+                    </Column>
+                  ))}
+                </Row>
 
-                    <Row>
-                      {gearListCampKitchen.map((item) => (
-                        <Column xs={4} md={2} key={item.name}>
-                          <Field
-                            as={IconCheckbox}
-                            icon={item.icon}
-                            checked={values[item.name] ?? false}
-                            name={item.name}
-                            label={item.label}
-                          />
-                        </Column>
-                      ))}
-                    </Row>
-                  </div>
-                  <div style={{ width: '100%' }}>
-                    <Row>
-                      <Column xs={6}>
-                        <Button
-                          type="button"
-                          onClick={() => setActiveTab(0)}
-                          color="primaryOutline"
-                          block
-                          iconLeft={<FaCaretLeft />}
-                        >
-                          Previous
-                        </Button>
-                      </Column>
-                      <Column xs={6}>
-                        <Button
-                          type="button"
-                          onClick={() => setActiveTab(2)}
-                          block
-                          iconRight={<FaCaretRight />}
-                        >
-                          Next
-                        </Button>
-                      </Column>
-                    </Row>
-                  </div>
-                </FlexContainer>
+                <Row>
+                  <Column xs={6} xsOffset={6}>
+                    <Button
+                      type="button"
+                      onClick={() => setActiveTab(1)}
+                      block
+                      iconRight={<FaCaretRight />}
+                    >
+                      Next
+                    </Button>
+                  </Column>
+                </Row>
               </div>
               <div>
-                <FlexContainer flexDirection="column" justifyContent="space-between" height="100%">
-                  <div>
-                    <Heading altStyle as="h2" noMargin align="center">
-                      Other Considerations
-                    </Heading>
-                    <Row>
-                      {gearListOtherConsiderations
-                        // filter out Essential as we will include them always
-                        .filter((i) => i.name !== 'essential')
-                        .map((item) => (
-                          <Column xs={4} md={2} key={item.name}>
-                            <Field
-                              as={IconCheckbox}
-                              icon={item.icon}
-                              checked={values[item.name] ?? false}
-                              name={item.name}
-                              label={item.label}
-                            />
-                          </Column>
-                        ))}
-                    </Row>
-                  </div>
-                  <div style={{ width: '100%' }}>
-                    <Row>
-                      <Column xs={6}>
-                        <Button
-                          type="button"
-                          onClick={() => setActiveTab(1)}
-                          color="primaryOutline"
-                          block
-                          iconLeft={<FaCaretLeft />}
-                        >
-                          Previous
-                        </Button>
+                <Heading altStyle as="h2" noMargin align="center">
+                  Accommodations
+                </Heading>
+                <p style={{ textAlign: 'center' }}>
+                  <small>Select all that apply so we can pre-populate your packing list.</small>
+                </p>
+                <Row>
+                  {gearListAccommodations.map((item) => (
+                    <Column xs={4} lg={3} key={item.name}>
+                      <Field
+                        as={IconCheckbox}
+                        icon={item.icon}
+                        checked={values[item.name] ?? false}
+                        name={item.name}
+                        label={item.label}
+                      />
+                    </Column>
+                  ))}
+                </Row>
+                <Heading altStyle as="h2" noMargin align="center">
+                  Camp Kitchen
+                </Heading>
+
+                <Row>
+                  {gearListCampKitchen.map((item) => (
+                    <Column xs={4} lg={3} key={item.name}>
+                      <Field
+                        as={IconCheckbox}
+                        icon={item.icon}
+                        checked={values[item.name] ?? false}
+                        name={item.name}
+                        label={item.label}
+                      />
+                    </Column>
+                  ))}
+                </Row>
+
+                <Row>
+                  <Column xs={6}>
+                    <Button
+                      type="button"
+                      onClick={() => setActiveTab(0)}
+                      color="primaryOutline"
+                      block
+                      iconLeft={<FaCaretLeft />}
+                    >
+                      Previous
+                    </Button>
+                  </Column>
+                  <Column xs={6}>
+                    <Button
+                      type="button"
+                      onClick={() => setActiveTab(2)}
+                      block
+                      iconRight={<FaCaretRight />}
+                    >
+                      Next
+                    </Button>
+                  </Column>
+                </Row>
+              </div>
+              <div>
+                <Heading altStyle as="h2" noMargin align="center">
+                  Other Considerations
+                </Heading>
+                <p style={{ textAlign: 'center' }}>
+                  <small>Select all that apply so we can pre-populate your packing list.</small>
+                </p>
+                <Row>
+                  {gearListOtherConsiderations
+                    // filter out Essential as we will include them always
+                    .filter((i) => i.name !== 'essential')
+                    .map((item) => (
+                      <Column xs={4} lg={3} key={item.name}>
+                        <Field
+                          as={IconCheckbox}
+                          icon={item.icon}
+                          checked={values[item.name] ?? false}
+                          name={item.name}
+                          label={item.label}
+                        />
                       </Column>
-                      <Column xs={6}>
-                        <Button
-                          type="submit"
-                          disabled={isSubmitting || !isValid}
-                          isLoading={isLoading}
-                          block
-                          color="success"
-                          iconLeft={<FaCheckCircle />}
-                        >
-                          {isLoading ? 'Saving' : 'Save'}
-                        </Button>
-                      </Column>
-                    </Row>
-                  </div>
-                </FlexContainer>
+                    ))}
+                </Row>
+
+                <Row>
+                  <Column xs={6}>
+                    <Button
+                      type="button"
+                      onClick={() => setActiveTab(1)}
+                      color="primaryOutline"
+                      block
+                      iconLeft={<FaCaretLeft />}
+                    >
+                      Previous
+                    </Button>
+                  </Column>
+                  <Column xs={6}>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || !isValid}
+                      isLoading={isLoading}
+                      block
+                      color="success"
+                      iconLeft={<FaCheckCircle />}
+                    >
+                      {isLoading ? 'Saving' : 'Save'}
+                    </Button>
+                  </Column>
+                </Row>
               </div>
             </SwipeableViews>
           </Form>
