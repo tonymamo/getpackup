@@ -97,23 +97,26 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     return null;
   }
 
+  const summaryActive = pathname.includes('summary') || pathname.includes('edit');
+  const checklistActive = !summaryActive || pathname.includes('checklist');
+
   return (
     <>
       <Seo title={activeTrip?.name || 'Trip Summary'} />
 
       <Tabs>
-        <Tab active={!pathname.includes('checklist')}>
-          <Link to={`/app/trips/${props.id}`}>Summary</Link>
+        <Tab active={checklistActive}>
+          <Link to={`/app/trips/${props.id}`}>Checklist</Link>
         </Tab>
-        <Tab active={pathname.includes('checklist')}>
-          <Link to={`/app/trips/${props.id}/checklist`}>Checklist</Link>
+        <Tab active={summaryActive}>
+          <Link to={`/app/trips/${props.id}/summary`}>Summary</Link>
         </Tab>
       </Tabs>
       <PageContainer>
         <Router basepath={`/app/trips/${props.id}`} style={{ paddingTop: 54 }} primary={false}>
-          <TripSummary path="/" activeTrip={activeTrip} />
+          <PackingList path="/" packingList={packingList} tripId={props.id} />
+          <TripSummary path="/summary" activeTrip={activeTrip} />
           <EditTripSummary path="/edit" activeTrip={activeTrip} />
-          <PackingList path="/checklist" packingList={packingList} tripId={props.id} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
         </Router>
       </PageContainer>
