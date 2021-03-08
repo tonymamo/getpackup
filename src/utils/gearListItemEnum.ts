@@ -35,6 +35,10 @@ export const gearListActivities = [
   { name: 'resort', label: 'Resort', icon: 'fa/FaSnowboarding' },
   // { name: 'snowboarding', label: 'Snowboarding', icon: 'fa/FaSnowboarding' },
   { name: 'snowshoeing', label: 'Snowshoeing', icon: 'fa/FaSnowflake' },
+  { name: 'fishing', label: 'Fishing', icon: 'fa/FaFish' },
+  { name: 'mountainBiking', label: 'Mountain Biking', icon: 'fa/FaBicycle' },
+  { name: 'bikepacking', label: 'Bikepacking', icon: 'fa/FaBiking' },
+  { name: 'trailRunning', label: 'Trail Running', icon: 'fa/FaRunning' },
 ];
 
 export const gearListAccommodations = [

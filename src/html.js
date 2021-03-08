@@ -12,6 +12,7 @@ export default function HTML(props) {
         <link
           rel="stylesheet"
           type="text/css"
+          media="all"
           href="https://cloud.typography.com/7222118/6340832/css/fonts.css"
         />
       </head>
