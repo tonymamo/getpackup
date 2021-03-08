@@ -47,7 +47,14 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
 
   return (
     <PageContainer>
-      <Seo title="Edit Profile" />
+      <Seo title="Edit Profile">
+        {typeof google !== 'object' && (
+          <script
+            type="text/javascript"
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places`}
+          />
+        )}
+      </Seo>
       {auth && loggedInUser && (
         <Row>
           <Column md={8} mdOffset={2}>

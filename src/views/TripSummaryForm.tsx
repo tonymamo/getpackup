@@ -12,7 +12,17 @@ import 'react-rangeslider/lib/index.css';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
-import { Avatar, Input, Button, HorizontalRule, Column, Row, FlexContainer } from '@components';
+import {
+  Avatar,
+  Input,
+  Button,
+  HorizontalRule,
+  Column,
+  Row,
+  FlexContainer,
+  UserMediaObject,
+  Seo,
+} from '@components';
 import { StyledLabel } from '@components/Input';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
@@ -281,6 +291,14 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
 
   return (
     <>
+      <Seo title={props.type === 'new' ? 'New Trip' : 'Edit Trip'}>
+        {typeof google !== 'object' && (
+          <script
+            type="text/javascript"
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places`}
+          />
+        )}
+      </Seo>
       <Formik
         validateOnMount
         initialValues={{
@@ -391,23 +409,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                     if (!matchingUser) return null;
                     return (
                       <div key={matchingUser.uid}>
-                        <FlexContainer justifyContent="flex-start">
-                          <Avatar
-                            src={matchingUser.photoURL}
-                            gravatarEmail={matchingUser.email}
-                            rightMargin
-                          />
-                          <div>
-                            <div>{matchingUser.username}</div>
-                            <small
-                              style={{
-                                color: textColorLight,
-                              }}
-                            >
-                              {matchingUser.displayName}
-                            </small>
-                          </div>
-                        </FlexContainer>
+                        <UserMediaObject user={matchingUser} />
                         <HorizontalRule compact />
                       </div>
                     );

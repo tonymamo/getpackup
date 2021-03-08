@@ -18,7 +18,7 @@ import { PreviewCompatibleImage } from '@components';
 import { zIndexAvatarImageAfter } from '@styles/layers';
 import { fontSizeSmall } from '@styles/typography';
 
-type AvatarProps = {
+export type AvatarProps = {
   src?:
     | {
         childImageSharp: { fluid: FluidObject };
@@ -120,8 +120,6 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
       size={props.size || 'sm'}
       bottomMargin={props.bottomMargin || false}
       rightMargin={props.rightMargin || false}
-      style={props.style}
-      {...props}
     >
       {props.staticContent && (!props.src || !gravatarUrl) ? (
         <StaticContentWrapper size={props.size || 'sm'}>

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from '@reach/router';
 
 import {
-  HeroImage,
   Row,
   Box,
   Column,
@@ -19,7 +18,6 @@ import {
   FlexContainer,
 } from '@components';
 import postFormUrlEncoded from '@utils/postFormUrlEncoded';
-import heroImage from '@images/FiveHikersNearingASnowySummit copy.jpg';
 import logo from '@images/maskable_icon.png';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -51,14 +49,6 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
 
   return (
     <>
-      <HeroImage imgSrc={heroImage}>
-        <PageContainer>
-          <Heading as="h1" inverse align="center">
-            Feedback
-          </Heading>
-        </PageContainer>
-      </HeroImage>
-
       <PageContainer withVerticalPadding>
         <Seo title="Feedback" />
         <Row>

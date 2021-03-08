@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
 import addDays from 'date-fns/addDays';
 
-import { Heading, PageContainer, Seo } from '@components';
+import { Heading, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
 import TripSummaryForm from '@views/TripSummaryForm';
 
@@ -28,8 +28,6 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
 
   return (
     <PageContainer>
-      <Seo title="New Trip" />
-
       <Heading altStyle as="h2">
         Create New Trip
       </Heading>

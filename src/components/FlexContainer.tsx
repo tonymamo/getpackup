@@ -33,6 +33,7 @@ const FlexContainer: FunctionComponent<FlexContainerProps> = styled.div`
   align-items: ${(props: FlexContainerProps) => props.alignItems};
   justify-content: ${(props: FlexContainerProps) => props.justifyContent};
   max-width: 100%;
+  width: 100%;
   height: ${(props: FlexContainerProps) => (props.height ? props.height : 'auto')};
   flex-wrap: ${(props: FlexContainerProps) => props.flexWrap};
   flex-direction: ${(props: FlexContainerProps) => props.flexDirection};

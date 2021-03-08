@@ -53,11 +53,13 @@ export const PublicProfileTemplate: FunctionComponent<PublicProfileProps> = ({
               </PublicProfileAvatarWrapper>
               <Heading as="h1">{displayName}</Heading>
               <p>{location}</p>
-              <div>
-                <a href={withHttp(website)} target="_blank" rel="noreferrer noopener">
-                  {withHttp(website)}
-                </a>
-              </div>
+              {website && (
+                <div>
+                  <a href={withHttp(website)} target="_blank" rel="noreferrer noopener">
+                    {withHttp(website)}
+                  </a>
+                </div>
+              )}
               <br />
               <p>{bio}</p>
             </FlexContainer>

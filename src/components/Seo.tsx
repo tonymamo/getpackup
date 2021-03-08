@@ -31,6 +31,7 @@ const Seo: FunctionComponent<SeoType> = ({
   meta,
   imageWidth,
   imageHeight,
+  children,
 }) => {
   const { pathname } = useLocation();
   const { site } = useStaticQuery(
@@ -201,6 +202,7 @@ const Seo: FunctionComponent<SeoType> = ({
         media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
+      {children}
     </Helmet>
   );
 };

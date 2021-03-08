@@ -43,6 +43,7 @@ import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
 import Table from './Table';
 import Testimonial from './Testimonial';
+import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
 
 export {
@@ -94,5 +95,6 @@ export {
   StackedAvatars,
   Table,
   Testimonial,
+  UserMediaObject,
   Wave,
 };

@@ -7,7 +7,6 @@ import { FaTrash } from 'react-icons/fa';
 
 import {
   Heading,
-  Seo,
   PageContainer,
   FlexContainer,
   DropdownMenu,
@@ -59,7 +58,6 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = ({ activeTrip }
 
   return (
     <>
-      <Seo title="Edit Trip" />
       <PageContainer>
         {typeof activeTrip !== 'undefined' && (
           <>

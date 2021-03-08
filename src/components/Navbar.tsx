@@ -29,7 +29,7 @@ import { halfSpacer, quadrupleSpacer, tripleSpacer } from '@styles/size';
 import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typography';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
-import yak from '@images/yak.png';
+import yak from '@images/yak.svg';
 import { zIndexNavbar } from '@styles/layers';
 
 type NavbarProps = {};
@@ -224,7 +224,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           {!size.isSmallScreen && auth.isLoaded && (
             <Heading noMargin>
               <Link to={isAuthenticated ? '/app/trips' : '/'}>
-                <img src={yak} alt="" width={tripleSpacer} />{' '}
+                <img src={yak} alt="" width={tripleSpacer} height={27} />{' '}
                 {size.isSmallScreen && !isAuthenticated ? '' : 'packup'}
               </Link>
             </Heading>

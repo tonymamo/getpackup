@@ -9,7 +9,7 @@ import {
   Heading,
   FlexContainer,
   HorizontalRule,
-  Avatar,
+  UserMediaObject,
   Box,
   Pill,
   Button,
@@ -122,14 +122,7 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
               if (!matchingUser) return null;
               return (
                 <Fragment key={matchingUser.uid}>
-                  <FlexContainer justifyContent="flex-start">
-                    <Avatar
-                      src={matchingUser.photoURL}
-                      gravatarEmail={matchingUser.email}
-                      rightMargin
-                    />
-                    <span>{matchingUser.displayName}</span>
-                  </FlexContainer>
+                  <UserMediaObject user={matchingUser} />
                   {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
                 </Fragment>
               );

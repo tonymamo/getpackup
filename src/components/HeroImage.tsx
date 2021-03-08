@@ -7,13 +7,11 @@ import useWindowSize from '@utils/useWindowSize';
 import { ClientOnly, PreviewCompatibleImage } from '@components';
 
 type HeroImageProps = {
-  imgSrc:
-    | {
-        childImageSharp: {
-          fluid: FluidObject;
-        };
-      }
-    | string;
+  imgSrc: {
+    childImageSharp: {
+      fluid: FluidObject;
+    };
+  };
   mobileImgSrc?: {
     childImageSharp: {
       fluid: FluidObject;
@@ -23,7 +21,7 @@ type HeroImageProps = {
 
 const HeroImageWrapper = styled.div`
   position: relative;
-  min-height: 200px;
+  min-height: ${(props: { aspectRatio: number }) => `calc(100vw / ${props.aspectRatio})`};
 `;
 
 const ChildrenWrapper = styled.div`
@@ -48,7 +46,13 @@ const HeroImage: FunctionComponent<HeroImageProps> = ({ imgSrc, children, mobile
   const size = useWindowSize();
 
   return (
-    <HeroImageWrapper>
+    <HeroImageWrapper
+      aspectRatio={
+        size.isExtraSmallScreen && mobileImgSrc
+          ? mobileImgSrc.childImageSharp.fluid.aspectRatio
+          : imgSrc.childImageSharp.fluid.aspectRatio
+      }
+    >
       <ClientOnly>
         <PreviewCompatibleImage
           imageInfo={{
