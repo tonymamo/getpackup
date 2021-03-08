@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { CSSProperties, FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'gatsby';
 
@@ -46,6 +46,7 @@ export type ButtonProps = {
   iconRight?: React.ReactNode;
   block?: boolean;
   isLoading?: boolean;
+  style?: CSSProperties;
 };
 
 const primaryButtonStyles = `
@@ -255,6 +256,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   iconRight,
   block,
   isLoading,
+  style,
 }) => {
   if (type === 'link' && to) {
     return (
@@ -264,6 +266,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         disabled={disabled}
         block={block}
         type={type}
+        style={style}
       >
         <Link to={to}>
           {iconLeft}&nbsp;{children}&nbsp;{iconRight}
@@ -281,6 +284,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         onClick={onClick}
         block={block}
         disabled={disabled || isLoading}
+        style={style}
       >
         {isLoading && <LoadingSpinner />}
         {iconLeft}&nbsp;{children}&nbsp;{iconRight}
