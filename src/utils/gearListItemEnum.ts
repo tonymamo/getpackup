@@ -27,6 +27,10 @@ export const gearListActivities = [
   { name: 'hiking', label: 'Hiking', icon: 'fa/FaHiking' },
   // { name: 'biking', label: 'Biking', icon: 'fa/FaBicycle' },
   { name: 'paddling', label: 'Paddling', icon: 'fa/FaWater' },
+  { name: 'fishing', label: 'Fishing', icon: 'fa/FaFish' },
+  { name: 'mountainBiking', label: 'Mountain Biking', icon: 'fa/FaBicycle' },
+  { name: 'bikepacking', label: 'Bikepacking', icon: 'fa/FaBiking' },
+  { name: 'trailRunning', label: 'Trail Running', icon: 'fa/FaRunning' },
   { name: 'bouldering', label: 'Bouldering', icon: 'fa/FaRegHandRock' },
   { name: 'sportClimbing', label: 'Sport Climbing', icon: 'fa/FaMountain' },
   { name: 'tradClimbing', label: 'Trad Climbing', icon: 'fa/FaMountain' },
@@ -35,10 +39,6 @@ export const gearListActivities = [
   { name: 'resort', label: 'Resort', icon: 'fa/FaSnowboarding' },
   // { name: 'snowboarding', label: 'Snowboarding', icon: 'fa/FaSnowboarding' },
   { name: 'snowshoeing', label: 'Snowshoeing', icon: 'fa/FaSnowflake' },
-  { name: 'fishing', label: 'Fishing', icon: 'fa/FaFish' },
-  { name: 'mountainBiking', label: 'Mountain Biking', icon: 'fa/FaBicycle' },
-  { name: 'bikepacking', label: 'Bikepacking', icon: 'fa/FaBiking' },
-  { name: 'trailRunning', label: 'Trail Running', icon: 'fa/FaRunning' },
 ];
 
 export const gearListAccommodations = [
