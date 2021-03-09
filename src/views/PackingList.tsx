@@ -11,16 +11,15 @@ type PackingListProps = {
 } & RouteComponentProps;
 
 const PackingList: FunctionComponent<PackingListProps> = ({ packingList, tripId }) => {
-  let groupedCategories: [string, PackingListItemType[]][] = [];
+  const groupedCategories: [string, PackingListItemType[]][] = [];
 
   if (packingList?.length) {
+    // Put the pre-trip category first, if it exists
     const entries = Object.entries(lodash.groupBy(packingList, 'category'));
-
-    groupedCategories = [
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      entries.find((item) => item[0] === 'Pre-Trip')!,
-      ...entries.filter((item) => item[0] !== 'Pre-Trip'),
-    ];
+    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
+    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
+    if (preTripEntries) groupedCategories.push(preTripEntries);
+    groupedCategories.push(...allOtherEntries);
   }
 
   return (

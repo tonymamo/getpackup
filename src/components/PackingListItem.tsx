@@ -133,7 +133,12 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                 <ItemText>
                   {props.item.quantity && props.item.quantity !== 1 ? (
                     <>
-                      {props.item.name} <Pill text={`× ${props.item.quantity}`} color="neutral" />
+                      {props.item.name}{' '}
+                      <Pill
+                        text={`× ${props.item.quantity}`}
+                        color="neutral"
+                        style={{ margin: 0, paddingTop: 2, paddingBottom: 2 }}
+                      />
                     </>
                   ) : (
                     props.item.name
