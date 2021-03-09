@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, FormikHelpers } from 'formik';
 import styled from 'styled-components';
 import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase';
@@ -30,9 +30,19 @@ type PackingListItemProps = {
 
 const PackingListItemWrapper = styled.li`
   border-bottom: ${baseBorderStyle};
+  transition: all 0.35s ease-out;
+  max-height: 1000px;
+  transform-origin: top;
+  overflow: hidden;
 
   &:hover {
     background-color: ${offWhite};
+  }
+
+  &.removing {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 `;
 
@@ -65,10 +75,13 @@ const firebaseConnection = (firebase: ExtendedFirebaseInstance, tripId: string, 
     .doc(itemId);
 };
 
+const callbackDelay = 350;
+
 const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const size = useWindowSize();
+  const [removing, setRemoving] = useState(false);
 
   const onCreate = (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
     firebaseConnection(firebase, props.tripId, props.item.id)
@@ -109,6 +122,11 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
       });
   };
 
+  const onRemove = () => {
+    setRemoving(true);
+    setTimeout(onDelete, callbackDelay);
+  };
+
   const trailingActions = () => (
     <TrailingActions>
       <SwipeAction destructive onClick={onDelete}>
@@ -120,11 +138,11 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
   );
 
   return (
-    <PackingListItemWrapper>
+    <PackingListItemWrapper className={removing ? 'removing' : undefined}>
       <SwipeableListItem
         listType={ListType.IOS}
         trailingActions={trailingActions()}
-        destructiveCallbackDelay={350}
+        destructiveCallbackDelay={callbackDelay}
         blockSwipe={!size.isSmallScreen} // only enable swiping for small screens
       >
         <Formik<FormValues>
@@ -173,7 +191,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   </IconWrapper>
                 )}
                 {!size.isSmallScreen ? (
-                  <IconWrapper onClick={onDelete} style={{ marginRight: 10, visibility: 'hidden' }}>
+                  <IconWrapper onClick={onRemove} style={{ marginRight: 10, visibility: 'hidden' }}>
                     <FaTrash />
                   </IconWrapper>
                 ) : null}
