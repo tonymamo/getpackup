@@ -21,6 +21,7 @@ import { Input, FlexContainer, Pill, IconWrapper } from '@components';
 import { brandInfo, offWhite } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 import Button from '@components/Button';
+import useWindowSize from '@utils/useWindowSize';
 
 type PackingListItemProps = {
   tripId: string;
@@ -63,6 +64,7 @@ const firebaseConnection = (firebase: ExtendedFirebaseInstance, tripId: string, 
 const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
+  const size = useWindowSize();
 
   const onCreate = (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
     firebaseConnection(firebase, props.tripId, props.item.id)
@@ -85,6 +87,14 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
   const onDelete = () => {
     firebaseConnection(firebase, props.tripId, props.item.id)
       .delete()
+      .then(() => {
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: `${props.item.name} has been removed`,
+          })
+        );
+      })
       .catch((err) => {
         dispatch(
           addAlert({
@@ -111,6 +121,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
         listType={ListType.IOS}
         trailingActions={trailingActions()}
         destructiveCallbackDelay={350}
+        blockSwipe={!size.isSmallScreen} // only enable swiping for small screens
       >
         <Formik<FormValues>
           validateOnMount
