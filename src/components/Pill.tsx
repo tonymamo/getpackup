@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, CSSProperties } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
 
@@ -10,6 +10,7 @@ type PillProps = {
   to?: string;
   text: string;
   color?: 'neutral' | 'primary';
+  style?: CSSProperties;
 };
 
 const renderColor = (color: PillProps['color']) => {
@@ -64,7 +65,7 @@ const StyledLink = styled(Link)`
 
 const Pill: FunctionComponent<PillProps> = (props) => {
   return (
-    <StyledPill color={props.color}>
+    <StyledPill color={props.color} style={props.style}>
       <small>{props.to ? <StyledLink to={props.to}>{props.text}</StyledLink> : props.text}</small>
     </StyledPill>
   );
