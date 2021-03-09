@@ -28,15 +28,15 @@ type FlexContainerProps = {
   as?: string;
 };
 
-const FlexContainer: FunctionComponent<FlexContainerProps> = styled.div`
+const FlexContainer: FunctionComponent<FlexContainerProps> = styled.div<FlexContainerProps>`
   display: flex;
-  align-items: ${(props: FlexContainerProps) => props.alignItems};
-  justify-content: ${(props: FlexContainerProps) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
+  justify-content: ${(props) => props.justifyContent};
   max-width: 100%;
-  width: 100%;
-  height: ${(props: FlexContainerProps) => (props.height ? props.height : 'auto')};
-  flex-wrap: ${(props: FlexContainerProps) => props.flexWrap};
-  flex-direction: ${(props: FlexContainerProps) => props.flexDirection};
+  width: ${(props) => (props.flexWrap === 'nowrap' ? '100%' : 'auto')};
+  height: ${(props) => (props.height ? props.height : 'auto')};
+  flex-wrap: ${(props) => props.flexWrap};
+  flex-direction: ${(props) => props.flexDirection};
 `;
 
 FlexContainer.defaultProps = {
