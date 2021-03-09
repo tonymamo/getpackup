@@ -172,9 +172,12 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                     />
                   </IconWrapper>
                 )}
-                <IconWrapper onClick={onDelete} style={{ marginRight: 10, visibility: 'hidden' }}>
-                  <FaTrash />
-                </IconWrapper>
+                {!size.isSmallScreen ? (
+                  <IconWrapper onClick={onDelete} style={{ marginRight: 10, visibility: 'hidden' }}>
+                    <FaTrash />
+                  </IconWrapper>
+                ) : null}
+
                 <IconWrapper
                   onClick={() => navigate(`/app/trips/${props.tripId}/checklist/${props.item.id}`)}
                 >
