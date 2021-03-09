@@ -17,10 +17,9 @@ import 'react-swipeable-list/dist/styles.css';
 import { baseBorderStyle } from '@styles/mixins';
 import { halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { Input, FlexContainer, Pill, IconWrapper } from '@components';
+import { Input, FlexContainer, Pill, IconWrapper, Button } from '@components';
 import { brandInfo, offWhite } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
-import Button from '@components/Button';
 import useWindowSize from '@utils/useWindowSize';
 
 type PackingListItemProps = {
@@ -83,7 +82,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
   const size = useWindowSize();
   const [removing, setRemoving] = useState(false);
 
-  const onCreate = (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
+  const onUpdate = (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
     firebaseConnection(firebase, props.tripId, props.item.id)
       .update({
         isPacked: values[props.item.name].isPacked,
@@ -148,7 +147,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
         <Formik<FormValues>
           validateOnMount
           initialValues={{ [props.item.name]: { isPacked: props.item.isPacked } }}
-          onSubmit={onCreate}
+          onSubmit={onUpdate}
         >
           {({ values, handleSubmit }) => (
             <Form onChange={handleSubmit}>
