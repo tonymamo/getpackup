@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
-import { FaChevronRight, FaExclamationTriangle } from 'react-icons/fa';
+import { FaChevronRight, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
 import { navigate } from 'gatsby';
 import {
   SwipeableListItem,
@@ -38,6 +38,10 @@ const PackingListItemWrapper = styled.li`
 
 const Form = styled.form`
   padding: ${halfSpacer};
+
+  &:hover svg {
+    visibility: visible;
+  }
 `;
 
 const ItemInputWrapper = styled.div`
@@ -168,6 +172,9 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                     />
                   </IconWrapper>
                 )}
+                <IconWrapper onClick={onDelete} style={{ marginRight: 10, visibility: 'hidden' }}>
+                  <FaTrash />
+                </IconWrapper>
                 <IconWrapper
                   onClick={() => navigate(`/app/trips/${props.tripId}/checklist/${props.item.id}`)}
                 >
