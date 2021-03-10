@@ -68,7 +68,7 @@ export const gearListOtherConsiderations = [
   { name: 'airplane', label: 'Airplane', icon: 'fa/FaPlane' },
   { name: 'car', label: 'Car', icon: 'fa/FaCar' },
   { name: 'bus', label: 'Bus', icon: 'fa/FaBusAlt' },
-  // { name: 'boat', label: 'Boat', icon: 'fa/FaShip' },
+  { name: 'boat', label: 'Boat', icon: 'fa/FaShip' },
   // { name: 'train', label: 'Train', icon: 'fa/FaTrain' },
   // { name: 'motorcycle', label: 'Motorcycle', icon: 'fa/FaMotorcycle' },
   { name: 'essential', label: '10 Essentials', icon: 'fa/FaExclamationTriangle' },
