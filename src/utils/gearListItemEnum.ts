@@ -37,6 +37,7 @@ export const gearListActivities = [
   { name: 'iceClimbing', label: 'Ice Climbing', icon: 'fa/FaIcicles' },
   { name: 'touring', label: 'Touring', icon: 'fa/FaSkiing' },
   { name: 'resort', label: 'Resort', icon: 'fa/FaSnowboarding' },
+  { name: 'crossCountrySkiing', label: 'XC Skiing', icon: 'fa/FaSkiing' },
   // { name: 'snowboarding', label: 'Snowboarding', icon: 'fa/FaSnowboarding' },
   { name: 'snowshoeing', label: 'Snowshoeing', icon: 'fa/FaSnowflake' },
 ];
