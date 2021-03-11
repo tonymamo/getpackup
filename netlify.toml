@@ -7,3 +7,6 @@
 # these settings.
 [context.test.environment] # 'test' is a branch name
   GATSBY_SITE_URL = "https://test.getpackup.com"
+
+[build.environment]
+  NODE_OPTIONS = "--max_old_space_size=4096"
