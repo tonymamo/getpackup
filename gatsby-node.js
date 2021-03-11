@@ -54,13 +54,13 @@ exports.createPages = ({ actions, graphql }) => {
           }
         }
       }
-      allUsers {
-        edges {
-          node {
-            username
-          }
-        }
-      }
+      // allUsers {
+      //   edges {
+      //     node {
+      //       username
+      //     }
+      //   }
+      // }
     }
   `).then(
     // eslint-disable-next-line consistent-return
@@ -106,18 +106,18 @@ exports.createPages = ({ actions, graphql }) => {
         });
       });
 
-      result.data.allUsers.edges.forEach((edge) => {
-        const { username } = edge.node;
+      // result.data.allUsers.edges.forEach((edge) => {
+      //   const { username } = edge.node;
 
-        createPage({
-          path: `/${username}`,
-          component: path.resolve(`src/templates/public-profile.tsx`),
-          // additional data can be passed via context
-          context: {
-            username,
-          },
-        });
-      });
+      //   createPage({
+      //     path: `/${username}`,
+      //     component: path.resolve(`src/templates/public-profile.tsx`),
+      //     // additional data can be passed via context
+      //     context: {
+      //       username,
+      //     },
+      //   });
+      // });
 
       // Tag pages:
       let tags = [];
