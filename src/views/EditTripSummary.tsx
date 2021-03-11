@@ -68,7 +68,7 @@ const EditTripSummary: FunctionComponent<EditTripSummaryProps> = ({ activeTrip }
               <DropdownMenu>
                 <Button
                   type="button"
-                  color="danger"
+                  color="text"
                   onClick={() => setModalIsOpen(true)}
                   iconLeft={<FaTrash />}
                 >

@@ -43,13 +43,13 @@ export const gearListActivities = [
 ];
 
 export const gearListAccommodations = [
-  { name: 'hotel', label: 'Hotel', icon: 'fa/FaHotel' },
+  { name: 'hotel', label: 'Hotel/Rental', icon: 'fa/FaHotel' },
   { name: 'hostel', label: 'Hostel', icon: 'fa/FaBed' },
   { name: 'servicedHut', label: 'Serviced Hut', icon: 'fa/FaWarehouse' },
   { name: 'basicHut', label: 'Basic Hut', icon: 'fa/FaHome' },
   { name: 'carCamp', label: 'Car Camp/RV', icon: 'fa/FaCaravan' },
   { name: 'tent', label: 'Tent', icon: 'fa/FaCampground' },
-  { name: 'bivy', label: 'Bivy', icon: 'fa/FaBed' },
+  // { name: 'bivy', label: 'Bivy', icon: 'fa/FaBed' },
 ];
 
 export const gearListCampKitchen = [
