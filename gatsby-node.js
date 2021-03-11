@@ -54,13 +54,6 @@ exports.createPages = ({ actions, graphql }) => {
           }
         }
       }
-      // allUsers {
-      //   edges {
-      //     node {
-      //       username
-      //     }
-      //   }
-      // }
     }
   `).then(
     // eslint-disable-next-line consistent-return
