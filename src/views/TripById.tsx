@@ -1,17 +1,12 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { RouteComponentProps, Router, useLocation } from '@reach/router';
+import { RouteComponentProps, Router } from '@reach/router';
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
-import styled from 'styled-components';
-import { Link } from 'gatsby';
 
 import { Seo, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
 import { TripType } from '@common/trip';
-import { brandPrimary, white, textColor } from '@styles/color';
-import { baseSpacer } from '@styles/size';
-import { baseBorderStyle } from '@styles/mixins';
 import PackingList from '@views/PackingList';
 import TripSummary from '@views/TripSummary';
 import EditPackingListItem from '@views/EditPackingListItem';
@@ -21,38 +16,8 @@ type TripByIdProps = {
   id?: string;
 } & RouteComponentProps;
 
-const Tabs = styled.div`
-  margin-top: calc(-${baseSpacer} - 1px);
-  background-color: ${white};
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  border-bottom: ${baseBorderStyle};
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  right: 0;
-`;
-
-const Tab = styled.div`
-  transition: all 0.2s ease-in-out;
-  flex: 1;
-  text-align: center;
-  border-bottom: 2px solid;
-  border-bottom-color: ${(props: { active: boolean }) =>
-    props.active ? brandPrimary : 'transparent'};
-  color: ${(props) => (props.active ? brandPrimary : textColor)};
-
-  & a {
-    display: block;
-    padding: ${baseSpacer};
-  }
-`;
-
 const TripById: FunctionComponent<TripByIdProps> = (props) => {
   const dispatch = useDispatch();
-
-  const { pathname } = useLocation();
 
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
@@ -93,30 +58,19 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     };
   }, []);
 
-  if (!props.id) {
+  if (!activeTrip || !props.id) {
     return null;
   }
-
-  const summaryActive = pathname.includes('summary') || pathname.includes('edit');
-  const checklistActive = !summaryActive || pathname.includes('checklist');
 
   return (
     <>
       <Seo title={activeTrip?.name || 'Trip Summary'} />
 
-      <Tabs>
-        <Tab active={checklistActive}>
-          <Link to={`/app/trips/${props.id}`}>Checklist</Link>
-        </Tab>
-        <Tab active={summaryActive}>
-          <Link to={`/app/trips/${props.id}/summary`}>Summary</Link>
-        </Tab>
-      </Tabs>
       <PageContainer>
-        <Router basepath={`/app/trips/${props.id}`} style={{ paddingTop: 54 }} primary={false}>
+        <Router basepath={`/app/trips/${props.id}`} primary={false} style={{ overflow: 'hidden' }}>
           <PackingList path="/" packingList={packingList} tripId={props.id} />
           <TripSummary path="/summary" activeTrip={activeTrip} />
-          <EditTripSummary path="/edit" activeTrip={activeTrip} />
+          <EditTripSummary path="/summary/edit" activeTrip={activeTrip} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
         </Router>
       </PageContainer>

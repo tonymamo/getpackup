@@ -19,6 +19,8 @@ import {
   Modal,
   Row,
   Column,
+  PackingListNavigation,
+  packingListNavigationHeight,
 } from '@components';
 import { halfSpacer } from '@styles/size';
 import { TripType } from '@common/trip';
@@ -27,7 +29,7 @@ import { UserType } from '@common/user';
 import { addAlert } from '@redux/ducks/globalAlerts';
 
 type TripSummaryProps = {
-  activeTrip?: TripType;
+  activeTrip: TripType;
 } & RouteComponentProps;
 
 const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
@@ -67,7 +69,8 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
 
   return (
     <>
-      <Box>
+      <PackingListNavigation tripId={activeTrip.tripId} />
+      <Box style={{ marginTop: packingListNavigationHeight }}>
         <FlexContainer justifyContent="space-between" alignItems="flex-start" flexWrap="nowrap">
           {activeTrip ? (
             <Heading as="h3" altStyle noMargin>
@@ -81,7 +84,7 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
               <Button
                 type="link"
                 color="text"
-                to={`/app/trips/${activeTrip.tripId}/edit`}
+                to={`/app/trips/${activeTrip.tripId}/summary/edit`}
                 iconLeft={<FaPencilAlt />}
                 block
               >

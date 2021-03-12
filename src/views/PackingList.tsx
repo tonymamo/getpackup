@@ -2,7 +2,11 @@ import React, { FunctionComponent } from 'react';
 import lodash from 'lodash';
 import { RouteComponentProps } from '@reach/router';
 
-import { PackingListCategory } from '@components';
+import {
+  PackingListCategory,
+  PackingListNavigation,
+  packingListNavigationHeight,
+} from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 
 type PackingListProps = {
@@ -24,29 +28,32 @@ const PackingList: FunctionComponent<PackingListProps> = ({ packingList, tripId 
 
   return (
     <>
-      {groupedCategories.map(
-        ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
-          const sortedItems = packingListItems.sort((a, b) => {
-            // put essentials at the top, and sort by created timestamp (newest goes last)
-            if (!a.isEssential && !b.isEssential) {
-              if (a.created.seconds === b.created.seconds) {
-                return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      <PackingListNavigation tripId={tripId} />
+      <div style={{ paddingTop: packingListNavigationHeight }}>
+        {groupedCategories.map(
+          ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
+            const sortedItems = packingListItems.sort((a, b) => {
+              // put essentials at the top, and sort by created timestamp (newest goes last)
+              if (!a.isEssential && !b.isEssential) {
+                if (a.created.seconds === b.created.seconds) {
+                  return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                }
+                return b.created.toDate() > a.created.toDate() ? -1 : 1;
               }
-              return b.created.toDate() > a.created.toDate() ? -1 : 1;
-            }
-            return a.isEssential > b.isEssential ? -1 : 1;
-          });
+              return a.isEssential > b.isEssential ? -1 : 1;
+            });
 
-          return (
-            <PackingListCategory
-              key={categoryName}
-              categoryName={categoryName}
-              sortedItems={sortedItems}
-              tripId={tripId}
-            />
-          );
-        }
-      )}
+            return (
+              <PackingListCategory
+                key={categoryName}
+                categoryName={categoryName}
+                sortedItems={sortedItems}
+                tripId={tripId}
+              />
+            );
+          }
+        )}
+      </div>
     </>
   );
 };

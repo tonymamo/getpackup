@@ -30,6 +30,7 @@ import NegativeMarginContainer from './NegativeMarginContainer';
 import PackingListAddItem from './PackingListAddItem';
 import PackingListCategory from './PackingListCategory';
 import PackingListItem from './PackingListItem';
+import PackingListNavigation, { packingListNavigationHeight } from './PackingListNavigation';
 import PageContainer from './PageContainer';
 import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
@@ -81,6 +82,8 @@ export {
   PackingListAddItem,
   PackingListCategory,
   PackingListItem,
+  PackingListNavigation,
+  packingListNavigationHeight,
   PageContainer,
   Pill,
   PreviewCompatibleImage,
