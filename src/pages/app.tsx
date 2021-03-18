@@ -57,6 +57,7 @@ const App: FunctionComponent<{}> = (props) => {
             bio: '',
             website: '',
             location: '',
+            lastUpdated: new Date(),
           });
       }
     }

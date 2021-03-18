@@ -73,7 +73,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                   .firestore()
                   .collection('users')
                   .doc(auth.uid)
-                  .update(updateValues)
+                  .update({ ...updateValues, lastUpdated: new Date() })
                   .then(() => {
                     setSubmitting(false);
                     resetForm({ values });

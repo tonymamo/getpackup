@@ -87,6 +87,7 @@ const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }
       .doc(auth.uid)
       .update({
         photoURL: newUrl,
+        lastUpdated: new Date(),
       });
     setIsLoading(false);
     uploader.close();

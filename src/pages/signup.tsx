@@ -83,6 +83,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             bio: '',
                             website: '',
                             location: '',
+                            lastUpdated: new Date(),
                           })
                           .then(() => {
                             setIsLoading(false);

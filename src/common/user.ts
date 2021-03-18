@@ -10,4 +10,5 @@ export type UserType = {
   uid: string;
   username: string;
   website?: string;
+  lastUpdated?: firebase.firestore.Timestamp;
 };
