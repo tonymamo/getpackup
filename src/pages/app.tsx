@@ -49,6 +49,7 @@ const App: FunctionComponent<{}> = (props) => {
           .set({
             uid: auth.uid,
             email: auth.email,
+            emailVerified: auth.emailVerified,
             displayName: auth.displayName,
             photoURL: auth.photoURL,
             username: `${auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(

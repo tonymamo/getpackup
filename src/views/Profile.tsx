@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
@@ -7,17 +7,29 @@ import { actionTypes } from 'redux-firestore';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 
-import { Input, Button, Box, Seo, PageContainer, Row, Column, AvatarUpload } from '@components';
+import {
+  Input,
+  Button,
+  Box,
+  Seo,
+  PageContainer,
+  Row,
+  Column,
+  AvatarUpload,
+  FlexContainer,
+} from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { requiredField } from '@utils/validations';
 import validateUsername from '@utils/validateUsername';
+import { StyledLabel } from '@components/Input';
 
 type ProfileProps = {
   loggedInUser?: any;
 } & RouteComponentProps;
 
 const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
+  const [verifySent, setVerifySent] = useState(false);
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -43,6 +55,39 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
       // https://github.com/prescottprue/redux-firestore/issues/114
       dispatch({ type: actionTypes.CLEAR_DATA });
     });
+  };
+
+  const verifyEmail = () => {
+    const user = firebase.auth().currentUser;
+
+    if (!user) {
+      dispatch(
+        addAlert({
+          type: 'danger',
+          message: 'You are not currently signed in',
+        })
+      );
+      return;
+    }
+    user
+      .sendEmailVerification()
+      .then(function() {
+        setVerifySent(true);
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: 'Verification email sent',
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
   };
 
   return (
@@ -133,6 +178,20 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                           : ''
                       }
                     />
+                    <StyledLabel>Email</StyledLabel>
+                    <FlexContainer
+                      flexWrap="nowrap"
+                      alignItems="center"
+                      justifyContent="space-between"
+                    >
+                      {loggedInUser.email} {loggedInUser.emailVerified ? null : '(Not Verified)'}
+                      {loggedInUser.emailVerified ? null : (
+                        <Button onClick={verifyEmail} type="button" disabled={verifySent}>
+                          Verify
+                        </Button>
+                      )}
+                    </FlexContainer>
+
                     {typeof window !== 'undefined' && window.google && (
                       <Field
                         as={Input}
