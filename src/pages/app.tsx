@@ -36,6 +36,16 @@ const App: FunctionComponent<{}> = (props) => {
   const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
 
   useEffect(() => {
+    if (window && window.analytics && activeLoggedInUser) {
+      window.analytics.identify(auth.email as string, {
+        email: auth.email,
+        displayName: auth.displayName || '',
+        username: activeLoggedInUser.username || '',
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (isLoaded(auth) && auth.uid) {
       if (
         ((activeLoggedInUser !== undefined && !activeLoggedInUser.username) ||
