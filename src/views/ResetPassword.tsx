@@ -46,25 +46,25 @@ const ResetPassword = ({ actionCode }: Props) => {
     }
   }, [firebase, actionCode]);
 
-  const onSubmit = (
-    values: ResetFormType,
-    { resetForm, setSubmitting }: FormikHelpers<ResetFormType>
-  ) => {
+  const onSubmit = (values: ResetFormType) => {
     firebase
       .auth()
       .confirmPasswordReset(actionCode, values.password)
-      .then((resp) => {
-        if (!email) {
-          // TODO: Throw error?
-          return;
-        }
+      .then(
+        (): Promise<void> => {
+          if (!email) {
+            return Promise.reject(new Error('Something went wrong, please try again'));
+          }
 
-        setSubmitting(false);
-        resetForm();
-        // Password reset has been confirmed and new password updated.
-        firebase.auth().signInWithEmailAndPassword(email, values.password);
-        // TODO: Redirect?
-      })
+          // Password reset has been confirmed and new password updated, navigate to home page
+          return firebase
+            .auth()
+            .signInWithEmailAndPassword(email, values.password)
+            .then(() => {
+              navigate('/app/trips');
+            });
+        }
+      )
       .catch((error: Error) => {
         dispatch(
           addAlert({

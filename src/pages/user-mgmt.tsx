@@ -19,7 +19,7 @@ const isValidMode = (mode: unknown) =>
 
 const isValidCode = (mode: unknown): mode is string => typeof mode === 'string';
 
-export const Feedback: FunctionComponent<FeedbackProps> = ({ location }) => {
+export const UserManagement: FunctionComponent<FeedbackProps> = ({ location }) => {
   const { mode, oobCode: actionCode } = parse(location.search);
 
   return (
@@ -56,4 +56,4 @@ const Error = () => {
   return null;
 };
 
-export default Feedback;
+export default UserManagement;
