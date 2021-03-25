@@ -44,6 +44,7 @@ import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
 import Table from './Table';
 import Testimonial from './Testimonial';
+import TripCard from './TripCard';
 import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
 
@@ -98,6 +99,7 @@ export {
   StackedAvatars,
   Table,
   Testimonial,
+  TripCard,
   UserMediaObject,
   Wave,
 };

@@ -2,6 +2,7 @@ import React, { useState, FunctionComponent, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaEllipsisH } from 'react-icons/fa';
 
+import { Button } from '@components';
 import { white } from '@styles/color';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import { baseAndAHalfSpacer, doubleSpacer, halfSpacer } from '@styles/size';
@@ -55,8 +56,10 @@ const DropdownMenu: FunctionComponent<DropdownMenuProps> = ({ children }) => {
   }, []);
 
   return (
-    <StyledDropdownWrapper onClick={() => setDropdownOpen(!dropdownOpen)} ref={dropdownNode}>
-      <FaEllipsisH size={baseAndAHalfSpacer} />
+    <StyledDropdownWrapper ref={dropdownNode}>
+      <Button type="button" onClick={() => setDropdownOpen(!dropdownOpen)} color="tertiary">
+        <FaEllipsisH size={baseAndAHalfSpacer} />
+      </Button>
       {dropdownOpen && <StyledDropdown>{children}</StyledDropdown>}
     </StyledDropdownWrapper>
   );

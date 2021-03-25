@@ -90,7 +90,7 @@ const StyledMenuToggle = styled.div`
 const StyledMenu = styled.nav`
   position: absolute;
   transform: translateX(${(props: { menuIsOpen: boolean }) => (props.menuIsOpen ? 0 : '100vw')});
-  top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
+  top: ${quadrupleSpacer};
   right: 0;
   left: 0;
   height: 100vh;

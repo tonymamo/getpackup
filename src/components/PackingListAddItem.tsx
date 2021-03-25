@@ -5,10 +5,10 @@ import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 
 import { baseBorderStyle } from '@styles/mixins';
-import { halfSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
+import { halfSpacer, doubleSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Input, FlexContainer } from '@components';
-import { offWhite, textColorLight } from '@styles/color';
+import { brandPrimary, offWhite, textColor } from '@styles/color';
 import { FaPlus } from 'react-icons/fa';
 import { InputWrapper } from './Input';
 
@@ -20,7 +20,6 @@ type PackingListItemProps = {
 const PackingListItemWrapper = styled.li`
   border-bottom: ${baseBorderStyle};
   padding: ${halfSpacer};
-  margin: 0 -${halfSpacer};
   &:hover {
     background-color: ${offWhite};
   }
@@ -32,8 +31,16 @@ const PackingListItemWrapper = styled.li`
 `;
 
 const IconWrapper = styled.div`
-  margin: 0 ${threeQuarterSpacer} 0 ${quarterSpacer};
-  color: ${textColorLight};
+  cursor: pointer;
+  width: ${doubleSpacer};
+  height: ${doubleSpacer};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${textColor};
+  &:hover {
+    color: ${brandPrimary};
+  }
 `;
 
 const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, categoryName }) => {
@@ -78,10 +85,10 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <FlexContainer justifyContent="flex-start">
-              <IconWrapper>
+              <Field as={Input} type="text" name="name" label="Add Item" hiddenLabel />
+              <IconWrapper onClick={() => handleSubmit()}>
                 <FaPlus />
               </IconWrapper>
-              <Field as={Input} type="text" name="name" label="Add Item" hiddenLabel />
             </FlexContainer>
           </Form>
         )}

@@ -142,7 +142,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         ...values,
         startDate: startOfDay(new Date(values.startDate)),
         endDate: endOfDay(new Date(values.endDate)),
-        tags: [formatTripLengthAsString(values.tripLength)],
+        tags: [],
         created: new Date(),
       })
       .then((docRef) => {
@@ -169,9 +169,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
 
   const updateTrip = (values: ValuesType) => {
     setIsLoading(true);
-    const existingTagsWithoutTripLengthTag = props.initialValues.tags.filter(
-      (tag) => !tag.includes('Day') // case is important here
-    );
     firebase
       .firestore()
       .collection('trips')
@@ -182,7 +179,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         endDate: endOfDay(new Date(values.endDate)),
         updated: new Date(),
         tripMembers: [...props.initialValues.tripMembers, ...values.tripMembers],
-        tags: [...existingTagsWithoutTripLengthTag, formatTripLengthAsString(values.tripLength)],
         tripLength: values.tripLength,
       })
       .then(() => {

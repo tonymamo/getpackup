@@ -17,13 +17,12 @@ import {
   brandSecondary,
   brandSecondaryHover,
   brandSuccess,
-  brandTertiary,
-  brandTertiaryHover,
   gray,
   lightGray,
+  textColor,
   white,
 } from '@styles/color';
-import { disabledStyle } from '@styles/mixins';
+import { baseBorderStyle, disabledStyle } from '@styles/mixins';
 import LoadingSpinner from './LoadingSpinner';
 
 export type ButtonProps = {
@@ -159,13 +158,14 @@ const secondaryButtonStyles = `
 `;
 
 const tertiaryButtonStyles = `
-  background-color: ${brandTertiary};
-  color: ${white};
+  background-color: ${white};
+  color: ${textColor};
+  border: ${baseBorderStyle};
   
   &:hover,
   &:focus {
-    color: ${white};
-    background-color: ${brandTertiaryHover};
+    color: ${textColor};
+    background-color: ${white};
   }
 `;
 

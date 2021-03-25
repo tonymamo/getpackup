@@ -71,6 +71,14 @@ const CssReset = createGlobalStyle`
   @-webkit-viewport{width:device-width}
   @viewport{width:device-width}}
 
+  /* https://benfrain.com/how-to-get-the-value-of-phone-notches-environment-variables-env-in-javascript-from-css/ */
+  :root {
+    --sat: env(safe-area-inset-top);
+    --sar: env(safe-area-inset-right);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+}
+
   html {
     font-size: 16px;
     -webkit-tap-highlight-color: rgba(0,0,0,0);

@@ -11,9 +11,11 @@ import PackingList from '@views/PackingList';
 import TripSummary from '@views/TripSummary';
 import EditPackingListItem from '@views/EditPackingListItem';
 import EditTripSummary from '@views/EditTripSummary';
+import { UserType } from '@common/user';
 
 type TripByIdProps = {
   id?: string;
+  loggedInUser: UserType;
 } & RouteComponentProps;
 
 const TripById: FunctionComponent<TripByIdProps> = (props) => {
@@ -67,8 +69,14 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       <Seo title={activeTrip?.name || 'Trip Summary'} />
 
       <PageContainer>
-        <Router basepath={`/app/trips/${props.id}`} primary={false} style={{ overflow: 'hidden' }}>
-          <PackingList path="/" packingList={packingList} tripId={props.id} />
+        <Router basepath={`/app/trips/${props.id}`} primary={false}>
+          <PackingList
+            path="/"
+            packingList={packingList}
+            tripId={props.id}
+            trip={activeTrip}
+            loggedInUser={props.loggedInUser}
+          />
           <TripSummary path="/summary" activeTrip={activeTrip} />
           <EditTripSummary path="/summary/edit" activeTrip={activeTrip} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
