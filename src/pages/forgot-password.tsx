@@ -1,15 +1,14 @@
 import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from '@reach/router';
-
-import { Row, Box, Column, PageContainer, Seo, Heading, Input, Button } from '@components';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { requiredField } from '@utils/validations';
 import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { addAlert } from '@redux/ducks/globalAlerts';
 import { FaCaretRight } from 'react-icons/fa';
 
-type ForgotPasswordProps = {} & RouteComponentProps;
+import { Row, Box, Column, PageContainer, Seo, Heading, Input, Button } from '@components';
+import { requiredField } from '@utils/validations';
+import { addAlert } from '@redux/ducks/globalAlerts';
+
+type ForgotPasswordProps = {};
 
 type ForgotPasswordForm = {
   email: string;
@@ -29,7 +28,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
       .then(() => {
         setSubmitting(false);
         resetForm();
-        // Password reset has been confirmed and new password updated.
+
         dispatch(
           addAlert({
             type: 'success',
@@ -59,10 +58,10 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
           <Column md={8} mdOffset={2}>
             <Box>
               <Heading as="h2">Forgot your password?</Heading>
-              <p>It's better to forget your password, than to forget your passport!</p>
+              <p>It&apos;s better to forget your password, than to forget your passport!</p>
               <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
                 {({ isSubmitting, isValid, dirty }) => (
-                  <Form name="forgot-password" method="post" data-netlify="true">
+                  <Form name="forgot-password">
                     <Field
                       as={Input}
                       type="text"
