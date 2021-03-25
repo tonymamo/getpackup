@@ -6,7 +6,7 @@ import { navigate } from 'gatsby';
 import { Row, Box, Column, PageContainer, Seo } from '@components';
 import ResetPassword from '@views/ResetPassword';
 
-type FeedbackProps = {
+type UserManagementProps = {
   location: {
     state: {
       pathname: string;
@@ -19,7 +19,7 @@ const isValidMode = (mode: unknown) =>
 
 const isValidCode = (mode: unknown): mode is string => typeof mode === 'string';
 
-export const UserManagement: FunctionComponent<FeedbackProps> = ({ location }) => {
+export const UserManagement: FunctionComponent<UserManagementProps> = ({ location }) => {
   const { mode, oobCode: actionCode } = parse(location.search);
 
   return (

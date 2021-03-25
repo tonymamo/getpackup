@@ -85,7 +85,7 @@ const ResetPassword = ({ actionCode }: Props) => {
       <p>Enter your new password below.</p>
       <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting, isValid, dirty }) => (
-          <Form name="feedback" method="post" data-netlify="true">
+          <Form name="reset-password" method="post" data-netlify="true">
             <Field
               as={Input}
               type="password"

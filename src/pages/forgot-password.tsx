@@ -9,19 +9,13 @@ import { useFirebase } from 'react-redux-firebase';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { FaCaretRight } from 'react-icons/fa';
 
-type FeedbackProps = {
-  location: {
-    state: {
-      pathname: string;
-    };
-  };
-} & RouteComponentProps;
+type ForgotPasswordProps = {} & RouteComponentProps;
 
 type ForgotPasswordForm = {
   email: string;
 };
 
-export const ForgotPassword: FunctionComponent<FeedbackProps> = () => {
+export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -68,7 +62,7 @@ export const ForgotPassword: FunctionComponent<FeedbackProps> = () => {
               <p>It's better to forget your password, than to forget your passport!</p>
               <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
                 {({ isSubmitting, isValid, dirty }) => (
-                  <Form name="feedback" method="post" data-netlify="true">
+                  <Form name="forgot-password" method="post" data-netlify="true">
                     <Field
                       as={Input}
                       type="text"
