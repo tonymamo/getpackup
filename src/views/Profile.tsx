@@ -178,7 +178,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                           : ''
                       }
                     />
-                    <StyledLabel>Email</StyledLabel>
+                    {/* <StyledLabel>Email</StyledLabel>
                     <FlexContainer
                       flexWrap="nowrap"
                       alignItems="center"
@@ -190,7 +190,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                           Verify
                         </Button>
                       )}
-                    </FlexContainer>
+                    </FlexContainer> */}
 
                     {typeof window !== 'undefined' && window.google && (
                       <Field
