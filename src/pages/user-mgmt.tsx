@@ -52,7 +52,9 @@ const VerifyEmail = () => {
 };
 
 const Error = () => {
-  navigate('/404');
+  if (typeof window !== 'undefined') {
+    navigate('/404');
+  }
   return null;
 };
 
