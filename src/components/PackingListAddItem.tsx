@@ -45,7 +45,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
       <Formik
         validateOnMount
         initialValues={{
-          name: '',
+          [`new-${categoryName}`]: '',
           category: categoryName,
           quantity: 1,
           isPacked: false,
@@ -54,14 +54,22 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
           created: new Date(),
         }}
         onSubmit={async (values, { resetForm }) => {
-          if (values.name.length > 1) {
+          if ((values[`new-${categoryName}`] as string).length > 1) {
             try {
               await firebase
                 .firestore()
                 .collection('trips')
                 .doc(tripId)
                 .collection('packing-list')
-                .add(values);
+                .add({
+                  name: values[`new-${categoryName}`],
+                  category: categoryName,
+                  quantity: 1,
+                  isPacked: false,
+                  isEssential: false,
+                  description: '',
+                  created: new Date(),
+                });
 
               resetForm({});
             } catch (err) {
@@ -81,7 +89,13 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
               <IconWrapper>
                 <FaPlus />
               </IconWrapper>
-              <Field as={Input} type="text" name="name" label="Add Item" hiddenLabel />
+              <Field
+                as={Input}
+                type="text"
+                name={`new-${categoryName}`}
+                label="Add Item"
+                hiddenLabel
+              />
             </FlexContainer>
           </Form>
         )}
