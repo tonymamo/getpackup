@@ -43,7 +43,6 @@ const App: FunctionComponent<{}> = (props) => {
             userId: auth.uid,
             email: auth.email,
             displayName: auth.displayName || '',
-            username: activeLoggedInUser.username || '',
           });
         }
       }
