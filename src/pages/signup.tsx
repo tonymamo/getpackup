@@ -69,7 +69,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                     .createUserWithEmailAndPassword(values.email, values.password)
                     .then((result: any) => {
                       if (result.user) {
-                        firebase
+                        return firebase
                           .firestore()
                           .collection('users')
                           .doc(result.user.uid)
@@ -86,7 +86,6 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             lastUpdated: new Date(),
                           })
                           .then(() => {
-                            setIsLoading(false);
                             dispatch(
                               addAlert({
                                 type: 'success',
@@ -103,6 +102,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             );
                           });
                       }
+                      return Promise.resolve();
                     })
                     .catch((err) => {
                       dispatch(
@@ -111,8 +111,11 @@ const Signup: FunctionComponent<SignupProps> = () => {
                           message: err.message,
                         })
                       );
+                    })
+                    .finally(() => {
+                      setIsLoading(false);
+                      setSubmitting(false);
                     });
-                  setSubmitting(false);
                 }}
               >
                 {({ isSubmitting, isValid, errors, values }) => (

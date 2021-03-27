@@ -1,10 +1,22 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { FaCaretRight } from 'react-icons/fa';
+import { Link } from 'gatsby';
 
-import { Row, Box, Column, PageContainer, Seo, Heading, Input, Button } from '@components';
+import {
+  Row,
+  Box,
+  Column,
+  PageContainer,
+  Seo,
+  Heading,
+  Input,
+  Button,
+  Alert,
+  FlexContainer,
+} from '@components';
 import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
 
@@ -17,16 +29,18 @@ type ForgotPasswordForm = {
 export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
+  const [displayError, setDisplayError] = useState<string>();
 
   const onSubmit = (
     values: ForgotPasswordForm,
     { resetForm, setSubmitting }: FormikHelpers<ForgotPasswordForm>
   ) => {
+    setDisplayError(undefined);
+
     firebase
       .auth()
       .sendPasswordResetEmail(values.email)
       .then(() => {
-        setSubmitting(false);
         resetForm();
 
         dispatch(
@@ -37,12 +51,10 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
         );
       })
       .catch((error: Error) => {
-        dispatch(
-          addAlert({
-            type: 'danger',
-            message: error.message,
-          })
-        );
+        setDisplayError(error.message);
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
   };
 
@@ -71,15 +83,22 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
                       required
                       hiddenLabel
                     />
-                    <p>
-                      <Button
-                        type="submit"
-                        iconRight={<FaCaretRight />}
-                        disabled={isSubmitting || !isValid || !dirty}
-                      >
-                        Submit
-                      </Button>
-                    </p>
+                    {displayError ? <Alert type="danger" message={displayError} /> : null}
+                    <FlexContainer justifyContent="space-between">
+                      <p>
+                        <Button
+                          type="submit"
+                          iconRight={<FaCaretRight />}
+                          disabled={isSubmitting || !isValid || !dirty}
+                        >
+                          Submit
+                        </Button>
+                      </p>
+
+                      <p>
+                        <Link to="/login">Back to login</Link>
+                      </p>
+                    </FlexContainer>
                   </Form>
                 )}
               </Formik>

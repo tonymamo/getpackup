@@ -3,7 +3,7 @@ import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { FaCaretRight } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 
-import { Button, Input, Heading } from '@components';
+import { Button, Input, Heading, Alert } from '@components';
 import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { useFirebase } from 'react-redux-firebase';
@@ -17,6 +17,8 @@ type ResetFormType = {
 
 const ResetPassword = ({ actionCode }: Props) => {
   const [email, setEmail] = useState<string>();
+  const [displayError, setDisplayError] = useState<string>();
+
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -46,7 +48,8 @@ const ResetPassword = ({ actionCode }: Props) => {
     }
   }, [firebase, actionCode]);
 
-  const onSubmit = (values: ResetFormType) => {
+  const onSubmit = (values: ResetFormType, { setSubmitting }: FormikHelpers<ResetFormType>) => {
+    setDisplayError(undefined);
     firebase
       .auth()
       .confirmPasswordReset(actionCode, values.password)
@@ -66,12 +69,10 @@ const ResetPassword = ({ actionCode }: Props) => {
         }
       )
       .catch((error: Error) => {
-        dispatch(
-          addAlert({
-            type: 'danger',
-            message: error.message,
-          })
-        );
+        setDisplayError(error.message);
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
   };
 
@@ -86,6 +87,7 @@ const ResetPassword = ({ actionCode }: Props) => {
       <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting, isValid, dirty }) => (
           <Form name="reset-password" method="post" data-netlify="true">
+            {displayError ? <Alert type="danger" message={displayError} /> : null}
             <Field
               as={Input}
               type="password"
