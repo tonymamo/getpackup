@@ -63,7 +63,6 @@ const Login: FunctionComponent<LoginProps> = () => {
                     .auth()
                     .signInWithEmailAndPassword(values.email, values.password)
                     .then(() => {
-                      setIsLoading(false);
                       if (client.location) {
                         dispatch(removeAttemptedPrivatePage());
                         navigate(client.location);
@@ -78,8 +77,12 @@ const Login: FunctionComponent<LoginProps> = () => {
                           message: err.message,
                         })
                       );
+                    })
+                    .finally(() => {
+                      setIsLoading(false);
+                      setSubmitting(false);
                     });
-                  setSubmitting(false);
+
                   resetForm();
                 }}
               >
