@@ -3,8 +3,10 @@ import { parse } from 'query-string';
 import { RouteComponentProps } from '@reach/router';
 import { navigate } from 'gatsby';
 
-import { Row, Box, Column, PageContainer, Seo } from '@components';
+import { Row, Box, Column, PageContainer, Seo, LoadingSpinner } from '@components';
 import ResetPassword from '@views/ResetPassword';
+import useVerify from '@hooks/useVerify';
+import { baseSpacer } from '@styles/size';
 
 type UserManagementProps = {
   location: {
@@ -14,10 +16,12 @@ type UserManagementProps = {
   };
 } & RouteComponentProps;
 
-const isValidMode = (mode: unknown) =>
-  typeof mode === 'string' && ['resetPassword', 'recoverEmail', 'verifyEmail'].includes(mode);
+type validMode = 'resetPassword' | 'verifyEmail';
 
-const isValidCode = (mode: unknown): mode is string => typeof mode === 'string';
+const isValidMode = (mode: unknown): mode is validMode =>
+  typeof mode === 'string' && ['resetPassword', 'verifyEmail'].includes(mode);
+
+const isValidCode = (code: unknown): code is string => typeof code === 'string';
 
 export const UserManagement: FunctionComponent<UserManagementProps> = ({ location }) => {
   const { mode, oobCode: actionCode } = parse(location.search);
@@ -32,8 +36,9 @@ export const UserManagement: FunctionComponent<UserManagementProps> = ({ locatio
               {mode === 'resetPassword' && isValidCode(actionCode) ? (
                 <ResetPassword actionCode={actionCode} />
               ) : null}
-              {/* {mode === 'recoverEmail' ? <RecoverEmail actionCode={actionCode} /> : null} */}
-              {/* {mode === 'verifyEmail' ? <VerifyEmail actionCode={actionCode} /> : null} */}
+              {mode === 'verifyEmail' && isValidCode(actionCode) ? (
+                <VerifyEmail actionCode={actionCode} />
+              ) : null}
               {!isValidMode(mode) || !isValidCode(actionCode) ? <Error /> : null}
             </Box>
           </Column>
@@ -43,12 +48,17 @@ export const UserManagement: FunctionComponent<UserManagementProps> = ({ locatio
   );
 };
 
-const RecoverEmail = () => {
-  return <>Verify</>;
-};
+type VerifyEmailProps = { actionCode: string };
 
-const VerifyEmail = () => {
-  return <>Verify</>;
+const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
+  useVerify(isValidCode(actionCode) ? actionCode : undefined);
+
+  return (
+    <>
+      <LoadingSpinner theme="dark" style={{ display: 'inline-block', marginRight: baseSpacer }} />
+      Verifying your email address
+    </>
+  );
 };
 
 const Error = () => {

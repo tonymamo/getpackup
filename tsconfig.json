@@ -22,16 +22,17 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
+      "@cms/*": ["./cms/*"],
       "@common/*": ["./common/*"],
       "@components": ["./components/index.tsx"],
       "@components/*": ["./components/*"],
-      "@cms/*": ["./cms/*"],
+      "@hooks/*": ["./hooks/*"],
       "@images/*": ["./images/*"],
       "@redux/*": ["./redux/*"],
       "@styles/*": ["./styles/*"],
+      "@templates/*": ["./templates/*"],
       "@utils/*": ["./utils/*"],
-      "@views/*": ["./views/*"],
-      "@templates/*": ["./templates/*"]
+      "@views/*": ["./views/*"]
     },
     "typeRoots": ["./node_modules/@types", "./custom_types", "src/common"],
     "esModuleInterop": true

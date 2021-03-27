@@ -42,9 +42,10 @@
       },
       "alias": {
         "map": [
-          ["@components", "./src/components"],
           ["@cms", "./src/cms"],
           ["@common","./src/common"],
+          ["@components", "./src/components"],
+          ["@hooks","./src/hooks"],
           ["@images", "./src/images"],
           ["@redux", "./src/redux"],
           ["@styles", "./src/styles"],

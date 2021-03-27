@@ -28,6 +28,7 @@ module.exports = {
         alias: {
           '@common': `${__dirname}/src/common`,
           '@components': `${__dirname}/src/components`,
+          '@hooks': `${__dirname}/src/hooks`,
           '@images': `${__dirname}/src/images`,
           '@redux': `${__dirname}/src/redux`,
           '@styles': `${__dirname}/src/styles`,
