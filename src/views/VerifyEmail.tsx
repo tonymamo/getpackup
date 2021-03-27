@@ -1,11 +1,15 @@
 import { navigate } from 'gatsby';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { baseSpacer } from '@styles/size';
+import { LoadingSpinner } from '@components';
 
-const useVerify = (actionCode?: string) => {
+type VerifyEmailProps = { actionCode: string };
+
+const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -35,6 +39,13 @@ const useVerify = (actionCode?: string) => {
         navigate('/');
       });
   }, [actionCode, firebase, dispatch]);
+
+  return (
+    <>
+      <LoadingSpinner theme="dark" style={{ display: 'inline-block', marginRight: baseSpacer }} />
+      Verifying your email address
+    </>
+  );
 };
 
-export default useVerify;
+export default VerifyEmail;

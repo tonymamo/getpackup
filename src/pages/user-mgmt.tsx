@@ -3,10 +3,9 @@ import { parse } from 'query-string';
 import { RouteComponentProps } from '@reach/router';
 import { navigate } from 'gatsby';
 
-import { Row, Box, Column, PageContainer, Seo, LoadingSpinner } from '@components';
+import { Row, Box, Column, PageContainer, Seo } from '@components';
 import ResetPassword from '@views/ResetPassword';
-import useVerify from '@hooks/useVerify';
-import { baseSpacer } from '@styles/size';
+import VerifyEmail from '@views/VerifyEmail';
 
 type UserManagementProps = {
   location: {
@@ -44,19 +43,6 @@ export const UserManagement: FunctionComponent<UserManagementProps> = ({ locatio
           </Column>
         </Row>
       </PageContainer>
-    </>
-  );
-};
-
-type VerifyEmailProps = { actionCode: string };
-
-const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
-  useVerify(isValidCode(actionCode) ? actionCode : undefined);
-
-  return (
-    <>
-      <LoadingSpinner theme="dark" style={{ display: 'inline-block', marginRight: baseSpacer }} />
-      Verifying your email address
     </>
   );
 };

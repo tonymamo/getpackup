@@ -26,7 +26,6 @@
       "@common/*": ["./common/*"],
       "@components": ["./components/index.tsx"],
       "@components/*": ["./components/*"],
-      "@hooks/*": ["./hooks/*"],
       "@images/*": ["./images/*"],
       "@redux/*": ["./redux/*"],
       "@styles/*": ["./styles/*"],
