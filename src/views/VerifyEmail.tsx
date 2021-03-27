@@ -38,7 +38,7 @@ const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
       .finally(() => {
         navigate('/');
       });
-  }, [actionCode, firebase, dispatch]);
+  }, [actionCode]);
 
   return (
     <>
