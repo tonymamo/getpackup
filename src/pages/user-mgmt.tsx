@@ -51,7 +51,7 @@ export const UserManagement: FunctionComponent<UserManagementProps> = ({ locatio
 type VerifyEmailProps = { actionCode: string };
 
 const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
-  useVerify(isValidCode(actionCode) ? actionCode : undefined);
+  // useVerify(isValidCode(actionCode) ? actionCode : undefined);
 
   return (
     <>

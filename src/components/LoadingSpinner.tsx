@@ -6,6 +6,8 @@ import styled, {
   CSSProperties,
 } from 'styled-components';
 
+import { darkSpinner, lightSpinner } from '@styles/color';
+
 const CirclesKeyframes = (props: ThemedStyledProps<{}, { main: string }>) => keyframes`
   0% {
     box-shadow:
@@ -123,11 +125,11 @@ type LoadingSpinnerProps = {
 };
 
 const lightTheme = {
-  main: '255, 255, 255',
+  main: lightSpinner,
 };
 
 const darkTheme = {
-  main: '52, 58, 64',
+  main: darkSpinner,
 };
 
 const LoadingSpinner: FunctionComponent<LoadingSpinnerProps> = ({ theme, style }) => {

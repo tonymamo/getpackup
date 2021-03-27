@@ -58,3 +58,7 @@ export const brandDangerRGB = '125,38,0';
 
 // Borders
 export const borderColor = lightestGray;
+
+// Loading spinners
+export const lightSpinner = '255, 255, 255'; // white
+export const darkSpinner = '74, 85, 90'; // riverbed
