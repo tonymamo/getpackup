@@ -5,6 +5,7 @@ import { navigate } from 'gatsby';
 
 import { Row, Box, Column, PageContainer, Seo } from '@components';
 import ResetPassword from '@views/ResetPassword';
+import VerifyEmail from '@views/VerifyEmail';
 
 type UserManagementProps = {
   location: {
@@ -14,10 +15,12 @@ type UserManagementProps = {
   };
 } & RouteComponentProps;
 
-const isValidMode = (mode: unknown) =>
-  typeof mode === 'string' && ['resetPassword', 'recoverEmail', 'verifyEmail'].includes(mode);
+type validMode = 'resetPassword' | 'verifyEmail';
 
-const isValidCode = (mode: unknown): mode is string => typeof mode === 'string';
+const isValidMode = (mode: unknown): mode is validMode =>
+  typeof mode === 'string' && ['resetPassword', 'verifyEmail'].includes(mode);
+
+const isValidCode = (code: unknown): code is string => typeof code === 'string';
 
 export const UserManagement: FunctionComponent<UserManagementProps> = ({ location }) => {
   const { mode, oobCode: actionCode } = parse(location.search);
@@ -32,8 +35,9 @@ export const UserManagement: FunctionComponent<UserManagementProps> = ({ locatio
               {mode === 'resetPassword' && isValidCode(actionCode) ? (
                 <ResetPassword actionCode={actionCode} />
               ) : null}
-              {/* {mode === 'recoverEmail' ? <RecoverEmail actionCode={actionCode} /> : null} */}
-              {/* {mode === 'verifyEmail' ? <VerifyEmail actionCode={actionCode} /> : null} */}
+              {mode === 'verifyEmail' && isValidCode(actionCode) ? (
+                <VerifyEmail actionCode={actionCode} />
+              ) : null}
               {!isValidMode(mode) || !isValidCode(actionCode) ? <Error /> : null}
             </Box>
           </Column>
@@ -41,14 +45,6 @@ export const UserManagement: FunctionComponent<UserManagementProps> = ({ locatio
       </PageContainer>
     </>
   );
-};
-
-const RecoverEmail = () => {
-  return <>Verify</>;
-};
-
-const VerifyEmail = () => {
-  return <>Verify</>;
 };
 
 const Error = () => {
