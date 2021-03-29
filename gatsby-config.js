@@ -173,7 +173,7 @@ module.exports = {
           process.env.GATSBY_SITE_URL === 'https://test.getpackup.com'
             ? process.env.GATSBY_TEST_SEGMENT_API_KEY
             : process.env.GATSBY_PROD_SEGMENT_API_KEY,
-        devKey: process.env.GATSBY_TEST_SEGMENT_API_KEY,
+        devKey: '',
         trackPage: true,
         trackPageDelay: 50,
       },
