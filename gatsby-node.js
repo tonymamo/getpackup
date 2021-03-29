@@ -24,6 +24,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
 
+  // featuredimage is for prev/next blog posts to pass in page context
   return graphql(`
     {
       allMarkdownRemark(sort: { order: ASC, fields: [frontmatter___date] }) {
@@ -45,7 +46,13 @@ exports.createPages = ({ actions, graphql }) => {
               featuredimage {
                 childImageSharp {
                   fluid(maxWidth: 400, quality: 60) {
+                    aspectRatio
+                    base64
+                    sizes
                     src
+                    srcSet
+                    srcSetWebp
+                    srcWebp
                   }
                 }
               }

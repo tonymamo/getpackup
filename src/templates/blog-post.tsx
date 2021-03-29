@@ -37,7 +37,7 @@ type RelatedPostType = {
     title: string;
     featuredimage: {
       childImageSharp: {
-        fluid: FluidObject;
+        fixed: FixedObject;
       };
     };
   };
