@@ -15,7 +15,8 @@ tags:
   - camping
   - emergency
 ---
-The Ten Essentials is a systems-based approach to surviving accidents or emergencies in wild areas during your outdoor excursions that first appeared in print in the third edition of *[Mountaineering: The Freedom of the Hills](https://en.wikipedia.org/wiki/Mountaineering:_The_Freedom_of_the_Hills "Mountaineering: The Freedom of the Hills")* (January 1974). The goal of the Ten Essentials and the items associated with each category is to address the following key questions:
+
+The Ten Essentials is a systems-based approach to surviving accidents or emergencies in wild areas during your outdoor excursions that first appeared in print in the third edition of *[Mountaineering: The Freedom of the Hills](https://en.wikipedia.org/wiki/Mountaineering:_The_Freedom_of_the_Hills 'Mountaineering: The Freedom of the Hills')* (January 1974). The goal of the Ten Essentials and the items associated with each category is to address the following key questions:
 
 1.  Can you respond to an emergency or accident?
 
@@ -23,35 +24,40 @@ The Ten Essentials is a systems-based approach to surviving accidents or emergen
 
 Following the guidance of the Ten Essentials can greatly improve the safety of you and your party. Each system satisfies a functional need and is broken into the categories below:
 
-<span id="top" />
+<span id="top"></span>
 
-**[1. Navigation](#1-navigation)**
+<table style="background-color: transparent; width: 100%;">
+  <tbody>
+    <tr>
+      <td><strong><a href="#1-navigation">1. Navigation</a></strong></td>
+      <td><strong><a href="#6-fire">6. Fire</a></strong></td>
+    </tr>
+    <tr>
+      <td><strong><a href="#2-sun-protection">2. Sun Protection</a></strong></td>
+      <td><strong><a href="#7-repair-kit-knife-and-tools">7. Repair Kit, Knife, and Tools</a></strong></td>
+    </tr>
+    <tr>
+      <td><strong><a href="#3-extra-clothing">3. Extra Clothing</a></strong></td>
+      <td><strong><a href="#8-extra-food">8. Extra Food</a></strong></td>
+    </tr>
+    <tr>
+      <td><strong><a href="#4-illumination">4. Illumination</a></strong></td>
+      <td><strong><a href="#9-hydration-and-purification">9. Hydration and Purification</a></strong></td>
+    </tr>
+    <tr>
+      <td><strong><a href="#5-first-aid-supplies">5. First-Aid Supplies</a></strong></td>
+      <td><strong><a href="#10-emergency-shelter">10. Emergency Shelter</a></strong></td>
+    </tr>
+  </tbody>
+</table>
 
-**[2. Sun Protection](#2-sun-protection)**
+---
 
-**[3. Extra Clothing](#3-extra-clothing)**
+## 1. Navigation
 
-**[4. Illumination](#4-illumination)**
+**Key items:** Map (w/case), compass.
 
-**[5. First-Aid Supplies](#5-first-aid-supplies)**
-
-**[6. Fire](#6-fire)**
-
-**[7. Repair Kit, Knife, and Tools](#7-repair-kit-knife-and-tools)**
-
-**[8. Extra Food](#8-extra-food)**
-
-**[9. Hydration and Purification](#9-hydration-and-purification)**
-
-**[10. Emergency Shelter](#10-emergency-shelter)**
-
-- - -
-
-# 1. Navigation
-
-**\*Key items:** Map (w/case), compass.*
-
-**\*Optional:** Navigation apps, GPS/altimeter, route descriptions, other maps/photos.*
+**Optional:** Navigation apps, GPS/altimeter, route descriptions, other maps/photos.
 
 Outdoor users must have the tools and skills to navigate their objectives and back, whether that be hiking, touring, climbing, paddling or any other adventure. It is critical to always carry a detailed topographic map of the area you’re visiting, in a waterproof case. In addition to the map, always carry a compass to navigate your direction.
 
@@ -63,13 +69,13 @@ If you’re unfamiliar with how to use these navigation devices in practice, man
 
 [Back to List](#top)
 
-![](/img/044a6193.jpg)
+![Person with arm extended holding a Garmin inReach Mini overlooking an alpine lake](/img/044a6193.jpg)
 
-# 2. Sun Protection
+## 2. Sun Protection
 
-**\*Key items:** Sunglasses, sunscreen, SPF lip balm*
+**Key items:** Sunglasses, sunscreen, SPF lip balm
 
-**\*Optional:** Sun protection hat, long sleeved clothing*
+**Optional:** Sun protection hat, long sleeved clothing
 
 Protect yourself from the sun! Carry and wear sunglasses, sunscreen for the skin and lips, and clothing for sun protection when necessary.
 
@@ -81,11 +87,11 @@ Don’t forget that in reflective environments, everything burns! Remember to pr
 
 [Back to List](#top)
 
-# 3. Extra Clothing
+## 3. Extra Clothing
 
-**\*Key items:** Extra clothing as required for potential conditions*
+**Key items:** Extra clothing as required for potential conditions
 
-**\*Optional:** Dry bags or garbage bags to keep things dry*
+**Optional:** Dry bags or garbage bags to keep things dry
 
 Ask yourself – what is needed to survive the worst conditions that could realistically be encountered on this trip? If you were not able to keep moving and had to remain still in an unplanned bivouac for a few hours or more, would you be able to stay warm without danger?
 
@@ -93,11 +99,11 @@ Long underwear, insulated hats, balaclavas offer more warmth for their weight th
 
 [Back to List](#top)
 
-![](/img/044a1107.jpg)
+![Person in winter environment wearing a puffy parka and sunglasses](/img/044a1107.jpg)
 
-# 4. Illumination
+## 4. Illumination
 
-**\*Key items:** Headlamp or flashlight, extra batteries*
+**Key items:** Headlamp or flashlight, extra batteries
 
 A headlamp or flashlight with extra batteries should ALWAYS be considered essential gear for an outing. LED based illumination has become the most popular option given their light weight, battery efficiency, and durability. A headlamp is typically preferable to a flashlight, given the hands-free nature of the device, allowing you to continue using your hands for the activity at hand, and giving you more mobility at camp.
 
@@ -107,11 +113,11 @@ Aim to have a headlamp that has a variety of lighting options – several bright
 
 [Back to List](#top)
 
-![](/img/044a3060-2-2.jpg)
+![Person on a lookout deck peering into a void of snow flakes illuminated by a headlamp](/img/044a3060-2-2.jpg)
 
-# 5. First-Aid Supplies
+## 5. First-Aid Supplies
 
-**\*Key items:** Personal first aid kit at a minimum, with additional considerations for group size, trip length and type.*
+**Key items:** Personal first aid kit at a minimum, with additional considerations for group size, trip length and type.
 
 Carry and know how to use a first-aid kit, but do not let it give you a false sense of security. Always take steps to avoid injury or sickness (altitude, waterborne) in the first place.
 
@@ -123,11 +129,11 @@ Lastly, a kit is only as useful as your own knowledge. Understanding how to impl
 
 [Back to List](#top)
 
-# 6. Fire
+## 6. Fire
 
-**\*Key items:** Lighter/matches, firestarter (candle, chemical heat tabs, various kindling)*
+**Key items:** Lighter/matches, firestarter (candle, chemical heat tabs, various kindling)
 
-**\*Optional:** Stove and fuel for high-altitude snowy areas above treeline*
+**Optional:** Stove and fuel for high-altitude snowy areas above treeline
 
 Ensure that you have the ability to start a fire for warmth or cooking in the event of an emergency. Most individuals carry a lighter or two (mini-BIC butane), which you need to keep from getting wet. A second lighter can ensure that if the first one is empty of butane, you’ll have a second option. Some users will keep a **[flint and striker](https://bit.ly/3cttfry)** for fire-starting, which will produce sparks reliably at 5,500 degrees F, regardless of unfavorable conditions.
 
@@ -137,11 +143,11 @@ In the event you are going to be spending the majority of the trip above treelin
 
 [Back to List](#top)
 
-![](/img/vancouverislandjuandefuca_taylorburk-39.jpg)
+![Four friends gathered around a campfire on a beach with a tent in the background](/img/vancouverislandjuandefuca_taylorburk-39.jpg)
 
-# 7. Repair Kit, Knife, and Tools
+## 7. Repair Kit, Knife, and Tools
 
-**\*Key items:** Multi-tool with knife, activity specific repair items.*
+**Key items:** Multi-tool with knife, activity specific repair items.
 
 Knives are extremely useful in their applications in outdoor activities. Other tools can be part of a knife/multi-tool as part of your kit, which can include pliers, screwdrivers, or other devices. One of our favorites for weight and utility is the **[Leatherman Skeletool](https://bit.ly/3dbPp0B)**, which has additional driver bits you can purchase to increase the utility of the tool for repairs specific to your gear items.
 
@@ -151,9 +157,9 @@ Cycling sports will come with their own unique set of repair parts such as tubes
 
 [Back to List](#top)
 
-# 8. Extra Food
+## 8. Extra Food
 
-**\*Key items:** A reasonable supply of extra food based on trip length – one-days worth is typical.*
+**Key items:** A reasonable supply of extra food based on trip length – one-days worth is typical.
 
 Extra food for excursions should require no cooking, be easily digestible, and store well for extended periods of time. Options such as nuts, granola, dried fruit, bars, dried meats, and quick oats work well, with additional options such as soup useful if there is a stove present.
 
@@ -161,11 +167,11 @@ Typically an extra day’s worth of food will suffice for shorter trips in the e
 
 [Back to List](#top)
 
-![](/img/044a7829-edit.jpg)
+![Two females holding up sporks as mustaches in their sleeping bags inside of a snow shelter eating a prepared dehydrated meal](/img/044a7829-edit.jpg)
 
-# 9. Hydration and Purification
+## 9. Hydration and Purification
 
-**\*Key items:** Water bottle or reservoir, water treatment solutions*
+**Key items:** Water bottle or reservoir, water treatment solutions
 
 Always carry at least one water bottle or water reservoir, filled from a reliable (clean) source before beginning your trip. Ask yourself the question: If I run out of water and I am more than a few hours away from a clean source, will I be ok?
 
@@ -173,17 +179,17 @@ If you are venturing beyond the reasonable distance of a clean water source, whe
 
 As tempting as it can be to drink straight from found water sources while on your excursions, these sources can harbour a lot of concerning micro-organisms including:
 
-* **Protozoa** - Includes cryptosporidium and giardia (the cause of giardiasis or “beaver fever”). Protozoa are increasingly widespread in North America.
-* **Bacteria** - Most are harmless, but some cause illnesses such as diarrhea and dysentery. They are smaller than protozoa.
-* **Viruses** – Can cause hepatitis, polio and other diseases. They can be present in any water contaminated by human waste, and are extremely tiny – smaller than bacteria or protozoa.
+- **Protozoa** - Includes cryptosporidium and giardia (the cause of giardiasis or “beaver fever”). Protozoa are increasingly widespread in North America.
+- **Bacteria** - Most are harmless, but some cause illnesses such as diarrhea and dysentery. They are smaller than protozoa.
+- **Viruses** – Can cause hepatitis, polio and other diseases. They can be present in any water contaminated by human waste, and are extremely tiny – smaller than bacteria or protozoa.
 
 Most filters can remove the protozoa and bacteria above, but if you are planning on travelling to countries where viruses are a risk in the water, you will want to use chemical treatment to destroy the viruses.
 
 [Back to List](#top)
 
-# 10. Emergency Shelter
+## 10. Emergency Shelter
 
-**\*Key items**: Additional protection from rain and wind such as a jumbo garbage bag, emergency blanket, tarp, or bivy.*
+**Key items**: Additional protection from rain and wind such as a jumbo garbage bag, emergency blanket, tarp, or bivy.
 
 If your group isn’t carrying a tent or shelter for your excursion, carry some form of emergency shelter that will provide you and others with protection from rain and wind (in addition to your rain clothing).
 
@@ -197,10 +203,8 @@ Prepare for your outdoor adventures in a thoughtful and considered way to minimi
 
 **[Try us out today!](/)**
 
-
-
-![](/img/044a0009-2.jpg)
+![Two pack rafters paddling in a river with trees on the left and a steep rock wall on the right](/img/044a0009-2.jpg)
 
 <br></br>
 
-*While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide!*
+_While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide!_

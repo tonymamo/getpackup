@@ -272,6 +272,10 @@ const CssReset = createGlobalStyle`
     content: url("data:image/svg+xml; utf8,${externalLinkIcon}");
     margin-left: ${quarterSpacer};
   }
+
+  .blog-content a {
+    font-weight: 700;
+  }
 `;
 
 export default CssReset;
