@@ -90,7 +90,7 @@ const CssReset = createGlobalStyle`
     margin-bottom: ${halfSpacer};
     color: ${headingsColor};
     font-family: ${headingsFontFamily};
-    text-rendering: geometricPrecision;
+    font-weight: 700;
   }
 
   p {
@@ -268,9 +268,12 @@ const CssReset = createGlobalStyle`
 
   /* https://github.com/react-icons/react-icons/issues/246#issuecomment-667147241 */
   /* add svg icon from react-icons to external links in blogs */
-  .blog-content a[target="_blank"]:after {
-    content: url("data:image/svg+xml; utf8,${externalLinkIcon}");
-    margin-left: ${quarterSpacer};
+  .blog-content a[target="_blank"] {
+  white-space: pre; 
+    &:after {
+      content: url("data:image/svg+xml; utf8,${externalLinkIcon}");
+      margin-left: ${quarterSpacer};
+    }
   }
 `;
 
