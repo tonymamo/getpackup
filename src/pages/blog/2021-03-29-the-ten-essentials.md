@@ -197,7 +197,7 @@ The simplest emergency shelters include jumbo garbage bags, plastic tube tents o
 
 [Back to List](#top)
 
-# Pack with packup
+## Pack with packup
 
 Prepare for your outdoor adventures in a thoughtful and considered way to minimize the risks to your party. Our digital platform ensures that you'll never forget to pack your Ten Essentials on your adventures.
 

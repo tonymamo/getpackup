@@ -21,7 +21,7 @@ We've provided our quick summary of what to bring when going car camping in our 
 
 Never forget anything again. [Try our app packup today! ](/)
 
-![](/img/screenshot-2021-02-12-155656.png)
+![Two screenshots of the Packup showing a packing list with checked and unchecked items](/img/screenshot-2021-02-12-155656.png)
 
 <br></br>
 
@@ -54,7 +54,7 @@ Car camping can entail being in a tent, or sleeping in your car at a site. If yo
 - Tarp & rope
 - Hammer/mallet for stakes
 
-![](/img/stefan-widua-mshs-9yzyvo-unsplash.jpg)
+![Overhead shot of a camp stove and some utensils on a picnic table](/img/stefan-widua-mshs-9yzyvo-unsplash.jpg)
 
 # Camp Kitchen
 
@@ -90,7 +90,7 @@ Minimizing environmental impact and the attraction of wildlife is of utmost impo
 - Table cloth and clips
 - Collapsible wash bin (facility dependent)
 
-![](/img/myles-tan-iwcljyv1tjw-unsplash.jpg)
+![A grate sits over a campfire while some food is cooking, and two individuals in a hammock are seen in the background](/img/myles-tan-iwcljyv1tjw-unsplash.jpg)
 
 # Food & Water
 
@@ -123,7 +123,7 @@ And don’t forget your:
 - Gear repair kits (duct-tape, spare parts, buckles, glue, patches)
 - Bear spray
 
-![](/img/tim-foster-z9lpimzfyfo-unsplash.jpg)
+![Two tents and a car in the woods](/img/tim-foster-z9lpimzfyfo-unsplash.jpg)
 
 #  Personal Items
 
@@ -162,6 +162,6 @@ Get outside faster, [and try it today!](https://getpackup.com/)
 
 <br></br>
 
-_While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this checklist on your next trip!_
+> *While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this checklist on your next trip!*
 
-_Cover Photo by [Robson Hatsukami Morgan](https://unsplash.com/@robsonhmorgan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)_
+> *Cover Photo by [Robson Hatsukami Morgan](https://unsplash.com/@robsonhmorgan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)*

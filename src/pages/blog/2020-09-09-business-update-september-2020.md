@@ -25,7 +25,7 @@ In the last 5 months since our founding, we have been able to gain good traction
 
 Throughout June - August, we have been diving into the prototyping process, beginning initial idea testing with a small cohort of users for feedback. Through customer discovery and prototyping, we have been introduced to a great new team member who brings over a decade of experience in the web and app development space, and who is as much of an outdoors nut as us. Welcome Tony!
 
-![](https://lh6.googleusercontent.com/cCcglyA4H9-RZdQZ__BKhiJBVPc41gceU4FEhItnQzqvuvivviUvx5YsYntrOE9oKyqF8JnRDP-__8nYg0zPR3-64G1F1nMM6N2UvsSQiaxDDtLpk82RJc5nUf7mZcuyq9B5fJtZ)
+![Screenshot of the three co-founders of Packup on a Google Meet video call](/img/Screen Shot 2020-09-09 at 11.28.36 AM.png)
 
 ## Next Steps
 

@@ -14,7 +14,7 @@ tags:
 
 Meet Taylor Burk, one of the co-founders of packup. Taylor is a full-time professional photographer in the outdoor adventure & travel space. Utilizing Instagram as a way to market himself, he has been able to gain popularity and secure many sponsors and clients from around the world. His work is not only a representation of his skill, but a testament to the deep affinity for nature he possesses. When he’s not traversing the globe, Burk keeps busy exploring his new home of Gibsons, British Columbia.
 
-![](/img/laventa-chrisbrinleejr-apr19-12.jpg)
+![Packup co-founder Taylor Burk in a pack raft](/img/laventa-chrisbrinleejr-apr19-12.jpg)
 
 **Worst experience in the backcountry?**
 
@@ -36,7 +36,7 @@ Socotra Island, Yemen. It’s like something out of a Dr. Seuss book. Seriously,
 
 Backpacking, Biking, Backcountry skiing, Climbing, Running (love/hate), Hiking, Paddling. Pretty much anything that keeps me active and provides a challenge.
 
-![](/img/chamonix-chrisbrinleejr-sep17-78.jpg)
+![Taylor Burk walking along a knife edge arete](/img/chamonix-chrisbrinleejr-sep17-78.jpg)
 
 **What is one item that you couldn't live without?**
 
