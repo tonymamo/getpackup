@@ -115,7 +115,10 @@ const Footer = () => (
               <HiddenText>Twitter</HiddenText>
             </Social>
           </nav>
-          <small>{`Copyright © Packup ${new Date().getFullYear()}`}</small>
+          <small>
+            <Link to="/privacy">Privacy</Link> <Link to="/terms">Terms of Use</Link>{' '}
+            {`Copyright © Packup ${new Date().getFullYear()}`}
+          </small>
         </FlexContainer>
       </PageContainer>
     </StyledFooter>

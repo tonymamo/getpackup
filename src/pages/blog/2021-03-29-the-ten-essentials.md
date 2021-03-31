@@ -26,7 +26,7 @@ Following the guidance of the Ten Essentials can greatly improve the safety of y
 
 <span id="top"></span>
 
-<table style="background-color: transparent; width: 100%;">
+<table>
   <tbody>
     <tr>
       <td><strong><a href="#1-navigation">1. Navigation</a></strong></td>

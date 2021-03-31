@@ -5,7 +5,7 @@ title: Our Story
 heroImage: /img/mountains_day.jpg
 ---
 
-## Where did the idea for packup come from?
+### Where did the idea for packup come from?
 
 During a complex multi-day ski traverse of the Wapta Icefields, the idea for our app originally sparked. We wanted to [build a platform](/) that could help others refine their flow when it comes to packing and organization for outdoor excursions and other travel. Missing an important item can be embarrassing at best, and sometimes dangerous.
 

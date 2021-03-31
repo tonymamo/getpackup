@@ -14,6 +14,7 @@ import {
 } from '@styles/color';
 import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { headingsFontFamily, fontFamilySansSerif } from '@styles/typography';
+import { baseBorderStyle } from '@styles/mixins';
 
 const externalLinkIcon = css`
   ${rtsm(<FaExternalLinkAlt color="darkgray" size={12} />).replace(/"/g, "'")}
@@ -180,7 +181,15 @@ const CssReset = createGlobalStyle`
   }
 
   table {
-    background-color: white;
+    background-color: transparent;
+  }
+
+  table, th, td {
+    border: ${baseBorderStyle};
+  }
+
+  th, td {
+    padding: ${quarterSpacer};
   }
 
   caption {

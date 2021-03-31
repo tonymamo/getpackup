@@ -37,7 +37,7 @@ export const brandInfo = brandPrimary;
 export const brandDanger = red;
 
 // Grayscale for UI (borders, shadows, etc)
-export const black = '#000A19';
+export const black = '#2e2e2e';
 export const darkGray = '#3e3e3e';
 export const gray = riverbed;
 export const lightGray = submarine;
