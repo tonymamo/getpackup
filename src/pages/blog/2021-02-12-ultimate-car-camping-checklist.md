@@ -21,7 +21,7 @@ We've provided our quick summary of what to bring when going car camping in our 
 
 Never forget anything again. [Try our app packup today! ](/)
 
-![Two screenshots of the Packup showing a packing list with checked and unchecked items](/img/screenshot-2021-02-12-155656.png)
+![Two screenshots of the Packup app showing a packing list with checked and unchecked items](/img/screenshot-2021-02-12-155656.png)
 
 <br></br>
 

@@ -6,8 +6,6 @@ import CookieConsent from 'react-cookie-consent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Footer, Navbar, GlobalAlerts } from '@components';
-import '@styles/webfonts.css';
-
 import { quadrupleSpacer } from '@styles/size';
 import { brandPrimary, black, white } from '@styles/color';
 import CssReset from '@styles/cssReset';

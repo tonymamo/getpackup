@@ -1,24 +1,18 @@
-import React from 'react';
-import { createGlobalStyle, css } from 'styled-components';
-import { renderToStaticMarkup as rtsm } from 'react-dom/server';
-import { FaExternalLinkAlt } from 'react-icons/fa';
+import { createGlobalStyle } from 'styled-components';
 
 import {
   brandPrimary,
   brandPrimaryHover,
-  brandSecondary,
   textColor,
   headingsColor,
   lightGray,
   white,
+  brandSecondary,
 } from '@styles/color';
+import topo from '@images/topo.png';
 import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { headingsFontFamily, fontFamilySansSerif } from '@styles/typography';
 import { baseBorderStyle } from '@styles/mixins';
-
-const externalLinkIcon = css`
-  ${rtsm(<FaExternalLinkAlt color="darkgray" size={12} />).replace(/"/g, "'")}
-`;
 
 /* eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }] */
 const CssReset = createGlobalStyle`
@@ -74,6 +68,7 @@ const CssReset = createGlobalStyle`
   html {
     font-size: 16px;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background-color: ${brandSecondary};
   }
 
   body {
@@ -83,7 +78,9 @@ const CssReset = createGlobalStyle`
     line-height: calc(14px + 1.05vw); /* Responsive Vertical Rhythm */
     color: ${textColor};
     overflow-x: hidden;
-    background-color: ${brandSecondary};
+    background-color: ${white};
+    background-image: url('${topo}');
+    background-size: 500px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -158,6 +155,10 @@ const CssReset = createGlobalStyle`
       outline: 1px dotted ${brandPrimaryHover};
       outline-offset: -2px;
       text-decoration: none;
+    }
+
+    &:active {
+      opacity: .8;
     }
   }
 
@@ -237,7 +238,8 @@ const CssReset = createGlobalStyle`
     line-height: inherit;
   }
 
-  input[type="search"] {
+  input[type="search"],
+  input[type="number"] {
     -webkit-appearance: none;
   }
 
@@ -247,12 +249,12 @@ const CssReset = createGlobalStyle`
 
   ::-moz-selection {
       color: ${white};
-      background: ${brandPrimary};
+      background: ${brandPrimaryHover};
   }
 
   ::selection {
       color: ${white};
-      background: ${brandPrimary};
+      background: ${brandPrimaryHover};
   }
 
   :-ms-input-placeholder {
@@ -275,15 +277,15 @@ const CssReset = createGlobalStyle`
     margin: 0 auto !important;
   }
 
-  /* https://github.com/react-icons/react-icons/issues/246#issuecomment-667147241 */
-  /* add svg icon from react-icons to external links in blogs */
+  /* add icon to external links in blogs */
   .blog-content a[target="_blank"]:after {
-    content: url("data:image/svg+xml; utf8,${externalLinkIcon}");
+    content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==");
     margin-left: ${quarterSpacer};
   }
 
-  .blog-content a {
-    font-weight: 700;
+  .tooltip.customTooltip {
+    white-space: nowrap;
+    padding: ${halfSpacer};
   }
 `;
 

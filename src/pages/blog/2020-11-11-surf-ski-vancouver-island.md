@@ -52,9 +52,9 @@ Mount Washington has six lifts that access 1,700 acres and 505 vertical meters o
 
 **Recommended Gear:** Backcountry Cottonwoods GORE-TEX Jacket ([Men’s](https://www.backcountry.com/backcountry-cottonwoods-gore-tex-jacket-mens?skid=BCC00EY-PIRBK-XL&INT_ID=AP_pdp%257Cpdp_NA-NA_NA_REC-RR_REC-BCC00EY_NA_20200112&ti=QVBfcGRwfHBkcF9OQS1OQV9OQV9SRUMtUlJfUkVDLUJDQzAwRVlfTkFfMjAyMDAxMTI=) / [Women’s](https://www.backcountry.com/backcountry-cottonwoods-gore-tex-jacket-womens?skid=BCC00F3-GIN-S&ti=U2VhcmNoIFJlc3VsdHM6Y290dG9ud29vZHM6MTo1OmNvdHRvbndvb2Rz))
 
-![](/img/vancouverisland_taylorburk_backcountry-15.jpg)
+![Two people loading a surfboard on top of a SUV, with a row rustic cabins in the background](/img/vancouverisland_taylorburk_backcountry-15.jpg)
 
-![](/img/vancouverisland_taylorburk_backcountry-11.jpg)
+![A man is sitting on the bumber of a car putting on a wetsuit while a woman next to him already in a wetsuit is stretching](/img/vancouverisland_taylorburk_backcountry-11.jpg)
 
 **Surfing in Tofino**
 

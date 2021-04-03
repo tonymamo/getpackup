@@ -2,7 +2,17 @@ import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
 
-import { Box, PageContainer, Seo, HeroImage, Heading, Content, HTMLContent } from '@components';
+import {
+  Box,
+  PageContainer,
+  Seo,
+  HeroImage,
+  Heading,
+  Content,
+  HTMLContent,
+  Row,
+  Column,
+} from '@components';
 
 type TermsProps = {
   hideFromCms?: boolean;
@@ -33,10 +43,14 @@ export const TermsTemplate: FunctionComponent<TermsProps> = ({
       <PageContainer withVerticalPadding>
         {!hideFromCms && <Seo title={title} />}
         <Box>
-          <Heading>{title}</Heading>
-          <div>
-            <PageContent content={content} />
-          </div>
+          <Row>
+            <Column md={8} mdOffset={2}>
+              <Heading>{title}</Heading>
+              <div>
+                <PageContent content={content} />
+              </div>
+            </Column>
+          </Row>
         </Box>
       </PageContainer>
     </>
