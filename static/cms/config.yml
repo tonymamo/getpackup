@@ -233,7 +233,7 @@ collections:
         fields:
           - { label: 'Template Key', name: 'templateKey', widget: 'hidden', default: 'terms' }
           - { label: Title, name: title, widget: string }
-          - { label: HeroImage, name: termsHeroImage, widget: image }
+          - { label: HeroImage, name: heroImage, widget: image }
           - { label: Body, name: body, widget: markdown }
       - file: 'src/pages/privacy.md'
         label: 'Privacy'
