@@ -1,48 +1,36 @@
 import React from 'react';
-import Img, { FixedObject, FluidObject } from 'gatsby-image';
+import Img from 'gatsby-image';
+
+import { FluidImageType, FixedImageType } from '@common/image';
 
 const PreviewCompatibleImage = ({
   imageInfo,
   ...rest
 }: {
   imageInfo: {
-    childImageSharp?: { fluid?: FluidObject; fixed?: FixedObject };
-    image: { childImageSharp: { fluid?: FluidObject; fixed?: FixedObject } } | string;
+    image: FluidImageType | FixedImageType | string;
     alt?: string;
   };
   // eslint-disable-next-line react/require-default-props
   style?: React.CSSProperties;
 }) => {
   const imageStyle = { width: '100%' };
-  const { alt = '', childImageSharp, image } = imageInfo;
+  const { alt = '', image } = imageInfo;
 
-  if (
-    !!image &&
-    typeof image !== 'string' &&
-    !!image.childImageSharp &&
-    image.childImageSharp.fluid
-  ) {
-    return <Img style={imageStyle} fluid={image.childImageSharp.fluid} alt={alt} {...rest} />;
+  const isFluidImage =
+    !!image && typeof image !== 'string' && Object.prototype.hasOwnProperty.call(image, 'fluid');
+  const isFixedImage =
+    !!image && typeof image !== 'string' && Object.prototype.hasOwnProperty.call(image, 'fixed');
+
+  if (typeof image !== 'string' && isFluidImage) {
+    return <Img style={imageStyle} fluid={(image as FluidImageType).fluid} alt={alt} {...rest} />;
   }
 
-  if (
-    !!image &&
-    typeof image !== 'string' &&
-    !!image.childImageSharp &&
-    image.childImageSharp.fixed
-  ) {
-    return <Img style={imageStyle} fixed={image.childImageSharp.fixed} alt={alt} {...rest} />;
+  if (typeof image !== 'string' && isFixedImage) {
+    return <Img style={imageStyle} fixed={(image as FixedImageType).fixed} alt={alt} {...rest} />;
   }
 
-  if (childImageSharp && childImageSharp.fluid) {
-    return <Img style={imageStyle} fluid={childImageSharp.fluid} alt={alt} {...rest} />;
-  }
-
-  if (childImageSharp && childImageSharp.fixed) {
-    return <Img style={imageStyle} fixed={childImageSharp.fixed} alt={alt} {...rest} />;
-  }
-
-  if (!!image && typeof image === 'string') {
+  if (!isFluidImage && !isFixedImage && typeof image === 'string') {
     return <img style={imageStyle} src={image} alt={alt} {...rest} />;
   }
 

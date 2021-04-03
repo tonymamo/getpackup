@@ -2,7 +2,7 @@
 templateKey: about-page
 path: /about
 title: Our Story
-heroImage: /img/mountains_day.jpg
+heroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/mountains_day.jpg
 ---
 
 ## Where did the idea for packup come from?
