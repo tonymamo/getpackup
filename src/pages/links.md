@@ -4,6 +4,9 @@ linksList:
   - linkUrl: /
     linkText: What is packup?
     thumbnail: /img/0f1a2062-3.jpg
+  - linkUrl: https://getpackup.com/blog/2021-03-29-the-ten-essentials/
+    linkText: "Blog Post: The Ten Essentials"
+    thumbnail: /img/044a6193.jpg
   - linkUrl: https://www.chrisistace.com/packup-app-adventure-made-easy/
     linkText: "Blog Post: Mindful Explorer, Chris Istace shares his thoughts on packup"
     thumbnail: /img/screen-shot-2021-02-17-at-2.21.53-pm.png
