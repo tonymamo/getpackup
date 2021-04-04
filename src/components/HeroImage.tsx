@@ -1,22 +1,14 @@
-import { FluidObject } from 'gatsby-image';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import { white } from '@styles/color';
 import useWindowSize from '@utils/useWindowSize';
-import { ClientOnly, PreviewCompatibleImage } from '@components';
+import { PreviewCompatibleImage } from '@components';
+import { FluidImageType } from '@common/image';
 
 type HeroImageProps = {
-  imgSrc: {
-    childImageSharp: {
-      fluid: FluidObject;
-    };
-  };
-  mobileImgSrc?: {
-    childImageSharp: {
-      fluid: FluidObject;
-    };
-  };
+  imgSrc: FluidImageType;
+  mobileImgSrc?: FluidImageType;
 };
 
 const HeroImageWrapper = styled.div`
@@ -48,19 +40,20 @@ const HeroImage: FunctionComponent<HeroImageProps> = ({ imgSrc, children, mobile
   return (
     <HeroImageWrapper
       aspectRatio={
+        // eslint-disable-next-line no-nested-ternary
         size.isExtraSmallScreen && mobileImgSrc
-          ? mobileImgSrc.childImageSharp.fluid.aspectRatio
-          : imgSrc.childImageSharp.fluid.aspectRatio
+          ? mobileImgSrc.fluid.aspectRatio
+          : imgSrc.fluid
+          ? imgSrc.fluid.aspectRatio
+          : 16 / 9
       }
     >
-      <ClientOnly>
-        <PreviewCompatibleImage
-          imageInfo={{
-            image: size.isExtraSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc,
-            alt: '',
-          }}
-        />
-      </ClientOnly>
+      <PreviewCompatibleImage
+        imageInfo={{
+          image: size.isExtraSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc,
+          alt: '',
+        }}
+      />
       <ChildrenWrapper>{children}</ChildrenWrapper>
     </HeroImageWrapper>
   );

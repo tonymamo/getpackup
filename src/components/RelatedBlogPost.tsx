@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'gatsby';
-import { FixedObject } from 'gatsby-image';
 
 import { PreviewCompatibleImage } from '@components';
+import { FixedImageType } from '@common/image';
 
 type RelatedBlogPostProps = {
   type: 'next' | 'prev';
@@ -13,15 +13,11 @@ type RelatedBlogPostProps = {
         text: string;
       };
     };
+    featuredimage: FixedImageType;
     frontmatter: {
       date: string;
       description: string;
       title: string;
-      featuredimage: {
-        childImageSharp: {
-          fixed: FixedObject;
-        };
-      };
     };
   };
 };
@@ -33,11 +29,7 @@ const RelatedBlogPost: FunctionComponent<RelatedBlogPostProps> = (props) => {
         <PreviewCompatibleImage
           style={{ height: 200 }}
           imageInfo={{
-            image: {
-              childImageSharp: {
-                fixed: props.post.frontmatter.featuredimage.childImageSharp.fixed,
-              },
-            },
+            image: props.post.featuredimage,
             alt: `featured image thumbnail for post ${props.post.frontmatter.title}`,
           }}
         />

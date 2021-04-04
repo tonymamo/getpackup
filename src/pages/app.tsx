@@ -37,6 +37,15 @@ const App: FunctionComponent<{}> = (props) => {
 
   useEffect(() => {
     if (isLoaded(auth) && auth.uid) {
+      if (typeof window !== 'undefined') {
+        if (window.analytics) {
+          window.analytics.identify(auth.email as string, {
+            userId: auth.uid,
+            email: auth.email,
+            displayName: auth.displayName || '',
+          });
+        }
+      }
       if (
         ((activeLoggedInUser !== undefined && !activeLoggedInUser.username) ||
           activeLoggedInUser === undefined) &&
@@ -49,6 +58,7 @@ const App: FunctionComponent<{}> = (props) => {
           .set({
             uid: auth.uid,
             email: auth.email,
+            emailVerified: auth.emailVerified,
             displayName: auth.displayName,
             photoURL: auth.photoURL,
             username: `${auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(

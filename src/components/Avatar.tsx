@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import styled, { CSSProperties } from 'styled-components';
-import { FluidObject } from 'gatsby-image';
 import { Md5 } from 'ts-md5/dist/md5';
 
 import {
@@ -17,13 +16,10 @@ import { lightestGray } from '@styles/color';
 import { PreviewCompatibleImage } from '@components';
 import { zIndexAvatarImageAfter } from '@styles/layers';
 import { fontSizeSmall } from '@styles/typography';
+import { FluidImageType } from '@common/image';
 
 export type AvatarProps = {
-  src?:
-    | {
-        childImageSharp: { fluid: FluidObject };
-      }
-    | string;
+  src?: FluidImageType | string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   gravatarEmail?: string;
   bottomMargin?: boolean;
@@ -130,7 +126,7 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
         <PreviewCompatibleImage
           imageInfo={{
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            image: (props.src || gravatarUrl)!,
+            image: (props.src || (gravatarUrl as string))!,
             alt: 'user profile picture',
           }}
         />

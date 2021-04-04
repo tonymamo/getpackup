@@ -1,15 +1,25 @@
 import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
 
-import { Box, PageContainer, Seo, HeroImage, Heading, Content, HTMLContent } from '@components';
+import {
+  Box,
+  PageContainer,
+  Seo,
+  HeroImage,
+  Heading,
+  Content,
+  HTMLContent,
+  Row,
+  Column,
+} from '@components';
+import { FluidImageType } from '@common/image';
 
 type TermsProps = {
   hideFromCms?: boolean;
   title: string;
   content: any;
   contentComponent: typeof HTMLContent;
-  heroImage: { childImageSharp: { fluid: FluidObject } };
+  heroImage: FluidImageType;
 };
 
 export const TermsTemplate: FunctionComponent<TermsProps> = ({
@@ -33,24 +43,34 @@ export const TermsTemplate: FunctionComponent<TermsProps> = ({
       <PageContainer withVerticalPadding>
         {!hideFromCms && <Seo title={title} />}
         <Box>
-          <Heading>{title}</Heading>
-          <div>
-            <PageContent content={content} />
-          </div>
+          <Row>
+            <Column md={8} mdOffset={2}>
+              <Heading>{title}</Heading>
+              <div>
+                <PageContent content={content} />
+              </div>
+            </Column>
+          </Row>
         </Box>
       </PageContainer>
     </>
   );
 };
 
-const Terms = ({ data }: { data: { markdownRemark: { frontmatter: TermsProps; html: any } } }) => {
+const Terms = ({
+  data,
+}: {
+  data: {
+    markdownRemark: { frontmatter: TermsProps; html: any; heroImage: TermsProps['heroImage'] };
+  };
+}) => {
   const { markdownRemark: post } = data;
 
   return (
     <TermsTemplate
       contentComponent={HTMLContent}
       title={post.frontmatter.title}
-      heroImage={post.frontmatter.heroImage}
+      heroImage={post.heroImage}
       content={post.html}
     />
   );
@@ -62,15 +82,14 @@ export const termsQuery = graphql`
   query TermsPage {
     markdownRemark(frontmatter: { templateKey: { eq: "terms" } }) {
       html
+      heroImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
       frontmatter {
         title
-        heroImage {
-          childImageSharp {
-            fluid(maxWidth: 2048, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
       }
     }
   }

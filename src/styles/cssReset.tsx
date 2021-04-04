@@ -1,7 +1,4 @@
-import React from 'react';
-import { createGlobalStyle, css } from 'styled-components';
-import { renderToStaticMarkup as rtsm } from 'react-dom/server';
-import { FaExternalLinkAlt } from 'react-icons/fa';
+import { createGlobalStyle } from 'styled-components';
 
 import {
   brandPrimary,
@@ -15,10 +12,7 @@ import {
 import topo from '@images/topo.png';
 import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { headingsFontFamily, fontFamilySansSerif } from '@styles/typography';
-
-const externalLinkIcon = css`
-  ${rtsm(<FaExternalLinkAlt color="darkgray" size={12} />).replace(/"/g, "'")}
-`;
+import { baseBorderStyle } from '@styles/mixins';
 
 /* eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }] */
 const CssReset = createGlobalStyle`
@@ -196,7 +190,15 @@ const CssReset = createGlobalStyle`
   }
 
   table {
-    background-color: white;
+    background-color: transparent;
+  }
+
+  table, th, td {
+    border: ${baseBorderStyle};
+  }
+
+  th, td {
+    padding: ${quarterSpacer};
   }
 
   caption {
@@ -283,10 +285,9 @@ const CssReset = createGlobalStyle`
     margin: 0 auto !important;
   }
 
-  /* https://github.com/react-icons/react-icons/issues/246#issuecomment-667147241 */
-  /* add svg icon from react-icons to external links in blogs */
+  /* add icon to external links in blogs */
   .blog-content a[target="_blank"]:after {
-    content: url("data:image/svg+xml; utf8,${externalLinkIcon}");
+    content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==");
     margin-left: ${quarterSpacer};
   }
 

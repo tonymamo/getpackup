@@ -2,7 +2,7 @@
 templateKey: contact-page
 path: /contact
 title: Contact Us
-heroImage: /img/FemaleRockclimberLookingBackAtDaybreak copy.jpg
+heroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244537/getpackup/FemaleRockclimberLookingBackAtDaybreak%20copy.jpg
 ---
 
 ## Send a Message

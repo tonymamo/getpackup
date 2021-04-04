@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
@@ -6,18 +6,35 @@ import { useFirebase } from 'react-redux-firebase';
 import { actionTypes } from 'redux-firestore';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
+import styled from 'styled-components';
 
-import { Input, Button, Box, Seo, PageContainer, Row, Column, AvatarUpload } from '@components';
+import {
+  Input,
+  Button,
+  Box,
+  Seo,
+  PageContainer,
+  Row,
+  Column,
+  AvatarUpload,
+  FlexContainer,
+} from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { requiredField } from '@utils/validations';
 import validateUsername from '@utils/validateUsername';
+import { baseSpacerUnit, baseSpacer } from '@styles/size';
 
 type ProfileProps = {
   loggedInUser?: any;
 } & RouteComponentProps;
 
+export const EmailWrapper = styled.div`
+  width: 100%;
+`;
+
 const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
+  const [verifySent, setVerifySent] = useState(false);
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -45,6 +62,39 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
     });
   };
 
+  const verifyEmail = () => {
+    const user = firebase.auth().currentUser;
+
+    if (!user) {
+      dispatch(
+        addAlert({
+          type: 'danger',
+          message: 'You are not currently signed in',
+        })
+      );
+      return;
+    }
+    user
+      .sendEmailVerification()
+      .then(function() {
+        setVerifySent(true);
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: 'Verification email sent',
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+  };
+
   return (
     <PageContainer>
       <Seo title="Edit Profile">
@@ -62,12 +112,13 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
               validateOnMount
               initialValues={{
                 ...loggedInUser,
+                email: auth.email,
               }}
               onSubmit={(values, { setSubmitting, resetForm }) => {
                 // Note: This prevents photo url from overwriting any change as the avatar
                 // file uploader handles saving itself.
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { photoURL, ...updateValues } = values;
+                const { photoURL, email, ...updateValues } = values;
 
                 firebase
                   .firestore()
@@ -133,6 +184,26 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                           : ''
                       }
                     />
+                    <FlexContainer
+                      flexWrap="nowrap"
+                      alignItems="flex-end"
+                      justifyContent="space-between"
+                    >
+                      <EmailWrapper>
+                        <Field as={Input} type="text" name="email" label="Email" disabled />
+                      </EmailWrapper>
+                      {auth.emailVerified ? null : (
+                        <Button
+                          onClick={verifyEmail}
+                          type="button"
+                          disabled={verifySent}
+                          style={{ marginBottom: baseSpacerUnit + 1, marginLeft: baseSpacer }}
+                        >
+                          Verify
+                        </Button>
+                      )}
+                    </FlexContainer>
+
                     {typeof window !== 'undefined' && window.google && (
                       <Field
                         as={Input}

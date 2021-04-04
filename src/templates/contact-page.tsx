@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { FaCaretRight } from 'react-icons/fa';
 import { graphql } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
 
 import {
   Content,
@@ -20,13 +19,14 @@ import {
 } from '@components';
 import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import { requiredEmail, requiredField } from '@utils/validations';
+import { FluidImageType } from '@common/image';
 
 type ContactProps = {
   hideFromCms?: boolean;
   title: string;
   content: any;
   contentComponent: typeof HTMLContent;
-  heroImage: { childImageSharp: { fluid: FluidObject } };
+  heroImage: FluidImageType;
 };
 
 export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
@@ -135,7 +135,9 @@ export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
 const ContactPage = ({
   data,
 }: {
-  data: { markdownRemark: { frontmatter: ContactProps; html: any } };
+  data: {
+    markdownRemark: { frontmatter: ContactProps; html: any; heroImage: ContactProps['heroImage'] };
+  };
 }) => {
   const { markdownRemark: post } = data;
 
@@ -143,7 +145,7 @@ const ContactPage = ({
     <ContactPageTemplate
       contentComponent={HTMLContent}
       title={post.frontmatter.title}
-      heroImage={post.frontmatter.heroImage}
+      heroImage={post.heroImage}
       content={post.html}
     />
   );
@@ -155,15 +157,13 @@ export const contactPageQuery = graphql`
   query ContactPage {
     markdownRemark(frontmatter: { templateKey: { eq: "contact-page" } }) {
       html
+      heroImage {
+        fluid {
+          ...CloudinaryAssetFluid
+        }
+      }
       frontmatter {
         title
-        heroImage {
-          childImageSharp {
-            fluid(maxWidth: 2048, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
       }
     }
   }
