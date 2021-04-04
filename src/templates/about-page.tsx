@@ -1,15 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
 
 import { Box, PageContainer, Seo, HeroImage, Heading, Content, HTMLContent } from '@components';
+import { FluidImageType } from '@common/image';
 
 type AboutPageProps = {
   hideFromCms?: boolean;
   title: string;
   content: any;
   contentComponent: typeof HTMLContent;
-  heroImage: { childImageSharp: { fluid: FluidObject } };
+  heroImage: FluidImageType;
 };
 
 export const AboutPageTemplate: FunctionComponent<AboutPageProps> = ({
@@ -46,7 +46,13 @@ export const AboutPageTemplate: FunctionComponent<AboutPageProps> = ({
 const AboutPage = ({
   data,
 }: {
-  data: { markdownRemark: { frontmatter: AboutPageProps; html: any } };
+  data: {
+    markdownRemark: {
+      frontmatter: AboutPageProps;
+      html: any;
+      heroImage: AboutPageProps['heroImage'];
+    };
+  };
 }) => {
   const { markdownRemark: post } = data;
 
@@ -54,7 +60,7 @@ const AboutPage = ({
     <AboutPageTemplate
       contentComponent={HTMLContent}
       title={post.frontmatter.title}
-      heroImage={post.frontmatter.heroImage}
+      heroImage={post.heroImage}
       content={post.html}
     />
   );
@@ -66,15 +72,13 @@ export const aboutPageQuery = graphql`
   query AboutPage {
     markdownRemark(frontmatter: { templateKey: { eq: "about-page" } }) {
       html
+      heroImage {
+        fluid {
+          ...CloudinaryAssetFluid
+        }
+      }
       frontmatter {
         title
-        heroImage {
-          childImageSharp {
-            fluid(maxWidth: 2048, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
       }
     }
   }

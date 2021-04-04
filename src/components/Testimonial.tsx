@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { FluidObject } from 'gatsby-image';
 import { FaQuoteRight } from 'react-icons/fa';
 
 import { Avatar, Heading, FlexContainer, Row, Column } from '@components';
@@ -7,17 +6,14 @@ import { Avatar, Heading, FlexContainer, Row, Column } from '@components';
 import { baseSpacer, doubleSpacer, quadrupleSpacer } from '@styles/size';
 import { fontSizeH6 } from '@styles/typography';
 import { brandPrimary } from '@styles/color';
+import { FluidImageType } from '@common/image';
 
 type TestimonialProps = {
   testimonial: {
     quote: string;
     author: string;
     location: string;
-    avatar: {
-      childImageSharp: {
-        fluid: FluidObject;
-      };
-    };
+    avatar: FluidImageType;
   };
 };
 

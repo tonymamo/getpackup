@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { kebabCase } from 'lodash';
 import { Link, graphql } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
 
 import { PageContainer, Box, Heading, Seo, HeroImage } from '@components';
+import { FluidImageType } from '@common/image';
 
 type TagsIndexProps = {
   title: string;
   group: Array<{ fieldValue: string; totalCount: number }>;
-  heroImage: { childImageSharp: { fluid: FluidObject } };
+  heroImage: FluidImageType;
 };
 
 export const TagsIndexTemplate: FunctionComponent<TagsIndexProps> = (props) => (
@@ -42,7 +42,7 @@ const TagsIndexPage = ({
   data,
 }: {
   data: {
-    markdownRemark: { frontmatter: TagsIndexProps };
+    markdownRemark: { frontmatter: TagsIndexProps; heroImage: TagsIndexProps['heroImage'] };
     allMarkdownRemark: { group: Array<{ fieldValue: string; totalCount: number }> };
   };
 }) => {
@@ -50,7 +50,7 @@ const TagsIndexPage = ({
   return (
     <TagsIndexTemplate
       title={post.frontmatter.title}
-      heroImage={post.frontmatter.heroImage}
+      heroImage={post.heroImage}
       group={data.allMarkdownRemark.group}
     />
   );
@@ -67,15 +67,14 @@ export const tagPageQuery = graphql`
       }
     }
     markdownRemark(frontmatter: { templateKey: { eq: "tags-index-page" } }) {
+      heroImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
       frontmatter {
         title
-        heroImage {
-          childImageSharp {
-            fluid(maxWidth: 2048, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
       }
     }
   }

@@ -4,16 +4,17 @@ title: Meet The Team - Mack Carson
 date: 2020-09-11T20:56:51.750Z
 description: A brief introduction to our team members.
 featuredpost: true
-featuredimage: /img/mackheadshot.jpg
+featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244556/getpackup/mackheadshot.jpg
 tags:
   - Mack Carson
   - meet the team
   - owners
   - packup
 ---
-Meet Mack Carson, one of the co-founders of Packup. Mack is a ramen and pho aficionado, travel fanatic, avid alpinist, and finance whiz. After receiving his BComm in finance, Mack spent four years working in commercial real estate finance where his team sourced over $500 million in funds for clients. He recently traded in his suit and tie with the goal of getting more involved in the start-up world, as he has always been keen to continue his lifelong learning, and have the chance to grow a business from its infancy. Mack recently moved out west, and has been settling into his new home of Victoria, BC.
 
-![](/img/044a8714.jpg)
+Meet Mack Carson, one of the co-founders of Packup. Mack is a ramen and pho aficionado, travel fanatic, avid alpinist, and finance whiz. After receiving his BComm in finance, Mack spent four years working in commercial real estate finance where his team sourced over \$500 million in funds for clients. He recently traded in his suit and tie with the goal of getting more involved in the start-up world, as he has always been keen to continue his lifelong learning, and have the chance to grow a business from its infancy. Mack recently moved out west, and has been settling into his new home of Victoria, BC.
+
+![Snowboarder descending through a myriad of trees capped with snow](https://res.cloudinary.com/getpackup/image/upload/v1617244540/getpackup/044a8714.jpg)
 
 **Worst experience in the backcountry?**
 
@@ -41,9 +42,9 @@ The Paprika 3 cooking app. Lululemon ABC pants. My bike. My 150 foot yacht with 
 
 **Share about a time when you felt the most alive and fully yourself?**
 
-Any time I'm out travelling. I also spent a summer during university in 2015 living and working in the mountain town of Jasper. At the time I was working as a hotel bartender so that I could cover living costs, and have a bit of savings for tuition. I lived in an absolute dump of a staff accommodation for $250/month, but met some amazing people on my floor (shout-out to Patrik and Callum). I was able to run, climb, scramble, and ride every day, practically giving myself tendonitis in my knee by the end of the summer. It was a simple time in my life, surrounded by good people.
+Any time I'm out travelling. I also spent a summer during university in 2015 living and working in the mountain town of Jasper. At the time I was working as a hotel bartender so that I could cover living costs, and have a bit of savings for tuition. I lived in an absolute dump of a staff accommodation for \$250/month, but met some amazing people on my floor (shout-out to Patrik and Callum). I was able to run, climb, scramble, and ride every day, practically giving myself tendonitis in my knee by the end of the summer. It was a simple time in my life, surrounded by good people.
 
-![](/img/044a1107.jpg)
+![Packup co-founder Mack Carson in a blue down parka and sunglasses](https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/044a1107.jpg)
 
 **What injustices in the world make you angry?**
 

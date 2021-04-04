@@ -1,11 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
 import Modal from 'react-modal';
+import { Link } from 'gatsby';
+import CookieConsent from 'react-cookie-consent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { ErrorBoundary, Footer, Navbar, GlobalAlerts } from '@components';
 import { quadrupleSpacer } from '@styles/size';
+import { brandPrimary, black, white } from '@styles/color';
 import CssReset from '@styles/cssReset';
 import UpploadTheme from '@styles/upploadTheme';
 
@@ -33,8 +36,6 @@ type LayoutProps = {
   hideFromCms?: boolean;
 };
 
-Modal.setAppElement('#___gatsby');
-
 const Layout: FunctionComponent<LayoutProps> = (props) => {
   // useEffect(() => {
   //   if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -44,6 +45,11 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
   //     console.log('This is running as browser.');
   //   }
   // }, []);
+  useEffect(() => {
+    if (!props.hideFromCms) {
+      Modal.setAppElement('#___gatsby');
+    }
+  }, []);
   return (
     <>
       <CssReset />
@@ -56,8 +62,23 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
             <ErrorBoundary>{props.children}</ErrorBoundary>
           </PageBody>
           {!props.hideFromCms && <GlobalAlerts />}
-          <Footer />
+          {!props.hideFromCms && <Footer />}
         </LayoutWrapper>
+        <CookieConsent
+          location="bottom"
+          buttonText="Accept"
+          cookieName="packup-gdpr-google-analytics"
+          style={{
+            backgroundColor: black,
+          }}
+          buttonStyle={{
+            backgroundColor: brandPrimary,
+            color: white,
+          }}
+        >
+          This site uses cookies to enhance the user experience. Visit our{' '}
+          <Link to="/privacy">Privacy page</Link> to learn more.
+        </CookieConsent>
       </IconContext.Provider>
     </>
   );

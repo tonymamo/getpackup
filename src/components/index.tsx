@@ -1,6 +1,7 @@
 import Alert from './Alert';
 import AutoSave from './AutoSave';
 import Avatar, { StackedAvatars } from './Avatar';
+import BlogRoll from './BlogRoll';
 import Box from './Box';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
@@ -19,7 +20,6 @@ import HeroImage from './HeroImage';
 import HorizontalRule from './HorizontalRule';
 import IconCheckbox from './IconCheckbox';
 import IconWrapper from './IconWrapper';
-import Image from './Image';
 import Input from './Input';
 import Layout from './Layout';
 import LoadingPage from './LoadingPage';
@@ -51,6 +51,7 @@ export {
   Alert,
   AutoSave,
   Avatar,
+  BlogRoll,
   Box,
   Button,
   ClientOnly,
@@ -70,7 +71,6 @@ export {
   HTMLContent,
   IconCheckbox,
   IconWrapper,
-  Image,
   Input,
   Layout,
   LoadingPage,

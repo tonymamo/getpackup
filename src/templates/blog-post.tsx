@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { kebabCase } from 'lodash';
 import { graphql } from 'gatsby';
-import { FluidObject, FixedObject } from 'gatsby-image';
 import { DiscussionEmbed } from 'disqus-react';
 
 import {
@@ -22,6 +21,7 @@ import {
   HTMLContent,
 } from '@components';
 import useWindowSize from '@utils/useWindowSize';
+import { FixedImageType, FluidImageType } from '@common/image';
 
 type RelatedPostType = {
   fields: {
@@ -34,12 +34,8 @@ type RelatedPostType = {
     date: string;
     description: string;
     title: string;
-    featuredimage: {
-      childImageSharp: {
-        fixed: FixedObject;
-      };
-    };
   };
+  featuredimage: FixedImageType;
 };
 
 type BlogPostProps = {
@@ -58,12 +54,7 @@ type BlogPostProps = {
   readingTime: {
     text: string;
   };
-  featuredimage: {
-    childImageSharp: {
-      fluid: FluidObject;
-      fixed: FixedObject;
-    };
-  };
+  featuredimage: FixedImageType & FluidImageType;
 };
 
 export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
@@ -88,9 +79,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
         <Seo
           title={props.title}
           description={props.description}
-          image={props.featuredimage.childImageSharp.fixed.src}
-          imageWidth={props.featuredimage.childImageSharp.fixed.width}
-          imageHeight={props.featuredimage.childImageSharp.fixed.height}
+          image={props.featuredimage.fixed.src}
+          imageWidth={props.featuredimage.fixed.width}
+          imageHeight={props.featuredimage.fixed.height}
         />
       )}
       {typeof window !== 'undefined' &&
@@ -103,14 +94,17 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
               title={props.title}
               tags={props.tags}
               vertical
-              media={props.featuredimage.childImageSharp.fixed.src}
+              media={props.featuredimage.fixed.src}
               description={props.description}
             />
           </ClientOnly>
         )}
-      <HeroImage imgSrc={props.featuredimage}>
-        <Heading inverse>{props.title}</Heading>
-      </HeroImage>
+      {!props.hideFromCms && (
+        <HeroImage imgSrc={props.featuredimage}>
+          <Heading inverse>{props.title}</Heading>
+        </HeroImage>
+      )}
+
       <PageContainer withVerticalPadding>
         <Row>
           <Column md={9}>
@@ -130,7 +124,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     url={props.pageContext.slug}
                     title={props.title}
                     tags={props.tags}
-                    media={props.featuredimage.childImageSharp.fixed.src}
+                    media={props.featuredimage.fixed.src}
                     description={props.description}
                   />
                 )}
@@ -161,7 +155,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     url={props.pageContext.slug}
                     title={props.title}
                     tags={props.tags}
-                    media={props.featuredimage.childImageSharp.fixed.src}
+                    media={props.featuredimage.fixed.src}
                     description={props.description}
                   />
                 )}
@@ -214,7 +208,7 @@ const BlogPost = ({ data, pageContext }: { data: any; pageContext: any }) => {
       date={post.frontmatter.date}
       tags={post.frontmatter.tags}
       title={post.frontmatter.title}
-      featuredimage={post.frontmatter.featuredimage}
+      featuredimage={post.featuredimage}
       readingTime={post.fields.readingTime}
       description={post.frontmatter.description}
       pageContext={pageContext}
@@ -234,21 +228,20 @@ export const pageQuery = graphql`
           text
         }
       }
+      featuredimage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+        fixed(width: 1200) {
+          ...CloudinaryAssetFixed
+        }
+      }
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         title
         description
         tags
-        featuredimage {
-          childImageSharp {
-            fluid(maxWidth: 2400, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-            fixed(width: 1080, quality: 60) {
-              ...GatsbyImageSharpFixed_withWebp
-            }
-          }
-        }
       }
     }
   }

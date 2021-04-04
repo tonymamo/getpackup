@@ -59,6 +59,7 @@ typings/
 .cache/
 public
 graphql-types.ts
+schema.graphql
 
 # Mac files
 .DS_Store
