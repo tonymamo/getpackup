@@ -3,7 +3,7 @@ templateKey: blog-post
 title: Ten Backcountry Ski Touring Tips and Hacks
 date: 2020-09-30T18:39:30.375Z
 description: Tips to help you enjoy your time outside
-featuredpost: true
+featuredpost: false
 featuredimage: /img/img_1015.jpg
 tags:
   - Tips

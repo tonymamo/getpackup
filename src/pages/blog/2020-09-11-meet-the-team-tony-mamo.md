@@ -3,7 +3,7 @@ templateKey: blog-post
 title: 'Meet The Team - Tony Mamo '
 date: 2020-09-10T23:11:13.862Z
 description: 'A brief introduction to our team members. '
-featuredpost: true
+featuredpost: false
 featuredimage: /img/tony.jpg
 tags:
   - Tony Mamo

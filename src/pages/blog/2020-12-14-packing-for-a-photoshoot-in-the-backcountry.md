@@ -5,7 +5,7 @@ date: 2020-12-14T18:20:56.388Z
 description: "An in-depth breakdown and gear list from photographer Taylor Burk
   on what and how he packs his camera gear for extended periods of time in the
   backcountry. "
-featuredpost: true
+featuredpost: false
 featuredimage: /img/dscf2292-2.jpg
 tags:
   - packing

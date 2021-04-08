@@ -3,7 +3,7 @@ templateKey: blog-post
 title: 'Meet The Team - Taylor Burk '
 date: 2020-09-10T19:45:07.805Z
 description: 'A brief introduction to our team members. '
-featuredpost: true
+featuredpost: false
 featuredimage: /img/j_kelsey_20191023_0625-2.jpg
 tags:
   - Taylor Burk

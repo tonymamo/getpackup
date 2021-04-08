@@ -5,7 +5,7 @@ date: 2021-03-28T22:37:16.028Z
 description: Following the guidance of the Ten Essentials can greatly improve
   the safety of you and your party. Learn more about how you can be prepared for
   emergencies, accidents, or an unexpected night outside.
-featuredpost: true
+featuredpost: false
 featuredimage: /img/watertonhike.jpg
 tags:
   - packing
