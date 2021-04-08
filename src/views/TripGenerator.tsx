@@ -26,11 +26,20 @@ type TripGeneratorProps = {
   id?: string; // reach router param
 } & RouteComponentProps;
 
+const usePersonalGear = () => {
+  const masterGear = useSelector((state: RootState) => state.firestore.ordered.gear);
+}
+
+
 const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const gear = useSelector((state: RootState) => state.firestore.ordered.gear);
+  const gearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const gearClosetAdditions = useSelector((state: RootState) => state.firestore.ordered.gearClosetAdditions);
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
+
   useFirestoreConnect([
     { collection: 'gear' },
     {
@@ -38,9 +47,22 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
       doc: props.id,
       storeAs: 'activeTripById',
     },
+    {
+      collection: "gear-closet",
+      storeAs: "gearCloset",
+      doc: auth.uid
+    },
+    {
+      collection: "gear-closet",
+      storeAs: "gearClosetAdditions",
+      doc: auth.uid,
+      subcollections: [{ collection: 'additions' }]
+    }
   ]);
   const firebase = useFirebase();
   const dispatch = useDispatch();
+
+  console.log(gearCloset?.removals, gearClosetAdditions);
 
   const [activeTab, setActiveTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
