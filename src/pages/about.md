@@ -40,4 +40,4 @@ To learn more about Mack, [check out his introduction](https://getpackup.com/blo
 
 Tony is a senior software engineer, designer, and outdoors enthusiast. A self-taught developer, he started out freelancing and eventually landed at a Fortune 10 company. After realizing the corporate life wasn't for him, he has since worked at several startups, working remotely, where he really found his ideal work-life balance. He enjoys the flexibility of being able to work from anywhere, which enabled him to spend a year on the road in a Sprinter van with his wife and dog, exploring all over North America. He has since settled down in Michigan, but is always dreaming up new travel locations, and occasionally traveling out of a cargo trailer he converted into a camper.
 
-**To learn more about Tony, [check out his introduction](https://getpackup.com/blog/2020-09-11-meet-the-team-tony-mamo/) on our blog.**
+To learn more about Tony, [check out his introduction](https://getpackup.com/blog/2020-09-11-meet-the-team-tony-mamo/) on our blog.
