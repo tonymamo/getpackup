@@ -8,13 +8,19 @@ heroImage: /img/mountains_day.jpg
 
 During a complex multi-day ski traverse along the Wapta Icefield, the idea for our app originally sparked. After a lengthy pre-trip planning and packing process for our group (four friends spread across four different cities), we were inspired to create a platform that could reduce friction in the packing process for future adventures. 
 
+<br></br>
+
 ### Our Mission:
 
 To increase the safety and enjoyment of outdoor adventures by improving competency and preparedness.
 
+<br></br>
+
 ### Our Vision:
 
 Our suite of trip preparation and packing tools, along with contributions from a community of passionate users aims to create an ecosystem where you can always be prepared for your outdoor excursions. Forgetting an important item can be embarrassing at best, or life threatening and dangerous depending on the circumstances. With packup, we will ensure that no item is left behind. 
+
+<br></br>
 
 ### The Team:
 
@@ -24,15 +30,11 @@ Taylor is a professional photographer in the outdoor adventure & travel space. U
 
 To learn more about Taylor, [check out his introduction](https://getpackup.com/blog/2020-09-10-meet-the-team-taylor-burk/) on our blog.
 
-
-
 ![](/img/mackheadshot.jpg)
 
 Mack is a ramen and pho aficionado, travel fanatic, avid alpinist, and finance whiz. After receiving his BComm in finance, Mack spent four years working in commercial real estate finance where his team sourced over $500 million in funds for clients. He recently traded in his suit and tie with the goal of getting more involved in the start-up world, as he has always been keen to continue his lifelong learning, and have the chance to grow a business from its infancy. Mack recently moved out west, and has been settling into his new home of Victoria, BC.
 
 To learn more about Mack, [check out his introduction](https://getpackup.com/blog/2020-09-11-meet-the-team-mack-carson/) on our blog.
-
-
 
 ![](/img/tony.jpg)
 
