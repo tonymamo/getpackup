@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
@@ -30,15 +30,46 @@ type FormValues = { [key: string]: boolean };
 
 const initialValues: { [key: string]: boolean } = {};
 
-// TODO: Build gear list from master + additions + removals
 const usePersonalGear = () => {
-  const masterGear = useSelector((state: RootState) => state.firestore.ordered.gear);
-  const gearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
-  const gearClosetAdditions = useSelector(
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const fetchedMasterGear = useSelector((state: RootState) => state.firestore.ordered.gear);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const fetchedGearClosetAdditions = useSelector(
     (state: RootState) => state.firestore.ordered.gearClosetAdditions
   );
 
-  return [];
+  useFirestoreConnect([
+    { collection: 'gear' },
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearClosetAdditions',
+      doc: auth.uid,
+      subcollections: [{ collection: 'additions' }],
+    },
+  ]);
+
+  const masterGear = fetchedMasterGear ?? [];
+  const gearClosetRemovals = fetchedGearCloset?.[0]?.removals ?? [];
+  const gearClosetAdditions = fetchedGearClosetAdditions ?? [];
+
+  const personalGear = useMemo(() => {
+    // Shallow clone the gear list, so we don't modify the master gear list
+    let customizedGear = [...masterGear];
+    gearClosetRemovals.forEach((itemToRemove: string) => {
+      // Remove in-place, it's okay because customizedGear is a clone
+      const removeIndex = customizedGear.findIndex((item) => item.id === itemToRemove);
+      customizedGear.splice(removeIndex, 1);
+    });
+
+    return customizedGear.concat(gearClosetAdditions);
+  }, [masterGear, gearClosetRemovals, gearClosetAdditions]);
+
+  return personalGear;
 };
 
 const generateGearList = (values: FormValues, gear: any) => {
@@ -74,29 +105,16 @@ const generateGearList = (values: FormValues, gear: any) => {
 };
 
 const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
-  const auth = useSelector((state: RootState) => state.firebase.auth);
-  const gear = useSelector((state: RootState) => state.firestore.ordered.gear);
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
+  const personalGear = usePersonalGear();
 
   useFirestoreConnect([
-    { collection: 'gear' },
     {
       collection: 'trips',
       doc: props.id,
       storeAs: 'activeTripById',
-    },
-    {
-      collection: 'gear-closet',
-      storeAs: 'gearCloset',
-      doc: auth.uid,
-    },
-    {
-      collection: 'gear-closet',
-      storeAs: 'gearClosetAdditions',
-      doc: auth.uid,
-      subcollections: [{ collection: 'additions' }],
     },
   ]);
   const firebase = useFirebase();
@@ -114,7 +132,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
 
   const onSubmit = (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
     setIsLoading(true);
-    const { gearList, tagMatches } = generateGearList(values, gear);
+    const { gearList, tagMatches } = generateGearList(values, personalGear);
 
     const promises: Array<Promise<any>> = [];
 
