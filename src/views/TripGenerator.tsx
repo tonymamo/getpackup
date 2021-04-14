@@ -57,6 +57,7 @@ const usePersonalGear = () => {
   const gearClosetRemovals = fetchedGearCloset?.[0]?.removals ?? [];
   const gearClosetAdditions = fetchedGearClosetAdditions ?? [];
 
+  // Only regenerate this data if the master gear, gear closet removals, or gear closet additions change
   const personalGear = useMemo(() => {
     // Shallow clone the gear list, so we don't modify the master gear list
     let customizedGear = [...masterGear];
