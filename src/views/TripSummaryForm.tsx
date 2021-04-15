@@ -120,11 +120,54 @@ const SliderWrapper = styled.div`
   }
 `;
 
+const Option = (option: any) => {
+  return (
+    <components.Option {...option}>
+      <FlexContainer justifyContent="flex-start">
+        <Avatar src={option.data.photoURL} gravatarEmail={option.data.email} rightMargin />
+        <div>
+          <div>{option.data.username}</div>
+          <small
+            style={{
+              color: textColorLight,
+            }}
+          >
+            {option.data.label}
+          </small>
+        </div>
+      </FlexContainer>
+    </components.Option>
+  );
+};
+
+const MultiValueLabel = ({
+  data,
+  ...option
+}: {
+  data: {
+    photoURL: string;
+    email: string;
+    username: string;
+  };
+}) => {
+  return (
+    <components.MultiValueLabel {...option}>
+      <FlexContainer justifyContent="flex-start">
+        <Avatar src={data.photoURL} gravatarEmail={data.email} rightMargin size="xs" />
+        <div>
+          <div>{data.username}</div>
+        </div>
+      </FlexContainer>
+    </components.MultiValueLabel>
+  );
+};
+
 const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const users = useSelector((state: RootState) => state.firestore.data.users);
+  const profile = useSelector((state: RootState) => state.firebase.profile);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -242,48 +285,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
     // TODO: also remove existing trip members from results
     return usersOptions.filter(
       (u) => u.uid !== auth.uid && !props.initialValues.tripMembers.includes(u.uid)
-    );
-  };
-
-  const Option = (option: any) => {
-    return (
-      <components.Option {...option}>
-        <FlexContainer justifyContent="flex-start">
-          <Avatar src={option.data.photoURL} gravatarEmail={option.data.email} rightMargin />
-          <div>
-            <div>{option.data.username}</div>
-            <small
-              style={{
-                color: textColorLight,
-              }}
-            >
-              {option.data.label}
-            </small>
-          </div>
-        </FlexContainer>
-      </components.Option>
-    );
-  };
-
-  const MultiValueLabel = ({
-    data,
-    ...option
-  }: {
-    data: {
-      photoURL: string;
-      email: string;
-      username: string;
-    };
-  }) => {
-    return (
-      <components.MultiValueLabel {...option}>
-        <FlexContainer justifyContent="flex-start">
-          <Avatar src={data.photoURL} gravatarEmail={data.email} rightMargin size="xs" />
-          <div>
-            <div>{data.username}</div>
-          </div>
-        </FlexContainer>
-      </components.MultiValueLabel>
     );
   };
 
@@ -418,24 +419,26 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               </>
             )}
 
-            <Field
-              as={Input}
-              type="async-select"
-              placeholder="Search by username"
-              // TODO: change to only be users you are following
-              // defaultOptions={false}
-              loadOptions={loadUsers}
-              name="tripMembers"
-              label={props.type === 'edit' ? 'Add Trip Members' : 'Trip Members'}
-              setFieldValue={setFieldValue}
-              isMulti
-              value={values.tripMembers}
-              components={{
-                Option,
-                MultiValueLabel,
-              }}
-              {...rest}
-            />
+            {profile.isAdmin ? (
+              <Field
+                as={Input}
+                type="async-select"
+                placeholder="Search by username"
+                // TODO: change to only be users you are following
+                // defaultOptions={false}
+                loadOptions={loadUsers}
+                name="tripMembers"
+                label={props.type === 'edit' ? 'Add Trip Members' : 'Trip Members'}
+                setFieldValue={setFieldValue}
+                isMulti
+                value={values.tripMembers}
+                components={{
+                  Option,
+                  MultiValueLabel,
+                }}
+                {...rest}
+              />
+            ) : null}
 
             <HorizontalRule />
 
