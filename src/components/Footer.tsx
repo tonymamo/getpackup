@@ -6,7 +6,7 @@ import {
   FaTwitter,
   FaInstagram,
   FaCalendar,
-  FaSearch,
+  FaWarehouse,
   FaUser,
   FaShoppingCart,
   FaUserLock,
@@ -193,8 +193,8 @@ const Footer = () => {
           <Link to="/app/trips" getProps={isPartiallyActive}>
             <FaCalendar />
           </Link>
-          <Link to="/app/search" getProps={isPartiallyActive}>
-            <FaSearch />
+          <Link to="/app/gear-closet" getProps={isPartiallyActive}>
+            <FaWarehouse />
           </Link>
           <Link to="/app/shopping-list" getProps={isPartiallyActive}>
             <FaShoppingCart />

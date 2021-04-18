@@ -3,14 +3,7 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
-import {
-  // FaBullhorn,
-  FaCalendar,
-  FaChevronLeft,
-  FaSearch,
-  FaShoppingCart,
-  FaUserLock,
-} from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaWarehouse, FaShoppingCart, FaUserLock } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
@@ -309,8 +302,8 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               <Link to="/app/trips" getProps={isPartiallyActive}>
                 <FaCalendar />
               </Link>
-              <Link to="/app/search" getProps={isPartiallyActive}>
-                <FaSearch />
+              <Link to="/app/gear-closet" getProps={isPartiallyActive}>
+                <FaWarehouse />
               </Link>
               <Link to="/app/shopping-list" getProps={isPartiallyActive}>
                 <FaShoppingCart />

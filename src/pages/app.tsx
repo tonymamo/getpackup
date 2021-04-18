@@ -9,7 +9,7 @@ import Trips from '@views/Trips';
 import NewTripSummary from '@views/NewTripSummary';
 import TripById from '@views/TripById';
 import TripGenerator from '@views/TripGenerator';
-import Search from '@views/Search';
+import GearCloset from '@views/GearCloset';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary, FeedbackModal } from '@components';
@@ -103,7 +103,11 @@ const App: FunctionComponent<{}> = (props) => {
             component={TripById}
             loggedInUser={activeLoggedInUser}
           /> */}
-          <PrivateRoute path="/search" component={Search} loggedInUser={activeLoggedInUser} />
+          <PrivateRoute
+            path="/gear-closet"
+            component={GearCloset}
+            loggedInUser={activeLoggedInUser}
+          />
           <PrivateRoute
             path="/shopping-list"
             component={ShoppingList}
