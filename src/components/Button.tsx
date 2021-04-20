@@ -8,6 +8,8 @@ import {
   borderRadius,
   borderWidth,
   halfSpacer,
+  quarterSpacer,
+  threeQuarterSpacer,
 } from '@styles/size';
 import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
 import {
@@ -46,6 +48,7 @@ export type ButtonProps = {
   block?: boolean;
   isLoading?: boolean;
   style?: CSSProperties;
+  size?: 'small' | 'large';
 };
 
 const primaryButtonStyles = `
@@ -186,7 +189,10 @@ const allStyles = css`
   border: ${borderWidth} solid transparent;
   letter-spacing: 1px;
   line-height: 1.5;
-  padding: ${halfSpacer} ${baseAndAHalfSpacer};
+  padding: ${(props: ButtonProps) =>
+    props.size === 'small'
+      ? `${quarterSpacer} ${threeQuarterSpacer}`
+      : `${halfSpacer} ${baseAndAHalfSpacer}`};
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   border-radius: ${borderRadius};
@@ -230,16 +236,19 @@ const StyledLink = styled.span`
   padding: 0; /* remove padding from parent div and use in <a> below */
 
   & > a {
-    padding: ${halfSpacer} ${baseAndAHalfSpacer};
+    padding: ${(props: ButtonProps) =>
+      props.size === 'small'
+        ? `${quarterSpacer} ${threeQuarterSpacer}`
+        : `${halfSpacer} ${baseAndAHalfSpacer}`};
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    color: inherit;
+    color: inherit !important;
 
     &:hover,
     &:focus {
-      color: inherit;
+      color: inherit !important;
     }
   }
 `;
@@ -257,6 +266,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   block,
   isLoading,
   style,
+  size,
 }) => {
   if (type === 'link' && to) {
     return (
@@ -267,6 +277,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         block={block}
         type={type}
         style={style}
+        size={size}
       >
         <Link to={to}>
           {iconLeft}&nbsp;{children}&nbsp;{iconRight}
@@ -285,6 +296,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         block={block}
         disabled={disabled || isLoading}
         style={style}
+        size={size}
       >
         {isLoading && <LoadingSpinner />}
         {iconLeft}&nbsp;{children}&nbsp;{iconRight}

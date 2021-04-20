@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { UserType } from '@common/user';
 import { textColorLight } from '@styles/color';
+import { halfSpacer } from '@styles/size';
 import { FlexContainer, Avatar } from '.';
 import { AvatarProps } from './Avatar';
 
@@ -15,6 +16,7 @@ type UserMediaObjectProps = {
 
 const UserContent = styled.div`
   flex: 1;
+  margin-right: ${halfSpacer};
 `;
 
 const MutedText = styled.small`
@@ -28,7 +30,7 @@ const UserMediaObject: FunctionComponent<UserMediaObjectProps> = ({
   showSecondaryContent,
 }) => {
   return (
-    <FlexContainer justifyContent="flex-start">
+    <FlexContainer justifyContent="flex-start" flexWrap="nowrap">
       <Avatar
         src={user.photoURL}
         gravatarEmail={user.email}
@@ -36,7 +38,7 @@ const UserMediaObject: FunctionComponent<UserMediaObjectProps> = ({
         size={avatarSize || 'sm'}
       />
       <UserContent>
-        <div>{user.username}</div>
+        <div style={{ wordBreak: 'break-all' }}>{user.username}</div>
         {showSecondaryContent && <MutedText>{user.displayName}</MutedText>}
       </UserContent>
       {action}

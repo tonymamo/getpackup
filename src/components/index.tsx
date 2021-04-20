@@ -3,17 +3,21 @@ import AutoSave from './AutoSave';
 import Avatar, { StackedAvatars } from './Avatar';
 import BlogRoll from './BlogRoll';
 import Box from './Box';
+import Breadcrumbs from './Breadcrumbs';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
 import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
+import DayPickerInput from './DayPickerInput';
 import DropdownMenu from './DropdownMenu';
 import ErrorBoundary from './ErrorBoundary';
 import AvatarUpload from './AvatarUpload';
+import EditableInput from './EditableInput';
 import FeedbackModal from './FeedbackModal';
 import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
+import FormErrors from './FormErrors';
 import GlobalAlerts from './GlobalAlerts';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
@@ -32,7 +36,7 @@ import PackingListCategory from './PackingListCategory';
 import PackingListItem from './PackingListItem';
 import PackingListNavigation, { packingListNavigationHeight } from './PackingListNavigation';
 import PageContainer from './PageContainer';
-import Pill from './Pill';
+import Pill, { PillWrapper } from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 import PrivateRoute from './PrivateRoute';
 import RelatedBlogPost from './RelatedBlogPost';
@@ -42,6 +46,7 @@ import Seo from './Seo';
 import Share from './Share';
 import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
+import StaticMapImage from './StaticMapImage';
 import Table from './Table';
 import Testimonial from './Testimonial';
 import TripCard from './TripCard';
@@ -52,19 +57,23 @@ export {
   Alert,
   AutoSave,
   Avatar,
+  AvatarUpload,
   BlogRoll,
   Box,
+  Breadcrumbs,
   Button,
   ClientOnly,
   Column,
   Content,
   DropdownMenu,
+  DayPickerInput,
   ErrorBoundary,
-  AvatarUpload,
+  EditableInput,
   FeedbackModal,
   FirebaseAuthWrapper,
   FlexContainer,
   Footer,
+  FormErrors,
   GlobalAlerts,
   Heading,
   HeroImage,
@@ -87,6 +96,7 @@ export {
   packingListNavigationHeight,
   PageContainer,
   Pill,
+  PillWrapper,
   PreviewCompatibleImage,
   PrivateRoute,
   RelatedBlogPost,
@@ -97,6 +107,7 @@ export {
   SignupForm,
   SiteMetadata,
   StackedAvatars,
+  StaticMapImage,
   Table,
   Testimonial,
   TripCard,

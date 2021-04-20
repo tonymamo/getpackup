@@ -38,7 +38,6 @@ const renderShadow = (zindex: number) => {
 };
 
 const StyledBox = styled.div<BoxProps>`
-  /* border-radius: ${borderRadius}; */
   padding: ${baseSpacer};
   margin-bottom: ${baseSpacer};
   border: ${baseBorderStyle};

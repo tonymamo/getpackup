@@ -18,7 +18,7 @@ import { baseBorderStyle } from '@styles/mixins';
 const CssReset = createGlobalStyle`
   html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
   body{margin:0}
-  article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}
+  article,aside,details,figcaption,figure,footer,header,main,menu,nav,section{display:block}
   audio,canvas,progress,video{display:inline-block;vertical-align:baseline}
   audio:not([controls]){display:none;height:0}[hidden],template{display:none}
   a{background-color:transparent}
@@ -294,6 +294,10 @@ const CssReset = createGlobalStyle`
   .tooltip.customTooltip {
     white-space: nowrap;
     padding: ${halfSpacer};
+  }
+
+  .truncatedText {
+    margin: 0;
   }
 `;
 

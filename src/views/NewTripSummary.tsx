@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector } from 'react-redux';
-import addDays from 'date-fns/addDays';
 
 import { Heading, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
@@ -18,12 +17,15 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
     name: '',
     description: '',
     startingPoint: '',
-    startDate: addDays(new Date(), 1),
-    endDate: addDays(new Date(), 2),
+    startDate: undefined,
+    endDate: undefined,
     timezoneOffset: new Date().getTimezoneOffset(),
     tripMembers: [],
     tags: [],
     tripLength: 1,
+    season: undefined,
+    lat: 0,
+    lng: 0,
   };
 
   return (
@@ -31,7 +33,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
       <Heading altStyle as="h2">
         Create New Trip
       </Heading>
-      <TripSummaryForm initialValues={initialValues} type="new" />
+      <TripSummaryForm initialValues={initialValues} />
     </PageContainer>
   );
 };

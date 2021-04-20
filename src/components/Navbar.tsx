@@ -3,14 +3,7 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
-import {
-  // FaBullhorn,
-  FaCalendar,
-  FaChevronLeft,
-  FaSearch,
-  FaShoppingCart,
-  FaUserLock,
-} from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaSearch, FaShoppingCart, FaUserLock } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
@@ -43,6 +36,8 @@ const StyledNavbar = styled.header`
   line-height: 64px;
   padding-top: env(safe-area-inset-top);
   z-index: ${zIndexNavbar};
+  display: flex;
+  align-items: center;
 
   & a,
   & a:hover,
@@ -220,7 +215,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <Helmet onChangeClientState={onHelmetChange} />
       <PageContainer>
-        <FlexContainer justifyContent="space-between" alignItems="center" height="100%">
+        <FlexContainer justifyContent="space-between" alignItems="center">
           {!size.isSmallScreen && auth.isLoaded && (
             <Heading noMargin>
               <Link to={isAuthenticated ? '/app/trips' : '/'}>
@@ -251,13 +246,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               {truncatedPageTitle}
             </Heading>
           )}
-          {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
-            <IconLinkWrapper>
-              {/* <Link to="/feedback">
-                <FaBullhorn />
-              </Link> */}
-            </IconLinkWrapper>
-          )}
+          {isAuthenticated && size.isSmallScreen && auth.isLoaded && <IconLinkWrapper />}
           {size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <StyledMenuToggle ref={hamburgerButton}>
               <Hamburger
@@ -320,9 +309,6 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   <FaUserLock />
                 </Link>
               )}
-              {/* <Link to="/feedback" getProps={isPartiallyActive}>
-                <FaBullhorn />
-              </Link> */}
               {loggedInUser && loggedInUser.length > 0 && (
                 <Link to="/app/profile" getProps={isPartiallyActive}>
                   <Avatar

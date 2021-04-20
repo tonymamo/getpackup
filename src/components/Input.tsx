@@ -4,7 +4,7 @@ import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 import { FaEye, FaEyeSlash, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
 import Select, { CommonProps } from 'react-select';
 import AsyncSelect from 'react-select/async';
-import Geosuggest, { QueryType } from 'react-geosuggest';
+import Geosuggest, { QueryType, Suggest } from 'react-geosuggest';
 import 'react-geosuggest/module/geosuggest.css';
 import NumericInput from 'react-numeric-input';
 
@@ -145,7 +145,7 @@ export const InputWrapper = styled.div`
   }
 `;
 
-const StyledGeosuggest = styled(Geosuggest)`
+const StyledGeosuggest = styled(Geosuggest)<any>`
   &.geosuggest {
     position: relative;
     width: 100%;
@@ -542,19 +542,28 @@ const Input: FunctionComponent<InputProps> = (props) => {
         <>
           <StyledGeosuggest
             types={props.geosuggestTypes || []}
-            onSuggestSelect={(suggest: { label: string }) =>
-              suggest && suggest.label
+            onSuggestSelect={(suggest: Suggest) => {
+              if (suggest && suggest.location) {
+                props.setFieldValue('lat', suggest.location?.lat);
+                props.setFieldValue('lng', suggest.location?.lng);
+              }
+
+              return suggest && suggest.label
                 ? props.setFieldValue(field.name, suggest.label)
-                : props.setFieldValue(field.name, '')
-            }
+                : props.setFieldValue(field.name, '');
+            }}
             id={props.name}
             {...field}
             {...props}
             {...meta}
+            // https://github.com/ubilabs/react-geosuggest#placedetailfields
+            // don't return any place fields to keep biling costs down
+            placeDetailFields={[]}
+            onBlur={() => props.setFieldTouched(props.name)}
             minLength={3}
             label=""
           />
-          <p style={{ margin: 0, textAlign: 'right' }}>
+          <p style={{ margin: 0, float: 'right' }}>
             <img src={poweredByGoogle} alt="powered by Google" style={{ height: 18 }} />
           </p>
         </>

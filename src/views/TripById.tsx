@@ -8,9 +8,9 @@ import { Seo, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
 import { TripType } from '@common/trip';
 import PackingList from '@views/PackingList';
-import TripSummary from '@views/TripSummary';
+import TripDetails from '@views/TripDetails';
+import TripParty from '@views/TripParty';
 import EditPackingListItem from '@views/EditPackingListItem';
-import EditTripSummary from '@views/EditTripSummary';
 import { UserType } from '@common/user';
 
 type TripByIdProps = {
@@ -60,7 +60,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     };
   }, []);
 
-  if (!activeTrip || !props.id) {
+  if (!props.id) {
     return null;
   }
 
@@ -77,8 +77,8 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             trip={activeTrip}
             loggedInUser={props.loggedInUser}
           />
-          <TripSummary path="/summary" activeTrip={activeTrip} />
-          <EditTripSummary path="/summary/edit" activeTrip={activeTrip} />
+          <TripDetails path="/details" activeTrip={activeTrip} />
+          <TripParty path="/party" activeTrip={activeTrip} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
         </Router>
       </PageContainer>

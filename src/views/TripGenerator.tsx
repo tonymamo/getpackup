@@ -17,7 +17,6 @@ import {
   gearListAccommodations,
   gearListOtherConsiderations,
   gearListKeys,
-  allGearListItems,
   gearListCampKitchen,
 } from '@utils/gearListItemEnum';
 import { TripType } from '@common/trip';
@@ -76,11 +75,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
 
           getValues(values).forEach((val) => {
             matches.push(...gear.filter((item: GearItem) => item[val] === true));
-            tagMatches.push(
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              allGearListItems.find((item: { name: string; label: string }) => item.name === val)
-                ?.label!
-            );
+            // for each activity selected, add a tag to the trip
+            gearListActivities
+              .filter((item) => item.name === val)
+              .map((i) => tagMatches.push(i.label));
           });
 
           const generatedPackingList = uniqBy(matches, 'name').map((item: GearItem) => {

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, Fragment, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { FaMapMarkerAlt, FaCalendar, FaPencilAlt, FaTrash } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCalendar, FaTrash } from 'react-icons/fa';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
@@ -15,11 +15,9 @@ import {
   Box,
   Pill,
   Button,
-  DropdownMenu,
   Modal,
   Row,
   Column,
-  PackingListNavigation,
   packingListNavigationHeight,
 } from '@components';
 import { halfSpacer } from '@styles/size';
@@ -29,7 +27,7 @@ import { UserType } from '@common/user';
 import { addAlert } from '@redux/ducks/globalAlerts';
 
 type TripSummaryProps = {
-  activeTrip: TripType;
+  activeTrip?: TripType;
 } & RouteComponentProps;
 
 const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
@@ -69,7 +67,6 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
 
   return (
     <>
-      <PackingListNavigation tripId={activeTrip.tripId} />
       <Box style={{ marginTop: packingListNavigationHeight }}>
         <FlexContainer justifyContent="space-between" alignItems="flex-start" flexWrap="nowrap">
           {activeTrip ? (
@@ -78,28 +75,6 @@ const TripSummary: FunctionComponent<TripSummaryProps> = ({ activeTrip }) => {
             </Heading>
           ) : (
             <Skeleton width={200} />
-          )}
-          {activeTrip && (
-            <DropdownMenu>
-              <Button
-                type="link"
-                color="text"
-                to={`/app/trips/${activeTrip.tripId}/summary/edit`}
-                iconLeft={<FaPencilAlt />}
-                block
-              >
-                Edit
-              </Button>
-              <Button
-                type="button"
-                color="text"
-                block
-                onClick={() => setModalIsOpen(true)}
-                iconLeft={<FaTrash />}
-              >
-                Delete
-              </Button>
-            </DropdownMenu>
           )}
         </FlexContainer>
         <HorizontalRule compact />

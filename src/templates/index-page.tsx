@@ -344,7 +344,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Row>
           <BlogRoll posts={props.posts} />
           <Button type="link" to="/blog/2" iconRight={<FaChevronRight />} color="secondary">
-            See More
+            Previous Posts
           </Button>
         </PageContainer>
       </Section>
