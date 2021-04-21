@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
@@ -26,13 +26,92 @@ type TripGeneratorProps = {
   id?: string; // reach router param
 } & RouteComponentProps;
 
+type FormValues = { [key: string]: boolean };
+
+const initialValues: { [key: string]: boolean } = {};
+
+const usePersonalGear = () => {
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const fetchedMasterGear = useSelector((state: RootState) => state.firestore.ordered.gear);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const fetchedGearClosetAdditions = useSelector(
+    (state: RootState) => state.firestore.ordered.gearClosetAdditions
+  );
+
+  useFirestoreConnect([
+    { collection: 'gear' },
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearClosetAdditions',
+      doc: auth.uid,
+      subcollections: [{ collection: 'additions' }],
+    },
+  ]);
+
+  const masterGear = fetchedMasterGear ?? [];
+  const gearClosetRemovals = fetchedGearCloset?.[0]?.removals ?? [];
+  const gearClosetAdditions = fetchedGearClosetAdditions ?? [];
+
+  // Only regenerate this data if the master gear, gear closet removals, or gear closet additions change
+  const personalGear = useMemo(() => {
+    // Shallow clone the gear list, so we don't modify the master gear list
+    let customizedGear = [...masterGear];
+    gearClosetRemovals.forEach((itemToRemove: string) => {
+      // Remove in-place, it's okay because customizedGear is a clone
+      const removeIndex = customizedGear.findIndex((item) => item.id === itemToRemove);
+      customizedGear.splice(removeIndex, 1);
+    });
+
+    return customizedGear.concat(gearClosetAdditions);
+  }, [masterGear, gearClosetRemovals, gearClosetAdditions]);
+
+  return personalGear;
+};
+
+const generateGearList = (values: FormValues, gear: any) => {
+  const getValues = (list: typeof initialValues) =>
+    Object.entries(list)
+      .filter((entry) => entry[1])
+      .map((key) => key[0]);
+
+  const matches: Array<GearItem> = [];
+  const tagMatches: Array<string> = [];
+
+  getValues(values).forEach((val) => {
+    matches.push(...gear.filter((item: GearItem) => item[val] === true));
+    tagMatches.push(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      allGearListItems.find((item: { name: string; label: string }) => item.name === val)?.label!
+    );
+  });
+
+  const gearList = uniqBy(matches, 'name').map((item: GearItem) => {
+    return {
+      name: item.name,
+      isPacked: false,
+      category: item.category,
+      isEssential: Boolean(item.essential),
+      quantity: 1,
+      description: '',
+      created: new Date(),
+    };
+  });
+
+  return { gearList, tagMatches };
+};
+
 const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
-  const gear = useSelector((state: RootState) => state.firestore.ordered.gear);
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
+  const personalGear = usePersonalGear();
+
   useFirestoreConnect([
-    { collection: 'gear' },
     {
       collection: 'trips',
       doc: props.id,
@@ -45,14 +124,60 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const initialValues: { [key: string]: boolean } = {};
-
   gearListKeys.forEach((item) => {
     initialValues[item] = false;
   });
 
   const activeTrip: TripType | undefined =
     activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
+
+  const onSubmit = (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
+    setIsLoading(true);
+    const { gearList, tagMatches } = generateGearList(values, personalGear);
+
+    const promises: Array<Promise<any>> = [];
+
+    promises.push(
+      firebase
+        .firestore()
+        .collection('trips')
+        .doc(props.id)
+        .update({
+          tags: [...(activeTrip?.tags || []), ...tagMatches],
+        })
+    );
+
+    gearList.forEach((item) => {
+      promises.push(
+        firebase
+          .firestore()
+          .collection('trips')
+          .doc(props.id)
+          .collection('packing-list')
+          .add(item)
+      );
+    });
+
+    Promise.all(promises)
+      .then(() => {
+        navigate(`/app/trips/${props.id}`);
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: `Successfully generated trip based on selections`,
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+    setSubmitting(false);
+  };
 
   // TODO check if generator has been completed already in case someone tries to navigate back using
   // browser controls, and either initialize fields with selections and make sure not to overwrite
@@ -61,84 +186,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   return (
     <PageContainer>
       <Seo title="Trip Generator" />
-      <Formik
-        validateOnMount
-        initialValues={initialValues}
-        onSubmit={(values, { setSubmitting }) => {
-          setIsLoading(true);
-          const getValues = (list: typeof initialValues) =>
-            Object.entries(list)
-              .filter((entry) => entry[1])
-              .map((key) => key[0]);
-
-          const matches: Array<GearItem> = [];
-          const tagMatches: Array<string> = [];
-
-          getValues(values).forEach((val) => {
-            matches.push(...gear.filter((item: GearItem) => item[val] === true));
-            tagMatches.push(
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              allGearListItems.find((item: { name: string; label: string }) => item.name === val)
-                ?.label!
-            );
-          });
-
-          const generatedPackingList = uniqBy(matches, 'name').map((item: GearItem) => {
-            return {
-              name: item.name,
-              isPacked: false,
-              category: item.category,
-              isEssential: Boolean(item.essential),
-              quantity: 1,
-              description: '',
-              created: new Date(),
-            };
-          });
-
-          const promises: Array<Promise<any>> = [];
-
-          promises.push(
-            firebase
-              .firestore()
-              .collection('trips')
-              .doc(props.id)
-              .update({
-                tags: [...(activeTrip?.tags || []), ...tagMatches],
-              })
-          );
-
-          generatedPackingList.forEach((item) => {
-            promises.push(
-              firebase
-                .firestore()
-                .collection('trips')
-                .doc(props.id)
-                .collection('packing-list')
-                .add(item)
-            );
-          });
-
-          Promise.all(promises)
-            .then(() => {
-              navigate(`/app/trips/${props.id}`);
-              dispatch(
-                addAlert({
-                  type: 'success',
-                  message: `Successfully generated trip based on selections`,
-                })
-              );
-            })
-            .catch((err) => {
-              dispatch(
-                addAlert({
-                  type: 'danger',
-                  message: err.message,
-                })
-              );
-            });
-          setSubmitting(false);
-        }}
-      >
+      <Formik<FormValues> validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting, isValid, values }) => (
           <Form>
             <SwipeableViews index={activeTab} onChangeIndex={(i) => setActiveTab(i)}>
