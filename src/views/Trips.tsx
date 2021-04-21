@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
-import { useFirestoreConnect } from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
 import { Row, Column, Heading, Box, Button, Seo, PageContainer, TripCard } from '@components';
@@ -87,23 +87,39 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         <PageContainer>{upcomingTrips.map((trip) => renderTrip(trip))}</PageContainer>
       ) : (
         <PageContainer>
-          <Box>
-            {trips && trips.length === 0 ? (
-              <>
-                Looks like it&apos;s your first time here,{' '}
-                <Link to="/app/trips/new">
-                  let&apos;s get started! <FaArrowRight />
-                </Link>
-              </>
-            ) : (
-              <>
-                No upcoming trips planned currently,{' '}
-                <Link to="/app/trips/new">
-                  create one now! <FaArrowRight />
-                </Link>
-              </>
-            )}
-          </Box>
+          {isLoaded(trips) && trips && trips.length === 0 ? (
+            <Box>
+              Looks like it&apos;s your first time here,{' '}
+              <Link to="/app/trips/new">
+                let&apos;s get started! <FaArrowRight />
+              </Link>
+            </Box>
+          ) : (
+            <>
+              {!isLoaded(trips) ? (
+                <>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Box key={`loadingTrip${index}`}>
+                      <TripCard
+                        trip={undefined}
+                        loggedInUser={loggedInUser}
+                        showDescription
+                        enableNavigation
+                      />
+                    </Box>
+                  ))}
+                </>
+              ) : (
+                <Box>
+                  No upcoming trips planned currently,{' '}
+                  <Link to="/app/trips/new">
+                    create one now! <FaArrowRight />
+                  </Link>
+                </Box>
+              )}
+            </>
+          )}
         </PageContainer>
       )}
 

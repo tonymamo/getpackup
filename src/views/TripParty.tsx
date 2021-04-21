@@ -296,7 +296,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                 </p>
                 <Alert
                   type="info"
-                  message="Note: Collaborative trips are coming soon, but still a work in progress, so Trip Party members will not be notified or see this trip yet on their list of trips."
+                  message="Note: Collaborative trips are coming soon, so Trip Party members will not be notified or see this trip yet on their list of trips."
                 />
                 <div
                   style={{

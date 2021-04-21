@@ -15,6 +15,7 @@ import {
   Seo,
   StaticMapImage,
   Pill,
+  Alert,
 } from '@components';
 import { TripType, TripFormType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -152,7 +153,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip }) => {
                         isLoading={isLoading}
                         value={values.startingPoint}
                       >
-                        {typeof window !== 'undefined' && window.google && (
+                        {typeof window !== 'undefined' && window.google ? (
                           <Field
                             as={Input}
                             type="geosuggest"
@@ -166,12 +167,17 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip }) => {
                             setFieldTouched={setFieldTouched}
                             {...rest}
                           />
+                        ) : (
+                          <Alert
+                            type="info"
+                            message="Failed to load Google Maps, please refresh the page to try again"
+                          />
                         )}
                       </EditableInput>
                       <EditableInput
                         label="Description"
                         isLoading={isLoading}
-                        value={values.description}
+                        value={values.description || 'No description provided'}
                       >
                         <Field
                           as={Input}
@@ -185,11 +191,15 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip }) => {
                         label="Activities"
                         isLoading={isLoading}
                         value={
-                          <>
-                            {activeTrip.tags.map((tag: string) => (
-                              <Pill key={`${tag}tag`} text={tag} color="primary" />
-                            ))}
-                          </>
+                          activeTrip.tags.length > 0 ? (
+                            <>
+                              {activeTrip.tags.map((tag: string) => (
+                                <Pill key={`${tag}tag`} text={tag} color="primary" />
+                              ))}
+                            </>
+                          ) : (
+                            'No activities selected'
+                          )
                         }
                       >
                         <Field
