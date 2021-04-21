@@ -2,7 +2,6 @@ import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import lodash from 'lodash';
 import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
 
 import { brandPrimary, textColor, white } from '@styles/color';
 import {
@@ -13,7 +12,7 @@ import {
   threeQuarterSpacer,
 } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
-import { PackingListCategory, TripCard } from '@components';
+import { Alert, Box, Heading, PackingListCategory, TripCard } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
@@ -63,13 +62,11 @@ const Tab = styled.div`
   border-bottom: 2px solid;
   border-bottom-color: ${(props: { active: boolean }) =>
     props.active ? brandPrimary : 'transparent'};
-
-  & a {
-    font-size: ${fontSizeH5};
-    color: ${(props) => (props.active ? brandPrimary : textColor)};
-    display: block;
-    padding: ${threeQuarterSpacer} ${baseSpacer};
-  }
+  cursor: pointer;
+  font-size: ${fontSizeH5};
+  color: ${(props) => (props.active ? brandPrimary : textColor)};
+  display: block;
+  padding: ${threeQuarterSpacer} ${baseSpacer};
 `;
 
 const PackingList: FunctionComponent<PackingListProps> = ({
@@ -89,8 +86,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     groupedCategories.push(...allOtherEntries);
   }
 
-  const [isSticky, setSticky] = useState(false);
+  const [tabIndex, setTabIndex] = useState(0);
 
+  const [isSticky, setSticky] = useState(false);
   const stickyRef = useRef<HTMLDivElement>(null);
 
   // 64 is height of navbar, plus grab the safe-area-top (sat) from :root css
@@ -111,54 +109,73 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   }, []);
 
   // we only need tabs if there are shared items, so hide if not
-  const showTabs = trip && trip.tripMembers.length > 0;
+  const sharedTrip = trip && trip.tripMembers.length > 0;
 
   return (
     <>
       <TripCard trip={trip} loggedInUser={loggedInUser} showTags />
       <StickyWrapper ref={stickyRef}>
-        {showTabs && (
+        {sharedTrip && (
           <Tabs isSticky={isSticky}>
-            <Tab active>
-              <Link to={`/app/trips/${tripId}`}>
-                <FaRegCheckSquare />
-              </Link>
+            <Tab active={tabIndex === 0} onClick={() => setTabIndex(0)}>
+              <FaRegCheckSquare title="Personal Checklist" />
             </Tab>
-            <Tab active={false}>
-              <Link to={`/app/trips/${tripId}/summary`}>
-                <FaUsers />
-              </Link>
+            <Tab active={tabIndex === 1} onClick={() => setTabIndex(1)}>
+              <FaUsers title="Shared Checklist" />
             </Tab>
           </Tabs>
         )}
       </StickyWrapper>
       <div
-        style={{ paddingTop: isSticky && showTabs ? navbarHeightWithSafeAreaOffset : baseSpacer }}
+        style={{ paddingTop: isSticky && sharedTrip ? navbarHeightWithSafeAreaOffset : baseSpacer }}
       >
         {trip ? (
           <>
-            {groupedCategories.map(
-              ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
-                const sortedItems = packingListItems.sort((a, b) => {
-                  // put essentials at the top, and sort by created timestamp (newest goes last)
-                  if (!a.isEssential && !b.isEssential) {
-                    if (a.created.seconds === b.created.seconds) {
-                      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-                    }
-                    return b.created.toDate() > a.created.toDate() ? -1 : 1;
-                  }
-                  return a.isEssential > b.isEssential ? -1 : 1;
-                });
+            {tabIndex === 0 && (
+              <>
+                {sharedTrip && (
+                  <Heading as="h4" altStyle uppercase>
+                    Personal Items
+                  </Heading>
+                )}
+                {groupedCategories.map(
+                  ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
+                    const sortedItems = packingListItems.sort((a, b) => {
+                      // put essentials at the top, and sort by created timestamp (newest goes last)
+                      if (!a.isEssential && !b.isEssential) {
+                        if (a.created.seconds === b.created.seconds) {
+                          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                        }
+                        return b.created.toDate() > a.created.toDate() ? -1 : 1;
+                      }
+                      return a.isEssential > b.isEssential ? -1 : 1;
+                    });
 
-                return (
-                  <PackingListCategory
-                    key={categoryName}
-                    categoryName={categoryName}
-                    sortedItems={sortedItems}
-                    tripId={tripId}
-                  />
-                );
-              }
+                    return (
+                      <PackingListCategory
+                        key={categoryName}
+                        categoryName={categoryName}
+                        sortedItems={sortedItems}
+                        tripId={tripId}
+                      />
+                    );
+                  }
+                )}
+              </>
+            )}
+            {tabIndex === 1 && sharedTrip && (
+              <>
+                <Heading as="h4" altStyle uppercase>
+                  Shared Items
+                </Heading>
+                <Box>
+                  <Alert type="info" message="Shared trip items coming soon!" />
+                  <p>
+                    Here you will be able to divide up items and assign roles to who is bringing
+                    what.
+                  </p>
+                </Box>
+              </>
             )}
           </>
         ) : (
