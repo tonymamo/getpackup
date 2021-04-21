@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import lodash from 'lodash';
 import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
+import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
 
 import { brandPrimary, textColor, white } from '@styles/color';
 import {
@@ -17,7 +18,6 @@ import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import getSafeAreaInset from '@utils/getSafeAreaInset';
-import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
 import { fontSizeH5 } from '@styles/typography';
 
 type PackingListProps = {
