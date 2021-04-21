@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useRef } from 'react';
 import styled from 'styled-components';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -87,11 +87,17 @@ const DayPickerInput: FunctionComponent<DayPickerInputProps> = ({
     return !from || isBeforeFirstDay || isRangeSelected;
   };
 
+  const inputRef = useRef<DayPicker>();
+
   const handleDayClick = (day: Date) => {
     const newRange = DateUtils.addDayToRange(day, {
       from: day,
       to: toDate as Date,
     });
+
+    if (inputRef && inputRef.current) {
+      inputRef.current.setState({ month: day });
+    }
 
     setFieldTouched('startDate');
     setFieldTouched('endDate');
@@ -125,13 +131,14 @@ const DayPickerInput: FunctionComponent<DayPickerInputProps> = ({
       <DayPickerInputWrapper>
         <DayPicker
           showOutsideDays
-          month={values.startDate ? new Date(values.startDate) : new Date()}
+          initialMonth={initialValues.startDate ? new Date(initialValues.startDate) : new Date()}
           numberOfMonths={2}
           modifiers={{ start: fromDate, end: toDate }}
           disabledDays={{ before: new Date() }}
           selectedDays={[fromDate, { from: fromDate as Date, to: enteredTo as Date }]}
           onDayClick={(day: Date) => handleDayClick(day)}
           onDayMouseEnter={handleDayMouseEnter}
+          ref={inputRef}
         />
         {!fromDate && !toDate && (
           <Alert type="info" message="Please select the first day of the trip." />
@@ -151,6 +158,11 @@ const DayPickerInput: FunctionComponent<DayPickerInputProps> = ({
               setFromDate(initialValues.startDate as Date);
               setToDate(initialValues.endDate as Date);
               setEnteredTo(initialValues.endDate as Date);
+              setFieldValue('startDate', initialValues.startDate);
+              setFieldValue('endDate', initialValues.endDate);
+              if (inputRef && inputRef.current) {
+                inputRef.current.showMonth(initialValues.startDate as Date);
+              }
             }}
           >
             Reset

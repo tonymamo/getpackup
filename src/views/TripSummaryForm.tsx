@@ -19,6 +19,7 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
 import { TripType } from '@common/trip';
 import getSeason from '@utils/getSeason';
+import trackEvent from '@utils/trackEvent';
 
 type ValuesType = Omit<TripType, 'startDate' | 'endDate'> & {
   startDate: string | Date | undefined;
@@ -51,6 +52,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         docRef.update({
           tripId: docRef.id,
         });
+        trackEvent('New Trip Submit Successful', { values: { ...values } });
         navigate(`/app/trips/${docRef.id}/generator`);
         dispatch(
           addAlert({
@@ -60,6 +62,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         );
       })
       .catch((err) => {
+        trackEvent('New Trip Submit Unsuccessful', { values: { ...values }, error: err });
         dispatch(
           addAlert({
             type: 'danger',
@@ -90,6 +93,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
             ...values,
             season: getSeason(values.lat, values.lng, values.startDate as string),
           };
+          trackEvent('New Trip Submit Button Clicked', valuesWithSeason);
 
           addNewTrip(valuesWithSeason);
 
@@ -104,6 +108,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
           dirty,
           errors,
           setFieldTouched,
+          touched,
           ...rest
         }) => (
           <Form autoComplete="off">
@@ -151,6 +156,15 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 color="dangerOutline"
                 rightSpacer
                 iconLeft={<FaChevronLeft />}
+                onClick={() =>
+                  trackEvent('New Trip Form Cancelled', {
+                    values: { ...values },
+                    errors: { ...errors },
+                    touched: { ...touched },
+                    dirty,
+                    isValid,
+                  })
+                }
               >
                 Cancel
               </Button>

@@ -1,19 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
-import {
-  FaRegCalendar,
-  FaMapMarkerAlt,
-  FaTrash,
-  FaChevronLeft,
-  FaInfoCircle,
-  FaRegCheckSquare,
-  FaUsers,
-} from 'react-icons/fa';
+import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaChevronLeft } from 'react-icons/fa';
 import TextTruncate from 'react-text-truncate';
-import { Link, navigate } from 'gatsby';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'gatsby';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
-import { useFirebase } from 'react-redux-firebase';
 
 import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
@@ -34,7 +25,6 @@ import { baseAndAHalfSpacer, baseSpacer, doubleSpacer, halfSpacer } from '@style
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
-import { addAlert } from '@redux/ducks/globalAlerts';
 import TripDeleteModal from '@views/TripDeleteModal';
 import { fontSizeSmall } from '@styles/typography';
 
@@ -71,38 +61,9 @@ const TripCard: FunctionComponent<TripCardProps> = ({
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const firebase = useFirebase();
-  const dispatch = useDispatch();
   const size = useWindowSize();
 
   const numberOfAvatarsToShow = 4;
-
-  const deleteTrip = () => {
-    if (trip) {
-      firebase
-        .firestore()
-        .collection('trips')
-        .doc(trip.tripId)
-        .delete()
-        .then(() => {
-          navigate('/app/trips');
-          dispatch(
-            addAlert({
-              type: 'success',
-              message: 'Successfully deleted trip',
-            })
-          );
-        })
-        .catch((err) => {
-          dispatch(
-            addAlert({
-              type: 'danger',
-              message: err.message,
-            })
-          );
-        });
-    }
-  };
 
   return (
     <StyledTripWrapper>
@@ -228,18 +189,9 @@ const TripCard: FunctionComponent<TripCardProps> = ({
                     tripId={trip.tripId}
                   />
                   <DropdownMenu>
-                    <Link to={`/app/trips/${trip.tripId}`}>
-                      <FaRegCheckSquare /> Packing List
-                    </Link>
-                    <Link to={`/app/trips/${trip.tripId}/details`}>
-                      <FaInfoCircle /> Details
-                    </Link>
-                    <Link to={`/app/trips/${trip.tripId}/party`}>
-                      <FaUsers /> Party
-                    </Link>
-                    <Link to="/" onClick={() => deleteTrip()}>
+                    <button onClick={() => setModalIsOpen(true)} type="button">
                       <FaTrash /> Delete
-                    </Link>
+                    </button>
                   </DropdownMenu>
                 </>
               ) : (
@@ -290,14 +242,18 @@ const TripCard: FunctionComponent<TripCardProps> = ({
         <>
           {trip ? (
             <>
-              <HorizontalRule compact />
-              <TextTruncate
-                line={1}
-                element="p"
-                truncateText="…"
-                text={trip.description}
-                containerClassName="truncatedText"
-              />
+              {trip.description !== '' && (
+                <>
+                  <HorizontalRule compact />
+                  <TextTruncate
+                    line={1}
+                    element="p"
+                    truncateText="…"
+                    text={trip.description || 'No description provided'}
+                    containerClassName="truncatedText"
+                  />
+                </>
+              )}
             </>
           ) : (
             <Skeleton count={1} />

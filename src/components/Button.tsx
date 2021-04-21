@@ -278,6 +278,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         type={type}
         style={style}
         size={size}
+        onClick={onClick} // so we can track analytics if passed in on Button Links
       >
         <Link to={to}>
           {iconLeft}&nbsp;{children}&nbsp;{iconRight}

@@ -2,7 +2,7 @@ import React, { useState, FunctionComponent, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { FaEllipsisH } from 'react-icons/fa';
 
-import { textColor, white, borderColor, brandPrimary } from '@styles/color';
+import { textColor, white, borderColor, brandPrimary, offWhite } from '@styles/color';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import {
   baseAndAHalfSpacer,
@@ -55,17 +55,27 @@ const StyledDropdown = styled.div`
     margin-left: calc(-${halfSpacer} - 1px);
   }
 
-  & > a {
+  & > a,
+  & > button {
     color: ${textColor};
     padding: ${halfSpacer} ${baseSpacer};
     display: block;
     border-bottom: ${baseBorderStyle};
   }
 
+  & > button {
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    text-align: left;
+  }
+
   & > a:hover,
-  & > a:focus {
+  & > a:focus,
+  & > button:hover,
+  & > button:focus {
     color: ${brandPrimary};
-    background-color: ${white};
+    background-color: ${offWhite};
   }
 `;
 

@@ -10,6 +10,7 @@ import { RootState } from '@redux/ducks';
 import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
 import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
+import trackEvent from '@utils/trackEvent';
 
 type TripsProps = { loggedInUser?: UserType } & RouteComponentProps;
 
@@ -62,7 +63,13 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         <Row>
           <Column sm={4}>
             <p>
-              <Button type="link" to="/app/trips/new" iconLeft={<FaPlusCircle />} block>
+              <Button
+                type="link"
+                to="/app/trips/new"
+                iconLeft={<FaPlusCircle />}
+                block
+                onClick={() => trackEvent('New Trip Button clicked', { location: 'Trips Page' })}
+              >
                 New Trip
               </Button>
             </p>

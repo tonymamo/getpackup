@@ -44,7 +44,7 @@ type TripPartyProps = {
 
 const SearchWrapper = styled.div`
   position: relative;
-  margin: ${baseSpacer} 0;
+  margin-bottom: ${baseSpacer};
 `;
 
 const ScrollableHitsWrapper = styled.div`
