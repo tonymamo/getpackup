@@ -100,7 +100,7 @@ export default BlogIndexPage;
 export const blogIndexPageQuery = graphql`
   query BlogIndexPage($skip: Int!, $limit: Int!) {
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: { order: [DESC, DESC], fields: [frontmatter___featuredpost, frontmatter___date] }
       limit: $limit
       skip: $skip
       filter: { frontmatter: { templateKey: { eq: "blog-post" } } }

@@ -11,6 +11,7 @@ import {
 
 import { baseSpacer, borderRadius, doubleSpacer, halfSpacer } from '@styles/size';
 import { brandDanger, brandSuccess, brandInfo, white } from '@styles/color';
+import RelativeOrExternalLink from './RelativeOrExternalLink';
 
 export type AlertProps = {
   type: 'success' | 'danger' | 'info';
@@ -66,7 +67,7 @@ const AlertWrapper = styled.div`
   }
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(RelativeOrExternalLink)`
   color: ${white};
   margin-left: ${halfSpacer};
   border-bottom: 1px solid ${white};
@@ -101,7 +102,7 @@ const Alert: FunctionComponent<AlertProps> = (props) => (
   <AlertWrapper {...props}>
     {renderIcon(props.type)} {props.message}{' '}
     {props.callToActionLink && (
-      <StyledLink href={props.callToActionLink}>
+      <StyledLink to={props.callToActionLink}>
         {props.callToActionLinkText} <FaLongArrowAltRight />
       </StyledLink>
     )}

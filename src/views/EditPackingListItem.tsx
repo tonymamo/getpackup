@@ -124,7 +124,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 <Alert
                   type="info"
                   message="This item is considered one of the 10 Essential items."
-                  callToActionLink="https://www.mountaineers.org/blog/what-are-the-ten-essentials"
+                  callToActionLink="/blog/2021-03-29-the-ten-essentials/"
                   callToActionLinkText="Learn more"
                 />
               )}

@@ -68,9 +68,9 @@ export const LinksPageTemplate: FunctionComponent<LinksPageProps> = ({
             linksList.length > 0 &&
             linksList.map((link) => {
               const parts = link.thumbnail.split('upload/');
-              const transformedThumbnail = [
-                (parts[0], 'upload/w_200,h_200,c_fill/', parts[1]),
-              ].join('');
+              const transformedThumbnail = [parts[0], 'upload/w_200,h_200,c_fill/', parts[1]].join(
+                ''
+              );
               return (
                 <Row key={link.linkUrl}>
                   <Column md={8} mdOffset={2}>
