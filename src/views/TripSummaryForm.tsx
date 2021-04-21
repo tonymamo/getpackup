@@ -170,7 +170,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               </Button>
               <Button
                 type="submit"
-                disabled={isSubmitting || !isValid || isLoading || !dirty}
+                disabled={isSubmitting || !isValid || isLoading}
                 isLoading={isLoading}
                 color="success"
                 iconRight={<FaChevronRight />}

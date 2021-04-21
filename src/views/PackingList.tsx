@@ -88,25 +88,26 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   const [tabIndex, setTabIndex] = useState(0);
 
+  // TODO: extract all of the sticky header stuff out to its own reusable hook
   const [isSticky, setSticky] = useState(false);
   const stickyRef = useRef<HTMLDivElement>(null);
 
   // 64 is height of navbar, plus grab the safe-area-top (sat) from :root css
   const navbarHeightWithSafeAreaOffset = 64 + getSafeAreaInset('--sat');
 
-  const handleScroll = () => {
-    if (stickyRef && stickyRef.current) {
-      setSticky(stickyRef.current.getBoundingClientRect().top <= navbarHeightWithSafeAreaOffset);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      if (stickyRef && stickyRef.current) {
+        setSticky(stickyRef.current.getBoundingClientRect().top <= navbarHeightWithSafeAreaOffset);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', () => handleScroll);
     };
-  }, []);
+  }, [stickyRef, setSticky]);
 
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && trip.tripMembers.length > 0;

@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
-// import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
+// TODO: uncomment when we add collapsible sections
+// import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 // import { useSpring, animated } from 'react-spring';
 // import { useMeasure } from 'react-use';
-import Skeleton from 'react-loading-skeleton';
 
 import {
   Box,
@@ -11,6 +12,7 @@ import {
   Heading,
   PackingListItem,
   PackingListAddItem,
+  // TODO: uncomment when we add collapsible sections
   // IconWrapper,
 } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
@@ -33,6 +35,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
 }) => {
+  // TODO: uncomment when we add collapsible sections
   // const defaultHeight = 0;
 
   // Manages the collapsed state of the accordion

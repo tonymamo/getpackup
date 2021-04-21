@@ -11,6 +11,7 @@ export type TripType = {
   lat: number;
   lng: number;
   created?: firebase.firestore.Timestamp;
+  updated?: firebase.firestore.Timestamp;
   tripMembers: Array<string>;
   tags: Array<string>;
   tripLength: number;

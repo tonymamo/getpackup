@@ -36,7 +36,6 @@ import Skeleton from 'react-loading-skeleton';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import { white } from '@styles/color';
 import { sharedStyles } from '@components/Input';
-// import { sharedStyles } from '@components/Input';
 
 type TripPartyProps = {
   activeTrip?: TripType;
@@ -74,9 +73,6 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const algoliaClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID as string,
     process.env.GATSBY_ALGOLIA_SEARCH_API_KEY as string
-    // Algolia generic api keys for testing purposes, use with <InstantSearch index="instant_search" />
-    // 'latency',
-    // '6be0576ff61c053d5f9a3225e2a90f76'
   );
 
   const searchClient = {

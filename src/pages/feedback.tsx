@@ -89,7 +89,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                       });
                   }}
                 >
-                  {({ isSubmitting, isValid, dirty, values }) => (
+                  {({ isSubmitting, isValid, values }) => (
                     <Form
                       name="feedback"
                       method="post"
@@ -140,7 +140,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                         <Button
                           type="submit"
                           iconRight={<FaCaretRight />}
-                          disabled={isSubmitting || !isValid || !dirty}
+                          disabled={isSubmitting || !isValid}
                         >
                           Submit
                         </Button>

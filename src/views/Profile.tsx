@@ -76,7 +76,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
     }
     user
       .sendEmailVerification()
-      .then(function() {
+      .then(() => {
         setVerifySent(true);
         dispatch(
           addAlert({
@@ -150,7 +150,6 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                 isSubmitting,
                 isValid,
                 setFieldValue,
-                dirty,
                 values,
                 initialValues,
                 errors,
@@ -217,7 +216,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                     )}
                     <Field as={Input} type="text" name="website" label="Website" />
                     <Field as={Input} type="textarea" name="bio" label="Bio" />
-                    <Button type="submit" disabled={isSubmitting || !isValid || !dirty}>
+                    <Button type="submit" disabled={isSubmitting || !isValid}>
                       Save
                     </Button>
                   </Box>

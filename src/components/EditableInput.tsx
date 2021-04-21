@@ -46,7 +46,7 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = (props) => 
               );
             }}
             isLoading={props.isLoading}
-            disabled={isSubmitting || !isValid || props.isLoading || !dirty}
+            disabled={isSubmitting || !isValid || props.isLoading}
           >
             Save
           </Button>

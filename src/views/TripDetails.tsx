@@ -16,6 +16,9 @@ import {
   StaticMapImage,
   Pill,
   Alert,
+  Box,
+  HorizontalRule,
+  UserMediaObject,
 } from '@components';
 import { TripType, TripFormType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -25,12 +28,14 @@ import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
 import { gearListActivities } from '@utils/gearListItemEnum';
 import TripNavigation from '@views/TripNavigation';
+import { UserType } from '@common/user';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
+  loggedInUser?: UserType;
 } & RouteComponentProps;
 
-const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip }) => {
+const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedInUser }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -122,102 +127,131 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip }) => {
                 <Form autoComplete="off">
                   <Row>
                     <Column lg={8}>
-                      <EditableInput label="Trip Name" isLoading={isLoading} value={values.name}>
-                        <Field
-                          as={Input}
-                          type="text"
-                          name="name"
-                          label="Trip Name"
-                          validate={requiredField}
-                          required
-                          autoComplete="off"
-                          hiddenLabel
-                        />
-                      </EditableInput>
-                      <EditableInput
-                        label="Trip Date"
-                        isLoading={isLoading}
-                        value={formattedTripDates as string}
-                      >
-                        <DayPickerInput
-                          hiddenLabel
-                          label="Trip Date"
-                          initialValues={initialValues}
-                          values={values}
-                          setFieldValue={setFieldValue}
-                          setFieldTouched={setFieldTouched}
-                        />
-                      </EditableInput>
-                      <EditableInput
-                        label="Location"
-                        isLoading={isLoading}
-                        value={values.startingPoint}
-                      >
-                        {typeof window !== 'undefined' && window.google ? (
+                      <Box>
+                        <EditableInput label="Trip Name" isLoading={isLoading} value={values.name}>
                           <Field
                             as={Input}
-                            type="geosuggest"
-                            types={[]}
-                            name="startingPoint"
-                            label="Starting Location"
+                            type="text"
+                            name="name"
+                            label="Trip Name"
                             validate={requiredField}
                             required
+                            autoComplete="off"
                             hiddenLabel
+                          />
+                        </EditableInput>
+                        <EditableInput
+                          label="Trip Date"
+                          isLoading={isLoading}
+                          value={formattedTripDates as string}
+                        >
+                          <DayPickerInput
+                            hiddenLabel
+                            label="Trip Date"
+                            initialValues={initialValues}
+                            values={values}
                             setFieldValue={setFieldValue}
                             setFieldTouched={setFieldTouched}
+                          />
+                        </EditableInput>
+                        <EditableInput
+                          label="Location"
+                          isLoading={isLoading}
+                          value={values.startingPoint}
+                        >
+                          {typeof window !== 'undefined' && window.google ? (
+                            <Field
+                              as={Input}
+                              type="geosuggest"
+                              types={[]}
+                              name="startingPoint"
+                              label="Starting Location"
+                              validate={requiredField}
+                              required
+                              hiddenLabel
+                              setFieldValue={setFieldValue}
+                              setFieldTouched={setFieldTouched}
+                              {...rest}
+                            />
+                          ) : (
+                            <Alert
+                              type="info"
+                              message="Failed to load Google Maps, please refresh the page to try again"
+                            />
+                          )}
+                        </EditableInput>
+                        <EditableInput
+                          label="Description"
+                          isLoading={isLoading}
+                          value={values.description || 'No description provided'}
+                        >
+                          <Field
+                            as={Input}
+                            type="textarea"
+                            name="description"
+                            label="Description"
+                            hiddenLabel
+                          />
+                        </EditableInput>
+                        <EditableInput
+                          label="Activities"
+                          isLoading={isLoading}
+                          value={
+                            activeTrip.tags.length > 0 ? (
+                              <>
+                                {activeTrip.tags.map((tag: string) => (
+                                  <Pill key={`${tag}tag`} text={tag} color="primary" />
+                                ))}
+                              </>
+                            ) : (
+                              'No activities selected'
+                            )
+                          }
+                        >
+                          <Field
+                            as={Input}
+                            type="select"
+                            isMulti
+                            name="tags"
+                            label="Tags"
+                            hiddenLabel
+                            options={createOptionsFromArrayOfObjects(gearListActivities, 'label')}
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
                             {...rest}
                           />
-                        ) : (
-                          <Alert
-                            type="info"
-                            message="Failed to load Google Maps, please refresh the page to try again"
-                          />
-                        )}
-                      </EditableInput>
-                      <EditableInput
-                        label="Description"
-                        isLoading={isLoading}
-                        value={values.description || 'No description provided'}
-                      >
-                        <Field
-                          as={Input}
-                          type="textarea"
-                          name="description"
-                          label="Description"
-                          hiddenLabel
-                        />
-                      </EditableInput>
-                      <EditableInput
-                        label="Activities"
-                        isLoading={isLoading}
-                        value={
-                          activeTrip.tags.length > 0 ? (
-                            <>
-                              {activeTrip.tags.map((tag: string) => (
-                                <Pill key={`${tag}tag`} text={tag} color="primary" />
-                              ))}
-                            </>
-                          ) : (
-                            'No activities selected'
-                          )
-                        }
-                      >
-                        <Field
-                          as={Input}
-                          type="select"
-                          isMulti
-                          name="tags"
-                          label="Tags"
-                          hiddenLabel
-                          options={createOptionsFromArrayOfObjects(gearListActivities, 'label')}
-                          required
-                          setFieldTouched={setFieldTouched}
-                          setFieldValue={setFieldValue}
-                          {...rest}
-                        />
-                      </EditableInput>
+                        </EditableInput>
+                      </Box>
                     </Column>
-                    <Column lg={4}>{/* TODO */}</Column>
+                    <Column lg={4}>
+                      <Box>
+                        <p>
+                          <strong>Created</strong>
+                        </p>
+                        <p>
+                          {activeTrip.created?.toDate().toLocaleDateString()}{' '}
+                          {activeTrip.created?.toDate().toLocaleTimeString()}
+                        </p>
+                        <HorizontalRule compact />
+                        <p>
+                          <strong>Last Updated</strong>
+                        </p>
+                        <p>
+                          {activeTrip.updated?.toDate().toLocaleDateString()}{' '}
+                          {activeTrip.updated?.toDate().toLocaleTimeString()}
+                        </p>
+                        <HorizontalRule compact />
+                        {loggedInUser && (
+                          <>
+                            <p>
+                              <strong>Owner</strong>
+                            </p>
+                            <UserMediaObject user={loggedInUser} />
+                          </>
+                        )}
+                      </Box>
+                    </Column>
                   </Row>
                 </Form>
               )}

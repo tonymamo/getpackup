@@ -77,7 +77,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             trip={activeTrip}
             loggedInUser={props.loggedInUser}
           />
-          <TripDetails path="/details" activeTrip={activeTrip} />
+          <TripDetails path="/details" activeTrip={activeTrip} loggedInUser={props.loggedInUser} />
           <TripParty path="/party" activeTrip={activeTrip} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
         </Router>
