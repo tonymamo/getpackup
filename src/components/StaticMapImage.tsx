@@ -1,7 +1,9 @@
+/* eslint-disable import/no-unresolved */
 import React, { FunctionComponent } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 import { StaticMap, Marker } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { brandPrimary, brandSecondary, white } from '@styles/color';
@@ -13,6 +15,12 @@ import {
   threeQuarterSpacer,
 } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
+
+// Mapbox failing on prod builds, fixed by adding `worker-loader` package and the following line
+// https://github.com/visgl/react-map-gl/issues/1266
+// https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-750489778
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 type StaticMapImageProps = {
   lat: number;

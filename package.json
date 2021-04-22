@@ -117,7 +117,8 @@
     "typewriter-effect": "2.17.0",
     "tz-lookup": "^6.1.25",
     "uppload": "^3.2.1",
-    "uuid": "^7.0.2"
+    "uuid": "^7.0.2",
+    "worker-loader": "^3.0.8"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.8.3",
