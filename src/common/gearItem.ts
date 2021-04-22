@@ -1,11 +1,5 @@
-export type GearItem = {
-  id: string;
-  name: string;
-  category: string;
-  lastEditedBy?: string;
-  essential: boolean;
-
-  // All the activity types
+// TODO: Merge all of these activities into the Gear Item and resolve TS errors
+export type ActivityTypes = {
   airplane: boolean;
   backcountryThreeSeason: boolean;
   backcountryWinter: boolean;
@@ -35,4 +29,13 @@ export type GearItem = {
   tent: boolean;
   tradClimbing: boolean;
   train: boolean;
+};
+
+export type GearItem = {
+  id: string;
+  name: string;
+  category: string;
+  lastEditedBy?: string;
+  essential: boolean;
+  [key: string]: boolean | string | undefined;
 };

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
@@ -21,6 +21,7 @@ import {
   gearListCampKitchen,
 } from '@utils/gearListItemEnum';
 import { TripType } from '@common/trip';
+import usePersonalGear from '@hooks/usePersonalGear';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -29,49 +30,6 @@ type TripGeneratorProps = {
 type FormValues = { [key: string]: boolean };
 
 const initialValues: { [key: string]: boolean } = {};
-
-const usePersonalGear = () => {
-  const auth = useSelector((state: RootState) => state.firebase.auth);
-  const fetchedMasterGear = useSelector((state: RootState) => state.firestore.ordered.gear);
-  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
-  const fetchedGearClosetAdditions = useSelector(
-    (state: RootState) => state.firestore.ordered.gearClosetAdditions
-  );
-
-  useFirestoreConnect([
-    { collection: 'gear' },
-    {
-      collection: 'gear-closet',
-      storeAs: 'gearCloset',
-      doc: auth.uid,
-    },
-    {
-      collection: 'gear-closet',
-      storeAs: 'gearClosetAdditions',
-      doc: auth.uid,
-      subcollections: [{ collection: 'additions' }],
-    },
-  ]);
-
-  const masterGear = fetchedMasterGear ?? [];
-  const gearClosetRemovals = fetchedGearCloset?.[0]?.removals ?? [];
-  const gearClosetAdditions = fetchedGearClosetAdditions ?? [];
-
-  // Only regenerate this data if the master gear, gear closet removals, or gear closet additions change
-  const personalGear = useMemo(() => {
-    // Shallow clone the gear list, so we don't modify the master gear list
-    let customizedGear = [...masterGear];
-    gearClosetRemovals.forEach((itemToRemove: string) => {
-      // Remove in-place, it's okay because customizedGear is a clone
-      const removeIndex = customizedGear.findIndex((item) => item.id === itemToRemove);
-      customizedGear.splice(removeIndex, 1);
-    });
-
-    return customizedGear.concat(gearClosetAdditions);
-  }, [masterGear, gearClosetRemovals, gearClosetAdditions]);
-
-  return personalGear;
-};
 
 const generateGearList = (values: FormValues, gear: any) => {
   const getValues = (list: typeof initialValues) =>
