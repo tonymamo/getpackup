@@ -18,7 +18,7 @@ import { baseBorderStyle } from '@styles/mixins';
 const CssReset = createGlobalStyle`
   html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
   body{margin:0}
-  article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}
+  article,aside,details,figcaption,figure,footer,header,main,menu,nav,section{display:block}
   audio,canvas,progress,video{display:inline-block;vertical-align:baseline}
   audio:not([controls]){display:none;height:0}[hidden],template{display:none}
   a{background-color:transparent}
@@ -64,6 +64,14 @@ const CssReset = createGlobalStyle`
   @-o-viewport{width:device-width}
   @-webkit-viewport{width:device-width}
   @viewport{width:device-width}}
+
+  /* https://benfrain.com/how-to-get-the-value-of-phone-notches-environment-variables-env-in-javascript-from-css/ */
+  :root {
+    --sat: env(safe-area-inset-top);
+    --sar: env(safe-area-inset-right);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+}
 
   html {
     font-size: 16px;
@@ -286,6 +294,10 @@ const CssReset = createGlobalStyle`
   .tooltip.customTooltip {
     white-space: nowrap;
     padding: ${halfSpacer};
+  }
+
+  .truncatedText {
+    margin: 0;
   }
 `;
 

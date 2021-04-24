@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { RouteComponentProps } from '@reach/router';
 
 import { PageContainer, Button, Box, Seo, Heading } from '@components';
+import trackEvent from '@utils/trackEvent';
 
 const NotFoundPage: FunctionComponent<RouteComponentProps> = () => (
   <PageContainer withVerticalPadding>
@@ -12,7 +13,12 @@ const NotFoundPage: FunctionComponent<RouteComponentProps> = () => (
       <p>
         We could not find the page you were looking for. Please try again or visit the home page.
       </p>
-      <Button type="link" to="/" color="primary">
+      <Button
+        type="link"
+        to="/"
+        color="primary"
+        onClick={() => trackEvent('404 Home Button Clicked')}
+      >
         Home
       </Button>
     </Box>

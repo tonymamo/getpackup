@@ -8,12 +8,15 @@ import { Seo, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
 import { TripType } from '@common/trip';
 import PackingList from '@views/PackingList';
-import TripSummary from '@views/TripSummary';
+import TripDetails from '@views/TripDetails';
+import TripParty from '@views/TripParty';
 import EditPackingListItem from '@views/EditPackingListItem';
-import EditTripSummary from '@views/EditTripSummary';
+import { UserType } from '@common/user';
+import trackEvent from '@utils/trackEvent';
 
 type TripByIdProps = {
   id?: string;
+  loggedInUser: UserType;
 } & RouteComponentProps;
 
 const TripById: FunctionComponent<TripByIdProps> = (props) => {
@@ -58,7 +61,8 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     };
   }, []);
 
-  if (!activeTrip || !props.id) {
+  if (!props.id) {
+    trackEvent('Trip By Id Had No Id');
     return null;
   }
 
@@ -67,10 +71,16 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       <Seo title={activeTrip?.name || 'Trip Summary'} />
 
       <PageContainer>
-        <Router basepath={`/app/trips/${props.id}`} primary={false} style={{ overflow: 'hidden' }}>
-          <PackingList path="/" packingList={packingList} tripId={props.id} />
-          <TripSummary path="/summary" activeTrip={activeTrip} />
-          <EditTripSummary path="/summary/edit" activeTrip={activeTrip} />
+        <Router basepath={`/app/trips/${props.id}`} primary={false}>
+          <PackingList
+            path="/"
+            packingList={packingList}
+            tripId={props.id}
+            trip={activeTrip}
+            loggedInUser={props.loggedInUser}
+          />
+          <TripDetails path="/details" activeTrip={activeTrip} loggedInUser={props.loggedInUser} />
+          <TripParty path="/party" activeTrip={activeTrip} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
         </Router>
       </PageContainer>

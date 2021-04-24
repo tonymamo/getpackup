@@ -6,6 +6,7 @@ import { actionTypes } from 'redux-firestore';
 
 import { PageContainer, LoadingPage, Seo } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
 
 type LogoutProps = {};
 
@@ -33,12 +34,7 @@ const Logout: FunctionComponent<LogoutProps> = () => {
       // https://github.com/prescottprue/redux-firestore/issues/114
       dispatch({ type: actionTypes.CLEAR_DATA });
     });
-    if (window && window.analytics) {
-      window.analytics.track('Logout', {
-        location: 'Logout page',
-      });
-    }
-
+    trackEvent('Logout', { location: 'Logout page' });
     navigate('/');
   }, []);
 

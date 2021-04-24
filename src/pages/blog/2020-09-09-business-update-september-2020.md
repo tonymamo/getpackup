@@ -3,7 +3,7 @@ templateKey: blog-post
 title: Where We Are Now - September 2020
 date: 2020-09-09T22:41:35.634Z
 description: 'Some insight to where we are as a company right now. '
-featuredpost: true
+featuredpost: false
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244550/getpackup/044a9077-2-2.jpg
 tags:
   - product

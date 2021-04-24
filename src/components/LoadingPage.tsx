@@ -1,17 +1,19 @@
 import React, { FunctionComponent } from 'react';
-import Skeleton from 'react-loading-skeleton';
-import { RouteComponentProps } from '@reach/router';
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-import { Box, PageContainer } from '@components';
+import { PageContainer, FlexContainer, Heading } from '@components';
+import { brandPrimary } from '@styles/color';
+import { octupleSpacer } from '@styles/size';
 
-const LoadingPage: FunctionComponent<RouteComponentProps> = () => (
+const LoadingPage: FunctionComponent<{}> = () => (
   <PageContainer withVerticalPadding>
-    <Skeleton width={200} height={40} />
-    <br />
-    <br />
-    <Box>
-      <Skeleton count={20} />
-    </Box>
+    <FlexContainer height="75vh" flexDirection="column">
+      <Loader type="Rings" color={brandPrimary} height={octupleSpacer} width={octupleSpacer} />
+      <Heading as="h6" uppercase>
+        Loading...
+      </Heading>
+    </FlexContainer>
   </PageContainer>
 );
 

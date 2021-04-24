@@ -3,11 +3,13 @@ import { Link } from 'gatsby';
 
 type RelativeOrExternalLinkProps = {
   to: string;
+  onClick?: () => void;
 };
 
 const RelativeOrExternalLink: FunctionComponent<RelativeOrExternalLinkProps> = ({
   children,
   to,
+  onClick,
   ...other
 }) => {
   // This assumes that any internal link (intended for Gatsby)
@@ -16,13 +18,13 @@ const RelativeOrExternalLink: FunctionComponent<RelativeOrExternalLinkProps> = (
   // Use Gatsby Link for internal links, and <a> for others
   if (internal) {
     return (
-      <Link to={to} {...other}>
+      <Link to={to} onClick={onClick} {...other}>
         {children}
       </Link>
     );
   }
   return (
-    <a href={to} {...other}>
+    <a href={to} onClick={onClick} {...other}>
       {children}
     </a>
   );

@@ -19,6 +19,7 @@ import {
 } from '@components';
 import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
 
 type ForgotPasswordProps = {};
 
@@ -42,7 +43,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
       .sendPasswordResetEmail(values.email)
       .then(() => {
         resetForm();
-
+        trackEvent('Forgot Password Submitted', { email: values.email });
         dispatch(
           addAlert({
             type: 'success',
@@ -51,6 +52,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
         );
       })
       .catch((error: Error) => {
+        trackEvent('Forgot Password Submit Failure', { email: values.email, error });
         setDisplayError(error.message);
       })
       .finally(() => {
@@ -72,7 +74,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
               <Heading as="h2">Forgot your password?</Heading>
               <p>It&apos;s better to forget your password, than to forget your passport!</p>
               <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
-                {({ isSubmitting, isValid, dirty }) => (
+                {({ isSubmitting, isValid }) => (
                   <Form name="forgot-password">
                     <Field
                       as={Input}
@@ -89,7 +91,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
                         <Button
                           type="submit"
                           iconRight={<FaCaretRight />}
-                          disabled={isSubmitting || !isValid || !dirty}
+                          disabled={isSubmitting || !isValid}
                         >
                           Submit
                         </Button>

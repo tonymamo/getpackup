@@ -7,6 +7,7 @@ import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
 import { UserType } from '@common/user';
+import trackEvent from '@utils/trackEvent';
 
 type PrivateRouteProps = {
   location?: WindowLocation;
@@ -26,6 +27,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
   useEffect(() => {
     if (auth.isLoaded && auth.isEmpty) {
       if (location) {
+        trackEvent('Attempted Private Page', { location });
         dispatch(addAttemptedPrivatePage(location.pathname));
       }
       navigate('/login');

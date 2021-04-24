@@ -3,7 +3,7 @@ templateKey: blog-post
 title: 'Surf & Ski - Vancouver Island '
 date: 2020-11-11T04:38:02.411Z
 description: 'A travel and gear guide to surf and ski Vancouver Island, British Columbia. '
-featuredpost: true
+featuredpost: false
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/vancouverisland_taylorburk_backcountry-2.jpg
 tags:
   - surf

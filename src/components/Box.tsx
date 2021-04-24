@@ -38,7 +38,6 @@ const renderShadow = (zindex: number) => {
 };
 
 const StyledBox = styled.div<BoxProps>`
-  /* border-radius: ${borderRadius}; */
   padding: ${baseSpacer};
   margin-bottom: ${baseSpacer};
   border: ${baseBorderStyle};
@@ -64,10 +63,6 @@ const StyledBox = styled.div<BoxProps>`
 
   @media only screen and (min-width: ${breakpoints.sm}) {
     padding: ${(props) => (props.largePadding ? quadrupleSpacer : doubleSpacer)};
-  }
-
-  @media only screen and (min-width: ${breakpoints.md}) {
-    padding: ${(props) => (props.largePadding ? quadrupleSpacer : baseSpacer)};
   }
 `;
 

@@ -3,13 +3,14 @@ import { Formik, Field, Form } from 'formik';
 import styled from 'styled-components';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
+import { FaPlus } from 'react-icons/fa';
 
 import { baseBorderStyle } from '@styles/mixins';
-import { halfSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
+import { halfSpacer, doubleSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Input, FlexContainer } from '@components';
-import { offWhite, textColorLight } from '@styles/color';
-import { FaPlus } from 'react-icons/fa';
+import { brandPrimary, offWhite, textColor } from '@styles/color';
+import trackEvent from '@utils/trackEvent';
 import { InputWrapper } from './Input';
 
 type PackingListItemProps = {
@@ -20,7 +21,6 @@ type PackingListItemProps = {
 const PackingListItemWrapper = styled.li`
   border-bottom: ${baseBorderStyle};
   padding: ${halfSpacer};
-  margin: 0 -${halfSpacer};
   &:hover {
     background-color: ${offWhite};
   }
@@ -32,8 +32,16 @@ const PackingListItemWrapper = styled.li`
 `;
 
 const IconWrapper = styled.div`
-  margin: 0 ${threeQuarterSpacer} 0 ${quarterSpacer};
-  color: ${textColorLight};
+  cursor: pointer;
+  width: ${doubleSpacer};
+  height: ${doubleSpacer};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${textColor};
+  &:hover {
+    color: ${brandPrimary};
+  }
 `;
 
 const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, categoryName }) => {
@@ -70,9 +78,19 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                   description: '',
                   created: new Date(),
                 });
-
+              trackEvent('Packing List Item Added', {
+                name: values[`new-${categoryName}`],
+                categoryName,
+                tripId,
+              });
               resetForm({});
             } catch (err) {
+              trackEvent('Packing List Item Add Failure', {
+                name: values[`new-${categoryName}`],
+                categoryName,
+                tripId,
+                error: err,
+              });
               await dispatch(
                 addAlert({
                   type: 'danger',
@@ -86,16 +104,10 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <FlexContainer justifyContent="flex-start">
-              <IconWrapper>
+              <Field as={Input} type="text" name="name" label="Add Item" hiddenLabel />
+              <IconWrapper onClick={() => handleSubmit()}>
                 <FaPlus />
               </IconWrapper>
-              <Field
-                as={Input}
-                type="text"
-                name={`new-${categoryName}`}
-                label="Add Item"
-                hiddenLabel
-              />
             </FlexContainer>
           </Form>
         )}
