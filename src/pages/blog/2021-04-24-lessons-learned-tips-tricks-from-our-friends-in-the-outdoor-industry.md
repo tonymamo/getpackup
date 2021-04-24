@@ -5,6 +5,8 @@ date: 2021-04-24T02:55:11.288Z
 description: Lessons Learned + Tips & Tricks From Our Friends In The Outdoor Industry
 featuredpost: true
 featuredimage: /img/collage.jpg
+tags:
+  - tipsandtricks
 ---
 **Cody Townsend**[](https://www.instagram.com/p/B-90pOOJsPy/?utm_source=ig_embed&utm_campaign=loading)
 
