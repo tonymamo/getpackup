@@ -22,6 +22,7 @@ import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { removeAttemptedPrivatePage } from '@redux/ducks/client';
+import trackEvent from '@utils/trackEvent';
 
 type LoginProps = {};
 
@@ -64,13 +65,24 @@ const Login: FunctionComponent<LoginProps> = () => {
                     .signInWithEmailAndPassword(values.email, values.password)
                     .then(() => {
                       if (client.location) {
+                        trackEvent('User Logged In and Needed Redirection', {
+                          location: client.location,
+                          email: values.email,
+                        });
                         dispatch(removeAttemptedPrivatePage());
                         navigate(client.location);
                       } else {
+                        trackEvent('User Logged In', {
+                          email: values.email,
+                        });
                         navigate('/app/trips');
                       }
                     })
                     .catch((err) => {
+                      trackEvent('User Log In Failure', {
+                        error: err,
+                        email: values.email,
+                      });
                       dispatch(
                         addAlert({
                           type: 'danger',
@@ -116,14 +128,27 @@ const Login: FunctionComponent<LoginProps> = () => {
                       {isLoading ? 'Logging In' : 'Log In'}
                     </Button>
 
-                    <Button type="link" to="/forgot-password" color="text" block>
+                    <Button
+                      type="link"
+                      to="/forgot-password"
+                      color="text"
+                      block
+                      onClick={() =>
+                        trackEvent('Forgot Password Clicked', { location: 'Login Page' })
+                      }
+                    >
                       Forgot Password?
                     </Button>
 
                     <p style={{ textAlign: 'center' }}>
                       <small>
                         Don&apos;t have an account yet?{' '}
-                        <Link to="/signup">
+                        <Link
+                          to="/signup"
+                          onClick={() =>
+                            trackEvent('Sign Up Now Link Clicked', { location: 'Login Page' })
+                          }
+                        >
                           Sign up now <FaArrowRight />
                         </Link>
                       </small>

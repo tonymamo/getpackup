@@ -96,6 +96,7 @@ const StaticContentWrapper = styled.div`
 
 export const StackedAvatars = styled.div`
   display: flex;
+  margin-right: ${halfSpacer};
 
   & ${AvatarImageWrapper}, & ${StaticContentWrapper} {
     margin-right: -${halfSpacer};

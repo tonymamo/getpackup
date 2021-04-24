@@ -4,6 +4,7 @@ import { Link } from 'gatsby';
 
 import { Box, HorizontalRule, Heading, Row, Column, PreviewCompatibleImage } from '@components';
 import { BlogRollType } from '@common/blogRoll';
+import trackEvent from '@utils/trackEvent';
 
 type BlogRollProps = {
   posts: BlogRollType;
@@ -18,7 +19,12 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ posts }) => {
             <Box>
               <div style={{ textAlign: 'left' }}>
                 {post.featuredimage && (
-                  <Link to={post.fields.slug}>
+                  <Link
+                    to={post.fields.slug}
+                    onClick={() =>
+                      trackEvent('Blog Roll Image Clicked', { blog: post.frontmatter.title })
+                    }
+                  >
                     <PreviewCompatibleImage
                       imageInfo={{
                         image: post.featuredimage,
@@ -32,7 +38,12 @@ const BlogRoll: FunctionComponent<BlogRollProps> = ({ posts }) => {
                   {post.frontmatter.date} - {post.fields.readingTime.text}
                 </small>
                 <Heading as="h2" noMargin>
-                  <Link className="title has-text-primary is-size-4" to={post.fields.slug}>
+                  <Link
+                    to={post.fields.slug}
+                    onClick={() =>
+                      trackEvent('Blog Roll Title Clicked', { blog: post.frontmatter.title })
+                    }
+                  >
                     {post.frontmatter.title}
                   </Link>
                 </Heading>

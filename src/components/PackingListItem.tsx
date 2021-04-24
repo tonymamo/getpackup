@@ -21,6 +21,7 @@ import { Input, FlexContainer, Pill, IconWrapper, Button } from '@components';
 import { brandInfo, offWhite } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 import useWindowSize from '@utils/useWindowSize';
+import trackEvent from '@utils/trackEvent';
 
 type PackingListItemProps = {
   tripId: string;
@@ -89,8 +90,18 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
       })
       .then(() => {
         resetForm({ values });
+        trackEvent('Packing List Item isPacked Toggled', {
+          tripId: props.tripId,
+          item: props.item,
+          isPacked: values[props.item.name].isPacked,
+        });
       })
       .catch((err) => {
+        trackEvent('Packing List Item isPacked Toggle Failure', {
+          tripId: props.tripId,
+          item: props.item,
+          isPacked: values[props.item.name].isPacked,
+        });
         dispatch(
           addAlert({
             type: 'danger',
@@ -104,6 +115,10 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
     firebaseConnection(firebase, props.tripId, props.item.id)
       .delete()
       .then(() => {
+        trackEvent('Packing List Item Deleted', {
+          tripId: props.tripId,
+          item: props.item,
+        });
         dispatch(
           addAlert({
             type: 'success',
@@ -112,6 +127,11 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
         );
       })
       .catch((err) => {
+        trackEvent('Packing List Item Deleted Failure', {
+          tripId: props.tripId,
+          item: props.item,
+          error: err,
+        });
         dispatch(
           addAlert({
             type: 'danger',

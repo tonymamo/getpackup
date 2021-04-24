@@ -110,7 +110,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
           setIsLoading(false);
         }}
       >
-        {({ isSubmitting, isValid, dirty, setFieldValue, ...rest }) => (
+        {({ isSubmitting, isValid, setFieldValue, ...rest }) => (
           <Form>
             <Row>
               <Column sm={6}>
@@ -186,7 +186,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
               <Button
                 rightSpacer
                 type="submit"
-                disabled={isSubmitting || !isValid || !dirty}
+                disabled={isSubmitting || !isValid}
                 isLoading={isLoading}
                 iconLeft={props.type === 'new' ? <FaChevronCircleRight /> : <FaCheckCircle />}
               >

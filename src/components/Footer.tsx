@@ -8,7 +8,6 @@ import {
   FaCalendar,
   FaWarehouse,
   FaUser,
-  FaShoppingCart,
   FaUserLock,
 } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -28,6 +27,7 @@ import { fontSizeSmall } from '@styles/typography';
 import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
+import trackEvent from '@utils/trackEvent';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
@@ -136,18 +136,35 @@ const Footer = () => {
                 </Column>
                 <Column sm={4} md={3} lg={2}>
                   <p>
-                    <Link to="/">Home</Link>
+                    <Link to="/" onClick={() => trackEvent('Footer Link Click', { link: 'Home' })}>
+                      Home
+                    </Link>
                   </p>
                   <p>
-                    <Link to="/signup">Sign Up</Link>
+                    <Link
+                      to="/signup"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'Sign Up' })}
+                    >
+                      Sign Up
+                    </Link>
                   </p>
                 </Column>
                 <Column sm={4} md={3} lg={2}>
                   <p>
-                    <Link to="/blog">Blog</Link>
+                    <Link
+                      to="/blog"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'Blog' })}
+                    >
+                      Blog
+                    </Link>
                   </p>
                   <p>
-                    <Link to="/about">About</Link>
+                    <Link
+                      to="/about"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'About' })}
+                    >
+                      About
+                    </Link>
                   </p>
                 </Column>
                 <Column sm={4} md={3} lg={2}>
@@ -155,7 +172,12 @@ const Footer = () => {
                     <a href="mailto:hello@getpackup.com">hello@getpackup.com</a>
                   </p>
                   <p>
-                    <Link to="/contact">Send a Message</Link>
+                    <Link
+                      to="/contact"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'Send a message' })}
+                    >
+                      Send a Message
+                    </Link>
                   </p>
                 </Column>
               </Row>
@@ -166,21 +188,43 @@ const Footer = () => {
                     href="https://www.instagram.com/getpackup/"
                     target="_blank"
                     rel="noopener"
+                    onClick={() => trackEvent('Footer Link Click', { link: 'Instagram' })}
                   >
                     <FaInstagram />
                     <HiddenText>Instagram</HiddenText>
                   </Social>
-                  <Social href="https://www.facebook.com/getpackup" target="_blank" rel="noopener">
+                  <Social
+                    href="https://www.facebook.com/getpackup"
+                    target="_blank"
+                    rel="noopener"
+                    onClick={() => trackEvent('Footer Link Click', { link: 'Facebook' })}
+                  >
                     <FaFacebook />
                     <HiddenText>Facebook</HiddenText>
                   </Social>
-                  <Social href="https://twitter.com/getpackup" target="_blank" rel="noopener">
+                  <Social
+                    href="https://twitter.com/getpackup"
+                    target="_blank"
+                    rel="noopener"
+                    onClick={() => trackEvent('Footer Link Click', { link: 'Twitter' })}
+                  >
                     <FaTwitter />
                     <HiddenText>Twitter</HiddenText>
                   </Social>
                 </nav>
                 <small>
-                  <Link to="/privacy">Privacy</Link> <Link to="/terms">Terms of Use</Link>{' '}
+                  <Link
+                    to="/privacy"
+                    onClick={() => trackEvent('Footer Link Click', { link: 'Privacy' })}
+                  >
+                    Privacy
+                  </Link>{' '}
+                  <Link
+                    to="/terms"
+                    onClick={() => trackEvent('Footer Link Click', { link: 'Terms of Use' })}
+                  >
+                    Terms of Use
+                  </Link>{' '}
                   {`Copyright © Packup ${new Date().getFullYear()}`}
                 </small>
               </FlexContainer>
@@ -190,21 +234,45 @@ const Footer = () => {
       )}
       {size.isSmallScreen && loggedInUser && (
         <BottomNav>
-          <Link to="/app/trips" getProps={isPartiallyActive}>
+          <Link
+            to="/app/trips"
+            getProps={isPartiallyActive}
+            onClick={() =>
+              trackEvent('Logged In Small Screen Footer Link Click', { link: 'Trips' })
+            }
+          >
             <FaCalendar />
           </Link>
-          <Link to="/app/gear-closet" getProps={isPartiallyActive}>
+          <Link
+            to="/app/gear-closet"
+            getProps={isPartiallyActive}
+            onClick={() =>
+              trackEvent('Logged In Small Screen Footer Link Click', { link: 'Gear Closet' })
+            }
+          >
             <FaWarehouse />
           </Link>
-          <Link to="/app/shopping-list" getProps={isPartiallyActive}>
-            <FaShoppingCart />
+          <Link
+            to="/app/shopping-list"
+            getProps={isPartiallyActive}
+            onClick={() =>
+              trackEvent('Logged In Small Screen Footer Link Click', { link: 'Shopping List' })
+            }
+          >
+            <FaWarehouse />
           </Link>
           {profile.isAdmin && (
             <Link to="/admin/gear-list" getProps={isPartiallyActive}>
               <FaUserLock />
             </Link>
           )}
-          <Link to="/app/profile" getProps={isPartiallyActive}>
+          <Link
+            to="/app/profile"
+            getProps={isPartiallyActive}
+            onClick={() =>
+              trackEvent('Logged In Small Screen Footer Link Click', { link: 'Profile' })
+            }
+          >
             <FaUser />
           </Link>
         </BottomNav>

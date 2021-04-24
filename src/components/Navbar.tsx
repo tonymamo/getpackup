@@ -24,6 +24,7 @@ import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import yak from '@images/yak.svg';
 import { zIndexNavbar } from '@styles/layers';
+import trackEvent from '@utils/trackEvent';
 
 type NavbarProps = {};
 
@@ -36,6 +37,8 @@ const StyledNavbar = styled.header`
   line-height: 64px;
   padding-top: env(safe-area-inset-top);
   z-index: ${zIndexNavbar};
+  display: flex;
+  align-items: center;
 
   & a,
   & a:hover,
@@ -83,7 +86,7 @@ const StyledMenuToggle = styled.div`
 const StyledMenu = styled.nav`
   position: absolute;
   transform: translateX(${(props: { menuIsOpen: boolean }) => (props.menuIsOpen ? 0 : '100vw')});
-  top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
+  top: ${quadrupleSpacer};
   right: 0;
   left: 0;
   height: 100vh;
@@ -213,10 +216,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
     <StyledNavbar role="navigation" aria-label="main-navigation">
       <Helmet onChangeClientState={onHelmetChange} />
       <PageContainer>
-        <FlexContainer justifyContent="space-between" alignItems="center" height="100%">
+        <FlexContainer justifyContent="space-between" alignItems="center">
           {!size.isSmallScreen && auth.isLoaded && (
             <Heading noMargin>
-              <Link to={isAuthenticated ? '/app/trips' : '/'}>
+              <Link
+                to={isAuthenticated ? '/app/trips' : '/'}
+                onClick={() => trackEvent('Navbar Logo Clicked', { isAuthenticated })}
+              >
                 <img src={yak} alt="" width={tripleSpacer} height={27} />{' '}
                 {size.isSmallScreen && !isAuthenticated ? '' : 'packup'}
               </Link>
@@ -224,7 +230,10 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {size.isSmallScreen && auth.isLoaded && !isAuthenticated && (
             <Heading noMargin>
-              <Link to="/">
+              <Link
+                to="/"
+                onClick={() => trackEvent('Navbar SmallScreen Logo Clicked', { isAuthenticated })}
+              >
                 <img src={yak} alt="" width={tripleSpacer} />
                 packup
               </Link>
@@ -233,7 +242,15 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
               {routeHasParent && (
-                <Link to="../" onClick={() => (routeIsChecklistItem ? navigate(-1) : undefined)}>
+                <Link
+                  to="../"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Back Button Clicked');
+                    if (routeIsChecklistItem) {
+                      navigate(-1);
+                    }
+                  }}
+                >
                   <FaChevronLeft />
                 </Link>
               )}
@@ -244,19 +261,16 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               {truncatedPageTitle}
             </Heading>
           )}
-          {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
-            <IconLinkWrapper>
-              {/* <Link to="/feedback">
-                <FaBullhorn />
-              </Link> */}
-            </IconLinkWrapper>
-          )}
+          {isAuthenticated && size.isSmallScreen && auth.isLoaded && <IconLinkWrapper />}
           {size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <StyledMenuToggle ref={hamburgerButton}>
               <Hamburger
                 color={white}
                 toggled={menuIsOpen}
-                toggle={() => setMenuIsOpen(!menuIsOpen)}
+                toggle={() => {
+                  trackEvent('Navbar Hamburger Toggled');
+                  setMenuIsOpen(!menuIsOpen);
+                }}
               />
             </StyledMenuToggle>
           )}
@@ -264,23 +278,53 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           {size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
-                <NavLink to="/blog" onClick={() => toggleMenu()}>
+                <NavLink
+                  to="/blog"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Blog' });
+                    toggleMenu();
+                  }}
+                >
                   Blog
                 </NavLink>
                 <HorizontalRule compact />
-                <NavLink to="/about" onClick={() => toggleMenu()}>
+                <NavLink
+                  to="/about"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'About' });
+                    toggleMenu();
+                  }}
+                >
                   About
                 </NavLink>
                 <HorizontalRule compact />
-                <NavLink to="/contact" onClick={() => toggleMenu()}>
+                <NavLink
+                  to="/contact"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Contact' });
+                    toggleMenu();
+                  }}
+                >
                   Contact
                 </NavLink>
                 <HorizontalRule compact />
-                <NavLink to="/login" onClick={() => toggleMenu()}>
+                <NavLink
+                  to="/login"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Login' });
+                    toggleMenu();
+                  }}
+                >
                   Log In
                 </NavLink>
                 <HorizontalRule compact />
-                <NavLink to="/signup" onClick={() => toggleMenu()}>
+                <NavLink
+                  to="/signup"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Sign Up' });
+                    toggleMenu();
+                  }}
+                >
                   Sign Up
                 </NavLink>
               </Box>
@@ -299,13 +343,29 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {!size.isSmallScreen && isAuthenticated && auth.isLoaded && (
             <TopNavIconWrapper>
-              <Link to="/app/trips" getProps={isPartiallyActive}>
+              <Link
+                to="/app/trips"
+                getProps={isPartiallyActive}
+                onClick={() => trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Trips' })}
+              >
                 <FaCalendar />
               </Link>
-              <Link to="/app/gear-closet" getProps={isPartiallyActive}>
+              <Link
+                to="/app/gear-closet"
+                getProps={isPartiallyActive}
+                onClick={() =>
+                  trackEvent('Navbar LoggedInUser Link Clicked', { link: 'gear-closet' })
+                }
+              >
                 <FaWarehouse />
               </Link>
-              <Link to="/app/shopping-list" getProps={isPartiallyActive}>
+              <Link
+                to="/app/shopping-list"
+                getProps={isPartiallyActive}
+                onClick={() =>
+                  trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Shopping List' })
+                }
+              >
                 <FaShoppingCart />
               </Link>
               {profile.isAdmin && (
@@ -313,11 +373,14 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   <FaUserLock />
                 </Link>
               )}
-              {/* <Link to="/feedback" getProps={isPartiallyActive}>
-                <FaBullhorn />
-              </Link> */}
               {loggedInUser && loggedInUser.length > 0 && (
-                <Link to="/app/profile" getProps={isPartiallyActive}>
+                <Link
+                  to="/app/profile"
+                  getProps={isPartiallyActive}
+                  onClick={() =>
+                    trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Profile' })
+                  }
+                >
                   <Avatar
                     src={loggedInUser[0].photoURL as string}
                     size="sm"

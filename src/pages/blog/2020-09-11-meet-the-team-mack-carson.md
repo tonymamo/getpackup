@@ -3,7 +3,7 @@ templateKey: blog-post
 title: Meet The Team - Mack Carson
 date: 2020-09-11T20:56:51.750Z
 description: A brief introduction to our team members.
-featuredpost: true
+featuredpost: false
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244556/getpackup/mackheadshot.jpg
 tags:
   - Mack Carson

@@ -1,8 +1,10 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
-import { useMeasure } from 'react-use';
+import Skeleton from 'react-loading-skeleton';
+// TODO: uncomment when we add collapsible sections
+// import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+// import { useSpring, animated } from 'react-spring';
+// import { useMeasure } from 'react-use';
 
 import {
   Box,
@@ -10,10 +12,11 @@ import {
   Heading,
   PackingListItem,
   PackingListAddItem,
-  IconWrapper,
+  // TODO: uncomment when we add collapsible sections
+  // IconWrapper,
 } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
-import { halfSpacer } from '@styles/size';
+import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 
 type PackingListCategoryProps = {
   categoryName: string;
@@ -32,6 +35,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
 }) => {
+  // TODO: uncomment when we add collapsible sections
   // const defaultHeight = 0;
 
   // Manages the collapsed state of the accordion
@@ -63,7 +67,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
     <Box key={categoryName}>
       <FlexContainer justifyContent="space-between">
         <Heading as="h3" altStyle>
-          {categoryName}
+          {categoryName === 'categoryLoading' ? <Skeleton width={200} /> : categoryName}
         </Heading>
         {/* <IconWrapper onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? <FaChevronDown /> : <FaChevronUp />}
@@ -72,10 +76,37 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
       {/* <animated.div style={{ overflow: 'hidden', ...expand, margin: `0 -${halfSpacer}` }}> */}
       {/* <ItemsWrapper ref={ref}> */}
       <ItemsWrapper>
-        {sortedItems.map((item) => (
-          <PackingListItem key={item.id} tripId={tripId} item={item} />
-        ))}
-        <PackingListAddItem tripId={tripId} categoryName={categoryName} />
+        {sortedItems && sortedItems.length > 0 ? (
+          <>
+            {sortedItems.map((item) => (
+              <PackingListItem key={item.id} tripId={tripId} item={item} />
+            ))}
+            <PackingListAddItem tripId={tripId} categoryName={categoryName} />
+          </>
+        ) : (
+          <>
+            {Array.from({ length: 10 }).map((_, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <FlexContainer key={`loadingListItem${index}`}>
+                <Skeleton
+                  circle
+                  width={baseAndAHalfSpacer}
+                  height={baseAndAHalfSpacer}
+                  style={{ marginRight: halfSpacer }}
+                />
+                <div style={{ flex: 1 }}>
+                  <Skeleton
+                    count={1}
+                    // random widths between 40 and 90%
+                    width={`${Math.floor(Math.random() * (90 - 40 + 1) + 40)}%`}
+                    height={baseAndAHalfSpacer}
+                    style={{ margin: halfSpacer }}
+                  />
+                </div>
+              </FlexContainer>
+            ))}
+          </>
+        )}
       </ItemsWrapper>
       {/* </animated.div> */}
     </Box>

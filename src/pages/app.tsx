@@ -12,10 +12,12 @@ import TripGenerator from '@views/TripGenerator';
 import GearCloset from '@views/GearCloset';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
-import { PrivateRoute, LoadingPage, ErrorBoundary, FeedbackModal } from '@components';
+import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
 import { breakpoints, baseSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
+import { UserType } from '@common/user';
+import trackEvent from '@utils/trackEvent';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -27,13 +29,14 @@ export const AppContainer = styled.div`
   min-height: 100vh;
 `;
 
-const App: FunctionComponent<{}> = (props) => {
+const App: FunctionComponent<{}> = () => {
   const firebase = useFirebase();
 
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
-  const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
+  const activeLoggedInUser: UserType =
+    loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
 
   useEffect(() => {
     if (isLoaded(auth) && auth.uid) {
@@ -68,6 +71,18 @@ const App: FunctionComponent<{}> = (props) => {
             website: '',
             location: '',
             lastUpdated: new Date(),
+          })
+          .then(() => {
+            trackEvent('User Profile Initial Info Set', {
+              uid: auth.uid,
+              email: auth.email,
+              emailVerified: auth.emailVerified,
+              displayName: auth.displayName,
+              photoURL: auth.photoURL,
+              username: `${auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(
+                100000 + Math.random() * 900000
+              )}`,
+            });
           });
       }
     }
@@ -115,7 +130,6 @@ const App: FunctionComponent<{}> = (props) => {
           />
         </Router>
       </ErrorBoundary>
-      <FeedbackModal auth={auth} {...props} />
     </AppContainer>
   );
 };

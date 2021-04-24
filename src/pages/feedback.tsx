@@ -21,6 +21,7 @@ import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import logo from '@images/maskable_icon.png';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
 
 type FeedbackProps = {
   location?: {
@@ -75,11 +76,13 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                   onSubmit={(values, { resetForm, setSubmitting }) => {
                     postFormUrlEncoded('feedback', values)
                       .then(() => {
+                        trackEvent('Feedback Form Submitted', values);
                         setSent(true);
                         setSubmitting(false);
                         resetForm();
                       })
                       .catch((err) => {
+                        trackEvent('Feedback Form Submitted', { ...values, error: err });
                         dispatch(
                           addAlert({
                             type: 'danger',
@@ -89,7 +92,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                       });
                   }}
                 >
-                  {({ isSubmitting, isValid, dirty, values }) => (
+                  {({ isSubmitting, isValid, values }) => (
                     <Form
                       name="feedback"
                       method="post"
@@ -140,7 +143,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                         <Button
                           type="submit"
                           iconRight={<FaCaretRight />}
-                          disabled={isSubmitting || !isValid || !dirty}
+                          disabled={isSubmitting || !isValid}
                         >
                           Submit
                         </Button>

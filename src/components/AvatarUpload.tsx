@@ -17,6 +17,7 @@ import {
 } from 'uppload';
 
 import { RootState } from '@redux/ducks';
+import trackEvent from '@utils/trackEvent';
 import Button from './Button';
 import Avatar from './Avatar';
 import FlexContainer from './FlexContainer';
@@ -89,6 +90,7 @@ const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }
         photoURL: newUrl,
         lastUpdated: new Date(),
       });
+    trackEvent('New User Avatar Uploaded', { user: auth.email, photoURL: newUrl });
     setIsLoading(false);
     uploader.close();
   });

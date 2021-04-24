@@ -17,6 +17,7 @@ import {
 import { baseSpacer, doubleSpacer, tripleSpacer } from '@styles/size';
 import { visuallyHiddenStyle } from '@styles/mixins';
 import logo from '@images/maskable_icon.png';
+import trackEvent from '@utils/trackEvent';
 
 type LinksPageProps = {
   hideFromCms?: boolean;
@@ -68,16 +69,21 @@ export const LinksPageTemplate: FunctionComponent<LinksPageProps> = ({
             linksList.length > 0 &&
             linksList.map((link) => {
               const parts = link.thumbnail.split('upload/');
-              const transformedThumbnail = [
-                (parts[0], 'upload/w_200,h_200,c_fill/', parts[1]),
-              ].join('');
+              const transformedThumbnail = [parts[0], 'upload/w_200,h_200,c_fill/', parts[1]].join(
+                ''
+              );
               return (
                 <Row key={link.linkUrl}>
                   <Column md={8} mdOffset={2}>
                     <Box>
                       <FlexContainer justifyContent="flex-start" flexWrap="nowrap">
                         <ThumbnailWrapper>
-                          <RelativeOrExternalLink to={link.linkUrl}>
+                          <RelativeOrExternalLink
+                            to={link.linkUrl}
+                            onClick={() =>
+                              trackEvent('Links Page Image Link Clicked', { link: link.linkUrl })
+                            }
+                          >
                             <PreviewCompatibleImage
                               imageInfo={{
                                 image: !hideFromCms ? transformedThumbnail : link.thumbnail,
@@ -87,7 +93,12 @@ export const LinksPageTemplate: FunctionComponent<LinksPageProps> = ({
                           </RelativeOrExternalLink>
                         </ThumbnailWrapper>
                         <div>
-                          <RelativeOrExternalLink to={link.linkUrl}>
+                          <RelativeOrExternalLink
+                            to={link.linkUrl}
+                            onClick={() =>
+                              trackEvent('Links Page Link Clicked', { link: link.linkUrl })
+                            }
+                          >
                             {link.linkText}
                           </RelativeOrExternalLink>
                         </div>

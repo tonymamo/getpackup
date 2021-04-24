@@ -5,7 +5,7 @@ date: 2021-02-12T21:40:15.546Z
 description: Our expert packing lists will get you out the door faster with
   peace of mind. Try our interactive adventure packing app today and never
   forget a thing.
-featuredpost: true
+featuredpost: false
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/robson-hatsukami-morgan-17qv-gmycz0-unsplash.jpg
 tags:
   - packing-list

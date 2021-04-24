@@ -17,11 +17,11 @@ import {
   gearListAccommodations,
   gearListOtherConsiderations,
   gearListKeys,
-  allGearListItems,
   gearListCampKitchen,
 } from '@utils/gearListItemEnum';
 import { TripType } from '@common/trip';
 import usePersonalGear from '@hooks/usePersonalGear';
+import trackEvent from '@utils/trackEvent';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -42,10 +42,8 @@ const generateGearList = (values: FormValues, gear: any) => {
 
   getValues(values).forEach((val) => {
     matches.push(...gear.filter((item: GearItem) => item[val] === true));
-    tagMatches.push(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      allGearListItems.find((item: { name: string; label: string }) => item.name === val)?.label!
-    );
+    // for each activity selected, add a tag to the trip
+    gearListActivities.filter((item) => item.name === val).map((i) => tagMatches.push(i.label));
   });
 
   const gearList = uniqBy(matches, 'name').map((item: GearItem) => {
@@ -119,6 +117,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
     Promise.all(promises)
       .then(() => {
         navigate(`/app/trips/${props.id}`);
+        trackEvent('Trip Generated Successfully', { tripId: props.id });
         dispatch(
           addAlert({
             type: 'success',
@@ -127,6 +126,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         );
       })
       .catch((err) => {
+        trackEvent('Trip Generation Failure', { tripId: props.id, error: err });
         dispatch(
           addAlert({
             type: 'danger',
@@ -173,7 +173,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6} xsOffset={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(1)}
+                      onClick={() => {
+                        setActiveTab(1);
+                        trackEvent('Trip Gen Next Button Clicked', { page: 1 });
+                      }}
                       block
                       iconRight={<FaCaretRight />}
                     >
@@ -224,7 +227,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(0)}
+                      onClick={() => {
+                        trackEvent('Trip Gen Previous Button Clicked', { page: 2 });
+                        setActiveTab(0);
+                      }}
                       color="primaryOutline"
                       block
                       iconLeft={<FaCaretLeft />}
@@ -235,7 +241,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(2)}
+                      onClick={() => {
+                        trackEvent('Trip Gen Next Button Clicked', { page: 2 });
+                        setActiveTab(2);
+                      }}
                       block
                       iconRight={<FaCaretRight />}
                     >
@@ -272,7 +281,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(1)}
+                      onClick={() => {
+                        trackEvent('Trip Gen Previous Button Clicked', { page: 3 });
+                        setActiveTab(1);
+                      }}
                       color="primaryOutline"
                       block
                       iconLeft={<FaCaretLeft />}

@@ -20,6 +20,7 @@ import {
 import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import { requiredEmail, requiredField } from '@utils/validations';
 import { FluidImageType } from '@common/image';
+import trackEvent from '@utils/trackEvent';
 
 type ContactProps = {
   hideFromCms?: boolean;
@@ -61,6 +62,7 @@ export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
                 initialValues={initialValues}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                   postFormUrlEncoded('contact', values).then(() => {
+                    trackEvent('Contact Page Form Submitted', { values });
                     setSent(true);
                     setSubmitting(false);
                     resetForm();

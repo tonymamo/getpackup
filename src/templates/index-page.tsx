@@ -37,6 +37,7 @@ import useWindowSize from '@utils/useWindowSize';
 import { RootState } from '@redux/ducks';
 import { FluidImageType } from '@common/image';
 import { BlogRollType } from '@common/blogRoll';
+import trackEvent from '@utils/trackEvent';
 
 type IndexPageProps = {
   hideFromCms?: boolean;
@@ -220,7 +221,11 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Heading>
 
           <p>{props.heroSubheading}</p>
-          <Button type="link" to={props.heroCTALink}>
+          <Button
+            type="link"
+            to={props.heroCTALink}
+            onClick={() => trackEvent('Index Page Hero CTA Clicked')}
+          >
             {props.heroCTAText}
           </Button>
         </PageContainer>
@@ -343,8 +348,14 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
             </Column>
           </Row>
           <BlogRoll posts={props.posts} />
-          <Button type="link" to="/blog/2" iconRight={<FaChevronRight />} color="secondary">
-            See More
+          <Button
+            type="link"
+            to="/blog/2"
+            iconRight={<FaChevronRight />}
+            color="secondary"
+            onClick={() => trackEvent('Index Page Blog Previous Post Button Clicked')}
+          >
+            Previous Posts
           </Button>
         </PageContainer>
       </Section>
@@ -401,7 +412,7 @@ export default IndexPage;
 export const pageQuery = graphql`
   query IndexPageTemplate {
     allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: { order: [DESC, DESC], fields: [frontmatter___featuredpost, frontmatter___date] }
       limit: 6
       filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
     ) {
