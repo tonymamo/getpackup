@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 import { white } from '@styles/color';
-import { screenSizes } from '@styles/size';
+import { screenSizes, doubleSpacer } from '@styles/size';
 import useWindowSize from '@utils/useWindowSize';
 import { ClientOnly, PreviewCompatibleImage } from '@components';
 
@@ -38,6 +38,7 @@ const ChildrenWrapper = styled.div`
   height: 100%;
   text-align: center;
   color: ${white};
+  padding: 0 ${doubleSpacer};
 
   & h1,
   & p {
