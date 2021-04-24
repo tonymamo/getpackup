@@ -68,7 +68,9 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
                 to="/app/trips/new"
                 iconLeft={<FaPlusCircle />}
                 block
-                onClick={() => trackEvent('New Trip Button clicked', { location: 'Trips Page' })}
+                onClick={() =>
+                  trackEvent('New Trip Button clicked', { location: 'Trips Page Header' })
+                }
               >
                 New Trip
               </Button>
@@ -97,7 +99,12 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
           {isLoaded(trips) && trips && trips.length === 0 ? (
             <Box>
               Looks like it&apos;s your first time here,{' '}
-              <Link to="/app/trips/new">
+              <Link
+                to="/app/trips/new"
+                onClick={() =>
+                  trackEvent('New Trip Button clicked', { location: 'Trips Page First Time' })
+                }
+              >
                 let&apos;s get started! <FaArrowRight />
               </Link>
             </Box>
@@ -120,7 +127,14 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
               ) : (
                 <Box>
                   No upcoming trips planned currently,{' '}
-                  <Link to="/app/trips/new">
+                  <Link
+                    to="/app/trips/new"
+                    onClick={() =>
+                      trackEvent('New Trip Button clicked', {
+                        location: 'Trips Page Create One Now',
+                      })
+                    }
+                  >
                     create one now! <FaArrowRight />
                   </Link>
                 </Box>

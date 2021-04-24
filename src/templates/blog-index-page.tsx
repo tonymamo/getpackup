@@ -13,6 +13,7 @@ import {
 } from '@components';
 import { FluidImageType } from '@common/image';
 import { BlogRollType } from '@common/blogRoll';
+import trackEvent from '@utils/trackEvent';
 
 type BlogIndexProps = {
   title: string;
@@ -48,14 +49,26 @@ export const BlogIndexTemplate: FunctionComponent<BlogIndexProps> = (props) => {
           <BlogRoll posts={props.posts} />
           <FlexContainer justifyContent="space-between">
             {!isFirst ? (
-              <Button type="link" color="secondary" to={prevPage} iconLeft={<FaChevronLeft />}>
+              <Button
+                type="link"
+                color="secondary"
+                to={prevPage}
+                iconLeft={<FaChevronLeft />}
+                onClick={() => trackEvent('Blog Index Previous Page Clicked')}
+              >
                 Previous
               </Button>
             ) : (
               <div />
             )}
             {!isLast ? (
-              <Button type="link" color="secondary" to={nextPage} iconRight={<FaChevronRight />}>
+              <Button
+                type="link"
+                color="secondary"
+                to={nextPage}
+                iconRight={<FaChevronRight />}
+                onClick={() => trackEvent('Blog Index Next Page Clicked')}
+              >
                 Next
               </Button>
             ) : (

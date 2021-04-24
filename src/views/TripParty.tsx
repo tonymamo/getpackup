@@ -36,6 +36,7 @@ import Skeleton from 'react-loading-skeleton';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import { white } from '@styles/color';
 import { sharedStyles } from '@components/Input';
+import trackEvent from '@utils/trackEvent';
 
 type TripPartyProps = {
   activeTrip?: TripType;
@@ -103,8 +104,19 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
           updated: new Date(),
           tripMembers: [...activeTrip.tripMembers, memberId],
         })
-        .then()
+        .then(() => {
+          trackEvent('Trip Party Member Added', {
+            ...activeTrip,
+            updated: new Date(),
+            tripMembers: [...activeTrip.tripMembers, memberId],
+          });
+        })
         .catch((err) => {
+          trackEvent('Trip Party Member Add Failure', {
+            ...activeTrip,
+            userAttemptedToAdd: memberId,
+            error: err,
+          });
           dispatch(
             addAlert({
               type: 'danger',
@@ -274,7 +286,13 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
           <>
             <TripNavigation activeTrip={activeTrip} />
             <SearchWrapper>
-              <InstantSearch searchClient={searchClient} indexName="Users">
+              <InstantSearch
+                searchClient={searchClient}
+                indexName="Users"
+                onSearchStateChange={(searchState) => {
+                  trackEvent('Trip Party Search', { query: searchState.query });
+                }}
+              >
                 <Configure hitsPerPage={10} filters={`NOT uid:${auth.uid}`} />
                 <ConnectedSearchBox />
                 <ConnectedResults />

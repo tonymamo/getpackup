@@ -20,6 +20,7 @@ import {
   gearListCampKitchen,
 } from '@utils/gearListItemEnum';
 import { TripType } from '@common/trip';
+import trackEvent from '@utils/trackEvent';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -158,6 +159,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
     Promise.all(promises)
       .then(() => {
         navigate(`/app/trips/${props.id}`);
+        trackEvent('Trip Generated Successfully', { tripId: props.id });
         dispatch(
           addAlert({
             type: 'success',
@@ -166,6 +168,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         );
       })
       .catch((err) => {
+        trackEvent('Trip Generation Failure', { tripId: props.id, error: err });
         dispatch(
           addAlert({
             type: 'danger',
@@ -212,7 +215,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6} xsOffset={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(1)}
+                      onClick={() => {
+                        setActiveTab(1);
+                        trackEvent('Trip Gen Next Button Clicked', { page: 1 });
+                      }}
                       block
                       iconRight={<FaCaretRight />}
                     >
@@ -263,7 +269,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(0)}
+                      onClick={() => {
+                        trackEvent('Trip Gen Previous Button Clicked', { page: 2 });
+                        setActiveTab(0);
+                      }}
                       color="primaryOutline"
                       block
                       iconLeft={<FaCaretLeft />}
@@ -274,7 +283,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(2)}
+                      onClick={() => {
+                        trackEvent('Trip Gen Next Button Clicked', { page: 2 });
+                        setActiveTab(2);
+                      }}
                       block
                       iconRight={<FaCaretRight />}
                     >
@@ -311,7 +323,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   <Column xs={6}>
                     <Button
                       type="button"
-                      onClick={() => setActiveTab(1)}
+                      onClick={() => {
+                        trackEvent('Trip Gen Previous Button Clicked', { page: 3 });
+                        setActiveTab(1);
+                      }}
                       color="primaryOutline"
                       block
                       iconLeft={<FaCaretLeft />}

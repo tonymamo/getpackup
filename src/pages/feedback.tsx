@@ -21,6 +21,7 @@ import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import logo from '@images/maskable_icon.png';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
 
 type FeedbackProps = {
   location?: {
@@ -75,11 +76,13 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                   onSubmit={(values, { resetForm, setSubmitting }) => {
                     postFormUrlEncoded('feedback', values)
                       .then(() => {
+                        trackEvent('Feedback Form Submitted', values);
                         setSent(true);
                         setSubmitting(false);
                         resetForm();
                       })
                       .catch((err) => {
+                        trackEvent('Feedback Form Submitted', { ...values, error: err });
                         dispatch(
                           addAlert({
                             type: 'danger',

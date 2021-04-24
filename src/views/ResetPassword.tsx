@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { FaCaretRight } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import { navigate } from 'gatsby';
+import { useFirebase } from 'react-redux-firebase';
 
 import { Button, Input, Heading, Alert } from '@components';
 import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { useFirebase } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
+import trackEvent from '@utils/trackEvent';
 
 type Props = { actionCode: string };
 
@@ -29,6 +30,7 @@ const ResetPassword = ({ actionCode }: Props) => {
         message: 'Something went wrong, try resetting your password again',
       })
     );
+    trackEvent('Reset Password Unrecoverable Error');
     navigate('/login');
   };
 
@@ -39,6 +41,7 @@ const ResetPassword = ({ actionCode }: Props) => {
         .verifyPasswordResetCode(actionCode)
         .then((userEmail) => {
           setEmail(userEmail);
+          trackEvent('Reset Password Verified', { userEmail });
         })
         .catch(() => {
           unrecoverableError();
@@ -56,6 +59,7 @@ const ResetPassword = ({ actionCode }: Props) => {
       .then(
         (): Promise<void> => {
           if (!email) {
+            trackEvent('Reset Password No Email');
             return Promise.reject(new Error('Something went wrong, please try again'));
           }
 
@@ -64,6 +68,7 @@ const ResetPassword = ({ actionCode }: Props) => {
             .auth()
             .signInWithEmailAndPassword(email, values.password)
             .then(() => {
+              trackEvent('Reset Password Confirmed And Signed In', { email });
               navigate('/app/trips');
             });
         }

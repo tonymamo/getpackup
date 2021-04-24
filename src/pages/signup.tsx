@@ -22,6 +22,7 @@ import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import validateUsername from '@utils/validateUsername';
+import trackEvent from '@utils/trackEvent';
 
 type SignupProps = {};
 
@@ -68,6 +69,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                     .auth()
                     .createUserWithEmailAndPassword(values.email, values.password)
                     .then((result: any) => {
+                      trackEvent('New User Signed Up', { email: values.email });
                       if (result.user) {
                         return firebase
                           .firestore()
@@ -86,6 +88,9 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             lastUpdated: new Date(),
                           })
                           .then(() => {
+                            trackEvent('New User Signed Up And Created Profile', {
+                              email: values.email,
+                            });
                             dispatch(
                               addAlert({
                                 type: 'success',
@@ -94,6 +99,10 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             );
                           })
                           .catch((err) => {
+                            trackEvent('New User Signed Up And Profile Creation Failed', {
+                              email: values.email,
+                              error: err,
+                            });
                             dispatch(
                               addAlert({
                                 type: 'danger',
@@ -105,6 +114,10 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       return Promise.resolve();
                     })
                     .catch((err) => {
+                      trackEvent('New User Sign Up Failed', {
+                        email: values.email,
+                        error: err,
+                      });
                       dispatch(
                         addAlert({
                           type: 'danger',

@@ -6,6 +6,7 @@ import { FaTrash } from 'react-icons/fa';
 
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Button, Column, Heading, Modal, Row } from '@components';
+import trackEvent from '@utils/trackEvent';
 
 type TripDeleteModalProps = {
   modalIsOpen: boolean;
@@ -29,6 +30,7 @@ const TripDeleteModal: FunctionComponent<TripDeleteModalProps> = ({
         .doc(tripId)
         .delete()
         .then(() => {
+          trackEvent('Trip Deleted Successfully', { tripId });
           navigate('/app/trips');
           dispatch(
             addAlert({
@@ -38,6 +40,7 @@ const TripDeleteModal: FunctionComponent<TripDeleteModalProps> = ({
           );
         })
         .catch((err) => {
+          trackEvent('Trip Delete Failure', { tripId, error: err });
           dispatch(
             addAlert({
               type: 'danger',
@@ -62,6 +65,7 @@ const TripDeleteModal: FunctionComponent<TripDeleteModalProps> = ({
           <Button
             type="button"
             onClick={() => {
+              trackEvent('Trip Delete Modal Canceled', { tripId });
               setModalIsOpen(false);
             }}
             color="primaryOutline"

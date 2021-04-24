@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useFormikContext } from 'formik';
 
-import { FlexContainer, Button, FormErrors } from '@components';
-import HorizontalRule from './HorizontalRule';
+import { FlexContainer, Button, FormErrors, HorizontalRule } from '@components';
+import trackEvent from '@utils/trackEvent';
 
 type EditableComponentProps = {
   label: string;
@@ -22,7 +22,17 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = (props) => 
           <strong>{props.label}</strong>
         </p>
         <p>
-          <Button type="button" color="text" onClick={() => setIsEditing(!isEditing)}>
+          <Button
+            type="button"
+            color="text"
+            onClick={() => {
+              trackEvent(
+                `EditableInput - ${isEditing ? 'Cancel' : 'Edit'} ${props.label} Clicked`,
+                { label: props.label, value: props.value }
+              );
+              setIsEditing(!isEditing);
+            }}
+          >
             {isEditing ? 'Cancel' : 'Edit'}
           </Button>
         </p>

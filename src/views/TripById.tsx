@@ -12,6 +12,7 @@ import TripDetails from '@views/TripDetails';
 import TripParty from '@views/TripParty';
 import EditPackingListItem from '@views/EditPackingListItem';
 import { UserType } from '@common/user';
+import trackEvent from '@utils/trackEvent';
 
 type TripByIdProps = {
   id?: string;
@@ -61,6 +62,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   }, []);
 
   if (!props.id) {
+    trackEvent('Trip By Id Had No Id');
     return null;
   }
 

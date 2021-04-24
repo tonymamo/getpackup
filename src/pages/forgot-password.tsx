@@ -19,6 +19,7 @@ import {
 } from '@components';
 import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
 
 type ForgotPasswordProps = {};
 
@@ -42,7 +43,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
       .sendPasswordResetEmail(values.email)
       .then(() => {
         resetForm();
-
+        trackEvent('Forgot Password Submitted', { email: values.email });
         dispatch(
           addAlert({
             type: 'success',
@@ -51,6 +52,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
         );
       })
       .catch((error: Error) => {
+        trackEvent('Forgot Password Submit Failure', { email: values.email, error });
         setDisplayError(error.message);
       })
       .finally(() => {

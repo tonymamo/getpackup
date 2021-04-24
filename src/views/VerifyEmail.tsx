@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { baseSpacer } from '@styles/size';
 import { LoadingSpinner } from '@components';
+import trackEvent from '@utils/trackEvent';
 
 type VerifyEmailProps = { actionCode: string };
 
@@ -20,6 +21,7 @@ const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
       .auth()
       .applyActionCode(actionCode)
       .then(() => {
+        trackEvent('Email Address Verified');
         dispatch(
           addAlert({
             type: 'success',
@@ -28,6 +30,7 @@ const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
         );
       })
       .catch((error: Error) => {
+        trackEvent('Email Address Verification Failure', { error });
         dispatch(
           addAlert({
             type: 'danger',

@@ -3,13 +3,14 @@ import { Formik, Field, Form } from 'formik';
 import styled from 'styled-components';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
+import { FaPlus } from 'react-icons/fa';
 
 import { baseBorderStyle } from '@styles/mixins';
 import { halfSpacer, doubleSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Input, FlexContainer } from '@components';
 import { brandPrimary, offWhite, textColor } from '@styles/color';
-import { FaPlus } from 'react-icons/fa';
+import trackEvent from '@utils/trackEvent';
 import { InputWrapper } from './Input';
 
 type PackingListItemProps = {
@@ -77,9 +78,19 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                   description: '',
                   created: new Date(),
                 });
-
+              trackEvent('Packing List Item Added', {
+                name: values[`new-${categoryName}`],
+                categoryName,
+                tripId,
+              });
               resetForm({});
             } catch (err) {
+              trackEvent('Packing List Item Add Failure', {
+                name: values[`new-${categoryName}`],
+                categoryName,
+                tripId,
+                error: err,
+              });
               await dispatch(
                 addAlert({
                   type: 'danger',

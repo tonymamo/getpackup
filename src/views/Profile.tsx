@@ -24,6 +24,7 @@ import { RootState } from '@redux/ducks';
 import { requiredField } from '@utils/validations';
 import validateUsername from '@utils/validateUsername';
 import { baseSpacerUnit, baseSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
 
 type ProfileProps = {
   loggedInUser?: any;
@@ -45,9 +46,11 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
       .auth()
       .signOut()
       .then(() => {
+        trackEvent('Logout Clicked', { location: 'Profile' });
         navigate('/');
       })
       .catch((err) => {
+        trackEvent('Logout Failure', { location: 'Profile', error: err });
         dispatch(
           addAlert({
             type: 'danger',
@@ -66,6 +69,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
     const user = firebase.auth().currentUser;
 
     if (!user) {
+      trackEvent('Verify Email Attempted', { error: 'Not logged in' });
       dispatch(
         addAlert({
           type: 'danger',
@@ -78,6 +82,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
       .sendEmailVerification()
       .then(() => {
         setVerifySent(true);
+        trackEvent('Verify Email Sent');
         dispatch(
           addAlert({
             type: 'success',
@@ -86,6 +91,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
         );
       })
       .catch((err) => {
+        trackEvent('Verify Email Send Failure');
         dispatch(
           addAlert({
             type: 'danger',
@@ -128,6 +134,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                   .then(() => {
                     setSubmitting(false);
                     resetForm({ values });
+                    trackEvent('Profile Updated', { ...updateValues });
                     dispatch(
                       addAlert({
                         type: 'success',
@@ -137,6 +144,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                   })
                   .catch((err) => {
                     setSubmitting(false);
+                    trackEvent('Profile Update Failure', { error: err, ...updateValues });
                     dispatch(
                       addAlert({
                         type: 'danger',

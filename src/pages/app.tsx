@@ -17,6 +17,7 @@ import { breakpoints, baseSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 import { UserType } from '@common/user';
+import trackEvent from '@utils/trackEvent';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -70,6 +71,18 @@ const App: FunctionComponent<{}> = () => {
             website: '',
             location: '',
             lastUpdated: new Date(),
+          })
+          .then(() => {
+            trackEvent('User Profile Initial Info Set', {
+              uid: auth.uid,
+              email: auth.email,
+              emailVerified: auth.emailVerified,
+              displayName: auth.displayName,
+              photoURL: auth.photoURL,
+              username: `${auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(
+                100000 + Math.random() * 900000
+              )}`,
+            });
           });
       }
     }

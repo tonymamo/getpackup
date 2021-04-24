@@ -29,6 +29,7 @@ import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
 import { gearListActivities } from '@utils/gearListItemEnum';
 import TripNavigation from '@views/TripNavigation';
 import { UserType } from '@common/user';
+import trackEvent from '@utils/trackEvent';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
@@ -44,20 +45,24 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
   const updateTrip = (values: TripFormType) => {
     setIsLoading(true);
     if (activeTrip) {
+      const updatedValues = {
+        ...values,
+        season: getSeason(values.lat, values.lng, values.startDate as string),
+        startDate: startOfDay(new Date(values.startDate as string)),
+        endDate: endOfDay(new Date(values.endDate as string)),
+        updated: new Date(),
+        tripMembers: [...activeTrip.tripMembers, ...values.tripMembers],
+        tripLength: values.tripLength,
+      };
       firebase
         .firestore()
         .collection('trips')
         .doc(activeTrip.tripId)
         .set({
-          ...values,
-          season: getSeason(values.lat, values.lng, values.startDate as string),
-          startDate: startOfDay(new Date(values.startDate as string)),
-          endDate: endOfDay(new Date(values.endDate as string)),
-          updated: new Date(),
-          tripMembers: [...activeTrip.tripMembers, ...values.tripMembers],
-          tripLength: values.tripLength,
+          ...updatedValues,
         })
         .then(() => {
+          trackEvent('Trip Details Updated', { ...updatedValues });
           setIsLoading(false);
           dispatch(
             addAlert({
@@ -67,6 +72,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
           );
         })
         .catch((err) => {
+          trackEvent('Trip Details Update Failure', { ...updatedValues });
           setIsLoading(false);
           dispatch(
             addAlert({

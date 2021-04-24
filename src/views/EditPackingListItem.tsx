@@ -22,6 +22,7 @@ import { gearListCategories } from '@utils/gearListItemEnum';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
+import trackEvent from '@utils/trackEvent';
 
 type EditPackingListItemProps = {
   tripId?: string;
@@ -55,6 +56,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
               message: `${activeItem.name} has been removed`,
             })
           );
+          trackEvent('Packing List Item Removed', { ...activeItem });
         })
         .catch((err) => {
           dispatch(
@@ -101,6 +103,10 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 })
                 .then(() => {
                   resetForm({ values });
+                  trackEvent('Packing List Item Edited', {
+                    ...activeItem,
+                    ...values,
+                  });
                 })
                 .catch((err) => {
                   dispatch(
@@ -109,6 +115,11 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                       message: err.message,
                     })
                   );
+                  trackEvent('Packing List Item Edited Failure', {
+                    ...activeItem,
+                    ...values,
+                    error: err,
+                  });
                 });
               setSubmitting(false);
             }

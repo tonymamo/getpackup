@@ -27,6 +27,7 @@ import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import TripDeleteModal from '@views/TripDeleteModal';
 import { fontSizeSmall } from '@styles/typography';
+import trackEvent from '@utils/trackEvent';
 
 type TripCardProps = {
   trip?: TripType;
@@ -68,7 +69,10 @@ const TripCard: FunctionComponent<TripCardProps> = ({
   return (
     <StyledTripWrapper>
       {!enableNavigation && !size.isSmallScreen ? (
-        <StyledBackLink to="../">
+        <StyledBackLink
+          to="../"
+          onClick={() => trackEvent('Trip Card Back To Trips Link Clicked', { trip })}
+        >
           <FaChevronLeft /> All Trips
         </StyledBackLink>
       ) : null}
@@ -77,7 +81,12 @@ const TripCard: FunctionComponent<TripCardProps> = ({
           {trip ? (
             <>
               {enableNavigation ? (
-                <Link to={`/app/trips/${trip.tripId}/`}>{trip.name}</Link>
+                <Link
+                  to={`/app/trips/${trip.tripId}/`}
+                  onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
+                >
+                  {trip.name}
+                </Link>
               ) : (
                 trip.name
               )}
@@ -171,6 +180,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({
                     rightSpacer
                     size="small"
                     color="tertiary"
+                    onClick={() => trackEvent('Trip Card Details Link Clicked', { trip })}
                   >
                     Details
                   </Button>
@@ -180,6 +190,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({
                     rightSpacer
                     size="small"
                     color="tertiary"
+                    onClick={() => trackEvent('Trip Card Party Link Clicked', { trip })}
                   >
                     Party
                   </Button>
@@ -189,7 +200,13 @@ const TripCard: FunctionComponent<TripCardProps> = ({
                     tripId={trip.tripId}
                   />
                   <DropdownMenu>
-                    <button onClick={() => setModalIsOpen(true)} type="button">
+                    <button
+                      onClick={() => {
+                        setModalIsOpen(true);
+                        trackEvent('Trip Card Delete Trip Clicked', { trip });
+                      }}
+                      type="button"
+                    >
                       <FaTrash /> Delete
                     </button>
                   </DropdownMenu>

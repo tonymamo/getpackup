@@ -19,6 +19,7 @@ import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
+import trackEvent from '@utils/trackEvent';
 
 type PackingListProps = {
   trip?: TripType;
@@ -118,10 +119,22 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       <StickyWrapper ref={stickyRef}>
         {sharedTrip && (
           <Tabs isSticky={isSticky}>
-            <Tab active={tabIndex === 0} onClick={() => setTabIndex(0)}>
+            <Tab
+              active={tabIndex === 0}
+              onClick={() => {
+                setTabIndex(0);
+                trackEvent('Personal Checklist Tab Clicked');
+              }}
+            >
               <FaRegCheckSquare title="Personal Checklist" />
             </Tab>
-            <Tab active={tabIndex === 1} onClick={() => setTabIndex(1)}>
+            <Tab
+              active={tabIndex === 1}
+              onClick={() => {
+                setTabIndex(1);
+                trackEvent('Shared Checklist Tab Clicked');
+              }}
+            >
               <FaUsers title="Shared Checklist" />
             </Tab>
           </Tabs>
