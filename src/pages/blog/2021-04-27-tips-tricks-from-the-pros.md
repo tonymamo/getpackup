@@ -41,7 +41,11 @@ I try to keep my kits for camping very multi-functional and as minimal as possib
 
 I’d say the worst thing I ever forgot was checking the weather forecast before a summer ski mission in Tahoe. Living in California for my entire life, I’ve gotten so used to half year long stretches of no rain, storms or harsh weather, that's when I decided to go for a multi-night summer ski mission in Desolation Wilderness with some friends, I completely forgot to check the weather forecast simply because summer in Tahoe generally means 100 day stretches of sun. So without a tent or a bivy sack, I loaded up my ski gear and hiked out to Desolation. As the wind came up the first evening I got a little worried about the weather but generally chalked it up to typical alpine diurnal winds. I went to sleep in my thin, 30 degree rated summer sleeping bag laying out on the granite slabs of the high alpine completely exposed to the elements…it began to snow. It was only about 10pm when I was woken up by snow on my face and ripping winds, I decided my only course of action was to put on my ski clothes and get back into my sleeping bag and hope for the best. Needless to say, I got very little sleep that night, shivered uncontrollably through the entire night and emerged from my bag at first light the next morning to find my sleeping bag wet enough to have been dumped in the nearby lake before being inside of it for the night. Learned my lesson that even in sunny California, don’t forget to check the weather before heading out to the backcountry.
 
+<br />
+
 <hr />
+
+<br />
 
 ### **[Meesh Coles](https://www.instagram.com/meesh.coles/?hl=en)**
 
@@ -65,7 +69,11 @@ A sharp knife! Better yet, a [Leatherman](https://bit.ly/3u0yGEB)! I never leave
 
 Woof. Well, one thing I wouldn’t recommend forgetting on the sunnier days (PS, check the weather forecast before you head out), is sunscreen. On one trip in particular the only thing I had was coconut oil and in my holistic-natural-remedy thinking brain I figured “hey this could work! It has some SPF.” Well, I was torched. Like couldn’t lay on any side, angle, front, back without whimpering like a little puppy. I also didn’t pack aloe or anything of the sort and had a couple days of being wrapped up in towels in hot weather to keep the sun away. Ouchie. Looking back, I can’t help but laugh but at the time it felt like life would carry on like that forever. The little red tomato human that wore towels and cried in the most stunning conditions. Don’t forget your sunscreen!
 
+<br />
+
 <hr />
+
+<br />
 
 ### [**Andrew Szeto** ](https://www.instagram.com/szetoszeto/?hl=en)
 
@@ -89,7 +97,11 @@ When it comes to camping/just everyday life, I can't really live without my coff
 
 Tent poles... I somehow seem to forget those fairly often. I usually just end up jimmy rigging sticks and praying that it doesn't start raining on my parade. Also remembering to charge and bring my camera/drone batteries. The countless incredible moments that I never captured haunt me in my dreams!
 
+<br />
+
 <hr />
+
+<br />
 
 ### **[Cath Simard](https://www.instagram.com/cathsimard/?hl=en)**
 
