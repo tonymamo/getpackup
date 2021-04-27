@@ -135,6 +135,6 @@ Last summer I did a backpacking trip with a few friends at Berg Lake. Some of th
 
 ##### **Pack with packup**
 
-Prepare for your outdoor adventures in a thoughtful and considered way to minimize the risks to your party. Our digital platform ensures that you'll never forget to pack your essentials on your trips.
+Prepare for your outdoor adventures in a organized and streamlined manner to minimize the risks to your party. Our digital platform ensures that you'll never forget to pack the essentials on your trips.
 
 **[Try us out today!](/)**
