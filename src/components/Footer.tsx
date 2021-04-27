@@ -9,6 +9,7 @@ import {
   FaWarehouse,
   FaUser,
   FaUserLock,
+  FaShoppingCart,
 } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -28,6 +29,7 @@ import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
+import { zIndexSmallScreenFooter } from '@styles/layers';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
@@ -61,6 +63,7 @@ const SignupFormWrapper = styled.div`
 
 const BottomNav = styled.nav`
   position: fixed;
+  z-index: ${zIndexSmallScreenFooter};
   bottom: 0;
   min-height: calc(${quadrupleSpacer} + 1px); /* min height plus 1px border top */
   left: 0;
@@ -259,7 +262,7 @@ const Footer = () => {
               trackEvent('Logged In Small Screen Footer Link Click', { link: 'Shopping List' })
             }
           >
-            <FaWarehouse />
+            <FaShoppingCart />
           </Link>
           {profile.isAdmin && (
             <Link to="/admin/gear-list" getProps={isPartiallyActive}>

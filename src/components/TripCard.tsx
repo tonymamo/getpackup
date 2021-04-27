@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useState } from 'react';
-import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaChevronLeft } from 'react-icons/fa';
+import React, { FunctionComponent } from 'react';
+import { FaRegCalendar, FaMapMarkerAlt } from 'react-icons/fa';
 import TextTruncate from 'react-text-truncate';
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
@@ -12,22 +12,18 @@ import {
   Heading,
   StackedAvatars,
   Avatar,
-  Pill,
-  PillWrapper,
   HorizontalRule,
   FlexContainer,
-  DropdownMenu,
-  Button,
-  Row,
-  Column,
+  NegativeMarginContainer,
+  StaticMapImage,
+  HeroImage,
 } from '@components';
-import { baseAndAHalfSpacer, baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
+import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
-import useWindowSize from '@utils/useWindowSize';
-import TripDeleteModal from '@views/TripDeleteModal';
-import { fontSizeSmall } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
+import useWindowSize from '@utils/useWindowSize';
+import { lightestGray } from '@styles/color';
 
 type TripCardProps = {
   trip?: TripType;
@@ -39,58 +35,56 @@ type TripCardProps = {
 
 const StyledTripWrapper = styled.div``;
 
-const StyledBackLink = styled(Link)`
-  display: inline-block;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin-bottom: ${halfSpacer};
-  font-size: ${fontSizeSmall};
-`;
-
 const StyledLineItem = styled.div`
   margin-bottom: ${halfSpacer};
 `;
 
-const TripCard: FunctionComponent<TripCardProps> = ({
-  trip,
-  loggedInUser,
-  showDescription,
-  showTags,
-  enableNavigation,
-}) => {
+const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const size = useWindowSize();
+  const { isExtraSmallScreen } = useWindowSize();
+  // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
+  const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
+  const mapHeight = isExtraSmallScreen ? 125 : 250;
 
   const numberOfAvatarsToShow = 4;
 
   return (
     <StyledTripWrapper>
-      {!enableNavigation && !size.isSmallScreen ? (
-        <StyledBackLink
-          to="../"
-          onClick={() => trackEvent('Trip Card Back To Trips Link Clicked', { trip })}
-        >
-          <FaChevronLeft /> All Trips
-        </StyledBackLink>
-      ) : null}
+      <NegativeMarginContainer
+        top={negativeSpacingSize}
+        left={negativeSpacingSize}
+        right={negativeSpacingSize}
+      >
+        {trip ? (
+          <>
+            {/* Aspect ratio is 16/4 or these images, but 5 works better for some reason? */}
+            {trip.headerImage && <HeroImage staticImgSrc={trip.headerImage} aspectRatio={5} />}
+            {!trip.headerImage && !!trip.lat && !!trip.lng && (
+              <StaticMapImage
+                lat={trip.lat}
+                lng={trip.lng}
+                height={mapHeight}
+                width="100%"
+                zoom={10}
+                label={isExtraSmallScreen ? undefined : trip.startingPoint}
+              />
+            )}
+          </>
+        ) : (
+          <div style={{ backgroundColor: lightestGray, height: mapHeight }} />
+        )}
+      </NegativeMarginContainer>
+
       <FlexContainer justifyContent="space-between" flexWrap="nowrap" alignItems="flex-start">
         <Heading as="h3" altStyle>
           {trip ? (
-            <>
-              {enableNavigation ? (
-                <Link
-                  to={`/app/trips/${trip.tripId}/`}
-                  onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
-                >
-                  {trip.name}
-                </Link>
-              ) : (
-                trip.name
-              )}
-            </>
+            <Link
+              to={`/app/trips/${trip.tripId}/`}
+              onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
+            >
+              {trip.name}
+            </Link>
           ) : (
             <Skeleton width={200} />
           )}
@@ -134,148 +128,53 @@ const TripCard: FunctionComponent<TripCardProps> = ({
         )}
       </FlexContainer>
 
-      <Row>
-        <Column md={showDescription ? 12 : 7}>
-          <StyledLineItem>
-            <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-              <FaRegCalendar style={{ marginRight: halfSpacer }} />
-              {trip ? (
-                <>
-                  {trip.tripLength === 21
-                    ? formattedDate(new Date(trip.startDate.seconds * 1000))
-                    : formattedDateRange(
-                        trip.startDate.seconds * 1000,
-                        trip.endDate.seconds * 1000
-                      )}
-                </>
-              ) : (
-                <div style={{ flex: 1 }}>
-                  <Skeleton count={1} width="50%" />
-                </div>
-              )}
-            </FlexContainer>
-          </StyledLineItem>
-
-          <StyledLineItem>
-            <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-              <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />
-              {trip ? (
-                trip.startingPoint
-              ) : (
-                <div style={{ flex: 1 }}>
-                  <Skeleton count={1} width="65%" />
-                </div>
-              )}
-            </FlexContainer>
-          </StyledLineItem>
-        </Column>
-        {!showDescription && (
-          <Column md={5}>
-            <FlexContainer justifyContent={!size.isSmallScreen ? 'flex-end' : 'flex-start'}>
-              {trip ? (
-                <>
-                  <Button
-                    type="link"
-                    to={`/app/trips/${trip.tripId}/details`}
-                    rightSpacer
-                    size="small"
-                    color="tertiary"
-                    onClick={() => trackEvent('Trip Card Details Link Clicked', { trip })}
-                  >
-                    Details
-                  </Button>
-                  <Button
-                    type="link"
-                    to={`/app/trips/${trip.tripId}/party`}
-                    rightSpacer
-                    size="small"
-                    color="tertiary"
-                    onClick={() => trackEvent('Trip Card Party Link Clicked', { trip })}
-                  >
-                    Party
-                  </Button>
-                  <TripDeleteModal
-                    setModalIsOpen={setModalIsOpen}
-                    modalIsOpen={modalIsOpen}
-                    tripId={trip.tripId}
-                  />
-                  <DropdownMenu>
-                    <button
-                      onClick={() => {
-                        setModalIsOpen(true);
-                        trackEvent('Trip Card Delete Trip Clicked', { trip });
-                      }}
-                      type="button"
-                    >
-                      <FaTrash /> Delete
-                    </button>
-                  </DropdownMenu>
-                </>
-              ) : (
-                <>
-                  <Skeleton width={100} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
-                  <Skeleton width={80} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
-                  <Skeleton width={50} height={doubleSpacer} />
-                </>
-              )}
-            </FlexContainer>
-          </Column>
-        )}
-      </Row>
-
-      {showTags && (
-        <PillWrapper>
+      <StyledLineItem>
+        <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
+          <FaRegCalendar style={{ marginRight: halfSpacer }} />
           {trip ? (
             <>
-              {trip.tags.map((tag: string) => (
-                <Pill
-                  key={`${tag}tag`}
-                  // TODO: link to tags
-                  // to={`/search/tags/${tag.replace(' ', '-')}`}
-                  text={tag}
-                  color="primary"
-                />
-              ))}
+              {trip.tripLength === 21
+                ? formattedDate(new Date(trip.startDate.seconds * 1000))
+                : formattedDateRange(trip.startDate.seconds * 1000, trip.endDate.seconds * 1000)}
             </>
           ) : (
-            <>
-              {/* Generate some tag placeholders and make widths dynamic with Math */}
-              {Array.from({ length: 7 }).map((_, i) => (
-                <Skeleton
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={i}
-                  // random widths between 48 and 128
-                  width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
-                  height={baseAndAHalfSpacer}
-                  style={{ marginRight: halfSpacer, borderRadius: baseAndAHalfSpacer }}
-                />
-              ))}
-            </>
+            <div style={{ flex: 1 }}>
+              <Skeleton count={1} width="50%" />
+            </div>
           )}
-        </PillWrapper>
-      )}
+        </FlexContainer>
+      </StyledLineItem>
 
-      {showDescription && (
-        <>
+      <StyledLineItem>
+        <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
+          <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />
           {trip ? (
-            <>
-              {trip.description !== '' && (
-                <>
-                  <HorizontalRule compact />
-                  <TextTruncate
-                    line={1}
-                    element="p"
-                    truncateText="…"
-                    text={trip.description || 'No description provided'}
-                    containerClassName="truncatedText"
-                  />
-                </>
-              )}
-            </>
+            trip.startingPoint
           ) : (
-            <Skeleton count={1} />
+            <div style={{ flex: 1 }}>
+              <Skeleton count={1} width="65%" />
+            </div>
+          )}
+        </FlexContainer>
+      </StyledLineItem>
+
+      {trip ? (
+        <>
+          {trip.description !== '' && (
+            <>
+              <HorizontalRule compact />
+              <TextTruncate
+                line={1}
+                element="p"
+                truncateText="…"
+                text={trip.description || 'No description provided'}
+                containerClassName="truncatedText"
+              />
+            </>
           )}
         </>
+      ) : (
+        <Skeleton count={1} />
       )}
     </StyledTripWrapper>
   );

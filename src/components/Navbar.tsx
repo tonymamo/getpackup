@@ -208,6 +208,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const checklistItemRegex = new RegExp('/checklist/*');
   const routeIsChecklistItem = checklistItemRegex.test(pathname);
 
+  const tripGenRegex = new RegExp('/add-trip-image|generator/*');
+  const routeIsPartOfTripGenProcess = tripGenRegex.test(pathname);
+
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
     return isPartiallyCurrent ? { className: 'active' } : {};
   };
@@ -246,7 +249,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   to="../"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Back Button Clicked');
-                    if (routeIsChecklistItem) {
+                    if (routeIsChecklistItem || routeIsPartOfTripGenProcess) {
                       navigate(-1);
                     }
                   }}

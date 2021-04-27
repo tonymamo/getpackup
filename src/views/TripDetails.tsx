@@ -19,6 +19,7 @@ import {
   Box,
   HorizontalRule,
   UserMediaObject,
+  HeroImageUpload,
 } from '@components';
 import { TripType, TripFormType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -104,16 +105,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
         {typeof activeTrip !== 'undefined' && (
           <>
             <TripNavigation activeTrip={activeTrip} />
-            {!!activeTrip.lat && !!activeTrip.lng && (
-              <StaticMapImage
-                lat={activeTrip.lat}
-                lng={activeTrip.lng}
-                height={200}
-                width="100%"
-                zoom={13}
-                label={activeTrip.startingPoint}
-              />
-            )}
+            <HeroImageUpload type="trip" image={activeTrip.headerImage} id={activeTrip.tripId} />
             <Formik
               validateOnMount
               initialValues={
@@ -134,7 +126,11 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                   <Row>
                     <Column lg={8}>
                       <Box>
-                        <EditableInput label="Trip Name" isLoading={isLoading} value={values.name}>
+                        <EditableInput
+                          label="Trip Name"
+                          isLoading={isLoading}
+                          value={activeTrip.name}
+                        >
                           <Field
                             as={Input}
                             type="text"
@@ -163,7 +159,20 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                         <EditableInput
                           label="Location"
                           isLoading={isLoading}
-                          value={values.startingPoint}
+                          value={
+                            !!activeTrip.lat && !!activeTrip.lng ? (
+                              <StaticMapImage
+                                lat={activeTrip.lat}
+                                lng={activeTrip.lng}
+                                height={200}
+                                width="100%"
+                                zoom={13}
+                                label={activeTrip.startingPoint}
+                              />
+                            ) : (
+                              activeTrip.startingPoint
+                            )
+                          }
                         >
                           {typeof window !== 'undefined' && window.google ? (
                             <Field
@@ -189,7 +198,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                         <EditableInput
                           label="Description"
                           isLoading={isLoading}
-                          value={values.description || 'No description provided'}
+                          value={activeTrip.description || 'No description provided'}
                         >
                           <Field
                             as={Input}

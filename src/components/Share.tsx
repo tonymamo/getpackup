@@ -21,6 +21,7 @@ import { z1Shadow } from '@styles/mixins';
 import { white } from '@styles/color';
 import { baseSpacer, borderRadius, halfSpacer, quarterSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
+import { zIndexModal } from '@styles/layers';
 
 type ShareProps = {
   url: string;
@@ -41,7 +42,7 @@ const ShareWrapper = styled.div`
 
 const VerticalShareWrapper = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: ${zIndexModal};
   left: 0;
   height: 270px; /* height of rendered div */
   margin-top: -135px; /* half of above */

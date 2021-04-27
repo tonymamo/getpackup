@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { FunctionComponent, useEffect, useState, useMemo } from 'react';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import {
@@ -15,18 +15,40 @@ import {
   Reddit,
   Flip,
 } from 'uppload';
+import styled from 'styled-components';
+import { FaCamera } from 'react-icons/fa';
 
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
-import Button from './Button';
+import { doubleSpacer, tripleSpacer } from '@styles/size';
+import { textColor, white } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
 import Avatar from './Avatar';
-import FlexContainer from './FlexContainer';
+
+const AvatarUploadWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+`;
+
+const EditButton = styled.button`
+  border-radius: ${doubleSpacer};
+  width: ${doubleSpacer};
+  height: ${doubleSpacer};
+  background-color: ${white};
+  color: ${textColor};
+  border: ${baseBorderStyle};
+  position: absolute;
+  bottom: 0;
+  right: calc(50% - ${tripleSpacer});
+  justify-content: center;
+  display: flex;
+  align-items: center;
+`;
 
 const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const uploader = useMemo(
     () =>
@@ -77,10 +99,6 @@ const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }
     uploader.use([new Crop({ aspectRatio: 1 }), new Flip()]);
   }, [uploader]);
 
-  uploader.on('before-upload', () => {
-    setIsLoading(true);
-  });
-
   uploader.on('upload', (newUrl: string) => {
     firebase
       .firestore()
@@ -91,22 +109,16 @@ const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }
         lastUpdated: new Date(),
       });
     trackEvent('New User Avatar Uploaded', { user: auth.email, photoURL: newUrl });
-    setIsLoading(false);
     uploader.close();
   });
 
   return (
-    <FlexContainer flexDirection="column">
-      <Avatar src={loggedInUser.photoURL} size="lg" gravatarEmail={loggedInUser.email} />
-      <Button
-        type="button"
-        onClick={() => uploader.open()}
-        color="text"
-        isLoading={!auth.isLoaded || isLoading}
-      >
-        Change Profile Photo
-      </Button>
-    </FlexContainer>
+    <AvatarUploadWrapper>
+      <Avatar src={loggedInUser.photoURL} size="xl" gravatarEmail={loggedInUser.email} />
+      <EditButton type="button" onClick={() => uploader.open()}>
+        <FaCamera />
+      </EditButton>
+    </AvatarUploadWrapper>
   );
 };
 

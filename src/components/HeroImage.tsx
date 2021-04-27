@@ -1,14 +1,20 @@
+/* eslint-disable no-nested-ternary */
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 import { white } from '@styles/color';
 import useWindowSize from '@utils/useWindowSize';
 import { PreviewCompatibleImage } from '@components';
 import { FluidImageType } from '@common/image';
+import { baseSpacer } from '@styles/size';
 
 type HeroImageProps = {
-  imgSrc: FluidImageType;
+  imgSrc?: FluidImageType;
   mobileImgSrc?: FluidImageType;
+  staticImgSrc?: string;
+  aspectRatio?: number;
+  justifyContent?: CSSProperties['justifyContent'];
+  alignItems?: CSSProperties['alignItems'];
 };
 
 const HeroImageWrapper = styled.div`
@@ -22,11 +28,12 @@ const ChildrenWrapper = styled.div`
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: ${(props: HeroImageProps) => props.justifyContent || 'center'};
+  align-items: ${(props: HeroImageProps) => props.alignItems || 'center'};
   height: 100%;
   text-align: center;
   color: ${white};
+  padding: ${baseSpacer};
 
   & h1,
   & p {
@@ -34,27 +41,42 @@ const ChildrenWrapper = styled.div`
   }
 `;
 
-const HeroImage: FunctionComponent<HeroImageProps> = ({ imgSrc, children, mobileImgSrc }) => {
+const HeroImage: FunctionComponent<HeroImageProps> = ({
+  imgSrc,
+  children,
+  mobileImgSrc,
+  staticImgSrc,
+  aspectRatio,
+  justifyContent,
+  alignItems,
+}) => {
   const size = useWindowSize();
 
   return (
     <HeroImageWrapper
       aspectRatio={
-        // eslint-disable-next-line no-nested-ternary
-        size.isExtraSmallScreen && mobileImgSrc
+        aspectRatio || // if a specific aspectRatio is passed in use that, otherwise use fluid image ratios. default to 16/9 if nothing is there
+        (size.isExtraSmallScreen && mobileImgSrc
           ? mobileImgSrc.fluid.aspectRatio
-          : imgSrc.fluid
+          : imgSrc && imgSrc.fluid
           ? imgSrc.fluid.aspectRatio
-          : 16 / 9
+          : 16 / 9)
       }
     >
       <PreviewCompatibleImage
         imageInfo={{
-          image: size.isExtraSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc,
+          image:
+            imgSrc || mobileImgSrc // if imgSrc or mobileImgSrc, use one of those, otherwise that means a staticImgSrc was passed in
+              ? size.isExtraSmallScreen && mobileImgSrc
+                ? (mobileImgSrc as FluidImageType)
+                : (imgSrc as FluidImageType)
+              : (staticImgSrc as string),
           alt: '',
         }}
       />
-      <ChildrenWrapper>{children}</ChildrenWrapper>
+      <ChildrenWrapper justifyContent={justifyContent} alignItems={alignItems}>
+        {children}
+      </ChildrenWrapper>
     </HeroImageWrapper>
   );
 };

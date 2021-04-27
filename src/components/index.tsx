@@ -21,6 +21,7 @@ import FormErrors from './FormErrors';
 import GlobalAlerts from './GlobalAlerts';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
+import HeroImageUpload from './HeroImageUpload';
 import HorizontalRule from './HorizontalRule';
 import IconCheckbox from './IconCheckbox';
 import IconWrapper from './IconWrapper';
@@ -49,6 +50,7 @@ import StaticMapImage from './StaticMapImage';
 import Table from './Table';
 import Testimonial from './Testimonial';
 import TripCard from './TripCard';
+import TripHeader from './TripHeader';
 import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
 
@@ -76,6 +78,7 @@ export {
   GlobalAlerts,
   Heading,
   HeroImage,
+  HeroImageUpload,
   HorizontalRule,
   HTMLContent,
   IconCheckbox,
@@ -108,6 +111,7 @@ export {
   Table,
   Testimonial,
   TripCard,
+  TripHeader,
   UserMediaObject,
   Wave,
 };

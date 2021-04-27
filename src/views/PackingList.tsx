@@ -13,13 +13,14 @@ import {
   threeQuarterSpacer,
 } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
-import { Alert, Box, Heading, PackingListCategory, TripCard } from '@components';
+import { Alert, Box, Heading, PackingListCategory, TripHeader } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
+import { zIndexNavbar } from '@styles/layers';
 
 type PackingListProps = {
   trip?: TripType;
@@ -51,7 +52,7 @@ const Tabs = styled.div`
     props.isSticky &&
     `
   position: fixed;
-  z-index: 1;
+  z-index: ${zIndexNavbar};
   top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
   `}
 `;
@@ -115,7 +116,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   return (
     <>
-      <TripCard trip={trip} loggedInUser={loggedInUser} showTags />
+      <TripHeader trip={trip} loggedInUser={loggedInUser} showTags />
       <StickyWrapper ref={stickyRef}>
         {sharedTrip && (
           <Tabs isSticky={isSticky}>

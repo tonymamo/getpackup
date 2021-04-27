@@ -45,7 +45,7 @@ const renderSize = (size: AvatarProps['size']) => {
   }
 };
 
-const AvatarImageWrapper = styled.div`
+export const AvatarImageWrapper = styled.div`
   border-radius: ${borderRadiusCircle};
   overflow: hidden;
   object-fit: cover;

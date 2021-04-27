@@ -10,7 +10,12 @@ type EditableComponentProps = {
   value: string | JSX.Element;
 };
 
-const EditableComponent: FunctionComponent<EditableComponentProps> = (props) => {
+const EditableComponent: FunctionComponent<EditableComponentProps> = ({
+  label,
+  isLoading,
+  value,
+  children,
+}) => {
   // Manage the state whether to show the label or the input. By default, label will be shown.
   const [isEditing, setIsEditing] = useState(false);
   const { isSubmitting, isValid, dirty, submitForm, errors } = useFormikContext();
@@ -19,17 +24,17 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = (props) => 
     <section>
       <FlexContainer justifyContent="space-between">
         <p>
-          <strong>{props.label}</strong>
+          <strong>{label}</strong>
         </p>
         <p>
           <Button
             type="button"
             color="text"
             onClick={() => {
-              trackEvent(
-                `EditableInput - ${isEditing ? 'Cancel' : 'Edit'} ${props.label} Clicked`,
-                { label: props.label, value: props.value }
-              );
+              trackEvent(`EditableInput - ${isEditing ? 'Cancel' : 'Edit'} ${label} Clicked`, {
+                label,
+                value,
+              });
               setIsEditing(!isEditing);
             }}
           >
@@ -40,7 +45,7 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = (props) => 
 
       {isEditing ? (
         <div>
-          {props.children}
+          {children}
           <FormErrors dirty={dirty} errors={errors as string[]} />
           <Button
             type="button"
@@ -55,14 +60,14 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = (props) => 
                 }
               );
             }}
-            isLoading={props.isLoading}
-            disabled={isSubmitting || !isValid || props.isLoading}
+            isLoading={isLoading}
+            disabled={isSubmitting || !isValid || isLoading}
           >
             Save
           </Button>
         </div>
       ) : (
-        <p>{props.value}</p>
+        <>{typeof value === 'string' ? <p>{value}</p> : value}</>
       )}
       <HorizontalRule />
     </section>
