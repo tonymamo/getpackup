@@ -49,7 +49,7 @@ I’d say the worst thing I ever forgot was checking the weather forecast before
 
 ### **[Meesh Coles](https://www.instagram.com/meesh.coles/?hl=en)**
 
-*Meesh Coles is a nutritionist and personal chef who loves to spend her time outside, preferably on water. When it comes to food, she is an incredibly talented artist. The ingredients are the paint and the plate is the canvas. She is the person that you want on your backcountry camping trip because you know that you’re going to be eating well!* 
+*Meesh Coles is a nutritionist and personal chef who loves to spend her time outside, preferably near a large body of water. When it comes to food, she is an incredibly talented artist. The ingredients are the paint and the plate is the canvas in which she creates masterpieces. She is the person that you want on your backcountry camping trip because you know that you’re going to be eating well!* 
 
 <br />
 
