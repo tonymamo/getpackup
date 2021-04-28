@@ -78,11 +78,6 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                   description: '',
                   created: new Date(),
                 });
-              trackEvent('Packing List Item Added', {
-                name: values[`new-${categoryName}`],
-                categoryName,
-                tripId,
-              });
               resetForm({});
             } catch (err) {
               trackEvent('Packing List Item Add Failure', {
@@ -104,7 +99,13 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <FlexContainer justifyContent="flex-start">
-              <Field as={Input} type="text" name="name" label="Add Item" hiddenLabel />
+              <Field
+                as={Input}
+                type="text"
+                name={`new-${categoryName}`}
+                label="Add Item"
+                hiddenLabel
+              />
               <IconWrapper onClick={() => handleSubmit()}>
                 <FaPlus />
               </IconWrapper>
