@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt } from 'react-icons/fa';
 import TextTruncate from 'react-text-truncate';
-import { Link, navigate } from 'gatsby';
+import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
@@ -33,7 +33,9 @@ type TripCardProps = {
   enableNavigation?: boolean;
 };
 
-const StyledTripWrapper = styled.div``;
+const StyledTripWrapper = styled.div`
+  cursor: pointer;
+`;
 
 const StyledLineItem = styled.div`
   margin-bottom: ${halfSpacer};
@@ -57,12 +59,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   const numberOfAvatarsToShow = 4;
 
   return (
-    <StyledTripWrapper
-      onClick={() => {
-        navigate(`/app/trips/${trip?.tripId}/`);
-        trackEvent('Trip Card Link Clicked', { trip });
-      }}
-    >
+    <StyledTripWrapper>
       <NegativeMarginContainer
         top={negativeSpacingSize}
         left={negativeSpacingSize}
