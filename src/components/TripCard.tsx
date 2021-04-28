@@ -67,7 +67,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
       >
         {trip ? (
           <>
-            {/* Aspect ratio is 16/4 or these images, but 5 works better for some reason? */}
+            {/* Aspect ratio is 16/4 or these images, but 5 works better because it isnt 100% full width, it's in a PageContainer with a max width */}
             {trip.headerImage && <HeroImage staticImgSrc={trip.headerImage} aspectRatio={5} />}
             {!trip.headerImage && (
               <PlaceholderImageWrapper backgroundColor={brandSecondary}>
