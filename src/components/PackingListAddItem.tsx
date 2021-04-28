@@ -78,6 +78,11 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                   description: '',
                   created: new Date(),
                 });
+              trackEvent('Packing List Item Added', {
+                name: values[`new-${categoryName}`],
+                categoryName,
+                tripId,
+              });
               resetForm({});
             } catch (err) {
               trackEvent('Packing List Item Add Failure', {
