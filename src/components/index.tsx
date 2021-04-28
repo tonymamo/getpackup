@@ -32,6 +32,7 @@ import LoadingSpinner from './LoadingSpinner';
 import Modal from './Modal';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
+import NoiseRings from './NoiseRings';
 import PackingListAddItem from './PackingListAddItem';
 import PackingListCategory from './PackingListCategory';
 import PackingListItem from './PackingListItem';
@@ -91,6 +92,7 @@ export {
   Modal,
   Navbar,
   NegativeMarginContainer,
+  NoiseRings,
   PackingListAddItem,
   PackingListCategory,
   PackingListItem,

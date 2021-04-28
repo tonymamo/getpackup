@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt } from 'react-icons/fa';
 import TextTruncate from 'react-text-truncate';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
@@ -15,15 +15,15 @@ import {
   HorizontalRule,
   FlexContainer,
   NegativeMarginContainer,
-  StaticMapImage,
   HeroImage,
+  NoiseRings,
 } from '@components';
 import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
-import { lightestGray } from '@styles/color';
+import { brandSecondary, lightestGray } from '@styles/color';
 
 type TripCardProps = {
   trip?: TripType;
@@ -39,18 +39,30 @@ const StyledLineItem = styled.div`
   margin-bottom: ${halfSpacer};
 `;
 
+const PlaceholderImageWrapper = styled.div`
+  height: calc(100vw / 5);
+  background-color: ${(props: { backgroundColor: string }) => props.backgroundColor};
+  & svg {
+    width: 100%;
+  }
+`;
+
 const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
 
   const { isExtraSmallScreen } = useWindowSize();
   // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
   const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
-  const mapHeight = isExtraSmallScreen ? 125 : 250;
 
   const numberOfAvatarsToShow = 4;
 
   return (
-    <StyledTripWrapper>
+    <StyledTripWrapper
+      onClick={() => {
+        navigate(`/app/trips/${trip?.tripId}/`);
+        trackEvent('Trip Card Link Clicked', { trip });
+      }}
+    >
       <NegativeMarginContainer
         top={negativeSpacingSize}
         left={negativeSpacingSize}
@@ -60,19 +72,19 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
           <>
             {/* Aspect ratio is 16/4 or these images, but 5 works better for some reason? */}
             {trip.headerImage && <HeroImage staticImgSrc={trip.headerImage} aspectRatio={5} />}
-            {!trip.headerImage && !!trip.lat && !!trip.lng && (
-              <StaticMapImage
-                lat={trip.lat}
-                lng={trip.lng}
-                height={mapHeight}
-                width="100%"
-                zoom={10}
-                label={isExtraSmallScreen ? undefined : trip.startingPoint}
-              />
+            {!trip.headerImage && (
+              <PlaceholderImageWrapper backgroundColor={brandSecondary}>
+                <NoiseRings
+                  height={512}
+                  width={2048}
+                  seed={trip ? trip.name : 'loading'}
+                  strokeWidth={4}
+                />
+              </PlaceholderImageWrapper>
             )}
           </>
         ) : (
-          <div style={{ backgroundColor: lightestGray, height: mapHeight }} />
+          <PlaceholderImageWrapper backgroundColor={lightestGray} />
         )}
       </NegativeMarginContainer>
 

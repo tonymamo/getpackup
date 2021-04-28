@@ -19,8 +19,8 @@ import { FaCamera } from 'react-icons/fa';
 
 import trackEvent from '@utils/trackEvent';
 import { Button, FlexContainer, HeroImage } from '@components';
-import { borderColor } from '@styles/color';
-import { baseSpacer, doubleSpacer } from '@styles/size';
+import { borderColor, offWhite, white } from '@styles/color';
+import { baseSpacer, halfSpacer } from '@styles/size';
 
 type HeroImageUploadProps = {
   type: 'trip' | 'profile';
@@ -34,8 +34,17 @@ const HeroImageUploadWrapper = styled.div`
 
 const HeroImageUploadPicker = styled.div`
   border: 2px dashed ${borderColor};
-  text-align: center;
-  padding: ${doubleSpacer};
+  background: repeating-linear-gradient(
+    45deg,
+    ${white},
+    ${white} ${halfSpacer},
+    ${offWhite} ${halfSpacer},
+    ${offWhite} ${baseSpacer}
+  );
+  min-height: calc(100vw / 5); /* 5 is to match aspectRatio of HeroImage */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, image }) => {
