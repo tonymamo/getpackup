@@ -6,7 +6,7 @@ description: >
   Tips & tricks along with lessons learned from mishaps in the outdoors. In this
   post you'll learn  from Cody Townsend (a ski mountaineer), Cath Simard (a
   landscape photographer), Meesh Coles (a chef) and Andrew Szeto (a woodworking
-  skateboarder) who all share the same passion, spending time outside! 
+  skateboarder) who all share the same passion—spending time outside! 
 featuredpost: true
 featuredimage: /img/collage.jpg
 tags:
@@ -21,7 +21,7 @@ tags:
 ---
 ### **[Cody Townsend](http://www.codytownsend.com)**
 
-*Cody AKA the peoples skier, is a successful and accomplished mountain athlete. If he’s not busy being a Hollywood stunt double then he's working on his goal of skiing all fifty of North America's classic descents and documenting the action through a [youtube series called “The Fifty”.](https://skithefifty.com/the-classics) His great attitude and sense of humor make him an entertaining person to follow along with.*
+*Cody AKA the people's skier, is a successful and accomplished mountain athlete. If he’s not busy being a Hollywood stunt double then he's working on his goal of skiing all fifty of North America's classic descents and documenting the action through a [youtube series called “The Fifty”.](https://skithefifty.com/the-classics) His great attitude and sense of humor make him an entertaining person to follow along with.*
 
 <br />
 
