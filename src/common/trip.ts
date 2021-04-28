@@ -15,6 +15,7 @@ export type TripType = {
   tripMembers: Array<string>;
   tags: Array<string>;
   tripLength: number;
+  headerImage?: string;
 };
 
 export type TripFormType = Omit<TripType, 'startDate' | 'endDate'> & {

@@ -9,13 +9,14 @@ import Trips from '@views/Trips';
 import NewTripSummary from '@views/NewTripSummary';
 import TripById from '@views/TripById';
 import TripGenerator from '@views/TripGenerator';
+import AddTripHeaderImage from '@views/AddTripHeaderImage';
 import GearCloset from '@views/GearCloset';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
 import { breakpoints, baseSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
-import { baseBorderStyle } from '@styles/mixins';
+import { z1Shadow } from '@styles/mixins';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 
@@ -25,8 +26,8 @@ export const AppContainer = styled.div`
   margin-left: auto;
   max-width: ${breakpoints.xl};
   background-color: ${offWhite};
-  border: ${baseBorderStyle};
   min-height: 100vh;
+  box-shadow: ${z1Shadow};
 `;
 
 const App: FunctionComponent<{}> = () => {
@@ -101,6 +102,11 @@ const App: FunctionComponent<{}> = () => {
           <PrivateRoute
             path="/trips/new"
             component={NewTripSummary}
+            loggedInUser={activeLoggedInUser}
+          />
+          <PrivateRoute
+            path="/trips/:id/add-trip-image"
+            component={AddTripHeaderImage}
             loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute

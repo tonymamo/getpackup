@@ -37,6 +37,7 @@ import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import { white } from '@styles/color';
 import { sharedStyles } from '@components/Input';
 import trackEvent from '@utils/trackEvent';
+import { zIndexDropdown } from '@styles/layers';
 
 type TripPartyProps = {
   activeTrip?: TripType;
@@ -54,7 +55,7 @@ const ScrollableHitsWrapper = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: ${zIndexDropdown};
   padding: ${baseSpacer};
   border: ${baseBorderStyle};
   background-color: ${white};

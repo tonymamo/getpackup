@@ -21,6 +21,7 @@ import FormErrors from './FormErrors';
 import GlobalAlerts from './GlobalAlerts';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
+import HeroImageUpload from './HeroImageUpload';
 import HorizontalRule from './HorizontalRule';
 import IconCheckbox from './IconCheckbox';
 import IconWrapper from './IconWrapper';
@@ -31,6 +32,7 @@ import LoadingSpinner from './LoadingSpinner';
 import Modal from './Modal';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
+import NoiseRings from './NoiseRings';
 import PackingListAddItem from './PackingListAddItem';
 import PackingListCategory from './PackingListCategory';
 import PackingListItem from './PackingListItem';
@@ -49,6 +51,7 @@ import StaticMapImage from './StaticMapImage';
 import Table from './Table';
 import Testimonial from './Testimonial';
 import TripCard from './TripCard';
+import TripHeader from './TripHeader';
 import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
 
@@ -76,6 +79,7 @@ export {
   GlobalAlerts,
   Heading,
   HeroImage,
+  HeroImageUpload,
   HorizontalRule,
   HTMLContent,
   IconCheckbox,
@@ -88,6 +92,7 @@ export {
   Modal,
   Navbar,
   NegativeMarginContainer,
+  NoiseRings,
   PackingListAddItem,
   PackingListCategory,
   PackingListItem,
@@ -108,6 +113,7 @@ export {
   Table,
   Testimonial,
   TripCard,
+  TripHeader,
   UserMediaObject,
   Wave,
 };

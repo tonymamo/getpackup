@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled, { CSSProperties } from 'styled-components';
 import { Md5 } from 'ts-md5/dist/md5';
+import ReactTooltip from 'react-tooltip';
 
 import {
   baseAndAHalfSpacer,
@@ -11,8 +12,9 @@ import {
   sextupleSpacer,
   borderRadiusCircle,
   octupleSpacer,
+  quarterSpacer,
 } from '@styles/size';
-import { lightestGray } from '@styles/color';
+import { lightestGray, white } from '@styles/color';
 import { PreviewCompatibleImage } from '@components';
 import { zIndexAvatarImageAfter } from '@styles/layers';
 import { fontSizeSmall } from '@styles/typography';
@@ -26,6 +28,7 @@ export type AvatarProps = {
   rightMargin?: boolean;
   staticContent?: string;
   style?: CSSProperties;
+  username?: string;
 };
 
 const renderSize = (size: AvatarProps['size']) => {
@@ -45,7 +48,7 @@ const renderSize = (size: AvatarProps['size']) => {
   }
 };
 
-const AvatarImageWrapper = styled.div`
+export const AvatarImageWrapper = styled.div`
   border-radius: ${borderRadiusCircle};
   overflow: hidden;
   object-fit: cover;
@@ -86,11 +89,8 @@ const StaticContentWrapper = styled.div`
   background-color: ${lightestGray};
   height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
   width: ${(props) => props.size && renderSize(props.size)};
-  /* min-width ensures it doesnt get resized when in a flexed parent */
-  min-width: ${(props) => props.size && renderSize(props.size)};
   position: relative;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   font-size: ${fontSizeSmall};
 `;
 
@@ -98,9 +98,17 @@ export const StackedAvatars = styled.div`
   display: flex;
   margin-right: ${halfSpacer};
 
-  & ${AvatarImageWrapper}, & ${StaticContentWrapper} {
+  & ${AvatarImageWrapper} {
     margin-right: -${halfSpacer};
     display: inline-flex;
+    border: 2px solid ${white};
+    z-index: ${zIndexAvatarImageAfter};
+    transition: transform 0.1s ease-out 0s;
+  }
+
+  & ${AvatarImageWrapper}:hover {
+    z-index: ${zIndexAvatarImageAfter + 1};
+    transform: translateY(-${quarterSpacer});
   }
 `;
 
@@ -119,17 +127,43 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
       rightMargin={props.rightMargin || false}
     >
       {props.staticContent && (!props.src || !gravatarUrl) ? (
-        <StaticContentWrapper size={props.size || 'sm'}>
-          <small>{props.staticContent}</small>
-        </StaticContentWrapper>
+        <>
+          <StaticContentWrapper
+            size={props.size || 'sm'}
+            data-tip={`${props.staticContent} more`}
+            data-for="avatar"
+          >
+            <small>{props.staticContent}</small>
+          </StaticContentWrapper>
+          <ReactTooltip
+            id="avatar"
+            place="top"
+            type="dark"
+            effect="solid"
+            className="tooltip customTooltip"
+          />
+        </>
       ) : (
-        <PreviewCompatibleImage
-          imageInfo={{
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            image: (props.src || (gravatarUrl as string))!,
-            alt: 'user profile picture',
-          }}
-        />
+        <>
+          <PreviewCompatibleImage
+            data-tip={props.username}
+            data-for="avatar"
+            imageInfo={{
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              image: (props.src || (gravatarUrl as string))!,
+              alt: 'user profile picture',
+            }}
+          />
+          {props.username ? (
+            <ReactTooltip
+              id="avatar"
+              place="top"
+              type="dark"
+              effect="solid"
+              className="tooltip customTooltip"
+            />
+          ) : null}
+        </>
       )}
     </AvatarImageWrapper>
   );

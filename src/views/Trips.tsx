@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
@@ -51,7 +51,13 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
   const renderTrip = (trip: TripType) => (
-    <Box key={trip.tripId}>
+    <Box
+      key={trip.tripId}
+      onClick={() => {
+        navigate(`/app/trips/${trip.tripId}/`);
+        trackEvent('Trip Card Link Clicked', { trip });
+      }}
+    >
       <TripCard trip={trip} loggedInUser={loggedInUser} showDescription enableNavigation />
     </Box>
   );

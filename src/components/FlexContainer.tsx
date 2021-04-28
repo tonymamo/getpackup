@@ -1,27 +1,10 @@
 import { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 type FlexContainerProps = {
   flexDirection?: 'row' | 'column';
-  justifyContent?:
-    | 'space-between'
-    | 'space-around'
-    | 'center'
-    | 'start'
-    | 'end'
-    | 'flex-start'
-    | 'flex-end'
-    | 'left'
-    | 'right';
-  alignItems?:
-    | 'center'
-    | 'start'
-    | 'end'
-    | 'flex-start'
-    | 'flex-end'
-    | 'left'
-    | 'right'
-    | 'stretch';
+  justifyContent?: CSSProperties['justifyContent'];
+  alignItems?: CSSProperties['alignItems'];
   flexWrap?: 'wrap' | 'nowrap';
   height?: string;
   style?: {};
