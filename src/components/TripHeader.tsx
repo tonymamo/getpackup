@@ -101,6 +101,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
               src={loggedInUser?.photoURL as string}
               gravatarEmail={loggedInUser?.email as string}
               size="sm"
+              username={loggedInUser?.username}
             />
             {users &&
               trip.tripMembers
@@ -119,6 +120,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
                       gravatarEmail={matchingUser?.email as string}
                       size="sm"
                       key={matchingUser.uid}
+                      username={matchingUser.username}
                     />
                   );
                 })}
@@ -128,6 +130,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
                 // Instead, lets add another so its always at least +2
                 staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
                 size="sm"
+                username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
               />
             )}
           </StackedAvatars>

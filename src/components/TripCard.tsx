@@ -17,6 +17,7 @@ import {
   NegativeMarginContainer,
   HeroImage,
   NoiseRings,
+  StaticMapImage,
 } from '@components';
 import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
@@ -69,14 +70,19 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
           <>
             {/* Aspect ratio is 16/4 or these images, but 5 works better because it isnt 100% full width, it's in a PageContainer with a max width */}
             {trip.headerImage && <HeroImage staticImgSrc={trip.headerImage} aspectRatio={5} />}
-            {!trip.headerImage && (
+            {!trip.headerImage && !!trip.lat && !!trip.lng && (
+              <StaticMapImage
+                lat={trip.lat}
+                lng={trip.lng}
+                height="calc(100vw / 5)"
+                width="100%"
+                zoom={10}
+                label={isExtraSmallScreen ? undefined : trip.startingPoint}
+              />
+            )}
+            {!trip.headerImage && !trip.lat && !trip.lng && (
               <PlaceholderImageWrapper backgroundColor={brandSecondary}>
-                <NoiseRings
-                  height={512}
-                  width={2048}
-                  seed={trip ? trip.name : 'loading'}
-                  strokeWidth={4}
-                />
+                <NoiseRings height={512} width={2048} seed={trip.name} strokeWidth={4} />
               </PlaceholderImageWrapper>
             )}
           </>
@@ -104,6 +110,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
               src={loggedInUser?.photoURL as string}
               gravatarEmail={loggedInUser?.email as string}
               size="sm"
+              username={loggedInUser?.username}
             />
             {users &&
               trip.tripMembers
@@ -122,6 +129,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
                       gravatarEmail={matchingUser?.email as string}
                       size="sm"
                       key={matchingUser.uid}
+                      username={matchingUser?.username}
                     />
                   );
                 })}
@@ -131,6 +139,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
                 // Instead, lets add another so its always at least +2
                 staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
                 size="sm"
+                username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
               />
             )}
           </StackedAvatars>
