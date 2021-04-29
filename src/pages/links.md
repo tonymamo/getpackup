@@ -5,7 +5,7 @@ linksList:
     linkText: What is packup?
     thumbnail: /img/0f1a2062-3.jpg
   - linkUrl: https://getpackup.com/blog/2021-04-27-tips-tricks-from-the-pros/
-    linkText: "Blog Post: Tips Tricks From The Pros"
+    linkText: "Blog Post: Tips & Tricks From The Pros"
     thumbnail: /img/collage.jpg
   - linkUrl: https://www.chrisistace.com/packup-app-adventure-made-easy/
     linkText: "Blog Post: Mindful Explorer; Chris Istace shares his thoughts on packup"
