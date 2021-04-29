@@ -1,12 +1,25 @@
 import React, { FunctionComponent } from 'react';
+import groupBy from 'lodash/groupBy';
 
-import { Seo, Heading, PageContainer, Box } from '@components';
+import { Seo, Heading, PageContainer, GearListCategory } from '@components';
 import usePersonalGear from '@hooks/usePersonalGear';
+import { GearItemType } from '@common/gearItem';
 
 type GearClosetProps = {};
 
 const GearCloset: FunctionComponent<GearClosetProps> = () => {
-  usePersonalGear();
+  const personalGear = usePersonalGear();
+
+  const groupedCategories: [string, GearItemType[]][] = [];
+
+  if (personalGear?.length) {
+    // Put the pre-trip category first, if it exists
+    const entries = Object.entries(groupBy(personalGear, 'category'));
+    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
+    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
+    if (preTripEntries) groupedCategories.push(preTripEntries);
+    groupedCategories.push(...allOtherEntries);
+  }
 
   return (
     <PageContainer>
@@ -14,7 +27,20 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
       <Heading as="h2" altStyle>
         Gear Closet
       </Heading>
-      <Box>Coming Soon!</Box>
+
+      {groupedCategories.map(([categoryName, gearListItems]: [string, GearItemType[]]) => {
+        const sortedItems = gearListItems.sort((a, b) => {
+          return a.essential > b.essential ? -1 : 1;
+        });
+
+        return (
+          <GearListCategory
+            key={categoryName}
+            categoryName={categoryName}
+            sortedItems={sortedItems}
+          />
+        );
+      })}
     </PageContainer>
   );
 };

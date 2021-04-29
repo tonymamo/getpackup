@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
-import lodash from 'lodash';
+import groupBy from 'lodash/groupBy';
 import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
@@ -81,7 +81,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   if (packingList?.length) {
     // Put the pre-trip category first, if it exists
-    const entries = Object.entries(lodash.groupBy(packingList, 'category'));
+    const entries = Object.entries(groupBy(packingList, 'category'));
     const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
     const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
     if (preTripEntries) groupedCategories.push(preTripEntries);

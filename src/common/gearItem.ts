@@ -31,7 +31,7 @@ export type ActivityTypes = {
   train: boolean;
 };
 
-export type GearItem = {
+export type GearItemType = {
   id: string;
   name: string;
   category: string;

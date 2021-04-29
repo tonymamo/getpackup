@@ -11,7 +11,7 @@ import { FaCaretLeft, FaCaretRight, FaCheckCircle } from 'react-icons/fa';
 import { Heading, PageContainer, Seo, Button, IconCheckbox, Row, Column, Modal } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
-import { GearItem } from '@common/gearItem';
+import { GearItemType } from '@common/gearItem';
 import {
   gearListActivities,
   gearListAccommodations,
@@ -37,16 +37,16 @@ const generateGearList = (values: FormValues, gear: any) => {
       .filter((entry) => entry[1])
       .map((key) => key[0]);
 
-  const matches: Array<GearItem> = [];
+  const matches: Array<GearItemType> = [];
   const tagMatches: Array<string> = [];
 
   getValues(values).forEach((val) => {
-    matches.push(...gear.filter((item: GearItem) => item[val] === true));
+    matches.push(...gear.filter((item: GearItemType) => item[val] === true));
     // for each activity selected, add a tag to the trip
     gearListActivities.filter((item) => item.name === val).map((i) => tagMatches.push(i.label));
   });
 
-  const gearList = uniqBy(matches, 'name').map((item: GearItem) => {
+  const gearList = uniqBy(matches, 'name').map((item: GearItemType) => {
     return {
       name: item.name,
       isPacked: false,

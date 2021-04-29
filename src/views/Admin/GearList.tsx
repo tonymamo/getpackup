@@ -17,7 +17,7 @@ import {
   PageContainer,
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { GearItem } from '@common/gearItem';
+import { GearItemType } from '@common/gearItem';
 
 type GearListProps = {};
 
@@ -25,7 +25,7 @@ const GearList: FunctionComponent<GearListProps> = () => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItem | undefined>(undefined);
+  const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
   const gear = useSelector((state: RootState) => state.firestore.ordered.gear);
   useFirestoreConnect([{ collection: 'gear' }]);
 
@@ -47,7 +47,7 @@ const GearList: FunctionComponent<GearListProps> = () => {
     []
   );
 
-  const deleteItem = (item: GearItem) => {
+  const deleteItem = (item: GearItemType) => {
     firebase
       .firestore()
       .collection('gear')
@@ -78,14 +78,14 @@ const GearList: FunctionComponent<GearListProps> = () => {
     !isEmpty(gear) &&
     gear &&
     gear.length > 0 &&
-    [...gear].sort((a: GearItem, b: GearItem) => a.name.localeCompare(b.name));
+    [...gear].sort((a: GearItemType, b: GearItemType) => a.name.localeCompare(b.name));
 
   const data =
     isLoaded(gear) &&
     !isEmpty(gear) &&
     gear &&
     gear.length > 0 &&
-    sortedGearList.map((item: GearItem) => {
+    sortedGearList.map((item: GearItemType) => {
       return {
         ...item,
         actions: [
