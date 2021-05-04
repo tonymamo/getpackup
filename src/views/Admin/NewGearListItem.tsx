@@ -3,17 +3,18 @@ import { RouteComponentProps } from '@reach/router';
 
 import { Seo, Heading, PageContainer } from '@components';
 import GearListItemForm from '@views/Admin/GearListItemForm';
-import { GearItem } from '@common/gearItem';
+import { GearItemType } from '@common/gearItem';
 import { gearListKeys } from '@utils/gearListItemEnum';
 
 type NewGearListItemProps = {} & RouteComponentProps;
 
 const NewGearListItem: FunctionComponent<NewGearListItemProps> = () => {
-  const initialValues: GearItem = {
+  const initialValues: GearItemType = {
     id: '',
     name: '',
     category: '',
     lastEditedBy: '',
+    essential: false,
   };
 
   gearListKeys.forEach((item) => {

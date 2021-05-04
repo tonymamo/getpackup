@@ -9,7 +9,7 @@ import { Input, Button, HorizontalRule, Row, Column, Heading } from '@components
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField, requiredSelect } from '@utils/validations';
 import { RootState } from '@redux/ducks';
-import { GearItem } from '@common/gearItem';
+import { GearItemType } from '@common/gearItem';
 import {
   gearListTripType,
   gearListAccommodations,
@@ -20,7 +20,7 @@ import {
 } from '@utils/gearListItemEnum';
 
 type GearListItemFormProps = {
-  initialValues: GearItem;
+  initialValues: GearItemType;
   type: 'new' | 'edit';
 };
 

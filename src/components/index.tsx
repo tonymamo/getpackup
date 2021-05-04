@@ -19,6 +19,8 @@ import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
 import FormErrors from './FormErrors';
+import GearListCategory from './GearListCategory';
+import GearListItem from './GearListItem';
 import GlobalAlerts from './GlobalAlerts';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
@@ -78,6 +80,8 @@ export {
   FlexContainer,
   Footer,
   FormErrors,
+  GearListCategory,
+  GearListItem,
   GlobalAlerts,
   Heading,
   HeroImage,
