@@ -172,6 +172,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                         categoryName={categoryName}
                         sortedItems={sortedItems}
                         tripId={tripId}
+                        collapsible={false}
                       />
                     );
                   }

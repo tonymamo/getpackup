@@ -6,6 +6,7 @@ import Box from './Box';
 import Breadcrumbs from './Breadcrumbs';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
+import CollapsibleBox from './CollapsibleBox';
 import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
 import DayPickerInput from './DayPickerInput';
@@ -65,6 +66,7 @@ export {
   Breadcrumbs,
   Button,
   ClientOnly,
+  CollapsibleBox,
   Column,
   Content,
   DropdownMenu,
