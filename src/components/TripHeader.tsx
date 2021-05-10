@@ -13,7 +13,7 @@ import {
   StackedAvatars,
   Avatar,
   Pill,
-  PillWrapper,
+  HorizontalScroller,
   HorizontalRule,
   FlexContainer,
   DropdownMenu,
@@ -227,7 +227,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
       </Row>
 
       {showTags && (
-        <PillWrapper>
+        <HorizontalScroller>
           {trip ? (
             <>
               {trip.tags.map((tag: string) => (
@@ -255,7 +255,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
               ))}
             </>
           )}
-        </PillWrapper>
+        </HorizontalScroller>
       )}
 
       {showDescription && (

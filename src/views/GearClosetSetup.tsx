@@ -1,14 +1,19 @@
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 
-import { gearListActivities, gearListKeys } from '@utils/gearListItemEnum';
+import {
+  gearListActivities,
+  gearListAccommodations,
+  gearListOtherConsiderations,
+  gearListKeys,
+  gearListCampKitchen,
+} from '@utils/gearListItemEnum';
 import {
   CollapsibleBox,
-  Column,
   Heading,
+  HorizontalScroller,
   IconCheckbox,
   PageContainer,
-  Row,
   Seo,
 } from '@components';
 
@@ -34,9 +39,9 @@ const GearClosetSetup = () => {
         {({ isSubmitting, isValid, values }) => (
           <Form>
             <CollapsibleBox title="Activities">
-              <Row>
+              <HorizontalScroller>
                 {gearListActivities.map((item) => (
-                  <Column xs={4} lg={3} key={item.name}>
+                  <div key={item.name}>
                     <Field
                       as={IconCheckbox}
                       icon={item.icon}
@@ -44,9 +49,54 @@ const GearClosetSetup = () => {
                       name={item.name}
                       label={item.label}
                     />
-                  </Column>
+                  </div>
                 ))}
-              </Row>
+              </HorizontalScroller>
+            </CollapsibleBox>
+            <CollapsibleBox title="Accommodations">
+              <HorizontalScroller>
+                {gearListAccommodations.map((item) => (
+                  <div key={item.name}>
+                    <Field
+                      as={IconCheckbox}
+                      icon={item.icon}
+                      checked={values[item.name] ?? false}
+                      name={item.name}
+                      label={item.label}
+                    />
+                  </div>
+                ))}
+              </HorizontalScroller>
+            </CollapsibleBox>
+            <CollapsibleBox title="Camp Kitchen">
+              <HorizontalScroller>
+                {gearListCampKitchen.map((item) => (
+                  <div key={item.name}>
+                    <Field
+                      as={IconCheckbox}
+                      icon={item.icon}
+                      checked={values[item.name] ?? false}
+                      name={item.name}
+                      label={item.label}
+                    />
+                  </div>
+                ))}
+              </HorizontalScroller>
+            </CollapsibleBox>
+            <CollapsibleBox title="Other Considerations">
+              <HorizontalScroller>
+                {gearListOtherConsiderations.map((item) => (
+                  <div key={item.name}>
+                    <Field
+                      as={IconCheckbox}
+                      icon={item.icon}
+                      checked={values[item.name] ?? false}
+                      name={item.name}
+                      label={item.label}
+                    />
+                  </div>
+                ))}
+              </HorizontalScroller>
             </CollapsibleBox>
           </Form>
         )}

@@ -4,7 +4,8 @@ import { useField, FieldMetaProps, FormikHelpers } from 'formik';
 import * as icons from 'react-icons/all';
 
 import { brandPrimary, lightGray, textColor } from '@styles/color';
-import { doubleSpacer, baseSpacer } from '@styles/size';
+import { doubleSpacer, baseSpacer, tripleSpacer } from '@styles/size';
+import { fontSizeXSmall } from '@styles/typography';
 
 type IconCheckboxProps = {
   id?: string;
@@ -28,14 +29,16 @@ const IconWrapperLabel = styled.label<{
 }>`
   text-align: center;
   cursor: pointer;
-  font-size: ${doubleSpacer};
-  margin: ${doubleSpacer} 0;
+  margin: ${doubleSpacer};
 `;
 
 const StyledLabel = styled.span`
   display: block;
-  font-size: ${baseSpacer};
-  margin-bottom: ${baseSpacer};
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: ${fontSizeXSmall};
+  line-height: 1.2;
+  margin: ${baseSpacer} 0;
   color: ${(props: { checked?: boolean }) => (props.checked ? brandPrimary : textColor)};
 `;
 
@@ -47,7 +50,7 @@ const IconCheckbox: FunctionComponent<IconCheckboxProps> = (props) => {
   const renderDynamicIcon = (comboName: string) => {
     const [, iconName] = comboName.split('/');
     const Icon = icons[iconName];
-    return <Icon color={props.checked ? brandPrimary : lightGray} />;
+    return <Icon color={props.checked ? brandPrimary : lightGray} size={tripleSpacer} />;
   };
 
   return (

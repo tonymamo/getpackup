@@ -26,6 +26,7 @@ import Heading from './Heading';
 import HeroImage from './HeroImage';
 import HeroImageUpload from './HeroImageUpload';
 import HorizontalRule from './HorizontalRule';
+import HorizontalScroller from './HorizontalScroller';
 import IconCheckbox from './IconCheckbox';
 import IconWrapper from './IconWrapper';
 import Input from './Input';
@@ -40,7 +41,7 @@ import PackingListAddItem from './PackingListAddItem';
 import PackingListCategory from './PackingListCategory';
 import PackingListItem from './PackingListItem';
 import PageContainer from './PageContainer';
-import Pill, { PillWrapper } from './Pill';
+import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 import PrivateRoute from './PrivateRoute';
 import RelatedBlogPost from './RelatedBlogPost';
@@ -87,6 +88,7 @@ export {
   HeroImage,
   HeroImageUpload,
   HorizontalRule,
+  HorizontalScroller,
   HTMLContent,
   IconCheckbox,
   IconWrapper,
@@ -104,7 +106,6 @@ export {
   PackingListItem,
   PageContainer,
   Pill,
-  PillWrapper,
   PreviewCompatibleImage,
   PrivateRoute,
   RelatedBlogPost,
