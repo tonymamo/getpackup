@@ -132,7 +132,7 @@ const GearListItem: FunctionComponent<GearListItemProps> = (props) => {
         <ListItemInner>
           <FlexContainer justifyContent="space-between">
             <ItemText>{props.item.name}</ItemText>
-            {props.item.isEssential && (
+            {props.item.essential && (
               <IconWrapper data-tip="Essential Item" data-for="essentialItem">
                 <FaExclamationTriangle color={brandInfo} />
                 <ReactTooltip

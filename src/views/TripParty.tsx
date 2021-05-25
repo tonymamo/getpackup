@@ -25,10 +25,10 @@ import {
   PageContainer,
   Seo,
   UserMediaObject,
+  TripNavigation,
 } from '@components';
 import { TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import TripNavigation from '@views/TripNavigation';
 import { RootState } from '@redux/ducks';
 import { UserType } from '@common/user';
 import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';

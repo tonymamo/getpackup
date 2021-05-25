@@ -39,7 +39,7 @@ const GearClosetSetup = () => {
         {({ isSubmitting, isValid, values }) => (
           <Form>
             <CollapsibleBox title="Activities">
-              <HorizontalScroller>
+              <HorizontalScroller withBorder>
                 {gearListActivities.map((item) => (
                   <li key={item.name}>
                     <Field
@@ -54,7 +54,7 @@ const GearClosetSetup = () => {
               </HorizontalScroller>
             </CollapsibleBox>
             <CollapsibleBox title="Accommodations">
-              <HorizontalScroller>
+              <HorizontalScroller withBorder>
                 {gearListAccommodations.map((item) => (
                   <li key={item.name}>
                     <Field
@@ -69,7 +69,7 @@ const GearClosetSetup = () => {
               </HorizontalScroller>
             </CollapsibleBox>
             <CollapsibleBox title="Camp Kitchen">
-              <HorizontalScroller>
+              <HorizontalScroller withBorder>
                 {gearListCampKitchen.map((item) => (
                   <li key={item.name}>
                     <Field
@@ -84,7 +84,7 @@ const GearClosetSetup = () => {
               </HorizontalScroller>
             </CollapsibleBox>
             <CollapsibleBox title="Other Considerations">
-              <HorizontalScroller>
+              <HorizontalScroller withBorder>
                 {gearListOtherConsiderations.map((item) => (
                   <li key={item.name}>
                     <Field

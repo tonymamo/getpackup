@@ -56,6 +56,7 @@ import Table from './Table';
 import Testimonial from './Testimonial';
 import TripCard from './TripCard';
 import TripHeader from './TripHeader';
+import TripNavigation from './TripNavigation';
 import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
 
@@ -121,6 +122,7 @@ export {
   Testimonial,
   TripCard,
   TripHeader,
+  TripNavigation,
   UserMediaObject,
   Wave,
 };

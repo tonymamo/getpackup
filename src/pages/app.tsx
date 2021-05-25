@@ -11,6 +11,7 @@ import TripById from '@views/TripById';
 import TripGenerator from '@views/TripGenerator';
 import AddTripHeaderImage from '@views/AddTripHeaderImage';
 import GearCloset from '@views/GearCloset';
+import GearClosetEditItem from '@views/GearClosetEditItem';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
@@ -127,6 +128,11 @@ const App: FunctionComponent<{}> = () => {
           <PrivateRoute
             path="/gear-closet"
             component={GearCloset}
+            loggedInUser={activeLoggedInUser}
+          />
+          <PrivateRoute
+            path="/gear-closet/:id"
+            component={GearClosetEditItem}
             loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute

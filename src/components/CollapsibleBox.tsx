@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useMeasure } from 'react-use';
 import { animated, useSpring } from 'react-spring';
 
@@ -37,7 +37,7 @@ const CollapsibleBox = ({ title, children }: CollapsibleBoxProps) => {
           {title}
         </Heading>
         <IconWrapper onClick={() => setCollapsed(!collapsed)}>
-          {collapsed ? <FaChevronDown /> : <FaChevronUp />}
+          {collapsed ? <FaCaretDown /> : <FaCaretUp />}
         </IconWrapper>
       </FlexContainer>
       <animated.div style={{ overflow: 'hidden', ...expand, margin: `0 -${halfSpacer}` }}>

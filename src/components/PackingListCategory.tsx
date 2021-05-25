@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 
-import { Box, FlexContainer, Heading, PackingListItem, PackingListAddItem } from '@components';
+import { FlexContainer, PackingListItem, PackingListAddItem, CollapsibleBox } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 
@@ -10,7 +10,6 @@ type PackingListCategoryProps = {
   categoryName: string;
   sortedItems: PackingListItemType[];
   tripId: string;
-  collapsible: boolean;
 };
 
 const ItemsWrapper = styled.ul`
@@ -24,14 +23,8 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
 }) => {
-  // Replace Box with CollapsibleBox to make these sections collapsible in the future
   return (
-    <Box key={categoryName}>
-      <FlexContainer justifyContent="space-between">
-        <Heading as="h3" altStyle noMargin>
-          {categoryName === 'categoryLoading' ? <Skeleton width={200} /> : categoryName}
-        </Heading>
-      </FlexContainer>
+    <CollapsibleBox key={categoryName} title={categoryName}>
       <div>
         <ItemsWrapper>
           {sortedItems && sortedItems.length > 0 ? (
@@ -67,7 +60,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
           )}
         </ItemsWrapper>
       </div>
-    </Box>
+    </CollapsibleBox>
   );
 };
 

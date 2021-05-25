@@ -20,6 +20,7 @@ import {
   HorizontalRule,
   UserMediaObject,
   HeroImageUpload,
+  TripNavigation,
 } from '@components';
 import { TripType, TripFormType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -28,7 +29,6 @@ import { requiredField } from '@utils/validations';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
 import { gearListActivities } from '@utils/gearListItemEnum';
-import TripNavigation from '@views/TripNavigation';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 

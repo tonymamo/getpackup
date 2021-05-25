@@ -163,6 +163,9 @@ export const StyledLabel = styled.label<{
   required?: boolean;
 }>`
   margin: 0;
+  font-weight: bold;
+  font-size: ${fontSizeSmall};
+  text-transform: uppercase;
   ${(props) => props.hiddenLabel && visuallyHiddenStyle}
   ${(props) =>
     props.invalid &&

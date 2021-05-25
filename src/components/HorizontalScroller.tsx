@@ -5,7 +5,7 @@ import { halfSpacer, baseSpacer, doubleSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 
-type HorizontalScrollerProps = {};
+type HorizontalScrollerProps = { withBorder?: boolean };
 
 /* https://dev.to/joostkiens/creating-practical-instagram-like-galleries-and-horizontal-lists-with-css-scroll-snapping-580e */
 const HorizontalScrollerWrapper = styled.ul`
@@ -29,7 +29,7 @@ const HorizontalScrollerWrapper = styled.ul`
   background-position: 0 0, 100%, 0 0, 100%;
   background-attachment: local, local, scroll, scroll;
   background-color: ${offWhite};
-  border: ${baseBorderStyle};
+  border: ${(props: HorizontalScrollerProps) => (props.withBorder ? baseBorderStyle : 'none')};
 
   &::-webkit-scrollbar {
     display: none;
@@ -54,8 +54,11 @@ const HorizontalScrollerWrapper = styled.ul`
   }
 `;
 
-const HorizontalScroller: FunctionComponent<HorizontalScrollerProps> = ({ children }) => {
-  return <HorizontalScrollerWrapper>{children}</HorizontalScrollerWrapper>;
+const HorizontalScroller: FunctionComponent<HorizontalScrollerProps> = ({
+  withBorder,
+  children,
+}) => {
+  return <HorizontalScrollerWrapper withBorder={withBorder}>{children}</HorizontalScrollerWrapper>;
 };
 
 export default HorizontalScroller;
