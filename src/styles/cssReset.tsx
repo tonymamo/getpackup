@@ -83,7 +83,7 @@ const CssReset = createGlobalStyle`
     font-family: ${fontFamilySansSerif};
     /* https://www.codementor.io/@ricardozea/100-responsive-typography-system-using-a-modular-scale-s5rhft58g */
     font-size: calc(14px + .35vw); /* Responsive base font size */
-    line-height: calc(14px + 1.05vw); /* Responsive Vertical Rhythm */
+    line-height: calc(21px + 1.05vw); /* Responsive Vertical Rhythm */
     color: ${textColor};
     overflow-x: hidden;
     background-color: ${white};

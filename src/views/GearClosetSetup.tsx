@@ -41,7 +41,7 @@ const GearClosetSetup = () => {
             <CollapsibleBox title="Activities">
               <HorizontalScroller>
                 {gearListActivities.map((item) => (
-                  <div key={item.name}>
+                  <li key={item.name}>
                     <Field
                       as={IconCheckbox}
                       icon={item.icon}
@@ -49,14 +49,14 @@ const GearClosetSetup = () => {
                       name={item.name}
                       label={item.label}
                     />
-                  </div>
+                  </li>
                 ))}
               </HorizontalScroller>
             </CollapsibleBox>
             <CollapsibleBox title="Accommodations">
               <HorizontalScroller>
                 {gearListAccommodations.map((item) => (
-                  <div key={item.name}>
+                  <li key={item.name}>
                     <Field
                       as={IconCheckbox}
                       icon={item.icon}
@@ -64,14 +64,14 @@ const GearClosetSetup = () => {
                       name={item.name}
                       label={item.label}
                     />
-                  </div>
+                  </li>
                 ))}
               </HorizontalScroller>
             </CollapsibleBox>
             <CollapsibleBox title="Camp Kitchen">
               <HorizontalScroller>
                 {gearListCampKitchen.map((item) => (
-                  <div key={item.name}>
+                  <li key={item.name}>
                     <Field
                       as={IconCheckbox}
                       icon={item.icon}
@@ -79,14 +79,14 @@ const GearClosetSetup = () => {
                       name={item.name}
                       label={item.label}
                     />
-                  </div>
+                  </li>
                 ))}
               </HorizontalScroller>
             </CollapsibleBox>
             <CollapsibleBox title="Other Considerations">
               <HorizontalScroller>
                 {gearListOtherConsiderations.map((item) => (
-                  <div key={item.name}>
+                  <li key={item.name}>
                     <Field
                       as={IconCheckbox}
                       icon={item.icon}
@@ -94,7 +94,7 @@ const GearClosetSetup = () => {
                       name={item.name}
                       label={item.label}
                     />
-                  </div>
+                  </li>
                 ))}
               </HorizontalScroller>
             </CollapsibleBox>

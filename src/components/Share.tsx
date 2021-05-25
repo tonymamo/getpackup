@@ -68,12 +68,14 @@ const Share: FunctionComponent<ShareProps> = ({
 }) => {
   const shareUrl = `https://getpackup.com${url}`;
 
+  const hashtags = tags.map((tag) => tag.split(' ').join(''));
+
   const renderIcons = (location: 'vertical' | 'inline') => {
     return (
       <>
         <FacebookShareButton
           url={shareUrl}
-          hashtag={tags && tags.length > 0 ? tags[0] : undefined}
+          hashtag={tags && tags.length > 0 ? hashtags[0] : undefined}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'FacebookShareButton', location, shareUrl })
           }
@@ -97,7 +99,7 @@ const Share: FunctionComponent<ShareProps> = ({
         <TwitterShareButton
           url={shareUrl}
           title={title}
-          hashtags={tags && tags.length > 0 ? tags : undefined}
+          hashtags={tags && tags.length > 0 ? hashtags : undefined}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'TwitterShareButton', location, shareUrl })
           }
