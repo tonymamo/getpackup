@@ -125,6 +125,7 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
       size={props.size || 'sm'}
       bottomMargin={props.bottomMargin || false}
       rightMargin={props.rightMargin || false}
+      {...props}
     >
       {props.staticContent && (!props.src || !gravatarUrl) ? (
         <>

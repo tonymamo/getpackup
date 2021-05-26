@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
-import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase';
+import { useFirebase } from 'react-redux-firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { FaChevronRight, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
@@ -58,15 +58,6 @@ const ItemText = styled.div`
   flex: 1;
 `;
 
-const firebaseConnection = (firebase: ExtendedFirebaseInstance, uid: string, itemId: string) => {
-  return firebase
-    .firestore()
-    .collection('gear-closet')
-    .doc(uid)
-    .collection('packing-list')
-    .doc(itemId);
-};
-
 const callbackDelay = 350;
 
 const GearListItem: FunctionComponent<GearListItemProps> = (props) => {
@@ -77,8 +68,13 @@ const GearListItem: FunctionComponent<GearListItemProps> = (props) => {
   const [removing, setRemoving] = useState(false);
 
   const onDelete = () => {
-    firebaseConnection(firebase, auth.uid, props.item.id)
-      .delete()
+    firebase
+      .firestore()
+      .collection('gear-closet')
+      .doc(auth.uid)
+      .update({
+        removals: firebase.firestore.FieldValue.arrayUnion(props.item.id),
+      })
       .then(() => {
         trackEvent('Gear Closet List Item Deleted', {
           uid: auth.uid,

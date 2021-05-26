@@ -6,7 +6,7 @@ import {
   FaTwitter,
   FaInstagram,
   FaCalendar,
-  FaWarehouse,
+  FaDoorOpen,
   FaUser,
   FaUserLock,
   FaShoppingCart,
@@ -253,7 +253,7 @@ const Footer = () => {
               trackEvent('Logged In Small Screen Footer Link Click', { link: 'Gear Closet' })
             }
           >
-            <FaWarehouse />
+            <FaDoorOpen />
           </Link>
           <Link
             to="/app/shopping-list"

@@ -22,9 +22,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     groupedCategories.push(...allOtherEntries);
   }
 
-  // TODO: If the activities array is empty, show the setup page
-  // return <GearClosetSetup />;
-
   return (
     <PageContainer>
       <Seo title="Gear Closet" />
@@ -32,19 +29,21 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         Gear Closet
       </Heading>
 
-      {groupedCategories.map(([categoryName, gearListItems]: [string, GearItemType[]]) => {
-        const sortedItems = gearListItems.sort((a, b) => {
-          return a.essential > b.essential ? -1 : 1;
-        });
+      {groupedCategories.length > 0 &&
+        groupedCategories.map(([categoryName, gearListItems]: [string, GearItemType[]]) => {
+          const sortedItems = gearListItems.sort((a, b) => {
+            return a.essential > b.essential ? -1 : 1;
+          });
 
-        return (
-          <GearListCategory
-            key={categoryName}
-            categoryName={categoryName}
-            sortedItems={sortedItems}
-          />
-        );
-      })}
+          return (
+            <GearListCategory
+              key={categoryName}
+              categoryName={categoryName}
+              sortedItems={sortedItems}
+            />
+          );
+        })}
+      {groupedCategories.length === 0 && <GearClosetSetup />}
     </PageContainer>
   );
 };

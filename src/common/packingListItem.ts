@@ -7,4 +7,5 @@ export type PackingListItemType = {
   quantity: number;
   description?: string;
   created: firebase.firestore.Timestamp;
+  updated?: firebase.firestore.Timestamp;
 };

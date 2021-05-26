@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaChevronLeft, FaWarehouse, FaShoppingCart, FaUserLock } from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaDoorOpen, FaShoppingCart, FaUserLock } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
 
 import {
   Avatar,
@@ -25,6 +26,7 @@ import useWindowSize from '@utils/useWindowSize';
 import yak from '@images/yak.svg';
 import { zIndexNavbar } from '@styles/layers';
 import trackEvent from '@utils/trackEvent';
+import { AvatarImageWrapper } from './Avatar';
 
 type NavbarProps = {};
 
@@ -143,7 +145,7 @@ const TopNavIconWrapper = styled.nav`
   }
 
   /* active avatar border */
-  & a.active div {
+  & a.active ${AvatarImageWrapper} {
     box-shadow: 0px 0px 0px 2px ${brandSecondary}, 0px 0px 0px 4px ${brandPrimary};
   }
 `;
@@ -351,7 +353,18 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 getProps={isPartiallyActive}
                 onClick={() => trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Trips' })}
               >
-                <FaCalendar />
+                <FaCalendar data-tip="Trips" data-for="trips" />
+                <ReactTooltip
+                  id="trips"
+                  place="bottom"
+                  type="dark"
+                  effect="solid"
+                  className="tooltip customTooltip"
+                  delayShow={500}
+                  offset={{
+                    bottom: 8,
+                  }}
+                />
               </Link>
               <Link
                 to="/app/gear-closet"
@@ -360,7 +373,18 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   trackEvent('Navbar LoggedInUser Link Clicked', { link: 'gear-closet' })
                 }
               >
-                <FaWarehouse />
+                <FaDoorOpen data-tip="Gear Closet" data-for="gearCloset" />
+                <ReactTooltip
+                  id="gearCloset"
+                  place="bottom"
+                  type="dark"
+                  effect="solid"
+                  className="tooltip customTooltip"
+                  delayShow={500}
+                  offset={{
+                    bottom: 8,
+                  }}
+                />
               </Link>
               <Link
                 to="/app/shopping-list"
@@ -369,11 +393,33 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Shopping List' })
                 }
               >
-                <FaShoppingCart />
+                <FaShoppingCart data-tip="Shopping list" data-for="shoppingList" />
+                <ReactTooltip
+                  id="shoppingList"
+                  place="bottom"
+                  type="dark"
+                  effect="solid"
+                  className="tooltip customTooltip"
+                  delayShow={500}
+                  offset={{
+                    bottom: 8,
+                  }}
+                />
               </Link>
               {profile.isAdmin && (
                 <Link to="/admin/gear-list" getProps={isPartiallyActive}>
-                  <FaUserLock />
+                  <FaUserLock data-tip="Admin" data-for="admin" />
+                  <ReactTooltip
+                    id="admin"
+                    place="bottom"
+                    type="dark"
+                    effect="solid"
+                    className="tooltip customTooltip"
+                    delayShow={500}
+                    offset={{
+                      bottom: 8,
+                    }}
+                  />
                 </Link>
               )}
               {loggedInUser && loggedInUser.length > 0 && (
@@ -388,6 +434,19 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     src={loggedInUser[0].photoURL as string}
                     size="sm"
                     gravatarEmail={loggedInUser[0].email as string}
+                    data-tip="Profile"
+                    data-for="profile"
+                  />
+                  <ReactTooltip
+                    id="profile"
+                    place="bottom"
+                    type="dark"
+                    effect="solid"
+                    className="tooltip customTooltip"
+                    delayShow={500}
+                    offset={{
+                      bottom: 8,
+                    }}
                   />
                 </Link>
               )}

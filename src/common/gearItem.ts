@@ -1,9 +1,10 @@
-// TODO: Merge all of these activities into the Gear Item and resolve TS errors
 export type ActivityTypes = {
   airplane: boolean;
+  baby: boolean;
   backcountryThreeSeason: boolean;
   backcountryWinter: boolean;
   basicHut: boolean;
+  bikepacking: boolean;
   biking: boolean;
   bivy: boolean;
   boat: boolean;
@@ -12,14 +13,24 @@ export type ActivityTypes = {
   car: boolean;
   carCamp: boolean;
   carCamping: boolean;
+  casual: boolean;
+  crossCountrySkiing: boolean;
   dayTrip: boolean;
+  essential: boolean;
+  fishing: boolean;
   hiking: boolean;
   hostel: boolean;
   hotel: boolean;
   iceClimbing: boolean;
+  international: boolean;
+  kids: boolean;
   motorcycle: boolean;
+  mountainBiking: boolean;
   multidayTrip: boolean;
   paddling: boolean;
+  pets: boolean;
+  photography: boolean;
+  resort: boolean;
   resortSkiing: boolean;
   servicedHut: boolean;
   skiTouring: boolean;
@@ -27,7 +38,9 @@ export type ActivityTypes = {
   snowshoeing: boolean;
   sportClimbing: boolean;
   tent: boolean;
+  touring: boolean;
   tradClimbing: boolean;
+  trailRunning: boolean;
   train: boolean;
 };
 
@@ -36,6 +49,14 @@ export type GearItemType = {
   name: string;
   category: string;
   lastEditedBy?: string;
+  created: firebase.firestore.Timestamp;
+  updated?: firebase.firestore.Timestamp;
   essential: boolean;
-  [key: string]: boolean | string | undefined;
-};
+  isCustomGearItem?: boolean;
+} & ActivityTypes;
+
+export type GearListEnumType = Array<{
+  name: keyof ActivityTypes;
+  label: string;
+  icon: string;
+}>;

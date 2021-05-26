@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { useDispatch } from 'react-redux';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, isLoaded } from 'react-redux-firebase';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import { FaCheckCircle, FaChevronLeft } from 'react-icons/fa';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, FormikHelpers } from 'formik';
+import omit from 'lodash/omit';
 
 import {
   Seo,
@@ -34,6 +35,8 @@ import {
   gearListCategories,
   gearListOtherConsiderations,
 } from '@utils/gearListItemEnum';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
 
 type GearClosetEditItemProps = {
   id?: string;
@@ -48,6 +51,9 @@ const StyledBackLink = styled(Link)`
 `;
 
 const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) => {
+  const firebase = useFirebase();
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const personalGear = usePersonalGear();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,6 +61,81 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
     personalGear && personalGear.find((item: GearItemType) => item.id === props.id);
 
   const initialValues: GearItemType = activeItem;
+
+  const save = (values: typeof initialValues) => {
+    // update a custom gear item that already exists
+    if (values.isCustomGearItem) {
+      return firebase
+        .firestore()
+        .collection('gear-closet')
+        .doc(auth.uid)
+        .collection('additions')
+        .doc(props.id)
+        .set({
+          ...values,
+          isCustomItem: true,
+          updated: new Date(),
+        });
+    }
+    // add the id of the original master gear list item to the removals array
+    // then create a new custom gear item
+    return firebase
+      .firestore()
+      .collection('gear-closet')
+      .doc(auth.uid)
+      .update({
+        removals: firebase.firestore.FieldValue.arrayUnion(values.id),
+      })
+      .then(() => {
+        firebase
+          .firestore()
+          .collection('gear-closet')
+          .doc(auth.uid)
+          .collection('additions')
+          .add({
+            ...omit(values, 'id'),
+            isCustomGearItem: true,
+            created: new Date(),
+          })
+          .then((docRef) => {
+            docRef.update({
+              id: docRef.id,
+            });
+          });
+      });
+  };
+
+  const onSubmit = (
+    values: typeof initialValues,
+    { resetForm, setSubmitting }: FormikHelpers<typeof initialValues>
+  ) => {
+    setIsLoading(true);
+
+    save(values)
+      .then(() => {
+        resetForm();
+        trackEvent('Gear Closet Edit Item Submitted', { values });
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: `Successfully updated ${values.name}`,
+          })
+        );
+      })
+      .catch((error: Error) => {
+        trackEvent('Gear Closet Edit Item Submit Failure', { values, error });
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: `Failed to update ${values.name}, please try again.`,
+          })
+        );
+      })
+      .finally(() => {
+        setSubmitting(false);
+        navigate('../');
+      });
+  };
 
   return (
     <PageContainer>
@@ -78,16 +159,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
               callToActionLinkText="Learn more"
             />
           )}
-          <Formik
-            validateOnMount
-            initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
-              // updateGearItem(values);
-
-              setSubmitting(false);
-              setIsLoading(false);
-            }}
-          >
+          <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
             {({ values, isSubmitting, isValid, setFieldValue, ...rest }) => (
               <Form>
                 <Row>
