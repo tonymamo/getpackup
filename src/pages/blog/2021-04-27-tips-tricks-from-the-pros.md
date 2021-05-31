@@ -1,6 +1,6 @@
 ---
 templateKey: blog-post
-title: Tips & Tricks From The Pros (Part 1)
+title: Camping Tips And Tricks (Part 1)
 date: 2021-04-27T20:20:54.646Z
 description: >
   Tips & tricks along with lessons learned from mishaps in the outdoors. In this
