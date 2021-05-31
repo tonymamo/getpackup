@@ -5,7 +5,7 @@ date: 2021-05-31T00:05:29.735Z
 description: >-
   Tips & tricks along with lessons learned from mishaps in the outdoors.
 
-  In this post you'll learn from Emilé Newman (a snowboarder), Ryan Dickie (adventure photographer/cinematographer), Natalie Panek (an aerospace engineer) and Roberto Gomez (adventure photographer) who all share the same passion—spending time outside!
+  In this post you'll learn from Emilé Newman (a snowboarder), Ryan Dickie (adventure photographer/cinematographer), Natalie Panek (an aerospace engineer) and Roberto Gomez (adventure photographer) who all share the same passion—spending time outside! 
 featuredpost: true
 featuredimage: /img/collage.jpg
 ---
