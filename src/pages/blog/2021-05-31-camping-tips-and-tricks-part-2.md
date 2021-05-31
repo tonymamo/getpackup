@@ -8,6 +8,12 @@ description: >-
   In this post you'll learn from Emilé Newman (a snowboarder), Ryan Dickie (adventure photographer/cinematographer), Natalie Panek (an aerospace engineer) and Roberto Gomez (adventure photographer) who all share the same passion—spending time outside! 
 featuredpost: true
 featuredimage: /img/collage.jpg
+tags:
+  - safety
+  - tipsandtricks
+  - camping
+  - hacks
+  - ""
 ---
 **[Emilé Newman ](https://www.instagram.com/curlsinthewild/)**
 
