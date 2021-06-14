@@ -42,6 +42,7 @@ const GearList: FunctionComponent<GearListProps> = () => {
       {
         header: 'Action',
         accessor: 'action',
+        disableSortBy: true,
       },
     ],
     []
@@ -96,7 +97,7 @@ const GearList: FunctionComponent<GearListProps> = () => {
           },
           {
             label: <FaTrash />,
-            color: 'danger',
+            color: 'dangerOutline',
             onClick: () => {
               setModalIsOpen(true);
               setItemToBeDeleted(item);

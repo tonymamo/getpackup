@@ -58,9 +58,20 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
   const [isLoading, setIsLoading] = useState(false);
 
   const activeItem: GearItemType =
-    personalGear && personalGear.find((item: GearItemType) => item.id === props.id);
+    personalGear &&
+    personalGear.length > 0 &&
+    personalGear !== 'loading' &&
+    personalGear.find((item: GearItemType) => item.id === props.id);
 
-  const initialValues: GearItemType = activeItem;
+  const initialValues: GearItemType = {
+    quantity: 1,
+    weight: '',
+    weightUnit: 'g',
+    notes: '',
+    // above are defaults since Master Gear List Items won't have them,
+    // and spreading activeItem below will overwrite them if they are available
+    ...activeItem,
+  };
 
   const save = (values: typeof initialValues) => {
     // update a custom gear item that already exists
@@ -186,8 +197,41 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                       required
                     />
                   </Column>
+                  <Column sm={6}>
+                    <Field
+                      as={Input}
+                      type="number"
+                      name="quantity"
+                      label="Quantity"
+                      setFieldValue={setFieldValue}
+                    />
+                  </Column>
+                  <Column sm={6}>
+                    <Row>
+                      <Column xs={8}>
+                        <Field as={Input} type="text" name="weight" label="Weight" />
+                      </Column>
+                      <Column xs={4}>
+                        <Field
+                          as={Input}
+                          type="select"
+                          name="weightUnit"
+                          label="Unit"
+                          options={[
+                            { value: 'g', label: 'g' },
+                            { value: 'kg', label: 'kg' },
+                            { value: 'oz', label: 'oz' },
+                            { value: 'lb', label: 'lb' },
+                          ]}
+                          setFieldValue={setFieldValue}
+                          {...rest}
+                        />
+                      </Column>
+                    </Row>
+                  </Column>
                 </Row>
-                <CollapsibleBox title="Activities">
+                <Field as={Input} type="textarea" name="notes" label="Notes/Description" />
+                <CollapsibleBox title="Activities" defaultClosed subtitle="2 items selected">
                   <HorizontalScroller withBorder>
                     {gearListActivities.map((item) => (
                       <li key={item.name}>
@@ -202,7 +246,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                     ))}
                   </HorizontalScroller>
                 </CollapsibleBox>
-                <CollapsibleBox title="Accommodations">
+                <CollapsibleBox title="Accommodations" defaultClosed>
                   <HorizontalScroller withBorder>
                     {gearListAccommodations.map((item) => (
                       <li key={item.name}>
@@ -217,7 +261,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                     ))}
                   </HorizontalScroller>
                 </CollapsibleBox>
-                <CollapsibleBox title="Camp Kitchen">
+                <CollapsibleBox title="Camp Kitchen" defaultClosed>
                   <HorizontalScroller withBorder>
                     {gearListCampKitchen.map((item) => (
                       <li key={item.name}>
@@ -232,7 +276,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                     ))}
                   </HorizontalScroller>
                 </CollapsibleBox>
-                <CollapsibleBox title="Other Considerations">
+                <CollapsibleBox title="Other Considerations" defaultClosed>
                   <HorizontalScroller withBorder>
                     {gearListOtherConsiderations.map((item) => (
                       <li key={item.name}>

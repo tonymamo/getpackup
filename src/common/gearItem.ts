@@ -53,6 +53,10 @@ export type GearItemType = {
   updated?: firebase.firestore.Timestamp;
   essential: boolean;
   isCustomGearItem?: boolean;
+  weight?: string;
+  weightUnit?: 'g' | 'kg' | 'oz' | 'lb';
+  notes?: string;
+  quantity?: number;
 } & ActivityTypes;
 
 export type GearListEnumType = Array<{

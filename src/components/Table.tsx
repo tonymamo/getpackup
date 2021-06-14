@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useMemo } from 'react';
 import { useTable, usePagination, useSortBy, useGlobalFilter, useAsyncDebounce } from 'react-table';
 import { matchSorter } from 'match-sorter';
 import styled from 'styled-components';
@@ -12,12 +12,15 @@ import {
   FaSortAlphaDown,
   FaSortAlphaUp,
 } from 'react-icons/fa';
+import { navigate } from 'gatsby';
+import { useLocation, WindowLocation } from '@reach/router';
 
 import { quarterSpacer, baseSpacer } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
 import { lightestGray, textColorLight, white } from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
 import { Column, FlexContainer, Row } from '@components';
+import { getQueryStringParams, mergeQueryParams } from '@utils/queryStringUtils';
 import Button, { ButtonProps } from './Button';
 import { StyledInput, StyledLabel, InputWrapper } from './Input';
 
@@ -68,29 +71,56 @@ const StyledTh = styled.th`
 `;
 
 const GlobalFilter = ({
-  globalFilter,
   setGlobalFilter,
+  searchValue,
+  location,
 }: {
-  globalFilter: any;
   setGlobalFilter: any;
+  searchValue: string;
+  location: WindowLocation<unknown>;
 }) => {
-  const [value, setValue] = React.useState(globalFilter);
+  const [value, setValue] = useState(searchValue);
   const onChange = useAsyncDebounce((val) => {
     setGlobalFilter(val || undefined);
+    if (val === '') {
+      // if val is blank, clear everything out
+      navigate(mergeQueryParams({ currentPage: '', search: '' }, location), { replace: true });
+    } else {
+      // clear currentPage because there are going to be new results
+      navigate(mergeQueryParams({ currentPage: '', search: val }, location), { replace: true });
+    }
   }, 200);
 
   return (
     <InputWrapper>
       <StyledLabel>Search:</StyledLabel>
-      <StyledInput
-        type="text"
-        value={value || ''}
-        onChange={(e) => {
-          setValue(e.target.value);
-          onChange(e.target.value);
-        }}
-        placeholder="Search anything..."
-      />
+      <Row>
+        <Column xs={8} sm={9} lg={10}>
+          <StyledInput
+            type="text"
+            value={value || ''}
+            onChange={(e) => {
+              setValue(e.target.value);
+              onChange(e.target.value);
+            }}
+            placeholder="Search anything..."
+          />
+        </Column>
+        <Column xs={4} sm={3} lg={2}>
+          <Button
+            type="button"
+            color="tertiary"
+            block
+            onClick={() => {
+              setValue('');
+              onChange('');
+            }}
+            disabled={!value}
+          >
+            Clear
+          </Button>
+        </Column>
+      </Row>
     </InputWrapper>
   );
 };
@@ -103,17 +133,21 @@ const Table: FunctionComponent<TableProps> = ({
   hasFiltering,
   rowsPerPage,
 }) => {
-  const fuzzyTextFilterFn = (rows: any, id: any, filterValue: string) => {
+  const location = useLocation();
+  // currentPage index starts at 1 to match displayed text in pagination on UI
+  const { search, currentPage, sortColumn, sortDirection } = getQueryStringParams(location);
+
+  const fuzzyTextFilterFn = (rows: Array<{ values: any }>, id: number, filterValue: string) => {
     return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
   };
 
-  const filterTypes = React.useMemo(
+  const filterTypes = useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
       fuzzyText: fuzzyTextFilterFn,
       // Or, override the default text filter to use
       // "startWith"
-      text: (rows, id, filterValue) => {
+      text: (rows: Array<any>, id: number, filterValue: string) => {
         return rows.filter((row) => {
           const rowValue = row.values[id];
           return rowValue !== undefined
@@ -140,7 +174,7 @@ const Table: FunctionComponent<TableProps> = ({
     gotoPage,
     nextPage,
     previousPage,
-    state: { pageIndex, globalFilter },
+    state: { pageIndex },
     headerGroups,
     setGlobalFilter,
   } = useTable(
@@ -148,7 +182,22 @@ const Table: FunctionComponent<TableProps> = ({
       columns,
       data,
       filterTypes,
-      initialState: { pageSize: rowsPerPage || 10 },
+      initialState: {
+        pageSize: rowsPerPage || 10,
+        globalFilter: search || '',
+        // currentPage index starts at 1 to match displayed text in pagination on UI
+        // if no query string for currentPage, set to 0
+        pageIndex: currentPage ? Number(currentPage as string) - 1 : 0,
+        sortBy: sortColumn
+          ? [
+              {
+                desc: Boolean(sortDirection === 'desc'),
+                id: sortColumn ? (sortColumn as string) : '',
+              },
+            ]
+          : [],
+      },
+      disableMultiSort: true,
     },
     useGlobalFilter,
     useSortBy,
@@ -159,11 +208,11 @@ const Table: FunctionComponent<TableProps> = ({
   return (
     <>
       {hasFiltering && (
-        <Row>
-          <Column md={4}>
-            <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
-          </Column>
-        </Row>
+        <GlobalFilter
+          setGlobalFilter={setGlobalFilter}
+          searchValue={search as string}
+          location={location}
+        />
       )}
       <StyledTable {...getTableProps()}>
         <thead>
@@ -176,8 +225,49 @@ const Table: FunctionComponent<TableProps> = ({
                     ? column.getHeaderProps(column.getSortByToggleProps())
                     : {};
                   return (
-                    <StyledTh key={column.header} {...thProps}>
-                      {column.header}
+                    <StyledTh
+                      key={column.render('header') as string}
+                      {...thProps}
+                      onClick={() => {
+                        let sortDir = '';
+                        let sortCol = String(column.render('header')).toLowerCase();
+                        let curPage = currentPage ? String(currentPage) : '';
+                        if (!sortColumn || !sortDirection || sortDirection === '') {
+                          sortDir = 'asc';
+                          curPage = '';
+                        } else if (sortColumn && sortColumn !== sortCol) {
+                          sortDir = 'asc';
+                          curPage = '';
+                        } else if (
+                          sortColumn &&
+                          sortColumn === sortCol &&
+                          sortDirection === 'asc'
+                        ) {
+                          sortDir = 'desc';
+                        } else if (sortDirection === 'desc') {
+                          // reset to blank
+                          sortDir = '';
+                          sortCol = '';
+                          curPage = '';
+                        }
+                        column.toggleSortBy();
+                        navigate(
+                          mergeQueryParams(
+                            {
+                              sortColumn: sortCol,
+                              sortDirection: sortDir,
+                              currentPage: curPage,
+                            },
+                            location
+                          ),
+                          {
+                            replace: true,
+                          }
+                        );
+                      }}
+                    >
+                      {column.render('header')}
+
                       {hasSorting && (
                         <>
                           {' '}
@@ -185,7 +275,11 @@ const Table: FunctionComponent<TableProps> = ({
                           <span>
                             {column.isSorted && !column.isSortedDesc && <FaSortAlphaDown />}
                           </span>
-                          <span>{!column.isSorted && <FaSort color={textColorLight} />}</span>
+                          <span>
+                            {!column.isSorted && column.canSort && (
+                              <FaSort color={textColorLight} />
+                            )}
+                          </span>
                         </>
                       )}
                     </StyledTh>
@@ -217,6 +311,7 @@ const Table: FunctionComponent<TableProps> = ({
                                       key={`${cell.row.id}-${action.color}`}
                                       onClick={action.onClick}
                                       color={action.color ?? 'text'}
+                                      size="small"
                                       iconLeft={action.icon}
                                       rightSpacer={
                                         cell.row.original.actions.length > 1 &&
@@ -234,6 +329,7 @@ const Table: FunctionComponent<TableProps> = ({
                                       type="link"
                                       key={`${cell.row.id}-${action.to}`}
                                       to={action.to}
+                                      size="small"
                                       color={action.color || 'text'}
                                       iconLeft={action.icon}
                                       rightSpacer={
@@ -268,7 +364,13 @@ const Table: FunctionComponent<TableProps> = ({
                 <Button
                   type="button"
                   color="primaryOutline"
-                  onClick={() => gotoPage(0)}
+                  onClick={() => {
+                    gotoPage(0);
+                    // set to empty string to remove currentPage query string param
+                    navigate(mergeQueryParams({ currentPage: '' }, location), {
+                      replace: true,
+                    });
+                  }}
                   disabled={!canPreviousPage}
                 >
                   <FaAngleDoubleLeft />
@@ -277,7 +379,23 @@ const Table: FunctionComponent<TableProps> = ({
                 <Button
                   type="button"
                   color="primaryOutline"
-                  onClick={() => previousPage()}
+                  onClick={() => {
+                    previousPage();
+                    navigate(
+                      mergeQueryParams(
+                        {
+                          currentPage:
+                            // currentPage index starts at 1 to match displayed text in pagination on UI
+                            // if on page 2 and going to page 1, set empty query string for currentPage
+                            currentPage === '2' ? '' : String(Number(currentPage as string) - 1),
+                        },
+                        location
+                      ),
+                      {
+                        replace: true,
+                      }
+                    );
+                  }}
                   disabled={!canPreviousPage}
                 >
                   <FaAngleLeft />
@@ -290,7 +408,23 @@ const Table: FunctionComponent<TableProps> = ({
                 <Button
                   type="button"
                   color="primaryOutline"
-                  onClick={() => nextPage()}
+                  onClick={() => {
+                    nextPage();
+                    navigate(
+                      mergeQueryParams(
+                        {
+                          currentPage:
+                            // currentPage index starts at 1 to match displayed text in pagination on UI
+                            // if no currentPage, we are on page 1 so go to page 2
+                            currentPage ? String(Number(currentPage as string) + 1) : '2',
+                        },
+                        location
+                      ),
+                      {
+                        replace: true,
+                      }
+                    );
+                  }}
                   disabled={!canNextPage}
                 >
                   <FaAngleRight />
@@ -299,7 +433,12 @@ const Table: FunctionComponent<TableProps> = ({
                 <Button
                   type="button"
                   color="primaryOutline"
-                  onClick={() => gotoPage(pageCount - 1)}
+                  onClick={() => {
+                    gotoPage(pageCount - 1);
+                    navigate(mergeQueryParams({ currentPage: String(pageCount) }, location), {
+                      replace: true,
+                    });
+                  }}
                   disabled={!canNextPage}
                 >
                   <FaAngleDoubleRight />

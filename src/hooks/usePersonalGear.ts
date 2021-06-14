@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useFirestoreConnect } from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@redux/ducks';
@@ -44,6 +44,9 @@ const usePersonalGear = () => {
     return customizedGear.concat(gearClosetAdditions);
   }, [masterGear, gearClosetRemovals, gearClosetAdditions]);
 
+  if (!isLoaded(fetchedGearCloset)) {
+    return 'loading';
+  }
   return personalGear;
 };
 

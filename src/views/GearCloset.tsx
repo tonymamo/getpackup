@@ -22,6 +22,8 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     groupedCategories.push(...allOtherEntries);
   }
 
+  const personalGearIsLoading = personalGear === 'loading';
+
   return (
     <PageContainer>
       <Seo title="Gear Closet" />
@@ -29,7 +31,13 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         Gear Closet
       </Heading>
 
-      {groupedCategories.length > 0 &&
+      {personalGearIsLoading && <GearListCategory categoryName="" sortedItems={[]} />}
+
+      {!personalGearIsLoading && groupedCategories.length === 0 && <GearClosetSetup />}
+
+      {!personalGearIsLoading &&
+        personalGear?.length &&
+        groupedCategories.length > 0 &&
         groupedCategories.map(([categoryName, gearListItems]: [string, GearItemType[]]) => {
           const sortedItems = gearListItems.sort((a, b) => {
             return a.essential > b.essential ? -1 : 1;
@@ -43,7 +51,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
             />
           );
         })}
-      {groupedCategories.length === 0 && <GearClosetSetup />}
     </PageContainer>
   );
 };

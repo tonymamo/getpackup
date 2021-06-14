@@ -192,7 +192,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
               >
                 {props.type === 'new' ? 'Save Item' : 'Update Item'}
               </Button>
-              <Button type="link" to="/admin/gear-list" color="dangerOutline">
+              <Button type="button" onClick={() => navigate(-1)} color="text">
                 Cancel
               </Button>
             </p>

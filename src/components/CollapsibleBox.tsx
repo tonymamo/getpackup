@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useMeasure } from 'react-use';
 import { animated, useSpring } from 'react-spring';
@@ -8,7 +8,8 @@ import { Box, FlexContainer, Heading, IconWrapper } from '@components';
 
 type CollapsibleBoxProps = {
   title: string;
-  children: React.ReactNode;
+  subtitle?: string;
+  defaultClosed?: boolean;
 };
 
 // In the future, we could allow the collapsed state to be passed in as a prop. If the state
@@ -16,11 +17,16 @@ type CollapsibleBoxProps = {
 // continue to manage the state internally.
 //
 // Docs for controlled and uncontrolled components: https://reactjs.org/docs/forms.html
-const CollapsibleBox = ({ title, children }: CollapsibleBoxProps) => {
+const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
+  title,
+  subtitle,
+  defaultClosed,
+  children,
+}) => {
   const defaultHeight = 0;
 
   // Manages the collapsed state of the accordion
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(!!defaultClosed);
 
   // Gets the height of the element (ref)
   const [ref, { height }] = useMeasure<HTMLDivElement>();
@@ -33,9 +39,12 @@ const CollapsibleBox = ({ title, children }: CollapsibleBoxProps) => {
   return (
     <Box>
       <FlexContainer justifyContent="space-between">
-        <Heading as="h3" altStyle noMargin>
-          {title}
-        </Heading>
+        <div>
+          <Heading as="h3" altStyle noMargin>
+            {title}
+          </Heading>
+          {subtitle && <small style={{ margin: 0 }}>{subtitle}</small>}
+        </div>
         <IconWrapper onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? <FaCaretDown /> : <FaCaretUp />}
         </IconWrapper>

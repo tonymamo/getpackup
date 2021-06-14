@@ -16,7 +16,7 @@ import 'react-swipeable-list/dist/styles.css';
 import { baseBorderStyle } from '@styles/mixins';
 import { halfSpacer } from '@styles/size';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { FlexContainer, IconWrapper, Button } from '@components';
+import { FlexContainer, IconWrapper, Button, Pill } from '@components';
 import { brandInfo, offWhite } from '@styles/color';
 import { GearItemType } from '@common/gearItem';
 import useWindowSize from '@utils/useWindowSize';
@@ -127,7 +127,20 @@ const GearListItem: FunctionComponent<GearListItemProps> = (props) => {
       >
         <ListItemInner>
           <FlexContainer justifyContent="space-between">
-            <ItemText>{props.item.name}</ItemText>
+            <ItemText>
+              {props.item.quantity && props.item.quantity !== 1 ? (
+                <>
+                  {props.item.name}{' '}
+                  <Pill
+                    text={`× ${props.item.quantity}`}
+                    color="neutral"
+                    style={{ margin: 0, paddingTop: 2, paddingBottom: 2 }}
+                  />
+                </>
+              ) : (
+                props.item.name
+              )}
+            </ItemText>
             {props.item.essential && (
               <IconWrapper data-tip="Essential Item" data-for="essentialItem">
                 <FaExclamationTriangle color={brandInfo} />
