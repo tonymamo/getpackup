@@ -6,7 +6,8 @@
 const submarine = '#BAC3C8';
 const riverbed = '#4A555A';
 const red = '#7d2600';
-const green = '#37570e';
+// const green = '#37570e';
+const green = '#578220';
 
 // Primary
 const orange = '#C46200';
@@ -18,7 +19,7 @@ const downriverVariant = '#264b67';
 
 // Tertiary
 const bismark = '#41688B';
-const bismarkVariant = '#47796';
+const bismarkVariant = '#6d8fad';
 
 // Brand Color Assignment
 // You can add new vars here, but keep the names abstracted.
@@ -33,25 +34,31 @@ export const brandTertiaryHover = bismarkVariant;
 
 // Validation Colors
 export const brandSuccess = green;
-export const brandInfo = brandPrimary;
+export const brandInfo = '#e29d03';
 export const brandDanger = red;
 
 // Grayscale for UI (borders, shadows, etc)
-export const black = '#2e2e2e';
+export const black = '#000A19';
 export const darkGray = '#3e3e3e';
 export const gray = riverbed;
 export const lightGray = submarine;
-export const lightestGray = '#E3E8E9';
-export const white = '#f3f3f3';
+export const lightestGray = '#dbdbdb';
+export const offWhite = '#fafafa';
+export const white = '#ffffff';
 
 // Typography
 export const textColor = riverbed;
-export const textColorLight = lightestGray;
+export const textColorLight = lightGray;
 export const headingsColor = downriver;
 
 // RGB for form focus styling
 export const brandPrimaryRGB = '196,98,0';
+export const brandSecondaryRGB = '14, 55, 87';
 export const brandDangerRGB = '125,38,0';
 
 // Borders
-export const borderColor = submarine;
+export const borderColor = lightestGray;
+
+// Loading spinners
+export const lightSpinner = '255, 255, 255'; // white
+export const darkSpinner = '74, 85, 90'; // riverbed
