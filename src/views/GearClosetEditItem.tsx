@@ -3,7 +3,7 @@ import { RouteComponentProps } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
-import { FaCheckCircle, FaChevronLeft } from 'react-icons/fa';
+import { FaCheckCircle, FaChevronLeft, FaTrash } from 'react-icons/fa';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import omit from 'lodash/omit';
 
@@ -18,6 +18,8 @@ import {
   Row,
   CollapsibleBox,
   Alert,
+  FlexContainer,
+  Modal,
 } from '@components';
 import { GearItemType, GearListEnumType } from '@common/gearItem';
 import trackEvent from '@utils/trackEvent';
@@ -43,6 +45,9 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const personalGear = usePersonalGear();
   const [isLoading, setIsLoading] = useState(false);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
 
   const activeItem: GearItemType =
     personalGear &&
@@ -133,6 +138,50 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
         setSubmitting(false);
         navigate(-1);
       });
+  };
+
+  const deleteItem = (item: GearItemType) => {
+    const deleteType = () => {
+      if (item.isCustomGearItem) {
+        // Custom item, so delete it from the user's Additions collection
+        return firebase
+          .firestore()
+          .collection('gear-closet')
+          .doc(auth.uid)
+          .collection('additions')
+          .doc(item.id)
+          .delete();
+      }
+      // Not a custom gear item, so add to Removals list
+      return firebase
+        .firestore()
+        .collection('gear-closet')
+        .doc(auth.uid)
+        .update({
+          removals: firebase.firestore.FieldValue.arrayUnion(item.id),
+        });
+    };
+
+    deleteType()
+      .then(() => {
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: `Successfully deleted ${item.name}`,
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+    setItemToBeDeleted(undefined);
+    setModalIsOpen(false);
+    navigate(-1);
   };
 
   const getSelectedCount = (arr: GearListEnumType, values: typeof initialValues) => {
@@ -279,30 +328,86 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                     ))}
                   </Row>
                 </CollapsibleBox>
-                <p>
-                  <Button
-                    rightSpacer
-                    type="submit"
-                    disabled={isSubmitting || !isValid}
-                    isLoading={isLoading}
-                    iconLeft={<FaCheckCircle />}
-                  >
-                    Update Item
-                  </Button>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      navigate(-1);
-                      trackEvent('Edit Gear Closet Item Cancel Click', { ...activeItem });
-                    }}
-                    color="text"
-                  >
-                    Cancel
-                  </Button>
-                </p>
+                <FlexContainer justifyContent="space-between">
+                  <p>
+                    <Button
+                      rightSpacer
+                      type="submit"
+                      disabled={isSubmitting || !isValid}
+                      isLoading={isLoading}
+                      iconLeft={<FaCheckCircle />}
+                    >
+                      Update Item
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        navigate(-1);
+                        trackEvent('Edit Gear Closet Item Cancel Click', { ...activeItem });
+                      }}
+                      color="text"
+                    >
+                      Cancel
+                    </Button>
+                  </p>
+                  <p>
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        setModalIsOpen(true);
+                        setItemToBeDeleted(activeItem);
+                      }}
+                      color="danger"
+                    >
+                      Delete
+                    </Button>
+                  </p>
+                </FlexContainer>
               </Form>
             )}
           </Formik>
+
+          {itemToBeDeleted && (
+            <Modal
+              toggleModal={() => {
+                setItemToBeDeleted(undefined);
+                setModalIsOpen(false);
+              }}
+              isOpen={modalIsOpen}
+            >
+              <Heading>Are you sure?</Heading>
+              <p>
+                Are you sure you want to delete <strong>{itemToBeDeleted.name}</strong>? This action
+                cannot be undone.
+              </p>
+              <Row>
+                <Column xs={6}>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setItemToBeDeleted(undefined);
+                      setModalIsOpen(false);
+                    }}
+                    color="primaryOutline"
+                    block
+                  >
+                    Cancel
+                  </Button>
+                </Column>
+                <Column xs={6}>
+                  <Button
+                    type="button"
+                    onClick={() => deleteItem(itemToBeDeleted)}
+                    block
+                    color="danger"
+                    iconLeft={<FaTrash />}
+                  >
+                    Delete
+                  </Button>
+                </Column>
+              </Row>
+            </Modal>
+          )}
         </>
       )}
       {(!activeItem || !isLoaded) && <LoadingPage />}
