@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaChevronLeft, FaDoorOpen, FaShoppingCart, FaUserLock } from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaShoppingCart, FaUserLock } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
@@ -24,6 +24,7 @@ import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typogra
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import yak from '@images/yak.svg';
+import GearClosetIcon from '@images/gearClosetIcon';
 import { zIndexNavbar } from '@styles/layers';
 import trackEvent from '@utils/trackEvent';
 import { AvatarImageWrapper } from './Avatar';
@@ -373,7 +374,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   trackEvent('Navbar LoggedInUser Link Clicked', { link: 'gear-closet' })
                 }
               >
-                <FaDoorOpen data-tip="Gear Closet" data-for="gearCloset" />
+                <GearClosetIcon data-tip="Gear Closet" data-for="gearCloset" size={17} />
                 <ReactTooltip
                   id="gearCloset"
                   place="bottom"

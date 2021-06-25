@@ -6,7 +6,6 @@ import {
   FaTwitter,
   FaInstagram,
   FaCalendar,
-  FaDoorOpen,
   FaUser,
   FaUserLock,
   FaShoppingCart,
@@ -30,6 +29,7 @@ import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
 import { zIndexSmallScreenFooter } from '@styles/layers';
+import GearClosetIcon from '@images/gearClosetIcon';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
@@ -253,7 +253,7 @@ const Footer = () => {
               trackEvent('Logged In Small Screen Footer Link Click', { link: 'Gear Closet' })
             }
           >
-            <FaDoorOpen />
+            <GearClosetIcon size={15} />
           </Link>
           <Link
             to="/app/shopping-list"

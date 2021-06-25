@@ -11,6 +11,7 @@ import TripById from '@views/TripById';
 import TripGenerator from '@views/TripGenerator';
 import AddTripHeaderImage from '@views/AddTripHeaderImage';
 import GearCloset from '@views/GearCloset';
+import GearClosetAddItem from '@views/GearClosetAddItem';
 import GearClosetEditItem from '@views/GearClosetEditItem';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
@@ -128,6 +129,11 @@ const App: FunctionComponent<{}> = () => {
           <PrivateRoute
             path="/gear-closet"
             component={GearCloset}
+            loggedInUser={activeLoggedInUser}
+          />
+          <PrivateRoute
+            path="/gear-closet/new"
+            component={GearClosetAddItem}
             loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute

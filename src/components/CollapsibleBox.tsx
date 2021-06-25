@@ -3,7 +3,6 @@ import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useMeasure } from 'react-use';
 import { animated, useSpring } from 'react-spring';
 
-import { halfSpacer } from '@styles/size';
 import { Box, FlexContainer, Heading, IconWrapper } from '@components';
 
 type CollapsibleBoxProps = {
@@ -38,9 +37,9 @@ const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
 
   return (
     <Box>
-      <FlexContainer justifyContent="space-between">
-        <div>
-          <Heading as="h3" altStyle noMargin>
+      <FlexContainer justifyContent="space-between" alignItems="flex-start">
+        <div style={{ cursor: 'pointer' }}>
+          <Heading as="h3" altStyle noMargin onClick={() => setCollapsed(!collapsed)}>
             {title}
           </Heading>
           {subtitle && <small style={{ margin: 0 }}>{subtitle}</small>}
@@ -49,7 +48,7 @@ const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
           {collapsed ? <FaCaretDown /> : <FaCaretUp />}
         </IconWrapper>
       </FlexContainer>
-      <animated.div style={{ overflow: 'hidden', ...expand, margin: `0 -${halfSpacer}` }}>
+      <animated.div style={{ overflow: 'hidden', ...expand }}>
         <div ref={ref}>{children}</div>
       </animated.div>
     </Box>

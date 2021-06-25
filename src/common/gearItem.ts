@@ -1,3 +1,50 @@
+// TODO: figure out how to not need to repeat this list in ActivityTypes type
+export const activityTypesList: Array<keyof ActivityTypes> = [
+  'airplane',
+  'baby',
+  'backcountryThreeSeason',
+  'backcountryWinter',
+  'basicHut',
+  'bikepacking',
+  'biking',
+  'bivy',
+  'boat',
+  'bouldering',
+  'bus',
+  'car',
+  'carCamp',
+  'carCamping',
+  'casual',
+  'crossCountrySkiing',
+  'dayTrip',
+  'essential',
+  'fishing',
+  'hiking',
+  'hostel',
+  'hotel',
+  'iceClimbing',
+  'international',
+  'kids',
+  'motorcycle',
+  'mountainBiking',
+  'multidayTrip',
+  'paddling',
+  'pets',
+  'photography',
+  'resort',
+  'resortSkiing',
+  'servicedHut',
+  'skiTouring',
+  'snowboarding',
+  'snowshoeing',
+  'sportClimbing',
+  'tent',
+  'touring',
+  'tradClimbing',
+  'trailRunning',
+  'train',
+];
+
 export type ActivityTypes = {
   airplane: boolean;
   baby: boolean;
@@ -49,7 +96,7 @@ export type GearItemType = {
   name: string;
   category: string;
   lastEditedBy?: string;
-  created: firebase.firestore.Timestamp;
+  created?: firebase.firestore.Timestamp;
   updated?: firebase.firestore.Timestamp;
   essential: boolean;
   isCustomGearItem?: boolean;

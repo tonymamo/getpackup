@@ -172,7 +172,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                         categoryName={categoryName}
                         sortedItems={sortedItems}
                         tripId={tripId}
-                        collapsible={false}
                       />
                     );
                   }
@@ -196,7 +195,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           </>
         ) : (
           // Loading state
-          <PackingListCategory categoryName="categoryLoading" sortedItems={[]} tripId="" />
+          <PackingListCategory categoryName="" sortedItems={[]} tripId="" />
         )}
       </div>
     </>

@@ -2,8 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
-import styled from 'styled-components';
-import { Link, navigate } from 'gatsby';
+import { navigate } from 'gatsby';
 import { FaCheckCircle, FaChevronLeft } from 'react-icons/fa';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import omit from 'lodash/omit';
@@ -17,14 +16,10 @@ import {
   Input,
   Column,
   Row,
-  HorizontalScroller,
-  IconCheckbox,
   CollapsibleBox,
   Alert,
 } from '@components';
-import { GearItemType } from '@common/gearItem';
-import { halfSpacer } from '@styles/size';
-import { fontSizeSmall } from '@styles/typography';
+import { GearItemType, GearListEnumType } from '@common/gearItem';
 import trackEvent from '@utils/trackEvent';
 import usePersonalGear from '@hooks/usePersonalGear';
 import { requiredField, requiredSelect } from '@utils/validations';
@@ -41,14 +36,6 @@ import { RootState } from '@redux/ducks';
 type GearClosetEditItemProps = {
   id?: string;
 } & RouteComponentProps;
-
-const StyledBackLink = styled(Link)`
-  display: inline-block;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin-bottom: ${halfSpacer};
-  font-size: ${fontSizeSmall};
-`;
 
 const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) => {
   const firebase = useFirebase();
@@ -84,7 +71,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
         .doc(props.id)
         .set({
           ...values,
-          isCustomItem: true,
+          isCustomGearItem: true,
           updated: new Date(),
         });
     }
@@ -144,21 +131,30 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
       })
       .finally(() => {
         setSubmitting(false);
-        navigate('../');
+        navigate(-1);
       });
+  };
+
+  const getSelectedCount = (arr: GearListEnumType, values: typeof initialValues) => {
+    const count = arr.filter((item) => values[item.name] === true).length;
+    return `${count} ${count === 1 ? 'category' : 'categories'} selected`;
   };
 
   return (
     <PageContainer>
       <Seo title="Edit Gear Closet Item" />
-      <StyledBackLink
-        to="../"
-        onClick={() =>
-          trackEvent('Edit Gear Closet Item Back to All Gear Click', { ...activeItem })
-        }
+      <Button
+        type="button"
+        onClick={() => {
+          navigate(-1);
+          trackEvent('Edit Gear Closet Item Back to All Gear Click', { ...activeItem });
+        }}
+        color="text"
+        iconLeft={<FaChevronLeft />}
       >
-        <FaChevronLeft /> Back to All Gear
-      </StyledBackLink>
+        Back to All Gear
+      </Button>
+
       {activeItem && (
         <>
           <Heading>Edit Gear Item</Heading>
@@ -231,65 +227,57 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                   </Column>
                 </Row>
                 <Field as={Input} type="textarea" name="notes" label="Notes/Description" />
-                <CollapsibleBox title="Activities" defaultClosed subtitle="2 items selected">
-                  <HorizontalScroller withBorder>
+                <CollapsibleBox
+                  title="Activities"
+                  defaultClosed
+                  subtitle={getSelectedCount(gearListActivities, values)}
+                >
+                  <Row>
                     {gearListActivities.map((item) => (
-                      <li key={item.name}>
-                        <Field
-                          as={IconCheckbox}
-                          icon={item.icon}
-                          checked={values[item.name] ?? false}
-                          name={item.name}
-                          label={item.label}
-                        />
-                      </li>
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
                     ))}
-                  </HorizontalScroller>
+                  </Row>
                 </CollapsibleBox>
-                <CollapsibleBox title="Accommodations" defaultClosed>
-                  <HorizontalScroller withBorder>
+                <CollapsibleBox
+                  title="Accommodations"
+                  defaultClosed
+                  subtitle={getSelectedCount(gearListAccommodations, values)}
+                >
+                  <Row>
                     {gearListAccommodations.map((item) => (
-                      <li key={item.name}>
-                        <Field
-                          as={IconCheckbox}
-                          icon={item.icon}
-                          checked={values[item.name] ?? false}
-                          name={item.name}
-                          label={item.label}
-                        />
-                      </li>
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
                     ))}
-                  </HorizontalScroller>
+                  </Row>
                 </CollapsibleBox>
-                <CollapsibleBox title="Camp Kitchen" defaultClosed>
-                  <HorizontalScroller withBorder>
+                <CollapsibleBox
+                  title="Camp Kitchen"
+                  defaultClosed
+                  subtitle={getSelectedCount(gearListCampKitchen, values)}
+                >
+                  <Row>
                     {gearListCampKitchen.map((item) => (
-                      <li key={item.name}>
-                        <Field
-                          as={IconCheckbox}
-                          icon={item.icon}
-                          checked={values[item.name] ?? false}
-                          name={item.name}
-                          label={item.label}
-                        />
-                      </li>
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
                     ))}
-                  </HorizontalScroller>
+                  </Row>
                 </CollapsibleBox>
-                <CollapsibleBox title="Other Considerations" defaultClosed>
-                  <HorizontalScroller withBorder>
+                <CollapsibleBox
+                  title="Other Considerations"
+                  defaultClosed
+                  subtitle={getSelectedCount(gearListOtherConsiderations, values)}
+                >
+                  <Row>
                     {gearListOtherConsiderations.map((item) => (
-                      <li key={item.name}>
-                        <Field
-                          as={IconCheckbox}
-                          icon={item.icon}
-                          checked={values[item.name] ?? false}
-                          name={item.name}
-                          label={item.label}
-                        />
-                      </li>
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
                     ))}
-                  </HorizontalScroller>
+                  </Row>
                 </CollapsibleBox>
                 <p>
                   <Button
@@ -301,7 +289,14 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                   >
                     Update Item
                   </Button>
-                  <Button type="link" to="../" color="dangerOutline">
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      navigate(-1);
+                      trackEvent('Edit Gear Closet Item Cancel Click', { ...activeItem });
+                    }}
+                    color="text"
+                  >
                     Cancel
                   </Button>
                 </p>
