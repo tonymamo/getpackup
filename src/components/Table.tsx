@@ -388,6 +388,8 @@ const Table: FunctionComponent<TableProps> = ({
               <div>
                 <Button
                   type="button"
+                  size="small"
+                  rightSpacer
                   color="primaryOutline"
                   onClick={() => {
                     gotoPage(0);
@@ -403,6 +405,7 @@ const Table: FunctionComponent<TableProps> = ({
 
                 <Button
                   type="button"
+                  size="small"
                   color="primaryOutline"
                   onClick={() => {
                     previousPage();
@@ -433,6 +436,8 @@ const Table: FunctionComponent<TableProps> = ({
                 <Button
                   type="button"
                   color="primaryOutline"
+                  size="small"
+                  rightSpacer
                   onClick={() => {
                     nextPage();
                     navigate(
@@ -458,6 +463,7 @@ const Table: FunctionComponent<TableProps> = ({
                 <Button
                   type="button"
                   color="primaryOutline"
+                  size="small"
                   onClick={() => {
                     gotoPage(pageCount - 1);
                     navigate(mergeQueryParams({ currentPage: String(pageCount) }, location), {

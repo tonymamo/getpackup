@@ -9,7 +9,6 @@ import {
   FlexContainer,
   Button,
   Table,
-  LoadingPage,
   Column,
   Row,
   Modal,
@@ -144,8 +143,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         rowsPerPage={25}
         isLoading={personalGearIsLoading}
       />
-
-      {personalGearIsLoading && <LoadingPage />}
 
       {!personalGearIsLoading && personalGear.length === 0 && <GearClosetSetup />}
 

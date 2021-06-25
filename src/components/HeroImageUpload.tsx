@@ -43,8 +43,9 @@ const HeroImageUploadPicker = styled.div`
   );
   min-height: calc(100vw / 5); /* 5 is to match aspectRatio of HeroImage */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: ${baseSpacer};
 `;
 
 const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, image }) => {
@@ -172,7 +173,7 @@ const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, im
             size="small"
             iconLeft={<FaCamera />}
           >
-            Upload Image
+            Upload
           </Button>
         </HeroImageUploadPicker>
       )}
