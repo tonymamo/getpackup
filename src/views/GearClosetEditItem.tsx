@@ -170,6 +170,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
             message: `Successfully deleted ${item.name}`,
           })
         );
+        trackEvent('Edit Gear Closet Item Deleted', { ...activeItem });
       })
       .catch((err) => {
         dispatch(
@@ -178,6 +179,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
             message: err.message,
           })
         );
+        trackEvent('Edit Gear Closet Item Delete Failure', { ...activeItem });
       });
     setItemToBeDeleted(undefined);
     setModalIsOpen(false);

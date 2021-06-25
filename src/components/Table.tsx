@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
 import React, { FunctionComponent, useState, useMemo } from 'react';
 import { useTable, usePagination, useSortBy, useGlobalFilter, useAsyncDebounce } from 'react-table';
@@ -14,8 +15,9 @@ import {
 } from 'react-icons/fa';
 import { navigate } from 'gatsby';
 import { useLocation, WindowLocation } from '@reach/router';
+import Skeleton from 'react-loading-skeleton';
 
-import { quarterSpacer, baseSpacer } from '@styles/size';
+import { quarterSpacer, baseSpacer, baseAndAHalfSpacer } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
 import { lightestGray, textColorLight, white } from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
@@ -43,6 +45,7 @@ type TableProps = {
   hasSorting?: boolean;
   hasFiltering?: boolean;
   rowsPerPage?: number;
+  isLoading?: boolean;
 };
 
 const StyledTable = styled.table`
@@ -132,6 +135,7 @@ const Table: FunctionComponent<TableProps> = ({
   hasSorting,
   hasFiltering,
   rowsPerPage,
+  isLoading,
 }) => {
   const location = useLocation();
   // currentPage index starts at 1 to match displayed text in pagination on UI
@@ -290,70 +294,91 @@ const Table: FunctionComponent<TableProps> = ({
           })}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {pageOrRows.map((row) => {
-            prepareRow(row);
-            return (
-              <StyledTr {...row.getRowProps()} key={row.id}>
-                {row.cells.map((cell) => {
-                  // if cell.
-                  return (
-                    <StyledTd {...cell.getCellProps()} key={cell.getCellProps().key}>
-                      {String(cell.getCellProps().key).includes('action') ? (
-                        <>
-                          {cell.row.original.actions &&
-                            cell.row.original.actions.length > 0 &&
-                            cell.row.original.actions.map(
-                              (action: TableActionType, index: number) => {
-                                if (action.onClick) {
-                                  return (
-                                    <Button
-                                      type="button"
-                                      key={`${cell.row.id}-${action.color}`}
-                                      onClick={action.onClick}
-                                      color={action.color ?? 'text'}
-                                      size="small"
-                                      iconLeft={action.icon}
-                                      rightSpacer={
-                                        cell.row.original.actions.length > 1 &&
-                                        index !== cell.row.original.actions.length - 1
-                                      }
-                                    >
-                                      {action.label}
-                                    </Button>
-                                  );
-                                }
-                                if (action.to) {
-                                  // TODO: more styling options like icon only button, colored button
-                                  return (
-                                    <Button
-                                      type="link"
-                                      key={`${cell.row.id}-${action.to}`}
-                                      to={action.to}
-                                      size="small"
-                                      color={action.color || 'text'}
-                                      iconLeft={action.icon}
-                                      rightSpacer={
-                                        cell.row.original.actions.length > 1 &&
-                                        index !== cell.row.original.actions.length - 1
-                                      }
-                                    >
-                                      {action.label}
-                                    </Button>
-                                  );
-                                }
-                                return null;
-                              }
-                            )}
-                        </>
-                      ) : (
-                        cell.value
-                      )}
+          {isLoading ? (
+            <>
+              {Array.from({ length: rowsPerPage || 10 }).map((_, rowIndex) => (
+                <StyledTr key={`loadingTableRow${rowIndex}`}>
+                  {Array.from({ length: columns.length }).map((__, cellIndex) => (
+                    <StyledTd key={`loadingTableRow${rowIndex}-cell${cellIndex}`}>
+                      <Skeleton
+                        count={1}
+                        // random widths between 40 and 90%
+                        width={`${Math.floor(Math.random() * (90 - 40 + 1) + 40)}%`}
+                        height={baseAndAHalfSpacer}
+                      />
                     </StyledTd>
-                  );
-                })}
-              </StyledTr>
-            );
-          })}
+                  ))}
+                </StyledTr>
+              ))}
+            </>
+          ) : (
+            <>
+              {pageOrRows.map((row) => {
+                prepareRow(row);
+                return (
+                  <StyledTr {...row.getRowProps()} key={row.id}>
+                    {row.cells.map((cell) => {
+                      // if cell.
+                      return (
+                        <StyledTd {...cell.getCellProps()} key={cell.getCellProps().key}>
+                          {String(cell.getCellProps().key).includes('action') ? (
+                            <>
+                              {cell.row.original.actions &&
+                                cell.row.original.actions.length > 0 &&
+                                cell.row.original.actions.map(
+                                  (action: TableActionType, index: number) => {
+                                    if (action.onClick) {
+                                      return (
+                                        <Button
+                                          type="button"
+                                          key={`${cell.row.id}-${action.color}`}
+                                          onClick={action.onClick}
+                                          color={action.color ?? 'text'}
+                                          size="small"
+                                          iconLeft={action.icon}
+                                          rightSpacer={
+                                            cell.row.original.actions.length > 1 &&
+                                            index !== cell.row.original.actions.length - 1
+                                          }
+                                        >
+                                          {action.label}
+                                        </Button>
+                                      );
+                                    }
+                                    if (action.to) {
+                                      // TODO: more styling options like icon only button, colored button
+                                      return (
+                                        <Button
+                                          type="link"
+                                          key={`${cell.row.id}-${action.to}`}
+                                          to={action.to}
+                                          size="small"
+                                          color={action.color || 'text'}
+                                          iconLeft={action.icon}
+                                          rightSpacer={
+                                            cell.row.original.actions.length > 1 &&
+                                            index !== cell.row.original.actions.length - 1
+                                          }
+                                        >
+                                          {action.label}
+                                        </Button>
+                                      );
+                                    }
+                                    return null;
+                                  }
+                                )}
+                            </>
+                          ) : (
+                            cell.value
+                          )}
+                        </StyledTd>
+                      );
+                    })}
+                  </StyledTr>
+                );
+              })}
+            </>
+          )}
         </tbody>
       </StyledTable>
       {hasPagination && (

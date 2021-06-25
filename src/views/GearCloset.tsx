@@ -135,16 +135,15 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         </Button>
       </FlexContainer>
 
-      {!personalGearIsLoading && personalGear?.length > 0 && (
-        <Table
-          columns={columns}
-          data={data}
-          hasPagination
-          hasSorting
-          hasFiltering
-          rowsPerPage={25}
-        />
-      )}
+      <Table
+        columns={columns}
+        data={data || []}
+        hasPagination
+        hasSorting
+        hasFiltering
+        rowsPerPage={25}
+        isLoading={personalGearIsLoading}
+      />
 
       {personalGearIsLoading && <LoadingPage />}
 

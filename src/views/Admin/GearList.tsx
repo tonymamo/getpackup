@@ -9,7 +9,6 @@ import {
   Button,
   FlexContainer,
   Heading,
-  LoadingPage,
   Table,
   Modal,
   Row,
@@ -116,17 +115,17 @@ const GearList: FunctionComponent<GearListProps> = () => {
           Add New Item
         </Button>
       </FlexContainer>
-      {gear && (
-        <Table
-          columns={columns}
-          data={data}
-          hasPagination
-          hasSorting
-          hasFiltering
-          rowsPerPage={25}
-        />
-      )}
-      {(!isLoaded(gear) || isEmpty(gear)) && <LoadingPage />}
+
+      <Table
+        columns={columns}
+        data={data || []}
+        hasPagination
+        hasSorting
+        hasFiltering
+        rowsPerPage={25}
+        isLoading={!isLoaded(gear) || isEmpty(gear)}
+      />
+
       {itemToBeDeleted && (
         <Modal
           toggleModal={() => {
