@@ -54,7 +54,8 @@ const StyledNavbar = styled.header`
   }
 
   & a:focus {
-    outline: none;
+    outline: 1px dotted ${brandPrimary};
+    opacity: 0.8;
   }
 
   & h1 a {
@@ -67,6 +68,12 @@ const StyledNavbar = styled.header`
     font-size: ${fontSizeBase};
     color: ${white};
     line-height: ${quadrupleSpacer};
+  }
+
+  & sup {
+    text-transform: uppercase;
+    font-size: 0.5em;
+    top: -1em;
   }
 `;
 
@@ -137,7 +144,8 @@ const TopNavIconWrapper = styled.nav`
 
   & a:focus,
   & a:active {
-    outline: none;
+    outline: 1px dotted ${brandPrimary};
+    opacity: 0.8;
   }
 
   & a.active,
@@ -207,9 +215,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const routeHasParent = pathname.split('/').length >= 4;
 
   // TODO: better way to do this?
-  // if on a checklist item page, we want to be able to do navigate(-1) on the back button below
-  const checklistItemRegex = new RegExp('/checklist/*');
-  const routeIsChecklistItem = checklistItemRegex.test(pathname);
+  // if on a checklist or gear closet item page, we want to be able to do navigate(-1) on the back button below
+  const checklistOrGearClosetItemRegex = new RegExp('/checklist|gear-closet|gear-list/*');
+  const routeIsChecklistOrGearClosetItem = checklistOrGearClosetItemRegex.test(pathname);
 
   const tripGenRegex = new RegExp('/add-trip-image|generator');
   const routeIsPartOfTripGenProcess = tripGenRegex.test(pathname);
@@ -230,7 +238,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 onClick={() => trackEvent('Navbar Logo Clicked', { isAuthenticated })}
               >
                 <img src={yak} alt="" width={tripleSpacer} height={27} />{' '}
-                {size.isSmallScreen && !isAuthenticated ? '' : 'packup'}
+                {size.isSmallScreen && !isAuthenticated ? (
+                  ''
+                ) : (
+                  <>
+                    packup<sup>beta</sup>
+                  </>
+                )}
               </Link>
             </Heading>
           )}
@@ -252,7 +266,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   to="../"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Back Button Clicked');
-                    if (routeIsChecklistItem) {
+                    if (routeIsChecklistOrGearClosetItem) {
                       navigate(-1);
                     }
                   }}

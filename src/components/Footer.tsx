@@ -6,7 +6,6 @@ import {
   FaTwitter,
   FaInstagram,
   FaCalendar,
-  FaUser,
   FaUserLock,
   FaShoppingCart,
 } from 'react-icons/fa';
@@ -20,6 +19,7 @@ import {
   FlexContainer,
   Heading,
   SignupForm,
+  Avatar,
 } from '@components';
 import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
 import { quadrupleSpacer, baseSpacer, doubleSpacer } from '@styles/size';
@@ -276,7 +276,11 @@ const Footer = () => {
               trackEvent('Logged In Small Screen Footer Link Click', { link: 'Profile' })
             }
           >
-            <FaUser />
+            <Avatar
+              src={profile.photoURL as string}
+              size="sm"
+              gravatarEmail={profile.email as string}
+            />
           </Link>
         </BottomNav>
       )}

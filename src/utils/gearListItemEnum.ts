@@ -77,7 +77,7 @@ export const gearListOtherConsiderations: GearListEnumType = [
 ];
 
 export const allGearListItems = [
-  ...gearListTripType,
+  // ...gearListTripType, // not really doing anything with day vs multiday yet
   ...gearListActivities,
   ...gearListAccommodations,
   ...gearListCampKitchen,

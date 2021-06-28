@@ -1,11 +1,21 @@
 import React, { FunctionComponent } from 'react';
 import { Link, navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
-import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
+import { FaArrowRight, FaChevronRight, FaPlusCircle } from 'react-icons/fa';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
-import { Row, Column, Heading, Box, Button, Seo, PageContainer, TripCard } from '@components';
+import {
+  Row,
+  Column,
+  Heading,
+  Box,
+  Button,
+  Seo,
+  PageContainer,
+  TripCard,
+  Modal,
+} from '@components';
 import { RootState } from '@redux/ducks';
 import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
 import { UserType } from '@common/user';
@@ -65,25 +75,27 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   return (
     <>
       <Seo title="My Trips" />
-      <PageContainer>
-        <Row>
-          <Column sm={4}>
-            <p>
-              <Button
-                type="link"
-                to="/app/trips/new"
-                iconLeft={<FaPlusCircle />}
-                block
-                onClick={() =>
-                  trackEvent('New Trip Button clicked', { location: 'Trips Page Header' })
-                }
-              >
-                New Trip
-              </Button>
-            </p>
-          </Column>
-        </Row>
-      </PageContainer>
+      {isLoaded(trips) && trips && trips.length !== 0 && (
+        <PageContainer>
+          <Row>
+            <Column sm={4}>
+              <p>
+                <Button
+                  type="link"
+                  to="/app/trips/new"
+                  iconLeft={<FaPlusCircle />}
+                  block
+                  onClick={() =>
+                    trackEvent('New Trip Button clicked', { location: 'Trips Page Header' })
+                  }
+                >
+                  New Trip
+                </Button>
+              </p>
+            </Column>
+          </Row>
+        </PageContainer>
+      )}
 
       {Array.isArray(inProgressTrips) && !!inProgressTrips.length && inProgressTrips.length > 0 && (
         <PageContainer>
@@ -93,27 +105,50 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
           {inProgressTrips.map((trip) => renderTrip(trip))}
         </PageContainer>
       )}
-      <PageContainer>
-        <Heading as="h2" altStyle>
-          Upcoming
-        </Heading>
-      </PageContainer>
       {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 ? (
-        <PageContainer>{upcomingTrips.map((trip) => renderTrip(trip))}</PageContainer>
+        <PageContainer>
+          <Heading as="h2" altStyle>
+            Upcoming
+          </Heading>
+          {upcomingTrips.map((trip) => renderTrip(trip))}
+        </PageContainer>
       ) : (
         <PageContainer>
           {isLoaded(trips) && trips && trips.length === 0 ? (
-            <Box>
-              Looks like it&apos;s your first time here,{' '}
-              <Link
-                to="/app/trips/new"
-                onClick={() =>
-                  trackEvent('New Trip Button clicked', { location: 'Trips Page First Time' })
-                }
-              >
-                let&apos;s get started! <FaArrowRight />
-              </Link>
-            </Box>
+            <Modal isOpen toggleModal={() => null} hideCloseButton>
+              <Row>
+                <Column md={8} mdOffset={2}>
+                  <Heading>Welcome! 🤝</Heading>
+                  <p>
+                    Looks like it&apos;s your first time here. Would you like to customize your gear
+                    closet first, or just create a trip with generic gear we suggest?
+                  </p>
+                  <Button
+                    type="link"
+                    to="/app/gear-closet"
+                    color="primary"
+                    iconRight={<FaChevronRight />}
+                    onClick={() =>
+                      trackEvent('Customize Gear Closet Button clicked', {
+                        location: 'Trips Page First Time',
+                      })
+                    }
+                  >
+                    Customize Gear Closet
+                  </Button>
+                  <Button
+                    type="link"
+                    to="/app/trips/new"
+                    color="text"
+                    onClick={() =>
+                      trackEvent('New Trip Button clicked', { location: 'Trips Page First Time' })
+                    }
+                  >
+                    Create New Trip
+                  </Button>
+                </Column>
+              </Row>
+            </Modal>
           ) : (
             <>
               {!isLoaded(trips) ? (

@@ -249,18 +249,22 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                           {activeTrip.created?.toDate().toLocaleTimeString()}
                         </p>
                         <HorizontalRule compact />
-                        <p>
-                          <strong>Last Updated</strong>
-                        </p>
-                        <p>
-                          {activeTrip.updated?.toDate().toLocaleDateString()}{' '}
-                          {activeTrip.updated?.toDate().toLocaleTimeString()}
-                        </p>
-                        <HorizontalRule compact />
+                        {activeTrip.updated && (
+                          <>
+                            <p>
+                              <strong>Last Updated</strong>
+                            </p>
+                            <p>
+                              {activeTrip.updated?.toDate().toLocaleDateString()}{' '}
+                              {activeTrip.updated?.toDate().toLocaleTimeString()}
+                            </p>
+                            <HorizontalRule compact />
+                          </>
+                        )}
                         {loggedInUser && (
                           <>
                             <p>
-                              <strong>Owner</strong>
+                              <strong>Trip Creator</strong>
                             </p>
                             <UserMediaObject user={loggedInUser} />
                           </>

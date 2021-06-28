@@ -21,7 +21,7 @@ import {
   inputPaddingY,
   baseAndAHalfSpacer,
 } from '@styles/size';
-import { fontSizeBase, lineHeightBase, fontSizeSmall, fontSizeH6 } from '@styles/typography';
+import { lineHeightBase, fontSizeSmall, fontSizeH6 } from '@styles/typography';
 import {
   textColor,
   white,
@@ -308,17 +308,20 @@ const StyledNumericInputWrapper = styled.div`
   }
 `;
 
-const multiSelectStyles = {
+export const multiSelectStyles = {
   option: (provided: any, state: { isFocused: boolean }) => ({
     ...provided,
     color: textColor,
     backgroundColor: state.isFocused ? offWhite : white,
     width: 'auto',
+    '&:active': {
+      backgroundColor: `rgba(${brandPrimaryRGB}, .25)`,
+    },
   }),
   control: (provided: any, state: { isFocused: boolean }) => ({
     ...provided,
     minHeight: inputHeight,
-    fontSize: fontSizeBase,
+    fontSize: '1.1em', // 1em makes it slightly smaller than 16px at smaller viewports, causing a zoom issue
     lineHeight: lineHeightBase,
     color: textColor,
     backgroundColor: 'white',

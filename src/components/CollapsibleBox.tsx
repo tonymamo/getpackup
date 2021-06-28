@@ -37,14 +37,29 @@ const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
 
   return (
     <Box>
-      <FlexContainer justifyContent="space-between" alignItems="flex-start">
-        <div style={{ cursor: 'pointer' }}>
-          <Heading as="h3" altStyle noMargin onClick={() => setCollapsed(!collapsed)}>
+      <FlexContainer justifyContent="space-between" alignItems="flex-start" flexWrap="nowrap">
+        <div
+          style={{ cursor: 'pointer' }}
+          onClick={() => setCollapsed(!collapsed)}
+          role="button"
+          onKeyPress={() => setCollapsed(!collapsed)}
+          tabIndex={0}
+        >
+          <Heading as="h3" altStyle noMargin>
             {title}
           </Heading>
-          {subtitle && <small style={{ margin: 0 }}>{subtitle}</small>}
+          {subtitle && (
+            <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
+              <small>{subtitle}</small>
+            </p>
+          )}
         </div>
-        <IconWrapper onClick={() => setCollapsed(!collapsed)}>
+        <IconWrapper
+          onClick={() => setCollapsed(!collapsed)}
+          onKeyPress={() => setCollapsed(!collapsed)}
+          tabIndex={0}
+          role="button"
+        >
           {collapsed ? <FaCaretDown /> : <FaCaretUp />}
         </IconWrapper>
       </FlexContainer>

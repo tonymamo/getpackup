@@ -210,7 +210,10 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   </IconWrapper>
                 )}
                 {!size.isSmallScreen ? (
-                  <IconWrapper onClick={onRemove} style={{ marginRight: 10, visibility: 'hidden' }}>
+                  <IconWrapper
+                    onClick={onRemove}
+                    style={{ marginRight: halfSpacer, visibility: 'hidden' }}
+                  >
                     <FaTrash />
                   </IconWrapper>
                 ) : null}

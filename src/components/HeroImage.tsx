@@ -7,6 +7,7 @@ import useWindowSize from '@utils/useWindowSize';
 import { PreviewCompatibleImage } from '@components';
 import { FluidImageType } from '@common/image';
 import { baseSpacer } from '@styles/size';
+import { zIndexNavbar } from '@styles/layers';
 
 type HeroImageProps = {
   imgSrc?: FluidImageType;
@@ -34,6 +35,7 @@ const ChildrenWrapper = styled.div`
   text-align: center;
   color: ${white};
   padding: ${baseSpacer};
+  z-index: ${zIndexNavbar};
 
   & h1,
   & p {

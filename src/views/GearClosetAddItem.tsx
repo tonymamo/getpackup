@@ -30,6 +30,7 @@ import {
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { StyledLabel } from '@components/Input';
+import useWindowSize from '@utils/useWindowSize';
 
 type GearClosetAddItemProps = {} & RouteComponentProps;
 
@@ -38,6 +39,8 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const [isLoading, setIsLoading] = useState(false);
+
+  const size = useWindowSize();
 
   const initialValues: GearItemType = {
     id: '',
@@ -113,17 +116,19 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
   return (
     <PageContainer>
       <Seo title="Add Gear Closet Item" />
-      <Button
-        type="button"
-        onClick={() => {
-          navigate(-1);
-          trackEvent('Add Gear Closet Item Back to All Gear Click');
-        }}
-        color="text"
-        iconLeft={<FaChevronLeft />}
-      >
-        Back to All Gear
-      </Button>
+      {!size.isSmallScreen && (
+        <Button
+          type="button"
+          onClick={() => {
+            navigate(-1);
+            trackEvent('Add Gear Closet Item Back to All Gear Click');
+          }}
+          color="text"
+          iconLeft={<FaChevronLeft />}
+        >
+          Back to All Gear
+        </Button>
+      )}
 
       <>
         <Heading>Add Gear Item</Heading>

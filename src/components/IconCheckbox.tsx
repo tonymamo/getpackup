@@ -24,7 +24,7 @@ const HiddenCheckboxInput = styled.input`
   display: none;
 `;
 
-const IconWrapperLabel = styled.label<{
+export const IconWrapperLabel = styled.label<{
   checked?: boolean;
 }>`
   text-align: center;
@@ -32,7 +32,7 @@ const IconWrapperLabel = styled.label<{
   margin: ${doubleSpacer};
 `;
 
-const StyledLabel = styled.span`
+export const IconCheckboxLabel = styled.span`
   display: block;
   text-transform: uppercase;
   font-weight: bold;
@@ -66,7 +66,9 @@ const IconCheckbox: FunctionComponent<IconCheckboxProps> = (props) => {
       />
       <IconWrapperLabel htmlFor={props.name} checked={props.checked}>
         {renderDynamicIcon(props.icon)}
-        {props.label && <StyledLabel checked={props.checked}>{props.label}</StyledLabel>}
+        {props.label && (
+          <IconCheckboxLabel checked={props.checked}>{props.label}</IconCheckboxLabel>
+        )}
       </IconWrapperLabel>
     </>
   );

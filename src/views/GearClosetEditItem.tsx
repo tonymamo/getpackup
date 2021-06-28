@@ -34,6 +34,7 @@ import {
 } from '@utils/gearListItemEnum';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
+import useWindowSize from '@utils/useWindowSize';
 
 type GearClosetEditItemProps = {
   id?: string;
@@ -44,12 +45,14 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const personalGear = usePersonalGear();
-  const [isLoading, setIsLoading] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
 
-  const activeItem: GearItemType =
+  const size = useWindowSize();
+
+  const activeItem: boolean | GearItemType | undefined =
     personalGear &&
     personalGear.length > 0 &&
     personalGear !== 'loading' &&
@@ -62,7 +65,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
     notes: '',
     // above are defaults since Master Gear List Items won't have them,
     // and spreading activeItem below will overwrite them if they are available
-    ...activeItem,
+    ...(activeItem as GearItemType),
   };
 
   const save = (values: typeof initialValues) => {
@@ -194,17 +197,19 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
   return (
     <PageContainer>
       <Seo title="Edit Gear Closet Item" />
-      <Button
-        type="button"
-        onClick={() => {
-          navigate(-1);
-          trackEvent('Edit Gear Closet Item Back to All Gear Click', { ...activeItem });
-        }}
-        color="text"
-        iconLeft={<FaChevronLeft />}
-      >
-        Back to All Gear
-      </Button>
+      {!size.isSmallScreen && (
+        <Button
+          type="button"
+          onClick={() => {
+            navigate(-1);
+            trackEvent('Edit Gear Closet Item Back to All Gear Click', { ...activeItem });
+          }}
+          color="text"
+          iconLeft={<FaChevronLeft />}
+        >
+          Back to All Gear
+        </Button>
+      )}
 
       {activeItem && (
         <>

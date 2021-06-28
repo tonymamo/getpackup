@@ -18,9 +18,10 @@ import styled from 'styled-components';
 import { FaCamera } from 'react-icons/fa';
 
 import trackEvent from '@utils/trackEvent';
-import { Button, FlexContainer, HeroImage } from '@components';
-import { borderColor, offWhite, white } from '@styles/color';
-import { baseSpacer, halfSpacer } from '@styles/size';
+import { Button, HeroImage } from '@components';
+import { borderColor, offWhite, textColor, white } from '@styles/color';
+import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
+import { baseBorderStyle } from '@styles/mixins';
 
 type HeroImageUploadProps = {
   type: 'trip' | 'profile';
@@ -46,6 +47,18 @@ const HeroImageUploadPicker = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
   padding: ${baseSpacer};
+`;
+
+const EditButton = styled.button`
+  border-radius: ${doubleSpacer};
+  width: ${doubleSpacer};
+  height: ${doubleSpacer};
+  background-color: ${white};
+  color: ${textColor};
+  border: ${baseBorderStyle};
+  justify-content: center;
+  display: flex;
+  align-items: center;
 `;
 
 const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, image }) => {
@@ -148,20 +161,11 @@ const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, im
           staticImgSrc={image as string}
           aspectRatio={5}
           justifyContent="flex-end"
-          alignItems="flex-end"
+          alignItems="flex-start"
         >
-          <FlexContainer>
-            <Button
-              type="button"
-              onClick={() => uploader.open()}
-              color="tertiary"
-              isLoading={isLoading}
-              size="small"
-              iconLeft={<FaCamera />}
-            >
-              Edit
-            </Button>
-          </FlexContainer>
+          <EditButton type="button" onClick={() => uploader.open()}>
+            <FaCamera />
+          </EditButton>
         </HeroImage>
       ) : (
         <HeroImageUploadPicker>

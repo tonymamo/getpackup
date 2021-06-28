@@ -7,7 +7,6 @@ export const baseBorderLightStyle = `${borderWidth} solid ${lightestGray}`;
 export const disabledStyle = `
   cursor: not-allowed;
   opacity: .65;
-  pointer-events: none;
 `;
 
 export const visuallyHiddenStyle = `

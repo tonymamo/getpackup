@@ -249,7 +249,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                       <EditableInput
                         label="Location"
                         isLoading={isLoading}
-                        value={loggedInUser.location}
+                        value={loggedInUser.location || 'No location provided'}
                       >
                         <Field
                           as={Input}

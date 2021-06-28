@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
+import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
 import {
   Seo,
@@ -12,6 +12,7 @@ import {
   Column,
   Row,
   Modal,
+  LoadingPage,
 } from '@components';
 import usePersonalGear from '@hooks/usePersonalGear';
 import GearClosetSetup from '@views/GearClosetSetup';
@@ -27,9 +28,18 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const dispatch = useDispatch();
   const personalGear = usePersonalGear();
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
+
+  useFirestoreConnect([
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
+  ]);
 
   const personalGearIsLoading = personalGear === 'loading';
 
@@ -127,24 +137,30 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
   return (
     <PageContainer>
       <Seo title="Gear Closet" />
-      <FlexContainer justifyContent="space-between">
-        <Heading altStyle>Gear Closet</Heading>
-        <Button type="link" to="/app/gear-closet/new" iconLeft={<FaPlusCircle />}>
-          Add New Item
-        </Button>
-      </FlexContainer>
+      {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
+        <FlexContainer justifyContent="space-between">
+          <Heading altStyle>Gear Closet</Heading>
+          <Button type="link" to="/app/gear-closet/new" iconLeft={<FaPlusCircle />}>
+            Add New Item
+          </Button>
+        </FlexContainer>
+      )}
 
-      <Table
-        columns={columns}
-        data={data || []}
-        hasPagination
-        hasSorting
-        hasFiltering
-        rowsPerPage={25}
-        isLoading={personalGearIsLoading}
-      />
+      {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
+        <Table
+          columns={columns}
+          data={data || []}
+          hasPagination
+          hasSorting
+          hasFiltering
+          rowsPerPage={25}
+          isLoading={personalGearIsLoading}
+        />
+      )}
 
-      {!personalGearIsLoading && personalGear.length === 0 && <GearClosetSetup />}
+      {isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0 && <GearClosetSetup />}
+
+      {!isLoaded(fetchedGearCloset) && <LoadingPage />}
 
       {itemToBeDeleted && (
         <Modal

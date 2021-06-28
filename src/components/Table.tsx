@@ -9,22 +9,43 @@ import {
   FaAngleDoubleRight,
   FaAngleLeft,
   FaAngleRight,
+  FaChevronRight,
   FaSort,
   FaSortAlphaDown,
   FaSortAlphaUp,
+  FaTrash,
 } from 'react-icons/fa';
 import { navigate } from 'gatsby';
 import { useLocation, WindowLocation } from '@reach/router';
 import Skeleton from 'react-loading-skeleton';
+import Select from 'react-select';
+import uniqBy from 'lodash/uniqBy';
 
-import { quarterSpacer, baseSpacer, baseAndAHalfSpacer } from '@styles/size';
+import {
+  baseSpacer,
+  baseAndAHalfSpacer,
+  halfSpacer,
+  quarterSpacer,
+  doubleSpacer,
+} from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
 import { lightestGray, textColorLight, white } from '@styles/color';
 import { fontSizeSmall } from '@styles/typography';
-import { Column, FlexContainer, Row } from '@components';
+import { Column, FlexContainer, IconWrapper, Row } from '@components';
 import { getQueryStringParams, mergeQueryParams } from '@utils/queryStringUtils';
-import Button, { ButtonProps } from './Button';
-import { StyledInput, StyledLabel, InputWrapper } from './Input';
+import {
+  allGearListItems,
+  gearListAccommodations,
+  gearListActivities,
+  gearListCampKitchen,
+  gearListOtherConsiderations,
+} from '@utils/gearListItemEnum';
+import { createOptionsFromGearListArray } from '@utils/createOptionsFromArray';
+import Button, { ButtonProps } from '@components/Button';
+import { StyledInput, StyledLabel, InputWrapper, multiSelectStyles } from '@components/Input';
+import { useSelector } from 'react-redux';
+import { RootState } from '@redux/ducks';
+import { ActivityTypes, GearListEnumType } from '@common/gearItem';
 
 type TableActionType = {
   to?: string;
@@ -52,73 +73,153 @@ const StyledTable = styled.table`
   margin-bottom: ${baseSpacer};
   width: 100%;
   font-size: ${fontSizeSmall};
+  border: none;
+  table-layout: fixed;
 `;
 
 const StyledTr = styled.tr`
-  border: ${baseBorderStyle};
+  border-bottom: ${baseBorderStyle};
   &:hover {
     background-color: ${white};
+  }
+
+  &:hover svg {
+    visibility: visible;
   }
 `;
 
 const StyledTd = styled.td`
-  padding: ${quarterSpacer};
-  border: ${baseBorderStyle};
+  padding: ${halfSpacer} ${quarterSpacer};
+  border: none;
 `;
 
 const StyledTh = styled.th`
-  padding: ${quarterSpacer};
+  padding: ${halfSpacer} ${quarterSpacer};
   font-weight: bold;
   border: ${baseBorderStyle};
   background-color: ${lightestGray};
+  text-transform: uppercase;
 `;
 
 const GlobalFilter = ({
   setGlobalFilter,
-  searchValue,
+  setValueToSearch,
+  valueToSearch,
+  setSubCategoryToSearch,
+  subCategoryToSearch,
   location,
 }: {
-  setGlobalFilter: any;
-  searchValue: string;
+  setGlobalFilter: (value: string) => void;
+  setValueToSearch: (value: string) => void;
+  valueToSearch: string;
+  setSubCategoryToSearch: (value: string) => void;
+  subCategoryToSearch: string;
   location: WindowLocation<unknown>;
 }) => {
-  const [value, setValue] = useState(searchValue);
-  const onChange = useAsyncDebounce((val) => {
-    setGlobalFilter(val || undefined);
-    if (val === '') {
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+
+  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
+
+  const onChange = useAsyncDebounce(({ val, subCat }: { val: string; subCat: string }) => {
+    setGlobalFilter(val || subCat || '');
+    if (val === '' || subCat === '') {
+      setGlobalFilter('');
       // if val is blank, clear everything out
-      navigate(mergeQueryParams({ currentPage: '', search: '' }, location), { replace: true });
-    } else {
+      navigate(mergeQueryParams({ currentPage: '', search: '', subCategory: '' }, location), {
+        replace: true,
+      });
+    }
+    if (val !== '') {
+      setGlobalFilter(val);
       // clear currentPage because there are going to be new results
-      navigate(mergeQueryParams({ currentPage: '', search: val }, location), { replace: true });
+      navigate(
+        mergeQueryParams({ currentPage: '', search: val || '', subCategory: '' }, location),
+        {
+          replace: true,
+        }
+      );
+    }
+    if (subCat !== '') {
+      setGlobalFilter(`subCat-${subCat}`);
+      // clear currentPage because there are going to be new results
+      navigate(mergeQueryParams({ currentPage: '', search: '', subCategory: subCat }, location), {
+        replace: true,
+      });
     }
   }, 200);
 
+  // the categories that the user DOES have in their gear closet, so we can only show those
+  const getFilteredCategories = (array: GearListEnumType) =>
+    array.filter((item) => gearClosetCategories.includes(item.name));
+
   return (
     <InputWrapper>
-      <StyledLabel>Search:</StyledLabel>
       <Row>
-        <Column xs={8} sm={9} lg={10}>
+        <Column sm={6} md={5}>
+          <StyledLabel>Search:</StyledLabel>
           <StyledInput
             type="text"
-            value={value || ''}
+            value={valueToSearch || ''}
             onChange={(e) => {
-              setValue(e.target.value);
-              onChange(e.target.value);
+              setValueToSearch(e.target.value);
+              setSubCategoryToSearch('');
+              onChange({ val: e.target.value, subCat: '' });
             }}
             placeholder="Search anything..."
           />
         </Column>
-        <Column xs={4} sm={3} lg={2}>
+        <Column sm={6} md={5}>
+          <StyledLabel>Filter by Sub-Category:</StyledLabel>
+          <Select
+            className="react-select"
+            styles={multiSelectStyles}
+            isMulti={false}
+            menuPlacement="auto"
+            value={{
+              value: allGearListItems.find((i) => i.name === subCategoryToSearch)?.name || '',
+              label: subCategoryToSearch,
+            }}
+            options={[
+              {
+                label: 'Activities',
+                options: createOptionsFromGearListArray(getFilteredCategories(gearListActivities)),
+              },
+              {
+                label: 'Accommodations',
+                options: createOptionsFromGearListArray(
+                  getFilteredCategories(gearListAccommodations)
+                ),
+              },
+              {
+                label: 'Camp Kitchen',
+                options: createOptionsFromGearListArray(getFilteredCategories(gearListCampKitchen)),
+              },
+              {
+                label: 'Other Considerations',
+                options: createOptionsFromGearListArray(
+                  getFilteredCategories(gearListOtherConsiderations)
+                ),
+              },
+            ]}
+            onChange={(option) => {
+              setValueToSearch('');
+              setSubCategoryToSearch(option?.label || '');
+              onChange({ val: '', subCat: option?.value || '' });
+            }}
+          />
+        </Column>
+        <Column md={2}>
+          <StyledLabel>&nbsp;</StyledLabel>
           <Button
             type="button"
             color="tertiary"
             block
             onClick={() => {
-              setValue('');
-              onChange('');
+              setValueToSearch('');
+              setSubCategoryToSearch('');
+              onChange({ val: '', subCat: '' });
             }}
-            disabled={!value}
+            disabled={!valueToSearch && !subCategoryToSearch}
           >
             Clear
           </Button>
@@ -139,28 +240,26 @@ const Table: FunctionComponent<TableProps> = ({
 }) => {
   const location = useLocation();
   // currentPage index starts at 1 to match displayed text in pagination on UI
-  const { search, currentPage, sortColumn, sortDirection } = getQueryStringParams(location);
+  const { search, currentPage, sortColumn, sortDirection, subCategory } = getQueryStringParams(
+    location
+  );
+  const [valueToSearch, setValueToSearch] = useState(search || '');
+  const [subCategoryToSearch, setSubCategoryToSearch] = useState(subCategory || '');
 
-  const fuzzyTextFilterFn = (rows: Array<{ values: any }>, id: number, filterValue: string) => {
-    return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
+  const fuzzyTextFilterFn = (rows: Array<any>, _: any, filterValue: string) => {
+    const stringMatches = matchSorter(rows, filterValue, {
+      keys: [
+        { threshold: matchSorter.rankings.WORD_STARTS_WITH, key: 'values.name' },
+        { threshold: matchSorter.rankings.CONTAINS, key: 'values.category' },
+      ],
+    });
+    const categoryMatches = rows.filter((row) => row.original[filterValue] === true);
+    return uniqBy([...stringMatches, ...categoryMatches], 'id');
   };
 
   const filterTypes = useMemo(
     () => ({
-      // Add a new fuzzyTextFilterFn filter type.
       fuzzyText: fuzzyTextFilterFn,
-      // Or, override the default text filter to use
-      // "startWith"
-      text: (rows: Array<any>, id: number, filterValue: string) => {
-        return rows.filter((row) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        });
-      },
     }),
     []
   );
@@ -186,9 +285,10 @@ const Table: FunctionComponent<TableProps> = ({
       columns,
       data,
       filterTypes,
+      globalFilter: 'fuzzyText',
       initialState: {
         pageSize: rowsPerPage || 10,
-        globalFilter: search || '',
+        globalFilter: search || subCategory || '',
         // currentPage index starts at 1 to match displayed text in pagination on UI
         // if no query string for currentPage, set to 0
         pageIndex: currentPage ? Number(currentPage as string) - 1 : 0,
@@ -214,7 +314,10 @@ const Table: FunctionComponent<TableProps> = ({
       {hasFiltering && (
         <GlobalFilter
           setGlobalFilter={setGlobalFilter}
-          searchValue={search as string}
+          setValueToSearch={setValueToSearch}
+          valueToSearch={valueToSearch as string}
+          setSubCategoryToSearch={setSubCategoryToSearch}
+          subCategoryToSearch={subCategoryToSearch as string}
           location={location}
         />
       )}
@@ -224,7 +327,7 @@ const Table: FunctionComponent<TableProps> = ({
             const headerGroupProps = headerGroup.getHeaderGroupProps();
             return (
               <StyledTr {...headerGroupProps} key={headerGroupProps.key}>
-                {headerGroup.headers.map((column) => {
+                {headerGroup.headers.map((column, index) => {
                   const thProps = hasSorting
                     ? column.getHeaderProps(column.getSortByToggleProps())
                     : {};
@@ -232,58 +335,56 @@ const Table: FunctionComponent<TableProps> = ({
                     <StyledTh
                       key={column.render('header') as string}
                       {...thProps}
+                      style={{ width: index === headerGroup.headers.length - 1 ? 80 : 'auto' }}
+                      title={column.canSort ? `Sort by ${column.render('header')}` : ''}
                       onClick={() => {
-                        let sortDir = '';
-                        let sortCol = String(column.render('header')).toLowerCase();
-                        let curPage = currentPage ? String(currentPage) : '';
-                        if (!sortColumn || !sortDirection || sortDirection === '') {
-                          sortDir = 'asc';
-                          curPage = '';
-                        } else if (sortColumn && sortColumn !== sortCol) {
-                          sortDir = 'asc';
-                          curPage = '';
-                        } else if (
-                          sortColumn &&
-                          sortColumn === sortCol &&
-                          sortDirection === 'asc'
-                        ) {
-                          sortDir = 'desc';
-                        } else if (sortDirection === 'desc') {
-                          // reset to blank
-                          sortDir = '';
-                          sortCol = '';
-                          curPage = '';
-                        }
-                        column.toggleSortBy();
-                        navigate(
-                          mergeQueryParams(
-                            {
-                              sortColumn: sortCol,
-                              sortDirection: sortDir,
-                              currentPage: curPage,
-                            },
-                            location
-                          ),
-                          {
-                            replace: true,
+                        if (column.canSort) {
+                          let sortDir = '';
+                          let sortCol = String(column.render('header')).toLowerCase();
+                          let curPage = currentPage ? String(currentPage) : '';
+                          if (!sortColumn || !sortDirection || sortDirection === '') {
+                            sortDir = 'asc';
+                            curPage = '';
+                          } else if (sortColumn && sortColumn !== sortCol) {
+                            sortDir = 'asc';
+                            curPage = '';
+                          } else if (
+                            sortColumn &&
+                            sortColumn === sortCol &&
+                            sortDirection === 'asc'
+                          ) {
+                            sortDir = 'desc';
+                          } else if (sortDirection === 'desc') {
+                            // reset to blank
+                            sortDir = '';
+                            sortCol = '';
+                            curPage = '';
                           }
-                        );
+                          column.toggleSortBy();
+                          navigate(
+                            mergeQueryParams(
+                              {
+                                sortColumn: sortCol,
+                                sortDirection: sortDir,
+                                currentPage: curPage,
+                              },
+                              location
+                            ),
+                            {
+                              replace: true,
+                            }
+                          );
+                        }
                       }}
                     >
-                      {column.render('header')}
+                      {index === headerGroup.headers.length - 1 ? '' : column.render('header')}
 
                       {hasSorting && (
                         <>
                           {' '}
-                          <span>{column.isSorted && column.isSortedDesc && <FaSortAlphaUp />}</span>
-                          <span>
-                            {column.isSorted && !column.isSortedDesc && <FaSortAlphaDown />}
-                          </span>
-                          <span>
-                            {!column.isSorted && column.canSort && (
-                              <FaSort color={textColorLight} />
-                            )}
-                          </span>
+                          {column.isSorted && column.isSortedDesc && <FaSortAlphaUp />}
+                          {column.isSorted && !column.isSortedDesc && <FaSortAlphaDown />}
+                          {!column.isSorted && column.canSort && <FaSort color={textColorLight} />}
                         </>
                       )}
                     </StyledTh>
@@ -313,70 +414,65 @@ const Table: FunctionComponent<TableProps> = ({
             </>
           ) : (
             <>
-              {pageOrRows.map((row) => {
-                prepareRow(row);
-                return (
-                  <StyledTr {...row.getRowProps()} key={row.id}>
-                    {row.cells.map((cell) => {
-                      // if cell.
-                      return (
-                        <StyledTd {...cell.getCellProps()} key={cell.getCellProps().key}>
-                          {String(cell.getCellProps().key).includes('action') ? (
-                            <>
-                              {cell.row.original.actions &&
-                                cell.row.original.actions.length > 0 &&
-                                cell.row.original.actions.map(
-                                  (action: TableActionType, index: number) => {
-                                    if (action.onClick) {
-                                      return (
-                                        <Button
-                                          type="button"
-                                          key={`${cell.row.id}-${action.color}`}
-                                          onClick={action.onClick}
-                                          color={action.color ?? 'text'}
-                                          size="small"
-                                          iconLeft={action.icon}
-                                          rightSpacer={
-                                            cell.row.original.actions.length > 1 &&
-                                            index !== cell.row.original.actions.length - 1
-                                          }
-                                        >
-                                          {action.label}
-                                        </Button>
-                                      );
-                                    }
-                                    if (action.to) {
-                                      // TODO: more styling options like icon only button, colored button
-                                      return (
-                                        <Button
-                                          type="link"
-                                          key={`${cell.row.id}-${action.to}`}
-                                          to={action.to}
-                                          size="small"
-                                          color={action.color || 'text'}
-                                          iconLeft={action.icon}
-                                          rightSpacer={
-                                            cell.row.original.actions.length > 1 &&
-                                            index !== cell.row.original.actions.length - 1
-                                          }
-                                        >
-                                          {action.label}
-                                        </Button>
-                                      );
-                                    }
-                                    return null;
-                                  }
-                                )}
-                            </>
-                          ) : (
-                            cell.value
-                          )}
-                        </StyledTd>
-                      );
-                    })}
-                  </StyledTr>
-                );
-              })}
+              {pageOrRows.length > 0 ? (
+                pageOrRows.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <StyledTr {...row.getRowProps()} key={row.id}>
+                      {row.cells.map((cell) => {
+                        // if cell.
+                        return (
+                          <StyledTd {...cell.getCellProps()} key={cell.getCellProps().key}>
+                            {String(cell.getCellProps().key).includes('action') ? (
+                              <FlexContainer justifyContent="flex-end" flexWrap="nowrap">
+                                <IconWrapper
+                                  onClick={cell.row.original.actions[1].onClick}
+                                  style={{
+                                    marginRight: halfSpacer,
+                                    visibility: 'hidden',
+                                  }}
+                                >
+                                  <FaTrash />
+                                </IconWrapper>
+                                <IconWrapper
+                                  onClick={() => navigate(cell.row.original.actions[0].to)}
+                                >
+                                  <FaChevronRight />
+                                </IconWrapper>
+                              </FlexContainer>
+                            ) : (
+                              cell.value
+                            )}
+                          </StyledTd>
+                        );
+                      })}
+                    </StyledTr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={3} style={{ padding: doubleSpacer, textAlign: 'center' }}>
+                    <FlexContainer flexDirection="column">
+                      <p>
+                        No results found for <strong>{search}</strong>
+                      </p>
+                      <Button
+                        type="button"
+                        color="tertiary"
+                        size="small"
+                        onClick={() => {
+                          setValueToSearch('');
+                          navigate(mergeQueryParams({ currentPage: '', search: '' }, location), {
+                            replace: false,
+                          });
+                        }}
+                      >
+                        Clear
+                      </Button>
+                    </FlexContainer>
+                  </td>
+                </tr>
+              )}
             </>
           )}
         </tbody>
@@ -390,7 +486,7 @@ const Table: FunctionComponent<TableProps> = ({
                   type="button"
                   size="small"
                   rightSpacer
-                  color="primaryOutline"
+                  color="tertiary"
                   onClick={() => {
                     gotoPage(0);
                     // set to empty string to remove currentPage query string param
@@ -406,7 +502,7 @@ const Table: FunctionComponent<TableProps> = ({
                 <Button
                   type="button"
                   size="small"
-                  color="primaryOutline"
+                  color="tertiary"
                   onClick={() => {
                     previousPage();
                     navigate(
@@ -435,7 +531,7 @@ const Table: FunctionComponent<TableProps> = ({
               <div>
                 <Button
                   type="button"
-                  color="primaryOutline"
+                  color="tertiary"
                   size="small"
                   rightSpacer
                   onClick={() => {
@@ -462,7 +558,7 @@ const Table: FunctionComponent<TableProps> = ({
 
                 <Button
                   type="button"
-                  color="primaryOutline"
+                  color="tertiary"
                   size="small"
                   onClick={() => {
                     gotoPage(pageCount - 1);
@@ -477,7 +573,6 @@ const Table: FunctionComponent<TableProps> = ({
               </div>
             </FlexContainer>
           )}
-          <p>&nbsp;</p>
         </>
       )}
     </>
