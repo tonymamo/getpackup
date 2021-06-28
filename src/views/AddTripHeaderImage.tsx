@@ -53,7 +53,7 @@ const AddTripHeaderImage: FunctionComponent<TripHeaderImageProps> = (props) => {
   const prevValue = usePrevious(activeTrip?.headerImage);
   useEffect(() => {
     if (activeTrip && prevValue !== activeTrip.headerImage && activeTrip.headerImage !== '') {
-      navigate(`/app/trips/${props.id}/generator`);
+      // navigate(`/app/trips/${props.id}/generator`);
     }
   }, [activeTrip?.headerImage]);
 

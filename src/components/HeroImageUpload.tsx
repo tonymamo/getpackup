@@ -161,11 +161,17 @@ const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, im
           staticImgSrc={image as string}
           aspectRatio={5}
           justifyContent="flex-end"
-          alignItems="flex-start"
+          alignItems="flex-end"
         >
-          <EditButton type="button" onClick={() => uploader.open()}>
-            <FaCamera />
-          </EditButton>
+          <Button
+            color="tertiary"
+            size="small"
+            type="button"
+            onClick={() => uploader.open()}
+            iconLeft={<FaCamera />}
+          >
+            Edit
+          </Button>
         </HeroImage>
       ) : (
         <HeroImageUploadPicker>
