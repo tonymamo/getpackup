@@ -119,12 +119,6 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
           tripId: props.tripId,
           item: props.item,
         });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `${props.item.name} has been removed`,
-          })
-        );
       })
       .catch((err) => {
         trackEvent('Packing List Item Deleted Failure', {

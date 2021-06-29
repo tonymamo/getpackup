@@ -80,12 +80,6 @@ const GearListItem: FunctionComponent<GearListItemProps> = (props) => {
           uid: auth.uid,
           item: props.item,
         });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `${props.item.name} has been removed`,
-          })
-        );
       })
       .catch((err) => {
         trackEvent('Gear Closet List Item Delete Failure', {

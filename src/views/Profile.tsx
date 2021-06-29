@@ -198,6 +198,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         label="Name"
                         validate={requiredField}
                         required
+                        hiddenLabel
                       />
                     </EditableInput>
                     <EditableInput
@@ -210,6 +211,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         type="text"
                         name="username"
                         label="Username"
+                        hiddenLabel
                         validate={(value: string) =>
                           validateUsername(value, firebase, '', initialValues.username)
                         }
@@ -230,7 +232,14 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         justifyContent="space-between"
                       >
                         <EmailWrapper>
-                          <Field as={Input} type="text" name="email" label="Email" disabled />
+                          <Field
+                            as={Input}
+                            type="text"
+                            name="email"
+                            label="Email"
+                            disabled
+                            hiddenLabel
+                          />
                         </EmailWrapper>
                         {auth.emailVerified ? null : (
                           <Button
@@ -257,6 +266,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                           geosuggestTypes={['(cities)']}
                           name="location"
                           label="Location"
+                          hiddenLabel
                           setFieldValue={setFieldValue}
                           {...rest}
                         />
@@ -267,14 +277,14 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                       isLoading={isLoading}
                       value={loggedInUser.website || 'No website provided'}
                     >
-                      <Field as={Input} type="text" name="website" label="Website" />
+                      <Field as={Input} type="text" name="website" label="Website" hiddenLabel />
                     </EditableInput>
                     <EditableInput
                       label="Bio"
                       isLoading={isLoading}
                       value={loggedInUser.bio || 'No bio provided'}
                     >
-                      <Field as={Input} type="textarea" name="bio" label="Bio" />
+                      <Field as={Input} type="textarea" name="bio" label="Bio" hiddenLabel />
                     </EditableInput>
                     <Button
                       type="button"

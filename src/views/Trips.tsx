@@ -27,12 +27,18 @@ type TripsProps = { loggedInUser?: UserType } & RouteComponentProps;
 const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
 
   useFirestoreConnect([
     {
       collection: 'trips',
       where: ['owner', '==', auth.uid],
       populates: [{ child: 'tripMembers', root: 'users' }],
+    },
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
     },
   ]);
 
@@ -75,7 +81,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   return (
     <>
       <Seo title="My Trips" />
-      {isLoaded(trips) && trips && trips.length !== 0 && (
+      {isLoaded(trips) && isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
         <PageContainer>
           <Row>
             <Column sm={4}>
@@ -114,40 +120,40 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         </PageContainer>
       ) : (
         <PageContainer>
-          {isLoaded(trips) && trips && trips.length === 0 ? (
-            <Modal isOpen toggleModal={() => null} hideCloseButton>
-              <Row>
-                <Column md={8} mdOffset={2}>
-                  <Heading>Welcome! 🤝</Heading>
-                  <p>
-                    Looks like it&apos;s your first time here. Would you like to customize your gear
-                    closet first, or just create a trip with generic gear we suggest?
-                  </p>
-                  <Button
-                    type="link"
-                    to="/app/gear-closet"
-                    color="primary"
-                    iconRight={<FaChevronRight />}
-                    onClick={() =>
-                      trackEvent('Customize Gear Closet Button clicked', {
-                        location: 'Trips Page First Time',
-                      })
-                    }
-                  >
-                    Customize Gear Closet
-                  </Button>
-                  <Button
-                    type="link"
-                    to="/app/trips/new"
-                    color="text"
-                    onClick={() =>
-                      trackEvent('New Trip Button clicked', { location: 'Trips Page First Time' })
-                    }
-                  >
-                    Create New Trip
-                  </Button>
-                </Column>
-              </Row>
+          {isLoaded(trips) &&
+          trips &&
+          trips.length === 0 &&
+          isLoaded(fetchedGearCloset) &&
+          fetchedGearCloset.length === 0 ? (
+            <Modal isOpen toggleModal={() => null} hideCloseButton largePadding>
+              <Heading>Welcome! 🤝</Heading>
+              <p>
+                Looks like it&apos;s your first time here. Would you like to customize your gear
+                closet first, or just create a trip with generic gear we suggest?
+              </p>
+              <Button
+                type="link"
+                to="/app/gear-closet"
+                color="primary"
+                iconRight={<FaChevronRight />}
+                onClick={() =>
+                  trackEvent('Customize Gear Closet Button clicked', {
+                    location: 'Trips Page First Time',
+                  })
+                }
+              >
+                Customize Gear Closet
+              </Button>
+              <Button
+                type="link"
+                to="/app/trips/new"
+                color="text"
+                onClick={() =>
+                  trackEvent('New Trip Button clicked', { location: 'Trips Page First Time' })
+                }
+              >
+                Create New Trip
+              </Button>
             </Modal>
           ) : (
             <>

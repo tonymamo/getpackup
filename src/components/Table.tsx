@@ -105,15 +105,15 @@ const GlobalFilter = ({
   setGlobalFilter,
   setValueToSearch,
   valueToSearch,
-  setSubCategoryToSearch,
-  subCategoryToSearch,
+  setTagToSearch,
+  tagToSearch,
   location,
 }: {
   setGlobalFilter: (value: string) => void;
   setValueToSearch: (value: string) => void;
   valueToSearch: string;
-  setSubCategoryToSearch: (value: string) => void;
-  subCategoryToSearch: string;
+  setTagToSearch: (value: string) => void;
+  tagToSearch: string;
   location: WindowLocation<unknown>;
 }) => {
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
@@ -125,24 +125,21 @@ const GlobalFilter = ({
     if (val === '' || subCat === '') {
       setGlobalFilter('');
       // if val is blank, clear everything out
-      navigate(mergeQueryParams({ currentPage: '', search: '', subCategory: '' }, location), {
+      navigate(mergeQueryParams({ currentPage: '', search: '', tag: '' }, location), {
         replace: true,
       });
     }
     if (val !== '') {
       setGlobalFilter(val);
       // clear currentPage because there are going to be new results
-      navigate(
-        mergeQueryParams({ currentPage: '', search: val || '', subCategory: '' }, location),
-        {
-          replace: true,
-        }
-      );
+      navigate(mergeQueryParams({ currentPage: '', search: val || '', tag: '' }, location), {
+        replace: true,
+      });
     }
     if (subCat !== '') {
       setGlobalFilter(`subCat-${subCat}`);
       // clear currentPage because there are going to be new results
-      navigate(mergeQueryParams({ currentPage: '', search: '', subCategory: subCat }, location), {
+      navigate(mergeQueryParams({ currentPage: '', search: '', tag: subCat }, location), {
         replace: true,
       });
     }
@@ -153,79 +150,89 @@ const GlobalFilter = ({
     array.filter((item) => gearClosetCategories.includes(item.name));
 
   return (
-    <InputWrapper>
+    <>
       <Row>
-        <Column sm={6} md={5}>
-          <StyledLabel>Search:</StyledLabel>
-          <StyledInput
-            type="text"
-            value={valueToSearch || ''}
-            onChange={(e) => {
-              setValueToSearch(e.target.value);
-              setSubCategoryToSearch('');
-              onChange({ val: e.target.value, subCat: '' });
-            }}
-            placeholder="Search anything..."
-          />
+        <Column sm={5} md={5}>
+          <InputWrapper>
+            <StyledLabel>Search:</StyledLabel>
+            <StyledInput
+              type="text"
+              value={valueToSearch || ''}
+              onChange={(e) => {
+                setValueToSearch(e.target.value);
+                setTagToSearch('');
+                onChange({ val: e.target.value, subCat: '' });
+              }}
+              placeholder="Search anything..."
+            />
+          </InputWrapper>
         </Column>
-        <Column sm={6} md={5}>
-          <StyledLabel>Filter by Sub-Category:</StyledLabel>
-          <Select
-            className="react-select"
-            styles={multiSelectStyles}
-            isMulti={false}
-            menuPlacement="auto"
-            value={{
-              value: allGearListItems.find((i) => i.name === subCategoryToSearch)?.name || '',
-              label: subCategoryToSearch,
-            }}
-            options={[
-              {
-                label: 'Activities',
-                options: createOptionsFromGearListArray(getFilteredCategories(gearListActivities)),
-              },
-              {
-                label: 'Accommodations',
-                options: createOptionsFromGearListArray(
-                  getFilteredCategories(gearListAccommodations)
-                ),
-              },
-              {
-                label: 'Camp Kitchen',
-                options: createOptionsFromGearListArray(getFilteredCategories(gearListCampKitchen)),
-              },
-              {
-                label: 'Other Considerations',
-                options: createOptionsFromGearListArray(
-                  getFilteredCategories(gearListOtherConsiderations)
-                ),
-              },
-            ]}
-            onChange={(option) => {
-              setValueToSearch('');
-              setSubCategoryToSearch(option?.label || '');
-              onChange({ val: '', subCat: option?.value || '' });
-            }}
-          />
+        <Column sm={5} md={5}>
+          <InputWrapper>
+            <StyledLabel>Filter by Tag:</StyledLabel>
+            <Select
+              className="react-select"
+              styles={multiSelectStyles}
+              isMulti={false}
+              menuPlacement="auto"
+              value={{
+                value: allGearListItems.find((i) => i.name === tagToSearch)?.name || '',
+                label: tagToSearch,
+              }}
+              options={[
+                {
+                  label: 'Activities',
+                  options: createOptionsFromGearListArray(
+                    getFilteredCategories(gearListActivities)
+                  ),
+                },
+                {
+                  label: 'Accommodations',
+                  options: createOptionsFromGearListArray(
+                    getFilteredCategories(gearListAccommodations)
+                  ),
+                },
+                {
+                  label: 'Camp Kitchen',
+                  options: createOptionsFromGearListArray(
+                    getFilteredCategories(gearListCampKitchen)
+                  ),
+                },
+                {
+                  label: 'Other Considerations',
+                  options: createOptionsFromGearListArray(
+                    getFilteredCategories(gearListOtherConsiderations)
+                  ),
+                },
+              ]}
+              onChange={(option) => {
+                setValueToSearch('');
+                setTagToSearch(option?.label || '');
+                onChange({ val: '', subCat: option?.value || '' });
+              }}
+            />
+          </InputWrapper>
         </Column>
-        <Column md={2}>
-          <StyledLabel>&nbsp;</StyledLabel>
-          <Button
-            type="button"
-            color="tertiary"
-            block
-            onClick={() => {
-              setValueToSearch('');
-              setSubCategoryToSearch('');
-              onChange({ val: '', subCat: '' });
-            }}
-            disabled={!valueToSearch && !subCategoryToSearch}
-          >
-            Clear
-          </Button>
+        <Column sm={2}>
+          <InputWrapper>
+            <StyledLabel>&nbsp;</StyledLabel>
+            <Button
+              type="button"
+              color="tertiary"
+              block
+              onClick={() => {
+                setValueToSearch('');
+                setTagToSearch('');
+                onChange({ val: '', subCat: '' });
+              }}
+              disabled={!valueToSearch && !tagToSearch}
+            >
+              Clear
+            </Button>
+          </InputWrapper>
         </Column>
       </Row>
-    </InputWrapper>
+    </>
   );
 };
 
@@ -240,11 +247,9 @@ const Table: FunctionComponent<TableProps> = ({
 }) => {
   const location = useLocation();
   // currentPage index starts at 1 to match displayed text in pagination on UI
-  const { search, currentPage, sortColumn, sortDirection, subCategory } = getQueryStringParams(
-    location
-  );
+  const { search, currentPage, sortColumn, sortDirection, tag } = getQueryStringParams(location);
   const [valueToSearch, setValueToSearch] = useState(search || '');
-  const [subCategoryToSearch, setSubCategoryToSearch] = useState(subCategory || '');
+  const [tagToSearch, setTagToSearch] = useState(tag || '');
 
   const fuzzyTextFilterFn = (rows: Array<any>, _: any, filterValue: string) => {
     const stringMatches = matchSorter(rows, filterValue, {
@@ -288,7 +293,7 @@ const Table: FunctionComponent<TableProps> = ({
       globalFilter: 'fuzzyText',
       initialState: {
         pageSize: rowsPerPage || 10,
-        globalFilter: search || subCategory || '',
+        globalFilter: search || tag || '',
         // currentPage index starts at 1 to match displayed text in pagination on UI
         // if no query string for currentPage, set to 0
         pageIndex: currentPage ? Number(currentPage as string) - 1 : 0,
@@ -316,8 +321,8 @@ const Table: FunctionComponent<TableProps> = ({
           setGlobalFilter={setGlobalFilter}
           setValueToSearch={setValueToSearch}
           valueToSearch={valueToSearch as string}
-          setSubCategoryToSearch={setSubCategoryToSearch}
-          subCategoryToSearch={subCategoryToSearch as string}
+          setTagToSearch={setTagToSearch}
+          tagToSearch={tagToSearch as string}
           location={location}
         />
       )}

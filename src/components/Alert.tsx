@@ -60,7 +60,7 @@ const AlertWrapper = styled.div`
   color: ${white};
   margin-bottom: ${baseSpacer};
   border-radius: ${borderRadius};
-  text-align: center;
+  text-align: left;
   position: relative;
   & > p {
     margin-bottom: 0;

@@ -19,9 +19,8 @@ import { FaCamera } from 'react-icons/fa';
 
 import trackEvent from '@utils/trackEvent';
 import { Button, HeroImage } from '@components';
-import { borderColor, offWhite, textColor, white } from '@styles/color';
-import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
-import { baseBorderStyle } from '@styles/mixins';
+import { borderColor, offWhite, white } from '@styles/color';
+import { baseSpacer, halfSpacer } from '@styles/size';
 
 type HeroImageUploadProps = {
   type: 'trip' | 'profile';
@@ -47,18 +46,6 @@ const HeroImageUploadPicker = styled.div`
   justify-content: flex-end;
   align-items: flex-end;
   padding: ${baseSpacer};
-`;
-
-const EditButton = styled.button`
-  border-radius: ${doubleSpacer};
-  width: ${doubleSpacer};
-  height: ${doubleSpacer};
-  background-color: ${white};
-  color: ${textColor};
-  border: ${baseBorderStyle};
-  justify-content: center;
-  display: flex;
-  align-items: center;
 `;
 
 const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, image }) => {
@@ -182,8 +169,9 @@ const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, im
             isLoading={isLoading}
             size="small"
             iconLeft={<FaCamera />}
+            style={{ zIndex: 1 }}
           >
-            Upload
+            Add
           </Button>
         </HeroImageUploadPicker>
       )}
