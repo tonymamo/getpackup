@@ -99,4 +99,4 @@ Prepare for your outdoor adventures in an organized and streamlined manner to mi
 
 <hr />
 
-Image credits: Balkan Campers, Lucas Favre, @whoisbenjamin, Forrest Cavale.
+Image credits: Caitlin Capa, Balkan Campers, Lucas Favre, @whoisbenjamin, Forrest Cavale.
