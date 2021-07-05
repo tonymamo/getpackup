@@ -13,11 +13,11 @@ tags:
   - travel
   - ""
 ---
-You probably ended up here because you’re intrigued about the idea of living in a van. The 9-5 office job or working from home just isn’t cutting it for you and you’re craving something new and exciting. You scroll past Instagram posts with the hashtag #vanlife and you feel a little jealous, a little lustful and a little curious. Some days you think, I could totally do that, but other days you're not sure if you're brave enough for it. Curiosity is what counts!
+You probably ended up here because you’re intrigued about the idea of living in a van. The 9-5 office job or working from home just isn’t cutting it for you and you’re craving something new and exciting. You scroll past Instagram posts with the hashtag #vanlife and you feel a little jealous, a little lustful and a little curious. Some days you think 'I could totally do that' but other days you're not sure if you're brave enough for it. Curiosity is what counts!
 
 ![](/img/img-7601.jpg)
 
-When I decided to quit my job and move across the world to Australia to live in a van, I was more of the, I could totally do that type. I actually kept my #vanlife plans a secret to avoid hearing other people’s criticisms and discouragements, especially since I am a woman and planned to do it solo. After taking some time to overcome the jet lag and initial shock of being alone in a new country I eventually bought my first van. It was only after making an introductory instagram post that my loved ones found out I was living in a van AKA my least expensive home. No regrets. 
+When I decided to quit my job and move across the world to Australia to live in a van, I was more of the 'I could totally do that type'. I actually kept my #vanlife plans a secret to avoid hearing other people’s criticisms and discouragements, especially since I am a woman and planned to do it solo. After taking some time to overcome the jet lag and initial shock of being alone in a new country I eventually bought my first van. It was only after making an introductory instagram post that my loved ones found out I was living in a van AKA my least expensive home. No regrets. 
 
 Not everyone needs to have sheer determination to live in a van. It’s okay to stay up tossing and turning attempting to decide whether it’s for you or not. It’s also okay and recommended to consult your best buds to see what they think. An important part of living in a van, besides having enough money to buy it and a strong desire to be free, includes having the right mindset and personality to do it. 
 
