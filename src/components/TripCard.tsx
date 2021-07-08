@@ -19,7 +19,7 @@ import {
   NoiseRings,
   StaticMapImage,
 } from '@components';
-import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
+import { baseSpacer, doubleSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
@@ -148,7 +148,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
 
       <StyledLineItem>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-          <FaRegCalendar style={{ marginRight: halfSpacer }} />
+          <FaRegCalendar style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }} />
           {trip ? (
             <>
               {trip.tripLength === 21
@@ -165,7 +165,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
 
       <StyledLineItem>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-          <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />
+          <FaMapMarkerAlt style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }} />
           {trip ? (
             trip.startingPoint
           ) : (

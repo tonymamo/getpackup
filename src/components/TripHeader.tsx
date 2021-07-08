@@ -21,7 +21,13 @@ import {
   Row,
   Column,
 } from '@components';
-import { baseAndAHalfSpacer, baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
+import {
+  baseAndAHalfSpacer,
+  baseSpacer,
+  doubleSpacer,
+  halfSpacer,
+  quarterSpacer,
+} from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
@@ -141,7 +147,9 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
         <Column md={showDescription ? 12 : 7}>
           <StyledLineItem>
             <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-              <FaRegCalendar style={{ marginRight: halfSpacer }} />
+              <FaRegCalendar
+                style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }}
+              />
               {trip ? (
                 <>
                   {trip.tripLength === 21
@@ -161,7 +169,9 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
 
           <StyledLineItem>
             <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-              <FaMapMarkerAlt style={{ marginRight: halfSpacer }} />
+              <FaMapMarkerAlt
+                style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }}
+              />
               {trip ? (
                 trip.startingPoint
               ) : (

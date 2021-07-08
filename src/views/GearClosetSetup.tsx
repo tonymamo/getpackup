@@ -61,12 +61,6 @@ const GearClosetSetup: FunctionComponent<GearClosetSetupProps> = () => {
       .then(() => {
         resetForm();
         trackEvent('Gear Closet Generation Successfully Completed', { values });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Successfully generated your gear closet!',
-          })
-        );
       })
       .catch((error: Error) => {
         trackEvent('Gear Closet Generation Failed', { values, error });

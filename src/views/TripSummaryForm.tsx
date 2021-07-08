@@ -54,12 +54,6 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         });
         trackEvent('New Trip Submit Successful', { values: { ...values } });
         navigate(`/app/trips/${docRef.id}/add-trip-image`);
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Successfully created new trip',
-          })
-        );
       })
       .catch((err) => {
         trackEvent('New Trip Submit Unsuccessful', { values: { ...values }, error: err });

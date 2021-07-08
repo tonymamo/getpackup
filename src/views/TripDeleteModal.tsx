@@ -32,12 +32,6 @@ const TripDeleteModal: FunctionComponent<TripDeleteModalProps> = ({
         .then(() => {
           trackEvent('Trip Deleted Successfully', { tripId });
           navigate('/app/trips');
-          dispatch(
-            addAlert({
-              type: 'success',
-              message: 'Successfully deleted trip',
-            })
-          );
         })
         .catch((err) => {
           trackEvent('Trip Delete Failure', { tripId, error: err });

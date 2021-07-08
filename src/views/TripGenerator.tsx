@@ -142,12 +142,6 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
       .then(() => {
         navigate(`/app/trips/${props.id}`);
         trackEvent('Trip Generated Successfully', { tripId: props.id });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully generated trip based on selections`,
-          })
-        );
       })
       .catch((err) => {
         trackEvent('Trip Generation Failure', { tripId: props.id, error: err });

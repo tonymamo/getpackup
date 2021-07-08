@@ -86,12 +86,6 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
       .then(() => {
         resetForm();
         trackEvent('Gear Closet Add Item Submitted', { values });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully add ${values.name}`,
-          })
-        );
       })
       .catch((error: Error) => {
         trackEvent('Gear Closet Add Item Submit Failure', { values, error });

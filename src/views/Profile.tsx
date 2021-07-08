@@ -163,12 +163,6 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                       resetForm({ values });
                       trackEvent('Profile Updated', { ...updateValues });
                       setIsLoading(false);
-                      dispatch(
-                        addAlert({
-                          type: 'success',
-                          message: `Successfully updated profile`,
-                        })
-                      );
                     })
                     .catch((err) => {
                       setSubmitting(false);

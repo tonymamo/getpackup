@@ -121,12 +121,6 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
       .then(() => {
         resetForm();
         trackEvent('Gear Closet Edit Item Submitted', { values });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully updated ${values.name}`,
-          })
-        );
       })
       .catch((error: Error) => {
         trackEvent('Gear Closet Edit Item Submit Failure', { values, error });
@@ -167,12 +161,6 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
 
     deleteType()
       .then(() => {
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully deleted ${item.name}`,
-          })
-        );
         trackEvent('Edit Gear Closet Item Deleted', { ...activeItem });
       })
       .catch((err) => {

@@ -53,14 +53,7 @@ const GearList: FunctionComponent<GearListProps> = () => {
       .collection('gear')
       .doc(item.id)
       .delete()
-      .then(() => {
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully deleted ${item.name}`,
-          })
-        );
-      })
+      .then()
       .catch((err) => {
         dispatch(
           addAlert({

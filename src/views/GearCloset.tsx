@@ -20,6 +20,7 @@ import { GearItemType } from '@common/gearItem';
 import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
+import trackEvent from '@utils/trackEvent';
 
 type GearClosetProps = {};
 
@@ -115,14 +116,10 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
 
     deleteType()
       .then(() => {
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully deleted ${item.name}`,
-          })
-        );
+        trackEvent('Gear Closet Item Deleted', { ...item });
       })
       .catch((err) => {
+        trackEvent('Gear Closet Item Delete Failure', { ...item, err });
         dispatch(
           addAlert({
             type: 'danger',

@@ -46,12 +46,6 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
           id: docRef.id,
         });
         navigate('/admin/gear-list');
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Successfully created new gear list item',
-          })
-        );
       })
       .catch((err) => {
         dispatch(
@@ -77,12 +71,6 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
       .then(() => {
         setIsLoading(false);
         navigate('/admin/gear-list');
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully updated ${values.name}`,
-          })
-        );
       })
       .catch((err) => {
         dispatch(

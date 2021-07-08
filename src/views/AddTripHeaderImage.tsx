@@ -77,12 +77,6 @@ const AddTripHeaderImage: FunctionComponent<TripHeaderImageProps> = (props) => {
         lastUpdated: new Date(),
       })
       .then(() => {
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Successfully added trip header image',
-          })
-        );
         trackEvent('New Predefined Trip Header Image Uploaded', {
           tripId: props.id,
           headerImage: predefinedChoices[index],

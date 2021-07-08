@@ -65,12 +65,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
         .then(() => {
           trackEvent('Trip Details Updated', { ...updatedValues });
           setIsLoading(false);
-          dispatch(
-            addAlert({
-              type: 'success',
-              message: `Successfully updated ${values.name}`,
-            })
-          );
         })
         .catch((err) => {
           trackEvent('Trip Details Update Failure', { ...updatedValues });
