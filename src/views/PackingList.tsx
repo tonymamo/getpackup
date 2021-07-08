@@ -27,6 +27,7 @@ type PackingListProps = {
   loggedInUser?: UserType;
   tripId: string;
   packingList: PackingListItemType[];
+  tripIsLoaded: boolean;
 } & RouteComponentProps;
 
 const StickyWrapper = styled.div`
@@ -76,6 +77,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   loggedInUser,
   packingList,
   tripId,
+  tripIsLoaded,
 }) => {
   const groupedCategories: [string, PackingListItemType[]][] = [];
 
@@ -113,6 +115,10 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && trip.tripMembers.length > 0;
+
+  if (tripIsLoaded && !trip) {
+    return null;
+  }
 
   return (
     <>

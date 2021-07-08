@@ -6,7 +6,6 @@ import {
   Seo,
   Heading,
   PageContainer,
-  FlexContainer,
   Button,
   Table,
   Column,
@@ -135,12 +134,21 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     <PageContainer>
       <Seo title="Gear Closet" />
       {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
-        <FlexContainer justifyContent="space-between">
-          <Heading altStyle>Gear Closet</Heading>
-          <Button type="link" to="/app/gear-closet/new" iconLeft={<FaPlusCircle />}>
-            Add New Item
-          </Button>
-        </FlexContainer>
+        <Row>
+          <Column sm={5}>
+            <p>
+              <Button
+                type="link"
+                to="/app/gear-closet/new"
+                iconLeft={<FaPlusCircle />}
+                block
+                onClick={() => trackEvent('New Gear Closet Item Button clicked')}
+              >
+                Add New Item
+              </Button>
+            </p>
+          </Column>
+        </Row>
       )}
 
       {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (

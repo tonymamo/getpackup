@@ -37,6 +37,7 @@ import Modal from './Modal';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
 import NoiseRings from './NoiseRings';
+import NoTripFound from './NoTripFound';
 import PackingListAddItem from './PackingListAddItem';
 import PackingListCategory from './PackingListCategory';
 import PackingListItem from './PackingListItem';
@@ -102,6 +103,7 @@ export {
   Navbar,
   NegativeMarginContainer,
   NoiseRings,
+  NoTripFound,
   PackingListAddItem,
   PackingListCategory,
   PackingListItem,

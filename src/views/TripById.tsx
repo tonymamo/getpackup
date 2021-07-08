@@ -4,7 +4,7 @@ import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 
-import { Seo, PageContainer } from '@components';
+import { Seo, PageContainer, NoTripFound } from '@components';
 import { RootState } from '@redux/ducks';
 import { TripType } from '@common/trip';
 import PackingList from '@views/PackingList';
@@ -21,7 +21,7 @@ type TripByIdProps = {
 
 const TripById: FunctionComponent<TripByIdProps> = (props) => {
   const dispatch = useDispatch();
-
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
@@ -44,7 +44,9 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   ]);
 
   const activeTrip: TripType | undefined =
-    activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
+    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid
+      ? activeTripById[0]
+      : undefined;
 
   useEffect(() => {
     return () => {
@@ -78,6 +80,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             tripId={props.id}
             trip={activeTrip}
             loggedInUser={props.loggedInUser}
+            tripIsLoaded={isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip)}
           />
           <TripDetails path="/details" activeTrip={activeTrip} loggedInUser={props.loggedInUser} />
           <TripParty path="/party" activeTrip={activeTrip} />
@@ -85,8 +88,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         </Router>
       </PageContainer>
 
-      {/* TODO: better failure state */}
-      {isLoaded(activeTripById) && isEmpty(activeTripById) && <p>No trip found</p>}
+      {isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip) && <NoTripFound />}
     </>
   );
 };

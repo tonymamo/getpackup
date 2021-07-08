@@ -46,6 +46,7 @@ import { StyledInput, StyledLabel, InputWrapper, multiSelectStyles } from '@comp
 import { useSelector } from 'react-redux';
 import { RootState } from '@redux/ducks';
 import { ActivityTypes, GearListEnumType } from '@common/gearItem';
+import useWindowSize from '@utils/useWindowSize';
 
 type TableActionType = {
   to?: string;
@@ -116,6 +117,7 @@ const GlobalFilter = ({
   tagToSearch: string;
   location: WindowLocation<unknown>;
 }) => {
+  const size = useWindowSize();
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
 
   const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
@@ -152,7 +154,7 @@ const GlobalFilter = ({
   return (
     <>
       <Row>
-        <Column sm={5} md={5}>
+        <Column xs={6} sm={5} md={5}>
           <InputWrapper>
             <StyledLabel>Search:</StyledLabel>
             <StyledInput
@@ -167,7 +169,7 @@ const GlobalFilter = ({
             />
           </InputWrapper>
         </Column>
-        <Column sm={5} md={5}>
+        <Column xs={6} sm={5} md={5}>
           <InputWrapper>
             <StyledLabel>Filter by Tag:</StyledLabel>
             <Select
@@ -214,22 +216,24 @@ const GlobalFilter = ({
           </InputWrapper>
         </Column>
         <Column sm={2}>
-          <InputWrapper>
-            <StyledLabel>&nbsp;</StyledLabel>
-            <Button
-              type="button"
-              color="tertiary"
-              block
-              onClick={() => {
-                setValueToSearch('');
-                setTagToSearch('');
-                onChange({ val: '', subCat: '' });
-              }}
-              disabled={!valueToSearch && !tagToSearch}
-            >
-              Clear
-            </Button>
-          </InputWrapper>
+          {(valueToSearch !== '' || tagToSearch !== '') && (
+            <InputWrapper>
+              {!size.isExtraSmallScreen && <StyledLabel>&nbsp;</StyledLabel>}
+              <Button
+                type="button"
+                color="tertiary"
+                block
+                onClick={() => {
+                  setValueToSearch('');
+                  setTagToSearch('');
+                  onChange({ val: '', subCat: '' });
+                }}
+                disabled={!valueToSearch && !tagToSearch}
+              >
+                Clear
+              </Button>
+            </InputWrapper>
+          )}
         </Column>
       </Row>
     </>

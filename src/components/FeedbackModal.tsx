@@ -13,6 +13,7 @@ import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { zIndexFeedbackButton } from '@styles/layers';
 import { tripleSpacer, breakpoints } from '@styles/size';
+import { Link } from 'gatsby';
 
 type FeedbackModalProps = {
   auth: FirebaseReducer.AuthState;
@@ -136,6 +137,14 @@ const FeedbackModal: FunctionComponent<FeedbackModalProps> = (props) => {
               ) : (
                 <>
                   <Heading>Got feedback for us?</Heading>
+                  <p>
+                    The only way we can make packup better is with your help! Please let us know
+                    what you think.
+                  </p>
+                  <p>
+                    Have a lot to say? <Link to="/feedback">Check out this bigger form</Link>{' '}
+                    instead!
+                  </p>
                   <Field
                     as={Input}
                     type="textarea"

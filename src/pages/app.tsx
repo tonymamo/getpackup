@@ -15,7 +15,7 @@ import GearClosetAddItem from '@views/GearClosetAddItem';
 import GearClosetEditItem from '@views/GearClosetEditItem';
 import ShoppingList from '@views/ShoppingList';
 import { RootState } from '@redux/ducks';
-import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
+import { PrivateRoute, LoadingPage, ErrorBoundary, FeedbackModal } from '@components';
 import { breakpoints, baseSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
 import { z1Shadow } from '@styles/mixins';
@@ -32,7 +32,7 @@ export const AppContainer = styled.div`
   box-shadow: ${z1Shadow};
 `;
 
-const App: FunctionComponent<{}> = () => {
+const App: FunctionComponent<{}> = (props) => {
   const firebase = useFirebase();
 
   const auth = useSelector((state: RootState) => state.firebase.auth);
@@ -148,6 +148,7 @@ const App: FunctionComponent<{}> = () => {
           />
         </Router>
       </ErrorBoundary>
+      <FeedbackModal auth={auth} {...props} />
     </AppContainer>
   );
 };

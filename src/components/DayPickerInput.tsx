@@ -5,7 +5,7 @@ import 'react-day-picker/lib/style.css';
 import format from 'date-fns/format';
 
 import { brandPrimary, textColor, white, brandPrimaryRGB } from '@styles/color';
-import { baseSpacer, borderRadius } from '@styles/size';
+import { baseSpacer, borderRadius, doubleSpacer } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
 import { Button, Alert } from '@components';
 import { StyledLabel } from '@components/Input';
@@ -50,7 +50,7 @@ const DayPickerInputWrapper = styled.div`
     .DayPicker:not(.DayPicker--interactionDisabled)
     .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
     background-color: rgba(${brandPrimaryRGB}, 0.25);
-    border-radius: 50%;
+    border-radius: ${doubleSpacer};
   }
   &
     .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
@@ -58,12 +58,12 @@ const DayPickerInputWrapper = styled.div`
     color: ${white};
   }
   & .DayPicker-Day--start {
-    border-top-left-radius: 50% !important;
-    border-bottom-left-radius: 50% !important;
+    border-top-left-radius: ${doubleSpacer} !important;
+    border-bottom-left-radius: ${doubleSpacer} !important;
   }
   & .DayPicker-Day--end {
-    border-top-right-radius: 50% !important;
-    border-bottom-right-radius: 50% !important;
+    border-top-right-radius: ${doubleSpacer} !important;
+    border-bottom-right-radius: ${doubleSpacer} !important;
   }
 `;
 
