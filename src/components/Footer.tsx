@@ -1,14 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import {
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaCalendar,
-  FaUserLock,
-  FaShoppingCart,
-} from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaCalendar, FaUserLock } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import {
@@ -255,7 +248,7 @@ const Footer = () => {
           >
             <GearClosetIcon size={15} />
           </Link>
-          <Link
+          {/* TODO: when shopping list is ready <Link
             to="/app/shopping-list"
             getProps={isPartiallyActive}
             onClick={() =>
@@ -263,7 +256,7 @@ const Footer = () => {
             }
           >
             <FaShoppingCart />
-          </Link>
+          </Link> */}
           {profile.isAdmin && (
             <Link to="/admin/gear-list" getProps={isPartiallyActive}>
               <FaUserLock />

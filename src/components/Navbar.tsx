@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaChevronLeft, FaShoppingCart, FaUserLock } from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
@@ -19,7 +19,7 @@ import {
   HorizontalRule,
 } from '@components';
 import { brandSecondary, brandTertiary, white, brandPrimary } from '@styles/color';
-import { halfSpacer, quadrupleSpacer, tripleSpacer } from '@styles/size';
+import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
 import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typography';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
@@ -74,6 +74,10 @@ const StyledNavbar = styled.header`
     text-transform: uppercase;
     font-size: 0.5em;
     top: -1em;
+    padding: ${quarterSpacer};
+    border-radius: ${baseSpacer};
+    background-color: ${white};
+    color: ${brandSecondary};
   }
 `;
 
@@ -401,6 +405,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   }}
                 />
               </Link>
+              {/* TODO: when shopping list is ready 
               <Link
                 to="/app/shopping-list"
                 getProps={isPartiallyActive}
@@ -420,7 +425,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     bottom: 8,
                   }}
                 />
-              </Link>
+              </Link> */}
               {profile.isAdmin && (
                 <Link to="/admin/gear-list" getProps={isPartiallyActive}>
                   <FaUserLock data-tip="Admin" data-for="admin" />
