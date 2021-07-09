@@ -131,7 +131,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 type="geosuggest"
                 types={[]}
                 name="startingPoint"
-                label="Starting Location"
+                label="Trip Location"
                 validate={requiredField}
                 required
                 setFieldValue={setFieldValue}

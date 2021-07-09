@@ -4,7 +4,6 @@ import { Md5 } from 'ts-md5/dist/md5';
 import ReactTooltip from 'react-tooltip';
 
 import {
-  baseAndAHalfSpacer,
   baseSpacer,
   doubleSpacer,
   halfSpacer,
@@ -13,6 +12,7 @@ import {
   borderRadiusCircle,
   octupleSpacer,
   quarterSpacer,
+  tripleSpacer,
 } from '@styles/size';
 import { lightestGray, white } from '@styles/color';
 import { PreviewCompatibleImage } from '@components';
@@ -34,9 +34,9 @@ export type AvatarProps = {
 const renderSize = (size: AvatarProps['size']) => {
   switch (size) {
     case 'xs':
-      return baseAndAHalfSpacer;
-    case 'sm':
       return doubleSpacer;
+    case 'sm':
+      return tripleSpacer;
     case 'md':
       return quadrupleSpacer;
     case 'lg':
@@ -44,7 +44,7 @@ const renderSize = (size: AvatarProps['size']) => {
     case 'xl':
       return octupleSpacer;
     default:
-      return doubleSpacer;
+      return tripleSpacer;
   }
 };
 
@@ -92,11 +92,12 @@ const StaticContentWrapper = styled.div`
   position: relative;
   text-align: center;
   font-size: ${fontSizeSmall};
+  line-height: ${(props) => props.size && renderSize(props.size)};
 `;
 
 export const StackedAvatars = styled.div`
   display: flex;
-  margin-right: ${halfSpacer};
+  margin: ${halfSpacer} 0;
 
   & ${AvatarImageWrapper} {
     margin-right: -${halfSpacer};

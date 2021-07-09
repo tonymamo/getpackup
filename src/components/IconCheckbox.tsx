@@ -30,6 +30,10 @@ export const IconWrapperLabel = styled.label<{
   text-align: center;
   cursor: pointer;
   margin: ${doubleSpacer};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const IconCheckboxLabel = styled.span`

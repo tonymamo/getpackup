@@ -18,6 +18,8 @@ import {
   HeroImage,
   NoiseRings,
   StaticMapImage,
+  Row,
+  Column,
 } from '@components';
 import { baseSpacer, doubleSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
@@ -53,7 +55,7 @@ const PlaceholderImageWrapper = styled.div`
 const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
 
-  const { isExtraSmallScreen } = useWindowSize();
+  const { isExtraSmallScreen, isSmallScreen } = useWindowSize();
   // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
   const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
 
@@ -91,60 +93,70 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
         )}
       </NegativeMarginContainer>
 
-      <FlexContainer justifyContent="space-between" flexWrap="nowrap" alignItems="flex-start">
-        <Heading as="h3" altStyle>
-          {trip ? (
-            <Link
-              to={`/app/trips/${trip.tripId}/`}
-              onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
-            >
-              {trip.name}
-            </Link>
-          ) : (
-            <Skeleton width={200} />
-          )}
-        </Heading>
-        {trip && trip.tripMembers.length > 0 && (
-          <StackedAvatars>
-            <Avatar
-              src={loggedInUser?.photoURL as string}
-              gravatarEmail={loggedInUser?.email as string}
-              size="sm"
-              username={loggedInUser?.username}
-            />
-            {users &&
-              trip.tripMembers
-                .slice(
-                  0,
-                  trip.tripMembers.length === numberOfAvatarsToShow
-                    ? numberOfAvatarsToShow
-                    : numberOfAvatarsToShow - 1 // to account for the +N avatar below
-                )
-                .map((tripMember: any) => {
-                  const matchingUser: UserType = users[tripMember] ? users[tripMember] : undefined;
-                  if (!matchingUser) return null;
-                  return (
-                    <Avatar
-                      src={matchingUser?.photoURL as string}
-                      gravatarEmail={matchingUser?.email as string}
-                      size="sm"
-                      key={matchingUser.uid}
-                      username={matchingUser?.username}
-                    />
-                  );
-                })}
-            {users && trip.tripMembers.length > numberOfAvatarsToShow && (
-              <Avatar
-                // never want to show +1, because then we could have just rendered the photo.
-                // Instead, lets add another so its always at least +2
-                staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
-                size="sm"
-                username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
-              />
+      <Row>
+        <Column md={8}>
+          <FlexContainer justifyContent="flex-start" height="100%">
+            <Heading as="h3" altStyle noMargin>
+              {trip ? (
+                <Link
+                  to={`/app/trips/${trip.tripId}/`}
+                  onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
+                >
+                  {trip.name}
+                </Link>
+              ) : (
+                <Skeleton width={200} />
+              )}
+            </Heading>
+          </FlexContainer>
+        </Column>
+        <Column md={4}>
+          <FlexContainer justifyContent={isSmallScreen ? 'flex-start' : 'flex-end'}>
+            {trip && trip.tripMembers.length > 0 && (
+              <StackedAvatars>
+                <Avatar
+                  src={loggedInUser?.photoURL as string}
+                  gravatarEmail={loggedInUser?.email as string}
+                  size="sm"
+                  username={loggedInUser?.username}
+                />
+                {users &&
+                  trip.tripMembers
+                    .slice(
+                      0,
+                      trip.tripMembers.length === numberOfAvatarsToShow
+                        ? numberOfAvatarsToShow
+                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
+                    )
+                    .map((tripMember: any) => {
+                      const matchingUser: UserType = users[tripMember]
+                        ? users[tripMember]
+                        : undefined;
+                      if (!matchingUser) return null;
+                      return (
+                        <Avatar
+                          src={matchingUser?.photoURL as string}
+                          gravatarEmail={matchingUser?.email as string}
+                          size="sm"
+                          key={matchingUser.uid}
+                          username={matchingUser?.username}
+                        />
+                      );
+                    })}
+                {users && trip.tripMembers.length > numberOfAvatarsToShow && (
+                  <Avatar
+                    // never want to show +1, because then we could have just rendered the photo.
+                    // Instead, lets add another so its always at least +2
+                    staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
+                    size="sm"
+                    username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
+                  />
+                )}
+              </StackedAvatars>
             )}
-          </StackedAvatars>
-        )}
-      </FlexContainer>
+          </FlexContainer>
+        </Column>
+      </Row>
 
       <StyledLineItem>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">

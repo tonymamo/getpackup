@@ -82,66 +82,76 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
           <FaChevronLeft /> All Trips
         </StyledBackLink>
       ) : null}
-      <FlexContainer justifyContent="space-between" flexWrap="nowrap" alignItems="flex-start">
-        <Heading as="h3" altStyle>
-          {trip ? (
-            <>
-              {enableNavigation ? (
-                <Link
-                  to={`/app/trips/${trip.tripId}/`}
-                  onClick={() => trackEvent('Trip Header Heading Link Clicked', { trip })}
-                >
-                  {trip.name}
-                </Link>
+      <Row>
+        <Column md={8}>
+          <FlexContainer justifyContent="flex-start" height="100%">
+            <Heading as="h3" altStyle noMargin>
+              {trip ? (
+                <>
+                  {enableNavigation ? (
+                    <Link
+                      to={`/app/trips/${trip.tripId}/`}
+                      onClick={() => trackEvent('Trip Header Heading Link Clicked', { trip })}
+                    >
+                      {trip.name}
+                    </Link>
+                  ) : (
+                    trip.name
+                  )}
+                </>
               ) : (
-                trip.name
+                <Skeleton width={200} />
               )}
-            </>
-          ) : (
-            <Skeleton width={200} />
-          )}
-        </Heading>
-        {trip && trip.tripMembers.length > 0 && (
-          <StackedAvatars>
-            <Avatar
-              src={loggedInUser?.photoURL as string}
-              gravatarEmail={loggedInUser?.email as string}
-              size="sm"
-              username={loggedInUser?.username}
-            />
-            {users &&
-              trip.tripMembers
-                .slice(
-                  0,
-                  trip.tripMembers.length === numberOfAvatarsToShow
-                    ? numberOfAvatarsToShow
-                    : numberOfAvatarsToShow - 1 // to account for the +N avatar below
-                )
-                .map((tripMember: any) => {
-                  const matchingUser: UserType = users[tripMember] ? users[tripMember] : undefined;
-                  if (!matchingUser) return null;
-                  return (
-                    <Avatar
-                      src={matchingUser?.photoURL as string}
-                      gravatarEmail={matchingUser?.email as string}
-                      size="sm"
-                      key={matchingUser.uid}
-                      username={matchingUser.username}
-                    />
-                  );
-                })}
-            {users && trip.tripMembers.length > numberOfAvatarsToShow && (
-              <Avatar
-                // never want to show +1, because then we could have just rendered the photo.
-                // Instead, lets add another so its always at least +2
-                staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
-                size="sm"
-                username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
-              />
+            </Heading>
+          </FlexContainer>
+        </Column>
+        <Column md={4}>
+          <FlexContainer justifyContent={size.isSmallScreen ? 'flex-start' : 'flex-end'}>
+            {trip && trip.tripMembers.length > 0 && (
+              <StackedAvatars>
+                <Avatar
+                  src={loggedInUser?.photoURL as string}
+                  gravatarEmail={loggedInUser?.email as string}
+                  size="sm"
+                  username={loggedInUser?.username}
+                />
+                {users &&
+                  trip.tripMembers
+                    .slice(
+                      0,
+                      trip.tripMembers.length === numberOfAvatarsToShow
+                        ? numberOfAvatarsToShow
+                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
+                    )
+                    .map((tripMember: any) => {
+                      const matchingUser: UserType = users[tripMember]
+                        ? users[tripMember]
+                        : undefined;
+                      if (!matchingUser) return null;
+                      return (
+                        <Avatar
+                          src={matchingUser?.photoURL as string}
+                          gravatarEmail={matchingUser?.email as string}
+                          size="sm"
+                          key={matchingUser.uid}
+                          username={matchingUser.username}
+                        />
+                      );
+                    })}
+                {users && trip.tripMembers.length > numberOfAvatarsToShow && (
+                  <Avatar
+                    // never want to show +1, because then we could have just rendered the photo.
+                    // Instead, lets add another so its always at least +2
+                    staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
+                    size="sm"
+                    username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
+                  />
+                )}
+              </StackedAvatars>
             )}
-          </StackedAvatars>
-        )}
-      </FlexContainer>
+          </FlexContainer>
+        </Column>
+      </Row>
 
       <Row>
         <Column md={showDescription ? 12 : 7}>

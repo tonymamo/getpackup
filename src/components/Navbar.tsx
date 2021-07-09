@@ -452,7 +452,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 >
                   <Avatar
                     src={loggedInUser[0].photoURL as string}
-                    size="sm"
+                    size="xs"
                     gravatarEmail={loggedInUser[0].email as string}
                     data-tip="Profile"
                     data-for="profile"

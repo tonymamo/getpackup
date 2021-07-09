@@ -104,7 +104,7 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
 
   const getSelectedCount = (arr: GearListEnumType, values: typeof initialValues) => {
     const count = arr.filter((item) => values[item.name] === true).length;
-    return `${count} ${count === 1 ? 'category' : 'categories'} selected`;
+    return `${count} ${count === 1 ? 'tag' : 'tags'} selected`;
   };
 
   return (
@@ -136,7 +136,7 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
               .filter((valueKey) => activityTypesList.includes(valueKey as keyof ActivityTypes))
               .filter((item) => values[item] === true).length;
             return activityTypeCheckedValuesLength === 0
-              ? { selectOne: 'You must tag an item with at least one sub-category option' }
+              ? { selectOne: 'You must tag an item with at least one tag option' }
               : {};
           }}
         >

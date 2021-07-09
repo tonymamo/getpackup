@@ -271,7 +271,7 @@ const Footer = () => {
           >
             <Avatar
               src={profile.photoURL as string}
-              size="sm"
+              size="xs"
               gravatarEmail={profile.email as string}
             />
           </Link>

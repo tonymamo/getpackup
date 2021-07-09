@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { baseSpacer, doubleSpacer } from '@styles/size';
+import { baseSpacer } from '@styles/size';
 
 type NegativeMarginContainerProps = {
   top?: string;

@@ -38,6 +38,7 @@ import {
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
 import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
 import { formatPhoneNumberValue } from '@utils/phoneNumber';
+import FlexContainer from './FlexContainer';
 
 type OptionType = { label: string; value: string };
 
@@ -446,31 +447,45 @@ const Input: FunctionComponent<InputProps> = (props) => {
       }
       break;
     case 'checkbox':
-      inputTypeToRender = (
-        <>
-          <StyledLabel htmlFor={props.id || props.name}>
-            <StyledToggle
-              {...field}
-              {...props}
-              {...meta}
-              id={props.name}
-              checked={props.checked}
-              type="checkbox"
-            />
-            {props.checked ? (
-              <FaCheckCircle
-                color={brandSuccess}
-                size={baseAndAHalfSpacer}
-                style={{ cursor: 'pointer' }}
+      {
+        const iconStyles = {
+          flexShrink: 0,
+          cursor: 'pointer',
+          marginRight: halfSpacer,
+        };
+        const renderCheckbox = (checked: boolean) =>
+          checked ? (
+            <FaCheckCircle color={brandSuccess} size={baseAndAHalfSpacer} style={iconStyles} />
+          ) : (
+            <FaRegCircle size={baseAndAHalfSpacer} style={iconStyles} />
+          );
+        inputTypeToRender = (
+          <>
+            <StyledLabel htmlFor={props.id || props.name}>
+              <StyledToggle
+                {...field}
+                {...props}
+                {...meta}
+                id={props.name}
+                checked={props.checked}
+                type="checkbox"
               />
-            ) : (
-              <FaRegCircle size={baseAndAHalfSpacer} style={{ cursor: 'pointer' }} />
-            )}
-            &nbsp;&nbsp;
-            {props.label}
-          </StyledLabel>
-        </>
-      );
+              {props.label !== '' ? (
+                <FlexContainer
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                  flexWrap="nowrap"
+                >
+                  {renderCheckbox(Boolean(props.checked))}
+                  <span>{props.label}</span>
+                </FlexContainer>
+              ) : (
+                renderCheckbox(Boolean(props.checked))
+              )}
+            </StyledLabel>
+          </>
+        );
+      }
       break;
     case 'toggle':
       inputTypeToRender = (

@@ -169,7 +169,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
     array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
 
   const renderAddCategoryButton = (array: GearListEnumType) => (
-    <li>
+    <Column xs={6} sm={4} md={3} lg={2}>
       <IconWrapperLabel
         onClick={() => {
           setGearListType(array);
@@ -179,7 +179,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         <FaPlusSquare size={tripleSpacer} color={lightGray} />
         <IconCheckboxLabel>Add New</IconCheckboxLabel>
       </IconWrapperLabel>
-    </li>
+    </Column>
   );
 
   const renderLoadingIcons = () => {
@@ -241,10 +241,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
               title="Activities"
               subtitle="What activities are you doing on this trip?"
             >
-              <HorizontalScroller withBorder>
+              <Row>
                 {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
                   ? getFilteredCategories(gearListActivities).map((item) => (
-                      <li key={item.name}>
+                      <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                         <Field
                           as={IconCheckbox}
                           icon={item.icon}
@@ -252,18 +252,18 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                           name={item.name}
                           label={item.label}
                         />
-                      </li>
+                      </Column>
                     ))
                   : renderLoadingIcons()}
                 {getOtherCategories(gearListActivities).length !== 0 &&
                   renderAddCategoryButton(gearListActivities)}
-              </HorizontalScroller>
+              </Row>
             </CollapsibleBox>
             <CollapsibleBox title="Accommodations" subtitle="Where are you staying on this trip?">
-              <HorizontalScroller withBorder>
+              <Row>
                 {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
                   ? getFilteredCategories(gearListAccommodations).map((item) => (
-                      <li key={item.name}>
+                      <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                         <Field
                           as={IconCheckbox}
                           icon={item.icon}
@@ -271,21 +271,21 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                           name={item.name}
                           label={item.label}
                         />
-                      </li>
+                      </Column>
                     ))
                   : renderLoadingIcons()}
                 {getOtherCategories(gearListAccommodations).length !== 0 &&
                   renderAddCategoryButton(gearListAccommodations)}
-              </HorizontalScroller>
+              </Row>
             </CollapsibleBox>
             <CollapsibleBox
               title="Camp Kitchen"
               subtitle="What type of kitchen setup(s) do will you need on this trip?"
             >
-              <HorizontalScroller withBorder>
+              <Row>
                 {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
                   ? getFilteredCategories(gearListCampKitchen).map((item) => (
-                      <li key={item.name}>
+                      <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                         <Field
                           as={IconCheckbox}
                           icon={item.icon}
@@ -293,23 +293,23 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                           name={item.name}
                           label={item.label}
                         />
-                      </li>
+                      </Column>
                     ))
                   : renderLoadingIcons()}
                 {getOtherCategories(gearListCampKitchen).length !== 0 &&
                   renderAddCategoryButton(gearListCampKitchen)}
-              </HorizontalScroller>
+              </Row>
             </CollapsibleBox>
             <CollapsibleBox
               title="Other Considerations"
               subtitle="What other things might you need to bring on this trip?"
             >
-              <HorizontalScroller withBorder>
+              <Row>
                 {/* remove '10 essentials' category, the last item in the array */}
                 {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
                   ? getFilteredCategories([...gearListOtherConsiderations.slice(0, -1)]).map(
                       (item) => (
-                        <li key={item.name}>
+                        <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                           <Field
                             as={IconCheckbox}
                             icon={item.icon}
@@ -317,13 +317,13 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                             name={item.name}
                             label={item.label}
                           />
-                        </li>
+                        </Column>
                       )
                     )
                   : renderLoadingIcons()}
                 {getOtherCategories([...gearListOtherConsiderations.slice(0, -1)]).length !== 0 &&
                   renderAddCategoryButton(gearListOtherConsiderations)}
-              </HorizontalScroller>
+              </Row>
             </CollapsibleBox>
 
             <Row>
