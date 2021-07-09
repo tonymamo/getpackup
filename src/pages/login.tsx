@@ -78,7 +78,7 @@ const Login: FunctionComponent<LoginProps> = () => {
                       label="Email"
                       validate={requiredField}
                       required
-                      hideLabel
+                      hiddenLabel
                     />
                     <Field
                       as={Input}
@@ -87,7 +87,7 @@ const Login: FunctionComponent<LoginProps> = () => {
                       label="Password"
                       validate={requiredField}
                       required
-                      hideLabel
+                      hiddenLabel
                     />
 
                     <Button type="submit" disabled={isSubmitting || !isValid} block>
