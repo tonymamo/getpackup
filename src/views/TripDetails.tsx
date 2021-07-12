@@ -19,6 +19,8 @@ import {
   Box,
   HorizontalRule,
   UserMediaObject,
+  HeroImageUpload,
+  TripNavigation,
 } from '@components';
 import { TripType, TripFormType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -27,16 +29,16 @@ import { requiredField } from '@utils/validations';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
 import { gearListActivities } from '@utils/gearListItemEnum';
-import TripNavigation from '@views/TripNavigation';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
-  loggedInUser?: UserType;
+  users: Array<UserType>;
+  loggedInUser: UserType;
 } & RouteComponentProps;
 
-const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedInUser }) => {
+const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, loggedInUser }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -64,12 +66,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
         .then(() => {
           trackEvent('Trip Details Updated', { ...updatedValues });
           setIsLoading(false);
-          dispatch(
-            addAlert({
-              type: 'success',
-              message: `Successfully updated ${values.name}`,
-            })
-          );
         })
         .catch((err) => {
           trackEvent('Trip Details Update Failure', { ...updatedValues });
@@ -104,16 +100,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
         {typeof activeTrip !== 'undefined' && (
           <>
             <TripNavigation activeTrip={activeTrip} />
-            {!!activeTrip.lat && !!activeTrip.lng && (
-              <StaticMapImage
-                lat={activeTrip.lat}
-                lng={activeTrip.lng}
-                height={200}
-                width="100%"
-                zoom={13}
-                label={activeTrip.startingPoint}
-              />
-            )}
+            <HeroImageUpload type="trip" image={activeTrip.headerImage} id={activeTrip.tripId} />
             <Formik
               validateOnMount
               initialValues={
@@ -134,7 +121,11 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                   <Row>
                     <Column lg={8}>
                       <Box>
-                        <EditableInput label="Trip Name" isLoading={isLoading} value={values.name}>
+                        <EditableInput
+                          label="Trip Name"
+                          isLoading={isLoading}
+                          value={activeTrip.name}
+                        >
                           <Field
                             as={Input}
                             type="text"
@@ -163,7 +154,20 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                         <EditableInput
                           label="Location"
                           isLoading={isLoading}
-                          value={values.startingPoint}
+                          value={
+                            !!activeTrip.lat && !!activeTrip.lng ? (
+                              <StaticMapImage
+                                lat={activeTrip.lat}
+                                lng={activeTrip.lng}
+                                height={200}
+                                width="100%"
+                                zoom={13}
+                                label={activeTrip.startingPoint}
+                              />
+                            ) : (
+                              activeTrip.startingPoint
+                            )
+                          }
                         >
                           {typeof window !== 'undefined' && window.google ? (
                             <Field
@@ -189,7 +193,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                         <EditableInput
                           label="Description"
                           isLoading={isLoading}
-                          value={values.description || 'No description provided'}
+                          value={activeTrip.description || 'No description provided'}
                         >
                           <Field
                             as={Input}
@@ -240,22 +244,29 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                           {activeTrip.created?.toDate().toLocaleTimeString()}
                         </p>
                         <HorizontalRule compact />
-                        <p>
-                          <strong>Last Updated</strong>
-                        </p>
-                        <p>
-                          {activeTrip.updated?.toDate().toLocaleDateString()}{' '}
-                          {activeTrip.updated?.toDate().toLocaleTimeString()}
-                        </p>
-                        <HorizontalRule compact />
-                        {loggedInUser && (
+                        {activeTrip.updated && (
                           <>
                             <p>
-                              <strong>Owner</strong>
+                              <strong>Last Updated</strong>
                             </p>
-                            <UserMediaObject user={loggedInUser} />
+                            <p>
+                              {activeTrip.updated?.toDate().toLocaleDateString()}{' '}
+                              {activeTrip.updated?.toDate().toLocaleTimeString()}
+                            </p>
+                            <HorizontalRule compact />
                           </>
                         )}
+
+                        <p>
+                          <strong>Trip Creator</strong>
+                        </p>
+                        <UserMediaObject
+                          user={
+                            activeTrip.owner === loggedInUser.uid
+                              ? loggedInUser
+                              : users[activeTrip.owner as any]
+                          }
+                        />
                       </Box>
                     </Column>
                   </Row>

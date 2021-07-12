@@ -53,13 +53,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
           tripId: docRef.id,
         });
         trackEvent('New Trip Submit Successful', { values: { ...values } });
-        navigate(`/app/trips/${docRef.id}/generator`);
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Successfully created new trip',
-          })
-        );
+        navigate(`/app/trips/${docRef.id}/add-trip-image`);
       })
       .catch((err) => {
         trackEvent('New Trip Submit Unsuccessful', { values: { ...values }, error: err });
@@ -137,7 +131,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
                 type="geosuggest"
                 types={[]}
                 name="startingPoint"
-                label="Starting Location"
+                label="Trip Location"
                 validate={requiredField}
                 required
                 setFieldValue={setFieldValue}

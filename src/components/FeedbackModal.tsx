@@ -5,6 +5,7 @@ import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FirebaseReducer } from 'react-redux-firebase';
+import { Link } from 'gatsby';
 
 import { Input, Row, Button, Column, Modal, Heading } from '@components';
 import { brandTertiary, brandTertiaryHover, white } from '@styles/color';
@@ -136,6 +137,14 @@ const FeedbackModal: FunctionComponent<FeedbackModalProps> = (props) => {
               ) : (
                 <>
                   <Heading>Got feedback for us?</Heading>
+                  <p>
+                    The only way we can make packup better is with your help! Please let us know
+                    what you think.
+                  </p>
+                  <p>
+                    Have a lot to say? <Link to="/feedback">Check out this bigger form</Link>{' '}
+                    instead!
+                  </p>
                   <Field
                     as={Input}
                     type="textarea"

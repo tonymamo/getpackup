@@ -119,12 +119,6 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
           tripId: props.tripId,
           item: props.item,
         });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `${props.item.name} has been removed`,
-          })
-        );
       })
       .catch((err) => {
         trackEvent('Packing List Item Deleted Failure', {
@@ -210,7 +204,10 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   </IconWrapper>
                 )}
                 {!size.isSmallScreen ? (
-                  <IconWrapper onClick={onRemove} style={{ marginRight: 10, visibility: 'hidden' }}>
+                  <IconWrapper
+                    onClick={onRemove}
+                    style={{ marginRight: halfSpacer, visibility: 'hidden' }}
+                  >
                     <FaTrash />
                   </IconWrapper>
                 ) : null}

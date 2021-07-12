@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Link, navigate } from 'gatsby';
 import { useSelector } from 'react-redux';
 import { Spin as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaChevronLeft, FaSearch, FaShoppingCart, FaUserLock } from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
 
 import {
   Avatar,
@@ -18,13 +19,15 @@ import {
   HorizontalRule,
 } from '@components';
 import { brandSecondary, brandTertiary, white, brandPrimary } from '@styles/color';
-import { halfSpacer, quadrupleSpacer, tripleSpacer } from '@styles/size';
+import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
 import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typography';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import yak from '@images/yak.svg';
+import GearClosetIcon from '@images/gearClosetIcon';
 import { zIndexNavbar } from '@styles/layers';
 import trackEvent from '@utils/trackEvent';
+import { AvatarImageWrapper } from './Avatar';
 
 type NavbarProps = {};
 
@@ -51,7 +54,8 @@ const StyledNavbar = styled.header`
   }
 
   & a:focus {
-    outline: none;
+    outline: 1px dotted ${brandPrimary};
+    opacity: 0.8;
   }
 
   & h1 a {
@@ -64,6 +68,16 @@ const StyledNavbar = styled.header`
     font-size: ${fontSizeBase};
     color: ${white};
     line-height: ${quadrupleSpacer};
+  }
+
+  & sup {
+    text-transform: uppercase;
+    font-size: 0.5em;
+    top: -1em;
+    padding: ${quarterSpacer};
+    border-radius: ${baseSpacer};
+    background-color: ${white};
+    color: ${brandSecondary};
   }
 `;
 
@@ -134,7 +148,8 @@ const TopNavIconWrapper = styled.nav`
 
   & a:focus,
   & a:active {
-    outline: none;
+    outline: 1px dotted ${brandPrimary};
+    opacity: 0.8;
   }
 
   & a.active,
@@ -143,7 +158,7 @@ const TopNavIconWrapper = styled.nav`
   }
 
   /* active avatar border */
-  & a.active div {
+  & a.active ${AvatarImageWrapper} {
     box-shadow: 0px 0px 0px 2px ${brandSecondary}, 0px 0px 0px 4px ${brandPrimary};
   }
 `;
@@ -204,9 +219,12 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const routeHasParent = pathname.split('/').length >= 4;
 
   // TODO: better way to do this?
-  // if on a checklist item page, we want to be able to do navigate(-1) on the back button below
-  const checklistItemRegex = new RegExp('/checklist/*');
-  const routeIsChecklistItem = checklistItemRegex.test(pathname);
+  // if on a checklist or gear closet item page, we want to be able to do navigate(-1) on the back button below
+  const checklistOrGearClosetItemRegex = new RegExp('/checklist|gear-closet|gear-list/*');
+  const routeIsChecklistOrGearClosetItem = checklistOrGearClosetItemRegex.test(pathname);
+
+  const tripGenRegex = new RegExp('/add-trip-image|generator');
+  const routeIsPartOfTripGenProcess = tripGenRegex.test(pathname);
 
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
     return isPartiallyCurrent ? { className: 'active' } : {};
@@ -224,7 +242,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 onClick={() => trackEvent('Navbar Logo Clicked', { isAuthenticated })}
               >
                 <img src={yak} alt="" width={tripleSpacer} height={27} />{' '}
-                {size.isSmallScreen && !isAuthenticated ? '' : 'packup'}
+                {size.isSmallScreen && !isAuthenticated ? (
+                  ''
+                ) : (
+                  <>
+                    packup<sup>beta</sup>
+                  </>
+                )}
               </Link>
             </Heading>
           )}
@@ -241,12 +265,12 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {isAuthenticated && size.isSmallScreen && auth.isLoaded && (
             <IconLinkWrapper>
-              {routeHasParent && (
+              {routeHasParent && !routeIsPartOfTripGenProcess && (
                 <Link
                   to="../"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Back Button Clicked');
-                    if (routeIsChecklistItem) {
+                    if (routeIsChecklistOrGearClosetItem) {
                       navigate(-1);
                     }
                   }}
@@ -348,15 +372,40 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 getProps={isPartiallyActive}
                 onClick={() => trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Trips' })}
               >
-                <FaCalendar />
+                <FaCalendar data-tip="Trips" data-for="trips" />
+                <ReactTooltip
+                  id="trips"
+                  place="bottom"
+                  type="dark"
+                  effect="solid"
+                  className="tooltip customTooltip"
+                  delayShow={500}
+                  offset={{
+                    bottom: 8,
+                  }}
+                />
               </Link>
               <Link
-                to="/app/search"
+                to="/app/gear-closet"
                 getProps={isPartiallyActive}
-                onClick={() => trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Search' })}
+                onClick={() =>
+                  trackEvent('Navbar LoggedInUser Link Clicked', { link: 'gear-closet' })
+                }
               >
-                <FaSearch />
+                <GearClosetIcon data-tip="Gear Closet" data-for="gearCloset" size={17} />
+                <ReactTooltip
+                  id="gearCloset"
+                  place="bottom"
+                  type="dark"
+                  effect="solid"
+                  className="tooltip customTooltip"
+                  delayShow={500}
+                  offset={{
+                    bottom: 8,
+                  }}
+                />
               </Link>
+              {/* TODO: when shopping list is ready 
               <Link
                 to="/app/shopping-list"
                 getProps={isPartiallyActive}
@@ -364,11 +413,33 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Shopping List' })
                 }
               >
-                <FaShoppingCart />
-              </Link>
+                <FaShoppingCart data-tip="Shopping list" data-for="shoppingList" />
+                <ReactTooltip
+                  id="shoppingList"
+                  place="bottom"
+                  type="dark"
+                  effect="solid"
+                  className="tooltip customTooltip"
+                  delayShow={500}
+                  offset={{
+                    bottom: 8,
+                  }}
+                />
+              </Link> */}
               {profile.isAdmin && (
                 <Link to="/admin/gear-list" getProps={isPartiallyActive}>
-                  <FaUserLock />
+                  <FaUserLock data-tip="Admin" data-for="admin" />
+                  <ReactTooltip
+                    id="admin"
+                    place="bottom"
+                    type="dark"
+                    effect="solid"
+                    className="tooltip customTooltip"
+                    delayShow={500}
+                    offset={{
+                      bottom: 8,
+                    }}
+                  />
                 </Link>
               )}
               {loggedInUser && loggedInUser.length > 0 && (
@@ -381,8 +452,21 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 >
                   <Avatar
                     src={loggedInUser[0].photoURL as string}
-                    size="sm"
+                    size="xs"
                     gravatarEmail={loggedInUser[0].email as string}
+                    data-tip="Profile"
+                    data-for="profile"
+                  />
+                  <ReactTooltip
+                    id="profile"
+                    place="bottom"
+                    type="dark"
+                    effect="solid"
+                    className="tooltip customTooltip"
+                    delayShow={500}
+                    offset={{
+                      bottom: 8,
+                    }}
                   />
                 </Link>
               )}

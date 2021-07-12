@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
-import lodash from 'lodash';
+import groupBy from 'lodash/groupBy';
 import { RouteComponentProps } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
@@ -13,19 +13,21 @@ import {
   threeQuarterSpacer,
 } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
-import { Alert, Box, Heading, PackingListCategory, TripCard } from '@components';
+import { Alert, Box, Heading, PackingListCategory, TripHeader } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
+import { zIndexNavbar } from '@styles/layers';
 
 type PackingListProps = {
   trip?: TripType;
   loggedInUser?: UserType;
   tripId: string;
   packingList: PackingListItemType[];
+  tripIsLoaded: boolean;
 } & RouteComponentProps;
 
 const StickyWrapper = styled.div`
@@ -51,7 +53,7 @@ const Tabs = styled.div`
     props.isSticky &&
     `
   position: fixed;
-  z-index: 1;
+  z-index: ${zIndexNavbar};
   top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
   `}
 `;
@@ -75,12 +77,13 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   loggedInUser,
   packingList,
   tripId,
+  tripIsLoaded,
 }) => {
   const groupedCategories: [string, PackingListItemType[]][] = [];
 
   if (packingList?.length) {
     // Put the pre-trip category first, if it exists
-    const entries = Object.entries(lodash.groupBy(packingList, 'category'));
+    const entries = Object.entries(groupBy(packingList, 'category'));
     const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
     const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
     if (preTripEntries) groupedCategories.push(preTripEntries);
@@ -113,9 +116,13 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && trip.tripMembers.length > 0;
 
+  if (tripIsLoaded && !trip) {
+    return null;
+  }
+
   return (
     <>
-      <TripCard trip={trip} loggedInUser={loggedInUser} showTags />
+      <TripHeader trip={trip} loggedInUser={loggedInUser} showTags />
       <StickyWrapper ref={stickyRef}>
         {sharedTrip && (
           <Tabs isSticky={isSticky}>
@@ -155,14 +162,17 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 {groupedCategories.map(
                   ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
                     const sortedItems = packingListItems.sort((a, b) => {
-                      // put essentials at the top, and sort by created timestamp (newest goes last)
-                      if (!a.isEssential && !b.isEssential) {
+                      if (a.isPacked === b.isPacked) {
+                        // sort by name
                         if (a.created.seconds === b.created.seconds) {
                           return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                         }
+
+                        // sort by timestamp
                         return b.created.toDate() > a.created.toDate() ? -1 : 1;
                       }
-                      return a.isEssential > b.isEssential ? -1 : 1;
+                      // sort by packed status, with checked items last
+                      return a.isPacked > b.isPacked ? 1 : -1;
                     });
 
                     return (
@@ -194,7 +204,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           </>
         ) : (
           // Loading state
-          <PackingListCategory categoryName="categoryLoading" sortedItems={[]} tripId="" />
+          <PackingListCategory categoryName="" sortedItems={[]} tripId="" />
         )}
       </div>
     </>

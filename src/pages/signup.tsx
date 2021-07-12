@@ -91,12 +91,6 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             trackEvent('New User Signed Up And Created Profile', {
                               email: values.email,
                             });
-                            dispatch(
-                              addAlert({
-                                type: 'success',
-                                message: `Successfully created profile`,
-                              })
-                            );
                           })
                           .catch((err) => {
                             trackEvent('New User Signed Up And Profile Creation Failed', {

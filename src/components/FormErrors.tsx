@@ -12,7 +12,7 @@ const FormErrors: FunctionComponent<FormErrorsProps> = ({ dirty, errors }) => {
   const hasMissingRequiredFields = Object.values(errors).some((err) => err.includes('required'));
 
   if (dirty && !isEmpty(errors) && !hasMissingRequiredFields) {
-    return <Alert type="danger" message="Please fix the errors above." />;
+    return <Alert type="danger" message={Object.values(errors)[0]} />;
   }
 
   if (dirty && !isEmpty(errors) && hasMissingRequiredFields) {

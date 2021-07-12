@@ -25,10 +25,10 @@ import {
   PageContainer,
   Seo,
   UserMediaObject,
+  TripNavigation,
 } from '@components';
 import { TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import TripNavigation from '@views/TripNavigation';
 import { RootState } from '@redux/ducks';
 import { UserType } from '@common/user';
 import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
@@ -37,6 +37,7 @@ import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import { white } from '@styles/color';
 import { sharedStyles } from '@components/Input';
 import trackEvent from '@utils/trackEvent';
+import { zIndexDropdown } from '@styles/layers';
 
 type TripPartyProps = {
   activeTrip?: TripType;
@@ -54,7 +55,7 @@ const ScrollableHitsWrapper = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: ${zIndexDropdown};
   padding: ${baseSpacer};
   border: ${baseBorderStyle};
   background-color: ${white};

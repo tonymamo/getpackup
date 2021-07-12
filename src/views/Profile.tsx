@@ -11,20 +11,25 @@ import styled from 'styled-components';
 import {
   Input,
   Button,
-  Box,
   Seo,
   PageContainer,
   Row,
   Column,
   AvatarUpload,
   FlexContainer,
+  HeroImageUpload,
+  EditableInput,
+  NegativeMarginContainer,
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { requiredField } from '@utils/validations';
 import validateUsername from '@utils/validateUsername';
-import { baseSpacerUnit, baseSpacer } from '@styles/size';
+import { offWhite } from '@styles/color';
+import { baseSpacerUnit, baseSpacer, halfSpacer, sextupleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
+import { AvatarImageWrapper } from '@components/Avatar';
+import useWindowSize from '@utils/useWindowSize';
 
 type ProfileProps = {
   loggedInUser?: any;
@@ -34,11 +39,25 @@ export const EmailWrapper = styled.div`
   width: 100%;
 `;
 
+const ProfileWrapper = styled.div`
+  & form {
+    transform: translateY(-${sextupleSpacer});
+  }
+
+  & ${AvatarImageWrapper} {
+    border: 2px solid ${offWhite};
+  }
+`;
+
 const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
-  const [verifySent, setVerifySent] = useState(false);
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
   const dispatch = useDispatch();
+
+  const [verifySent, setVerifySent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { isExtraSmallScreen } = useWindowSize();
 
   const logout = () => {
     // log out the user
@@ -112,131 +131,170 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
         )}
       </Seo>
       {auth && loggedInUser && (
-        <Row>
-          <Column md={8} mdOffset={2}>
-            <Formik
-              validateOnMount
-              initialValues={{
-                ...loggedInUser,
-                email: auth.email,
-              }}
-              onSubmit={(values, { setSubmitting, resetForm }) => {
-                // Note: This prevents photo url from overwriting any change as the avatar
-                // file uploader handles saving itself.
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { photoURL, email, ...updateValues } = values;
-
-                firebase
-                  .firestore()
-                  .collection('users')
-                  .doc(auth.uid)
-                  .update({ ...updateValues, lastUpdated: new Date() })
-                  .then(() => {
-                    setSubmitting(false);
-                    resetForm({ values });
-                    trackEvent('Profile Updated', { ...updateValues });
-                    dispatch(
-                      addAlert({
-                        type: 'success',
-                        message: `Successfully updated profile`,
-                      })
-                    );
-                  })
-                  .catch((err) => {
-                    setSubmitting(false);
-                    trackEvent('Profile Update Failure', { error: err, ...updateValues });
-                    dispatch(
-                      addAlert({
-                        type: 'danger',
-                        message: err.message,
-                      })
-                    );
-                  });
-              }}
-            >
-              {({
-                isSubmitting,
-                isValid,
-                setFieldValue,
-                values,
-                initialValues,
-                errors,
-                ...rest
-              }) => (
-                <Form>
-                  <Box>
+        <ProfileWrapper>
+          <NegativeMarginContainer
+            top={baseSpacer}
+            left={isExtraSmallScreen ? halfSpacer : baseSpacer}
+            right={isExtraSmallScreen ? halfSpacer : baseSpacer}
+          >
+            <HeroImageUpload type="profile" id={auth.uid} image={loggedInUser.profileHeaderImage} />
+          </NegativeMarginContainer>
+          <Row>
+            <Column md={8} mdOffset={2}>
+              <Formik
+                validateOnMount
+                initialValues={{
+                  ...loggedInUser,
+                  email: auth.email,
+                }}
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                  // Note: This prevents photo url from overwriting any change as the avatar
+                  // file uploader handles saving itself.
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                  const { photoURL, email, ...updateValues } = values;
+                  setIsLoading(true);
+                  firebase
+                    .firestore()
+                    .collection('users')
+                    .doc(auth.uid)
+                    .update({ ...updateValues, lastUpdated: new Date() })
+                    .then(() => {
+                      setSubmitting(false);
+                      resetForm({ values });
+                      trackEvent('Profile Updated', { ...updateValues });
+                      setIsLoading(false);
+                    })
+                    .catch((err) => {
+                      setSubmitting(false);
+                      setIsLoading(false);
+                      trackEvent('Profile Update Failure', { error: err, ...updateValues });
+                      dispatch(
+                        addAlert({
+                          type: 'danger',
+                          message: err.message,
+                        })
+                      );
+                    });
+                }}
+              >
+                {({ setFieldValue, values, initialValues, errors, ...rest }) => (
+                  <Form>
                     <AvatarUpload loggedInUser={loggedInUser} />
-                    <Field
-                      as={Input}
-                      type="text"
-                      name="displayName"
+                    <EditableInput
                       label="Name"
-                      validate={requiredField}
-                      required
-                    />
-                    <Field
-                      as={Input}
-                      type="text"
-                      name="username"
-                      label="Username"
-                      validate={(value: string) =>
-                        validateUsername(value, firebase, '', initialValues.username)
-                      }
-                      required
-                      helpText={
-                        values.username.length > 3 &&
-                        !errors.username &&
-                        loggedInUser.username !== values.username // initialValues is set from loggedInUser
-                          ? `${values.username} is available!`
-                          : ''
-                      }
-                    />
-                    <FlexContainer
-                      flexWrap="nowrap"
-                      alignItems="flex-end"
-                      justifyContent="space-between"
+                      isLoading={isLoading}
+                      value={loggedInUser.displayName}
                     >
-                      <EmailWrapper>
-                        <Field as={Input} type="text" name="email" label="Email" disabled />
-                      </EmailWrapper>
-                      {auth.emailVerified ? null : (
-                        <Button
-                          onClick={verifyEmail}
-                          type="button"
-                          disabled={verifySent}
-                          style={{ marginBottom: baseSpacerUnit + 1, marginLeft: baseSpacer }}
-                        >
-                          Verify
-                        </Button>
-                      )}
-                    </FlexContainer>
-
-                    {typeof window !== 'undefined' && window.google && (
                       <Field
                         as={Input}
-                        type="geosuggest"
-                        geosuggestTypes={['(cities)']}
-                        name="location"
-                        label="Location"
-                        setFieldValue={setFieldValue}
-                        {...rest}
+                        type="text"
+                        name="displayName"
+                        label="Name"
+                        validate={requiredField}
+                        required
+                        hiddenLabel
                       />
+                    </EditableInput>
+                    <EditableInput
+                      label="Username"
+                      isLoading={isLoading}
+                      value={loggedInUser.username}
+                    >
+                      <Field
+                        as={Input}
+                        type="text"
+                        name="username"
+                        label="Username"
+                        hiddenLabel
+                        validate={(value: string) =>
+                          validateUsername(value, firebase, '', initialValues.username)
+                        }
+                        required
+                        helpText={
+                          values.username.length > 3 &&
+                          !errors.username &&
+                          loggedInUser.username !== values.username // initialValues is set from loggedInUser
+                            ? `${values.username} is available!`
+                            : ''
+                        }
+                      />
+                    </EditableInput>
+                    <EditableInput label="Email" isLoading={isLoading} value={loggedInUser.email}>
+                      <FlexContainer
+                        flexWrap="nowrap"
+                        alignItems="flex-end"
+                        justifyContent="space-between"
+                      >
+                        <EmailWrapper>
+                          <Field
+                            as={Input}
+                            type="text"
+                            name="email"
+                            label="Email"
+                            disabled
+                            hiddenLabel
+                          />
+                        </EmailWrapper>
+                        {auth.emailVerified ? null : (
+                          <Button
+                            onClick={verifyEmail}
+                            type="button"
+                            disabled={verifySent}
+                            style={{ marginBottom: baseSpacerUnit + 1, marginLeft: baseSpacer }}
+                          >
+                            Verify
+                          </Button>
+                        )}
+                      </FlexContainer>
+                    </EditableInput>
+
+                    {typeof window !== 'undefined' && window.google && (
+                      <EditableInput
+                        label="Location"
+                        isLoading={isLoading}
+                        value={loggedInUser.location || 'No location provided'}
+                      >
+                        <Field
+                          as={Input}
+                          type="geosuggest"
+                          geosuggestTypes={['(cities)']}
+                          name="location"
+                          label="Location"
+                          hiddenLabel
+                          setFieldValue={setFieldValue}
+                          {...rest}
+                        />
+                      </EditableInput>
                     )}
-                    <Field as={Input} type="text" name="website" label="Website" />
-                    <Field as={Input} type="textarea" name="bio" label="Bio" />
-                    <Button type="submit" disabled={isSubmitting || !isValid}>
-                      Save
+                    <EditableInput
+                      label="Website"
+                      isLoading={isLoading}
+                      value={loggedInUser.website || 'No website provided'}
+                    >
+                      <Field as={Input} type="text" name="website" label="Website" hiddenLabel />
+                    </EditableInput>
+                    <EditableInput
+                      label="Bio"
+                      isLoading={isLoading}
+                      value={loggedInUser.bio || 'No bio provided'}
+                    >
+                      <Field as={Input} type="textarea" name="bio" label="Bio" hiddenLabel />
+                    </EditableInput>
+                    <Button
+                      type="button"
+                      onClick={logout}
+                      iconLeft={<FaSignOutAlt />}
+                      color="dangerOutline"
+                    >
+                      Logout
                     </Button>
-                  </Box>
-                </Form>
-              )}
-            </Formik>
-          </Column>
-        </Row>
+                  </Form>
+                )}
+              </Formik>
+            </Column>
+          </Row>
+        </ProfileWrapper>
       )}
-      <Button type="button" onClick={logout} iconLeft={<FaSignOutAlt />} color="dangerOutline">
-        Logout
-      </Button>
     </PageContainer>
   );
 };

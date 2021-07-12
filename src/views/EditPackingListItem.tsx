@@ -50,12 +50,6 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
         .doc(activeItem?.id)
         .delete()
         .then(() => {
-          dispatch(
-            addAlert({
-              type: 'success',
-              message: `${activeItem.name} has been removed`,
-            })
-          );
           trackEvent('Packing List Item Removed', { ...activeItem });
         })
         .catch((err) => {

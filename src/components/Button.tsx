@@ -8,6 +8,7 @@ import {
   borderRadius,
   borderWidth,
   halfSpacer,
+  inputHeight,
   quarterSpacer,
   threeQuarterSpacer,
 } from '@styles/size';
@@ -189,10 +190,11 @@ const allStyles = css`
   border: ${borderWidth} solid transparent;
   letter-spacing: 1px;
   line-height: 1.5;
-  padding: ${(props: ButtonProps) =>
+  padding: ${(props) =>
     props.size === 'small'
       ? `${quarterSpacer} ${threeQuarterSpacer}`
       : `${halfSpacer} ${baseAndAHalfSpacer}`};
+  height: ${(props) => (props.size === 'small' ? 'auto' : inputHeight)};
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   border-radius: ${borderRadius};

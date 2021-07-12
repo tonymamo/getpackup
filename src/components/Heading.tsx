@@ -25,6 +25,7 @@ type HeadingProps = {
   id?: string;
   uppercase?: boolean;
   altStyle?: boolean;
+  onClick?: () => void;
 };
 
 const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle']) => {
@@ -74,6 +75,7 @@ const Heading: FunctionComponent<HeadingProps> = (props) => (
     id={props.id}
     uppercase={props.uppercase}
     altStyle={props.altStyle}
+    {...props}
   >
     {props.children}
   </StyledHeading>

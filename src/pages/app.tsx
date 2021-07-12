@@ -9,15 +9,21 @@ import Trips from '@views/Trips';
 import NewTripSummary from '@views/NewTripSummary';
 import TripById from '@views/TripById';
 import TripGenerator from '@views/TripGenerator';
-import Search from '@views/Search';
+import AddTripHeaderImage from '@views/AddTripHeaderImage';
+import GearCloset from '@views/GearCloset';
+import GearClosetSetup from '@views/GearClosetSetup';
+import GearClosetAddItem from '@views/GearClosetAddItem';
+import GearClosetEditItem from '@views/GearClosetEditItem';
 import ShoppingList from '@views/ShoppingList';
+import Onboarding from '@views/Onboarding';
 import { RootState } from '@redux/ducks';
-import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
+import { PrivateRoute, LoadingPage, ErrorBoundary, FeedbackModal } from '@components';
 import { breakpoints, baseSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
-import { baseBorderStyle } from '@styles/mixins';
+import { z1Shadow } from '@styles/mixins';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
+import AddToHomeScreenModal from '@components/AddToHomeScreenModal';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -25,11 +31,11 @@ export const AppContainer = styled.div`
   margin-left: auto;
   max-width: ${breakpoints.xl};
   background-color: ${offWhite};
-  border: ${baseBorderStyle};
   min-height: 100vh;
+  box-shadow: ${z1Shadow};
 `;
 
-const App: FunctionComponent<{}> = () => {
+const App: FunctionComponent<{}> = (props) => {
   const firebase = useFirebase();
 
   const auth = useSelector((state: RootState) => state.firebase.auth);
@@ -96,11 +102,21 @@ const App: FunctionComponent<{}> = () => {
     <AppContainer>
       <ErrorBoundary>
         <Router basepath="/app">
+          <PrivateRoute
+            path="/onboarding"
+            component={Onboarding}
+            loggedInUser={activeLoggedInUser}
+          />
           <PrivateRoute path="/profile" component={Profile} loggedInUser={activeLoggedInUser} />
           <PrivateRoute path="/trips" component={Trips} loggedInUser={activeLoggedInUser} />
           <PrivateRoute
             path="/trips/new"
             component={NewTripSummary}
+            loggedInUser={activeLoggedInUser}
+          />
+          <PrivateRoute
+            path="/trips/:id/add-trip-image"
+            component={AddTripHeaderImage}
             loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute
@@ -113,12 +129,26 @@ const App: FunctionComponent<{}> = () => {
             component={TripById}
             loggedInUser={activeLoggedInUser}
           />
-          {/* <PrivateRoute
-            path="/trips/:id/item/*"
-            component={TripById}
+          <PrivateRoute
+            path="/gear-closet/setup"
+            component={GearClosetSetup}
             loggedInUser={activeLoggedInUser}
-          /> */}
-          <PrivateRoute path="/search" component={Search} loggedInUser={activeLoggedInUser} />
+          />
+          <PrivateRoute
+            path="/gear-closet"
+            component={GearCloset}
+            loggedInUser={activeLoggedInUser}
+          />
+          <PrivateRoute
+            path="/gear-closet/new"
+            component={GearClosetAddItem}
+            loggedInUser={activeLoggedInUser}
+          />
+          <PrivateRoute
+            path="/gear-closet/:id"
+            component={GearClosetEditItem}
+            loggedInUser={activeLoggedInUser}
+          />
           <PrivateRoute
             path="/shopping-list"
             component={ShoppingList}
@@ -126,6 +156,8 @@ const App: FunctionComponent<{}> = () => {
           />
         </Router>
       </ErrorBoundary>
+      <FeedbackModal auth={auth} {...props} />
+      <AddToHomeScreenModal />
     </AppContainer>
   );
 };

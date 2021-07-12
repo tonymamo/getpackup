@@ -21,6 +21,7 @@ import { z1Shadow } from '@styles/mixins';
 import { white } from '@styles/color';
 import { baseSpacer, borderRadius, halfSpacer, quarterSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
+import { zIndexModal } from '@styles/layers';
 
 type ShareProps = {
   url: string;
@@ -41,7 +42,7 @@ const ShareWrapper = styled.div`
 
 const VerticalShareWrapper = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: ${zIndexModal};
   left: 0;
   height: 270px; /* height of rendered div */
   margin-top: -135px; /* half of above */
@@ -51,10 +52,9 @@ const VerticalShareWrapper = styled.div`
   padding: ${quarterSpacer};
   box-shadow: ${z1Shadow};
   border-radius: 0 ${borderRadius} ${borderRadius} 0;
-
-  & button {
-    margin-bottom: ${quarterSpacer};
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Share: FunctionComponent<ShareProps> = ({
@@ -67,12 +67,14 @@ const Share: FunctionComponent<ShareProps> = ({
 }) => {
   const shareUrl = `https://getpackup.com${url}`;
 
+  const hashtags = tags.map((tag) => tag.split(' ').join(''));
+
   const renderIcons = (location: 'vertical' | 'inline') => {
     return (
       <>
         <FacebookShareButton
           url={shareUrl}
-          hashtag={tags && tags.length > 0 ? tags[0] : undefined}
+          hashtag={tags && tags.length > 0 ? hashtags[0] : undefined}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'FacebookShareButton', location, shareUrl })
           }
@@ -96,7 +98,7 @@ const Share: FunctionComponent<ShareProps> = ({
         <TwitterShareButton
           url={shareUrl}
           title={title}
-          hashtags={tags && tags.length > 0 ? tags : undefined}
+          hashtags={tags && tags.length > 0 ? hashtags : undefined}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'TwitterShareButton', location, shareUrl })
           }

@@ -1,3 +1,5 @@
+import { GearListEnumType } from '@common/gearItem';
+
 export const gearListCategories = [
   { value: 'Activity Gear', label: 'Activity Gear' },
   { value: 'Safety & Tools', label: 'Safety & Tools' },
@@ -23,7 +25,7 @@ export const gearListTripType = [
   { name: 'multidayTrip', label: 'Multi-Day Trip' },
 ];
 
-export const gearListActivities = [
+export const gearListActivities: GearListEnumType = [
   { name: 'hiking', label: 'Hiking', icon: 'fa/FaHiking' },
   // { name: 'biking', label: 'Biking', icon: 'fa/FaBicycle' },
   { name: 'paddling', label: 'Paddling', icon: 'fa/FaWater' },
@@ -42,7 +44,7 @@ export const gearListActivities = [
   { name: 'snowshoeing', label: 'Snowshoeing', icon: 'fa/FaSnowflake' },
 ];
 
-export const gearListAccommodations = [
+export const gearListAccommodations: GearListEnumType = [
   { name: 'hotel', label: 'Hotel/Rental', icon: 'fa/FaHotel' },
   { name: 'hostel', label: 'Hostel', icon: 'fa/FaBed' },
   { name: 'servicedHut', label: 'Serviced Hut', icon: 'fa/FaWarehouse' },
@@ -52,13 +54,13 @@ export const gearListAccommodations = [
   // { name: 'bivy', label: 'Bivy', icon: 'fa/FaBed' },
 ];
 
-export const gearListCampKitchen = [
+export const gearListCampKitchen: GearListEnumType = [
   { name: 'backcountryThreeSeason', label: 'Backcountry 3-Season', icon: 'fa/FaCampground' },
   { name: 'backcountryWinter', label: 'Backcountry Winter', icon: 'fa/FaSnowflake' },
   { name: 'carCamping', label: 'Car Camping', icon: 'fa/FaCaravan' },
 ];
 
-export const gearListOtherConsiderations = [
+export const gearListOtherConsiderations: GearListEnumType = [
   { name: 'casual', label: 'Casual', icon: 'fa/FaTshirt' },
   { name: 'international', label: 'International', icon: 'fa/FaGlobeAmericas' },
   { name: 'photography', label: 'Photography', icon: 'fa/FaCamera' },
@@ -75,7 +77,7 @@ export const gearListOtherConsiderations = [
 ];
 
 export const allGearListItems = [
-  ...gearListTripType,
+  // ...gearListTripType, // not really doing anything with day vs multiday yet
   ...gearListActivities,
   ...gearListAccommodations,
   ...gearListCampKitchen,

@@ -1,17 +1,30 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import uniqBy from 'lodash/uniqBy';
-import SwipeableViews from 'react-swipeable-views';
-import { FaCaretLeft, FaCaretRight, FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaPlusSquare } from 'react-icons/fa';
+import * as icons from 'react-icons/all';
 
-import { Heading, PageContainer, Seo, Button, IconCheckbox, Row, Column, Modal } from '@components';
+import {
+  Heading,
+  PageContainer,
+  Seo,
+  Button,
+  Row,
+  Column,
+  Modal,
+  CollapsibleBox,
+  HorizontalScroller,
+  IconCheckbox,
+  FlexContainer,
+  Alert,
+} from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
-import { GearItem } from '@common/gearItem';
+import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
 import {
   gearListActivities,
   gearListAccommodations,
@@ -20,7 +33,12 @@ import {
   gearListCampKitchen,
 } from '@utils/gearListItemEnum';
 import { TripType } from '@common/trip';
+import usePersonalGear from '@hooks/usePersonalGear';
 import trackEvent from '@utils/trackEvent';
+import { IconWrapperLabel, IconCheckboxLabel } from '@components/IconCheckbox';
+import { baseSpacer, doubleSpacer, sextupleSpacer, tripleSpacer } from '@styles/size';
+import { lightGray } from '@styles/color';
+import Skeleton from 'react-loading-skeleton';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -30,65 +48,22 @@ type FormValues = { [key: string]: boolean };
 
 const initialValues: { [key: string]: boolean } = {};
 
-const usePersonalGear = () => {
-  const auth = useSelector((state: RootState) => state.firebase.auth);
-  const fetchedMasterGear = useSelector((state: RootState) => state.firestore.ordered.gear);
-  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
-  const fetchedGearClosetAdditions = useSelector(
-    (state: RootState) => state.firestore.ordered.gearClosetAdditions
-  );
-
-  useFirestoreConnect([
-    { collection: 'gear' },
-    {
-      collection: 'gear-closet',
-      storeAs: 'gearCloset',
-      doc: auth.uid,
-    },
-    {
-      collection: 'gear-closet',
-      storeAs: 'gearClosetAdditions',
-      doc: auth.uid,
-      subcollections: [{ collection: 'additions' }],
-    },
-  ]);
-
-  const masterGear = fetchedMasterGear ?? [];
-  const gearClosetRemovals = fetchedGearCloset?.[0]?.removals ?? [];
-  const gearClosetAdditions = fetchedGearClosetAdditions ?? [];
-
-  // Only regenerate this data if the master gear, gear closet removals, or gear closet additions change
-  const personalGear = useMemo(() => {
-    // Shallow clone the gear list, so we don't modify the master gear list
-    let customizedGear = [...masterGear];
-    gearClosetRemovals.forEach((itemToRemove: string) => {
-      // Remove in-place, it's okay because customizedGear is a clone
-      const removeIndex = customizedGear.findIndex((item) => item.id === itemToRemove);
-      customizedGear.splice(removeIndex, 1);
-    });
-
-    return customizedGear.concat(gearClosetAdditions);
-  }, [masterGear, gearClosetRemovals, gearClosetAdditions]);
-
-  return personalGear;
-};
-
 const generateGearList = (values: FormValues, gear: any) => {
   const getValues = (list: typeof initialValues) =>
     Object.entries(list)
       .filter((entry) => entry[1])
       .map((key) => key[0]);
 
-  const matches: Array<GearItem> = [];
+  const matches: Array<GearItemType> = [];
   const tagMatches: Array<string> = [];
 
   getValues(values).forEach((val) => {
-    matches.push(...gear.filter((item: GearItem) => item[val] === true));
+    matches.push(...gear.filter((item: GearItemType) => item[val] === true));
     // for each activity selected, add a tag to the trip
     gearListActivities.filter((item) => item.name === val).map((i) => tagMatches.push(i.label));
   });
 
-  const gearList = uniqBy(matches, 'name').map((item: GearItem) => {
+  const gearList = uniqBy(matches, 'name').map((item: GearItemType) => {
     return {
       name: item.name,
       isPacked: false,
@@ -104,9 +79,14 @@ const generateGearList = (values: FormValues, gear: any) => {
 };
 
 const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+
+  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
+
   const personalGear = usePersonalGear();
 
   useFirestoreConnect([
@@ -119,8 +99,10 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
-  const [activeTab, setActiveTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [addNewCategoryModalIsOpen, setAddNewCategoryModalIsOpen] = useState(false);
+  const [gearListType, setGearListType] = useState<GearListEnumType | Array<any>>([]);
+  const [gearClosetCategoriesIsLoading, setGearClosetCategoriesIsLoading] = useState(false);
 
   gearListKeys.forEach((item) => {
     initialValues[item] = false;
@@ -160,12 +142,6 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
       .then(() => {
         navigate(`/app/trips/${props.id}`);
         trackEvent('Trip Generated Successfully', { tripId: props.id });
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: `Successfully generated trip based on selections`,
-          })
-        );
       })
       .catch((err) => {
         trackEvent('Trip Generation Failure', { tripId: props.id, error: err });
@@ -183,131 +159,92 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   // browser controls, and either initialize fields with selections and make sure not to overwrite
   // packing list items, or maybe just forward them to a different screen?
 
+  // the categories that the user DOES have in their gear closet, so we can only show those
+  const getFilteredCategories = (array: GearListEnumType) =>
+    array.filter((item) => gearClosetCategories.includes(item.name));
+
+  // the categories that the user DOES NOT have in the gear closet
+  // also remove "essential" because that will always exist for users
+  const getOtherCategories = (array: GearListEnumType) =>
+    array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
+
+  const renderAddCategoryButton = (array: GearListEnumType) => (
+    <Column xs={6} sm={4} md={3} lg={2}>
+      <IconWrapperLabel
+        onClick={() => {
+          setGearListType(array);
+          setAddNewCategoryModalIsOpen(true);
+        }}
+      >
+        <FaPlusSquare size={tripleSpacer} color={lightGray} />
+        <IconCheckboxLabel>Add New</IconCheckboxLabel>
+      </IconWrapperLabel>
+    </Column>
+  );
+
+  const renderLoadingIcons = () => {
+    return Array.from({ length: 10 }).map((_, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <li key={`loadingIcon${index}`}>
+        <FlexContainer flexDirection="column" style={{ margin: doubleSpacer }}>
+          <Skeleton count={1} width={tripleSpacer} height={tripleSpacer} />
+          <Skeleton count={1} width={sextupleSpacer} height={baseSpacer} />
+        </FlexContainer>
+      </li>
+    ));
+  };
+
+  const renderDynamicIcon = (comboName: string) => {
+    const [, iconName] = comboName.split('/');
+    const Icon = icons[iconName];
+    return <Icon color={lightGray} size={tripleSpacer} />;
+  };
+
+  const updateUsersGearClosetCategories = (categoryToAdd: string) => {
+    setGearClosetCategoriesIsLoading(true);
+    setAddNewCategoryModalIsOpen(false);
+    firebase
+      .firestore()
+      .collection('gear-closet')
+      .doc(auth.uid)
+      .update({
+        categories: firebase.firestore.FieldValue.arrayUnion(categoryToAdd),
+      })
+      .then(() => {
+        setGearClosetCategoriesIsLoading(false);
+      })
+      .catch((err) => {
+        setGearClosetCategoriesIsLoading(false);
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+  };
+
   return (
     <PageContainer>
       <Seo title="Trip Generator" />
       <Formik<FormValues> validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting, isValid, values }) => (
           <Form>
-            <SwipeableViews index={activeTab} onChangeIndex={(i) => setActiveTab(i)}>
-              <div>
-                <Heading altStyle as="h2" noMargin align="center">
-                  Activities
-                </Heading>
-                <p style={{ textAlign: 'center' }}>
-                  <small>Select all that apply so we can pre-populate your packing list.</small>
-                </p>
-                <Row>
-                  {gearListActivities.map((item) => (
-                    <Column xs={4} lg={3} key={item.name}>
-                      <Field
-                        as={IconCheckbox}
-                        icon={item.icon}
-                        checked={values[item.name] ?? false}
-                        name={item.name}
-                        label={item.label}
-                      />
-                    </Column>
-                  ))}
-                </Row>
-
-                <Row>
-                  <Column xs={6} xsOffset={6}>
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        setActiveTab(1);
-                        trackEvent('Trip Gen Next Button Clicked', { page: 1 });
-                      }}
-                      block
-                      iconRight={<FaCaretRight />}
-                    >
-                      Next
-                    </Button>
-                  </Column>
-                </Row>
-              </div>
-              <div>
-                <Heading altStyle as="h2" noMargin align="center">
-                  Accommodations
-                </Heading>
-                <p style={{ textAlign: 'center' }}>
-                  <small>Select all that apply so we can pre-populate your packing list.</small>
-                </p>
-                <Row>
-                  {gearListAccommodations.map((item) => (
-                    <Column xs={4} lg={3} key={item.name}>
-                      <Field
-                        as={IconCheckbox}
-                        icon={item.icon}
-                        checked={values[item.name] ?? false}
-                        name={item.name}
-                        label={item.label}
-                      />
-                    </Column>
-                  ))}
-                </Row>
-                <Heading altStyle as="h2" noMargin align="center">
-                  Camp Kitchen
-                </Heading>
-
-                <Row>
-                  {gearListCampKitchen.map((item) => (
-                    <Column xs={4} lg={3} key={item.name}>
-                      <Field
-                        as={IconCheckbox}
-                        icon={item.icon}
-                        checked={values[item.name] ?? false}
-                        name={item.name}
-                        label={item.label}
-                      />
-                    </Column>
-                  ))}
-                </Row>
-
-                <Row>
-                  <Column xs={6}>
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        trackEvent('Trip Gen Previous Button Clicked', { page: 2 });
-                        setActiveTab(0);
-                      }}
-                      color="primaryOutline"
-                      block
-                      iconLeft={<FaCaretLeft />}
-                    >
-                      Previous
-                    </Button>
-                  </Column>
-                  <Column xs={6}>
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        trackEvent('Trip Gen Next Button Clicked', { page: 2 });
-                        setActiveTab(2);
-                      }}
-                      block
-                      iconRight={<FaCaretRight />}
-                    >
-                      Next
-                    </Button>
-                  </Column>
-                </Row>
-              </div>
-              <div>
-                <Heading altStyle as="h2" noMargin align="center">
-                  Other Considerations
-                </Heading>
-                <p style={{ textAlign: 'center' }}>
-                  <small>Select all that apply so we can pre-populate your packing list.</small>
-                </p>
-                <Row>
-                  {gearListOtherConsiderations
-                    // filter out Essential as we will include them always
-                    .filter((i) => i.name !== 'essential')
-                    .map((item) => (
-                      <Column xs={4} lg={3} key={item.name}>
+            <Heading altStyle as="h1" noMargin align="center">
+              Tell us about your trip!
+            </Heading>
+            <p style={{ textAlign: 'center' }}>
+              Select the categories below that apply to this trip so we can make a custom packing
+              list for you from all the gear in your gear closet.
+            </p>
+            <CollapsibleBox
+              title="Activities"
+              subtitle="What activities are you doing on this trip?"
+            >
+              <Row>
+                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                  ? getFilteredCategories(gearListActivities).map((item) => (
+                      <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                         <Field
                           as={IconCheckbox}
                           icon={item.icon}
@@ -316,39 +253,93 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                           label={item.label}
                         />
                       </Column>
-                    ))}
-                </Row>
+                    ))
+                  : renderLoadingIcons()}
+                {getOtherCategories(gearListActivities).length !== 0 &&
+                  renderAddCategoryButton(gearListActivities)}
+              </Row>
+            </CollapsibleBox>
+            <CollapsibleBox title="Accommodations" subtitle="Where are you staying on this trip?">
+              <Row>
+                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                  ? getFilteredCategories(gearListAccommodations).map((item) => (
+                      <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
+                        <Field
+                          as={IconCheckbox}
+                          icon={item.icon}
+                          checked={values[item.name] ?? false}
+                          name={item.name}
+                          label={item.label}
+                        />
+                      </Column>
+                    ))
+                  : renderLoadingIcons()}
+                {getOtherCategories(gearListAccommodations).length !== 0 &&
+                  renderAddCategoryButton(gearListAccommodations)}
+              </Row>
+            </CollapsibleBox>
+            <CollapsibleBox
+              title="Camp Kitchen"
+              subtitle="What type of kitchen setup(s) do will you need on this trip?"
+            >
+              <Row>
+                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                  ? getFilteredCategories(gearListCampKitchen).map((item) => (
+                      <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
+                        <Field
+                          as={IconCheckbox}
+                          icon={item.icon}
+                          checked={values[item.name] ?? false}
+                          name={item.name}
+                          label={item.label}
+                        />
+                      </Column>
+                    ))
+                  : renderLoadingIcons()}
+                {getOtherCategories(gearListCampKitchen).length !== 0 &&
+                  renderAddCategoryButton(gearListCampKitchen)}
+              </Row>
+            </CollapsibleBox>
+            <CollapsibleBox
+              title="Other Considerations"
+              subtitle="What other things might you need to bring on this trip?"
+            >
+              <Row>
+                {/* remove '10 essentials' category, the last item in the array */}
+                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                  ? getFilteredCategories([...gearListOtherConsiderations.slice(0, -1)]).map(
+                      (item) => (
+                        <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
+                          <Field
+                            as={IconCheckbox}
+                            icon={item.icon}
+                            checked={values[item.name] ?? false}
+                            name={item.name}
+                            label={item.label}
+                          />
+                        </Column>
+                      )
+                    )
+                  : renderLoadingIcons()}
+                {getOtherCategories([...gearListOtherConsiderations.slice(0, -1)]).length !== 0 &&
+                  renderAddCategoryButton(gearListOtherConsiderations)}
+              </Row>
+            </CollapsibleBox>
 
-                <Row>
-                  <Column xs={6}>
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        trackEvent('Trip Gen Previous Button Clicked', { page: 3 });
-                        setActiveTab(1);
-                      }}
-                      color="primaryOutline"
-                      block
-                      iconLeft={<FaCaretLeft />}
-                    >
-                      Previous
-                    </Button>
-                  </Column>
-                  <Column xs={6}>
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting || !isValid}
-                      isLoading={isLoading}
-                      block
-                      color="success"
-                      iconLeft={<FaCheckCircle />}
-                    >
-                      {isLoading ? 'Saving' : 'Save'}
-                    </Button>
-                  </Column>
-                </Row>
-              </div>
-            </SwipeableViews>
+            <Row>
+              <Column xs={6} xsOffset={6}>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || !isValid}
+                  isLoading={isLoading}
+                  block
+                  color="success"
+                  iconLeft={<FaCheckCircle />}
+                >
+                  {isLoading ? 'Saving' : 'Save'}
+                </Button>
+              </Column>
+            </Row>
           </Form>
         )}
       </Formik>
@@ -359,6 +350,35 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         <p>
           Please hold tight while we create a custom packing list for you based on your selections!
         </p>
+      </Modal>
+
+      <Modal
+        toggleModal={() => {
+          setGearListType([]);
+          setAddNewCategoryModalIsOpen(false);
+        }}
+        isOpen={addNewCategoryModalIsOpen}
+      >
+        <Heading>Add New Category</Heading>
+        <Alert
+          type="info"
+          message="Note: selecting a new tag will pre-populate new gear in your gear closet that you may want to customize after!"
+        />
+        <strong style={{ textTransform: 'uppercase' }}>Select a Category</strong>
+        <HorizontalScroller withBorder>
+          {getOtherCategories(gearListType).map((item) => (
+            <li key={item.name}>
+              <IconWrapperLabel
+                onClick={() => {
+                  updateUsersGearClosetCategories(item.name);
+                }}
+              >
+                {renderDynamicIcon(item.icon)}
+                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
+              </IconWrapperLabel>
+            </li>
+          ))}
+        </HorizontalScroller>
       </Modal>
     </PageContainer>
   );

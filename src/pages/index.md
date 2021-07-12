@@ -17,9 +17,9 @@ typewriterList:
   - text: gloves
   - text: helmet
   - text: batteries
-heroSubheading: Sign up below to become an early adopter
+heroSubheading: Create your customized gear closet and start planning trips today
 heroCTALink: '/signup'
-heroCTAText: Sign Up
+heroCTAText: Get Started
 mainpitch:
   image: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/Screen%20Shot%202020-09-08%20at%201.17.18%20PM.png
   heading: Spend more time outside doing what you love.

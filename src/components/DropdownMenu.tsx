@@ -12,6 +12,7 @@ import {
   quarterSpacer,
 } from '@styles/size';
 import { Button } from '@components';
+import { zIndexDropdown } from '@styles/layers';
 
 type DropdownMenuProps = {
   color?: string;
@@ -25,7 +26,7 @@ const StyledDropdown = styled.div`
   right: 0;
   top: calc(100% + ${quarterSpacer});
   width: 250px;
-  z-index: 1;
+  z-index: ${zIndexDropdown};
   display: flex;
   flex-direction: column;
   border-radius: ${borderRadius};

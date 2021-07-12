@@ -6,6 +6,7 @@ import Box from './Box';
 import Breadcrumbs from './Breadcrumbs';
 import Button from './Button';
 import ClientOnly from './ClientOnly';
+import CollapsibleBox from './CollapsibleBox';
 import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
 import DayPickerInput from './DayPickerInput';
@@ -18,10 +19,14 @@ import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
 import Footer from './Footer';
 import FormErrors from './FormErrors';
+import GearListCategory from './GearListCategory';
+import GearListItem from './GearListItem';
 import GlobalAlerts from './GlobalAlerts';
 import Heading from './Heading';
 import HeroImage from './HeroImage';
+import HeroImageUpload from './HeroImageUpload';
 import HorizontalRule from './HorizontalRule';
+import HorizontalScroller from './HorizontalScroller';
 import IconCheckbox from './IconCheckbox';
 import IconWrapper from './IconWrapper';
 import Input from './Input';
@@ -31,11 +36,13 @@ import LoadingSpinner from './LoadingSpinner';
 import Modal from './Modal';
 import Navbar from './Navbar';
 import NegativeMarginContainer from './NegativeMarginContainer';
+import NoiseRings from './NoiseRings';
+import NoTripFound from './NoTripFound';
 import PackingListAddItem from './PackingListAddItem';
 import PackingListCategory from './PackingListCategory';
 import PackingListItem from './PackingListItem';
 import PageContainer from './PageContainer';
-import Pill, { PillWrapper } from './Pill';
+import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 import PrivateRoute from './PrivateRoute';
 import RelatedBlogPost from './RelatedBlogPost';
@@ -49,6 +56,8 @@ import StaticMapImage from './StaticMapImage';
 import Table from './Table';
 import Testimonial from './Testimonial';
 import TripCard from './TripCard';
+import TripHeader from './TripHeader';
+import TripNavigation from './TripNavigation';
 import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
 
@@ -62,6 +71,7 @@ export {
   Breadcrumbs,
   Button,
   ClientOnly,
+  CollapsibleBox,
   Column,
   Content,
   DropdownMenu,
@@ -73,10 +83,14 @@ export {
   FlexContainer,
   Footer,
   FormErrors,
+  GearListCategory,
+  GearListItem,
   GlobalAlerts,
   Heading,
   HeroImage,
+  HeroImageUpload,
   HorizontalRule,
+  HorizontalScroller,
   HTMLContent,
   IconCheckbox,
   IconWrapper,
@@ -88,12 +102,13 @@ export {
   Modal,
   Navbar,
   NegativeMarginContainer,
+  NoiseRings,
+  NoTripFound,
   PackingListAddItem,
   PackingListCategory,
   PackingListItem,
   PageContainer,
   Pill,
-  PillWrapper,
   PreviewCompatibleImage,
   PrivateRoute,
   RelatedBlogPost,
@@ -108,6 +123,8 @@ export {
   Table,
   Testimonial,
   TripCard,
+  TripHeader,
+  TripNavigation,
   UserMediaObject,
   Wave,
 };

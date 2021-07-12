@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
-import { FaCaretRight, FaUndo } from 'react-icons/fa';
+import { FaCaretRight } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps } from '@reach/router';
+import { navigate, RouteComponentProps } from '@reach/router';
 
 import {
   Row,
@@ -61,11 +61,7 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                   <Avatar src={logo} size="lg" gravatarEmail="" bottomMargin />
                   <p>With love,</p>
                   <Heading as="h2">Taylor, Mack, &amp; Tony 😘</Heading>
-                  <Button
-                    type="link"
-                    to={props.location?.state?.pathname || '/'}
-                    iconLeft={<FaUndo />}
-                  >
+                  <Button type="button" onClick={() => navigate(-1)} color="text">
                     Go Back
                   </Button>
                 </FlexContainer>
@@ -142,17 +138,13 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                       <p>
                         <Button
                           type="submit"
+                          rightSpacer
                           iconRight={<FaCaretRight />}
                           disabled={isSubmitting || !isValid}
                         >
                           Submit
                         </Button>
-                        <Button
-                          type="link"
-                          to={props.location?.state?.pathname || '/'}
-                          color="text"
-                          iconLeft={<FaUndo />}
-                        >
+                        <Button type="button" onClick={() => navigate(-1)} color="text">
                           Cancel
                         </Button>
                       </p>

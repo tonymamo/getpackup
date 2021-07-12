@@ -21,7 +21,7 @@ import {
   inputPaddingY,
   baseAndAHalfSpacer,
 } from '@styles/size';
-import { fontSizeBase, lineHeightBase, fontSizeSmall, fontSizeH6 } from '@styles/typography';
+import { lineHeightBase, fontSizeSmall, fontSizeH6 } from '@styles/typography';
 import {
   textColor,
   white,
@@ -38,6 +38,7 @@ import {
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
 import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
 import { formatPhoneNumberValue } from '@utils/phoneNumber';
+import FlexContainer from './FlexContainer';
 
 type OptionType = { label: string; value: string };
 
@@ -163,6 +164,9 @@ export const StyledLabel = styled.label<{
   required?: boolean;
 }>`
   margin: 0;
+  font-weight: bold;
+  font-size: ${fontSizeSmall};
+  text-transform: uppercase;
   ${(props) => props.hiddenLabel && visuallyHiddenStyle}
   ${(props) =>
     props.invalid &&
@@ -305,17 +309,20 @@ const StyledNumericInputWrapper = styled.div`
   }
 `;
 
-const multiSelectStyles = {
+export const multiSelectStyles = {
   option: (provided: any, state: { isFocused: boolean }) => ({
     ...provided,
     color: textColor,
     backgroundColor: state.isFocused ? offWhite : white,
     width: 'auto',
+    '&:active': {
+      backgroundColor: `rgba(${brandPrimaryRGB}, .25)`,
+    },
   }),
   control: (provided: any, state: { isFocused: boolean }) => ({
     ...provided,
     minHeight: inputHeight,
-    fontSize: fontSizeBase,
+    fontSize: '1.1em', // 1em makes it slightly smaller than 16px at smaller viewports, causing a zoom issue
     lineHeight: lineHeightBase,
     color: textColor,
     backgroundColor: 'white',
@@ -440,31 +447,45 @@ const Input: FunctionComponent<InputProps> = (props) => {
       }
       break;
     case 'checkbox':
-      inputTypeToRender = (
-        <>
-          <StyledLabel htmlFor={props.id || props.name}>
-            <StyledToggle
-              {...field}
-              {...props}
-              {...meta}
-              id={props.name}
-              checked={props.checked}
-              type="checkbox"
-            />
-            {props.checked ? (
-              <FaCheckCircle
-                color={brandSuccess}
-                size={baseAndAHalfSpacer}
-                style={{ cursor: 'pointer' }}
+      {
+        const iconStyles = {
+          flexShrink: 0,
+          cursor: 'pointer',
+          marginRight: halfSpacer,
+        };
+        const renderCheckbox = (checked: boolean) =>
+          checked ? (
+            <FaCheckCircle color={brandSuccess} size={baseAndAHalfSpacer} style={iconStyles} />
+          ) : (
+            <FaRegCircle size={baseAndAHalfSpacer} style={iconStyles} />
+          );
+        inputTypeToRender = (
+          <>
+            <StyledLabel htmlFor={props.id || props.name}>
+              <StyledToggle
+                {...field}
+                {...props}
+                {...meta}
+                id={props.name}
+                checked={props.checked}
+                type="checkbox"
               />
-            ) : (
-              <FaRegCircle size={baseAndAHalfSpacer} style={{ cursor: 'pointer' }} />
-            )}
-            &nbsp;&nbsp;
-            {props.label}
-          </StyledLabel>
-        </>
-      );
+              {props.label !== '' ? (
+                <FlexContainer
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                  flexWrap="nowrap"
+                >
+                  {renderCheckbox(Boolean(props.checked))}
+                  <span>{props.label}</span>
+                </FlexContainer>
+              ) : (
+                renderCheckbox(Boolean(props.checked))
+              )}
+            </StyledLabel>
+          </>
+        );
+      }
       break;
     case 'toggle':
       inputTypeToRender = (

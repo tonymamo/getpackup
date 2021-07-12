@@ -1,16 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import {
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaCalendar,
-  FaSearch,
-  FaUser,
-  FaShoppingCart,
-  FaUserLock,
-} from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaCalendar, FaUserLock } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import {
@@ -21,6 +12,7 @@ import {
   FlexContainer,
   Heading,
   SignupForm,
+  Avatar,
 } from '@components';
 import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
 import { quadrupleSpacer, baseSpacer, doubleSpacer } from '@styles/size';
@@ -29,6 +21,8 @@ import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
+import { zIndexSmallScreenFooter } from '@styles/layers';
+import GearClosetIcon from '@images/gearClosetIcon';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
@@ -62,6 +56,7 @@ const SignupFormWrapper = styled.div`
 
 const BottomNav = styled.nav`
   position: fixed;
+  z-index: ${zIndexSmallScreenFooter};
   bottom: 0;
   min-height: calc(${quadrupleSpacer} + 1px); /* min height plus 1px border top */
   left: 0;
@@ -245,15 +240,15 @@ const Footer = () => {
             <FaCalendar />
           </Link>
           <Link
-            to="/app/search"
+            to="/app/gear-closet"
             getProps={isPartiallyActive}
             onClick={() =>
-              trackEvent('Logged In Small Screen Footer Link Click', { link: 'Search' })
+              trackEvent('Logged In Small Screen Footer Link Click', { link: 'Gear Closet' })
             }
           >
-            <FaSearch />
+            <GearClosetIcon size={15} />
           </Link>
-          <Link
+          {/* TODO: when shopping list is ready <Link
             to="/app/shopping-list"
             getProps={isPartiallyActive}
             onClick={() =>
@@ -261,7 +256,7 @@ const Footer = () => {
             }
           >
             <FaShoppingCart />
-          </Link>
+          </Link> */}
           {profile.isAdmin && (
             <Link to="/admin/gear-list" getProps={isPartiallyActive}>
               <FaUserLock />
@@ -274,7 +269,11 @@ const Footer = () => {
               trackEvent('Logged In Small Screen Footer Link Click', { link: 'Profile' })
             }
           >
-            <FaUser />
+            <Avatar
+              src={profile.photoURL as string}
+              size="xs"
+              gravatarEmail={profile.email as string}
+            />
           </Link>
         </BottomNav>
       )}

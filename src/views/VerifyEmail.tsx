@@ -22,12 +22,6 @@ const VerifyEmail = ({ actionCode }: VerifyEmailProps) => {
       .applyActionCode(actionCode)
       .then(() => {
         trackEvent('Email Address Verified');
-        dispatch(
-          addAlert({
-            type: 'success',
-            message: 'Your email address was verified',
-          })
-        );
       })
       .catch((error: Error) => {
         trackEvent('Email Address Verification Failure', { error });

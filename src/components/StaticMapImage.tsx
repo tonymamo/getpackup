@@ -6,14 +6,8 @@ import { StaticMap, Marker } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { brandPrimary, brandSecondary, white } from '@styles/color';
-import {
-  baseSpacer,
-  borderRadius,
-  doubleSpacer,
-  quarterSpacer,
-  threeQuarterSpacer,
-} from '@styles/size';
+import { brandPrimary, white } from '@styles/color';
+import { borderRadius, doubleSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
 
 // Mapbox failing on prod builds, fixed by adding `worker-loader` package and the following line
@@ -33,7 +27,9 @@ type StaticMapImageProps = {
 
 const StyledMarkerText = styled.span`
   display: block;
-  transform: translateX(-50%);
+  transform: translateX(
+    -45%
+  ); /* 45 works better to center than 50% for some reason? probably accounting for padding */
   font-size: ${fontSizeSmall};
   font-weight: bold;
   color: ${white};
@@ -58,13 +54,12 @@ const StaticMapImage: FunctionComponent<StaticMapImageProps> = ({
     height={height}
     width={width}
     zoom={zoom}
-    style={{ marginBottom: baseSpacer, marginTop: baseSpacer }}
-    mapStyle="mapbox://styles/getpackup/ckndmcjoa2vih18myisj4ypi1"
+    mapStyle="mapbox://styles/getpackup/cknw0bimf0s1q18nxauvs45jj"
     mapboxApiAccessToken={process.env.GATSBY_MAPBOX_API_KEY}
   >
     {label ? (
       <Marker latitude={lat} longitude={lng}>
-        <FaMapMarkerAlt size={doubleSpacer} color={brandSecondary} />
+        <FaMapMarkerAlt size={doubleSpacer} color={white} />
         <StyledMarkerText>{label}</StyledMarkerText>
       </Marker>
     ) : null}
