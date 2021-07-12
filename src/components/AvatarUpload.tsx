@@ -116,7 +116,7 @@ const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }
     <AvatarUploadWrapper>
       <Avatar src={loggedInUser.photoURL} size="xl" gravatarEmail={loggedInUser.email} />
       <EditButton type="button" onClick={() => uploader.open()}>
-        <FaCamera color={textColor} />
+        <FaCamera color={textColor} style={{ flexShrink: 0 }} />
       </EditButton>
     </AvatarUploadWrapper>
   );

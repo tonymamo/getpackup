@@ -2,8 +2,9 @@ import React, { FunctionComponent, useState } from 'react';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
+import { isLoaded, useFirebase } from 'react-redux-firebase';
 import pickBy from 'lodash/pickBy';
+import { navigate } from 'gatsby';
 
 import {
   gearListActivities,
@@ -33,6 +34,7 @@ const GearClosetSetup: FunctionComponent<GearClosetSetupProps> = () => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,6 +62,13 @@ const GearClosetSetup: FunctionComponent<GearClosetSetupProps> = () => {
       })
       .then(() => {
         resetForm();
+        dispatch(
+          addAlert({
+            type: 'success',
+            message: 'Great success! Now go and customize your gear 😎',
+          })
+        );
+        navigate('/app/gear-closet');
         trackEvent('Gear Closet Generation Successfully Completed', { values });
       })
       .catch((error: Error) => {
@@ -76,19 +85,28 @@ const GearClosetSetup: FunctionComponent<GearClosetSetupProps> = () => {
       });
   };
 
+  if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0) {
+    navigate('/app/gear-closet');
+  }
+
   return (
     <PageContainer>
-      <Seo title="Gear Closet" />
-      <Heading altStyle as="h1" noMargin align="center">
-        Let&apos;s build out your gear closet
-      </Heading>
-      <p style={{ textAlign: 'center' }}>
-        <small>
-          Select all the categories relevant to you so we can populate your closet. Once you build
-          out your gear closet with all of your gear, we will use it to populate your packing lists
-          dynamically based on what activities you do on each trip!
-        </small>
-      </p>
+      <Seo title="Gear Closet Setup" />
+
+      <Row>
+        <Column md={8} mdOffset={2}>
+          <Heading altStyle as="h1" noMargin align="center">
+            Let&apos;s build out your gear closet
+          </Heading>
+          <p style={{ textAlign: 'center' }}>
+            <small>
+              Select all the categories relevant to you so we can populate your closet with an
+              initial list of gear we think you should have. You can add and remove individual items
+              later.
+            </small>
+          </p>
+        </Column>
+      </Row>
       <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
         {({ isSubmitting, isValid, values }) => (
           <Form>
@@ -175,7 +193,7 @@ const GearClosetSetup: FunctionComponent<GearClosetSetupProps> = () => {
                   color="success"
                   iconLeft={<FaCheckCircle />}
                 >
-                  {isLoading ? 'Saving' : 'Save'}
+                  {isLoading ? 'Saving' : 'All set'}
                 </Button>
               </Column>
             </Row>

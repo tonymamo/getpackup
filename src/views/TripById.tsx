@@ -22,6 +22,7 @@ type TripByIdProps = {
 const TripById: FunctionComponent<TripByIdProps> = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const users = useSelector((state: RootState) => state.firestore.data.users);
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
@@ -82,7 +83,12 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             loggedInUser={props.loggedInUser}
             tripIsLoaded={isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip)}
           />
-          <TripDetails path="/details" activeTrip={activeTrip} loggedInUser={props.loggedInUser} />
+          <TripDetails
+            path="/details"
+            activeTrip={activeTrip}
+            users={users}
+            loggedInUser={props.loggedInUser}
+          />
           <TripParty path="/party" activeTrip={activeTrip} />
           <EditPackingListItem path="/checklist/:id" tripId={props.id} />
         </Router>

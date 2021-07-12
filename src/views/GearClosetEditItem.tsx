@@ -179,7 +179,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
 
   const getSelectedCount = (arr: GearListEnumType, values: typeof initialValues) => {
     const count = arr.filter((item) => values[item.name] === true).length;
-    return `${count} ${count === 1 ? 'category' : 'categories'} selected`;
+    return `${count} ${count === 1 ? 'tag' : 'tags'} selected`;
   };
 
   return (

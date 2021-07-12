@@ -1,14 +1,13 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
 import { useFirebase } from 'react-redux-firebase';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { navigate } from 'gatsby';
 
 import { Input, Button, HorizontalRule, Row, Column, Heading } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField, requiredSelect } from '@utils/validations';
-import { RootState } from '@redux/ducks';
 import { GearItemType } from '@common/gearItem';
 import {
   gearListTripType,
@@ -25,7 +24,6 @@ type GearListItemFormProps = {
 };
 
 const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
-  const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +35,6 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
       .collection('gear')
       .add({
         ...values,
-        lastEditedBy: auth.uid,
         created: new Date(),
       })
       .then((docRef) => {
@@ -65,7 +62,6 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
       .doc(props.initialValues.id)
       .set({
         ...values,
-        lastEditedBy: auth.uid,
         updated: new Date(),
       })
       .then(() => {

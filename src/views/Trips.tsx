@@ -1,21 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Link, navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
-import { FaArrowRight, FaChevronRight, FaPlusCircle } from 'react-icons/fa';
+import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 
-import {
-  Row,
-  Column,
-  Heading,
-  Box,
-  Button,
-  Seo,
-  PageContainer,
-  TripCard,
-  Modal,
-} from '@components';
+import { Row, Column, Heading, Box, Button, Seo, PageContainer, TripCard } from '@components';
 import { RootState } from '@redux/ducks';
 import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
 import { UserType } from '@common/user';
@@ -78,6 +68,10 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     </Box>
   );
 
+  if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
+    navigate('/app/onboarding');
+  }
+
   return (
     <>
       <Seo title="My Trips" />
@@ -103,6 +97,24 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         </PageContainer>
       )}
 
+      {/* LOADING SKELETON */}
+      {!isLoaded(trips) && (
+        <>
+          {Array.from({ length: 5 }).map((_, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Box key={`loadingTrip${index}`}>
+              <TripCard
+                trip={undefined}
+                loggedInUser={loggedInUser}
+                showDescription
+                enableNavigation
+              />
+            </Box>
+          ))}
+        </>
+      )}
+
+      {/* IN PROGRESS */}
       {Array.isArray(inProgressTrips) && !!inProgressTrips.length && inProgressTrips.length > 0 && (
         <PageContainer>
           <Heading as="h2" altStyle>
@@ -111,86 +123,37 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
           {inProgressTrips.map((trip) => renderTrip(trip))}
         </PageContainer>
       )}
-      {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 ? (
+
+      {/* UPCOMING */}
+      {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 && (
         <PageContainer>
           <Heading as="h2" altStyle>
             Upcoming
           </Heading>
           {upcomingTrips.map((trip) => renderTrip(trip))}
         </PageContainer>
-      ) : (
+      )}
+
+      {/* NO UPCOMING TRIPS */}
+      {isLoaded(trips) && !upcomingTrips && (
         <PageContainer>
-          {isLoaded(trips) &&
-          trips &&
-          trips.length === 0 &&
-          isLoaded(fetchedGearCloset) &&
-          fetchedGearCloset.length === 0 ? (
-            <Modal isOpen toggleModal={() => null} hideCloseButton largePadding>
-              <Heading>Welcome! 🤝</Heading>
-              <p>
-                Looks like it&apos;s your first time here. Would you like to customize your gear
-                closet first, or just create a trip with generic gear we suggest?
-              </p>
-              <Button
-                type="link"
-                to="/app/gear-closet"
-                color="primary"
-                iconRight={<FaChevronRight />}
-                onClick={() =>
-                  trackEvent('Customize Gear Closet Button clicked', {
-                    location: 'Trips Page First Time',
-                  })
-                }
-              >
-                Customize Gear Closet
-              </Button>
-              <Button
-                type="link"
-                to="/app/trips/new"
-                color="text"
-                onClick={() =>
-                  trackEvent('New Trip Button clicked', { location: 'Trips Page First Time' })
-                }
-              >
-                Create New Trip
-              </Button>
-            </Modal>
-          ) : (
-            <>
-              {!isLoaded(trips) ? (
-                <>
-                  {Array.from({ length: 5 }).map((_, index) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <Box key={`loadingTrip${index}`}>
-                      <TripCard
-                        trip={undefined}
-                        loggedInUser={loggedInUser}
-                        showDescription
-                        enableNavigation
-                      />
-                    </Box>
-                  ))}
-                </>
-              ) : (
-                <Box>
-                  No upcoming trips planned currently,{' '}
-                  <Link
-                    to="/app/trips/new"
-                    onClick={() =>
-                      trackEvent('New Trip Button clicked', {
-                        location: 'Trips Page Create One Now',
-                      })
-                    }
-                  >
-                    create one now! <FaArrowRight />
-                  </Link>
-                </Box>
-              )}
-            </>
-          )}
+          <Box>
+            No upcoming trips planned currently,{' '}
+            <Link
+              to="/app/trips/new"
+              onClick={() =>
+                trackEvent('New Trip Button clicked', {
+                  location: 'Trips Page Create One Now',
+                })
+              }
+            >
+              create one now! <FaArrowRight />
+            </Link>
+          </Box>
         </PageContainer>
       )}
 
+      {/* PAST TRIPS */}
       {Array.isArray(pastTrips) && !!pastTrips.length && pastTrips.length > 0 && (
         <PageContainer>
           <PageContainer>

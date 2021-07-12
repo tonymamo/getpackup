@@ -11,9 +11,11 @@ import TripById from '@views/TripById';
 import TripGenerator from '@views/TripGenerator';
 import AddTripHeaderImage from '@views/AddTripHeaderImage';
 import GearCloset from '@views/GearCloset';
+import GearClosetSetup from '@views/GearClosetSetup';
 import GearClosetAddItem from '@views/GearClosetAddItem';
 import GearClosetEditItem from '@views/GearClosetEditItem';
 import ShoppingList from '@views/ShoppingList';
+import Onboarding from '@views/Onboarding';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary, FeedbackModal } from '@components';
 import { breakpoints, baseSpacer } from '@styles/size';
@@ -99,6 +101,11 @@ const App: FunctionComponent<{}> = (props) => {
     <AppContainer>
       <ErrorBoundary>
         <Router basepath="/app">
+          <PrivateRoute
+            path="/onboarding"
+            component={Onboarding}
+            loggedInUser={activeLoggedInUser}
+          />
           <PrivateRoute path="/profile" component={Profile} loggedInUser={activeLoggedInUser} />
           <PrivateRoute path="/trips" component={Trips} loggedInUser={activeLoggedInUser} />
           <PrivateRoute
@@ -121,11 +128,11 @@ const App: FunctionComponent<{}> = (props) => {
             component={TripById}
             loggedInUser={activeLoggedInUser}
           />
-          {/* <PrivateRoute
-            path="/trips/:id/item/*"
-            component={TripById}
+          <PrivateRoute
+            path="/gear-closet/setup"
+            component={GearClosetSetup}
             loggedInUser={activeLoggedInUser}
-          /> */}
+          />
           <PrivateRoute
             path="/gear-closet"
             component={GearCloset}

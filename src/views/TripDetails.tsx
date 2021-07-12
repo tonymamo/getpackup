@@ -34,10 +34,11 @@ import trackEvent from '@utils/trackEvent';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
-  loggedInUser?: UserType;
+  users: Array<UserType>;
+  loggedInUser: UserType;
 } & RouteComponentProps;
 
-const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedInUser }) => {
+const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, loggedInUser }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -255,14 +256,17 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, loggedIn
                             <HorizontalRule compact />
                           </>
                         )}
-                        {loggedInUser && (
-                          <>
-                            <p>
-                              <strong>Trip Creator</strong>
-                            </p>
-                            <UserMediaObject user={loggedInUser} />
-                          </>
-                        )}
+
+                        <p>
+                          <strong>Trip Creator</strong>
+                        </p>
+                        <UserMediaObject
+                          user={
+                            activeTrip.owner === loggedInUser.uid
+                              ? loggedInUser
+                              : users[activeTrip.owner as any]
+                          }
+                        />
                       </Box>
                     </Column>
                   </Row>

@@ -247,35 +247,37 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
       </Row>
 
       {showTags && (
-        <HorizontalScroller>
-          {trip ? (
-            <>
-              {trip.tags.map((tag: string) => (
-                <Pill
-                  key={`${tag}tag`}
-                  // TODO: link to tags
-                  // to={`/search/tags/${tag.replace(' ', '-')}`}
-                  text={tag}
-                  color="primary"
-                />
-              ))}
-            </>
-          ) : (
-            <>
-              {/* Generate some tag placeholders and make widths dynamic with Math */}
-              {Array.from({ length: 7 }).map((_, i) => (
-                <Skeleton
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={i}
-                  // random widths between 48 and 128
-                  width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
-                  height={baseAndAHalfSpacer}
-                  style={{ marginRight: halfSpacer, borderRadius: baseAndAHalfSpacer }}
-                />
-              ))}
-            </>
-          )}
-        </HorizontalScroller>
+        <div style={{ margin: `${halfSpacer} 0` }}>
+          <HorizontalScroller>
+            {trip ? (
+              <>
+                {trip.tags.map((tag: string) => (
+                  <Pill
+                    key={`${tag}tag`}
+                    // TODO: link to tags
+                    // to={`/search/tags/${tag.replace(' ', '-')}`}
+                    text={tag}
+                    color="primary"
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                {/* Generate some tag placeholders and make widths dynamic with Math */}
+                {Array.from({ length: 7 }).map((_, i) => (
+                  <Skeleton
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={i}
+                    // random widths between 48 and 128
+                    width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
+                    height={baseAndAHalfSpacer}
+                    style={{ marginRight: halfSpacer, borderRadius: baseAndAHalfSpacer }}
+                  />
+                ))}
+              </>
+            )}
+          </HorizontalScroller>
+        </div>
       )}
 
       {showDescription && (

@@ -13,7 +13,6 @@ const NewGearListItem: FunctionComponent<NewGearListItemProps> = () => {
     id: '',
     name: '',
     category: '',
-    lastEditedBy: '',
     essential: false,
   };
 

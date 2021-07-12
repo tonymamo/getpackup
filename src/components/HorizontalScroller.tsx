@@ -11,7 +11,7 @@ type HorizontalScrollerProps = { withBorder?: boolean };
 const HorizontalScrollerWrapper = styled.ul`
   list-style: none;
   display: flex;
-  margin: ${halfSpacer} 0;
+  margin: 0;
   padding: 0 ${halfSpacer};
   overflow-x: scroll;
   scrollbar-width: none;

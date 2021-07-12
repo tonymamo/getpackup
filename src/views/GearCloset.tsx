@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { navigate } from 'gatsby';
 
 import {
   Seo,
@@ -12,14 +13,15 @@ import {
   Row,
   Modal,
   LoadingPage,
+  Alert,
 } from '@components';
 import usePersonalGear from '@hooks/usePersonalGear';
-import GearClosetSetup from '@views/GearClosetSetup';
 import { GearItemType } from '@common/gearItem';
 import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
+import { TripType } from '@common/trip';
 
 type GearClosetProps = {};
 
@@ -29,6 +31,7 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const personalGear = usePersonalGear();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
@@ -130,9 +133,23 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     setModalIsOpen(false);
   };
 
+  if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
+    navigate('/app/gear-closet/setup');
+  }
+
   return (
     <PageContainer>
       <Seo title="Gear Closet" />
+
+      {isLoaded(trips) && trips.length === 0 && (
+        <Alert
+          type="info"
+          message="Looks like you have some gear now, start customizing it by adding or removing items, or go create your first trip!"
+          callToActionLink="/app/trips/new"
+          callToActionLinkText="Create a trip"
+        />
+      )}
+
       {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
         <Row>
           <Column sm={5}>
@@ -162,8 +179,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           isLoading={personalGearIsLoading}
         />
       )}
-
-      {isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0 && <GearClosetSetup />}
 
       {!isLoaded(fetchedGearCloset) && <LoadingPage />}
 

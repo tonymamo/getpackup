@@ -202,8 +202,8 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
               <Field as={Input} type="textarea" name="notes" label="Notes/Description" />
               <StyledLabel required>Tag your Item</StyledLabel>
               <p>
-                Select all sub-categories that apply to your item, so that this item will get
-                included whenever you create a trip that has any of the matching sub-categories.
+                Select all tags that apply to your item, so that this item will get included
+                whenever you create a trip that has any of the matching tags.
               </p>
               <CollapsibleBox
                 title="Activities"

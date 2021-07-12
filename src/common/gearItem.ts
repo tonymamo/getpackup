@@ -95,7 +95,6 @@ export type GearItemType = {
   id: string;
   name: string;
   category: string;
-  lastEditedBy?: string;
   created?: firebase.firestore.Timestamp;
   updated?: firebase.firestore.Timestamp;
   essential: boolean;
