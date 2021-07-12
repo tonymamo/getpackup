@@ -4,5 +4,5 @@ export const zIndexNavbar = 4;
 export const zIndexFeedbackButton = 5;
 export const zIndexSmallScreenFooter = 6;
 export const zIndexGlobalAlert = 7;
-export const zIndexModal = 8;
-export const zIndexDropdown = 9;
+export const zIndexDropdown = 8;
+export const zIndexModal = 9;
