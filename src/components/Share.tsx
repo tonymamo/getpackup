@@ -52,10 +52,9 @@ const VerticalShareWrapper = styled.div`
   padding: ${quarterSpacer};
   box-shadow: ${z1Shadow};
   border-radius: 0 ${borderRadius} ${borderRadius} 0;
-
-  & button {
-    margin-bottom: ${quarterSpacer};
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Share: FunctionComponent<ShareProps> = ({

@@ -289,6 +289,10 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         isOpen={addNewCategoryModalIsOpen}
       >
         <Heading>Add New Category</Heading>
+        <p>
+          Getting into a new sport or activity, or upgrading your gear? Select any tags that apply
+          to gear you own!
+        </p>
         <Alert
           type="info"
           message="Note: selecting a new tag will pre-populate new gear in your gear closet that you may want to customize after!"
