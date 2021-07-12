@@ -74,7 +74,7 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
   }, []);
 
   return (
-    <div className="blog-content">
+    <div>
       {!props.hideFromCms && (
         <Seo
           title={props.title}
@@ -128,7 +128,6 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     description={props.description}
                   />
                 )}
-
                 {props.tags && props.tags.length ? (
                   <>
                     {props.tags.map((tag: string) => (
@@ -142,10 +141,11 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                   </>
                 ) : null}
                 <HorizontalRule />
-
                 <p style={{ fontStyle: 'italic' }}>{props.description}</p>
                 <HorizontalRule />
-                <PostContent content={props.content} />
+                <div className="blog-content">
+                  <PostContent content={props.content} />
+                </div>
                 <br />
                 <br />
                 <br />
@@ -159,7 +159,6 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
                     description={props.description}
                   />
                 )}
-
                 <HorizontalRule />
                 {props.tags && props.tags.length ? (
                   <>

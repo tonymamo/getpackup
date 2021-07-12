@@ -25,6 +25,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
 
+  // featuredimage is for prev/next blog posts to pass in page context
   return graphql(`
     {
       allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }, limit: 1000) {

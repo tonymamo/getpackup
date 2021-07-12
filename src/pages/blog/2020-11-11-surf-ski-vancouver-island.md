@@ -19,7 +19,7 @@ tags:
 
 Vancouver Island, British Columbia is one of few places in the world where you can attainably go surfing and skiing or snowboarding on the same trip—even on the same day, if you are dedicated enough.
 
-Since moving to the West Coast of the island a few years back, I had been eager to do a trip combining the two sports, and finally made it happen with my friends [Caley Vanula](https://www.instagram.com/caleyvanular/)[r](https://www.instagram.com/caleyvanular/) and [Nathaniel Atakora](https://www.instagram.com/nathanielatakora/) last winter.
+Since moving to the West Coast of the island a few years back, I had been eager to do a trip combining the two sports, and finally made it happen with my friends [Caley Vanular](https://www.instagram.com/caleyvanular/) and [Nathaniel Atakora](https://www.instagram.com/nathanielatakora/) last winter.
 
 I go skiing quite often, but have only been surfing a handful of times, and as it is trying a new sport, it was a humbling experience. Regardless of your abilities, this sort of trip is a great way to experience the diversity of the island.
 
@@ -65,7 +65,7 @@ Tofino is a small, relaxed town on the West Coast of the island. Here you’ll f
 
 If you’re new to surfing you can take lessons and rent gear in town. I’ve heard great things about Surf Sisters and Pacific Surf Co.
 
-There are plenty of places to stay in Tofino depending on your budget, but one of my favorites is [Ocean Villag](https://www.oceanvillageresort.com/)[e](https://www.oceanvillageresort.com/), which is on the outskirts of town. When you have some downtime, be sure to check out the abundance of shops and galleries of the talented local artists and explore the nearby beaches in Pacific Rim National Park.
+There are plenty of places to stay in Tofino depending on your budget, but one of my favorites is [Ocean Village](https://www.oceanvillageresort.com/), which is on the outskirts of town. When you have some downtime, be sure to check out the abundance of shops and galleries of the talented local artists and explore the nearby beaches in Pacific Rim National Park.
 
 Before you retrace your steps back to the ferry terminal in Nanaimo, make a stop at Tacofino and grab a bite for the road—you won’t regret it.
 

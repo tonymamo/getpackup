@@ -90,3 +90,7 @@ Chemical [hand warmers](https://www.rei.com/product/160327/yaktrax-hand-warmers-
 Two way radios are an excellent piece of gear to have in your group - it allows communication between parties going at different speeds, members who were separated on the descent, and between party members when crossing terrain traps such as avalanche paths where separation is key.
 
 Beyond the improved benefits of communication within your party, [some radios on the market](https://www.amazon.com/BaoFeng-UV-5R-Dual-Radio-Black/dp/B007H4VT7A) can be programmed to receive and monitor other useful channels - forest service groups, ski hills, weather channels, and rescue services. Note that using and transmitting on these types of channels without permission can be an illegal offence in many areas and should not be abused or used for transmission, with the exception of an emergency situation.
+
+
+<br/><br />
+*While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this checklist on your next trip!*

@@ -42,6 +42,8 @@ import FlexContainer from './FlexContainer';
 
 type OptionType = { label: string; value: string };
 
+type OptionType = { label: string; value: string };
+
 type InputProps = {
   disabled?: boolean;
   id?: string;

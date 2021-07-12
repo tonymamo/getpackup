@@ -18,7 +18,6 @@ tags:
   - app
   - packingapp
 ---
-
 ## Introduction
 
 Hello and welcome to our packup beta! It’s been a long 15 months since we initiated the idea for a packing platform for outdoor adventure. We’ve been through dozens of prototypes, a full alpha testing period, and have received the help and feedback of hundreds of thoughtful and die-hard outdoor users, some of whom have been with us right from our first landing page. We wouldn’t be here today without your interest and support, and it's invigorating to see how many of you share our love of getting outside, and how many stories we’ve heard along the way about people forgetting things on their own adventures.

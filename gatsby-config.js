@@ -205,6 +205,28 @@ module.exports = {
         environments: ['production', 'development'],
       },
     },
+    {
+      resolve: 'gatsby-plugin-gdpr-cookies',
+      options: {
+        googleAnalytics: {
+          trackingId: process.env.GATSBY_GOOGLE_ANALYTICS_TRACKING_ID, // leave empty if you want to disable the tracker
+          cookieName: 'packup-gdpr-google-analytics',
+          anonymize: true, // default
+          allowAdFeatures: false, // default
+        },
+        googleTagManager: {
+          trackingId: process.env.GATSBY_GOOGLE_TAG_MANAGER_CONTAINER_ID, // leave empty if you want to disable the tracker
+          cookieName: 'packup-gdpr-google-tagmanager',
+          dataLayerName: 'dataLayer', // default
+        },
+        facebookPixel: {
+          pixelId: '', // leave empty if you want to disable the tracker
+          cookieName: 'packup-gdpr-facebook-pixel',
+        },
+        // defines the environments where the tracking should be available  - default is ["production"]
+        environments: ['production', 'development'],
+      },
+    },
     // {
     //   resolve: `gatsby-source-firestore-easy`,
     //   options: {
