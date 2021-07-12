@@ -181,7 +181,7 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const getOtherCategories = (array: GearListEnumType) =>
     array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
 
-  if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
+  if (isLoaded(fetchedGearCloset) && gearClosetCategories.length === 0) {
     navigate('/app/gear-closet/setup');
   }
 
