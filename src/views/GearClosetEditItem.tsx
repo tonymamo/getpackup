@@ -21,7 +21,7 @@ import {
   FlexContainer,
   Modal,
 } from '@components';
-import { GearItemType, GearListEnumType } from '@common/gearItem';
+import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
 import trackEvent from '@utils/trackEvent';
 import usePersonalGear from '@hooks/usePersonalGear';
 import { requiredField, requiredSelect } from '@utils/validations';
@@ -45,6 +45,8 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const personalGear = usePersonalGear();
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
 
   const [isLoading, setIsLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -120,10 +122,15 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
     save(values)
       .then(() => {
         resetForm();
-        trackEvent('Gear Closet Edit Item Submitted', { values });
+        trackEvent('Gear Closet Edit Item Submitted', {
+          values,
+        });
       })
       .catch((error: Error) => {
-        trackEvent('Gear Closet Edit Item Submit Failure', { values, error });
+        trackEvent('Gear Closet Edit Item Submit Failure', {
+          values,
+          error,
+        });
         dispatch(
           addAlert({
             type: 'danger',
@@ -161,7 +168,9 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
 
     deleteType()
       .then(() => {
-        trackEvent('Edit Gear Closet Item Deleted', { ...activeItem });
+        trackEvent('Edit Gear Closet Item Deleted', {
+          ...activeItem,
+        });
       })
       .catch((err) => {
         dispatch(
@@ -170,15 +179,21 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
             message: err.message,
           })
         );
-        trackEvent('Edit Gear Closet Item Delete Failure', { ...activeItem });
+        trackEvent('Edit Gear Closet Item Delete Failure', {
+          ...activeItem,
+        });
       });
     setItemToBeDeleted(undefined);
     setModalIsOpen(false);
     navigate(-1);
   };
 
+  // the categories that the user DOES have in their gear closet, so we can only show those
+  const getFilteredCategories = (array: GearListEnumType) =>
+    array.filter((item) => gearClosetCategories.includes(item.name));
+
   const getSelectedCount = (arr: GearListEnumType, values: typeof initialValues) => {
-    const count = arr.filter((item) => values[item.name] === true).length;
+    const count = getFilteredCategories(arr).filter((item) => values[item.name] === true).length;
     return `${count} ${count === 1 ? 'tag' : 'tags'} selected`;
   };
 
@@ -190,7 +205,9 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
           type="button"
           onClick={() => {
             navigate(-1);
-            trackEvent('Edit Gear Closet Item Back to All Gear Click', { ...activeItem });
+            trackEvent('Edit Gear Closet Item Back to All Gear Click', {
+              ...activeItem,
+            });
           }}
           color="text"
           iconLeft={<FaChevronLeft />}
@@ -258,10 +275,22 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                           name="weightUnit"
                           label="Unit"
                           options={[
-                            { value: 'g', label: 'g' },
-                            { value: 'kg', label: 'kg' },
-                            { value: 'oz', label: 'oz' },
-                            { value: 'lb', label: 'lb' },
+                            {
+                              value: 'g',
+                              label: 'g',
+                            },
+                            {
+                              value: 'kg',
+                              label: 'kg',
+                            },
+                            {
+                              value: 'oz',
+                              label: 'oz',
+                            },
+                            {
+                              value: 'lb',
+                              label: 'lb',
+                            },
                           ]}
                           setFieldValue={setFieldValue}
                           {...rest}
@@ -271,58 +300,66 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                   </Column>
                 </Row>
                 <Field as={Input} type="textarea" name="notes" label="Notes/Description" />
-                <CollapsibleBox
-                  title="Activities"
-                  defaultClosed
-                  subtitle={getSelectedCount(gearListActivities, values)}
-                >
-                  <Row>
-                    {gearListActivities.map((item) => (
-                      <Column xs={6} md={4} lg={3} key={item.name}>
-                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                      </Column>
-                    ))}
-                  </Row>
-                </CollapsibleBox>
-                <CollapsibleBox
-                  title="Accommodations"
-                  defaultClosed
-                  subtitle={getSelectedCount(gearListAccommodations, values)}
-                >
-                  <Row>
-                    {gearListAccommodations.map((item) => (
-                      <Column xs={6} md={4} lg={3} key={item.name}>
-                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                      </Column>
-                    ))}
-                  </Row>
-                </CollapsibleBox>
-                <CollapsibleBox
-                  title="Camp Kitchen"
-                  defaultClosed
-                  subtitle={getSelectedCount(gearListCampKitchen, values)}
-                >
-                  <Row>
-                    {gearListCampKitchen.map((item) => (
-                      <Column xs={6} md={4} lg={3} key={item.name}>
-                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                      </Column>
-                    ))}
-                  </Row>
-                </CollapsibleBox>
-                <CollapsibleBox
-                  title="Other Considerations"
-                  defaultClosed
-                  subtitle={getSelectedCount(gearListOtherConsiderations, values)}
-                >
-                  <Row>
-                    {gearListOtherConsiderations.map((item) => (
-                      <Column xs={6} md={4} lg={3} key={item.name}>
-                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                      </Column>
-                    ))}
-                  </Row>
-                </CollapsibleBox>
+                {getFilteredCategories(gearListActivities).length > 0 && (
+                  <CollapsibleBox
+                    title="Activities"
+                    defaultClosed
+                    subtitle={getSelectedCount(gearListActivities, values)}
+                  >
+                    <Row>
+                      {getFilteredCategories(gearListActivities).map((item) => (
+                        <Column xs={6} md={4} lg={3} key={item.name}>
+                          <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                        </Column>
+                      ))}
+                    </Row>
+                  </CollapsibleBox>
+                )}
+                {getFilteredCategories(gearListAccommodations).length > 0 && (
+                  <CollapsibleBox
+                    title="Accommodations"
+                    defaultClosed
+                    subtitle={getSelectedCount(gearListAccommodations, values)}
+                  >
+                    <Row>
+                      {getFilteredCategories(gearListAccommodations).map((item) => (
+                        <Column xs={6} md={4} lg={3} key={item.name}>
+                          <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                        </Column>
+                      ))}
+                    </Row>
+                  </CollapsibleBox>
+                )}
+                {getFilteredCategories(gearListCampKitchen).length > 0 && (
+                  <CollapsibleBox
+                    title="Camp Kitchen"
+                    defaultClosed
+                    subtitle={getSelectedCount(gearListCampKitchen, values)}
+                  >
+                    <Row>
+                      {getFilteredCategories(gearListCampKitchen).map((item) => (
+                        <Column xs={6} md={4} lg={3} key={item.name}>
+                          <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                        </Column>
+                      ))}
+                    </Row>
+                  </CollapsibleBox>
+                )}
+                {getFilteredCategories(gearListCampKitchen).length > 0 && (
+                  <CollapsibleBox
+                    title="Other Considerations"
+                    defaultClosed
+                    subtitle={getSelectedCount(gearListOtherConsiderations, values)}
+                  >
+                    <Row>
+                      {getFilteredCategories(gearListOtherConsiderations).map((item) => (
+                        <Column xs={6} md={4} lg={3} key={item.name}>
+                          <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                        </Column>
+                      ))}
+                    </Row>
+                  </CollapsibleBox>
+                )}
                 <FlexContainer justifyContent="space-between">
                   <p>
                     <Button
@@ -338,7 +375,9 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                       type="button"
                       onClick={() => {
                         navigate(-1);
-                        trackEvent('Edit Gear Closet Item Cancel Click', { ...activeItem });
+                        trackEvent('Edit Gear Closet Item Cancel Click', {
+                          ...activeItem,
+                        });
                       }}
                       color="text"
                     >

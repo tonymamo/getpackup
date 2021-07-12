@@ -362,8 +362,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         <Heading>Add New Category</Heading>
         <Alert
           type="info"
-          message="
-          Note: this will add new gear to your gear closet that you may want to customize later!"
+          message="Note: selecting a new tag will pre-populate new gear in your gear closet that you may want to customize after!"
         />
         <strong style={{ textTransform: 'uppercase' }}>Select a Category</strong>
         <HorizontalScroller withBorder>

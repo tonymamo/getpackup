@@ -38,6 +38,8 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
   const [isLoading, setIsLoading] = useState(false);
 
   const size = useWindowSize();
@@ -88,7 +90,10 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
         trackEvent('Gear Closet Add Item Submitted', { values });
       })
       .catch((error: Error) => {
-        trackEvent('Gear Closet Add Item Submit Failure', { values, error });
+        trackEvent('Gear Closet Add Item Submit Failure', {
+          values,
+          error,
+        });
         dispatch(
           addAlert({
             type: 'danger',
@@ -102,8 +107,12 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
       });
   };
 
+  // the categories that the user DOES have in their gear closet, so we can only show those
+  const getFilteredCategories = (array: GearListEnumType) =>
+    array.filter((item) => gearClosetCategories.includes(item.name));
+
   const getSelectedCount = (arr: GearListEnumType, values: typeof initialValues) => {
-    const count = arr.filter((item) => values[item.name] === true).length;
+    const count = getFilteredCategories(arr).filter((item) => values[item.name] === true).length;
     return `${count} ${count === 1 ? 'tag' : 'tags'} selected`;
   };
 
@@ -136,7 +145,9 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
               .filter((valueKey) => activityTypesList.includes(valueKey as keyof ActivityTypes))
               .filter((item) => values[item] === true).length;
             return activityTypeCheckedValuesLength === 0
-              ? { selectOne: 'You must tag an item with at least one tag option' }
+              ? {
+                  selectOne: 'You must tag an item with at least one tag option',
+                }
               : {};
           }}
         >
@@ -187,10 +198,22 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
                         name="weightUnit"
                         label="Unit"
                         options={[
-                          { value: 'g', label: 'g' },
-                          { value: 'kg', label: 'kg' },
-                          { value: 'oz', label: 'oz' },
-                          { value: 'lb', label: 'lb' },
+                          {
+                            value: 'g',
+                            label: 'g',
+                          },
+                          {
+                            value: 'kg',
+                            label: 'kg',
+                          },
+                          {
+                            value: 'oz',
+                            label: 'oz',
+                          },
+                          {
+                            value: 'lb',
+                            label: 'lb',
+                          },
                         ]}
                         setFieldValue={setFieldValue}
                         {...rest}
@@ -205,57 +228,65 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
                 Select all tags that apply to your item, so that this item will get included
                 whenever you create a trip that has any of the matching tags.
               </p>
-              <CollapsibleBox
-                title="Activities"
-                subtitle={getSelectedCount(gearListActivities, values)}
-              >
-                <Row>
-                  {gearListActivities.map((item) => (
-                    <Column xs={6} md={4} lg={3} key={item.name}>
-                      <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                    </Column>
-                  ))}
-                </Row>
-              </CollapsibleBox>
-              <CollapsibleBox
-                title="Accommodations"
-                subtitle={getSelectedCount(gearListAccommodations, values)}
-                defaultClosed
-              >
-                <Row>
-                  {gearListAccommodations.map((item) => (
-                    <Column xs={6} md={4} lg={3} key={item.name}>
-                      <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                    </Column>
-                  ))}
-                </Row>
-              </CollapsibleBox>
-              <CollapsibleBox
-                title="Camp Kitchen"
-                subtitle={getSelectedCount(gearListCampKitchen, values)}
-                defaultClosed
-              >
-                <Row>
-                  {gearListCampKitchen.map((item) => (
-                    <Column xs={6} md={4} lg={3} key={item.name}>
-                      <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                    </Column>
-                  ))}
-                </Row>
-              </CollapsibleBox>
-              <CollapsibleBox
-                title="Other Considerations"
-                subtitle={getSelectedCount(gearListOtherConsiderations, values)}
-                defaultClosed
-              >
-                <Row>
-                  {gearListOtherConsiderations.map((item) => (
-                    <Column xs={6} md={4} lg={3} key={item.name}>
-                      <Field as={Input} type="checkbox" name={item.name} label={item.label} />
-                    </Column>
-                  ))}
-                </Row>
-              </CollapsibleBox>
+              {getFilteredCategories(gearListActivities).length > 0 && (
+                <CollapsibleBox
+                  title="Activities"
+                  subtitle={getSelectedCount(gearListActivities, values)}
+                >
+                  <Row>
+                    {getFilteredCategories(gearListActivities).map((item) => (
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
+                    ))}
+                  </Row>
+                </CollapsibleBox>
+              )}
+              {getFilteredCategories(gearListAccommodations).length > 0 && (
+                <CollapsibleBox
+                  title="Accommodations"
+                  subtitle={getSelectedCount(gearListAccommodations, values)}
+                  defaultClosed
+                >
+                  <Row>
+                    {getFilteredCategories(gearListAccommodations).map((item) => (
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
+                    ))}
+                  </Row>
+                </CollapsibleBox>
+              )}
+              {getFilteredCategories(gearListCampKitchen).length > 0 && (
+                <CollapsibleBox
+                  title="Camp Kitchen"
+                  subtitle={getSelectedCount(gearListCampKitchen, values)}
+                  defaultClosed
+                >
+                  <Row>
+                    {getFilteredCategories(gearListCampKitchen).map((item) => (
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
+                    ))}
+                  </Row>
+                </CollapsibleBox>
+              )}
+              {getFilteredCategories(gearListOtherConsiderations).length > 0 && (
+                <CollapsibleBox
+                  title="Other Considerations"
+                  subtitle={getSelectedCount(gearListOtherConsiderations, values)}
+                  defaultClosed
+                >
+                  <Row>
+                    {getFilteredCategories(gearListOtherConsiderations).map((item) => (
+                      <Column xs={6} md={4} lg={3} key={item.name}>
+                        <Field as={Input} type="checkbox" name={item.name} label={item.label} />
+                      </Column>
+                    ))}
+                  </Row>
+                </CollapsibleBox>
+              )}
               <FormErrors dirty={dirty} errors={errors as string[]} />
               <p>
                 <Button

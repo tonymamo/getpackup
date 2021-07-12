@@ -2,6 +2,7 @@ import React, { FunctionComponent, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
+import * as icons from 'react-icons/all';
 
 import {
   Seo,
@@ -14,14 +15,26 @@ import {
   Modal,
   LoadingPage,
   Alert,
+  HorizontalScroller,
+  DropdownMenu,
+  FlexContainer,
 } from '@components';
 import usePersonalGear from '@hooks/usePersonalGear';
-import { GearItemType } from '@common/gearItem';
+import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
 import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
 import { TripType } from '@common/trip';
+import { IconWrapperLabel, IconCheckboxLabel } from '@components/IconCheckbox';
+import { lightGray } from '@styles/color';
+import { tripleSpacer } from '@styles/size';
+import {
+  gearListAccommodations,
+  gearListActivities,
+  gearListCampKitchen,
+  gearListOtherConsiderations,
+} from '@utils/gearListItemEnum';
 
 type GearClosetProps = {};
 
@@ -33,8 +46,12 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
 
+  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
+
+  const [addNewCategoryModalIsOpen, setAddNewCategoryModalIsOpen] = useState(false);
 
   useFirestoreConnect([
     {
@@ -43,6 +60,32 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
       doc: auth.uid,
     },
   ]);
+
+  const updateUsersGearClosetCategories = (categoryToAdd: string) => {
+    setAddNewCategoryModalIsOpen(false);
+    firebase
+      .firestore()
+      .collection('gear-closet')
+      .doc(auth.uid)
+      .update({
+        categories: firebase.firestore.FieldValue.arrayUnion(categoryToAdd),
+      })
+      .then(() => {})
+      .catch((err) => {
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+  };
+
+  const renderDynamicIcon = (comboName: string) => {
+    const [, iconName] = comboName.split('/');
+    const Icon = icons[iconName];
+    return <Icon color={lightGray} size={tripleSpacer} />;
+  };
 
   const personalGearIsLoading = personalGear === 'loading';
 
@@ -133,6 +176,11 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     setModalIsOpen(false);
   };
 
+  // the categories that the user DOES NOT have in the gear closet
+  // also remove "essential" because that will always exist for users
+  const getOtherCategories = (array: GearListEnumType) =>
+    array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
+
   if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
     navigate('/app/gear-closet/setup');
   }
@@ -151,21 +199,31 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
       )}
 
       {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
-        <Row>
-          <Column sm={5}>
-            <p>
-              <Button
-                type="link"
-                to="/app/gear-closet/new"
-                iconLeft={<FaPlusCircle />}
-                block
-                onClick={() => trackEvent('New Gear Closet Item Button clicked')}
-              >
-                Add New Item
-              </Button>
-            </p>
-          </Column>
-        </Row>
+        <FlexContainer justifyContent="space-between" alignItems="flex-start">
+          <p>
+            <Button
+              type="link"
+              to="/app/gear-closet/new"
+              iconLeft={<FaPlusCircle />}
+              block
+              onClick={() => trackEvent('New Gear Closet Item Button clicked')}
+            >
+              Add New Item
+            </Button>
+          </p>
+
+          <DropdownMenu>
+            <button
+              onClick={() => {
+                setAddNewCategoryModalIsOpen(true);
+                trackEvent('Add New Tag to Gear Closet Clicked');
+              }}
+              type="button"
+            >
+              <FaPlusCircle /> Add New Gear Tag
+            </button>
+          </DropdownMenu>
+        </FlexContainer>
       )}
 
       {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
@@ -223,6 +281,90 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           </Row>
         </Modal>
       )}
+
+      <Modal
+        toggleModal={() => {
+          setAddNewCategoryModalIsOpen(false);
+        }}
+        isOpen={addNewCategoryModalIsOpen}
+      >
+        <Heading>Add New Category</Heading>
+        <Alert
+          type="info"
+          message="Note: selecting a new tag will pre-populate new gear in your gear closet that you may want to customize after!"
+        />
+        <p>
+          <strong>Activities</strong>
+        </p>
+        <HorizontalScroller withBorder>
+          {getOtherCategories(gearListActivities).map((item) => (
+            <li key={item.name}>
+              <IconWrapperLabel
+                onClick={() => {
+                  updateUsersGearClosetCategories(item.name);
+                }}
+              >
+                {renderDynamicIcon(item.icon)}
+                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
+              </IconWrapperLabel>
+            </li>
+          ))}
+        </HorizontalScroller>
+        <br />
+        <p>
+          <strong>Accommodations</strong>
+        </p>
+        <HorizontalScroller withBorder>
+          {getOtherCategories(gearListAccommodations).map((item) => (
+            <li key={item.name}>
+              <IconWrapperLabel
+                onClick={() => {
+                  updateUsersGearClosetCategories(item.name);
+                }}
+              >
+                {renderDynamicIcon(item.icon)}
+                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
+              </IconWrapperLabel>
+            </li>
+          ))}
+        </HorizontalScroller>
+        <br />
+        <p>
+          <strong>Camp Kitchen</strong>
+        </p>
+        <HorizontalScroller withBorder>
+          {getOtherCategories(gearListCampKitchen).map((item) => (
+            <li key={item.name}>
+              <IconWrapperLabel
+                onClick={() => {
+                  updateUsersGearClosetCategories(item.name);
+                }}
+              >
+                {renderDynamicIcon(item.icon)}
+                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
+              </IconWrapperLabel>
+            </li>
+          ))}
+        </HorizontalScroller>
+        <br />
+        <p>
+          <strong>Other Considerations</strong>
+        </p>
+        <HorizontalScroller withBorder>
+          {getOtherCategories(gearListOtherConsiderations).map((item) => (
+            <li key={item.name}>
+              <IconWrapperLabel
+                onClick={() => {
+                  updateUsersGearClosetCategories(item.name);
+                }}
+              >
+                {renderDynamicIcon(item.icon)}
+                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
+              </IconWrapperLabel>
+            </li>
+          ))}
+        </HorizontalScroller>
+      </Modal>
     </PageContainer>
   );
 };
