@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
@@ -85,9 +85,11 @@ const GearClosetSetup: FunctionComponent<GearClosetSetupProps> = () => {
       });
   };
 
-  if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0) {
-    navigate('/app/gear-closet');
-  }
+  useEffect(() => {
+    if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0) {
+      navigate('/app/gear-closet');
+    }
+  }, [fetchedGearCloset]);
 
   return (
     <PageContainer>

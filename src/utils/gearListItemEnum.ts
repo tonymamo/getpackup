@@ -45,19 +45,19 @@ export const gearListActivities: GearListEnumType = [
 ];
 
 export const gearListAccommodations: GearListEnumType = [
-  { name: 'hotel', label: 'Hotel/Rental', icon: 'fa/FaHotel' },
-  { name: 'hostel', label: 'Hostel', icon: 'fa/FaBed' },
-  { name: 'servicedHut', label: 'Serviced Hut', icon: 'fa/FaWarehouse' },
-  { name: 'basicHut', label: 'Basic Hut', icon: 'fa/FaHome' },
-  { name: 'carCamp', label: 'Car Camp/RV', icon: 'fa/FaCaravan' },
   { name: 'tent', label: 'Tent', icon: 'fa/FaCampground' },
   // { name: 'bivy', label: 'Bivy', icon: 'fa/FaBed' },
+  { name: 'carCamp', label: 'Car Camp/RV', icon: 'fa/FaCaravan' },
+  { name: 'basicHut', label: 'Basic Hut', icon: 'fa/FaHome' },
+  { name: 'servicedHut', label: 'Serviced Hut', icon: 'fa/FaWarehouse' },
+  { name: 'hostel', label: 'Hostel', icon: 'fa/FaBed' },
+  { name: 'hotel', label: 'Hotel/Rental', icon: 'fa/FaHotel' },
 ];
 
 export const gearListCampKitchen: GearListEnumType = [
+  { name: 'carCamping', label: 'Car Camping', icon: 'fa/FaCaravan' },
   { name: 'backcountryThreeSeason', label: 'Backcountry 3-Season', icon: 'fa/FaCampground' },
   { name: 'backcountryWinter', label: 'Backcountry Winter', icon: 'fa/FaSnowflake' },
-  { name: 'carCamping', label: 'Car Camping', icon: 'fa/FaCaravan' },
 ];
 
 export const gearListOtherConsiderations: GearListEnumType = [
