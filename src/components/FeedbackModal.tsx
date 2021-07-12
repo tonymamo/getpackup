@@ -5,6 +5,7 @@ import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { FirebaseReducer } from 'react-redux-firebase';
+import { Link } from 'gatsby';
 
 import { Input, Row, Button, Column, Modal, Heading } from '@components';
 import { brandTertiary, brandTertiaryHover, white } from '@styles/color';
@@ -13,7 +14,6 @@ import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { zIndexFeedbackButton } from '@styles/layers';
 import { tripleSpacer, breakpoints } from '@styles/size';
-import { Link } from 'gatsby';
 
 type FeedbackModalProps = {
   auth: FirebaseReducer.AuthState;

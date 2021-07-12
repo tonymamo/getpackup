@@ -23,6 +23,7 @@ import { offWhite } from '@styles/color';
 import { z1Shadow } from '@styles/mixins';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
+import AddToHomeScreenModal from '@components/AddToHomeScreenModal';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -156,6 +157,7 @@ const App: FunctionComponent<{}> = (props) => {
         </Router>
       </ErrorBoundary>
       <FeedbackModal auth={auth} {...props} />
+      <AddToHomeScreenModal />
     </AppContainer>
   );
 };
