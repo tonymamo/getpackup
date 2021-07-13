@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { isLoaded, useFirebase } from 'react-redux-firebase';
+import { isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import pickBy from 'lodash/pickBy';
 import { navigate } from 'gatsby';
 
@@ -35,6 +35,14 @@ const GearClosetSetup: FunctionComponent<GearClosetSetupProps> = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+
+  useFirestoreConnect([
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
+  ]);
 
   const [isLoading, setIsLoading] = useState(false);
 

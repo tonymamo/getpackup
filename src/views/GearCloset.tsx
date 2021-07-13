@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
@@ -58,6 +58,10 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
       collection: 'gear-closet',
       storeAs: 'gearCloset',
       doc: auth.uid,
+    },
+    {
+      collection: 'trips',
+      where: ['owner', '==', auth.uid],
     },
   ]);
 
@@ -181,9 +185,11 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const getOtherCategories = (array: GearListEnumType) =>
     array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
 
-  if (isLoaded(fetchedGearCloset) && gearClosetCategories.length === 0) {
-    navigate('/app/gear-closet/setup');
-  }
+  useEffect(() => {
+    if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
+      navigate('/app/gear-closet/setup');
+    }
+  }, [fetchedGearCloset]);
 
   return (
     <PageContainer>
