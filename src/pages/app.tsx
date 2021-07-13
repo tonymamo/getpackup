@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { Router } from '@reach/router';
+import { RouteComponentProps, Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
@@ -34,6 +34,15 @@ export const AppContainer = styled.div`
   min-height: 100vh;
   box-shadow: ${z1Shadow};
 `;
+
+const ScrollToTop: FunctionComponent<{
+  children: any;
+  path: string;
+  location: RouteComponentProps['location'];
+}> = ({ children, location }) => {
+  useEffect(() => window.scrollTo(0, 0), [location?.pathname]);
+  return children;
+};
 
 const App: FunctionComponent<{}> = (props) => {
   const firebase = useFirebase();
@@ -101,59 +110,61 @@ const App: FunctionComponent<{}> = (props) => {
   return (
     <AppContainer>
       <ErrorBoundary>
-        <Router basepath="/app">
-          <PrivateRoute
-            path="/onboarding"
-            component={Onboarding}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute path="/profile" component={Profile} loggedInUser={activeLoggedInUser} />
-          <PrivateRoute path="/trips" component={Trips} loggedInUser={activeLoggedInUser} />
-          <PrivateRoute
-            path="/trips/new"
-            component={NewTripSummary}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/trips/:id/add-trip-image"
-            component={AddTripHeaderImage}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/trips/:id/generator"
-            component={TripGenerator}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/trips/:id/*"
-            component={TripById}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/gear-closet/setup"
-            component={GearClosetSetup}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/gear-closet"
-            component={GearCloset}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/gear-closet/new"
-            component={GearClosetAddItem}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/gear-closet/:id"
-            component={GearClosetEditItem}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/shopping-list"
-            component={ShoppingList}
-            loggedInUser={activeLoggedInUser}
-          />
+        <Router basepath="/app" primary>
+          <ScrollToTop path="/">
+            <PrivateRoute
+              path="/onboarding"
+              component={Onboarding}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute path="/profile" component={Profile} loggedInUser={activeLoggedInUser} />
+            <PrivateRoute path="/trips" component={Trips} loggedInUser={activeLoggedInUser} />
+            <PrivateRoute
+              path="/trips/new"
+              component={NewTripSummary}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/trips/:id/add-trip-image"
+              component={AddTripHeaderImage}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/trips/:id/generator"
+              component={TripGenerator}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/trips/:id/*"
+              component={TripById}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/gear-closet/setup"
+              component={GearClosetSetup}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/gear-closet"
+              component={GearCloset}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/gear-closet/new"
+              component={GearClosetAddItem}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/gear-closet/:id"
+              component={GearClosetEditItem}
+              loggedInUser={activeLoggedInUser}
+            />
+            <PrivateRoute
+              path="/shopping-list"
+              component={ShoppingList}
+              loggedInUser={activeLoggedInUser}
+            />
+          </ScrollToTop>
         </Router>
       </ErrorBoundary>
       <FeedbackModal auth={auth} {...props} />

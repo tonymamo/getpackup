@@ -15,6 +15,18 @@ const AddToHomeScreenModal = () => {
 
   const isInStandaloneMode = () => 'standalone' in window.navigator && window.navigator.standalone;
 
+  const getPWADisplayMode = () => {
+    // https://web.dev/customize-install/#detect-launch-type
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (document.referrer.startsWith('android-app://')) {
+      return 'twa';
+    }
+    if (navigator.standalone || isStandalone) {
+      return 'standalone';
+    }
+    return 'browser';
+  };
+
   const LOCAL_STORAGE_KEY = 'packup_pwa_popup_display';
   const NB_DAYS_EXPIRE = 30; // only ask once every 30 days so we dont annoy
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -38,7 +50,12 @@ const AddToHomeScreenModal = () => {
         console.log('isInStandaloneMode: ', isInStandaloneMode());
         console.log('checkLastPwaDisplay: ', checkLastPwaDisplay());
       }
-      if (isIos() && !isInStandaloneMode() && checkLastPwaDisplay()) {
+      if (
+        isIos() &&
+        !isInStandaloneMode() &&
+        checkLastPwaDisplay() &&
+        getPWADisplayMode() === 'browser'
+      ) {
         setOpened(true);
       }
     }, 5000);
@@ -53,7 +70,7 @@ const AddToHomeScreenModal = () => {
     <Modal isOpen={isOpen} toggleModal={() => saveLastPwaDisplay()}>
       <Heading altStyle>Add To Home Screen</Heading>
       <p>Want to add this app to your home screen so you can get to it easier next time?</p>
-      <Button type="link" to="/install" color="primary" block>
+      <Button type="link" to="/install" color="primary" block onClick={() => saveLastPwaDisplay()}>
         Show me how!
       </Button>
       <Button type="button" color="text" block onClick={() => saveLastPwaDisplay()}>

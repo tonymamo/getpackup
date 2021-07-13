@@ -15,7 +15,7 @@ module.exports = {
     author: '@getpackup',
     url: 'https://getpackup.com',
     siteUrl: 'https://getpackup.com',
-    image: '/img/collage.jpg',
+    image: '/img/beta-launch-banner.jpg',
   },
   plugins: [
     'gatsby-plugin-typescript',

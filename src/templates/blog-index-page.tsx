@@ -52,7 +52,7 @@ export const BlogIndexTemplate: FunctionComponent<BlogIndexProps> = (props) => {
               <Button
                 type="link"
                 color="secondary"
-                to={prevPage}
+                to={`/blog/${prevPage}`}
                 iconLeft={<FaChevronLeft />}
                 onClick={() => trackEvent('Blog Index Previous Page Clicked')}
               >
@@ -65,7 +65,7 @@ export const BlogIndexTemplate: FunctionComponent<BlogIndexProps> = (props) => {
               <Button
                 type="link"
                 color="secondary"
-                to={nextPage}
+                to={`/blog/${nextPage}`}
                 iconRight={<FaChevronRight />}
                 onClick={() => trackEvent('Blog Index Next Page Clicked')}
               >
