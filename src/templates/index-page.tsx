@@ -202,7 +202,14 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
 
   return (
     <>
-      {!props.hideFromCms && <Seo title={props.title} />}
+      {!props.hideFromCms && (
+        <Seo
+          title={props.title}
+          image="https://getpackup.com/img/beta-launch-banner.jpg"
+          imageWidth={1920}
+          imageHeight={1080}
+        />
+      )}
       <HeroImage imgSrc={props.heroImage} mobileImgSrc={props.mobileHeroImage}>
         <PageContainer>
           <Heading inverse align="center" noMargin>
