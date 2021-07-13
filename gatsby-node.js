@@ -124,6 +124,7 @@ exports.createPages = ({ actions, graphql }) => {
 
       blogPosts.forEach((edge, index) => {
         const { id } = edge.node;
+        console.log('slug is ', edge.node.fields.slug);
         createPage({
           path: edge.node.fields.slug,
           component: path.resolve(`src/templates/blog-post.tsx`),

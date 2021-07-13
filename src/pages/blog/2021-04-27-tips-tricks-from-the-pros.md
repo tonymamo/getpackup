@@ -78,7 +78,7 @@ Woof. Well, one thing I wouldn’t recommend forgetting on the sunnier days (PS,
 
 ### [**Andrew Szeto** ](https://www.instagram.com/szetoszeto/?hl=en)
 
-_Andrew is a down to earth and very humble yes man who is always seeking the next adventure. He started out as a skateboard photographer who ventured into [woodworking](http://maruthecirclebrand.com) where he now up-cycles broken skateboards into his projects. He has a great[ youtube channel where he shares his adventures](https://www.youtube.com/channel/UCEyBnGE6eAu_Dr4lN0bK6pg), everything from canoe climbing trips to building an A-Frame cabin from scratch!_
+_Andrew is a down to earth and very humble yes man who is always seeking the next adventure. He started out as a skateboard photographer who ventured into [woodworking](http://maruthecirclebrand.com) where he now up-cycles broken skateboards into his projects. He has a great [youtube channel where he shares his adventures](https://www.youtube.com/channel/UCEyBnGE6eAu_Dr4lN0bK6pg), everything from canoe climbing trips to building an A-Frame cabin from scratch!_
 
 <br />
 
