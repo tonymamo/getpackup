@@ -35,32 +35,6 @@ export const AppContainer = styled.div`
   box-shadow: ${z1Shadow};
 `;
 
-// const ScrollToTop: FunctionComponent<{
-//   path: string;
-// }> = ({ children }) => {
-//   // https://github.com/reach/router/issues/242#issuecomment-644991279
-//   const navigate = useNavigate();
-//   const { href, state } = useLocation();
-
-//   const updateState = React.useCallback(() => {
-//     navigate(href, {
-//       state: { ...(state as Record<string, any>), scrolled: true },
-//       replace: true,
-//     }).then(() => window?.scrollTo(0, 0));
-//   }, [href, state, navigate]);
-
-//   // Mark the page as scrolled on first mount
-//   useEffect(updateState, []);
-
-//   useEffect(() => {
-//     if (!(state as any)?.scrolled) {
-//       updateState();
-//     }
-//   }, [state, updateState]);
-
-//   return <>{children}</>;
-// };
-
 const App: FunctionComponent<{}> = (props) => {
   const firebase = useFirebase();
 
@@ -128,7 +102,6 @@ const App: FunctionComponent<{}> = (props) => {
     <AppContainer>
       <ErrorBoundary>
         <Router basepath="/app" primary={false}>
-          {/* <ScrollToTop path="/"> */}
           <PrivateRoute
             path="/onboarding"
             component={Onboarding}
@@ -181,7 +154,6 @@ const App: FunctionComponent<{}> = (props) => {
             component={ShoppingList}
             loggedInUser={activeLoggedInUser}
           />
-          {/* </ScrollToTop> */}
         </Router>
       </ErrorBoundary>
       <FeedbackModal auth={auth} {...props} />
