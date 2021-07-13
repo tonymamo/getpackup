@@ -125,14 +125,12 @@ exports.createPages = ({ actions, graphql }) => {
       blogPosts.forEach((edge, index) => {
         const { id } = edge.node;
         createPage({
-          // sometimes slug doesn't have /blog at beginning on Test environment, so force it this way
-          path: `/blog/${edge.node.fields.slug.replace('/blog/', '')}`,
+          path: edge.node.fields.slug,
           component: path.resolve(`src/templates/blog-post.tsx`),
           // additional data can be passed via context
           context: {
             id,
-            // sometimes slug doesn't have /blog at beginning on Test environment, so force it this way
-            slug: `/blog/${edge.node.fields.slug.replace('/blog/', '')}`,
+            slug: edge.node.fields.slug,
             prev: index === 0 ? blogPosts[blogPosts.length - 1].node : blogPosts[index - 1].node,
             next: index === blogPosts.length - 1 ? blogPosts[0].node : blogPosts[index + 1].node,
           },
