@@ -22,16 +22,19 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "@components": ["./components"],
       "@cms/*": ["./cms/*"],
+      "@common/*": ["./common/*"],
+      "@components": ["./components/index.tsx"],
+      "@components/*": ["./components/*"],
+      "@hooks/*": ["./hooks/*"],
       "@images/*": ["./images/*"],
       "@redux/*": ["./redux/*"],
       "@styles/*": ["./styles/*"],
+      "@templates/*": ["./templates/*"],
       "@utils/*": ["./utils/*"],
-      "@views/*": ["./views/*"],
-      "@templates/*": ["./templates/*"]
+      "@views/*": ["./views/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./custom_types"],
+    "typeRoots": ["./node_modules/@types", "./custom_types", "src/common"],
     "esModuleInterop": true
   },
   "exclude": ["*.test.js", "_this_is_virtual_fs_path_/**/*"]

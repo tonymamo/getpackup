@@ -5,19 +5,19 @@ date: 2021-05-31T00:05:29.735Z
 description: >-
   Tips & tricks along with lessons learned from mishaps in the outdoors.
 
-  In this post you'll learn from Emilé Newman (a snowboarder), Ryan Dickie (adventure photographer/cinematographer), Natalie Panek (an aerospace engineer) and Roberto Gomez (adventure photographer) who all share the same passion—spending time outside! 
+  In this post you'll learn from Emilé Newman (a snowboarder), Ryan Dickie (adventure photographer/cinematographer), Natalie Panek (an aerospace engineer) and Roberto Gomez (adventure photographer) who all share the same passion—spending time outside!
 featuredpost: true
-featuredimage: /img/044a5545-3.jpg
+featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244535/getpackup/044a5545-3.jpg
 tags:
   - safety
   - tipsandtricks
   - camping
   - hacks
-  - ""
 ---
+
 **[Emilé Newman ](https://www.instagram.com/curlsinthewild/)**
 
-*Emilé wears many hats; she’s an environmentalist, snowboarder, yogi, climber, writer, biker, naturalist and much, much more. She’s passionate about getting outdoors and encouraging people to do the same while striving for inclusivity in that space. Pushing her comfort zone is what you will usually find her doing!* 
+_Emilé wears many hats; she’s an environmentalist, snowboarder, yogi, climber, writer, biker, naturalist and much, much more. She’s passionate about getting outdoors and encouraging people to do the same while striving for inclusivity in that space. Pushing her comfort zone is what you will usually find her doing!_
 
 <br />
 
@@ -27,11 +27,11 @@ tags:
 
 ##### What is your favourite camping hack?
 
-For longer packing trips I put a thick large trash bag in my backpacking pack to line it and keep my things dry. It also helps with separating dirty or wet things from your primary contents. 
+For longer packing trips I put a thick large trash bag in my backpacking pack to line it and keep my things dry. It also helps with separating dirty or wet things from your primary contents.
 
 ##### What is one of your favourite pieces of equipment/gear for camping that you can't live without?
 
-I have two things - A watercolor set and A [GSI outdoors compact scraper](https://amzn.to/3uH2iXm), it makes cleaning your bowls and pots to LNT standards so much easier! 
+I have two things - A watercolor set and A [GSI outdoors compact scraper](https://amzn.to/3uH2iXm), it makes cleaning your bowls and pots to LNT standards so much easier!
 
 ##### Can you tell a short story of a time you have had something go wrong on a trip due to you forgetting an important item?
 
@@ -45,7 +45,7 @@ Honestly, I can’t think of anything, which is probably a good thing!
 
 **[Ryan Dickie](https://www.winterhawkstudios.com)**
 
-*Ryan is a talented and humble photographer and storyteller. Living in Northern BC he endures long winters and constant harsh weather in rugged terrain which in he does a great job of capturing and sharing. He has been learning more and more about his culture over the years and it has been really interesting to follow along with his journey of self discovery.* 
+_Ryan is a talented and humble photographer and storyteller. Living in Northern BC he endures long winters and constant harsh weather in rugged terrain which in he does a great job of capturing and sharing. He has been learning more and more about his culture over the years and it has been really interesting to follow along with his journey of self discovery._
 
 <br />
 
@@ -59,7 +59,7 @@ Flip one of the batteries in your headlamp to the wrong position when it is not 
 
 ##### What is one of your favourite pieces of equipment/gear for camping that you can't live without?
 
-The [inReach](https://www.avantlink.com/click.php?tt=cl&merchant_id=e295c418-295a-447c-b265-734e25f82503&website_id=14151b40-3289-4c4d-9b58-70a22e7e2a1e&url=https%3A%2F%2Fwww.rei.com%2Fproduct%2F140110%2Fgarmin-inreach-mini) has been a game changer for me. Many of my trips are solo, and/or completely off-the-grid. Having a GPS, and a direct line to safety in a small package is of huge value to me as a new father. I have also found the weather forecast feature to be quite accurate, which is great for planning and adapting as the expedition or trek advances. 
+The [inReach](https://www.avantlink.com/click.php?tt=cl&merchant_id=e295c418-295a-447c-b265-734e25f82503&website_id=14151b40-3289-4c4d-9b58-70a22e7e2a1e&url=https%3A%2F%2Fwww.rei.com%2Fproduct%2F140110%2Fgarmin-inreach-mini) has been a game changer for me. Many of my trips are solo, and/or completely off-the-grid. Having a GPS, and a direct line to safety in a small package is of huge value to me as a new father. I have also found the weather forecast feature to be quite accurate, which is great for planning and adapting as the expedition or trek advances.
 
 ##### Can you tell a short story of a time you have had something go wrong on a trip due to you forgetting an important item?
 
@@ -73,7 +73,7 @@ I am generally pretty dialled when it comes to trip preparedness and packing, bu
 
 **[Natalie Panek](https://www.instagram.com/nmpanek/)**
 
-*Natalie is a rocket scientist, yes literally, who is advocating for the role of more women in the technology sector as well as holding companies accountable for their debris and litter in space. When she’s not in the lab she’s outdoors, probably in her packraft or hiking in the woods somewhere in the rockies!*
+_Natalie is a rocket scientist, yes literally, who is advocating for the role of more women in the technology sector as well as holding companies accountable for their debris and litter in space. When she’s not in the lab she’s outdoors, probably in her packraft or hiking in the woods somewhere in the rockies!_
 
 <br/>
 
@@ -91,7 +91,7 @@ My packraft has really become my one piece of gear that I cannot live without. I
 
 ##### Can you tell a short story of a time you have had something go wrong on a trip due to you forgetting an important item?
 
-I am not sure why this is the first story that comes to mind - maybe because I am the type of person who starts a trip in the backcountry by thinking exactly about what I am going to eat when it is over - but a backpacking trip in Bruce Peninsula National Park a few years ago probably hits the mark. We had all our gear packed up in Toronto before we left the city and made a quick pit stop along the way to buy groceries. We had big plans to make an epic mac and cheese at our first campsite. But once we arrived and set up camp, we realized we had left absolutely everything behind that we needed to prepare dinner. Except for a bag of noodles. To salvage our grand dinner plans, I picked all the cheese off the cheese buns we had brought for lunch the next day, and tried to melt it over the noodles. Suffice to say it definitely left us wanting more...and not of the pasta! 
+I am not sure why this is the first story that comes to mind - maybe because I am the type of person who starts a trip in the backcountry by thinking exactly about what I am going to eat when it is over - but a backpacking trip in Bruce Peninsula National Park a few years ago probably hits the mark. We had all our gear packed up in Toronto before we left the city and made a quick pit stop along the way to buy groceries. We had big plans to make an epic mac and cheese at our first campsite. But once we arrived and set up camp, we realized we had left absolutely everything behind that we needed to prepare dinner. Except for a bag of noodles. To salvage our grand dinner plans, I picked all the cheese off the cheese buns we had brought for lunch the next day, and tried to melt it over the noodles. Suffice to say it definitely left us wanting more...and not of the pasta!
 
 <br />
 
@@ -101,7 +101,7 @@ I am not sure why this is the first story that comes to mind - maybe because I a
 
 **[Roberto Gomez](https://www.instagram.com/theexpeditioners/)**
 
-*Roberto is always on some sort of adventure with his family, whether it's canoeing, kayaking, camping or skiing he does a great job of documenting and capturing the journey. He has 2 little ones with a third on the way, nature is a big part of their life and there is no doubt that his kids will grow up to be quite skilled in their outdoor pursuits with such an early start!*
+_Roberto is always on some sort of adventure with his family, whether it's canoeing, kayaking, camping or skiing he does a great job of documenting and capturing the journey. He has 2 little ones with a third on the way, nature is a big part of their life and there is no doubt that his kids will grow up to be quite skilled in their outdoor pursuits with such an early start!_
 
 <br />
 
@@ -119,7 +119,7 @@ A great mattress! After a long day of adventure, whether it be sea kayaking or h
 
 ##### Can you tell a short story of a time you have had something go wrong on a trip due to you forgetting an important item?
 
-So many misadventures have happened to us due to forgetting something— but here’s the first that comes to mind. We were out sea kayaking in Newfoundland and departed from Bonne Bay in the middle of the night. We could see the phosphorescence acting up aplenty and were super excited to get out on the water. Under the cover of darkness, my buddy Wang-Tsu, my lady Bella, and I slipped our kayaks into the magma-like water— and experienced a sublime paddle out to our camp spot. Of course, as we set up the tents, I realized that I had left my sleeping bag in the truck! It was a crisp night being November, and so the three of us ended up cozying up real tight in a two person tent to keep warm. For the rest of my days, my buddy will never let me forget how I forgot such a crucial piece of equipment… my sleeping bag! 
+So many misadventures have happened to us due to forgetting something— but here’s the first that comes to mind. We were out sea kayaking in Newfoundland and departed from Bonne Bay in the middle of the night. We could see the phosphorescence acting up aplenty and were super excited to get out on the water. Under the cover of darkness, my buddy Wang-Tsu, my lady Bella, and I slipped our kayaks into the magma-like water— and experienced a sublime paddle out to our camp spot. Of course, as we set up the tents, I realized that I had left my sleeping bag in the truck! It was a crisp night being November, and so the three of us ended up cozying up real tight in a two person tent to keep warm. For the rest of my days, my buddy will never let me forget how I forgot such a crucial piece of equipment… my sleeping bag!
 
 <hr />
 
@@ -127,7 +127,7 @@ So many misadventures have happened to us due to forgetting something— but her
 
 <hr />
 
-![](/img/044a0009-2.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1617244547/getpackup/044A0009-2.jpg)
 
 **Pack with packup**
 

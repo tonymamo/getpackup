@@ -1,16 +1,14 @@
 import React, { FunctionComponent } from 'react';
-import { graphql } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
+import { navigate, graphql } from 'gatsby';
 import Typewriter from 'typewriter-effect';
-import scrollTo from 'gatsby-plugin-smoothscroll';
 import styled, { keyframes } from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 import {
   Seo,
   HeroImage,
-  SignupForm,
   Button,
   PageContainer,
   Row,
@@ -20,6 +18,8 @@ import {
   Testimonial,
   ClientOnly,
   PreviewCompatibleImage,
+  LoadingPage,
+  BlogRoll,
 } from '@components';
 import {
   textColor,
@@ -29,12 +29,15 @@ import {
   brandTertiary,
   lightestGray,
 } from '@styles/color';
-import { screenSizes, quadrupleSpacer, breakpoints, doubleSpacer, baseSpacer } from '@styles/size';
+import { quadrupleSpacer, breakpoints, doubleSpacer, baseSpacer } from '@styles/size';
 import collage from '@images/Outdoorsman_Collage copy.jpg';
 import waveBismark from '@images/wave-bismark.svg';
 import waveDownriver from '@images/wave-downriver.svg';
 import useWindowSize from '@utils/useWindowSize';
-import BlogRoll from './BlogRoll';
+import { RootState } from '@redux/ducks';
+import { FluidImageType } from '@common/image';
+import { BlogRollType } from '@common/blogRoll';
+import trackEvent from '@utils/trackEvent';
 
 type IndexPageProps = {
   hideFromCms?: boolean;
@@ -44,57 +47,42 @@ type IndexPageProps = {
   heroSubheading: string;
   heroCTALink: string;
   heroCTAText: string;
-  heroImage: { childImageSharp: { fluid: FluidObject } };
-  mobileHeroImage: { childImageSharp: { fluid: FluidObject } };
+  heroImage: FluidImageType;
+  mobileHeroImage: FluidImageType;
+  mainpitchImage: FluidImageType;
+  secondpitchImage: FluidImageType;
+  thirdpitchImage: FluidImageType;
   mainpitch: {
     heading: string;
     subheading: string;
     text: string;
-    image: {
-      childImageSharp: {
-        fluid: FluidObject;
-      };
-    };
+    image: FluidImageType;
   };
   secondpitch: {
     heading: string;
     subheading: string;
     text: string;
-    image: {
-      childImageSharp: {
-        fluid: FluidObject;
-      };
-    };
+    image: FluidImageType;
   };
   thirdpitch: {
     heading: string;
     subheading: string;
     text: string;
-    image: {
-      childImageSharp: {
-        fluid: FluidObject;
-      };
-    };
-  };
-  signupform: {
-    heading: string;
-    text: string;
-    bgImage: {
-      childImageSharp: {
-        fluid: FluidObject;
-      };
-    };
+    image: FluidImageType;
   };
   testimonials: Array<{
     quote: string;
     author: string;
     location: string;
-    avatar: {
-      childImageSharp: {
-        fluid: FluidObject;
-      };
-    };
+    avatar: FluidImageType;
   }>;
+  pageContext: {
+    currentPage: number;
+    limit: number;
+    numPages: number;
+    skip: number;
+  };
+  posts: BlogRollType;
 };
 
 const Section = styled.section`
@@ -201,8 +189,16 @@ const CarouselWrapper = styled.div`
 `;
 
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const size = useWindowSize();
-  const isLargeScreen = Boolean(size && size.width && size.width > screenSizes.large);
+
+  if (!!auth && auth.isLoaded && !auth.isEmpty) {
+    navigate('/app/trips');
+  }
+
+  if (!auth.isLoaded) {
+    return <LoadingPage />;
+  }
 
   return (
     <>
@@ -213,6 +209,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
             <TypewriterWrapper>
               Never forget your{' '}
               <Typewriter
+                onInit={() => {}}
                 options={{
                   strings: props.typewriterList.map((arr) => arr.text),
                   autoStart: true,
@@ -224,7 +221,11 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Heading>
 
           <p>{props.heroSubheading}</p>
-          <Button type="button" onClick={() => scrollTo(props.heroCTALink)}>
+          <Button
+            type="link"
+            to={props.heroCTALink}
+            onClick={() => trackEvent('Index Page Hero CTA Clicked')}
+          >
             {props.heroCTAText}
           </Button>
         </PageContainer>
@@ -234,12 +235,6 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <Heading as="h2" align="center" inverse noMargin>
             {props.mainpitch.heading}
           </Heading>
-          <p>{props.signupform.text}</p>
-          <Row>
-            <Column md={8} mdOffset={2}>
-              <SignupForm location="homepage-header" />
-            </Column>
-          </Row>
         </PageContainer>
       </Section>
       <Section backgroundColor={white}>
@@ -255,7 +250,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               <SectionImageWrapper>
                 <PreviewCompatibleImage
                   imageInfo={{
-                    image: props.mainpitch.image,
+                    image: props.mainpitchImage,
                     alt: 'mockup of packup app on iphone',
                   }}
                 />
@@ -272,7 +267,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               <SectionImageWrapper>
                 <PreviewCompatibleImage
                   imageInfo={{
-                    image: props.secondpitch.image,
+                    image: props.secondpitchImage,
                     alt: 'mockup of packup app on iphone',
                   }}
                 />
@@ -305,7 +300,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               <SectionImageWrapper>
                 <PreviewCompatibleImage
                   imageInfo={{
-                    image: props.thirdpitch.image,
+                    image: props.thirdpitchImage,
                     alt: 'mockup of packup app on iphone',
                   }}
                 />
@@ -314,7 +309,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </Row>
         </PageContainer>
       </Section>
-      {isLargeScreen && (
+      {size.isLargeScreen && (
         <ClientOnly>
           <ParallaxBackground bgImage={collage} />
         </ClientOnly>
@@ -343,7 +338,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           </CarouselWrapper>
         </PageContainer>
       </Section>
-      <Section style={{ textAlign: 'left' }}>
+      <Section>
         <PageContainer>
           <Row>
             <Column xs={6} xsOffset={3}>
@@ -352,30 +347,62 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               </Heading>
             </Column>
           </Row>
-          <BlogRoll count={3} />
+          <BlogRoll posts={props.posts} />
+          <Button
+            type="link"
+            to="/blog/2"
+            iconRight={<FaChevronRight />}
+            color="secondary"
+            onClick={() => trackEvent('Index Page Blog Previous Post Button Clicked')}
+          >
+            Previous Posts
+          </Button>
         </PageContainer>
       </Section>
     </>
   );
 };
 
-const IndexPage = ({ data }: { data: { markdownRemark: { frontmatter: IndexPageProps } } }) => {
-  const { frontmatter } = data.markdownRemark;
+const IndexPage = ({
+  data,
+  pageContext,
+}: {
+  pageContext: IndexPageProps['pageContext'];
+  data: {
+    allMarkdownRemark: {
+      edges: IndexPageProps['posts'];
+    };
+    markdownRemark: {
+      frontmatter: IndexPageProps;
+      heroImage: IndexPageProps['heroImage'];
+      mobileHeroImage: IndexPageProps['mobileHeroImage'];
+      mainpitchImage: IndexPageProps['mainpitchImage'];
+      secondpitchImage: IndexPageProps['secondpitchImage'];
+      thirdpitchImage: IndexPageProps['thirdpitchImage'];
+    };
+  };
+}) => {
+  const { markdownRemark: post, allMarkdownRemark: all } = data;
+
   return (
     <IndexPageTemplate
-      heroImage={frontmatter.heroImage}
-      mobileHeroImage={frontmatter.mobileHeroImage}
-      title={frontmatter.title}
-      heroHeading={frontmatter.heroHeading}
-      typewriterList={frontmatter.typewriterList}
-      heroSubheading={frontmatter.heroSubheading}
-      heroCTALink={frontmatter.heroCTALink}
-      heroCTAText={frontmatter.heroCTAText}
-      mainpitch={frontmatter.mainpitch}
-      secondpitch={frontmatter.secondpitch}
-      thirdpitch={frontmatter.thirdpitch}
-      signupform={frontmatter.signupform}
-      testimonials={frontmatter.testimonials}
+      heroImage={post.heroImage}
+      mobileHeroImage={post.mobileHeroImage}
+      mainpitchImage={post.mainpitchImage}
+      secondpitchImage={post.secondpitchImage}
+      thirdpitchImage={post.thirdpitchImage}
+      title={post.frontmatter.title}
+      heroHeading={post.frontmatter.heroHeading}
+      typewriterList={post.frontmatter.typewriterList}
+      heroSubheading={post.frontmatter.heroSubheading}
+      heroCTALink={post.frontmatter.heroCTALink}
+      heroCTAText={post.frontmatter.heroCTAText}
+      mainpitch={post.frontmatter.mainpitch}
+      secondpitch={post.frontmatter.secondpitch}
+      thirdpitch={post.frontmatter.thirdpitch}
+      testimonials={post.frontmatter.testimonials}
+      pageContext={pageContext}
+      posts={all.edges}
     />
   );
 };
@@ -384,23 +411,69 @@ export default IndexPage;
 
 export const pageQuery = graphql`
   query IndexPageTemplate {
+    allMarkdownRemark(
+      sort: { order: [DESC, DESC], fields: [frontmatter___featuredpost, frontmatter___date] }
+      limit: 6
+      filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+    ) {
+      edges {
+        node {
+          excerpt(pruneLength: 400)
+          id
+          fields {
+            slug
+            readingTime {
+              text
+            }
+          }
+          featuredimage {
+            fluid(maxWidth: 400) {
+              ...CloudinaryAssetFluid
+            }
+          }
+          frontmatter {
+            title
+            templateKey
+            description
+            date(formatString: "MMMM DD, YYYY")
+            featuredpost
+          }
+        }
+      }
+    }
     markdownRemark(frontmatter: { templateKey: { eq: "index-page" } }) {
+      heroImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
+      mobileHeroImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
+      mainpitchImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
+      secondpitchImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
+      thirdpitchImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
       frontmatter {
         title
-        heroImage {
-          childImageSharp {
-            fluid(maxWidth: 2048, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
-        mobileHeroImage {
-          childImageSharp {
-            fluid(maxWidth: 768, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
         heroHeading
         typewriterList {
           text
@@ -412,60 +485,25 @@ export const pageQuery = graphql`
           heading
           subheading
           text
-          image {
-            childImageSharp {
-              fluid(maxWidth: 1200, quality: 90) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
-            }
-          }
+          image
         }
         secondpitch {
           heading
           subheading
           text
-          image {
-            childImageSharp {
-              fluid(maxWidth: 1200, quality: 90) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
-            }
-          }
+          image
         }
         thirdpitch {
           heading
           subheading
           text
-          image {
-            childImageSharp {
-              fluid(maxWidth: 1200, quality: 90) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
-            }
-          }
-        }
-        signupform {
-          heading
-          text
-          bgImage {
-            childImageSharp {
-              fluid(maxWidth: 1000, quality: 60) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
-            }
-          }
+          image
         }
         testimonials {
           quote
           author
           location
-          avatar {
-            childImageSharp {
-              fluid(maxWidth: 300, quality: 60) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
-            }
-          }
+          avatar
         }
       }
     }

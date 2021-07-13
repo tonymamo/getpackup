@@ -1,39 +1,25 @@
 import { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 type FlexContainerProps = {
   flexDirection?: 'row' | 'column';
-  justifyContent?:
-    | 'space-between'
-    | 'space-around'
-    | 'center'
-    | 'start'
-    | 'end'
-    | 'flex-start'
-    | 'flex-end'
-    | 'left'
-    | 'right';
-  alignItems?:
-    | 'center'
-    | 'start'
-    | 'end'
-    | 'flex-start'
-    | 'flex-end'
-    | 'left'
-    | 'right'
-    | 'stretch';
+  justifyContent?: CSSProperties['justifyContent'];
+  alignItems?: CSSProperties['alignItems'];
   flexWrap?: 'wrap' | 'nowrap';
   height?: string;
+  style?: {};
+  as?: string;
 };
 
-const FlexContainer: FunctionComponent<FlexContainerProps> = styled.div`
+const FlexContainer: FunctionComponent<FlexContainerProps> = styled.div<FlexContainerProps>`
   display: flex;
-  align-items: ${(props: FlexContainerProps) => props.alignItems};
-  justify-content: ${(props: FlexContainerProps) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
+  justify-content: ${(props) => props.justifyContent};
   max-width: 100%;
-  height: ${(props: FlexContainerProps) => (props.height ? props.height : 'auto')};
-  flex-wrap: ${(props: FlexContainerProps) => props.flexWrap};
-  flex-direction: ${(props: FlexContainerProps) => props.flexDirection};
+  width: ${(props) => (props.flexWrap === 'nowrap' ? '100%' : 'auto')};
+  height: ${(props) => (props.height ? props.height : 'auto')};
+  flex-wrap: ${(props) => props.flexWrap};
+  flex-direction: ${(props) => props.flexDirection};
 `;
 
 FlexContainer.defaultProps = {

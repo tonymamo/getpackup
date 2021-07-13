@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React, { CSSProperties, FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { FluidObject } from 'gatsby-image';
 
-import { baseSpacer, borderRadius, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
+import { baseSpacer, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
 import { white } from '@styles/color';
-import { z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';
+import { baseBorderStyle, z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';
 
 type BoxProps = {
   textAlign?: 'center' | 'left' | 'right';
@@ -18,49 +18,51 @@ type BoxProps = {
       fluid: FluidObject;
     };
   };
+  onClick?: () => void;
+  style?: CSSProperties;
 };
 
 const renderShadow = (zindex: number) => {
-  if (zindex === 1) {
-    return z1Shadow;
+  switch (zindex) {
+    case 1:
+      return z1Shadow;
+    case 2:
+      return z2Shadow;
+    case 3:
+      return z3Shadow;
+    case 4:
+      return z4Shadow;
+    default:
+      return z1Shadow;
   }
-  if (zindex === 2) {
-    return z2Shadow;
-  }
-  if (zindex === 3) {
-    return z3Shadow;
-  }
-  if (zindex === 4) {
-    return z4Shadow;
-  }
-  return z1Shadow;
 };
 
-const StyledBox = styled.div`
-  border-radius: ${borderRadius};
+const StyledBox = styled.div<BoxProps>`
   padding: ${baseSpacer};
   margin-bottom: ${baseSpacer};
-  box-shadow: ${(props: BoxProps) => props.zindex && renderShadow(props.zindex)};
-  text-align: ${(props: BoxProps) => props.textAlign};
-  height: ${(props: BoxProps) =>
-    props.height ? `${props.height}px` : `calc(100% - ${baseSpacer})`};
-  background: ${(props: BoxProps) =>
+  border: ${baseBorderStyle};
+  /* box-shadow: ${(props) => props.zindex && renderShadow(props.zindex)}; */
+  text-align: ${(props) => props.textAlign};
+  height: ${(props) => (props.height ? `${props.height}px` : `calc(100% - ${baseSpacer})`)};
+  background: ${(props) =>
     props.bgSrc
       ? `url(${props.bgSrc.childImageSharp.fluid.src}) center center / cover no-repeat`
       : white};
-  ${(props: BoxProps) =>
+  cursor: ${(props) => (props.onClick ? 'pointer' : 'initial')};
+  transition: all 0.2s ease-in-out;
+  ${(props) =>
     props.footer &&
     css`
       position: relative;
       padding-bottom: ${quadrupleSpacer};
     `}
-  
-  @media only screen and (min-width: ${breakpoints.sm}) {
-    padding: ${(props: BoxProps) => (props.largePadding ? quadrupleSpacer : doubleSpacer)};
+
+  &:hover {
+    /* box-shadow: ${(props) => props.zindex && props.onClick && renderShadow(props.zindex + 1)}; */
   }
 
-  @media only screen and (min-width: ${breakpoints.md}) {
-    padding: ${(props: BoxProps) => (props.largePadding ? quadrupleSpacer : baseSpacer)};
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    padding: ${(props) => (props.largePadding ? quadrupleSpacer : doubleSpacer)};
   }
 `;
 
@@ -91,6 +93,7 @@ const Box: FunctionComponent<BoxProps> = ({
   backgroundAccent,
   bgSrc,
   footer,
+  ...rest
 }) => (
   <StyledBox
     bgSrc={bgSrc}
@@ -99,6 +102,7 @@ const Box: FunctionComponent<BoxProps> = ({
     zindex={zindex}
     largePadding={largePadding}
     footer={footer}
+    {...rest}
   >
     {bgSrc && !backgroundAccent && <BackgroundImageOverlay>{children}</BackgroundImageOverlay>}
     {!bgSrc && backgroundAccent && <StyledBoxBackground>{children}</StyledBoxBackground>}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { CSSProperties, FunctionComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'gatsby';
 
@@ -8,6 +8,9 @@ import {
   borderRadius,
   borderWidth,
   halfSpacer,
+  inputHeight,
+  quarterSpacer,
+  threeQuarterSpacer,
 } from '@styles/size';
 import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
 import {
@@ -17,15 +20,15 @@ import {
   brandSecondary,
   brandSecondaryHover,
   brandSuccess,
-  brandTertiary,
-  brandTertiaryHover,
   gray,
   lightGray,
+  textColor,
   white,
 } from '@styles/color';
-import { disabledStyle } from '@styles/mixins';
+import { baseBorderStyle, disabledStyle } from '@styles/mixins';
+import LoadingSpinner from './LoadingSpinner';
 
-type ButtonProps = {
+export type ButtonProps = {
   type: 'submit' | 'button' | 'reset' | 'link';
   color?:
     | 'text'
@@ -37,13 +40,16 @@ type ButtonProps = {
     | 'dangerOutline'
     | 'secondary'
     | 'tertiary';
-  rightspacer?: boolean;
+  rightSpacer?: boolean;
   onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
   to?: string;
   disabled?: boolean;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   block?: boolean;
+  isLoading?: boolean;
+  style?: CSSProperties;
+  size?: 'small' | 'large';
 };
 
 const primaryButtonStyles = `
@@ -90,6 +96,7 @@ const successButtonStyles = `
   
   &:hover,
   &:focus {
+    background-color: ${brandSuccess};
     filter: brightness(115%);
   }
 `;
@@ -117,6 +124,7 @@ const dangerButtonStyles = `
 `;
 
 const dangerOutlineButtonStyles = `
+  background-color: ${white};
   border-color: ${brandDanger};
   color: ${brandDanger};
   
@@ -138,7 +146,7 @@ const textButtonStyles = `
   &:focus {
     background-color: transparent;
     color: ${brandPrimaryHover};
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 
@@ -154,13 +162,14 @@ const secondaryButtonStyles = `
 `;
 
 const tertiaryButtonStyles = `
-  background-color: ${brandTertiary};
-  color: ${white};
+  background-color: ${white};
+  color: ${textColor};
+  border: ${baseBorderStyle};
   
   &:hover,
   &:focus {
-    color: ${white};
-    background-color: ${brandTertiaryHover};
+    color: ${textColor};
+    background-color: ${white};
   }
 `;
 
@@ -181,8 +190,12 @@ const allStyles = css`
   border: ${borderWidth} solid transparent;
   letter-spacing: 1px;
   line-height: 1.5;
-  padding: ${halfSpacer} ${baseAndAHalfSpacer};
-  transition: all .2s ease-in-out;
+  padding: ${(props) =>
+    props.size === 'small'
+      ? `${quarterSpacer} ${threeQuarterSpacer}`
+      : `${halfSpacer} ${baseAndAHalfSpacer}`};
+  height: ${(props) => (props.size === 'small' ? 'auto' : inputHeight)};
+  transition: all 0.2s ease-in-out;
   text-decoration: none;
   border-radius: ${borderRadius};
   
@@ -206,8 +219,8 @@ const allStyles = css`
   /* Disabled state for all other variations: adds opacity and cursor/pointer-events styling */
   ${(props: ButtonProps) => props.disabled && disabledStyle}
 
-  /* When button is next to other items, use rightspacer give them some breathing room */
-  ${(props: ButtonProps) => props.rightspacer && `margin-right: ${baseSpacer};`}
+  /* When button is next to other items, use rightSpacer give them some breathing room */
+  ${(props: ButtonProps) => props.rightSpacer && `margin-right: ${baseSpacer};`}
   
   &:active,
   &:focus {
@@ -220,28 +233,31 @@ const StyledButton = styled.button`
   ${allStyles}
 `;
 
-const StyledLink = styled.div`
+const StyledLink = styled.span`
   ${allStyles}
   padding: 0; /* remove padding from parent div and use in <a> below */
 
   & > a {
-    padding: ${halfSpacer} ${baseAndAHalfSpacer};
+    padding: ${(props: ButtonProps) =>
+      props.size === 'small'
+        ? `${quarterSpacer} ${threeQuarterSpacer}`
+        : `${halfSpacer} ${baseAndAHalfSpacer}`};
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    color: inherit;
+    color: inherit !important;
 
     &:hover,
     &:focus {
-      color: inherit;
+      color: inherit !important;
     }
   }
 `;
 
 const Button: FunctionComponent<ButtonProps> = ({
   color,
-  rightspacer,
+  rightSpacer,
   to,
   children,
   type,
@@ -250,15 +266,21 @@ const Button: FunctionComponent<ButtonProps> = ({
   iconLeft,
   iconRight,
   block,
+  isLoading,
+  style,
+  size,
 }) => {
   if (type === 'link' && to) {
     return (
       <StyledLink
         color={color}
-        rightspacer={rightspacer}
+        rightSpacer={rightSpacer}
         disabled={disabled}
         block={block}
         type={type}
+        style={style}
+        size={size}
+        onClick={onClick} // so we can track analytics if passed in on Button Links
       >
         <Link to={to}>
           {iconLeft}&nbsp;{children}&nbsp;{iconRight}
@@ -272,11 +294,14 @@ const Button: FunctionComponent<ButtonProps> = ({
       <StyledButton
         type={type}
         color={color}
-        rightspacer={rightspacer}
+        rightSpacer={rightSpacer}
         onClick={onClick}
-        disabled={disabled}
         block={block}
+        disabled={disabled || isLoading}
+        style={style}
+        size={size}
       >
+        {isLoading && <LoadingSpinner />}
         {iconLeft}&nbsp;{children}&nbsp;{iconRight}
       </StyledButton>
     );

@@ -6,7 +6,7 @@ description: Build your own modular sleeping platform for your vehicle in a
   weekend for $275. Designed for the weekend warrior who still needs their seats
   during the week.
 featuredpost: true
-featuredimage: /img/tyler-lillico-pru6-3v8n7i-unsplash.jpg
+featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244541/getpackup/tyler-lillico-pru6-3v8n7i-unsplash.jpg
 tags:
   - DIY
   - camping
@@ -16,6 +16,7 @@ tags:
   - hacks
   - guides
 ---
+
 #### If you find our posts useful for getting out, wait till you see the app we are developing. [Please consider signing up for the beta of our app](/), which aims to help you get outside on excursions faster and safer!
 
 <br></br>
@@ -32,13 +33,13 @@ If you answered “I guess?” to any of the questions above, you’re in luck! 
 
 **Cost Effective -** You should be able to put this together for between $275 to $535 (CAD, before tax) depending on how many nice-to-haves you add, and how many tools you can borrow. Not bad!
 
-![A SUV with its trunk open revealing a sleeping platform built into it](/img/dscf6808.jpg)
+![A SUV with its trunk open revealing a sleeping platform built into it](https://res.cloudinary.com/getpackup/image/upload/v1617244547/getpackup/dscf6808.jpg)
 
 This platform was designed around a foam tri-fold mattress that we knew would fit within the dimensions of our vehicle, would be comfortable, and easily removable with its tri-fold design: [Milliard Full Tri Folding Mattress](https://amzn.to/3ga5sNj). We've been super happy with it so far, and the folding design allows us to store more gear while in transit. I would note that these guys have a variety of mattress sizes that should work for your individual situation.
 
-![section of sleeping platform](/img/img-3402.jpg)
+![section of sleeping platform](https://res.cloudinary.com/getpackup/image/upload/v1617244548/getpackup/img-3402.jpg)
 
-![front section of platform](/img/img-3403.jpg)
+![front section of platform](https://res.cloudinary.com/getpackup/image/upload/v1617244542/getpackup/img-3403.jpg)
 
 ###### **<br></br>**
 
@@ -46,11 +47,11 @@ This platform was designed around a foam tri-fold mattress that we knew would fi
 
 ### Core Materials
 
-![Materials list](/img/core-materials.png)
+![Materials list](https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/core-materials.png)
 
 ### Nice-to-Haves
 
-![Nice to haves list](/img/nice-to-haves.png)
+![Nice to haves list](https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/nice-to-haves.png)
 
 ### Tools
 
@@ -82,7 +83,7 @@ This platform was designed around a foam tri-fold mattress that we knew would fi
 
 Begin the process of your platform build by prototyping the platform for your vehicle. At this stage, you’ll want your long bubble level, a tape measure, stacks of books or other objects to manipulate the height of the level, and your notebook and pencil.
 
-![Using the long level and stacks of books, begin prototyping your platform sizes and estimated leg lengths. Make sure to give yourself enough clearance for your rear wheel wells.](/img/img_3463.png)
+![Using the long level and stacks of books, begin prototyping your platform sizes and estimated leg lengths. Make sure to give yourself enough clearance for your rear wheel wells.](https://res.cloudinary.com/getpackup/image/upload/v1617244553/getpackup/img_3463.png)
 
 The key items to measure and consider at this stage are:
 
@@ -96,7 +97,7 @@ The most important measurements at this stage to get right are the dimensions of
 
 Below is a high-level example of our platform design – **measurements will be unique to your vehicle.**
 
-![Platform prototype](/img/platform-prototype.png)
+![Platform prototype](https://res.cloudinary.com/getpackup/image/upload/v1617244528/getpackup/platform-prototype.png)
 
 <br></br>
 
@@ -104,11 +105,11 @@ Below is a high-level example of our platform design – **measurements will be 
 
 Wood and many of the required materials should be straightforward to pick up from any hardware store in your area. Most stores will be able to make the required wood cuts for you when you buy it, which can save a lot of headaches as far as required tools, and transporting it home. Note that while the lengths of your platform sections will be unique to your vehicle, the 1x4 lumber boards should all be cut to 48", to match the width of the plywood platform.
 
-![Wood cuts required](/img/wood-prototype.png)
+![Wood cuts required](https://res.cloudinary.com/getpackup/image/upload/v1617244528/getpackup/wood-prototype.png)
 
 3/4" Galvanized steel pipe and flanges can be a bit more of a challenge to source – some hardware locations may have it and others won’t. Try calling ahead or using the websites of different store locations to see if it is held as inventory.
 
-The biggest challenge was finding an indoor-outdoor rug in a 8’ x 6’ size that we could use for covering the platform. We ended up finding ours at Canadian Tire for around $40.00, along with our under-platform storage bins and LED light pucks.
+The biggest challenge was finding an indoor-outdoor rug in a 8’ x 6’ size that we could use for covering the platform. We ended up finding ours at Canadian Tire for around \$40.00, along with our under-platform storage bins and LED light pucks.
 
 <br></br>
 
@@ -116,7 +117,7 @@ The biggest challenge was finding an indoor-outdoor rug in a 8’ x 6’ size th
 
 After returning home with your plywood pieces, you should have the opportunity to dry fit the sections into your vehicle to confirm they’ll work with your vehicle dimensions.
 
-![Dry fit 1](/img/dryfit-1.png)
+![Dry fit 1](https://res.cloudinary.com/getpackup/image/upload/v1617244540/getpackup/dryfit-1.png)
 
 Note that on our rear platform, we needed to make two additional diagonal cuts to make the platform fit properly. We can also see that our trunk platform section should be able to remain in the vehicle with the rear seats folded up. Good stuff!
 
@@ -130,7 +131,7 @@ The platform sections can now be covered with the indoor/outdoor rug, and staple
 
 Rolling out the carpet with the corduroy side down, place your plywood platform on top of the carpet, and cut the carpet to size using your utility knife. Aim for a 3-5 inches of excess edge, which will allow you to staple it to the platform when folded back over the plywood.
 
-![Adding carpet to plywood platform](/img/rug-stapling.png)
+![Adding carpet to plywood platform](https://res.cloudinary.com/getpackup/image/upload/v1617244528/getpackup/rug-stapling.png)
 
 As you begin stapling the carpet to the platform, make sure that the carpet underneath is tight without any creasing, pulling the carpet tight and stapling on alternating sides of the platform as if you were stretching an art canvas onto a frame. This should create a reasonably snug rug fit. To finish the corners, you will need to cut excess material out of corners of the fabric to fold it down cleanly. I’m sure there’s an elegant way of doing this, but it's also not rocket surgery.
 
@@ -143,7 +144,7 @@ With your top carpet layer now stapled to your platform sections, it is now time
 1. Placing your 1x4 beam and 3/4" flanges into their confirmed locations (light brown wood and dark grey donuts in diagram below), use your drill and 1/8th drill bit to pre-drill screw holes approximately 1” to 1¼” deep, through the support beam and into the plywood below. To make sure you are consistent with your drilling depth, use a piece of tape on your drill-bit to mark the correct depth. You do NOT want to drill straight through the other side of the plywood into your carpet. Aim to have screws in pairs, every 6” or so along the beam.
 2. After pre-drilling holes for a single beam, take your screws, and affix your beams and flanges, again aiming to not drill through to the rug side of the platform by over-drilling.
 
-![Support beams for platform](/img/screw-boards.png)
+![Support beams for platform](https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/screw-boards.png)
 
 You may find that you want to complete your first trunk platform section initially with legs in the next step, before progressing to the second rear seat section. It might make your beam and leg location assumptions easier to make for your second platform if you do.
 
@@ -172,9 +173,9 @@ At this point, you should have at least one (or both) of your platform sections 
 6. Screw D-rings down into position, clipping carabiner onto the D-Ring
 7. Rebuild platform in car, cinching down turnbuckles to tighten the whole system and secure the platform.
 
-![Turnbuckles shown](/img/img-3402.jpg)
+![Turnbuckles shown](https://res.cloudinary.com/getpackup/image/upload/v1617244548/getpackup/img-3402.jpg)
 
-![Legs supporting the platform, and turnbuckles engaged](/img/turnbuckles.jpg)
+![Legs supporting the platform, and turnbuckles engaged](https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/turnbuckles.jpg)
 
 <br></br>
 
@@ -206,6 +207,6 @@ If you enjoyed this post and want to see more videos detailing the build of this
 
 # HAPPY CAMPING!
 
-> *While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!*
->
-> *Cover photo by [Jimmy Conover](https://unsplash.com/@jimmy_conover?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/camping?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)*
+> _While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed instructional guide above for your platform build!_
+
+<small>Cover photo by [Jimmy Conover](https://unsplash.com/@jimmy_conover?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/camping?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)</small>

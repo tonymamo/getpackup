@@ -4,6 +4,7 @@ import { Field, Form, Formik } from 'formik';
 
 import { Alert, Button, Row, Column, Input } from '@components';
 import { requiredEmail } from '@utils/validations';
+import trackEvent from '@utils/trackEvent';
 
 type SignupFormProps = {
   location: string;
@@ -25,7 +26,7 @@ const SignupForm: FunctionComponent<SignupFormProps> = (props) => {
         addToMailchimp(values[`email-${props.location}`]).then((res: MailchimpResponse) => {
           setSubmitting(false);
           setResponse(res);
-          window.analytics.track('Signed Up For Newsletter', {
+          trackEvent('Signed Up For Newsletter', {
             email: values[`email-${props.location}`],
             response: res,
             location: props.location,

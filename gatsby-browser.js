@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 /**
  * Implement Gatsby's Browser APIs in this file.
  *
@@ -8,6 +9,8 @@
 import React from 'react';
 import 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 import Layout from './src/components/Layout';
 
@@ -21,4 +24,14 @@ export const wrapPageElement = ({ element }) => {
       <Layout>{element}</Layout>
     </>
   );
+};
+
+export const onServiceWorkerUpdateReady = () => {
+  // eslint-disable-next-line no-alert
+  const answer = window.confirm(
+    `This application has been updated. Reload to display the latest version?`
+  );
+  if (answer === true) {
+    window.location.reload();
+  }
 };

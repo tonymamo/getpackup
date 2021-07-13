@@ -1,9 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import firebase from 'gatsby-plugin-firebase';
+import { navigate } from 'gatsby';
+import { useFirebase } from 'react-redux-firebase';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
-import { baseAndAHalfSpacer, borderRadius, halfSpacer } from '@styles/size';
+import { brandPrimary } from '@styles/color';
+import { halfSpacer, baseAndAHalfSpacer, borderRadius } from '@styles/size';
+import { RootState } from '@redux/ducks';
+import { removeAttemptedPrivatePage } from '@redux/ducks/client';
+import { baseBorderStyle } from '@styles/mixins';
 
 // Wrapper around 'react-firebaseui/StyledFirebaseAuth' just to modify some styling
 // to make buttons match better to Button.tsx
@@ -25,6 +32,7 @@ const StyledFirebaseAuthWrapper = styled.div`
   & .firebaseui-idp-button {
     border-radius: ${borderRadius};
     box-shadow: none;
+    border: ${baseBorderStyle};
   }
 
   & .mdl-button {
@@ -33,35 +41,58 @@ const StyledFirebaseAuthWrapper = styled.div`
     padding: ${halfSpacer} ${baseAndAHalfSpacer};
     max-width: 100%;
     font-size: ${fontSizeBase};
+    display: flex;
+    justify-content: center;
   }
 
   & .firebaseui-idp-text {
     font-size: ${fontSizeBase};
   }
+
+  & .firebaseui-link {
+    color: ${brandPrimary};
+  }
 `;
 
 type FirebaseAuthWrapperProps = {};
 
-const signInProviders =
-  typeof window !== 'undefined'
-    ? [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        firebase.auth.GithubAuthProvider.PROVIDER_ID,
-        firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      ]
-    : [];
+const FirebaseAuthWrapper: FunctionComponent<FirebaseAuthWrapperProps> = () => {
+  const firebase = useFirebase();
+  const dispatch = useDispatch();
+  const client = useSelector((state: RootState) => state.client);
 
-export const uiConfig = {
-  signInFlow: 'popup',
-  signInOptions: signInProviders,
-  callbacks: {
-    signInSuccessWithAuthResult: () => false,
-  },
+  const signInProviders =
+    typeof window !== 'undefined'
+      ? [
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+          firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        ]
+      : [];
+
+  const uiConfig = {
+    signInFlow: 'popup',
+    signInOptions: signInProviders,
+    callbacks: {
+      signInSuccessWithAuthResult: () => {
+        if (client.location) {
+          dispatch(removeAttemptedPrivatePage());
+          navigate(client.location);
+        } else {
+          navigate('/app/trips');
+        }
+      },
+    },
+    tosUrl: 'https://getpackup.com/terms',
+    privacyPolicyUrl: 'https://getpackup.com/privacy',
+  };
+
+  return (
+    <StyledFirebaseAuthWrapper>
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+    </StyledFirebaseAuthWrapper>
+  );
 };
-
-const FirebaseAuthWrapper: FunctionComponent<FirebaseAuthWrapperProps> = (props) => (
-  <StyledFirebaseAuthWrapper>{props.children}</StyledFirebaseAuthWrapper>
-);
 
 export default FirebaseAuthWrapper;

@@ -1,4 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
+import {
+  lightestGray,
+  textColor,
+  white,
+  brandDanger,
+  brandPrimary,
+  brandPrimaryHover,
+  black,
+  darkGray,
+} from './color';
+import { quadrupleSpacer } from './size';
 
 /* eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }] */
 const UpploadTheme = createGlobalStyle`
@@ -21,6 +32,7 @@ const UpploadTheme = createGlobalStyle`
     background: none;
     margin: 1rem 1.5rem;
     font-size: 200%;
+    color: ${white}
   }
 
   .uppload-modal {
@@ -51,7 +63,7 @@ const UpploadTheme = createGlobalStyle`
     border: none;
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: ${white};
   }
   .uppload-modal .uppload-help button {
     position: absolute;
@@ -283,7 +295,7 @@ const UpploadTheme = createGlobalStyle`
   .cropper-view-box {
     display: block;
     height: 100%;
-    outline: 1px dashed #fff;
+    outline: 1px dashed ${white};
     overflow: hidden;
     width: 100%;
   }
@@ -334,7 +346,7 @@ const UpploadTheme = createGlobalStyle`
     width: 100%;
   }
   .cropper-face {
-    background-color: #fff;
+    background-color: ${white};
     left: 0;
     top: 0;
   }
@@ -363,8 +375,8 @@ const UpploadTheme = createGlobalStyle`
     left: 0;
   }
   .cropper-point {
-    background-color: #fff;
-    border: 1px solid #000;
+    background-color: ${white};
+    border: 1px solid ${black};
     height: 5px;
     opacity: 0.75;
     width: 5px;
@@ -936,7 +948,7 @@ const UpploadTheme = createGlobalStyle`
     border-radius: 1rem;
   }
   .uppload-modal .uppload-effect [type='range']::-webkit-slider-thumb {
-    background: #fff;
+    background: ${white};
     box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
     box-sizing: border-box;
@@ -956,7 +968,7 @@ const UpploadTheme = createGlobalStyle`
     height: 0.125rem;
   }
   .uppload-modal .uppload-effect [type='range']::-moz-range-thumb {
-    background: #fff;
+    background: ${white};
     box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
     box-sizing: border-box;
@@ -983,7 +995,7 @@ const UpploadTheme = createGlobalStyle`
     border-radius: 2rem;
   }
   .uppload-modal .uppload-effect [type='range']::-ms-thumb {
-    background: #fff;
+    background: ${white};
     box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
     box-sizing: border-box;
@@ -1134,11 +1146,12 @@ const UpploadTheme = createGlobalStyle`
       transform: none;
       left: 0;
       right: 0;
-      width: 100%;
+      width: 90vw;
+      margin: 0 auto;
       border-radius: 0;
       bottom: 0;
       height: auto;
-      top: 10%;
+      top: ${quadrupleSpacer};
       flex-direction: column;
     }
     .uppload-modal .uppload-service--default .uppload-services .uppload-service-name {
@@ -1192,72 +1205,74 @@ const UpploadTheme = createGlobalStyle`
  * All variables
  */
 .uppload-modal-bg {
-  background-color: rgba(125, 125, 125, 0.25);
+  background-color: rgba(0, 0, 0, 0.85);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .uppload-modal {
-  background-color: #fff;
-  color: #1b0000;
+  background-color: ${white};
+  color: ${textColor};
   box-shadow: 0 5rem 10rem rgba(0, 0, 0, 0.3);
 }
 .uppload-modal .uppload-help {
-  background-color: #fff;
-  color: #1b0000;
+  background-color: ${white};
+  color: ${textColor};
 }
 .uppload-modal .need-help-link,
 .uppload-modal .uppload-help button {
-  background-color: #dfe6e9;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal a {
   color: inherit;
 }
 .uppload-modal aside {
-  background-color: #dfe6e9;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal aside nav .uppload-service-name input[type=radio]:checked + label {
-  background-color: #fff;
+  background-color: ${white};
   color: inherit;
 }
 .uppload-modal aside nav .uppload-service-name input[type=radio]:checked + label:hover, .uppload-modal aside nav .uppload-service-name input[type=radio]:checked + label:focus {
-  background-color: #fff;
+  background-color: ${white};
 }
 .uppload-modal aside nav .uppload-service-name input[type=radio]:focus + label {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 .uppload-modal aside nav .uppload-service-name input[type=radio] + label:hover,
 .uppload-modal aside nav .uppload-service-name input[type=radio] + label:focus {
-  background-color: #d0dadf;
+  background-color: ${lightestGray};
 }
 .uppload-modal .uppload-error {
-  background-color: #c33;
-  color: #fff;
+  background-color: ${brandDanger};
+  color: ${white};
 }
 .uppload-modal form input {
   border-color: rgba(0, 0, 0, 0.1);
 }
 .uppload-modal form button,
 .uppload-modal .uppload-button {
-  background-color: #333;
-  color: #fff;
+  background-color: ${brandPrimary};
+  color: ${white};
 }
 .uppload-modal .effects-continue button {
-  background-color: whitesmoke;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal .effects-continue button:hover, .uppload-modal .effects-continue button:focus {
-  background-color: white;
+  background-color: ${white}
 }
 .uppload-modal .effects-continue button.effects-continue--upload {
-  background-color: #0077cc;
-  color: #fff;
+  background-color: ${brandPrimary};
+  color: ${white};
 }
 .uppload-modal .effects-continue button.effects-continue--upload:hover, .uppload-modal .effects-continue button.effects-continue--upload:focus {
-  background-color: #217dbb;
+  background-color: ${brandPrimaryHover};
 }
 .uppload-modal footer.effects-nav {
-  background-color: #dfe6e9;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal footer.effects-nav label svg g,
@@ -1269,18 +1284,18 @@ const UpploadTheme = createGlobalStyle`
 }
 .uppload-modal footer.effects-nav label:hover,
 .uppload-modal footer.effects-nav label:focus {
-  background-color: #d0dadf;
+  background-color: ${lightestGray};
 }
 .uppload-modal footer.effects-nav input[type=radio]:checked + label {
-  background-color: #fff;
+  background-color: ${white};
   color: inherit;
 }
 .uppload-modal .uppload-service--default .uppload-services button {
-  background-color: whitesmoke;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal .uppload-service--default .uppload-services button:hover, .uppload-modal .uppload-service--default .uppload-services button:focus {
-  background-color: #dfe6e9;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal .uppload-service--local .drop-area {
@@ -1290,25 +1305,25 @@ const UpploadTheme = createGlobalStyle`
 }
 .uppload-modal .uppload-service--local .drop-area.drop-area-active {
   border: 3px dashed rgba(0, 0, 0, 0.25);
-  background-color: whitesmoke;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal .uppload-loader > div {
-  background-color: #333;
+  background-color: ${darkGray};
 }
 .uppload-modal .uppload-effect--crop .uppload-actions input[type=radio]:focus + label {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 .uppload-modal .uppload-actions label,
 .uppload-modal .settings button {
-  background-color: #dfe6e9;
+  background-color: ${lightestGray};
   color: inherit;
 }
 .uppload-modal .processing-loader {
   background-color: rgba(255, 255, 255, 0.5);
 }
 .uppload-modal .processing-loader::after {
-  background-color: #fff;
+  background-color: ${white};
 }
 `;
 

@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { graphql, Link } from 'gatsby';
-import { FixedObject } from 'gatsby-image';
 import styled from 'styled-components';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
@@ -18,13 +17,14 @@ import {
 import { baseSpacer, doubleSpacer, tripleSpacer } from '@styles/size';
 import { visuallyHiddenStyle } from '@styles/mixins';
 import logo from '@images/maskable_icon.png';
+import trackEvent from '@utils/trackEvent';
 
 type LinksPageProps = {
   hideFromCms?: boolean;
   linksList: Array<{
     linkUrl: string;
     linkText: string;
-    thumbnail: { childImageSharp: { fixed: FixedObject } };
+    thumbnail: string;
   }>;
 };
 
@@ -67,31 +67,47 @@ export const LinksPageTemplate: FunctionComponent<LinksPageProps> = ({
         <div>
           {linksList &&
             linksList.length > 0 &&
-            linksList.map((link) => (
-              <Row key={link.linkUrl}>
-                <Column md={8} mdOffset={2}>
-                  <Box>
-                    <FlexContainer justifyContent="flex-start" flexWrap="nowrap">
-                      <ThumbnailWrapper>
-                        <RelativeOrExternalLink to={link.linkUrl}>
-                          <PreviewCompatibleImage
-                            imageInfo={{
-                              image: link.thumbnail,
-                              alt: '',
-                            }}
-                          />
-                        </RelativeOrExternalLink>
-                      </ThumbnailWrapper>
-                      <div>
-                        <RelativeOrExternalLink to={link.linkUrl}>
-                          {link.linkText}
-                        </RelativeOrExternalLink>
-                      </div>
-                    </FlexContainer>
-                  </Box>
-                </Column>
-              </Row>
-            ))}
+            linksList.map((link) => {
+              const parts = link.thumbnail.split('upload/');
+              const transformedThumbnail = [parts[0], 'upload/w_200,h_200,c_fill/', parts[1]].join(
+                ''
+              );
+              return (
+                <Row key={link.linkUrl}>
+                  <Column md={8} mdOffset={2}>
+                    <Box>
+                      <FlexContainer justifyContent="flex-start" flexWrap="nowrap">
+                        <ThumbnailWrapper>
+                          <RelativeOrExternalLink
+                            to={link.linkUrl}
+                            onClick={() =>
+                              trackEvent('Links Page Image Link Clicked', { link: link.linkUrl })
+                            }
+                          >
+                            <PreviewCompatibleImage
+                              imageInfo={{
+                                image: !hideFromCms ? transformedThumbnail : link.thumbnail,
+                                alt: '',
+                              }}
+                            />
+                          </RelativeOrExternalLink>
+                        </ThumbnailWrapper>
+                        <div>
+                          <RelativeOrExternalLink
+                            to={link.linkUrl}
+                            onClick={() =>
+                              trackEvent('Links Page Link Clicked', { link: link.linkUrl })
+                            }
+                          >
+                            {link.linkText}
+                          </RelativeOrExternalLink>
+                        </div>
+                      </FlexContainer>
+                    </Box>
+                  </Column>
+                </Row>
+              );
+            })}
         </div>
         <Row>
           <Column md={8} mdOffset={2}>
@@ -134,13 +150,7 @@ export const linksPageQuery = graphql`
         linksList {
           linkUrl
           linkText
-          thumbnail {
-            childImageSharp {
-              fixed(width: 100, height: 100) {
-                ...GatsbyImageSharpFixed
-              }
-            }
-          }
+          thumbnail
         }
       }
     }

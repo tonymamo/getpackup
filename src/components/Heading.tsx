@@ -11,6 +11,10 @@ import {
   fontSizeH5,
   fontSizeH6,
   lineHeightSmall,
+  headingsFontFamily,
+  fontFamilySansSerif,
+  fontSizeBase,
+  fontSizeSmall,
 } from '@styles/typography';
 
 type HeadingProps = {
@@ -20,28 +24,30 @@ type HeadingProps = {
   align?: 'left' | 'center' | 'right';
   id?: string;
   uppercase?: boolean;
+  altStyle?: boolean;
+  onClick?: () => void;
 };
 
-const renderFontSize = (as: HeadingProps['as']) => {
+const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle']) => {
   if (as === 'h1') {
-    return fontSizeH1;
+    return altStyle ? fontSizeH3 : fontSizeH1;
   }
   if (as === 'h2') {
-    return fontSizeH2;
+    return altStyle ? fontSizeH4 : fontSizeH2;
   }
   if (as === 'h3') {
-    return fontSizeH3;
+    return altStyle ? fontSizeH5 : fontSizeH3;
   }
   if (as === 'h4') {
-    return fontSizeH4;
+    return altStyle ? fontSizeH6 : fontSizeH4;
   }
   if (as === 'h5') {
-    return fontSizeH5;
+    return altStyle ? fontSizeBase : fontSizeH5;
   }
   if (as === 'h6') {
-    return fontSizeH6;
+    return altStyle ? fontSizeSmall : fontSizeH6;
   }
-  return fontSizeH1;
+  return altStyle ? fontSizeH3 : fontSizeH1;
 };
 
 const StyledHeading = styled.h1`
@@ -51,8 +57,10 @@ const StyledHeading = styled.h1`
   margin-bottom: ${(props: HeadingProps) => (props.noMargin ? '0' : baseSpacer)};
   text-align: ${(props: HeadingProps) => props.align};
   white-space: pre-line;
-  font-size: ${(props: HeadingProps) => props.as && renderFontSize(props.as)};
+  font-size: ${(props: HeadingProps) => renderFontSize(props.as, props.altStyle)};
   text-transform: ${(props: HeadingProps) => (props.uppercase ? 'uppercase' : 'initial')};
+  font-family: ${(props: HeadingProps) =>
+    props.altStyle ? fontFamilySansSerif : headingsFontFamily};
   & div {
     display: inline;
   }
@@ -66,6 +74,8 @@ const Heading: FunctionComponent<HeadingProps> = (props) => (
     align={props.align}
     id={props.id}
     uppercase={props.uppercase}
+    altStyle={props.altStyle}
+    {...props}
   >
     {props.children}
   </StyledHeading>

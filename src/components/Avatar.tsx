@@ -1,53 +1,116 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import { FluidObject } from 'gatsby-image';
+import styled, { CSSProperties } from 'styled-components';
 import { Md5 } from 'ts-md5/dist/md5';
+import ReactTooltip from 'react-tooltip';
 
 import {
-  baseAndAHalfSpacer,
   baseSpacer,
   doubleSpacer,
+  halfSpacer,
   quadrupleSpacer,
   sextupleSpacer,
+  borderRadiusCircle,
+  octupleSpacer,
+  quarterSpacer,
+  tripleSpacer,
 } from '@styles/size';
+import { lightestGray, white } from '@styles/color';
 import { PreviewCompatibleImage } from '@components';
+import { zIndexAvatarImageAfter } from '@styles/layers';
+import { fontSizeSmall } from '@styles/typography';
+import { FluidImageType } from '@common/image';
 
-type AvatarProps = {
-  src?:
-    | {
-        childImageSharp: { fluid: FluidObject };
-      }
-    | string;
-  size?: 'xs' | 'sm' | 'md' | 'lg';
-  gravatarEmail: string;
+export type AvatarProps = {
+  src?: FluidImageType | string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  gravatarEmail?: string;
   bottomMargin?: boolean;
+  rightMargin?: boolean;
+  staticContent?: string;
+  style?: CSSProperties;
+  username?: string;
 };
 
 const renderSize = (size: AvatarProps['size']) => {
-  if (size === 'xs') {
-    return baseAndAHalfSpacer;
+  switch (size) {
+    case 'xs':
+      return doubleSpacer;
+    case 'sm':
+      return tripleSpacer;
+    case 'md':
+      return quadrupleSpacer;
+    case 'lg':
+      return sextupleSpacer;
+    case 'xl':
+      return octupleSpacer;
+    default:
+      return tripleSpacer;
   }
-  if (size === 'sm') {
-    return doubleSpacer;
-  }
-  if (size === 'md') {
-    return quadrupleSpacer;
-  }
-  if (size === 'lg') {
-    return sextupleSpacer;
-  }
-  return doubleSpacer;
 };
 
-const AvatarImageWrapper = styled.div`
-  border-radius: 50%;
+export const AvatarImageWrapper = styled.div`
+  border-radius: ${borderRadiusCircle};
   overflow: hidden;
   object-fit: cover;
   display: flex;
-  height: ${(props: { size: AvatarProps['size']; bottomMargin: AvatarProps['bottomMargin'] }) =>
-    props.size && renderSize(props.size)};
+  height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
   width: ${(props) => props.size && renderSize(props.size)};
-  ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer}`}
+  /* min-width ensures it doesnt get resized when in a flexed parent */
+  min-width: ${(props) => props.size && renderSize(props.size)};
+  ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer};`}
+  ${(props) =>
+    props.rightMargin &&
+    `margin-right: ${
+      props.size === 'md' || props.size === 'lg' ? baseSpacer : halfSpacer
+    };`}
+
+  /* If image fails to load, provide some fallback styling to make it look better */
+  & img {
+    position: relative;
+  }
+
+  & img:after {
+    content: '👤';
+    font-size: ${(props) => renderSize(props.size)};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: ${zIndexAvatarImageAfter};
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%; /* slightly bigger to have emoji fully cover up bottom of avatar circle */
+    background-color: ${lightestGray};
+  }
+`;
+
+const StaticContentWrapper = styled.div`
+  background-color: ${lightestGray};
+  height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
+  width: ${(props) => props.size && renderSize(props.size)};
+  position: relative;
+  text-align: center;
+  font-size: ${fontSizeSmall};
+  line-height: ${(props) => props.size && renderSize(props.size)};
+`;
+
+export const StackedAvatars = styled.div`
+  display: flex;
+  margin: ${halfSpacer} 0;
+
+  & ${AvatarImageWrapper} {
+    margin-right: -${halfSpacer};
+    display: inline-flex;
+    border: 2px solid ${white};
+    z-index: ${zIndexAvatarImageAfter};
+    transition: transform 0.1s ease-out 0s;
+  }
+
+  & ${AvatarImageWrapper}:hover {
+    z-index: ${zIndexAvatarImageAfter + 1};
+    transform: translateY(-${quarterSpacer});
+  }
 `;
 
 const Avatar: FunctionComponent<AvatarProps> = (props) => {
@@ -55,17 +118,55 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
   // hash users email address with md5
   // default to an identicon and
   // size of 192px(sextupleSpacer * 2x)
-  const gravatarUrl = `https://www.gravatar.com/avatar/${Md5.hashStr(
-    props.gravatarEmail
-  )}?d=identicon&s=192`;
+  const gravatarUrl =
+    props.gravatarEmail &&
+    `https://www.gravatar.com/avatar/${Md5.hashStr(props.gravatarEmail)}?d=identicon&s=192`;
   return (
-    <AvatarImageWrapper size={props.size || 'sm'} bottomMargin={props.bottomMargin || false}>
-      <PreviewCompatibleImage
-        imageInfo={{
-          image: props.src || gravatarUrl,
-          alt: 'user profile picture',
-        }}
-      />
+    <AvatarImageWrapper
+      size={props.size || 'sm'}
+      bottomMargin={props.bottomMargin || false}
+      rightMargin={props.rightMargin || false}
+      {...props}
+    >
+      {props.staticContent && (!props.src || !gravatarUrl) ? (
+        <>
+          <StaticContentWrapper
+            size={props.size || 'sm'}
+            data-tip={`${props.staticContent} more`}
+            data-for="avatar"
+          >
+            <small>{props.staticContent}</small>
+          </StaticContentWrapper>
+          <ReactTooltip
+            id="avatar"
+            place="top"
+            type="dark"
+            effect="solid"
+            className="tooltip customTooltip"
+          />
+        </>
+      ) : (
+        <>
+          <PreviewCompatibleImage
+            data-tip={props.username}
+            data-for="avatar"
+            imageInfo={{
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              image: (props.src || (gravatarUrl as string))!,
+              alt: 'user profile picture',
+            }}
+          />
+          {props.username ? (
+            <ReactTooltip
+              id="avatar"
+              place="top"
+              type="dark"
+              effect="solid"
+              className="tooltip customTooltip"
+            />
+          ) : null}
+        </>
+      )}
     </AvatarImageWrapper>
   );
 };

@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
+import { screenSizes } from '@styles/size';
 
 const useWindowSize = () => {
   const isClient = typeof window === 'object';
 
-  const getSize = () => ({
-    width: isClient ? window.innerWidth : undefined,
-    height: isClient ? window.innerHeight : undefined,
-  });
+  const getSize = () => {
+    const width = isClient ? window.innerWidth : undefined;
+
+    return {
+      width,
+      height: isClient ? window.innerHeight : undefined,
+      isExtraSmallScreen: isClient ? width && width < screenSizes.small : false,
+      isSmallScreen: isClient ? width && width < screenSizes.medium : false,
+      isLargeScreen: isClient ? width && width > screenSizes.large : false,
+    };
+  };
 
   const [windowSize, setWindowSize] = useState(getSize);
 

@@ -6,7 +6,7 @@ description: Learn what to expect from the beta version of our packing app, how
   to get the most out of it, what’s next for the platform, and how you can get
   involved.
 featuredpost: true
-featuredimage: /img/img_8155-2-2.jpg
+featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/img_8155-2-2.jpg
 tags:
   - beta
   - guide
@@ -26,12 +26,12 @@ In this post, we will summarize what to expect from our current beta version, ho
 
 # Setting up
 
-1. Visit <https://getpackup.com/> on your mobile browser.
-2. Using your phone or tablet, save the webpage to your phone’s home screen as a progressive web app. [A simple guide to doing this can be found here](https://natomasunified.org/kb/add-website-to-mobile-device-home-screen/).
+1. Visit [getpackup.com](/) on your mobile browser.
+2. Using your phone or tablet, save the webpage to your phone’s home screen as a progressive web app. [You can checkout out our install guide here](/install).
 3. Open the app, or your mobile browser, and sign up as a user using email, Google, Facebook, Twitter, or GitHub credentials. Your choice! Your profile can be customized once you’re on the platform.
 4. You’re done! Explore the platform on your phone, tablet, or desktop computer. Get packing!
 
-![](/img/add-pwa.jpg "iOS App Save Sequence")
+![iOS App Save Sequence](https://res.cloudinary.com/getpackup/image/upload/v1626121231/getpackup/add-pwa_palqnl.jpg)
 
 
 
@@ -49,13 +49,13 @@ Keep in mind, if you don’t want to install the PWA, that is perfectly fine - o
 
 Quickly generate detailed packing lists for your trips by using our **Trip Generator**. Simply select the tagged options such as activities, accommodation type, kitchen requirements, and tons of other considerations when creating your trip to have the foundation of your trip list seeded for you.
 
-![](/img/trip-generator.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1626121272/getpackup/trip-generator_mbgqek.jpg)
 
 ##### **Gear Closet**
 
-When you initially set up your account, we will create a robust **Gear Closet** for you based on your indicated activity interests, which is your *personal* database of tagged items. Dial in your trip preparation further by customizing, adding, deleting, and tagging items in the **Gear Closet** - the Trip Generator will draw items from this database when you go to create a trip. Never forget those personal prescription meds or special considerations again.
+When you initially set up your account, we will create a robust **Gear Closet** for you based on your indicated activity interests, which is your _personal_ database of tagged items. Dial in your trip preparation further by customizing, adding, deleting, and tagging items in the **Gear Closet** - the Trip Generator will draw items from this database when you go to create a trip. Never forget those personal prescription meds or special considerations again.
 
-![](/img/gear-closet.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1626121295/getpackup/gear-closet_cjgpzm.jpg)
 
 ##### **Basic Profile**
 
@@ -65,22 +65,22 @@ Personalize the basics of your account and profile with a picture, banner pictur
 
 #### **Minor Features**
 
-* Custom categorization and tags
-* Trip sharing (Leave a plan with loved ones or brag to your friends)
-* Weather APIs
-* Offline capabilities
+- Custom categorization and tags
+- Trip sharing (Leave a plan with loved ones or brag to your friends)
+- Weather APIs
+- Offline capabilities
 
 #### **Major Features**
 
-* Group trip planning, and shared lists between party members
-* Search capabilities for regions or activity type
-* Item weight module and total packed weight
+- Group trip planning, and shared lists between party members
+- Search capabilities for regions or activity type
+- Item weight module and total packed weight
 
 The direction we go is entirely based on your feedback, so chime in with what you think is most important to you!
 
 ### How You Can Get Involved
 
-Within the platform there is a megaphone icon in the top right corner that can be used to provide comments which go directly into our #userfeedback slack channel, where we have the chance to summarize and understand your experiences. Any feedback on the topics below is a huge help
+Within the platform there is a megaphone icon in the top right corner that can be used to provide comments which go directly into one of our slack channels, where we have the chance to summarize and understand your experiences. Any feedback on the topics below is a huge help:
 
 1. Bugs and error reporting
 2. Potential improvements on existing features
@@ -88,4 +88,7 @@ Within the platform there is a megaphone icon in the top right corner that can b
 4. Things you dislike, or don’t use
 5. Anything else on your mind! Don’t be shy
 
+
 We will also be conducting user interviews in the next few months for those of you who are interested in diving into more detailed comments.
+
+You can send us detailed feedback using our [feedback page](/feedback) or send us a message about anything at [our contact page](/contact).

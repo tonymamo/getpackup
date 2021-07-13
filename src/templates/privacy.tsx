@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { graphql } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
 
 import {
   Box,
@@ -13,13 +12,14 @@ import {
   Row,
   Column,
 } from '@components';
+import { FluidImageType } from '@common/image';
 
 type PrivacyProps = {
   hideFromCms?: boolean;
   title: string;
   content: any;
   contentComponent: typeof HTMLContent;
-  heroImage: { childImageSharp: { fluid: FluidObject } };
+  heroImage: FluidImageType;
 };
 
 export const PrivacyTemplate: FunctionComponent<PrivacyProps> = ({
@@ -60,7 +60,9 @@ export const PrivacyTemplate: FunctionComponent<PrivacyProps> = ({
 const Privacy = ({
   data,
 }: {
-  data: { markdownRemark: { frontmatter: PrivacyProps; html: any } };
+  data: {
+    markdownRemark: { frontmatter: PrivacyProps; html: any; heroImage: PrivacyProps['heroImage'] };
+  };
 }) => {
   const { markdownRemark: post } = data;
 
@@ -68,7 +70,7 @@ const Privacy = ({
     <PrivacyTemplate
       contentComponent={HTMLContent}
       title={post.frontmatter.title}
-      heroImage={post.frontmatter.heroImage}
+      heroImage={post.heroImage}
       content={post.html}
     />
   );
@@ -80,15 +82,14 @@ export const privacyQuery = graphql`
   query PrivacyPage {
     markdownRemark(frontmatter: { templateKey: { eq: "privacy" } }) {
       html
+      heroImage {
+        fluid {
+          base64
+          ...CloudinaryAssetFluid
+        }
+      }
       frontmatter {
         title
-        heroImage {
-          childImageSharp {
-            fluid(maxWidth: 2048, quality: 60) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
       }
     }
   }

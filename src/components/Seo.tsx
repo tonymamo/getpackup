@@ -31,6 +31,7 @@ const Seo: FunctionComponent<SeoType> = ({
   meta,
   imageWidth,
   imageHeight,
+  children,
 }) => {
   const { pathname } = useLocation();
   const { site } = useStaticQuery(
@@ -134,11 +135,22 @@ const Seo: FunctionComponent<SeoType> = ({
           content: 'yes',
         },
         {
+          name: 'msapplication-TileColor',
+          content: '#c46200',
+        },
+        {
           name: 'viewport',
           content: 'width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover',
         },
+        {
+          'http-equiv': 'ScreenOrientation',
+          content: 'autoRotate:disabled',
+        },
       ].concat(meta || [])}
     >
+      {/* suggestions from https://realfavicongenerator.net/ */}
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#c46200" />
+      <link rel="shortcut icon" href="/favicon.ico" />
       {/* genereated from https://appsco.pe/developer/splash-screens */}
       <link
         href="img/splashscreens/iphone5_splash.png"
@@ -190,6 +202,7 @@ const Seo: FunctionComponent<SeoType> = ({
         media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
         rel="apple-touch-startup-image"
       />
+      {children}
     </Helmet>
   );
 };

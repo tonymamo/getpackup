@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as Sentry from '@sentry/gatsby';
 
 import { Box, Button, Column, Heading, PageContainer, Row } from '@components';
+import trackEvent from '@utils/trackEvent';
 
 type Props = {
   children: any;
@@ -23,7 +24,14 @@ class ErrorBoundary extends Component<Props, {}> {
                     <a href="mailto:hello@getpackup.com">hello@getpackup.com</a>.
                   </p>
                   <p>
-                    <Button type="button" rightspacer onClick={() => resetError()}>
+                    <Button
+                      type="button"
+                      rightSpacer
+                      onClick={() => {
+                        trackEvent('Reset ErrorBoundary Clicked');
+                        resetError();
+                      }}
+                    >
                       Reset
                     </Button>
 

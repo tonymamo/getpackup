@@ -6,7 +6,7 @@ description: Following the guidance of the Ten Essentials can greatly improve
   the safety of you and your party. Learn more about how you can be prepared for
   emergencies, accidents, or an unexpected night outside.
 featuredpost: false
-featuredimage: /img/watertonhike.jpg
+featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244556/getpackup/WatertonHike.jpg
 tags:
   - packing
   - ten-essentials
@@ -69,7 +69,7 @@ If you’re unfamiliar with how to use these navigation devices in practice, man
 
 [Back to List](#top)
 
-![Person with arm extended holding a Garmin inReach Mini overlooking an alpine lake](/img/044a6193.jpg)
+![Person with arm extended holding a Garmin inReach Mini overlooking an alpine lake](https://res.cloudinary.com/getpackup/image/upload/v1619038019/044a6193_scxnz0.jpg)
 
 ## 2. Sun Protection
 
@@ -99,7 +99,7 @@ Long underwear, insulated hats, balaclavas offer more warmth for their weight th
 
 [Back to List](#top)
 
-![Person in winter environment wearing a puffy parka and sunglasses](/img/044a1107.jpg)
+![Person in winter environment wearing a puffy parka and sunglasses](https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/044a1107.jpg)
 
 ## 4. Illumination
 
@@ -113,7 +113,7 @@ Aim to have a headlamp that has a variety of lighting options – several bright
 
 [Back to List](#top)
 
-![Person on a lookout deck peering into a void of snow flakes illuminated by a headlamp](/img/044a3060-2-2.jpg)
+![Person on a lookout deck peering into a void of snow flakes illuminated by a headlamp](https://res.cloudinary.com/getpackup/image/upload/v1619038140/getpackup/044a3060-2-2_qbmbth.jpg)
 
 ## 5. First-Aid Supplies
 
@@ -143,7 +143,7 @@ In the event you are going to be spending the majority of the trip above treelin
 
 [Back to List](#top)
 
-![Four friends gathered around a campfire on a beach with a tent in the background](/img/vancouverislandjuandefuca_taylorburk-39.jpg)
+![Four friends gathered around a campfire on a beach with a tent in the background](https://res.cloudinary.com/getpackup/image/upload/v1617337708/getpackup/vancouverislandjuandefuca_taylorburk-39.jpg)
 
 ## 7. Repair Kit, Knife, and Tools
 
@@ -167,7 +167,7 @@ Typically an extra day’s worth of food will suffice for shorter trips in the e
 
 [Back to List](#top)
 
-![Two females holding up sporks as mustaches in their sleeping bags inside of a snow shelter eating a prepared dehydrated meal](/img/044a7829-edit.jpg)
+![Two females holding up sporks as mustaches in their sleeping bags inside of a snow shelter eating a prepared dehydrated meal](https://res.cloudinary.com/getpackup/image/upload/v1619038226/getpackup/044a7829-edit_j2atog.jpg)
 
 ## 9. Hydration and Purification
 
@@ -203,7 +203,7 @@ Prepare for your outdoor adventures in a thoughtful and considered way to minimi
 
 **[Try us out today!](/)**
 
-![Two pack rafters paddling in a river with trees on the left and a steep rock wall on the right](/img/044a0009-2.jpg)
+![Two pack rafters paddling in a river with trees on the left and a steep rock wall on the right](https://res.cloudinary.com/getpackup/image/upload/v1617244547/getpackup/044A0009-2.jpg)
 
 <br></br>
 

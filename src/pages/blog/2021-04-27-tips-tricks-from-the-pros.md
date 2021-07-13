@@ -6,9 +6,9 @@ description: >
   Tips & tricks along with lessons learned from mishaps in the outdoors. In this
   post you'll learn  from Cody Townsend (a ski mountaineer), Cath Simard (a
   landscape photographer), Meesh Coles (a chef) and Andrew Szeto (a woodworking
-  skateboarder) who all share the same passion—spending time outside! 
+  skateboarder) who all share the same passion—spending time outside!
 featuredpost: true
-featuredimage: /img/collage.jpg
+featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244443/getpackup/collage.jpg
 tags:
   - safety
   - camping
@@ -19,9 +19,10 @@ tags:
   - cathsimard
   - andrewszeto
 ---
+
 ### **[Cody Townsend](http://www.codytownsend.com)**
 
-*Cody AKA the people's skier, is a successful and accomplished mountain athlete. If he’s not busy being a Hollywood stunt double then he's working on his goal of skiing all fifty of North America's classic descents and documenting the action through a [youtube series called “The Fifty”.](https://skithefifty.com/the-classics) His great attitude and sense of humor make him an entertaining person to follow along with.*
+_Cody AKA the people's skier, is a successful and accomplished mountain athlete. If he’s not busy being a Hollywood stunt double then he's working on his goal of skiing all fifty of North America's classic descents and documenting the action through a [youtube series called “The Fifty”.](https://skithefifty.com/the-classics) His great attitude and sense of humor make him an entertaining person to follow along with._
 
 <br />
 
@@ -49,7 +50,7 @@ I’d say the worst thing I ever forgot was checking the weather forecast before
 
 ### **[Meesh Coles](https://www.instagram.com/meesh.coles/?hl=en)**
 
-*Meesh Coles is a nutritionist and personal chef who loves to spend her time outside, preferably near a large body of water. When it comes to food, she is an incredibly talented artist. The ingredients are the paint and the plate is the canvas in which she creates masterpieces. She is the person that you want on your backcountry camping trip because you know that you’re going to be eating well!* 
+_Meesh Coles is a nutritionist and personal chef who loves to spend her time outside, preferably near a large body of water. When it comes to food, she is an incredibly talented artist. The ingredients are the paint and the plate is the canvas in which she creates masterpieces. She is the person that you want on your backcountry camping trip because you know that you’re going to be eating well!_
 
 <br />
 
@@ -77,7 +78,7 @@ Woof. Well, one thing I wouldn’t recommend forgetting on the sunnier days (PS,
 
 ### [**Andrew Szeto** ](https://www.instagram.com/szetoszeto/?hl=en)
 
-*Andrew is a down to earth and very humble yes man who is always seeking the next adventure. He started out as a skateboard photographer who ventured into [woodworking](http://maruthecirclebrand.com) where he now up-cycles broken skateboards into his projects. He has a great[ youtube channel where he shares his adventures](https://www.youtube.com/channel/UCEyBnGE6eAu_Dr4lN0bK6pg), everything from canoe climbing trips to building an A-Frame cabin from scratch!* 
+_Andrew is a down to earth and very humble yes man who is always seeking the next adventure. He started out as a skateboard photographer who ventured into [woodworking](http://maruthecirclebrand.com) where he now up-cycles broken skateboards into his projects. He has a great[ youtube channel where he shares his adventures](https://www.youtube.com/channel/UCEyBnGE6eAu_Dr4lN0bK6pg), everything from canoe climbing trips to building an A-Frame cabin from scratch!_
 
 <br />
 
@@ -105,7 +106,7 @@ Tent poles... I somehow seem to forget those fairly often. I usually just end up
 
 ### **[Cath Simard](https://www.instagram.com/cathsimard/?hl=en)**
 
-*Cath is a [photographer and digital artist](https://www.cathsimard.com) who has developed a unique and instantly recognizable style in the landscape and adventure genre. She’s a former model who now spends most of her time in the backcountry with a camera in hand. She’s built up an impressive portfolio from all over the world, with the goal of inspiring others to get outside!*
+_Cath is a [photographer and digital artist](https://www.cathsimard.com) who has developed a unique and instantly recognizable style in the landscape and adventure genre. She’s a former model who now spends most of her time in the backcountry with a camera in hand. She’s built up an impressive portfolio from all over the world, with the goal of inspiring others to get outside!_
 
 <br />
 
@@ -119,7 +120,7 @@ I love to bring a little bottle of Sriracha to spice up my dehydrated meals and 
 
 ##### **What is one of your favourite pieces of equipment/gear for camping that you can't live without?**
 
-I love my big North Face Seven Summit Series Down Jacket. It's Goretex and 800 fill down which makes it extremely warm. This jacket has saved me so many times on backcountry trips where the weather would be colder than expected or unpredictable. I like to use it as a pillow when I'm sleeping or wrap it around my feet. This jacket feels like you are wearing a sleeping bag, it is extremely cozy and brings me a bit of comfort in the backcountry. 
+I love my big North Face Seven Summit Series Down Jacket. It's Goretex and 800 fill down which makes it extremely warm. This jacket has saved me so many times on backcountry trips where the weather would be colder than expected or unpredictable. I like to use it as a pillow when I'm sleeping or wrap it around my feet. This jacket feels like you are wearing a sleeping bag, it is extremely cozy and brings me a bit of comfort in the backcountry.
 
 ##### **Can you tell a short story of a time you have had something go wrong on a trip due to you forgetting an important item?**
 
@@ -131,7 +132,7 @@ Last summer I did a backpacking trip with a few friends at Berg Lake. Some of th
 
 <hr />
 
-![](/img/0f1a2062-3.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg)
 
 ##### **Pack with packup**
 

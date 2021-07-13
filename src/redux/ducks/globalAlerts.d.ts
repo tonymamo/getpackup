@@ -3,7 +3,7 @@ import {
   CLOSE_GLOBAL_ALERT,
   ADD_GLOBAL_BANNER,
   CLOSE_GLOBAL_BANNER,
-} from './globalAlerts';
+} from '@redux/ducks/globalAlerts';
 
 export type AlertType = {
   message: string;

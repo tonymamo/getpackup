@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { navigate, Link } from 'gatsby';
-import firebase from 'gatsby-plugin-firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { useFirebase } from 'react-redux-firebase';
 import { FaArrowRight } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Row,
@@ -18,18 +17,24 @@ import {
   Heading,
   FlexContainer,
   FirebaseAuthWrapper,
-  uiConfig,
 } from '@components';
 import { requiredField } from '@utils/validations';
-import useAuthState from '@utils/useFirebaseAuth';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
+import { removeAttemptedPrivatePage } from '@redux/ducks/client';
+import trackEvent from '@utils/trackEvent';
 
 type LoginProps = {};
 
 const Login: FunctionComponent<LoginProps> = () => {
-  const [user, loading, error] = useAuthState(firebase);
+  const firebase = useFirebase();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const client = useSelector((state: RootState) => state.client);
   const dispatch = useDispatch();
-  if (!!user && !loading && !error) {
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
   }
 
@@ -42,7 +47,7 @@ const Login: FunctionComponent<LoginProps> = () => {
     <PageContainer withVerticalPadding>
       <Seo title="Log In" />
       <Box>
-        <Heading align="center">Login</Heading>
+        <Heading align="center">Log In</Heading>
         <p style={{ textAlign: 'center' }}>
           Adventure made easy&mdash;never forget important gear again!
         </p>
@@ -54,18 +59,42 @@ const Login: FunctionComponent<LoginProps> = () => {
                 validateOnMount
                 initialValues={initialValues}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
+                  setIsLoading(true);
                   firebase
                     .auth()
                     .signInWithEmailAndPassword(values.email, values.password)
+                    .then(() => {
+                      if (client.location) {
+                        trackEvent('User Logged In and Needed Redirection', {
+                          location: client.location,
+                          email: values.email,
+                        });
+                        dispatch(removeAttemptedPrivatePage());
+                        navigate(client.location);
+                      } else {
+                        trackEvent('User Logged In', {
+                          email: values.email,
+                        });
+                        navigate('/app/trips');
+                      }
+                    })
                     .catch((err) => {
+                      trackEvent('User Log In Failure', {
+                        error: err,
+                        email: values.email,
+                      });
                       dispatch(
                         addAlert({
                           type: 'danger',
                           message: err.message,
                         })
                       );
+                    })
+                    .finally(() => {
+                      setIsLoading(false);
+                      setSubmitting(false);
                     });
-                  setSubmitting(false);
+
                   resetForm();
                 }}
               >
@@ -90,18 +119,36 @@ const Login: FunctionComponent<LoginProps> = () => {
                       hiddenLabel
                     />
 
-                    <Button type="submit" disabled={isSubmitting || !isValid} block>
-                      Log In
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || !isValid || isLoading}
+                      isLoading={isLoading}
+                      block
+                    >
+                      {isLoading ? 'Logging In' : 'Log In'}
                     </Button>
 
-                    <Button type="link" to="/forgot-password" color="text" block>
+                    <Button
+                      type="link"
+                      to="/forgot-password"
+                      color="text"
+                      block
+                      onClick={() =>
+                        trackEvent('Forgot Password Clicked', { location: 'Login Page' })
+                      }
+                    >
                       Forgot Password?
                     </Button>
 
                     <p style={{ textAlign: 'center' }}>
                       <small>
                         Don&apos;t have an account yet?{' '}
-                        <Link to="/signup">
+                        <Link
+                          to="/signup"
+                          onClick={() =>
+                            trackEvent('Sign Up Now Link Clicked', { location: 'Login Page' })
+                          }
+                        >
                           Sign up now <FaArrowRight />
                         </Link>
                       </small>
@@ -112,11 +159,7 @@ const Login: FunctionComponent<LoginProps> = () => {
             </FlexContainer>
           </Column>
           <Column xs={10} xsOffset={1} sm={8} smOffset={2} md={5} lg={4} lgOffset={2}>
-            {typeof window !== 'undefined' && (
-              <FirebaseAuthWrapper>
-                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-              </FirebaseAuthWrapper>
-            )}
+            {typeof window !== 'undefined' && <FirebaseAuthWrapper />}
           </Column>
         </Row>
       </Box>

@@ -12,12 +12,8 @@ export default function HTML(props) {
         <link
           rel="stylesheet"
           type="text/css"
+          media="all"
           href="https://cloud.typography.com/7222118/6340832/css/fonts.css"
-        />
-
-        <script
-          type="text/javascript"
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places`}
         />
       </head>
       <body {...props.bodyAttributes}>

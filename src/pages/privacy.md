@@ -2,7 +2,7 @@
 templateKey: 'privacy'
 path: /privacy
 title: Privacy Policy
-heroImage: /img/mountains_day.jpg
+heroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244555/getpackup/chamonix-chrisbrinleejr-sep17-78.jpg
 ---
 
 ###### Last updated March 31, 2021

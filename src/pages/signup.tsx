@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { navigate, Link } from 'gatsby';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { FaArrowRight } from 'react-icons/fa';
-import firebase from 'gatsby-plugin-firebase';
-import { useDispatch } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Row,
@@ -18,29 +17,35 @@ import {
   Heading,
   FlexContainer,
   FirebaseAuthWrapper,
-  uiConfig,
 } from '@components';
-
 import { requiredField } from '@utils/validations';
-import useAuthState from '@utils/useFirebaseAuth';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { RootState } from '@redux/ducks';
+import validateUsername from '@utils/validateUsername';
+import trackEvent from '@utils/trackEvent';
 
 type SignupProps = {};
 
 const Signup: FunctionComponent<SignupProps> = () => {
-  const [authUser, authLoading, authError] = useAuthState(firebase);
+  const firebase = useFirebase();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
   const dispatch = useDispatch();
 
-  if (!!authUser && !authLoading && !authError) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (!!auth && auth.isLoaded && !auth.isEmpty) {
     navigate('/app/trips');
   }
 
   const initialValues = {
-    firstName: '',
-    lastName: '',
+    displayName: '',
+    username: '',
     email: '',
     password: '',
-    confirmPassword: '',
+    photoURL: '',
+    bio: '',
+    website: '',
+    location: '',
   };
 
   return (
@@ -59,59 +64,94 @@ const Signup: FunctionComponent<SignupProps> = () => {
                 validateOnMount
                 initialValues={initialValues}
                 onSubmit={(values, { setSubmitting }) => {
+                  setIsLoading(true);
                   firebase
                     .auth()
                     .createUserWithEmailAndPassword(values.email, values.password)
                     .then((result: any) => {
+                      trackEvent('New User Signed Up', { email: values.email });
                       if (result.user) {
-                        // firebase
-                        //   .firestore()
-                        //   .collection('users')
-                        //   .doc(result.user.uid)
-                        //   .set({
-                        //     email: values.email,
-                        //     firstName: values.firstName,
-                        //     lastName: values.lastName,
-                        //   });
+                        return firebase
+                          .firestore()
+                          .collection('users')
+                          .doc(result.user.uid)
+                          .set({
+                            // don't spread, we dont want password in here
+                            uid: result.user.uid,
+                            email: values.email,
+                            displayName: values.displayName,
+                            username: values.username,
+                            photoURL: '',
+                            bio: '',
+                            website: '',
+                            location: '',
+                            lastUpdated: new Date(),
+                          })
+                          .then(() => {
+                            trackEvent('New User Signed Up And Created Profile', {
+                              email: values.email,
+                            });
+                          })
+                          .catch((err) => {
+                            trackEvent('New User Signed Up And Profile Creation Failed', {
+                              email: values.email,
+                              error: err,
+                            });
+                            dispatch(
+                              addAlert({
+                                type: 'danger',
+                                message: err.message,
+                              })
+                            );
+                          });
                       }
+                      return Promise.resolve();
                     })
                     .catch((err) => {
+                      trackEvent('New User Sign Up Failed', {
+                        email: values.email,
+                        error: err,
+                      });
                       dispatch(
                         addAlert({
                           type: 'danger',
                           message: err.message,
                         })
                       );
+                    })
+                    .finally(() => {
+                      setIsLoading(false);
+                      setSubmitting(false);
                     });
-                  setSubmitting(false);
                 }}
               >
-                {({ isSubmitting, isValid }) => (
+                {({ isSubmitting, isValid, errors, values }) => (
                   <Form>
-                    <Row>
-                      <Column sm={6}>
-                        <Field
-                          as={Input}
-                          type="text"
-                          name="firstName"
-                          label="First Name"
-                          validate={requiredField}
-                          required
-                          hiddenLabel
-                        />
-                      </Column>
-                      <Column sm={6}>
-                        <Field
-                          as={Input}
-                          type="text"
-                          name="lastName"
-                          label="Last Name"
-                          validate={requiredField}
-                          required
-                          hiddenLabel
-                        />
-                      </Column>
-                    </Row>
+                    <Field
+                      as={Input}
+                      type="text"
+                      name="displayName"
+                      label="Full Name"
+                      validate={requiredField}
+                      required
+                      hiddenLabel
+                    />
+
+                    <Field
+                      as={Input}
+                      type="text"
+                      name="username"
+                      label="Username"
+                      validate={(value: string) => validateUsername(value, firebase, auth.uid, '')}
+                      required
+                      hiddenLabel
+                      helpText={
+                        values.username.length > 3 && !errors.username
+                          ? `${values.username} is available!`
+                          : ''
+                      }
+                    />
+
                     <Field
                       as={Input}
                       type="email"
@@ -130,27 +170,15 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       required
                       hiddenLabel
                     />
-                    <Field
-                      as={Input}
-                      type="password"
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      validate={requiredField}
-                      required
-                      hiddenLabel
-                    />
                     <p>
-                      <Button type="submit" disabled={isSubmitting || !isValid} block>
-                        Sign Up
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting || !isValid || isLoading}
+                        isLoading={isLoading}
+                        block
+                      >
+                        {isLoading ? 'Loading' : 'Sign Up'}
                       </Button>
-                    </p>
-                    <p style={{ textAlign: 'center' }}>
-                      <small>
-                        Already have an account?{' '}
-                        <Link to="/login">
-                          Login now <FaArrowRight />
-                        </Link>
-                      </small>
                     </p>
                   </Form>
                 )}
@@ -162,14 +190,18 @@ const Signup: FunctionComponent<SignupProps> = () => {
               <p>
                 <small>Or, sign up with one of the following:</small>
               </p>
-              {typeof window !== 'undefined' && (
-                <FirebaseAuthWrapper>
-                  <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-                </FirebaseAuthWrapper>
-              )}
+              {typeof window !== 'undefined' && <FirebaseAuthWrapper />}
             </FlexContainer>
           </Column>
         </Row>
+        <p style={{ textAlign: 'center' }}>
+          <small>
+            Already have an account?{' '}
+            <Link to="/login">
+              Log in now <FaArrowRight />
+            </Link>
+          </small>
+        </p>
       </Box>
     </PageContainer>
   );

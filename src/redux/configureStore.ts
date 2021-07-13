@@ -13,6 +13,7 @@ import logger from '@redux/middleware/logger';
 import oauth from '@redux/middleware/oauth';
 import requestHeaders from '@redux/middleware/requestHeaders';
 import errorCatcher from '@redux/middleware/errorCatcher';
+import { initialState as clientInitialState } from '@redux/ducks/client';
 import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
 
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
@@ -51,7 +52,10 @@ const makeConfiguredStore = (reducer: any, initialState: any) => {
 };
 
 const configureStore = (
-  initialState: string | RootState = { globalAlerts: globalAlertsInitialState }
+  initialState: string | RootState = {
+    client: clientInitialState,
+    globalAlerts: globalAlertsInitialState,
+  }
 ) => {
   const store = { ...makeConfiguredStore(rootReducer, initialState) };
   const persistor = persistStore(store);

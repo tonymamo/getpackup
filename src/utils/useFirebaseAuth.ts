@@ -21,6 +21,7 @@ export default function useAuthState(
     | { type: 'error'; error: firebase.auth.Error };
 
   const [state, dispatch] = useReducer(
+    // eslint-disable-next-line no-shadow
     (state: State, action: Action) => {
       switch (action.type) {
         case 'auth_state_changed':
@@ -34,6 +35,10 @@ export default function useAuthState(
             ...state,
             error: action.error,
             loading: false,
+          };
+        default:
+          return {
+            ...state,
           };
       }
     },
@@ -52,13 +57,15 @@ export default function useAuthState(
 
     const unsubscribe = auth.onAuthStateChanged(
       (user): void => {
-        dispatch({ type: 'auth_state_changed', user });
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        dispatch({ type: 'auth_state_changed', user: user! });
       },
-      (error: auth.Error): void => {
+      (error: firebase.auth.Error): void => {
         dispatch({ type: 'error', error });
       }
     );
 
+    // eslint-disable-next-line consistent-return
     return (): void => {
       unsubscribe();
     };

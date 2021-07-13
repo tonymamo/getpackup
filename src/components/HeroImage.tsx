@@ -1,30 +1,26 @@
-import { FluidObject } from 'gatsby-image';
+/* eslint-disable no-nested-ternary */
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 import { white } from '@styles/color';
-import { screenSizes, doubleSpacer } from '@styles/size';
 import useWindowSize from '@utils/useWindowSize';
-import { ClientOnly, PreviewCompatibleImage } from '@components';
+import { PreviewCompatibleImage } from '@components';
+import { FluidImageType } from '@common/image';
+import { baseSpacer } from '@styles/size';
+import { zIndexHeroImage } from '@styles/layers';
 
-type FullBleedImageProps = {
-  imgSrc:
-    | {
-        childImageSharp: {
-          fluid: FluidObject;
-        };
-      }
-    | string;
-  mobileImgSrc?: {
-    childImageSharp: {
-      fluid: FluidObject;
-    };
-  };
+type HeroImageProps = {
+  imgSrc?: FluidImageType;
+  mobileImgSrc?: FluidImageType;
+  staticImgSrc?: string;
+  aspectRatio?: number;
+  justifyContent?: CSSProperties['justifyContent'];
+  alignItems?: CSSProperties['alignItems'];
 };
 
 const HeroImageWrapper = styled.div`
   position: relative;
-  min-height: 200px;
+  min-height: ${(props: { aspectRatio: number }) => `calc(100vw / ${props.aspectRatio})`};
 `;
 
 const ChildrenWrapper = styled.div`
@@ -33,12 +29,13 @@ const ChildrenWrapper = styled.div`
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: ${(props: HeroImageProps) => props.justifyContent || 'center'};
+  align-items: ${(props: HeroImageProps) => props.alignItems || 'center'};
   height: 100%;
   text-align: center;
   color: ${white};
-  padding: 0 ${doubleSpacer};
+  padding: ${baseSpacer};
+  z-index: ${zIndexHeroImage};
 
   & h1,
   & p {
@@ -46,27 +43,44 @@ const ChildrenWrapper = styled.div`
   }
 `;
 
-const FullBleedImage: FunctionComponent<FullBleedImageProps> = ({
+const HeroImage: FunctionComponent<HeroImageProps> = ({
   imgSrc,
   children,
   mobileImgSrc,
+  staticImgSrc,
+  aspectRatio,
+  justifyContent,
+  alignItems,
 }) => {
   const size = useWindowSize();
-  const isSmallScreen = Boolean(size && size.width && size.width < screenSizes.small);
 
   return (
-    <HeroImageWrapper>
-      <ClientOnly>
-        <PreviewCompatibleImage
-          imageInfo={{
-            image: isSmallScreen && mobileImgSrc ? mobileImgSrc : imgSrc,
-            alt: '',
-          }}
-        />
-      </ClientOnly>
-      <ChildrenWrapper>{children}</ChildrenWrapper>
+    <HeroImageWrapper
+      aspectRatio={
+        aspectRatio || // if a specific aspectRatio is passed in use that, otherwise use fluid image ratios. default to 16/9 if nothing is there
+        (size.isExtraSmallScreen && mobileImgSrc
+          ? mobileImgSrc.fluid.aspectRatio
+          : imgSrc && imgSrc.fluid
+          ? imgSrc.fluid.aspectRatio
+          : 16 / 9)
+      }
+    >
+      <PreviewCompatibleImage
+        imageInfo={{
+          image:
+            imgSrc || mobileImgSrc // if imgSrc or mobileImgSrc, use one of those, otherwise that means a staticImgSrc was passed in
+              ? size.isExtraSmallScreen && mobileImgSrc
+                ? (mobileImgSrc as FluidImageType)
+                : (imgSrc as FluidImageType)
+              : (staticImgSrc as string),
+          alt: '',
+        }}
+      />
+      <ChildrenWrapper justifyContent={justifyContent} alignItems={alignItems}>
+        {children}
+      </ChildrenWrapper>
     </HeroImageWrapper>
   );
 };
 
-export default FullBleedImage;
+export default HeroImage;

@@ -15,6 +15,7 @@ export const fontSizeH6 = '1.132em';
 
 export const fontSizeBase = '1em';
 export const fontSizeSmall = '.85em';
+export const fontSizeXSmall = '.75em';
 
 export const lineHeightBase = '1.5';
 export const lineHeightSmall = '1.1';

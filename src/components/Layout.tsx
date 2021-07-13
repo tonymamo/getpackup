@@ -1,15 +1,16 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons';
+import Modal from 'react-modal';
 import { Link } from 'gatsby';
 import CookieConsent from 'react-cookie-consent';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Footer, Navbar, GlobalAlerts } from '@components';
+import { ErrorBoundary, Footer, Navbar, GlobalAlerts } from '@components';
 import { quadrupleSpacer } from '@styles/size';
 import { brandPrimary, black, white } from '@styles/color';
 import CssReset from '@styles/cssReset';
-import topo from '@images/topo.png';
+import UpploadTheme from '@styles/upploadTheme';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -21,26 +22,47 @@ const LayoutWrapper = styled.div`
 
 const PageBody = styled.main`
   flex: 1;
-  margin-top: ${quadrupleSpacer};
-  background-image: url('${topo}');
-  background-color: ${white};
-  background-size: 500px;
+  padding-top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
+  padding-bottom: calc(${quadrupleSpacer} + env(safe-area-inset-bottom));
 `;
+
+// const InstallBanner = styled.div`
+//   @media all and (display-mode: standalone) {
+//     display: none;
+//   }
+// `;
 
 type LayoutProps = {
   hideFromCms?: boolean;
 };
 
 const Layout: FunctionComponent<LayoutProps> = (props) => {
+  // useEffect(() => {
+  //   if (window.matchMedia('(display-mode: standalone)').matches) {
+  //     console.log('This is running as standalone.');
+  //   }
+  //   if (window.matchMedia('(display-mode: browser)').matches) {
+  //     console.log('This is running as browser.');
+  //   }
+  // }, []);
+  useEffect(() => {
+    if (!props.hideFromCms) {
+      Modal.setAppElement('#___gatsby');
+    }
+  }, []);
   return (
     <>
       <CssReset />
+      <UpploadTheme />
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
         <LayoutWrapper>
+          {/* <InstallBanner>hello</InstallBanner> */}
           {!props.hideFromCms && <Navbar />}
-          <PageBody>{props.children}</PageBody>
+          <PageBody>
+            <ErrorBoundary>{props.children}</ErrorBoundary>
+          </PageBody>
           {!props.hideFromCms && <GlobalAlerts />}
-          <Footer />
+          {!props.hideFromCms && <Footer />}
         </LayoutWrapper>
         <CookieConsent
           location="bottom"

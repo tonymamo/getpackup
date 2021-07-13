@@ -4,7 +4,7 @@ title: 'Meet The Team - Taylor Burk '
 date: 2020-09-10T19:45:07.805Z
 description: 'A brief introduction to our team members. '
 featuredpost: false
-featuredimage: /img/j_kelsey_20191023_0625-2.jpg
+featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1617244554/getpackup/j_kelsey_20191023_0625-2.jpg
 tags:
   - Taylor Burk
   - meet the team
@@ -14,7 +14,7 @@ tags:
 
 Meet Taylor Burk, one of the co-founders of packup. Taylor is a full-time professional photographer in the outdoor adventure & travel space. Utilizing Instagram as a way to market himself, he has been able to gain popularity and secure many sponsors and clients from around the world. His work is not only a representation of his skill, but a testament to the deep affinity for nature he possesses. When he’s not traversing the globe, Burk keeps busy exploring his new home of Gibsons, British Columbia.
 
-![Packup co-founder Taylor Burk in a pack raft](/img/laventa-chrisbrinleejr-apr19-12.jpg)
+![Packup co-founder Taylor Burk in a pack raft](https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/laventa-chrisbrinleejr-apr19-12.jpg)
 
 **Worst experience in the backcountry?**
 
@@ -36,7 +36,7 @@ Socotra Island, Yemen. It’s like something out of a Dr. Seuss book. Seriously,
 
 Backpacking, Biking, Backcountry skiing, Climbing, Running (love/hate), Hiking, Paddling. Pretty much anything that keeps me active and provides a challenge.
 
-![Taylor Burk walking along a knife edge arete](/img/chamonix-chrisbrinleejr-sep17-78.jpg)
+![Taylor Burk walking along a knife edge arete](https://res.cloudinary.com/getpackup/image/upload/v1617244555/getpackup/chamonix-chrisbrinleejr-sep17-78.jpg)
 
 **What is one item that you couldn't live without?**
 

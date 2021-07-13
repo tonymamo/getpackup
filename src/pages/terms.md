@@ -2,7 +2,7 @@
 templateKey: 'terms'
 path: /terms
 title: Terms of Use
-heroImage: /img/mountains_day.jpg
+heroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244547/getpackup/044a8633.jpg
 ---
 
 ###### Last updated March 31, 2021
