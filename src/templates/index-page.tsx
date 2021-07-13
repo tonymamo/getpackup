@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { navigate, graphql } from 'gatsby';
 import Typewriter from 'typewriter-effect';
 import styled, { keyframes } from 'styled-components';
@@ -18,7 +18,6 @@ import {
   Testimonial,
   ClientOnly,
   PreviewCompatibleImage,
-  LoadingPage,
   BlogRoll,
 } from '@components';
 import {
@@ -192,13 +191,11 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const size = useWindowSize();
 
-  if (!!auth && auth.isLoaded && !auth.isEmpty) {
-    navigate('/app/trips');
-  }
-
-  if (!auth.isLoaded) {
-    return <LoadingPage />;
-  }
+  useEffect(() => {
+    if (auth.isLoaded && !auth.isEmpty) {
+      navigate('/app/trips');
+    }
+  }, [auth]);
 
   return (
     <>

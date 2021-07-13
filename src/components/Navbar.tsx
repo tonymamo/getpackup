@@ -259,7 +259,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 onClick={() => trackEvent('Navbar SmallScreen Logo Clicked', { isAuthenticated })}
               >
                 <img src={yak} alt="" width={tripleSpacer} />
-                packup
+                packup<sup>beta</sup>
               </Link>
             </Heading>
           )}
