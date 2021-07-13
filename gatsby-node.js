@@ -126,15 +126,13 @@ exports.createPages = ({ actions, graphql }) => {
         const { id } = edge.node;
         createPage({
           // sometimes slug doesn't have /blog at beginning on Test environment, so force it this way
-          // for whatever reason, need the trailing slash after blog at the beginning,
-          // but not below on the slug in context
           path: `/blog/${edge.node.fields.slug.replace('/blog/', '')}`,
           component: path.resolve(`src/templates/blog-post.tsx`),
           // additional data can be passed via context
           context: {
             id,
             // sometimes slug doesn't have /blog at beginning on Test environment, so force it this way
-            slug: `/blog${edge.node.fields.slug.replace('/blog/', '')}`,
+            slug: `/blog/${edge.node.fields.slug.replace('/blog/', '')}`,
             prev: index === 0 ? blogPosts[blogPosts.length - 1].node : blogPosts[index - 1].node,
             next: index === blogPosts.length - 1 ? blogPosts[0].node : blogPosts[index + 1].node,
           },
