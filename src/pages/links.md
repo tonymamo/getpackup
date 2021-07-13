@@ -1,6 +1,9 @@
 ---
 templateKey: links-page
 linksList:
+  - linkUrl: getpackup.com
+    linkText: Sign up for packup
+    thumbnail: https://getpackup.com/static/maskable_icon-ed499377bf4acd3b54ed8182bb1dc84b.png
   - linkUrl: /
     linkText: What is packup?
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
@@ -13,7 +16,4 @@ linksList:
   - linkUrl: /blog/2020-11-23-suv-sleeping-platform-a-diy-guide-to-sleeping-inside/
     linkText: "Blog Post: SUV Sleeping Platform - A DIY Guide to Sleeping Inside"
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244547/getpackup/dscf6808.jpg
-  - linkUrl: getpackup.com
-    linkText: Sign up for packup
-    thumbnail: https://getpackup.com/static/maskable_icon-ed499377bf4acd3b54ed8182bb1dc84b.png
 ---
