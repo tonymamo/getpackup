@@ -22,7 +22,7 @@ const LayoutWrapper = styled.div`
 
 const PageBody = styled.main`
   flex: 1;
-  margin-top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
+  padding-top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
   padding-bottom: calc(${quadrupleSpacer} + env(safe-area-inset-bottom));
 `;
 

@@ -21,7 +21,7 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import usePrevious from '@utils/usePrevious';
 
 type TripHeaderImageProps = {
-  id: string;
+  id?: string;
 } & RouteComponentProps;
 
 const ImageOption = styled.img`
@@ -141,7 +141,7 @@ const AddTripHeaderImage: FunctionComponent<TripHeaderImageProps> = (props) => {
 
       {activeTrip ? (
         <>
-          <HeroImageUpload type="trip" id={props.id} image={activeTrip?.headerImage} />
+          <HeroImageUpload type="trip" id={props.id as string} image={activeTrip?.headerImage} />
           <p style={{ textAlign: 'center' }}>
             Or choose from one below, all courtesy of{' '}
             <a href="https://www.taylorburk.com/" target="_blank" rel="noopener noreferrer">
