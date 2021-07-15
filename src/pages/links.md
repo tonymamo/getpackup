@@ -1,7 +1,7 @@
 ---
 templateKey: links-page
 linksList:
-  - linkUrl: /
+  - linkUrl: /signup
     linkText: Sign up for packup
     thumbnail: https://getpackup.com/static/maskable_icon-ed499377bf4acd3b54ed8182bb1dc84b.png
   - linkUrl: /about
