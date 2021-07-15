@@ -7,6 +7,9 @@ linksList:
   - linkUrl: /
     linkText: What is packup?
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
+  - linkText: Packup Blog
+    thumbnail: https://getpackup.com/blog
+    linkUrl: https://getpackup.com/blog
   - linkUrl: https://www.chrisistace.com/packup-app-adventure-made-easy/
     linkText: "Blog Post: Mindful Explorer, Chris Istace shares his thoughts on packup"
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/screen-shot-2021-02-17-at-2.21.53-pm.png
