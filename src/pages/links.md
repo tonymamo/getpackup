@@ -1,10 +1,10 @@
 ---
 templateKey: links-page
 linksList:
-  - linkUrl: /
+  - linkUrl: /signup
     linkText: Sign up for packup
     thumbnail: https://getpackup.com/static/maskable_icon-ed499377bf4acd3b54ed8182bb1dc84b.png
-  - linkUrl: /
+  - linkUrl: /about
     linkText: What is packup?
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
   - linkUrl: https://www.chrisistace.com/packup-app-adventure-made-easy/
