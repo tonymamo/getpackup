@@ -60,7 +60,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
       .firestore()
       .collection('gear')
       .doc(props.initialValues.id)
-      .set({
+      .update({
         ...values,
         updated: new Date(),
       })

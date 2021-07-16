@@ -79,7 +79,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
         .doc(auth.uid)
         .collection('additions')
         .doc(props.id)
-        .set({
+        .update({
           ...values,
           isCustomGearItem: true,
           updated: new Date(),

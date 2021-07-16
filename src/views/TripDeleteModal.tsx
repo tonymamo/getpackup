@@ -28,13 +28,15 @@ const TripDeleteModal: FunctionComponent<TripDeleteModalProps> = ({
         .firestore()
         .collection('trips')
         .doc(tripId)
-        .delete()
+        .update({
+          archived: true,
+        })
         .then(() => {
-          trackEvent('Trip Deleted Successfully', { tripId });
+          trackEvent('Trip Archived Successfully', { tripId });
           navigate('/app/trips');
         })
         .catch((err) => {
-          trackEvent('Trip Delete Failure', { tripId, error: err });
+          trackEvent('Trip Archive Failure', { tripId, error: err });
           dispatch(
             addAlert({
               type: 'danger',

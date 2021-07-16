@@ -100,7 +100,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
         .firestore()
         .collection('trips')
         .doc(activeTrip.tripId)
-        .set({
+        .update({
           ...activeTrip,
           updated: new Date(),
           tripMembers: [...activeTrip.tripMembers, memberId],

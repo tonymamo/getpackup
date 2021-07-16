@@ -60,7 +60,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
         .firestore()
         .collection('trips')
         .doc(activeTrip.tripId)
-        .set({
+        .update({
           ...updatedValues,
         })
         .then(() => {

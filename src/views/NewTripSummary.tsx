@@ -5,13 +5,14 @@ import { useSelector } from 'react-redux';
 import { Heading, PageContainer } from '@components';
 import { RootState } from '@redux/ducks';
 import TripSummaryForm from '@views/TripSummaryForm';
+import { TripFormType } from '@common/trip';
 
 type NewTripSummaryProps = {} & RouteComponentProps;
 
 const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
 
-  const initialValues = {
+  const initialValues: TripFormType = {
     owner: auth.uid,
     tripId: '',
     name: '',
@@ -26,6 +27,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
     season: undefined,
     lat: 0,
     lng: 0,
+    archived: false,
   };
 
   return (

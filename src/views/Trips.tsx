@@ -22,7 +22,10 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   useFirestoreConnect([
     {
       collection: 'trips',
-      where: ['owner', '==', auth.uid],
+      where: [
+        ['owner', '==', auth.uid],
+        ['archived', '!=', true],
+      ],
       populates: [{ child: 'tripMembers', root: 'users' }],
     },
     {
