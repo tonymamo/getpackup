@@ -2,7 +2,7 @@ import React, { FunctionComponent, useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
-import * as icons from 'react-icons/all';
+import { IconType } from 'react-icons/lib';
 
 import {
   Seo,
@@ -85,9 +85,8 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
       });
   };
 
-  const renderDynamicIcon = (comboName: string) => {
-    const [, iconName] = comboName.split('/');
-    const Icon = icons[iconName];
+  const renderDynamicIcon = (icon: IconType) => {
+    const Icon = icon;
     return <Icon color={lightGray} size={tripleSpacer} />;
   };
 

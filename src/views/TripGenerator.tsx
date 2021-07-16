@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import uniqBy from 'lodash/uniqBy';
 import { FaCheckCircle, FaPlusSquare } from 'react-icons/fa';
-import * as icons from 'react-icons/all';
+import Skeleton from 'react-loading-skeleton';
+import { IconType } from 'react-icons';
 
 import {
   Heading,
@@ -38,7 +39,6 @@ import trackEvent from '@utils/trackEvent';
 import { IconWrapperLabel, IconCheckboxLabel } from '@components/IconCheckbox';
 import { baseSpacer, doubleSpacer, sextupleSpacer, tripleSpacer } from '@styles/size';
 import { lightGray } from '@styles/color';
-import Skeleton from 'react-loading-skeleton';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -194,9 +194,8 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
     ));
   };
 
-  const renderDynamicIcon = (comboName: string) => {
-    const [, iconName] = comboName.split('/');
-    const Icon = icons[iconName];
+  const renderDynamicIcon = (icon: IconType) => {
+    const Icon = icon;
     return <Icon color={lightGray} size={tripleSpacer} />;
   };
 

@@ -1,3 +1,5 @@
+import { IconType } from 'react-icons/lib';
+
 // TODO: figure out how to not need to repeat this list in ActivityTypes type
 export const activityTypesList: Array<keyof ActivityTypes> = [
   'airplane',
@@ -108,5 +110,5 @@ export type GearItemType = {
 export type GearListEnumType = Array<{
   name: keyof ActivityTypes;
   label: string;
-  icon: string;
+  icon: IconType;
 }>;

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { useField, FieldMetaProps, FormikHelpers } from 'formik';
-import * as icons from 'react-icons/all';
+import { IconType } from 'react-icons';
 
 import { brandPrimary, lightGray, textColor } from '@styles/color';
 import { doubleSpacer, baseSpacer, tripleSpacer } from '@styles/size';
@@ -11,7 +11,7 @@ type IconCheckboxProps = {
   id?: string;
   name: string;
   checked?: boolean;
-  icon: string;
+  icon: IconType;
   label?: string;
   onChange: () => void;
 } & FieldMetaProps<string> &
@@ -51,11 +51,7 @@ const IconCheckbox: FunctionComponent<IconCheckboxProps> = (props) => {
   // which we can spread on <input> and also replace ErrorMessage entirely.
   const [field, meta] = useField<string>(props.name);
 
-  const renderDynamicIcon = (comboName: string) => {
-    const [, iconName] = comboName.split('/');
-    const Icon = icons[iconName];
-    return <Icon color={props.checked ? brandPrimary : lightGray} size={tripleSpacer} />;
-  };
+  const Icon = props.icon;
 
   return (
     <>
@@ -69,7 +65,7 @@ const IconCheckbox: FunctionComponent<IconCheckboxProps> = (props) => {
         onChange={props.onChange}
       />
       <IconWrapperLabel htmlFor={props.name} checked={props.checked}>
-        {renderDynamicIcon(props.icon)}
+        <Icon color={props.checked ? brandPrimary : lightGray} size={tripleSpacer} />
         {props.label && (
           <IconCheckboxLabel checked={props.checked}>{props.label}</IconCheckboxLabel>
         )}
