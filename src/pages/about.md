@@ -4,8 +4,6 @@ path: /about
 title: Our Story
 heroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/mountains_day.jpg
 ---
-### Our Story
-
 During a complex multi-day ski traverse along the Wapta Icefield, the idea for our app originally sparked. After a lengthy pre-trip planning and packing process for our group (four friends spread across four different cities), we were inspired to create a platform that could reduce friction in the packing process for future adventures. 
 
 ### Our Mission
