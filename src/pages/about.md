@@ -18,6 +18,8 @@ Our suite of trip preparation and packing tools, along with contributions from a
 
 # The Team
 
+<br></br>
+
 #### Taylor Burk
 
 ![](/img/j_kelsey_20191023_0625-2.jpg)
