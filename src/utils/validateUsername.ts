@@ -1,4 +1,10 @@
-import { ExtendedFirebaseInstance } from 'react-redux-firebase';
+import algoliasearch from 'algoliasearch';
+
+const algoliaClient = algoliasearch(
+  process.env.GATSBY_ALGOLIA_APP_ID as string,
+  process.env.GATSBY_ALGOLIA_SEARCH_API_KEY as string
+);
+const searchIndex = algoliaClient.initIndex('Users');
 
 const reservedRouteNamesThatCannotBeUsernames = [
   'about',
@@ -17,12 +23,7 @@ const reservedRouteNamesThatCannotBeUsernames = [
   'app',
 ];
 
-const validateUsername = async (
-  value: string,
-  firebase: ExtendedFirebaseInstance,
-  loggedInUserUID: string,
-  initialValue: string
-) => {
+const validateUsername = async (value: string, initialValue: string) => {
   if (value === '' || value === initialValue) {
     // return out early to avoid api calls below
     return undefined;
@@ -34,24 +35,14 @@ const validateUsername = async (
 
   const searchValue = value.toLowerCase();
 
-  const response = await firebase
-    .firestore()
-    .collection('users')
-    .orderBy(`searchableIndex.${searchValue}`)
-    .limit(5)
-    .get();
-  const existingUsernames: Array<any> = [];
-
-  if (!response.empty) {
-    response.forEach((doc) => existingUsernames.push(doc.data()));
-  }
+  const response = await searchIndex.search(searchValue, {
+    restrictSearchableAttributes: ['username'],
+    typoTolerance: false,
+    filters: `username:${searchValue}`,
+  });
 
   let error;
-  if (
-    reservedRouteNamesThatCannotBeUsernames.includes(searchValue) ||
-    existingUsernames.filter((user) => user.uid !== loggedInUserUID && user.username === value)
-      .length > 0
-  ) {
+  if (reservedRouteNamesThatCannotBeUsernames.includes(searchValue) || response.nbHits !== 0) {
     error = `Sorry, ${value} is unavailable`;
   }
   return error;
