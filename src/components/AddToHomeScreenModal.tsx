@@ -58,7 +58,7 @@ const AddToHomeScreenModal = () => {
       ) {
         setOpened(true);
       }
-    }, 5000);
+    }, 60000);
     return () => {
       if (t) clearTimeout(t);
     };

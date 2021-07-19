@@ -207,7 +207,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         label="Username"
                         hiddenLabel
                         validate={(value: string) =>
-                          validateUsername(value, firebase, '', initialValues.username)
+                          validateUsername(value, initialValues.username)
                         }
                         required
                         helpText={
