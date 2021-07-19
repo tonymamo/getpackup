@@ -13,6 +13,7 @@ class ErrorBoundary extends Component<Props, {}> {
   render() {
     return (
       <Sentry.ErrorBoundary
+        showDialog
         fallback={({ error, componentStack, resetError }) => (
           <PageContainer>
             <Row>
