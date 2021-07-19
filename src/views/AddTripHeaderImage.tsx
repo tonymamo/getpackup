@@ -60,7 +60,7 @@ const AddTripHeaderImage: FunctionComponent<TripHeaderImageProps> = (props) => {
   const predefinedChoices = [
     // 'https://res.cloudinary.com/getpackup/image/upload/c_fill,g_north,h_512,w_2048/v1617244552/getpackup/0f1a2062-3.jpg',
     // 'https://res.cloudinary.com/getpackup/image/upload/c_fill,g_south,h_512,w_2048/v1617244549/getpackup/044a8781.jpg',
-    // 'https://res.cloudinary.com/getpackup/image/upload/c_fill,h_512,w_2048/v1617244550/getpackup/044a9077-2-2.jpg',
+    'https://res.cloudinary.com/getpackup/image/upload/c_fill,h_512,w_2048/v1617244550/getpackup/044a9077-2-2.jpg',
     // 'https://res.cloudinary.com/getpackup/image/upload/c_fill,g_south,h_512,w_2048/v1617244547/getpackup/044A0009-2.jpg',
     // 'https://res.cloudinary.com/getpackup/image/upload/c_fill,h_512,w_2048/v1617244545/getpackup/SnowboarderCuttingTracksOnTheEdgeOfTheShadowOnVirginSnow.jpg',
     // 'https://res.cloudinary.com/getpackup/image/upload/c_fill,g_north,h_512,w_2048/v1617244556/getpackup/WatertonHike.jpg',
@@ -142,17 +142,17 @@ const AddTripHeaderImage: FunctionComponent<TripHeaderImageProps> = (props) => {
       {activeTrip ? (
         <>
           <HeroImageUpload type="trip" id={props.id as string} image={activeTrip?.headerImage} />
-          <p style={{ textAlign: 'center' }}>
-            Or choose from one below, all courtesy of{' '}
-            <a href="https://www.taylorburk.com/" target="_blank" rel="noopener noreferrer">
-              Taylor Burk Photography
-            </a>
-            :
-          </p>
+          <p style={{ textAlign: 'center' }}>Or choose from one below:</p>
 
           {predefinedChoices.map((img, index) => (
             <ImageOption src={img} alt="" key={img} onClick={() => updateTripImage(index)} />
           ))}
+          <p>
+            All photos courtesy of{' '}
+            <a href="https://www.taylorburk.com/" target="_blank" rel="noopener noreferrer">
+              Taylor Burk Photography
+            </a>
+          </p>
         </>
       ) : (
         <LoadingPage />
