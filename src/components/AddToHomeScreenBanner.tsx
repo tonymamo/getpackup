@@ -1,10 +1,38 @@
 /* eslint-disable no-console */
-import React, { useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import differenceInDays from 'date-fns/differenceInDays';
+import styled from 'styled-components';
+import { FaTimes } from 'react-icons/fa';
 
-import { Modal, Heading, Button } from '@components';
+import { Button, FlexContainer } from '@components';
+import logo from '@images/maskable_icon.png';
+import { doubleSpacer, halfSpacer } from '@styles/size';
+import { white } from '@styles/color';
+import { zIndexModal } from '@styles/layers';
+import { useSelector } from 'react-redux';
+import { RootState } from '@redux/ducks';
 
-const AddToHomeScreenModal = () => {
+const AddToHomeScreenWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: ${white};
+  z-index: ${zIndexModal};
+  padding: ${halfSpacer};
+`;
+
+const StyledImage = styled.img`
+  width: ${doubleSpacer};
+  height: ${doubleSpacer};
+  margin-right: ${halfSpacer};
+  border-radius: ${halfSpacer};
+`;
+
+const AddToHomeScreenBanner: FunctionComponent<{}> = () => {
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const trips = useSelector((state: RootState) => state.firestore.ordered.trips);
+  const isAuthenticated = auth && !auth.isEmpty;
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setOpened] = useState(false);
 
@@ -49,8 +77,12 @@ const AddToHomeScreenModal = () => {
         console.log('isIOS: ', isIos());
         console.log('isInStandaloneMode: ', isInStandaloneMode());
         console.log('checkLastPwaDisplay: ', checkLastPwaDisplay());
+        setOpened(true);
       }
       if (
+        isAuthenticated &&
+        trips &&
+        trips.length > 0 &&
         isIos() &&
         !isInStandaloneMode() &&
         checkLastPwaDisplay() &&
@@ -58,7 +90,7 @@ const AddToHomeScreenModal = () => {
       ) {
         setOpened(true);
       }
-    }, 60000);
+    }, 5000);
     return () => {
       if (t) clearTimeout(t);
     };
@@ -67,17 +99,32 @@ const AddToHomeScreenModal = () => {
   if (!isLoaded) return null;
 
   return isOpen ? (
-    <Modal isOpen={isOpen} toggleModal={() => saveLastPwaDisplay()}>
-      <Heading altStyle>Add To Home Screen</Heading>
-      <p>Want to add this app to your home screen so you can get to it easier next time?</p>
-      <Button type="link" to="/install" color="primary" block onClick={() => saveLastPwaDisplay()}>
-        Show me how!
-      </Button>
-      <Button type="button" color="text" block onClick={() => saveLastPwaDisplay()}>
-        Nah, I&apos;m good
-      </Button>
-    </Modal>
+    <AddToHomeScreenWrapper>
+      <FlexContainer justifyContent="space-between">
+        <FlexContainer>
+          <StyledImage src={logo} alt="" />
+          <span style={{ lineHeight: 1 }}>
+            <strong>packup</strong>
+            <br />
+            <small>Adventure made easy.</small>
+          </span>
+        </FlexContainer>
+        <FlexContainer>
+          <Button
+            type="link"
+            to="/install"
+            onClick={() => saveLastPwaDisplay()}
+            size="small"
+            color="success"
+            rightSpacer
+          >
+            Install
+          </Button>
+          <FaTimes onClick={() => saveLastPwaDisplay()} />
+        </FlexContainer>
+      </FlexContainer>
+    </AddToHomeScreenWrapper>
   ) : null;
 };
 
-export default AddToHomeScreenModal;
+export default AddToHomeScreenBanner;

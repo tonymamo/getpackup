@@ -39,7 +39,7 @@ export const gearListCategories = [
   { value: 'Outerwear', label: 'Outerwear' },
   { value: 'Food & Water', label: 'Food & Water' },
   { value: 'Personal', label: 'Personal' },
-  { value: 'Accomodation', label: 'Accomodation' },
+  { value: 'Accommodation', label: 'Accommodation' },
   { value: 'Camp Kitchen', label: 'Camp Kitchen' },
   { value: 'Transportation', label: 'Transportation' },
   { value: 'Casual', label: 'Casual' },

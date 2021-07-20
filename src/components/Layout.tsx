@@ -11,6 +11,7 @@ import { quadrupleSpacer } from '@styles/size';
 import { brandPrimary, black, white } from '@styles/color';
 import CssReset from '@styles/cssReset';
 import UpploadTheme from '@styles/upploadTheme';
+import AddToHomeScreenBanner from './AddToHomeScreenBanner';
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -26,25 +27,11 @@ const PageBody = styled.main`
   padding-bottom: calc(${quadrupleSpacer} + env(safe-area-inset-bottom));
 `;
 
-// const InstallBanner = styled.div`
-//   @media all and (display-mode: standalone) {
-//     display: none;
-//   }
-// `;
-
 type LayoutProps = {
   hideFromCms?: boolean;
 };
 
 const Layout: FunctionComponent<LayoutProps> = (props) => {
-  // useEffect(() => {
-  //   if (window.matchMedia('(display-mode: standalone)').matches) {
-  //     console.log('This is running as standalone.');
-  //   }
-  //   if (window.matchMedia('(display-mode: browser)').matches) {
-  //     console.log('This is running as browser.');
-  //   }
-  // }, []);
   useEffect(() => {
     if (!props.hideFromCms) {
       Modal.setAppElement('#___gatsby');
@@ -56,7 +43,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
       <UpploadTheme />
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
         <LayoutWrapper>
-          {/* <InstallBanner>hello</InstallBanner> */}
+          <AddToHomeScreenBanner />
           {!props.hideFromCms && <Navbar />}
           <PageBody>
             <ErrorBoundary>{props.children}</ErrorBoundary>
