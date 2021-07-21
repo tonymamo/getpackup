@@ -296,6 +296,11 @@ const CssReset = createGlobalStyle`
     padding: ${halfSpacer};
   }
 
+  .tooltip.customTooltip.customTooltip200 {
+    width: 200px;
+    white-space: initial;
+  }
+
   .truncatedText {
     margin: 0;
   }

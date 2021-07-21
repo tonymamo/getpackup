@@ -3,6 +3,7 @@ import { Router } from '@reach/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
+import * as Sentry from '@sentry/gatsby';
 
 import Profile from '@views/Profile';
 import Trips from '@views/Trips';
@@ -46,8 +47,13 @@ const App: FunctionComponent<{}> = (props) => {
   useEffect(() => {
     if (isLoaded(auth) && auth.uid) {
       if (typeof window !== 'undefined') {
-        if (window.analytics) {
-          window.analytics.identify(auth.email as string, {
+        if (window.analytics && auth.email) {
+          window.analytics.identify(auth.email, {
+            userId: auth.uid,
+            email: auth.email,
+            displayName: auth.displayName || '',
+          });
+          Sentry.setUser({
             userId: auth.uid,
             email: auth.email,
             displayName: auth.displayName || '',
@@ -59,6 +65,8 @@ const App: FunctionComponent<{}> = (props) => {
           activeLoggedInUser === undefined) &&
         isLoaded(profile)
       ) {
+        const displayNameDefault =
+          auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '') || 'user';
         firebase
           .firestore()
           .collection('users')
@@ -69,9 +77,7 @@ const App: FunctionComponent<{}> = (props) => {
             emailVerified: auth.emailVerified,
             displayName: auth.displayName,
             photoURL: auth.photoURL,
-            username: `${auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(
-              100000 + Math.random() * 900000
-            )}`,
+            username: `${displayNameDefault}${Math.floor(100000 + Math.random() * 900000)}`,
             bio: '',
             website: '',
             location: '',

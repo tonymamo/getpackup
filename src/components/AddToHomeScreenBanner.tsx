@@ -77,7 +77,6 @@ const AddToHomeScreenBanner: FunctionComponent<{}> = () => {
         console.log('isIOS: ', isIos());
         console.log('isInStandaloneMode: ', isInStandaloneMode());
         console.log('checkLastPwaDisplay: ', checkLastPwaDisplay());
-        setOpened(true);
       }
       if (
         isAuthenticated &&

@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, Form } from 'formik';
 import { navigate, Link } from 'gatsby';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaInfoCircle } from 'react-icons/fa';
 import { useFirebase } from 'react-redux-firebase';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 
 import {
   Row,
@@ -18,7 +19,12 @@ import {
   FlexContainer,
   FirebaseAuthWrapper,
 } from '@components';
-import { requiredField } from '@utils/validations';
+import {
+  passwordRulesString,
+  requiredEmail,
+  requiredField,
+  requiredPassword,
+} from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import validateUsername from '@utils/validateUsername';
@@ -157,7 +163,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       type="email"
                       name="email"
                       label="Email"
-                      validate={requiredField}
+                      validate={requiredEmail}
                       required
                       hiddenLabel
                     />
@@ -166,7 +172,21 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       type="password"
                       name="password"
                       label="Password"
-                      validate={requiredField}
+                      validate={requiredPassword}
+                      helpText={
+                        <span>
+                          Password requirements{' '}
+                          <FaInfoCircle data-tip={passwordRulesString} data-for="requirements" />
+                          <ReactTooltip
+                            id="requirements"
+                            place="bottom"
+                            type="dark"
+                            effect="solid"
+                            className="tooltip customTooltip customTooltip200"
+                            delayShow={500}
+                          />
+                        </span>
+                      }
                       required
                       hiddenLabel
                     />
