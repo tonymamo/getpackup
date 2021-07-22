@@ -5,13 +5,16 @@ import Modal from 'react-modal';
 import { Link } from 'gatsby';
 import CookieConsent from 'react-cookie-consent';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import loadable from '@loadable/component';
 
-import { ErrorBoundary, Footer, Navbar, GlobalAlerts } from '@components';
+import { ErrorBoundary, Navbar, GlobalAlerts } from '@components';
 import { quadrupleSpacer } from '@styles/size';
 import { brandPrimary, black, white } from '@styles/color';
-import CssReset from '@styles/cssReset';
-import UpploadTheme from '@styles/upploadTheme';
-import AddToHomeScreenBanner from './AddToHomeScreenBanner';
+
+const Footer = loadable(() => import('@components/Footer'));
+const CssReset = loadable(() => import('@styles/cssReset'));
+const UpploadTheme = loadable(() => import('@styles/upploadTheme'));
+const AddToHomeScreenBanner = loadable(() => import('./AddToHomeScreenBanner'));
 
 const LayoutWrapper = styled.div`
   display: flex;

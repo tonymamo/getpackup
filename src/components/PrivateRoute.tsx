@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
 
 import { RootState } from '@redux/ducks';
-import { addAlert } from '@redux/ducks/globalAlerts';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
@@ -32,12 +31,6 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
         dispatch(addAttemptedPrivatePage(location.pathname));
       }
       navigate('/login');
-      dispatch(
-        addAlert({
-          type: 'danger',
-          message: 'Please log in to access that page',
-        })
-      );
     }
   }, [auth]);
 

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { PageContainer, Seo, Box, Heading, HorizontalRule, Row, Column } from '@components';
+import { PageContainer, Seo, Box, Heading, HorizontalRule, Row, Column, Button } from '@components';
 import step1ios from '@images/A2HS-step1-ios.png';
 import step2ios from '@images/A2HS-step2-ios.png';
 import step3ios from '@images/A2HS-step3-ios.png';
@@ -9,6 +9,7 @@ import step1android from '@images/A2HS-step1-android.png';
 import step2android from '@images/A2HS-step2-android.png';
 import step3android from '@images/A2HS-step3-android.png';
 import { Link } from 'gatsby';
+import { FaCaretDown } from 'react-icons/fa';
 
 type InstallProps = {};
 
@@ -19,7 +20,52 @@ const Install: FunctionComponent<InstallProps> = () => {
       <Box>
         <Row>
           <Column md={8} mdOffset={2}>
-            <Heading align="center">How to Add the Packup App to Your Home Screen</Heading>
+            <Heading align="center">Get the App</Heading>
+            <HorizontalRule />
+            <Heading as="h5" align="center">
+              Wait, no link to the App Store? 🧐
+            </Heading>
+            <HorizontalRule />
+            <p>
+              That&apos;s right! Packup is basically a website you can save as an app to your device
+              without the need to use the Apple App Store or Google Play Store!
+            </p>
+            <Button
+              type="link"
+              to="#read-more"
+              block
+              iconLeft={<FaCaretDown />}
+              iconRight={<FaCaretDown />}
+            >
+              Skip to Instructions
+            </Button>
+            <br />
+            <br />
+            <br />
+            <br />
+            <p>
+              We’re using a new technology called a “Progressive Web App” for the early stages of
+              our platform - it combines the best of web and mobile apps. Think of it as a website
+              built using web technologies, but acts and feels like an app. It seems complicated,
+              but it&apos;s not.
+            </p>
+
+            <p>
+              Want to know more? You can read more about the specifics{' '}
+              <Link to="/blog/2021-07-11-packup-beta-guide-were-finally-public/#what-is-a-progressive-web-app">
+                on our blog post about our Beta Launch
+              </Link>
+              .
+            </p>
+            <div style={{ marginBottom: 100 }}>&nbsp;</div>
+          </Column>
+        </Row>
+        <HorizontalRule />
+        <Row>
+          <Column md={8} mdOffset={2}>
+            <Heading align="center" as="h2" id="read-more">
+              How to Add the Packup App to Your Home Screen
+            </Heading>
             <p style={{ textAlign: 'center' }}>
               Follow the instructions below to add a shortcut to the packup app on the home screen
               of your iPad, iPhone, or Android devices, or even as an app on your laptop or desktop.
@@ -36,7 +82,7 @@ const Install: FunctionComponent<InstallProps> = () => {
         <HorizontalRule />
         <Row>
           <Column md={8} mdOffset={2}>
-            <Heading as="h2" id="ios">
+            <Heading as="h3" id="ios">
               iPhone or iPad
             </Heading>
             <ol start={1}>
@@ -89,7 +135,7 @@ const Install: FunctionComponent<InstallProps> = () => {
         <HorizontalRule />
         <Row>
           <Column md={8} mdOffset={2}>
-            <Heading as="h2" id="android">
+            <Heading as="h3" id="android">
               Android
             </Heading>
             <ol start={1}>
@@ -126,7 +172,7 @@ const Install: FunctionComponent<InstallProps> = () => {
         <HorizontalRule />
         <Row>
           <Column md={8} mdOffset={2}>
-            <Heading as="h2" id="desktop">
+            <Heading as="h3" id="desktop">
               Laptop/Desktop
             </Heading>
             <ol start={1}>

@@ -3,6 +3,7 @@ const _ = require('lodash');
 const path = require('path');
 const { createFilePath } = require('gatsby-source-filesystem');
 const { createRemoteImageNode } = require('gatsby-transformer-cloudinary');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -124,7 +125,6 @@ exports.createPages = ({ actions, graphql }) => {
 
       blogPosts.forEach((edge, index) => {
         const { id } = edge.node;
-        console.log('slug is ', edge.node.fields.slug);
         createPage({
           path: edge.node.fields.slug,
           component: path.resolve(`src/templates/blog-post.tsx`),
@@ -270,4 +270,10 @@ exports.onCreateNode = async ({
       });
     }
   }
+};
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    plugins: [new LoadablePlugin()],
+  });
 };

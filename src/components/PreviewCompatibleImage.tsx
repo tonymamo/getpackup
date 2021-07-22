@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import Img from 'gatsby-image';
 
@@ -11,8 +12,10 @@ const PreviewCompatibleImage = ({
     image: FluidImageType | FixedImageType | string;
     alt?: string;
   };
-  // eslint-disable-next-line react/require-default-props
+
   style?: React.CSSProperties;
+  width?: string;
+  height?: string;
 }) => {
   const imageStyle = { width: '100%' };
   const { alt = '', image } = imageInfo;

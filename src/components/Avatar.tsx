@@ -126,7 +126,6 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
       size={props.size || 'sm'}
       bottomMargin={props.bottomMargin || false}
       rightMargin={props.rightMargin || false}
-      {...props}
     >
       {props.staticContent && (!props.src || !gravatarUrl) ? (
         <>
@@ -155,6 +154,8 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
               image: (props.src || (gravatarUrl as string))!,
               alt: 'user profile picture',
             }}
+            width={renderSize(props.size)}
+            height={renderSize(props.size)}
           />
           {props.username ? (
             <ReactTooltip

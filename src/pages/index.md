@@ -45,15 +45,15 @@ testimonials:
       upcoming hiking trips!
     author: Hamish E.
     location: British Columbia
-    avatar: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/hamishguylookingout.png
+    avatar: https://res.cloudinary.com/getpackup/image/upload/c_fill,h_128,w_128/v1617244441/getpackup/hamishguylookingout.png
   - quote: I'm looking forward to creating collaborative lists with my friends.
       Tracking who is bringing what has always been an issue.
     author: Hayley G.
     location: Ontario
-    avatar: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/hayleygirlonrocks.png
+    avatar: https://res.cloudinary.com/getpackup/image/upload/c_fill,h_128,w_128/v1617244441/getpackup/hayleygirlonrocks.png
   - author: Kristian P.
     location: Alberta
-    avatar: https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/66297736_10161885243285545_8771925095204519936_o.jpg
+    avatar: https://res.cloudinary.com/getpackup/image/upload/c_fill,h_128,w_128/v1617244442/getpackup/66297736_10161885243285545_8771925095204519936_o.jpg
     quote: As a habitual overpacker, I’m excited for Packup’s lists to help me
       determine exactly what I need to bring on my next adventure. No more
       unnecessary weight for extraneous items in my packs!

@@ -303,6 +303,16 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
                 <NavLink
+                  to="/install"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Install' });
+                    toggleMenu();
+                  }}
+                >
+                  Get the App
+                </NavLink>
+                <HorizontalRule compact />
+                <NavLink
                   to="/blog"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Blog' });
@@ -356,6 +366,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {!size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <FlexContainer as="nav">
+              <NavLink to="/install">Get the App</NavLink>
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
               <NavLink to="/contact">Contact</NavLink>

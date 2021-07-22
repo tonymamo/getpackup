@@ -5,6 +5,7 @@ import styled, { keyframes } from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import loadable from '@loadable/component';
 
 import {
   Seo,
@@ -15,11 +16,10 @@ import {
   Column,
   Heading,
   FlexContainer,
-  Testimonial,
   ClientOnly,
   PreviewCompatibleImage,
-  BlogRoll,
 } from '@components';
+
 import {
   textColor,
   white,
@@ -37,6 +37,9 @@ import { RootState } from '@redux/ducks';
 import { FluidImageType } from '@common/image';
 import { BlogRollType } from '@common/blogRoll';
 import trackEvent from '@utils/trackEvent';
+
+const Testimonial = loadable(() => import('@components/Testimonial'));
+const BlogRoll = loadable(() => import('@components/BlogRoll'));
 
 type IndexPageProps = {
   hideFromCms?: boolean;
