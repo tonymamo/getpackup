@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { Router } from '@reach/router';
-import { useSelector } from 'react-redux';
+import { navigate, Router, useLocation } from '@reach/router';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
 import * as Sentry from '@sentry/gatsby';
@@ -24,6 +24,8 @@ import { offWhite } from '@styles/color';
 import { z1Shadow } from '@styles/mixins';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { addAttemptedPrivatePage } from '@redux/ducks/client';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -37,12 +39,30 @@ export const AppContainer = styled.div`
 
 const App: FunctionComponent<{}> = (props) => {
   const firebase = useFirebase();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
   const activeLoggedInUser: UserType =
     loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
+
+  useEffect(() => {
+    if (auth.isLoaded && auth.isEmpty) {
+      if (location) {
+        trackEvent('Attempted Private Page', { location });
+        dispatch(addAttemptedPrivatePage(location.pathname));
+      }
+      navigate('/login');
+      dispatch(
+        addAlert({
+          type: 'danger',
+          message: 'Please log in to access that page',
+        })
+      );
+    }
+  }, [auth]);
 
   useEffect(() => {
     if (isLoaded(auth) && auth.uid) {

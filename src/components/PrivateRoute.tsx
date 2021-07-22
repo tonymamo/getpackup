@@ -8,6 +8,7 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
+import { LoadingPage } from '@components';
 
 type PrivateRouteProps = {
   location?: WindowLocation;
@@ -38,11 +39,10 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
         })
       );
     }
-  }, []);
+  }, [auth]);
 
   if ((auth.isLoaded && auth.isEmpty) || !auth) {
-    navigate('/');
-    return null;
+    return <LoadingPage />;
   }
   return <Component loggedInUser={loggedInUser} {...rest} />;
 };
