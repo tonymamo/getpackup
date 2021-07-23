@@ -111,7 +111,7 @@ const Footer = () => {
                 Sign up for the newsletter
               </Heading>
               <p style={{ textAlign: 'center', color: white }}>
-                Enter your email to receive periodic updates about Packup
+                <strong>Enter your email to receive periodic updates about Packup</strong>
               </p>
               <Row>
                 <Column md={8} mdOffset={2}>

@@ -26,6 +26,7 @@ import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
+import usePrevious from '@utils/usePrevious';
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;
@@ -48,8 +49,10 @@ const App: FunctionComponent<{}> = (props) => {
   const activeLoggedInUser: UserType =
     loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
 
+  const prevAuthValue = usePrevious(auth.isEmpty);
+
   useEffect(() => {
-    if (auth.isLoaded && auth.isEmpty) {
+    if (auth.isLoaded && auth.isEmpty && !!prevAuthValue) {
       if (location) {
         trackEvent('Attempted Private Page', { location });
         dispatch(addAttemptedPrivatePage(location.pathname));
