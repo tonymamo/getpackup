@@ -177,6 +177,12 @@ module.exports = {
       },
     },
     {
+      resolve: '@sentry/gatsby',
+      options: {
+        dsn: process.env.GATSBY_SENTRY_DSN,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-gdpr-cookies',
       options: {
         googleAnalytics: {
