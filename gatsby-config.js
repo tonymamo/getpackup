@@ -27,7 +27,14 @@ module.exports = {
     'gatsby-plugin-advanced-sitemap',
     'gatsby-plugin-robots-txt',
     'gatsby-plugin-instagram-embed',
-    'gatsby-plugin-webpack-bundle-analyser-v2',
+    {
+      resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
+      options: {
+        disable:
+          process.env.GATSBY_SITE_URL === 'https://getpackup.com' ||
+          process.env.GATSBY_SITE_URL === 'https://test.getpackup.com',
+      },
+    },
     {
       resolve: 'gatsby-plugin-alias-imports',
       options: {
