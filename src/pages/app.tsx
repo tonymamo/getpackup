@@ -4,19 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
 import * as Sentry from '@sentry/gatsby';
+import loadable from '@loadable/component';
 
-import Profile from '@views/Profile';
-import Trips from '@views/Trips';
-import NewTripSummary from '@views/NewTripSummary';
-import TripById from '@views/TripById';
-import TripGenerator from '@views/TripGenerator';
-import AddTripHeaderImage from '@views/AddTripHeaderImage';
-import GearCloset from '@views/GearCloset';
-import GearClosetSetup from '@views/GearClosetSetup';
-import GearClosetAddItem from '@views/GearClosetAddItem';
-import GearClosetEditItem from '@views/GearClosetEditItem';
-import ShoppingList from '@views/ShoppingList';
-import Onboarding from '@views/Onboarding';
 import { RootState } from '@redux/ducks';
 import { PrivateRoute, LoadingPage, ErrorBoundary, FeedbackModal } from '@components';
 import { breakpoints, baseSpacer } from '@styles/size';
@@ -27,6 +16,29 @@ import trackEvent from '@utils/trackEvent';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
 import usePrevious from '@utils/usePrevious';
+
+const Profile = loadable(() => import('@views/Profile'), { fallback: <LoadingPage /> });
+const Trips = loadable(() => import('@views/Trips'), { fallback: <LoadingPage /> });
+const NewTripSummary = loadable(() => import('@views/NewTripSummary'), {
+  fallback: <LoadingPage />,
+});
+const TripById = loadable(() => import('@views/TripById'), { fallback: <LoadingPage /> });
+const TripGenerator = loadable(() => import('@views/TripGenerator'), { fallback: <LoadingPage /> });
+const AddTripHeaderImage = loadable(() => import('@views/AddTripHeaderImage'), {
+  fallback: <LoadingPage />,
+});
+const GearCloset = loadable(() => import('@views/GearCloset'), { fallback: <LoadingPage /> });
+const GearClosetSetup = loadable(() => import('@views/GearClosetSetup'), {
+  fallback: <LoadingPage />,
+});
+const GearClosetAddItem = loadable(() => import('@views/GearClosetAddItem'), {
+  fallback: <LoadingPage />,
+});
+const GearClosetEditItem = loadable(() => import('@views/GearClosetEditItem'), {
+  fallback: <LoadingPage />,
+});
+const ShoppingList = loadable(() => import('@views/ShoppingList'), { fallback: <LoadingPage /> });
+const Onboarding = loadable(() => import('@views/Onboarding'), { fallback: <LoadingPage /> });
 
 export const AppContainer = styled.div`
   padding: ${baseSpacer} 0;

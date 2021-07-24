@@ -64,7 +64,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
     quantity: 1,
     weight: '',
     weightUnit: 'g',
-    notes: '',
+    description: '',
     // above are defaults since Master Gear List Items won't have them,
     // and spreading activeItem below will overwrite them if they are available
     ...(activeItem as GearItemType),
@@ -299,7 +299,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                     </Row>
                   </Column>
                 </Row>
-                <Field as={Input} type="textarea" name="notes" label="Notes/Description" />
+                <Field as={Input} type="textarea" name="description" label="Description" />
                 {getFilteredCategories(gearListActivities).length > 0 && (
                   <CollapsibleBox
                     title="Activities"

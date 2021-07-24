@@ -5,13 +5,13 @@ export type TripType = {
   description: string;
   startingPoint: string;
   season?: 'spring' | 'summer' | 'autumn' | 'winter';
-  startDate: firebase.firestore.Timestamp;
-  endDate: firebase.firestore.Timestamp;
+  startDate: firebase.default.firestore.Timestamp;
+  endDate: firebase.default.firestore.Timestamp;
   timezoneOffset: number;
   lat: number;
   lng: number;
-  created?: firebase.firestore.Timestamp;
-  updated?: firebase.firestore.Timestamp;
+  created?: firebase.default.firestore.Timestamp;
+  updated?: firebase.default.firestore.Timestamp;
   tripMembers: Array<string>;
   tags: Array<string>;
   tripLength: number;

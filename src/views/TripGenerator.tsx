@@ -64,13 +64,17 @@ const generateGearList = (values: FormValues, gear: any) => {
   });
 
   const gearList = uniqBy(matches, 'name').map((item: GearItemType) => {
+    // we dont just destructure `item` here because it contains all of the boolean values for
+    // all of the tags, which is overkill and not needing in the packing list itself
     return {
       name: item.name,
-      isPacked: false,
       category: item.category,
+      isPacked: false,
       isEssential: Boolean(item.essential),
-      quantity: 1,
-      description: '',
+      quantity: item.quantity,
+      description: item.description,
+      weight: item.weight,
+      weightUnit: item.weightUnit,
       created: new Date(),
     };
   });

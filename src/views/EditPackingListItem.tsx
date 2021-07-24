@@ -10,10 +10,12 @@ import {
   Alert,
   AutoSave,
   Button,
+  Column,
   FlexContainer,
   Heading,
   HorizontalRule,
   Input,
+  Row,
   Seo,
 } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
@@ -133,45 +135,103 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                   callToActionLinkText="Learn more"
                 />
               )}
-              <Field
-                as={Input}
-                type="text"
-                name="name"
-                label="Name"
-                validate={requiredField}
-                required
-              />
+              <Row>
+                <Column sm={6}>
+                  <Field
+                    as={Input}
+                    type="text"
+                    name="name"
+                    label="Name"
+                    validate={requiredField}
+                    required
+                  />
+                </Column>
+                <Column sm={6}>
+                  <Field
+                    as={Input}
+                    type="select"
+                    name="category"
+                    label="Category"
+                    options={gearListCategories}
+                    validate={requiredSelect}
+                    setFieldValue={setFieldValue}
+                    {...rest}
+                    required
+                  />
+                </Column>
+              </Row>
 
-              <Field
-                as={Input}
-                type="number"
-                name="quantity"
-                label="Quantity"
-                setFieldValue={setFieldValue}
-              />
-              <Field
-                as={Input}
-                type="select"
-                name="category"
-                label="Category"
-                options={gearListCategories}
-                validate={requiredSelect}
-                setFieldValue={setFieldValue}
-                {...rest}
-                required
-              />
               <Field as={Input} type="textarea" name="description" label="Description" />
+              <Row>
+                <Column sm={6}>
+                  <Field
+                    as={Input}
+                    type="number"
+                    name="quantity"
+                    label="Quantity"
+                    setFieldValue={setFieldValue}
+                  />
+                </Column>
+                <Column sm={6}>
+                  <Row>
+                    <Column xs={8}>
+                      <Field as={Input} type="text" name="weight" label="Weight" />
+                    </Column>
+                    <Column xs={4}>
+                      <Field
+                        as={Input}
+                        type="select"
+                        name="weightUnit"
+                        label="Unit"
+                        options={[
+                          {
+                            value: 'g',
+                            label: 'g',
+                          },
+                          {
+                            value: 'kg',
+                            label: 'kg',
+                          },
+                          {
+                            value: 'oz',
+                            label: 'oz',
+                          },
+                          {
+                            value: 'lb',
+                            label: 'lb',
+                          },
+                        ]}
+                        setFieldValue={setFieldValue}
+                        {...rest}
+                      />
+                    </Column>
+                  </Row>
+                </Column>
+              </Row>
               <AutoSave />
 
               <HorizontalRule />
-              <Button
-                type="button"
-                onClick={() => removeItem()}
-                color="danger"
-                iconLeft={<FaTrash />}
-              >
-                Remove Item
-              </Button>
+              <FlexContainer justifyContent="space-between">
+                <Button
+                  type="button"
+                  onClick={() => {
+                    navigate(-1);
+                    trackEvent('Edit Packing List Item Cancel Click');
+                  }}
+                  color="text"
+                  iconLeft={<FaChevronLeft />}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => removeItem()}
+                  color="danger"
+                  iconLeft={<FaTrash />}
+                >
+                  Remove Item
+                </Button>
+              </FlexContainer>
             </Form>
           )}
         </Formik>

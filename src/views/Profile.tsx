@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
 import { actionTypes } from 'redux-firestore';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt, FaTrash } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 import styled from 'styled-components';
 
@@ -23,16 +24,17 @@ import {
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
-import { requiredField } from '@utils/validations';
+import { requiredEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
 import validateUsername from '@utils/validateUsername';
-import { offWhite } from '@styles/color';
-import { baseSpacerUnit, baseSpacer, halfSpacer, sextupleSpacer } from '@styles/size';
+import { brandDanger, offWhite } from '@styles/color';
+import { baseSpacerUnit, baseSpacer, halfSpacer, sextupleSpacer, doubleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import { AvatarImageWrapper } from '@components/Avatar';
 import useWindowSize from '@utils/useWindowSize';
+import { UserType } from '@common/user';
 
 type ProfileProps = {
-  loggedInUser?: any;
+  loggedInUser?: UserType;
 } & RouteComponentProps;
 
 export const EmailWrapper = styled.div`
@@ -120,6 +122,40 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
       });
   };
 
+  const removeEmergencyContact = (index: number) => {
+    setIsLoading(true);
+    if (
+      loggedInUser &&
+      loggedInUser.emergencyContacts &&
+      loggedInUser.emergencyContacts.length > 0
+    ) {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(auth.uid)
+        .update({
+          emergencyContacts: firebase.firestore.FieldValue.arrayRemove(
+            loggedInUser.emergencyContacts[index]
+          ),
+          lastUpdated: new Date(),
+        })
+        .then(() => {
+          trackEvent('Emergency Contact Removed');
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          trackEvent('Emergency Contact Removal Failure', { error: err });
+          dispatch(
+            addAlert({
+              type: 'danger',
+              message: err.message,
+            })
+          );
+        });
+    }
+  };
+
   return (
     <PageContainer>
       <Seo title="Edit Profile">
@@ -146,21 +182,51 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                 initialValues={{
                   ...loggedInUser,
                   email: auth.email,
+                  newEmergencyContactName: '',
+                  newEmergencyContactPhoneNumber: '',
+                  newEmergencyContactEmail: '',
                 }}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                   // Note: This prevents photo url from overwriting any change as the avatar
                   // file uploader handles saving itself.
-                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                  const { photoURL, email, ...updateValues } = values;
+                  // Remove email and emergency contact fields as well since we don't want the user
+                  // updating their email here, and the EC fields are just for the form
+                  const {
+                    photoURL,
+                    email,
+                    newEmergencyContactName,
+                    newEmergencyContactEmail,
+                    newEmergencyContactPhoneNumber,
+                    ...updateValues
+                  } = values;
                   setIsLoading(true);
                   firebase
                     .firestore()
                     .collection('users')
                     .doc(auth.uid)
-                    .update({ ...updateValues, lastUpdated: new Date() })
+                    .update({
+                      ...updateValues,
+                      emergencyContacts:
+                        values.newEmergencyContactName !== ''
+                          ? firebase.firestore.FieldValue.arrayUnion({
+                              name: newEmergencyContactName,
+                              email: newEmergencyContactEmail,
+                              phoneNumber: newEmergencyContactPhoneNumber,
+                            })
+                          : [...(values.emergencyContacts || [])],
+                      lastUpdated: new Date(),
+                    })
                     .then(() => {
                       setSubmitting(false);
-                      resetForm({ values });
+                      resetForm({
+                        values: {
+                          ...updateValues,
+                          email: auth.email,
+                          newEmergencyContactName: '',
+                          newEmergencyContactPhoneNumber: '',
+                          newEmergencyContactEmail: '',
+                        },
+                      });
                       trackEvent('Profile Updated', { ...updateValues });
                       setIsLoading(false);
                     })
@@ -247,7 +313,6 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         )}
                       </FlexContainer>
                     </EditableInput>
-
                     {typeof window !== 'undefined' && window.google && (
                       <EditableInput
                         label="Location"
@@ -279,6 +344,78 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                       value={loggedInUser.bio || 'No bio provided'}
                     >
                       <Field as={Input} type="textarea" name="bio" label="Bio" hiddenLabel />
+                    </EditableInput>
+                    <EditableInput
+                      label="Emergency Contacts"
+                      isLoading={isLoading}
+                      actionName="Add"
+                      value={
+                        loggedInUser.emergencyContacts &&
+                        loggedInUser.emergencyContacts.length > 0 ? (
+                          <table
+                            style={{ width: '100%', tableLayout: 'fixed' }}
+                            className="no-border"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Contact Info</th>
+                                <th style={{ width: doubleSpacer }}>&nbsp;</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {loggedInUser.emergencyContacts &&
+                                loggedInUser.emergencyContacts.length > 0 &&
+                                loggedInUser.emergencyContacts.map((contact, index) => (
+                                  <tr key={contact.name + contact.email + contact.phoneNumber}>
+                                    <td style={{ wordBreak: 'break-all' }}>{contact.name}</td>
+                                    <td style={{ wordBreak: 'break-all', lineHeight: 1.2 }}>
+                                      <small>{contact.phoneNumber}</small>
+                                      <br />
+                                      <small>{contact.email}</small>
+                                    </td>
+                                    <td align="right">
+                                      <FaTrash
+                                        style={{ cursor: 'pointer' }}
+                                        color={brandDanger}
+                                        onClick={() => removeEmergencyContact(index)}
+                                      />
+                                    </td>
+                                  </tr>
+                                ))}
+                            </tbody>
+                          </table>
+                        ) : (
+                          'No Emergency Contacts'
+                        )
+                      }
+                    >
+                      <Field
+                        as={Input}
+                        type="text"
+                        name="newEmergencyContactName"
+                        label="Name"
+                        required
+                        validate={requiredField}
+                      />
+
+                      <Field
+                        as={Input}
+                        type="tel"
+                        name="newEmergencyContactPhoneNumber"
+                        label="Phone"
+                        required
+                        validate={requiredPhoneNumber}
+                      />
+
+                      <Field
+                        as={Input}
+                        type="email"
+                        name="newEmergencyContactEmail"
+                        label="Email"
+                        required
+                        validate={requiredEmail}
+                      />
                     </EditableInput>
                     <Button
                       type="button"

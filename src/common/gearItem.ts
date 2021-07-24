@@ -97,13 +97,13 @@ export type GearItemType = {
   id: string;
   name: string;
   category: string;
-  created?: firebase.firestore.Timestamp;
-  updated?: firebase.firestore.Timestamp;
+  created?: firebase.default.firestore.Timestamp;
+  updated?: firebase.default.firestore.Timestamp;
   essential: boolean;
   isCustomGearItem?: boolean;
   weight?: string;
   weightUnit?: 'g' | 'kg' | 'oz' | 'lb';
-  notes?: string;
+  description?: string;
   quantity?: number;
 } & ActivityTypes;
 

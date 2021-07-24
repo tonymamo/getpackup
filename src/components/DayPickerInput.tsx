@@ -160,7 +160,7 @@ const DayPickerInput: FunctionComponent<DayPickerInputProps> = ({
               setEnteredTo(initialValues.endDate as Date);
               setFieldValue('startDate', initialValues.startDate);
               setFieldValue('endDate', initialValues.endDate);
-              if (inputRef && inputRef.current) {
+              if (inputRef && inputRef.current && initialValues.startDate instanceof Date) {
                 inputRef.current.showMonth(initialValues.startDate as Date);
               }
             }}

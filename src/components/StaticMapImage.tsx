@@ -3,12 +3,15 @@ import React, { FunctionComponent } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 import { StaticMap, Marker } from 'react-map-gl';
-import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import loadable from '@loadable/component';
 
 import { brandPrimary, white } from '@styles/color';
 import { borderRadius, doubleSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
+import InlineLoader from './InlineLoader';
+
+const mapboxgl = loadable.lib(() => import('mapbox-gl'), { fallback: <InlineLoader /> });
 
 // Mapbox failing on prod builds, fixed by adding `worker-loader` package and the following line
 // https://github.com/visgl/react-map-gl/issues/1266

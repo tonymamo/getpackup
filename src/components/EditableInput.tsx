@@ -8,6 +8,7 @@ type EditableComponentProps = {
   label: string;
   isLoading: boolean;
   value: string | JSX.Element;
+  actionName?: string;
 };
 
 const EditableComponent: FunctionComponent<EditableComponentProps> = ({
@@ -15,6 +16,7 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = ({
   isLoading,
   value,
   children,
+  actionName,
 }) => {
   // Manage the state whether to show the label or the input. By default, label will be shown.
   const [isEditing, setIsEditing] = useState(false);
@@ -38,7 +40,7 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = ({
               setIsEditing(!isEditing);
             }}
           >
-            {isEditing ? 'Cancel' : 'Edit'}
+            {isEditing ? 'Cancel' : actionName || 'Edit'}
           </Button>
         </p>
       </FlexContainer>

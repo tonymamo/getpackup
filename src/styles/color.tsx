@@ -10,12 +10,12 @@ const red = '#7d2600';
 const green = '#578220';
 
 // Primary
-const orange = '#C46200';
-const orangeVariant = '#c97119';
+const orange = '#B35900';
+const orangeVariant = '#c46200';
 
 // Secondary
-const downriver = '#0E3757';
-const downriverVariant = '#264b67';
+const downriver = '#0b2b44';
+const downriverVariant = '#0E3757';
 
 // Tertiary
 const bismark = '#41688B';

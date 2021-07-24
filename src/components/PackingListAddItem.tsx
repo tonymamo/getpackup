@@ -83,7 +83,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                 categoryName,
                 tripId,
               });
-              resetForm({});
+              resetForm({ values });
             } catch (err) {
               trackEvent('Packing List Item Add Failure', {
                 name: values[`new-${categoryName}`],

@@ -53,6 +53,7 @@ export const AvatarImageWrapper = styled.div`
   overflow: hidden;
   object-fit: cover;
   display: flex;
+  background-color: ${lightestGray};
   height: ${(props: AvatarProps) => props.size && renderSize(props.size)};
   width: ${(props) => props.size && renderSize(props.size)};
   /* min-width ensures it doesnt get resized when in a flexed parent */
@@ -92,7 +93,9 @@ const StaticContentWrapper = styled.div`
   position: relative;
   text-align: center;
   font-size: ${fontSizeSmall};
-  line-height: ${(props) => props.size && renderSize(props.size)};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StackedAvatars = styled.div`

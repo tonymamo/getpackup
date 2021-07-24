@@ -165,7 +165,12 @@ const Footer = () => {
                 </Column>
                 <Column sm={4} md={3} lg={2}>
                   <p>
-                    <a href="mailto:hello@getpackup.com">hello@getpackup.com</a>
+                    <Link
+                      to="/install"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'Get the App' })}
+                    >
+                      Get the App
+                    </Link>
                   </p>
                   <p>
                     <Link

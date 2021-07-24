@@ -304,6 +304,12 @@ const CssReset = createGlobalStyle`
   .truncatedText {
     margin: 0;
   }
+
+  table.no-border,
+  table.no-border th,
+  table.no-border td {
+    border: none;
+  }
 `;
 
 export default CssReset;

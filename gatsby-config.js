@@ -5,8 +5,9 @@ require('dotenv').config({
 
 module.exports = {
   flags: {
-    FAST_DEV: false,
+    FAST_DEV: true,
     PARALLEL_SOURCING: true,
+    PRESERVE_FILE_DOWNLOAD_CACHE: true,
   },
   siteMetadata: {
     title: 'Packup',
@@ -26,6 +27,7 @@ module.exports = {
     'gatsby-plugin-advanced-sitemap',
     'gatsby-plugin-robots-txt',
     'gatsby-plugin-instagram-embed',
+    'gatsby-plugin-webpack-bundle-analyser-v2',
     {
       resolve: 'gatsby-plugin-alias-imports',
       options: {
@@ -61,17 +63,9 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: `${__dirname}/src/images`,
-      },
-    },
-    // 'gatsby-plugin-extract-schema',
-    {
       resolve: 'gatsby-plugin-nprogress',
       options: {
-        color: '#C46200',
+        color: '#B35900',
         showSpinner: false,
       },
     },
@@ -87,7 +81,7 @@ module.exports = {
         lang: 'en',
         start_url: '/',
         background_color: '#f3f3f3',
-        theme_color: '#0E3757',
+        theme_color: '#0b2b44',
         orientation: 'portrait',
         categories: ['packing', 'outdoors', 'productivity', 'safety'],
         shortcuts: [
@@ -174,6 +168,15 @@ module.exports = {
         trackPageDelay: 50,
         delayLoad: true,
         delayLoadTime: 1000,
+      },
+    },
+    {
+      resolve: '@sentry/gatsby',
+      options: {
+        dsn:
+          process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+            ? process.env.GATSBY_SENTRY_DSN
+            : '',
       },
     },
     {

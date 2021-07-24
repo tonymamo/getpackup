@@ -136,7 +136,7 @@ const Seo: FunctionComponent<SeoType> = ({
         },
         {
           name: 'msapplication-TileColor',
-          content: '#c46200',
+          content: '#B35900',
         },
         {
           name: 'viewport',
@@ -149,7 +149,7 @@ const Seo: FunctionComponent<SeoType> = ({
       ].concat(meta || [])}
     >
       {/* suggestions from https://realfavicongenerator.net/ */}
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#c46200" />
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#B35900" />
       <link rel="shortcut icon" href="/favicon.ico" />
       {/* genereated from https://appsco.pe/developer/splash-screens */}
       <link

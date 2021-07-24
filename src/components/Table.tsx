@@ -177,6 +177,7 @@ const GlobalFilter = ({
               styles={multiSelectStyles}
               isMulti={false}
               menuPlacement="auto"
+              isSearchable={!size.isExtraSmallScreen}
               value={{
                 value: allGearListItems.find((i) => i.name === tagToSearch)?.name || '',
                 label: tagToSearch,
@@ -404,7 +405,7 @@ const Table: FunctionComponent<TableProps> = ({
           })}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {isLoading ? (
+          {isLoading || pageOrRows.length === 0 ? (
             <>
               {Array.from({ length: rowsPerPage || 10 }).map((_, rowIndex) => (
                 <StyledTr key={`loadingTableRow${rowIndex}`}>

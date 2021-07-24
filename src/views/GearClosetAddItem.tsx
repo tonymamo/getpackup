@@ -51,7 +51,7 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
     isCustomGearItem: true,
     weight: '',
     weightUnit: 'g',
-    notes: '',
+    description: '',
     quantity: 1,
     essential: false,
   };
@@ -222,7 +222,7 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
                   </Row>
                 </Column>
               </Row>
-              <Field as={Input} type="textarea" name="notes" label="Notes/Description" />
+              <Field as={Input} type="textarea" name="description" label="Description" />
               <StyledLabel required>Tag your Item</StyledLabel>
               <p>
                 Select all tags that apply to your item, so that this item will get included

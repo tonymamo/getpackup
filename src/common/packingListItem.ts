@@ -6,6 +6,8 @@ export type PackingListItemType = {
   isEssential: boolean;
   quantity: number;
   description?: string;
-  created: firebase.firestore.Timestamp;
-  updated?: firebase.firestore.Timestamp;
+  weight?: string;
+  weightUnit?: 'g' | 'kg' | 'oz' | 'lb';
+  created: firebase.default.firestore.Timestamp;
+  updated?: firebase.default.firestore.Timestamp;
 };

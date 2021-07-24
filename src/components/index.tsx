@@ -29,6 +29,7 @@ import HorizontalRule from './HorizontalRule';
 import HorizontalScroller from './HorizontalScroller';
 import IconCheckbox from './IconCheckbox';
 import IconWrapper from './IconWrapper';
+import InlineLoader from './InlineLoader';
 import Input from './Input';
 import Layout from './Layout';
 import LoadingPage from './LoadingPage';
@@ -95,6 +96,7 @@ export {
   IconCheckbox,
   IconWrapper,
   Input,
+  InlineLoader,
   Layout,
   LoadingPage,
   LoadingSpinner,
