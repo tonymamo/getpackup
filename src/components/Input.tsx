@@ -39,6 +39,7 @@ import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mix
 import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
 import { formatPhoneNumberValue } from '@utils/phoneNumber';
 import FlexContainer from './FlexContainer';
+import LoadingSpinner from './LoadingSpinner';
 
 type OptionType = { label: string; value: string };
 
@@ -561,29 +562,45 @@ const Input: FunctionComponent<InputProps> = (props) => {
     case 'geosuggest':
       inputTypeToRender = (
         <>
-          <StyledGeosuggest
-            types={props.geosuggestTypes || []}
-            onSuggestSelect={(suggest: Suggest) => {
-              if (suggest && suggest.location) {
-                props.setFieldValue('lat', suggest.location?.lat);
-                props.setFieldValue('lng', suggest.location?.lng);
-              }
+          {typeof window !== 'undefined' && window.google ? (
+            <StyledGeosuggest
+              types={props.geosuggestTypes || []}
+              onSuggestSelect={(suggest: Suggest) => {
+                if (suggest && suggest.location) {
+                  props.setFieldValue('lat', suggest.location?.lat);
+                  props.setFieldValue('lng', suggest.location?.lng);
+                }
 
-              return suggest && suggest.label
-                ? props.setFieldValue(field.name, suggest.label)
-                : props.setFieldValue(field.name, '');
-            }}
-            id={props.name}
-            {...field}
-            {...props}
-            {...meta}
-            // https://github.com/ubilabs/react-geosuggest#placedetailfields
-            // don't return any place fields to keep biling costs down
-            placeDetailFields={[]}
-            onBlur={() => props.setFieldTouched(props.name)}
-            minLength={3}
-            label=""
-          />
+                return suggest && suggest.label
+                  ? props.setFieldValue(field.name, suggest.label)
+                  : props.setFieldValue(field.name, '');
+              }}
+              id={props.name}
+              {...field}
+              {...props}
+              {...meta}
+              // https://github.com/ubilabs/react-geosuggest#placedetailfields
+              // don't return any place fields to keep biling costs down
+              placeDetailFields={[]}
+              onBlur={() => props.setFieldTouched(props.name)}
+              minLength={3}
+              label=""
+            />
+          ) : (
+            <>
+              <StyledInput
+                placeholder="Search places"
+                id={props.name}
+                {...field}
+                {...props}
+                {...meta}
+                disabled
+              />
+              <small>
+                <LoadingSpinner /> Loading Google Maps...
+              </small>
+            </>
+          )}
           <p style={{ margin: 0, float: 'right' }}>
             <img src={poweredByGoogle} alt="powered by Google" style={{ height: 18 }} />
           </p>

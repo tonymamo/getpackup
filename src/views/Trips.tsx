@@ -76,28 +76,26 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
   }
 
   return (
-    <>
+    <PageContainer>
       <Seo title="My Trips" />
       {isLoaded(trips) && isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
-        <PageContainer>
-          <Row>
-            <Column sm={4}>
-              <p>
-                <Button
-                  type="link"
-                  to="/app/trips/new"
-                  iconLeft={<FaPlusCircle />}
-                  block
-                  onClick={() =>
-                    trackEvent('New Trip Button clicked', { location: 'Trips Page Header' })
-                  }
-                >
-                  New Trip
-                </Button>
-              </p>
-            </Column>
-          </Row>
-        </PageContainer>
+        <Row>
+          <Column sm={4}>
+            <p>
+              <Button
+                type="link"
+                to="/app/trips/new"
+                iconLeft={<FaPlusCircle />}
+                block
+                onClick={() =>
+                  trackEvent('New Trip Button clicked', { location: 'Trips Page Header' })
+                }
+              >
+                New Trip
+              </Button>
+            </p>
+          </Column>
+        </Row>
       )}
 
       {/* LOADING SKELETON */}
@@ -119,55 +117,51 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
 
       {/* IN PROGRESS */}
       {Array.isArray(inProgressTrips) && !!inProgressTrips.length && inProgressTrips.length > 0 && (
-        <PageContainer>
+        <>
           <Heading as="h2" altStyle>
             Trips in Progress
           </Heading>
           {inProgressTrips.map((trip) => renderTrip(trip))}
-        </PageContainer>
+        </>
       )}
 
       {/* UPCOMING */}
       {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 && (
-        <PageContainer>
+        <>
           <Heading as="h2" altStyle>
             Upcoming
           </Heading>
           {upcomingTrips.map((trip) => renderTrip(trip))}
-        </PageContainer>
+        </>
       )}
 
       {/* NO UPCOMING TRIPS */}
       {isLoaded(trips) && !upcomingTrips && (
-        <PageContainer>
-          <Box>
-            No upcoming trips planned currently,{' '}
-            <Link
-              to="/app/trips/new"
-              onClick={() =>
-                trackEvent('New Trip Button clicked', {
-                  location: 'Trips Page Create One Now',
-                })
-              }
-            >
-              create one now! <FaArrowRight />
-            </Link>
-          </Box>
-        </PageContainer>
+        <Box>
+          No upcoming trips planned currently,{' '}
+          <Link
+            to="/app/trips/new"
+            onClick={() =>
+              trackEvent('New Trip Button clicked', {
+                location: 'Trips Page Create One Now',
+              })
+            }
+          >
+            create one now! <FaArrowRight />
+          </Link>
+        </Box>
       )}
 
       {/* PAST TRIPS */}
       {Array.isArray(pastTrips) && !!pastTrips.length && pastTrips.length > 0 && (
-        <PageContainer>
-          <PageContainer>
-            <Heading as="h2" altStyle>
-              Past
-            </Heading>
-          </PageContainer>
-          <div>{pastTrips.map((trip) => renderTrip(trip))}</div>
-        </PageContainer>
+        <>
+          <Heading as="h2" altStyle>
+            Past
+          </Heading>
+          {pastTrips.map((trip) => renderTrip(trip))}
+        </>
       )}
-    </>
+    </PageContainer>
   );
 };
 

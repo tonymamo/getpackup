@@ -18,8 +18,8 @@ import {
   FlexContainer,
   ClientOnly,
   PreviewCompatibleImage,
+  InlineLoader,
 } from '@components';
-
 import {
   textColor,
   white,
@@ -38,8 +38,10 @@ import { FluidImageType } from '@common/image';
 import { BlogRollType } from '@common/blogRoll';
 import trackEvent from '@utils/trackEvent';
 
-const Testimonial = loadable(() => import('@components/Testimonial'));
-const BlogRoll = loadable(() => import('@components/BlogRoll'));
+const Testimonial = loadable(() => import('@components/Testimonial'), {
+  fallback: <InlineLoader />,
+});
+const BlogRoll = loadable(() => import('@components/BlogRoll'), { fallback: <InlineLoader /> });
 
 type IndexPageProps = {
   hideFromCms?: boolean;

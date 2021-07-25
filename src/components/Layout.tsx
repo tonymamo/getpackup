@@ -4,14 +4,16 @@ import { IconContext } from 'react-icons';
 import Modal from 'react-modal';
 import { Link } from 'gatsby';
 import CookieConsent from 'react-cookie-consent';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import loadable from '@loadable/component';
 
+import '@styles/bootstrapCarousel.css';
 import { ErrorBoundary, Navbar, GlobalAlerts } from '@components';
 import { quadrupleSpacer } from '@styles/size';
-import { brandPrimary, black, white } from '@styles/color';
+import { brandPrimary, black, white, brandSecondary } from '@styles/color';
 
-const Footer = loadable(() => import('@components/Footer'));
+const Footer = loadable(() => import('@components/Footer'), {
+  fallback: <footer style={{ backgroundColor: brandSecondary, height: '20vh' }} />,
+});
 const CssReset = loadable(() => import('@styles/cssReset'));
 const UpploadTheme = loadable(() => import('@styles/upploadTheme'));
 const AddToHomeScreenBanner = loadable(() => import('./AddToHomeScreenBanner'));

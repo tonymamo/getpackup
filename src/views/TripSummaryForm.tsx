@@ -125,20 +125,19 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
             />
 
             <Field as={Input} type="textarea" name="description" label="Description" />
-            {typeof window !== 'undefined' && window.google && (
-              <Field
-                as={Input}
-                type="geosuggest"
-                types={[]}
-                name="startingPoint"
-                label="Trip Location"
-                validate={requiredField}
-                required
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-                {...rest}
-              />
-            )}
+
+            <Field
+              as={Input}
+              type="geosuggest"
+              types={[]}
+              name="startingPoint"
+              label="Trip Location"
+              validate={requiredField}
+              required
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+              {...rest}
+            />
 
             <HorizontalRule />
 
@@ -147,7 +146,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               <Button
                 type="link"
                 to="../"
-                color="dangerOutline"
+                color="text"
                 rightSpacer
                 iconLeft={<FaChevronLeft />}
                 onClick={() =>

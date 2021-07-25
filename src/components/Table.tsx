@@ -409,7 +409,7 @@ const Table: FunctionComponent<TableProps> = ({
             <>
               {Array.from({ length: rowsPerPage || 10 }).map((_, rowIndex) => (
                 <StyledTr key={`loadingTableRow${rowIndex}`}>
-                  {Array.from({ length: columns.length }).map((__, cellIndex) => (
+                  {Array.from({ length: columns.length - 1 }).map((__, cellIndex) => (
                     <StyledTd key={`loadingTableRow${rowIndex}-cell${cellIndex}`}>
                       <Skeleton
                         count={1}
@@ -419,6 +419,13 @@ const Table: FunctionComponent<TableProps> = ({
                       />
                     </StyledTd>
                   ))}
+                  <StyledTd>
+                    <FlexContainer justifyContent="flex-end" flexWrap="nowrap">
+                      <IconWrapper>
+                        <FaChevronRight />
+                      </IconWrapper>
+                    </FlexContainer>
+                  </StyledTd>
                 </StyledTr>
               ))}
             </>
