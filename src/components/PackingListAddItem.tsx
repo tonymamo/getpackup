@@ -61,7 +61,8 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
           description: '',
           created: new Date(),
         }}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
+          resetForm({});
           if ((values[`new-${categoryName}`] as string).length > 1) {
             try {
               await firebase
@@ -83,8 +84,9 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                 categoryName,
                 tripId,
               });
-              resetForm({ values });
+              setSubmitting(false);
             } catch (err) {
+              setSubmitting(false);
               trackEvent('Packing List Item Add Failure', {
                 name: values[`new-${categoryName}`],
                 categoryName,
@@ -101,7 +103,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
           }
         }}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, isSubmitting }) => (
           <Form onSubmit={handleSubmit}>
             <FlexContainer justifyContent="flex-start">
               <Field
@@ -110,6 +112,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                 name={`new-${categoryName}`}
                 label="Add Item"
                 hiddenLabel
+                disabled={isSubmitting}
               />
               <IconWrapper onClick={() => handleSubmit()}>
                 <FaPlus />
