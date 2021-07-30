@@ -164,6 +164,8 @@ export const StyledLabel = styled.label<{
   invalid?: boolean;
   required?: boolean;
 }>`
+  display: flex;
+  line-height: 1.75;
   margin: 0;
   font-weight: bold;
   font-size: ${fontSizeSmall};
@@ -471,18 +473,9 @@ const Input: FunctionComponent<InputProps> = (props) => {
                 checked={props.checked}
                 type="checkbox"
               />
-              {props.label !== '' ? (
-                <FlexContainer
-                  justifyContent="flex-start"
-                  alignItems="flex-start"
-                  flexWrap="nowrap"
-                >
-                  {renderCheckbox(Boolean(props.checked))}
-                  <span>{props.label}</span>
-                </FlexContainer>
-              ) : (
-                renderCheckbox(Boolean(props.checked))
-              )}
+
+              {renderCheckbox(Boolean(props.checked))}
+              {props.label}
             </StyledLabel>
           </>
         );

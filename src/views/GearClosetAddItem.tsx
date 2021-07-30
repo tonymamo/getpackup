@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
 import { FaCheckCircle, FaChevronLeft } from 'react-icons/fa';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
@@ -43,6 +43,14 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const size = useWindowSize();
+
+  useFirestoreConnect([
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
+  ]);
 
   const initialValues: GearItemType = {
     id: '',

@@ -86,21 +86,21 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
   const onUpdate = (values: FormValues, { resetForm }: FormikHelpers<FormValues>) => {
     firebaseConnection(firebase, props.tripId, props.item.id)
       .update({
-        isPacked: values[props.item.name].isPacked,
+        isPacked: values[props.item.id].isPacked,
       })
       .then(() => {
         resetForm({ values });
         trackEvent('Packing List Item isPacked Toggled', {
           tripId: props.tripId,
           item: props.item,
-          isPacked: values[props.item.name].isPacked,
+          isPacked: values[props.item.id].isPacked,
         });
       })
       .catch((err) => {
         trackEvent('Packing List Item isPacked Toggle Failure', {
           tripId: props.tripId,
           item: props.item,
-          isPacked: values[props.item.name].isPacked,
+          isPacked: values[props.item.id].isPacked,
         });
         dispatch(
           addAlert({
@@ -160,7 +160,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
       >
         <Formik<FormValues>
           validateOnMount
-          initialValues={{ [props.item.name]: { isPacked: props.item.isPacked } }}
+          initialValues={{ [props.item.id]: { isPacked: props.item.isPacked } }}
           onSubmit={onUpdate}
         >
           {({ values, handleSubmit }) => (
@@ -170,9 +170,9 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   <Field
                     as={Input}
                     noMarginOnWrapper
-                    name={`${props.item.name}.isPacked`}
+                    name={`${props.item.id}.isPacked`}
                     type="checkbox"
-                    checked={values[props.item.name].isPacked}
+                    checked={values[props.item.id].isPacked}
                     label=""
                   />
                 </ItemInputWrapper>
