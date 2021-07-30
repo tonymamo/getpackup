@@ -1,4 +1,5 @@
 import algoliasearch from 'algoliasearch';
+import { isAlphaNumeric } from './validations';
 
 const algoliaClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID as string,
@@ -31,6 +32,10 @@ const validateUsername = async (value: string, initialValue: string) => {
 
   if (value.length < 3) {
     return 'Username must be at least 3 characters long';
+  }
+
+  if (isAlphaNumeric(value) !== undefined) {
+    return 'Username can only contain letters and numbers';
   }
 
   const searchValue = value.toLowerCase();

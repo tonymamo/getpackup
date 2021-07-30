@@ -522,6 +522,26 @@ const Input: FunctionComponent<InputProps> = (props) => {
         />
       );
       break;
+    case 'username':
+      inputTypeToRender = (
+        <StyledInput
+          id={props.name}
+          placeholder={typeof props.label === 'string' ? props.label : ''}
+          {...field}
+          {...props}
+          {...meta}
+          onKeyDown={(event) => {
+            if (event.key === ' ') {
+              event.preventDefault();
+            }
+          }}
+          onChange={(event) => {
+            field.onChange(event.target.name)(event.target.value.replace(/\s/g, ''));
+          }}
+        />
+      );
+
+      break;
     case 'password':
       inputTypeToRender = (
         <PasswordWrapper>

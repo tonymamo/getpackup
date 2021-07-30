@@ -145,7 +145,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
 
                     <Field
                       as={Input}
-                      type="text"
+                      type="username"
                       name="username"
                       label="Username"
                       validate={(value: string) => validateUsername(value, '')}

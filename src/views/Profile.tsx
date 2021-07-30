@@ -268,7 +268,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                     >
                       <Field
                         as={Input}
-                        type="text"
+                        type="username"
                         name="username"
                         label="Username"
                         hiddenLabel
