@@ -142,7 +142,9 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
       )}
 
       <>
-        <Heading>Add Gear Item</Heading>
+        <Heading altStyle as="h2">
+          Add Gear Item
+        </Heading>
 
         <Formik
           validateOnMount

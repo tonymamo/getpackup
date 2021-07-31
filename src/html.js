@@ -10,13 +10,11 @@ export default function HTML(props) {
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         {props.headComponents}
-        {/* https://csswizardry.com/2019/08/making-cloud-typography-faster/ */}
         <link
           rel="stylesheet"
           type="text/css"
           href="https://cloud.typography.com/7222118/6340832/css/fonts.css"
           media="print"
-          onLoad="this.media='all'"
         />
       </head>
       <body {...props.bodyAttributes}>
