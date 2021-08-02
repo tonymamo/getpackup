@@ -118,7 +118,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       {/* IN PROGRESS */}
       {Array.isArray(inProgressTrips) && !!inProgressTrips.length && inProgressTrips.length > 0 && (
         <>
-          <Heading as="h2" altStyle>
+          <Heading as="h2" altStyle withDecoration>
             Trips in Progress
           </Heading>
           {inProgressTrips.map((trip) => renderTrip(trip))}
@@ -128,8 +128,8 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       {/* UPCOMING */}
       {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 && (
         <>
-          <Heading as="h2" altStyle>
-            Upcoming
+          <Heading as="h2" altStyle withDecoration>
+            Upcoming Trips
           </Heading>
           {upcomingTrips.map((trip) => renderTrip(trip))}
         </>
@@ -155,8 +155,8 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       {/* PAST TRIPS */}
       {Array.isArray(pastTrips) && !!pastTrips.length && pastTrips.length > 0 && (
         <>
-          <Heading as="h2" altStyle>
-            Past
+          <Heading as="h2" altStyle withDecoration>
+            Past Trips
           </Heading>
           {pastTrips.map((trip) => renderTrip(trip))}
         </>

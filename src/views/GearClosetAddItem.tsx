@@ -142,7 +142,9 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
       )}
 
       <>
-        <Heading>Add Gear Item</Heading>
+        <Heading altStyle as="h2">
+          Add Gear Item
+        </Heading>
 
         <Formik
           validateOnMount
@@ -295,7 +297,7 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
                   </Row>
                 </CollapsibleBox>
               )}
-              <FormErrors dirty={dirty} errors={errors as string[]} />
+              <FormErrors dirty={dirty} errors={errors} />
               <p>
                 <Button
                   rightSpacer

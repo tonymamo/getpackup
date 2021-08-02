@@ -48,7 +48,7 @@ const EditableComponent: FunctionComponent<EditableComponentProps> = ({
       {isEditing ? (
         <div>
           {children}
-          <FormErrors dirty={dirty} errors={errors as string[]} />
+          <FormErrors dirty={dirty} errors={errors} />
           <Button
             type="button"
             color="success"

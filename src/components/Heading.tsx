@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { baseSpacer } from '@styles/size';
 import { headingsColor, white } from '@styles/color';
@@ -26,6 +26,7 @@ type HeadingProps = {
   uppercase?: boolean;
   altStyle?: boolean;
   onClick?: () => void;
+  withDecoration?: boolean;
 };
 
 const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle']) => {
@@ -50,35 +51,45 @@ const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle
   return altStyle ? fontSizeH3 : fontSizeH1;
 };
 
-const StyledHeading = styled.h1`
+const StyledHeading = styled.h1<HeadingProps>`
   font-weight: 700;
   line-height: ${lineHeightSmall};
-  color: ${(props: HeadingProps) => (props.inverse ? white : headingsColor)};
-  margin-bottom: ${(props: HeadingProps) => (props.noMargin ? '0' : baseSpacer)};
-  text-align: ${(props: HeadingProps) => props.align};
+  color: ${(props) => (props.inverse ? white : headingsColor)};
+  margin-bottom: ${(props) => (props.noMargin ? '0' : baseSpacer)};
+  text-align: ${(props) => props.align};
   white-space: pre-line;
-  font-size: ${(props: HeadingProps) => renderFontSize(props.as, props.altStyle)};
-  text-transform: ${(props: HeadingProps) => (props.uppercase ? 'uppercase' : 'initial')};
-  font-family: ${(props: HeadingProps) =>
-    props.altStyle ? fontFamilySansSerif : headingsFontFamily};
+  font-size: ${(props) => renderFontSize(props.as, props.altStyle)};
+  text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'initial')};
+  font-family: ${(props) => (props.altStyle ? fontFamilySansSerif : headingsFontFamily)};
   & div {
     display: inline;
   }
+
+  ${(props) =>
+    props.withDecoration &&
+    css`
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      &:before,
+      &:after {
+        content: '';
+        border-top: 1px solid;
+        margin: 0 ${baseSpacer} 0 0;
+        flex: 1 0 ${baseSpacer};
+      }
+
+      &:after {
+        margin: 0 0 0 ${baseSpacer};
+      }
+    `}
 `;
 
 const Heading: FunctionComponent<HeadingProps> = (props) => (
-  <StyledHeading
-    as={props.as}
-    noMargin={props.noMargin}
-    inverse={props.inverse}
-    align={props.align}
-    id={props.id}
-    uppercase={props.uppercase}
-    altStyle={props.altStyle}
-    {...props}
-  >
-    {props.children}
-  </StyledHeading>
+  <StyledHeading {...props}>{props.children}</StyledHeading>
 );
 
 export default Heading;

@@ -141,7 +141,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
 
             <HorizontalRule />
 
-            <FormErrors dirty={dirty} errors={errors as string[]} />
+            <FormErrors dirty={dirty} errors={errors} />
             <FlexContainer justifyContent="space-between">
               <Button
                 type="link"
