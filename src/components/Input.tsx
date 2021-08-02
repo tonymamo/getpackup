@@ -270,6 +270,7 @@ const StyledNumericInputWrapper = styled.div`
     height: ${inputHeight};
     padding: 0 ${inputHeight};
     text-align: center;
+    font-size: ${fontSizeH6};
   }
   & input:focus {
     outline: none;
