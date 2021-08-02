@@ -37,7 +37,6 @@ const StyledNavbar = styled.header`
   right: 0;
   background: ${brandSecondary};
   min-height: ${quadrupleSpacer};
-  line-height: 64px;
   padding-top: env(safe-area-inset-top);
   z-index: ${zIndexNavbar};
   display: flex;
@@ -78,6 +77,10 @@ const StyledNavbar = styled.header`
     border-radius: ${baseSpacer};
     background-color: ${white};
     color: ${brandSecondary};
+  }
+
+  & svg:focus {
+    outline: none;
   }
 `;
 
