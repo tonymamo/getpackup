@@ -14,7 +14,7 @@ export default function HTML(props) {
           rel="stylesheet"
           type="text/css"
           href="https://cloud.typography.com/7222118/6340832/css/fonts.css"
-          media="print"
+          media="all"
         />
       </head>
       <body {...props.bodyAttributes}>
