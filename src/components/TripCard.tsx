@@ -31,9 +31,6 @@ import { brandSecondary, lightestGray } from '@styles/color';
 type TripCardProps = {
   trip?: TripType;
   loggedInUser?: UserType;
-  showDescription?: boolean;
-  showTags?: boolean;
-  enableNavigation?: boolean;
 };
 
 const StyledTripWrapper = styled.div`

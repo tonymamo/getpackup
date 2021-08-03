@@ -67,7 +67,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         trackEvent('Trip Card Link Clicked', { trip });
       }}
     >
-      <TripCard trip={trip} loggedInUser={loggedInUser} showDescription enableNavigation />
+      <TripCard trip={trip} loggedInUser={loggedInUser} />
     </Box>
   );
 
@@ -104,12 +104,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
           {Array.from({ length: 5 }).map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <Box key={`loadingTrip${index}`}>
-              <TripCard
-                trip={undefined}
-                loggedInUser={loggedInUser}
-                showDescription
-                enableNavigation
-              />
+              <TripCard trip={undefined} loggedInUser={loggedInUser} />
             </Box>
           ))}
         </>

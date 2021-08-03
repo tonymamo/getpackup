@@ -28,9 +28,6 @@ const AddTripHeaderImage = loadable(() => import('@views/AddTripHeaderImage'), {
   fallback: <LoadingPage />,
 });
 const GearCloset = loadable(() => import('@views/GearCloset'), { fallback: <LoadingPage /> });
-const GearClosetSetup = loadable(() => import('@views/GearClosetSetup'), {
-  fallback: <LoadingPage />,
-});
 const GearClosetAddItem = loadable(() => import('@views/GearClosetAddItem'), {
   fallback: <LoadingPage />,
 });
@@ -167,11 +164,6 @@ const App: FunctionComponent<{}> = (props) => {
           <PrivateRoute
             path="/trips/:id/*"
             component={TripById}
-            loggedInUser={activeLoggedInUser}
-          />
-          <PrivateRoute
-            path="/gear-closet/setup"
-            component={GearClosetSetup}
             loggedInUser={activeLoggedInUser}
           />
           <PrivateRoute

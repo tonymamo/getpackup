@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { useDispatch } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import { Formik, Form, Field } from 'formik';
 import { startOfDay, endOfDay } from 'date-fns';
 
@@ -31,6 +31,8 @@ import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
 import { gearListActivities } from '@utils/gearListItemEnum';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
+import { ActivityTypes, GearListEnumType } from '@common/gearItem';
+import { RootState } from '@redux/ducks';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
@@ -41,6 +43,19 @@ type TripDetailsProps = {
 const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, loggedInUser }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
+
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+
+  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
+
+  useFirestoreConnect([
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
+  ]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,11 +79,15 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
           ...updatedValues,
         })
         .then(() => {
-          trackEvent('Trip Details Updated', { ...updatedValues });
+          trackEvent('Trip Details Updated', {
+            ...updatedValues,
+          });
           setIsLoading(false);
         })
         .catch((err) => {
-          trackEvent('Trip Details Update Failure', { ...updatedValues });
+          trackEvent('Trip Details Update Failure', {
+            ...updatedValues,
+          });
           setIsLoading(false);
           dispatch(
             addAlert({
@@ -85,6 +104,10 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
     (activeTrip?.tripLength === 21
       ? formattedDate(new Date(activeTrip.startDate.seconds * 1000))
       : formattedDateRange(activeTrip.startDate.seconds * 1000, activeTrip.endDate.seconds * 1000));
+
+  // the categories that the user DOES have in their gear closet, so we can only show those
+  const getFilteredCategories = (array: GearListEnumType) =>
+    array.filter((item) => gearClosetCategories.includes(item.name));
 
   return (
     <>
@@ -225,7 +248,10 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                             name="tags"
                             label="Tags"
                             hiddenLabel
-                            options={createOptionsFromArrayOfObjects(gearListActivities, 'label')}
+                            options={createOptionsFromArrayOfObjects(
+                              getFilteredCategories(gearListActivities),
+                              'label'
+                            )}
                             required
                             setFieldTouched={setFieldTouched}
                             setFieldValue={setFieldValue}

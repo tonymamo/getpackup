@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
-import { halfSpacer, baseSpacer, doubleSpacer } from '@styles/size';
+import { baseSpacer, doubleSpacer } from '@styles/size';
 import { offWhite } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 
@@ -12,7 +12,7 @@ const HorizontalScrollerWrapper = styled.ul`
   list-style: none;
   display: flex;
   margin: 0;
-  padding: 0 ${halfSpacer};
+  padding: 0;
   overflow-x: scroll;
   scrollbar-width: none;
   /* overscroll-behavior: contain; */

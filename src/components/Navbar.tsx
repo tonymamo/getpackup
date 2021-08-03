@@ -229,6 +229,8 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const tripGenRegex = new RegExp('/add-trip-image|generator');
   const routeIsPartOfTripGenProcess = tripGenRegex.test(pathname);
 
+  const isInOnboardingFlow = pathname.includes('onboarding');
+
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
     return isPartiallyCurrent ? { className: 'active' } : {};
   };
@@ -379,7 +381,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Button>
             </FlexContainer>
           )}
-          {!size.isSmallScreen && isAuthenticated && auth.isLoaded && (
+          {!size.isSmallScreen && isAuthenticated && auth.isLoaded && !isInOnboardingFlow && (
             <TopNavIconWrapper>
               <Link
                 to="/app/trips"

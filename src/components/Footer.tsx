@@ -23,6 +23,7 @@ import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
 import { zIndexSmallScreenFooter } from '@styles/layers';
 import GearClosetIcon from '@images/gearClosetIcon';
+import { useLocation } from '@reach/router';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
@@ -92,6 +93,9 @@ const Footer = () => {
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
   const size = useWindowSize();
+  const location = useLocation();
+
+  const isInOnboardingFlow = location.pathname.includes('onboarding');
 
   const isPartiallyActive = ({ isPartiallyCurrent }: { isPartiallyCurrent: boolean }) => {
     return isPartiallyCurrent ? { className: 'active' } : {};
@@ -233,7 +237,7 @@ const Footer = () => {
           </StyledFooter>
         </>
       )}
-      {size.isSmallScreen && loggedInUser && (
+      {size.isSmallScreen && loggedInUser && !isInOnboardingFlow && (
         <BottomNav>
           <Link
             to="/app/trips"

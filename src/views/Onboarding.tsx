@@ -1,11 +1,12 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { FaCheck, FaChevronLeft, FaChevronRight, FaCircle } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
+import { isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import pickBy from 'lodash/pickBy';
 import styled from 'styled-components';
+import { navigate } from 'gatsby';
 
 import {
   Button,
@@ -20,7 +21,7 @@ import {
   FormErrors,
   InlineLoader,
 } from '@components';
-import { halfSpacer } from '@styles/size';
+import { doubleSpacer, halfSpacer } from '@styles/size';
 import { textColor, textColorLight } from '@styles/color';
 import {
   gearListActivities,
@@ -33,8 +34,6 @@ import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { ActivityTypes } from '@common/gearItem';
-import GearClosetIcon from '@images/gearClosetIcon';
-import { Link } from 'gatsby';
 
 type OnboardingProps = {};
 
@@ -50,6 +49,15 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+
+  useFirestoreConnect([
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
+  ]);
 
   const [activeTab, setActiveTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,6 +67,12 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
   gearListKeys.forEach((item) => {
     initialValues[item] = false;
   });
+
+  useEffect(() => {
+    if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0) {
+      navigate('/app/gear-closet');
+    }
+  }, []);
 
   const onSubmit = (
     values: typeof initialValues,
@@ -102,33 +116,31 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
   };
 
   const renderPageIndicators = () => (
-    <FlexContainer>
-      <FaCircle
-        style={{ margin: halfSpacer }}
-        color={activeTab === 0 ? textColor : textColorLight}
-        onClick={() => onSwitch(0)}
-      />
-      <FaCircle
-        style={{ margin: halfSpacer }}
-        color={activeTab === 1 ? textColor : textColorLight}
-        onClick={() => onSwitch(1)}
-      />
-      <FaCircle
-        style={{ margin: halfSpacer }}
-        color={activeTab === 2 ? textColor : textColorLight}
-        onClick={() => onSwitch(2)}
-      />
-      <FaCircle
-        style={{ margin: halfSpacer }}
-        color={activeTab === 3 ? textColor : textColorLight}
-        onClick={() => onSwitch(3)}
-      />
-    </FlexContainer>
+    <div style={{ marginTop: doubleSpacer }}>
+      <FlexContainer>
+        <FaCircle
+          style={{ margin: halfSpacer }}
+          color={activeTab === 0 ? textColor : textColorLight}
+        />
+        <FaCircle
+          style={{ margin: halfSpacer }}
+          color={activeTab === 1 ? textColor : textColorLight}
+        />
+        <FaCircle
+          style={{ margin: halfSpacer }}
+          color={activeTab === 2 ? textColor : textColorLight}
+        />
+        <FaCircle
+          style={{ margin: halfSpacer }}
+          color={activeTab === 3 ? textColor : textColorLight}
+        />
+      </FlexContainer>
+    </div>
   );
 
   return (
     <PageContainer>
-      <Seo title="Let's Get Started" />
+      <Seo title="Initial Account Setup" />
       <Formik
         validateOnMount
         initialValues={initialValues}
@@ -158,14 +170,16 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                     <CenteredText>
                       <Heading>Welcome! 🤝</Heading>
                       <p>
-                        What types of activities do you like to do? We will use your answers to
-                        create a <strong>custom gear closet</strong> for you.
+                        Looks like it&apos;s your first time here, let&apos;s set up your account.
+                        Tell us all the activities you&apos;re interested in doing.
                       </p>
                       <p>
                         <small>
                           <em>
-                            Select all that apply. Don&apos;t see your favorite activity? You will
-                            have a chance to add it later.
+                            Select all that apply.
+                            {/* TODO: add back when we have custom categories */}
+                            {/* Don&apos;t see your favorite activity? You will
+                            have a chance to add it later. */}
                           </em>
                         </small>
                       </p>
@@ -185,21 +199,24 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                       ))}
                     </Row>
 
-                    <FlexContainer justifyContent="flex-end">
-                      <Button
-                        type="button"
-                        onClick={() => onSwitch(1)}
-                        iconRight={<FaChevronRight />}
-                      >
-                        Next
-                      </Button>
-                    </FlexContainer>
+                    <Row>
+                      <Column sm={6} smOffset={6}>
+                        <Button
+                          type="button"
+                          block
+                          onClick={() => onSwitch(1)}
+                          iconRight={<FaChevronRight />}
+                        >
+                          Next
+                        </Button>
+                      </Column>
+                    </Row>
                     {renderPageIndicators()}
                   </Slide>
                   <Slide>
                     <CenteredText>
                       <Heading>Accommodations</Heading>
-                      <p>When you go on adventures, what types of accommodations do you stay in?</p>
+                      <p>What types of accommodations do you stay in?</p>
                       <p>
                         <small>
                           <em>Select all that apply.</em>
@@ -209,7 +226,7 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
 
                     <Row>
                       {gearListAccommodations.map((item) => (
-                        <Column xs={6} sm={4} md={3} key={item.name}>
+                        <Column xs={4} md={3} key={item.name}>
                           <Field
                             as={IconCheckbox}
                             icon={item.icon}
@@ -223,7 +240,7 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                     <HorizontalRule />
                     <CenteredText>
                       <Heading>Kitchen</Heading>
-                      <p>Related, what type of kitchen setup(s) do you have gear for?</p>
+                      <p>What kinds of setups will you need on your trips?</p>
                       <p>
                         <small>
                           <em>Select all that apply.</em>
@@ -233,7 +250,7 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
 
                     <Row>
                       {gearListCampKitchen.map((item) => (
-                        <Column xs={6} sm={4} md={3} key={item.name}>
+                        <Column xs={4} md={3} key={item.name}>
                           <Field
                             as={IconCheckbox}
                             icon={item.icon}
@@ -245,38 +262,41 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                       ))}
                     </Row>
 
-                    <FlexContainer justifyContent="space-between">
-                      <Button
-                        type="button"
-                        color="text"
-                        onClick={() => onSwitch(0)}
-                        iconLeft={<FaChevronLeft />}
-                      >
-                        Forgot something?
-                      </Button>
-                      <Button
-                        type="button"
-                        onClick={() => onSwitch(2)}
-                        iconRight={<FaChevronRight />}
-                      >
-                        Next
-                      </Button>
-                    </FlexContainer>
+                    <Row>
+                      <Column sm={6} xsSpacer smOrder={2}>
+                        <Button
+                          type="button"
+                          block
+                          onClick={() => onSwitch(2)}
+                          iconRight={<FaChevronRight />}
+                        >
+                          Next
+                        </Button>
+                      </Column>
+                      <Column sm={6} smOrder={1}>
+                        <Button
+                          type="button"
+                          color="text"
+                          block
+                          onClick={() => onSwitch(0)}
+                          iconLeft={<FaChevronLeft />}
+                        >
+                          Go Back
+                        </Button>
+                      </Column>
+                    </Row>
                     {renderPageIndicators()}
                   </Slide>
                   <Slide>
                     <CenteredText>
-                      <Heading>Miscellaneous</Heading>
+                      <Heading>Other Considerations</Heading>
                       <p>
-                        What other stuff are you into, or need to remember to bring on your trips?
-                        We can help you pack those items too 😎
+                        Sometimes trips need additional items. Select those that are important to
+                        you.
                       </p>
                       <p>
                         <small>
-                          <em>
-                            Select all that apply. You can add more categories and custom items
-                            later.
-                          </em>
+                          <em>Select all that apply. You can always add custom items later.</em>
                         </small>
                       </p>
                     </CenteredText>
@@ -284,7 +304,7 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                     <Row>
                       {/* remove '10 essentials' category, the last item in the array */}
                       {[...gearListOtherConsiderations.slice(0, -1)].map((item) => (
-                        <Column xs={6} sm={4} md={3} key={item.name}>
+                        <Column xs={4} md={3} key={item.name}>
                           <Field
                             as={IconCheckbox}
                             icon={item.icon}
@@ -296,29 +316,35 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                       ))}
                     </Row>
                     <FormErrors dirty errors={errors} />
-                    <FlexContainer justifyContent="space-between">
-                      <Button
-                        type="button"
-                        color="text"
-                        onClick={() => onSwitch(1)}
-                        iconLeft={<FaChevronLeft />}
-                      >
-                        Wait, go back
-                      </Button>
-                      <Button
-                        type="button"
-                        color="success"
-                        isLoading={isLoading}
-                        disabled={isSubmitting || !isValid}
-                        onClick={() => {
-                          onSwitch(3);
-                          handleSubmit();
-                        }}
-                        iconLeft={<FaCheck />}
-                      >
-                        Finish
-                      </Button>
-                    </FlexContainer>
+                    <Row>
+                      <Column sm={6} xsSpacer smOrder={2}>
+                        <Button
+                          type="button"
+                          color="success"
+                          block
+                          isLoading={isLoading}
+                          disabled={isSubmitting || !isValid}
+                          onClick={() => {
+                            onSwitch(3);
+                            handleSubmit();
+                          }}
+                          iconLeft={<FaCheck />}
+                        >
+                          Finish
+                        </Button>
+                      </Column>
+                      <Column sm={6}>
+                        <Button
+                          type="button"
+                          color="text"
+                          block
+                          onClick={() => onSwitch(1)}
+                          iconLeft={<FaChevronLeft />}
+                        >
+                          Go Back
+                        </Button>
+                      </Column>
+                    </Row>
                     {renderPageIndicators()}
                   </Slide>
                   <Slide>
@@ -327,67 +353,34 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                         <>
                           <InlineLoader />
                           <Heading>Please Wait</Heading>
-                          <p>We are building out your personalized gear closet.</p>
+                          <p>We are setting up your account.</p>
                         </>
                       ) : (
                         <>
                           <Heading>Success!</Heading>
                           <p>
-                            We just built out your personalized gear closet. Now we will use your
-                            gear to create a <strong>dynamic packing list</strong> that is unique
-                            for each trip, based on what you are doing on that trip. You can find
-                            your gear closet by looking for{' '}
-                            <Link
-                              to="/app/gear-closet"
-                              onClick={() =>
-                                trackEvent('Gear Closet Button clicked', {
-                                  location: 'Onboarding Finish Text',
-                                })
-                              }
-                            >
-                              the gear closet icon <GearClosetIcon size={15} />
-                            </Link>
-                            .
+                            We have personalized your account for your interests, and have set up
+                            your inventory of packing list recommendations for your trips.
                           </p>
                           <br />
                           <Heading as="h2" altStyle>
-                            You can now go create your first trip to see how it works, or go
-                            customize your gear closet to your liking!
+                            Let&apos;s get started by making your first trip!
                           </Heading>
                           <br />
                           <br />
-                          <Row>
-                            <Column sm={6}>
-                              <Button
-                                type="link"
-                                to="/app/gear-closet"
-                                color="text"
-                                block
-                                onClick={() =>
-                                  trackEvent('Gear Closet Button Clicked', {
-                                    location: 'Onboarding Finish Button',
-                                  })
-                                }
-                              >
-                                Customize Gear Closet
-                              </Button>
-                            </Column>
-                            <Column sm={6} xsSpacer>
-                              <Button
-                                type="link"
-                                to="/app/trips/new"
-                                iconRight={<FaChevronRight />}
-                                block
-                                onClick={() =>
-                                  trackEvent('New Trip Button clicked', {
-                                    location: 'Onboarding Finish Button',
-                                  })
-                                }
-                              >
-                                Create First Trip
-                              </Button>
-                            </Column>
-                          </Row>
+
+                          <Button
+                            type="link"
+                            to="/app/trips/new"
+                            iconRight={<FaChevronRight />}
+                            onClick={() =>
+                              trackEvent('New Trip Button clicked', {
+                                location: 'Onboarding Finish Button',
+                              })
+                            }
+                          >
+                            Create First Trip
+                          </Button>
                         </>
                       )}
                     </CenteredText>

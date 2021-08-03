@@ -122,7 +122,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   return (
     <>
-      <TripHeader trip={trip} loggedInUser={loggedInUser} showTags />
+      <TripHeader trip={trip} loggedInUser={loggedInUser} />
       <StickyWrapper ref={stickyRef}>
         {sharedTrip && (
           <Tabs isSticky={isSticky}>

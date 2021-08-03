@@ -3,6 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import differenceInDays from 'date-fns/differenceInDays';
 import styled from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
+import { useLocation } from '@reach/router';
 
 import { Button, FlexContainer } from '@components';
 import logo from '@images/maskable_icon.png';
@@ -35,6 +36,8 @@ const AddToHomeScreenBanner: FunctionComponent<{}> = () => {
   const isAuthenticated = auth && !auth.isEmpty;
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setOpened] = useState(false);
+
+  const location = useLocation();
 
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
@@ -82,6 +85,7 @@ const AddToHomeScreenBanner: FunctionComponent<{}> = () => {
         isAuthenticated &&
         trips &&
         trips.length > 0 &&
+        (location.pathname === '/app/trips' || location.pathname === '/app/trips/') &&
         isIos() &&
         !isInStandaloneMode() &&
         checkLastPwaDisplay() &&

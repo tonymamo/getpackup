@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaChevronLeft } from 'react-icons/fa';
-import TextTruncate from 'react-text-truncate';
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -14,7 +13,6 @@ import {
   Avatar,
   Pill,
   HorizontalScroller,
-  HorizontalRule,
   FlexContainer,
   DropdownMenu,
   Button,
@@ -38,9 +36,6 @@ import trackEvent from '@utils/trackEvent';
 type TripHeaderProps = {
   trip?: TripType;
   loggedInUser?: UserType;
-  showDescription?: boolean;
-  showTags?: boolean;
-  enableNavigation?: boolean;
 };
 
 const StyledTripWrapper = styled.div``;
@@ -57,13 +52,7 @@ const StyledLineItem = styled.div`
   margin-bottom: ${halfSpacer};
 `;
 
-const TripHeader: FunctionComponent<TripHeaderProps> = ({
-  trip,
-  loggedInUser,
-  showDescription,
-  showTags,
-  enableNavigation,
-}) => {
+const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -74,7 +63,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
 
   return (
     <StyledTripWrapper>
-      {!enableNavigation && !size.isSmallScreen ? (
+      {!size.isSmallScreen ? (
         <StyledBackLink
           to="../"
           onClick={() => trackEvent('Trip Header Back To Trips Link Clicked', { trip })}
@@ -86,22 +75,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
         <Column md={8}>
           <FlexContainer justifyContent="flex-start" height="100%">
             <Heading as="h3" altStyle noMargin>
-              {trip ? (
-                <>
-                  {enableNavigation ? (
-                    <Link
-                      to={`/app/trips/${trip.tripId}/`}
-                      onClick={() => trackEvent('Trip Header Heading Link Clicked', { trip })}
-                    >
-                      {trip.name}
-                    </Link>
-                  ) : (
-                    trip.name
-                  )}
-                </>
-              ) : (
-                <Skeleton width={200} />
-              )}
+              {trip ? trip.name : <Skeleton width={200} />}
             </Heading>
           </FlexContainer>
         </Column>
@@ -154,7 +128,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
       </Row>
 
       <Row>
-        <Column md={showDescription ? 12 : 7}>
+        <Column md={7}>
           <StyledLineItem>
             <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
               <FaRegCalendar
@@ -192,116 +166,90 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({
             </FlexContainer>
           </StyledLineItem>
         </Column>
-        {!showDescription && (
-          <Column md={5}>
-            <FlexContainer justifyContent={!size.isSmallScreen ? 'flex-end' : 'flex-start'}>
-              {trip ? (
-                <>
-                  <Button
-                    type="link"
-                    to={`/app/trips/${trip.tripId}/details`}
-                    rightSpacer
-                    size="small"
-                    color="tertiary"
-                    onClick={() => trackEvent('Trip Header Details Link Clicked', { trip })}
-                  >
-                    Details
-                  </Button>
-                  <Button
-                    type="link"
-                    to={`/app/trips/${trip.tripId}/party`}
-                    rightSpacer
-                    size="small"
-                    color="tertiary"
-                    onClick={() => trackEvent('Trip Header Party Link Clicked', { trip })}
-                  >
-                    Party
-                  </Button>
-                  <TripDeleteModal
-                    setModalIsOpen={setModalIsOpen}
-                    modalIsOpen={modalIsOpen}
-                    tripId={trip.tripId}
-                  />
-                  <DropdownMenu>
-                    <button
-                      onClick={() => {
-                        setModalIsOpen(true);
-                        trackEvent('Trip Header Delete Trip Clicked', { trip });
-                      }}
-                      type="button"
-                    >
-                      <FaTrash /> Delete
-                    </button>
-                  </DropdownMenu>
-                </>
-              ) : (
-                <>
-                  <Skeleton width={100} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
-                  <Skeleton width={80} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
-                  <Skeleton width={50} height={doubleSpacer} />
-                </>
-              )}
-            </FlexContainer>
-          </Column>
-        )}
-      </Row>
 
-      {showTags && (
-        <div style={{ margin: `${halfSpacer} 0` }}>
-          <HorizontalScroller>
+        <Column md={5}>
+          <FlexContainer justifyContent={!size.isSmallScreen ? 'flex-end' : 'flex-start'}>
             {trip ? (
               <>
-                {trip.tags.map((tag: string) => (
-                  <Pill
-                    key={`${tag}tag`}
-                    // TODO: link to tags
-                    // to={`/search/tags/${tag.replace(' ', '-')}`}
-                    text={tag}
-                    color="primary"
-                  />
-                ))}
+                <Button
+                  type="link"
+                  to={`/app/trips/${trip.tripId}/details`}
+                  rightSpacer
+                  size="small"
+                  color="tertiary"
+                  onClick={() => trackEvent('Trip Header Details Link Clicked', { trip })}
+                >
+                  Details
+                </Button>
+                <Button
+                  type="link"
+                  to={`/app/trips/${trip.tripId}/party`}
+                  rightSpacer
+                  size="small"
+                  color="tertiary"
+                  onClick={() => trackEvent('Trip Header Party Link Clicked', { trip })}
+                >
+                  Party
+                </Button>
+                <TripDeleteModal
+                  setModalIsOpen={setModalIsOpen}
+                  modalIsOpen={modalIsOpen}
+                  tripId={trip.tripId}
+                />
+                <DropdownMenu>
+                  <button
+                    onClick={() => {
+                      setModalIsOpen(true);
+                      trackEvent('Trip Header Delete Trip Clicked', { trip });
+                    }}
+                    type="button"
+                  >
+                    <FaTrash /> Delete
+                  </button>
+                </DropdownMenu>
               </>
             ) : (
               <>
-                {/* Generate some tag placeholders and make widths dynamic with Math */}
-                {Array.from({ length: 7 }).map((_, i) => (
-                  <Skeleton
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={i}
-                    // random widths between 48 and 128
-                    width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
-                    height={baseAndAHalfSpacer}
-                    style={{ marginRight: halfSpacer, borderRadius: baseAndAHalfSpacer }}
-                  />
-                ))}
+                <Skeleton width={100} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
+                <Skeleton width={80} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
+                <Skeleton width={50} height={doubleSpacer} />
               </>
             )}
-          </HorizontalScroller>
-        </div>
-      )}
+          </FlexContainer>
+        </Column>
+      </Row>
 
-      {showDescription && (
-        <>
+      <div style={{ margin: `${halfSpacer} 0` }}>
+        <HorizontalScroller>
           {trip ? (
             <>
-              {trip.description !== '' && (
-                <>
-                  <HorizontalRule compact />
-                  <TextTruncate
-                    line={1}
-                    element="p"
-                    truncateText="…"
-                    text={trip.description || 'No description provided'}
-                    containerClassName="truncatedText"
-                  />
-                </>
-              )}
+              {trip.tags.map((tag: string) => (
+                <Pill
+                  key={`${tag}tag`}
+                  // TODO: link to tags
+                  // to={`/search/tags/${tag.replace(' ', '-')}`}
+                  text={tag}
+                  color="primary"
+                />
+              ))}
             </>
           ) : (
-            <Skeleton count={1} />
+            <>
+              {/* Generate some tag placeholders and make widths dynamic with Math */}
+              {Array.from({ length: 7 }).map((_, i) => (
+                <Skeleton
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={i}
+                  // random widths between 48 and 128
+                  width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
+                  height={baseAndAHalfSpacer}
+                  style={{ marginRight: halfSpacer, borderRadius: baseAndAHalfSpacer }}
+                />
+              ))}
+            </>
           )}
-        </>
-      )}
+        </HorizontalScroller>
+      </div>
     </StyledTripWrapper>
   );
 };
