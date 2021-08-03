@@ -71,7 +71,12 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     </Box>
   );
 
-  if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
+  if (
+    isLoaded(fetchedGearCloset) &&
+    fetchedGearCloset.length === 0 &&
+    isLoaded(trips) &&
+    trips.length === 0
+  ) {
     navigate('/app/onboarding');
   }
 
