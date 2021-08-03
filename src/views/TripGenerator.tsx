@@ -71,10 +71,10 @@ const generateGearList = (values: FormValues, gear: any) => {
       category: item.category,
       isPacked: false,
       isEssential: Boolean(item.essential),
-      quantity: item.quantity,
-      description: item.description,
-      weight: item.weight,
-      weightUnit: item.weightUnit,
+      quantity: item.quantity || 1,
+      description: item.description || '',
+      weight: item.weight || '',
+      weightUnit: item.weightUnit || '',
       created: new Date(),
     };
   });

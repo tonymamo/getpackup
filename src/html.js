@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 
 export default function HTML(props) {
@@ -12,8 +13,8 @@ export default function HTML(props) {
         <link
           rel="stylesheet"
           type="text/css"
-          media="all"
           href="https://cloud.typography.com/7222118/6340832/css/fonts.css"
+          media="all"
         />
       </head>
       <body {...props.bodyAttributes}>

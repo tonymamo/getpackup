@@ -24,15 +24,19 @@ export const requiredField = (value: string) => {
 };
 
 export const requiredSelect = (value: Array<string> | string) => {
-  // input type select can have multiple values as an array of strings, so check that first
-  if (Array.isArray(value) && value.length === 0) {
-    return 'This field is required';
-  }
-  // otherwise, for a single value it is just a string
-  if ((value as string) === '') {
-    return 'This field is required';
-  }
-  return undefined;
+  // Adding a quick timeout seems to help with validation on Selects, which were showing an error on
+  // mobile Safari after selecting a value. Touched was true, value was there, but error was still shown
+  setTimeout(() => {
+    // input type select can have multiple values as an array of strings, so check that first
+    if (Array.isArray(value) && value.length === 0) {
+      return 'This field is required';
+    }
+    // otherwise, for a single value it is just a string
+    if ((value as string) === '') {
+      return 'This field is required';
+    }
+    return undefined;
+  }, 100);
 };
 
 export const isPhoneNumber = (value: string) =>

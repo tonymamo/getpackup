@@ -10,11 +10,11 @@ import '@styles/bootstrapCarousel.css';
 import { ErrorBoundary, Navbar, GlobalAlerts } from '@components';
 import { quadrupleSpacer } from '@styles/size';
 import { brandPrimary, black, white, brandSecondary } from '@styles/color';
+import CssReset from '@styles/cssReset';
 
 const Footer = loadable(() => import('@components/Footer'), {
   fallback: <footer style={{ backgroundColor: brandSecondary, height: '20vh' }} />,
 });
-const CssReset = loadable(() => import('@styles/cssReset'));
 const UpploadTheme = loadable(() => import('@styles/upploadTheme'));
 const AddToHomeScreenBanner = loadable(() => import('./AddToHomeScreenBanner'));
 
@@ -44,6 +44,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
   }, []);
   return (
     <>
+      <div style={{ display: 'none' }}>{process.env.COMMIT_REF || ''}</div>
       <CssReset />
       <UpploadTheme />
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
