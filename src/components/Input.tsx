@@ -38,7 +38,6 @@ import {
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
 import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
 import { formatPhoneNumberValue } from '@utils/phoneNumber';
-import FlexContainer from './FlexContainer';
 import LoadingSpinner from './LoadingSpinner';
 
 type OptionType = { label: string; value: string };
@@ -372,7 +371,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
             style={false}
             id={props.name}
             value={props.value}
-            onChange={(value) => props.setFieldValue(field.name, String(value))}
+            onChange={(value) => props.setFieldValue(field.name, Number(value))}
           />
         </StyledNumericInputWrapper>
       );

@@ -405,7 +405,7 @@ const Table: FunctionComponent<TableProps> = ({
           })}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {isLoading || pageOrRows.length === 0 ? (
+          {isLoading || (!valueToSearch && !tagToSearch && pageOrRows.length === 0) ? (
             <>
               {Array.from({ length: rowsPerPage || 10 }).map((_, rowIndex) => (
                 <StyledTr key={`loadingTableRow${rowIndex}`}>

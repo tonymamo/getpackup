@@ -20,6 +20,7 @@ import {
   Alert,
   FlexContainer,
   Modal,
+  HorizontalRule,
 } from '@components';
 import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
 import trackEvent from '@utils/trackEvent';
@@ -228,7 +229,7 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
             />
           )}
           <Formik validateOnMount initialValues={initialValues} onSubmit={onSubmit}>
-            {({ values, isSubmitting, isValid, setFieldValue, ...rest }) => (
+            {({ values, isSubmitting, isValid, setFieldValue, dirty, ...rest }) => (
               <Form>
                 <Row>
                   <Column sm={6}>
@@ -360,12 +361,13 @@ const GearClosetEditItem: FunctionComponent<GearClosetEditItemProps> = (props) =
                     </Row>
                   </CollapsibleBox>
                 )}
+                <HorizontalRule />
                 <FlexContainer justifyContent="space-between">
                   <p>
                     <Button
                       rightSpacer
                       type="submit"
-                      disabled={isSubmitting || !isValid}
+                      disabled={isSubmitting || !isValid || !dirty || values === initialValues}
                       isLoading={isLoading}
                       iconLeft={<FaCheckCircle />}
                     >
