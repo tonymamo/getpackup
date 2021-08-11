@@ -70,6 +70,7 @@ export const gearListActivities: GearListEnumType = [
   { name: 'sportClimbing', label: 'Sport Climbing', icon: FaMountain },
   { name: 'tradClimbing', label: 'Trad Climbing', icon: FaMountain },
   { name: 'iceClimbing', label: 'Ice Climbing', icon: FaIcicles },
+  { name: 'mountaineering', label: 'Mountaineering', icon: FaMountain },
   { name: 'touring', label: 'Touring', icon: FaSkiing },
   { name: 'resort', label: 'Resort', icon: FaSnowboarding },
   { name: 'crossCountrySkiing', label: 'XC Skiing', icon: FaSkiingNordic },

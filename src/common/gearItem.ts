@@ -75,6 +75,7 @@ export type ActivityTypes = {
   kids: boolean;
   motorcycle: boolean;
   mountainBiking: boolean;
+  mountaineering: boolean;
   multidayTrip: boolean;
   paddling: boolean;
   pets: boolean;
