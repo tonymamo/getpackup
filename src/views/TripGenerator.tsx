@@ -99,6 +99,11 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
       doc: props.id,
       storeAs: 'activeTripById',
     },
+    {
+      collection: 'gear-closet',
+      storeAs: 'gearCloset',
+      doc: auth.uid,
+    },
   ]);
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -189,12 +194,12 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   const renderLoadingIcons = () => {
     return Array.from({ length: 10 }).map((_, index) => (
       // eslint-disable-next-line react/no-array-index-key
-      <li key={`loadingIcon${index}`}>
+      <div key={`loadingIcon${index}`}>
         <FlexContainer flexDirection="column" style={{ margin: doubleSpacer }}>
           <Skeleton count={1} width={tripleSpacer} height={tripleSpacer} />
           <Skeleton count={1} width={sextupleSpacer} height={baseSpacer} />
         </FlexContainer>
-      </li>
+      </div>
     ));
   };
 
@@ -245,7 +250,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
               subtitle="What activities are you doing on this trip?"
             >
               <Row>
-                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
                   ? getFilteredCategories(gearListActivities).map((item) => (
                       <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                         <Field
@@ -264,7 +269,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
             </CollapsibleBox>
             <CollapsibleBox title="Accommodations" subtitle="Where are you staying on this trip?">
               <Row>
-                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
                   ? getFilteredCategories(gearListAccommodations).map((item) => (
                       <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                         <Field
@@ -286,7 +291,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
               subtitle="What type of kitchen setup(s) do will you need on this trip?"
             >
               <Row>
-                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
                   ? getFilteredCategories(gearListCampKitchen).map((item) => (
                       <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
                         <Field
@@ -309,7 +314,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
             >
               <Row>
                 {/* remove '10 essentials' category, the last item in the array */}
-                {isLoaded(fetchedGearCloset) || gearClosetCategoriesIsLoading
+                {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
                   ? getFilteredCategories([...gearListOtherConsiderations.slice(0, -1)]).map(
                       (item) => (
                         <Column xs={6} sm={4} md={3} lg={2} key={item.name}>
