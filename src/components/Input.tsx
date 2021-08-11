@@ -529,7 +529,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
             }
           }}
           onChange={(event) => {
-            field.onChange(event.target.name)(event.target.value.replace(/\s/g, ''));
+            field.onChange(event.target.name)(event.target.value.replace(/\s/g, '').toLowerCase());
           }}
         />
       );

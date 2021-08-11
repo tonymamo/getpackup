@@ -92,6 +92,7 @@ const App: FunctionComponent<{}> = (props) => {
           });
         }
       }
+      // if no username, lets create a random one for them
       if (
         ((activeLoggedInUser !== undefined && !activeLoggedInUser.username) ||
           activeLoggedInUser === undefined) &&
@@ -99,6 +100,9 @@ const App: FunctionComponent<{}> = (props) => {
       ) {
         const displayNameDefault =
           auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '') || 'user';
+        const generatedUsername = `${displayNameDefault}${Math.floor(
+          100000 + Math.random() * 900000
+        )}`;
         firebase
           .firestore()
           .collection('users')
@@ -109,11 +113,12 @@ const App: FunctionComponent<{}> = (props) => {
             emailVerified: auth.emailVerified,
             displayName: auth.displayName,
             photoURL: auth.photoURL,
-            username: `${displayNameDefault}${Math.floor(100000 + Math.random() * 900000)}`,
+            username: generatedUsername,
             bio: '',
             website: '',
             location: '',
             lastUpdated: new Date(),
+            profileHeaderImage: '',
           })
           .then(() => {
             trackEvent('User Profile Initial Info Set', {
@@ -122,9 +127,7 @@ const App: FunctionComponent<{}> = (props) => {
               emailVerified: auth.emailVerified,
               displayName: auth.displayName,
               photoURL: auth.photoURL,
-              username: `${auth.displayName?.toLowerCase().replace(/[^0-9a-z]/gi, '')}${Math.floor(
-                100000 + Math.random() * 900000
-              )}`,
+              username: generatedUsername,
             });
           });
       }

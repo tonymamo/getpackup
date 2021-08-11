@@ -25,9 +25,9 @@ const reservedRouteNamesThatCannotBeUsernames = [
 ];
 
 const validateUsername = async (value: string, initialValue: string) => {
-  if (value === '' || value === initialValue) {
+  if (value === '' || value === initialValue || !value || String(value).trim() === '') {
     // return out early to avoid api calls below
-    return undefined;
+    return 'This field is required';
   }
 
   if (value.length < 3) {

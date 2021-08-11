@@ -2,7 +2,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { navigate } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
 import { actionTypes } from 'redux-firestore';
 import { FaSignOutAlt, FaTrash } from 'react-icons/fa';
@@ -299,6 +299,12 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                             label="Email"
                             disabled
                             hiddenLabel
+                            helpText={
+                              <span>
+                                Please <Link to="/contact">contact us</Link> to change your email
+                                address
+                              </span>
+                            }
                           />
                         </EmailWrapper>
                         {auth.emailVerified ? null : (
