@@ -174,9 +174,8 @@ const Signup: FunctionComponent<SignupProps> = () => {
                       label="Password"
                       validate={requiredPassword}
                       helpText={
-                        <span>
-                          Password requirements{' '}
-                          <FaInfoCircle data-tip={passwordRulesString} data-for="requirements" />
+                        <span data-tip={passwordRulesString} data-for="requirements">
+                          Password requirements <FaInfoCircle />
                           <ReactTooltip
                             id="requirements"
                             place="bottom"

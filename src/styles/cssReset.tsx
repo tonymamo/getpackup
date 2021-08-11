@@ -294,6 +294,8 @@ const CssReset = createGlobalStyle`
   .tooltip.customTooltip {
     white-space: nowrap;
     padding: ${halfSpacer};
+    line-height: 1.5;
+    text-align: center;
   }
 
   .tooltip.customTooltip.customTooltip200 {

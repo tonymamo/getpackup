@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { FaCaretRight } from 'react-icons/fa';
+import { FaCaretRight, FaInfoCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
 import { useFirebase } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
 
 import { Button, Input, Heading, Alert } from '@components';
-import { requiredField } from '@utils/validations';
+import { passwordRulesString, requiredPassword } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import trackEvent from '@utils/trackEvent';
 
@@ -98,8 +99,21 @@ const ResetPassword = ({ actionCode }: Props) => {
               type="password"
               name="password"
               label="Password"
-              validate={requiredField}
+              validate={requiredPassword}
               required
+              helpText={
+                <span data-tip={passwordRulesString} data-for="requirements">
+                  Password requirements <FaInfoCircle />
+                  <ReactTooltip
+                    id="requirements"
+                    place="bottom"
+                    type="dark"
+                    effect="solid"
+                    className="tooltip customTooltip customTooltip200"
+                    delayShow={500}
+                  />
+                </span>
+              }
               hiddenLabel
             />
             <p>
