@@ -55,7 +55,7 @@ const Seo: FunctionComponent<SeoType> = ({
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
+    image: `${image || defaultImage}`,
     url: `${siteUrl}${pathname}`,
     imageWidth: imageWidth || 1920,
     imageHeight: imageHeight || 1080,
