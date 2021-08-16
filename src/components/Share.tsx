@@ -19,7 +19,7 @@ import styled from 'styled-components';
 
 import { z1Shadow } from '@styles/mixins';
 import { white } from '@styles/color';
-import { baseSpacer, borderRadius, halfSpacer, quarterSpacer } from '@styles/size';
+import { baseSpacer, doubleSpacer, borderRadius, halfSpacer, quarterSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import { zIndexModal } from '@styles/layers';
 
@@ -69,11 +69,17 @@ const Share: FunctionComponent<ShareProps> = ({
 
   const hashtags = tags.map((tag) => tag.split(' ').join(''));
 
+  const buttonStyle = {
+    width: doubleSpacer,
+    height: doubleSpacer,
+  };
+
   const renderIcons = (location: 'vertical' | 'inline') => {
     return (
       <>
         <FacebookShareButton
           url={shareUrl}
+          style={buttonStyle}
           hashtag={tags && tags.length > 0 ? hashtags[0] : undefined}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'FacebookShareButton', location, shareUrl })
@@ -83,6 +89,7 @@ const Share: FunctionComponent<ShareProps> = ({
         </FacebookShareButton>
         <FacebookMessengerShareButton
           url={shareUrl}
+          style={buttonStyle}
           redirectUri={shareUrl}
           appId="335885727718265"
           onClick={() =>
@@ -97,6 +104,7 @@ const Share: FunctionComponent<ShareProps> = ({
         </FacebookMessengerShareButton>
         <TwitterShareButton
           url={shareUrl}
+          style={buttonStyle}
           title={title}
           hashtags={tags && tags.length > 0 ? hashtags : undefined}
           onClick={() =>
@@ -107,6 +115,7 @@ const Share: FunctionComponent<ShareProps> = ({
         </TwitterShareButton>{' '}
         <TelegramShareButton
           url={shareUrl}
+          style={buttonStyle}
           title={title}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'TwitterShareButton', location, shareUrl })
@@ -116,6 +125,7 @@ const Share: FunctionComponent<ShareProps> = ({
         </TelegramShareButton>
         <RedditShareButton
           url={shareUrl}
+          style={buttonStyle}
           title={title}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'RedditShareButton', location, shareUrl })
@@ -125,6 +135,7 @@ const Share: FunctionComponent<ShareProps> = ({
         </RedditShareButton>
         <PinterestShareButton
           url={shareUrl}
+          style={buttonStyle}
           media={`https://getpackup.com${media}`}
           description={description}
           onClick={() =>
@@ -135,6 +146,7 @@ const Share: FunctionComponent<ShareProps> = ({
         </PinterestShareButton>
         <EmailShareButton
           url={shareUrl}
+          style={buttonStyle}
           onClick={() =>
             trackEvent('Share Icon Clicked', { icon: 'EmailShareButton', location, shareUrl })
           }
