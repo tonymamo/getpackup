@@ -42,7 +42,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
         docRef.update({
           id: docRef.id,
         });
-        navigate('/admin/gear-list');
+        navigate(-1);
       })
       .catch((err) => {
         dispatch(
@@ -66,7 +66,7 @@ const GearListItemForm: FunctionComponent<GearListItemFormProps> = (props) => {
       })
       .then(() => {
         setIsLoading(false);
-        navigate('/admin/gear-list');
+        navigate(-1);
       })
       .catch((err) => {
         dispatch(

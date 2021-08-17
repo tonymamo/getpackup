@@ -119,6 +119,7 @@ const GlobalFilter = ({
 }) => {
   const size = useWindowSize();
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const profile = useSelector((state: RootState) => state.firebase.profile);
 
   const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
 
@@ -186,25 +187,31 @@ const GlobalFilter = ({
                 {
                   label: 'Activities',
                   options: createOptionsFromGearListArray(
-                    getFilteredCategories(gearListActivities)
+                    profile.isAdmin ? gearListActivities : getFilteredCategories(gearListActivities)
                   ),
                 },
                 {
                   label: 'Accommodations',
                   options: createOptionsFromGearListArray(
-                    getFilteredCategories(gearListAccommodations)
+                    profile.isAdmin
+                      ? gearListAccommodations
+                      : getFilteredCategories(gearListAccommodations)
                   ),
                 },
                 {
                   label: 'Camp Kitchen',
                   options: createOptionsFromGearListArray(
-                    getFilteredCategories(gearListCampKitchen)
+                    profile.isAdmin
+                      ? gearListCampKitchen
+                      : getFilteredCategories(gearListCampKitchen)
                   ),
                 },
                 {
                   label: 'Other Considerations',
                   options: createOptionsFromGearListArray(
-                    getFilteredCategories(gearListOtherConsiderations)
+                    profile.isAdmin
+                      ? gearListOtherConsiderations
+                      : getFilteredCategories(gearListOtherConsiderations)
                   ),
                 },
               ]}

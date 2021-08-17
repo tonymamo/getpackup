@@ -40,6 +40,7 @@ export const activityTypesList: Array<keyof ActivityTypes> = [
   'snowboarding',
   'snowshoeing',
   'sportClimbing',
+  'surfing',
   'tent',
   'touring',
   'tradClimbing',
@@ -87,6 +88,7 @@ export type ActivityTypes = {
   snowboarding: boolean;
   snowshoeing: boolean;
   sportClimbing: boolean;
+  surfing: boolean;
   tent: boolean;
   touring: boolean;
   tradClimbing: boolean;
