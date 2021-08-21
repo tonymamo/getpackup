@@ -23,7 +23,7 @@ Here’s a quick checklist to help ensure that you're taking everything importan
 4. Personal Needs
 5. Priceless Items
 
-<br />
+<hr />
 
 If you live in a high risk location, having a bag that is already packed and ready to go can be handy. Here are some suggested items:
 
@@ -45,8 +45,6 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Small first aid kit
 * Face masks or coverings
 
-  <br />
-
   **Last Minute Grab / out the door:**
 * Prescription medication
 * Passport
@@ -56,6 +54,8 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Family heirlooms, art and photo albums
 * Pet supplies
 * Turn off utilities
+
+<hr />
 
 **Speciality Items:**
 
@@ -74,6 +74,10 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Medications
 * Leash / collar / ID tag
 * Food / treats
+
+<br />
+
+<hr />
 
 <br />
 
