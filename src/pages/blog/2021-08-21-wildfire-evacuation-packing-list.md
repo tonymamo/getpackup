@@ -7,7 +7,7 @@ description: "With the ever-growing threat of wildfires it's best to be prepared
   of an emergency. "
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1629566958/kym-mackinnon-K7brnUOXtWc-unsplash_oeb39j.jpg
 ---
-Here’s a quick checklist that can help you make sure that you're taking everything with you in case of an emergency. In some situations you will have time to prepare and not be rushed but other times may be immediate, it's best to be prepared for the worst. 
+Here’s a quick checklist to help ensure that you're taking everything important and necessary with you in case of an emergency. In some situations you will have time to prepare and not be rushed but other times may be immediate, it's best to be prepared for anything. Have an emergency plan made that everyone in your household knows and understands what to do if you need to quickly evacuate.  
 
 **Keep in mind the 5 P's of of evacuation:** 
 
@@ -24,7 +24,7 @@ If you live in a high risk location, having a bag that is already packed and rea
 **Ready To Go Bag:**
 
 * 1 Litre of water for each person
-* High energy snacks
+* High energy snacks / non-perishable food
 * Headlamp / flashlight
 * Emergency blanket
 * Cash
@@ -37,6 +37,8 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Computer backup files
 * Copies of important documents
 * Small first aid kit
+* Face masks or coverings
+*
 
 **Last Minute Grab / out the door:**
 
