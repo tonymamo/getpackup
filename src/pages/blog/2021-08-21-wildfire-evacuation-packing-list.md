@@ -15,6 +15,8 @@ tags:
 ---
 Here’s a quick checklist to help ensure that you're taking everything important and necessary with you in case of an emergency. In some situations you will have time to prepare and not be rushed but other times may be immediate, it's best to be prepared for anything. Have an emergency plan made that everyone in your household knows and understands what to do if you need to quickly evacuate.  
 
+![](https://res.cloudinary.com/getpackup/image/upload/v1629576582/giorgio-trovato-i1rWTJQxEw0-unsplash_y5144i.jpg)
+
 <hr />
 
 **Keep in mind the 5 P's of of evacuation:** 
