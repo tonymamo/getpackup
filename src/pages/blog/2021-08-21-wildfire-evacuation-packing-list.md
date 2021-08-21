@@ -44,7 +44,10 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Copies of important documents
 * Small first aid kit
 * Face masks or coverings
-* **Last Minute Grab / out the door:**
+
+  <br />
+
+  **Last Minute Grab / out the door:**
 * Prescription medication
 * Passport
 * Cell phone & charger
@@ -56,7 +59,7 @@ If you live in a high risk location, having a bag that is already packed and rea
 
 **Speciality Items:**
 
-Baby:
+**Baby:**
 
 * Baby food
 * Diapers
@@ -64,7 +67,7 @@ Baby:
 * Wipes
 * Medications
 
-Pets:
+**Pets:**
 
 * Kennel
 * Water
