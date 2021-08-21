@@ -69,6 +69,6 @@ Pets:
 
 <br />
 
-Be prepared! It will likely be dark, smoky, windy, and hot. There may be airborne burning embers, no power or telephone, and poor water pressure. Remember, there is nothing you own worth your life! Please evacuate immediately when asked.
+Be prepared! It will likely be dark, smoky, windy, and hot. There may be airborne burning embers, no power or telephone, and poor water pressure. Remember, there is nothing you own worth your life!
 
 For more information, be sure to watch out for local fire alerts and recommendations from fire departments.
