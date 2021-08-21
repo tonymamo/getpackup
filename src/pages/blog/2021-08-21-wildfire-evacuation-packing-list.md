@@ -7,18 +7,14 @@ description: "With the ever-growing threat of wildfires it's best to be prepared
   of an emergency. "
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1629566958/kym-mackinnon-K7brnUOXtWc-unsplash_oeb39j.jpg
 ---
-Here’s a quick checklist that can help you make sure you are taking everything with you in case of an emergency.
+Here’s a quick checklist that can help you make sure that you're taking everything with you in case of an emergency. In some situations you will have time to prepare and not be rushed but other times may be immediate, it's best to be prepared for the worst. 
 
 **Keep in mind the 5 P's of of evacuation:** 
 
 1. People & Pets
-
 2. Prescriptions
-
 3. Papers
-
 4. Personal Needs
-
 5. Priceless Items
 
 <br />
@@ -42,8 +38,6 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Copies of important documents
 * Small first aid kit
 
-  <br />
-
 **Last Minute Grab / out the door:**
 
 * Prescription medication
@@ -54,8 +48,6 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Family heirlooms, art and photo albums
 * Pet supplies
 * Turn off utilities
-
-  <br />
 
 **Speciality Items:**
 
@@ -74,7 +66,5 @@ Pets:
 * Medications
 * Leash / collar / ID tag
 * Food / treats
-
-  <br />
 
 For more information, be sure to watch out for local fire alerts and recommendations from fire departments.
