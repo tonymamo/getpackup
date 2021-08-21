@@ -6,6 +6,12 @@ description: "With the ever-growing threat of wildfires it's best to be prepared
   for any sort of evacuation. Below is a list to help you stay organized in case
   of an emergency. "
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1629566958/kym-mackinnon-K7brnUOXtWc-unsplash_oeb39j.jpg
+tags:
+  - wildfire
+  - packinglist
+  - checklist
+  - evacuation
+  - packup
 ---
 Here’s a quick checklist to help ensure that you're taking everything important and necessary with you in case of an emergency. In some situations you will have time to prepare and not be rushed but other times may be immediate, it's best to be prepared for anything. Have an emergency plan made that everyone in your household knows and understands what to do if you need to quickly evacuate.  
 
@@ -38,7 +44,10 @@ If you live in a high risk location, having a bag that is already packed and rea
 * Copies of important documents
 * Small first aid kit
 * Face masks or coverings
-* **Last Minute Grab / out the door:**
+
+  <br />
+
+  **Last Minute Grab / out the door:**
 * Prescription medication
 * Passport
 * Cell phone & charger
@@ -50,7 +59,7 @@ If you live in a high risk location, having a bag that is already packed and rea
 
 **Speciality Items:**
 
-Baby:
+**Baby:**
 
 * Baby food
 * Diapers
@@ -58,7 +67,7 @@ Baby:
 * Wipes
 * Medications
 
-Pets:
+**Pets:**
 
 * Kennel
 * Water
