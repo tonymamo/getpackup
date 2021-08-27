@@ -49,7 +49,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
       <UpploadTheme />
       <IconContext.Provider value={{ style: { position: 'relative' } }}>
         <LayoutWrapper>
-          <AddToHomeScreenBanner />
+          {!props.hideFromCms && <AddToHomeScreenBanner />}
           {!props.hideFromCms && <Navbar />}
           <PageBody>
             <ErrorBoundary>{props.children}</ErrorBoundary>
