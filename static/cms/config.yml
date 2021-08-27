@@ -36,7 +36,7 @@ collections:
       - { label: 'Featured Post', name: featuredpost, widget: boolean, required: false }
       - { label: 'Featured Image', name: featuredimage, widget: image }
       - { label: Body, name: body, widget: markdown }
-      - { label: Tags, name: tags, widget: list }
+      - { label: Tags, name: tags, widget: list, required: false }
 
   - name: 'profile'
     editor:

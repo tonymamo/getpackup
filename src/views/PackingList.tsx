@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
 import groupBy from 'lodash/groupBy';
-import { RouteComponentProps } from '@reach/router';
+import { RouteComponentProps, navigate } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
 
@@ -118,6 +118,10 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   if (tripIsLoaded && !trip) {
     return null;
+  }
+
+  if (tripIsLoaded && packingList.length === 0) {
+    navigate(`${trip?.tripId}/generator`);
   }
 
   return (

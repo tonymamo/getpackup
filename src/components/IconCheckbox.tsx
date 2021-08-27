@@ -4,7 +4,7 @@ import { useField, FieldMetaProps, FormikHelpers } from 'formik';
 import { IconType } from 'react-icons';
 
 import { brandPrimary, lightGray, textColor } from '@styles/color';
-import { doubleSpacer, baseSpacer, tripleSpacer } from '@styles/size';
+import { baseSpacer, tripleSpacer } from '@styles/size';
 import { fontSizeXSmall } from '@styles/typography';
 
 type IconCheckboxProps = {
@@ -29,7 +29,8 @@ export const IconWrapperLabel = styled.label<{
 }>`
   text-align: center;
   cursor: pointer;
-  margin: ${doubleSpacer};
+  padding: ${baseSpacer};
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

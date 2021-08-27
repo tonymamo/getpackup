@@ -232,9 +232,14 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                           value={
                             activeTrip.tags.length > 0 ? (
                               <>
-                                {activeTrip.tags.map((tag: string) => (
-                                  <Pill key={`${tag}tag`} text={tag} color="primary" />
-                                ))}
+                                {// only show Activity tags
+                                activeTrip.tags
+                                  .filter((item) =>
+                                    gearListActivities.some((activity) => item === activity.label)
+                                  )
+                                  .map((tag: string) => (
+                                    <Pill key={`${tag}tag`} text={tag} color="primary" />
+                                  ))}
                               </>
                             ) : (
                               'No activities selected'

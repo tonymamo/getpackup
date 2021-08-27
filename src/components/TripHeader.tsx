@@ -32,6 +32,7 @@ import useWindowSize from '@utils/useWindowSize';
 import TripDeleteModal from '@views/TripDeleteModal';
 import { fontSizeSmall } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
+import { gearListActivities } from '@utils/gearListItemEnum';
 
 type TripHeaderProps = {
   trip?: TripType;
@@ -223,15 +224,18 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
         <HorizontalScroller>
           {trip ? (
             <>
-              {trip.tags.map((tag: string) => (
-                <Pill
-                  key={`${tag}tag`}
-                  // TODO: link to tags
-                  // to={`/search/tags/${tag.replace(' ', '-')}`}
-                  text={tag}
-                  color="primary"
-                />
-              ))}
+              {// only show Activity tags
+              trip.tags
+                .filter((item) => gearListActivities.some((activity) => item === activity.label))
+                .map((tag: string) => (
+                  <Pill
+                    key={`${tag}tag`}
+                    // TODO: link to tags
+                    // to={`/search/tags/${tag.replace(' ', '-')}`}
+                    text={tag}
+                    color="primary"
+                  />
+                ))}
             </>
           ) : (
             <>

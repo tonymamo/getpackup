@@ -67,7 +67,7 @@ const Share: FunctionComponent<ShareProps> = ({
 }) => {
   const shareUrl = `https://getpackup.com${url}`;
 
-  const hashtags = tags.map((tag) => tag.split(' ').join(''));
+  const hashtags = (tags && tags.length > 0 && tags.map((tag) => tag.split(' ').join(''))) || [];
 
   const buttonStyle = {
     width: doubleSpacer,
