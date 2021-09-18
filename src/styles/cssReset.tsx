@@ -89,6 +89,10 @@ const CssReset = createGlobalStyle`
     background-color: ${white};
     background-image: url('${topo}');
     background-size: 500px;
+
+    &.ReactModal__Body--open {
+      overflow: hidden;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
