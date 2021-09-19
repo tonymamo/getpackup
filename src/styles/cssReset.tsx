@@ -8,6 +8,7 @@ import {
   lightGray,
   white,
   brandSecondary,
+  gray,
 } from '@styles/color';
 import topo from '@images/topo.png';
 import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
@@ -253,6 +254,17 @@ const CssReset = createGlobalStyle`
   input[type="search"],
   input[type="number"] {
     -webkit-appearance: none;
+  }
+
+  input[type="number"] {
+    color: transparent;
+    text-shadow: 0 0 0 ${gray};
+    &::selection {
+      background: transparent;
+      user-select: none;
+      pointer-events: none;
+      color: transparent;
+    }
   }
 
   input:-webkit-autofill {

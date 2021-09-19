@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useRef, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 import { FaEye, FaEyeSlash, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
@@ -119,8 +119,8 @@ const StyledErrorMessage = styled.div`
 const StyledSelect = styled(Select)`
   & > div:first-child {
     ${(props: { invalid?: boolean }) =>
-      props.invalid &&
-      `
+    props.invalid &&
+    `
       border: 2px solid ${brandDanger};
   `}
   }
@@ -129,8 +129,8 @@ const StyledSelect = styled(Select)`
 const StyledAsyncSelect = styled(AsyncSelect)`
   & > div:first-child {
     ${(props: { invalid?: boolean }) =>
-      props.invalid &&
-      `
+    props.invalid &&
+    `
       border: 2px solid ${brandDanger};
   `}
   }
@@ -146,7 +146,7 @@ export const InputWrapper = styled.div`
   }
 `;
 
-const StyledGeosuggest = styled(Geosuggest)<any>`
+const StyledGeosuggest = styled(Geosuggest) <any>`
   &.geosuggest {
     position: relative;
     width: 100%;
@@ -357,6 +357,14 @@ const Input: FunctionComponent<InputProps> = (props) => {
 
   let inputTypeToRender;
 
+  useEffect(() => {
+    // Override react-numeric-input type
+    if (props.type === 'number') {
+      const input = document.querySelector('.react-numeric-input input');
+      input?.setAttribute('type', 'number');
+    }
+  }, [props.type]);
+
   switch (props.type) {
     case 'number':
       inputTypeToRender = (
@@ -393,8 +401,8 @@ const Input: FunctionComponent<InputProps> = (props) => {
         const setValue = (value: string | Array<string>) => {
           return props.isMulti
             ? (value as Array<string>).map((item) =>
-                props.options.find((option) => option.value === item)
-              )
+              props.options.find((option) => option.value === item)
+            )
             : props.options.find((option) => option.value === value);
         };
 
