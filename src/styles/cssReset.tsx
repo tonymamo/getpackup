@@ -259,6 +259,8 @@ const CssReset = createGlobalStyle`
   input[type="number"] {
     color: transparent;
     text-shadow: 0 0 0 ${gray};
+    caret-color: transparent;
+    
     &::selection {
       background: transparent;
       user-select: none;
