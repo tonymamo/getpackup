@@ -6,12 +6,15 @@ import client from '@redux/ducks/client';
 import { ClientStoreType } from '@redux/ducks/client.d';
 import globalAlerts from '@redux/ducks/globalAlerts';
 import { GlobalAlertsStoreType } from '@redux/ducks/globalAlerts.d';
+import workerUpdateReady from '@redux/ducks/workerUpdateReady';
+import { WorkerUpdateStoreType } from '@redux/ducks/workerUpdateReady';
 
 export type RootState = {
   firebase: FirebaseReducer.Reducer<any, any>;
   firestore: any;
   client: ClientStoreType;
   globalAlerts: GlobalAlertsStoreType;
+  workerUpdateReady: WorkerUpdateStoreType;
 };
 
 const rootReducer = combineReducers<RootState>({
@@ -19,6 +22,7 @@ const rootReducer = combineReducers<RootState>({
   firebase: firebaseReducer,
   firestore: firestoreReducer,
   globalAlerts,
+  workerUpdateReady,
 });
 
 export default rootReducer;

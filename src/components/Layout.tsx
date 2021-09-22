@@ -11,6 +11,7 @@ import { ErrorBoundary, Navbar, GlobalAlerts } from '@components';
 import { quadrupleSpacer } from '@styles/size';
 import { brandPrimary, black, white, brandSecondary } from '@styles/color';
 import CssReset from '@styles/cssReset';
+import UpdateConfirmModal from './UpdateConfirmModal';
 
 const Footer = loadable(() => import('@components/Footer'), {
   fallback: <footer style={{ backgroundColor: brandSecondary, height: '20vh' }} />,
@@ -56,6 +57,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
           </PageBody>
           {!props.hideFromCms && <GlobalAlerts />}
           {!props.hideFromCms && <Footer />}
+          <UpdateConfirmModal />
         </LayoutWrapper>
         <CookieConsent
           location="bottom"
