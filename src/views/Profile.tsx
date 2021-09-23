@@ -349,7 +349,14 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                       isLoading={isLoading}
                       value={loggedInUser.bio || 'No bio provided'}
                     >
-                      <Field as={Input} type="textarea" name="bio" label="Bio" hiddenLabel />
+                      <Field
+                        as={Input}
+                        type="textarea"
+                        maxLength={2000}
+                        name="bio"
+                        label="2000 character limit"
+                        hiddenLabel
+                      />
                     </EditableInput>
                     <EditableInput
                       label="Emergency Contacts"
