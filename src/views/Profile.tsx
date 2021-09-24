@@ -354,7 +354,8 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         type="textarea"
                         maxLength={2000}
                         name="bio"
-                        label="2000 character limit"
+                        label="Bio"
+                        helpText="2000 character limit"
                         hiddenLabel
                       />
                     </EditableInput>
@@ -410,6 +411,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         label="Name"
                         required
                         validate={requiredField}
+                        maxLength={50}
                       />
 
                       <Field

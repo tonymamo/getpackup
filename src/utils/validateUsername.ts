@@ -34,6 +34,10 @@ const validateUsername = async (value: string, initialValue: string) => {
     return 'Username must be at least 3 characters long';
   }
 
+  if (value.length > 30) {
+    return 'Username must be less than 30 characters long';
+  }
+
   if (isAlphaNumeric(value) !== undefined) {
     return 'Username can only contain letters and numbers';
   }

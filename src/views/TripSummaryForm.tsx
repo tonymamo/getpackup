@@ -114,6 +114,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
               validate={requiredField}
               required
               autoComplete="off"
+              maxLength={50}
             />
 
             <DayPickerInput

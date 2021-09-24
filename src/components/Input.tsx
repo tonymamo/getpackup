@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { FieldMetaProps, FormikHelpers, useField } from 'formik';
 import { FaEye, FaEyeSlash, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
@@ -119,8 +119,8 @@ const StyledErrorMessage = styled.div`
 const StyledSelect = styled(Select)`
   & > div:first-child {
     ${(props: { invalid?: boolean }) =>
-    props.invalid &&
-    `
+      props.invalid &&
+      `
       border: 2px solid ${brandDanger};
   `}
   }
@@ -129,8 +129,8 @@ const StyledSelect = styled(Select)`
 const StyledAsyncSelect = styled(AsyncSelect)`
   & > div:first-child {
     ${(props: { invalid?: boolean }) =>
-    props.invalid &&
-    `
+      props.invalid &&
+      `
       border: 2px solid ${brandDanger};
   `}
   }
@@ -146,7 +146,7 @@ export const InputWrapper = styled.div`
   }
 `;
 
-const StyledGeosuggest = styled(Geosuggest) <any>`
+const StyledGeosuggest = styled(Geosuggest)<any>`
   &.geosuggest {
     position: relative;
     width: 100%;
@@ -361,6 +361,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
     // Override react-numeric-input type
     if (props.type === 'number') {
       const input = document.querySelector('.react-numeric-input input');
+      // eslint-disable-next-line no-unused-expressions
       input?.setAttribute('type', 'number');
     }
   }, [props.type]);
@@ -401,8 +402,8 @@ const Input: FunctionComponent<InputProps> = (props) => {
         const setValue = (value: string | Array<string>) => {
           return props.isMulti
             ? (value as Array<string>).map((item) =>
-              props.options.find((option) => option.value === item)
-            )
+                props.options.find((option) => option.value === item)
+              )
             : props.options.find((option) => option.value === value);
         };
 
@@ -527,6 +528,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
       inputTypeToRender = (
         <StyledInput
           id={props.name}
+          maxLength={30}
           placeholder={typeof props.label === 'string' ? props.label : ''}
           {...field}
           {...props}
