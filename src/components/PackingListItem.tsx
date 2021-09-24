@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Formik, Field, FormikHelpers } from 'formik';
 import styled from 'styled-components';
 import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase';
@@ -22,6 +22,7 @@ import { brandDanger, offWhite } from '@styles/color';
 import { PackingListItemType } from '@common/packingListItem';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
+import { LocalStorage } from '../enums';
 
 type PackingListItemProps = {
   tripId: string;
@@ -150,6 +151,15 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
     </TrailingActions>
   );
 
+  const handlePersistScrollPosition = (): void => {
+    window?.localStorage.setItem(LocalStorage.WindowOffsetTop, `${window.pageYOffset}`);
+  };
+
+  const handleItemSelect = (tripId: string, itemId: string): void => {
+    handlePersistScrollPosition();
+    navigate(`/app/trips/${tripId}/checklist/${itemId}`);
+  };
+
   return (
     <PackingListItemWrapper className={removing ? 'removing' : undefined}>
       <SwipeableListItem
@@ -213,7 +223,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                 ) : null}
 
                 <IconWrapper
-                  onClick={() => navigate(`/app/trips/${props.tripId}/checklist/${props.item.id}`)}
+                  onClick={() =>  handleItemSelect(props.tripId, props.item.id)}
                 >
                   <FaChevronRight />
                 </IconWrapper>

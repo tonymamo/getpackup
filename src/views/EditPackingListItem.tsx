@@ -25,6 +25,7 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
+import { LocalStorage } from '../enums';
 
 type EditPackingListItemProps = {
   tripId?: string;
@@ -65,13 +66,20 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
     }
   };
 
+  const handleReturn = (): void => {
+    setTimeout(() => {
+      window?.scrollTo(0, Number(window?.localStorage.getItem(LocalStorage.WindowOffsetTop)));
+    }, 500);
+    navigate(-1);
+  };
+
   return (
     <div>
       <Seo title="Edit Item" />
       {!size.isSmallScreen && (
         <Button
           type="button"
-          onClick={() => navigate(-1)}
+          onClick={() => handleReturn()}
           color="text"
           iconLeft={<FaChevronLeft />}
         >
@@ -215,7 +223,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 <Button
                   type="button"
                   onClick={() => {
-                    navigate(-1);
+                    handleReturn();
                     trackEvent('Edit Packing List Item Cancel Click');
                   }}
                   color="text"

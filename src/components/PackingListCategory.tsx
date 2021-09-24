@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 
 import { FlexContainer, PackingListItem, PackingListAddItem, CollapsibleBox } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
+import { LocalStorage } from '../enums';
 
 type PackingListCategoryProps = {
   categoryName: string;
@@ -23,6 +24,17 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
 }) => {
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const localStorage = window.localStorage;
+      const windowOffsetTop = LocalStorage.WindowOffsetTop;
+      if (localStorage.getItem(windowOffsetTop) === null) {
+        localStorage.setItem(windowOffsetTop, '0');
+      }
+    }
+  }, [window]);
+
   return (
     <CollapsibleBox key={categoryName} title={categoryName}>
       <div>
