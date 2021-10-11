@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Formik, Field, FormikHelpers } from 'formik';
 import styled from 'styled-components';
 import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase';

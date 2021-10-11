@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useMeasure } from 'react-use';
-import { animated, useSpring } from 'react-spring';
+import styled from 'styled-components';
 
 import { Box, FlexContainer, Heading, IconWrapper } from '@components';
 
@@ -9,7 +9,16 @@ type CollapsibleBoxProps = {
   title: string;
   subtitle?: string;
   defaultClosed?: boolean;
+  collapseCallback?: () => void;
 };
+
+const StyledCollapsed = styled.div<{
+  isCollapsed: boolean;
+  height: number;
+}>`
+  overflow: hidden;
+  max-height: ${({isCollapsed, height}) => isCollapsed ? `${height}px` : '0px'}
+`;
 
 // In the future, we could allow the collapsed state to be passed in as a prop. If the state
 // is supplied, it's a "controlled" component, otherwise it's "uncontrolled" and we
@@ -19,30 +28,30 @@ type CollapsibleBoxProps = {
 const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
   title,
   subtitle,
-  defaultClosed,
+  defaultClosed = false,
   children,
+  collapseCallback,
 }) => {
-  const defaultHeight = 0;
 
   // Manages the collapsed state of the accordion
-  const [collapsed, setCollapsed] = useState(!!defaultClosed);
+  const [collapsed, setCollapsed] = useState(!defaultClosed);
 
   // Gets the height of the element (ref)
   const [ref, { height }] = useMeasure<HTMLDivElement>();
-
-  // Animations
-  const expand = useSpring({
-    height: collapsed ? `${defaultHeight}px` : `${height}px`,
-  });
+  
+  const handleCollapse = () => {
+    if (collapseCallback) collapseCallback();
+    setCollapsed(!collapsed);
+  };
 
   return (
     <Box>
       <FlexContainer justifyContent="space-between" alignItems="flex-start" flexWrap="nowrap">
         <div
           style={{ cursor: 'pointer' }}
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={handleCollapse}
           role="button"
-          onKeyPress={() => setCollapsed(!collapsed)}
+          onKeyPress={handleCollapse}
           tabIndex={0}
         >
           <Heading as="h3" altStyle noMargin>
@@ -55,17 +64,17 @@ const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
           )}
         </div>
         <IconWrapper
-          onClick={() => setCollapsed(!collapsed)}
-          onKeyPress={() => setCollapsed(!collapsed)}
+          onClick={handleCollapse}
+          onKeyPress={handleCollapse}
           tabIndex={0}
           role="button"
         >
           {collapsed ? <FaCaretDown /> : <FaCaretUp />}
         </IconWrapper>
       </FlexContainer>
-      <animated.div style={{ overflow: 'hidden', ...expand }}>
+      <StyledCollapsed isCollapsed={collapsed} height={height}>
         <div ref={ref}>{children}</div>
-      </animated.div>
+      </StyledCollapsed>
     </Box>
   );
 };

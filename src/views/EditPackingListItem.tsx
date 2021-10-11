@@ -69,7 +69,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
   const handleReturn = (): void => {
     setTimeout(() => {
       window?.scrollTo(0, Number(window?.localStorage.getItem(LocalStorage.WindowOffsetTop)));
-    }, 500);
+    }, 125);
     navigate(-1);
   };
 
