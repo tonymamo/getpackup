@@ -32,6 +32,8 @@ type EditPackingListItemProps = {
   id?: string;
 } & RouteComponentProps;
 
+const TIMEOUT_DELAY: number = 166; // milliseconds
+
 const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props) => {
   const dispatch = useDispatch();
   const firebase = useFirebase();
@@ -69,7 +71,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
   const handleReturn = (): void => {
     setTimeout(() => {
       window?.scrollTo(0, Number(window?.localStorage.getItem(LocalStorage.WindowOffsetTop)));
-    }, 125);
+    }, TIMEOUT_DELAY);
     navigate(-1);
   };
 

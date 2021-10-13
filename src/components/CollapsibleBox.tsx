@@ -16,6 +16,7 @@ const StyledCollapsed = styled.div<{
   isCollapsed: boolean;
   height: number;
 }>`
+  transition: max-height 0.165s;
   overflow: hidden;
   max-height: ${({isCollapsed, height}) => isCollapsed ? `${height}px` : '0px'}
 `;
