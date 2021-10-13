@@ -34,13 +34,9 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
       }
     }
   }, [window]);
-
-  const handleCollapseCallback = () => {
-    console.log('called')
-  };
-
+  
   return (
-    <CollapsibleBox key={categoryName} title={categoryName} collapseCallback={handleCollapseCallback}>
+    <CollapsibleBox key={categoryName} title={categoryName}>
       <div>
         <ItemsWrapper>
           {sortedItems && sortedItems.length > 0 ? (
