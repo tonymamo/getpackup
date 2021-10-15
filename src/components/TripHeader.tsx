@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaChevronLeft } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 
-import { TripType } from '@common/trip';
+import { GearListItem, TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import {
   Heading,
@@ -55,10 +55,20 @@ const StyledLineItem = styled.div`
 
 const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
+  const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
+
+  const [gearListLength, setGearListLength] = useState(0);
+  const [packedItemsLength, setPackedItemsLength] = useState(0);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const size = useWindowSize();
+
+  useEffect(() => {
+    const gearListArray: GearListItem[] = gearList ? Object.values(gearList) : [];
+    setGearListLength(gearListArray.length);
+    setPackedItemsLength(gearListArray.filter((item) => item.isPacked === true).length);
+  }, [gearList]);
 
   const numberOfAvatarsToShow = 4;
 
@@ -67,7 +77,11 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
       {!size.isSmallScreen ? (
         <StyledBackLink
           to="../"
-          onClick={() => trackEvent('Trip Header Back To Trips Link Clicked', { trip })}
+          onClick={() =>
+            trackEvent('Trip Header Back To Trips Link Clicked', {
+              trip,
+            })
+          }
         >
           <FaChevronLeft /> All Trips
         </StyledBackLink>
@@ -133,7 +147,11 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
           <StyledLineItem>
             <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
               <FaRegCalendar
-                style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }}
+                style={{
+                  marginRight: halfSpacer,
+                  top: quarterSpacer,
+                  flexShrink: 0,
+                }}
               />
               {trip ? (
                 <>
@@ -145,7 +163,11 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
                       )}
                 </>
               ) : (
-                <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    flex: 1,
+                  }}
+                >
                   <Skeleton count={1} width="50%" />
                 </div>
               )}
@@ -155,12 +177,20 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
           <StyledLineItem>
             <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
               <FaMapMarkerAlt
-                style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }}
+                style={{
+                  marginRight: halfSpacer,
+                  top: quarterSpacer,
+                  flexShrink: 0,
+                }}
               />
               {trip ? (
                 trip.startingPoint
               ) : (
-                <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    flex: 1,
+                  }}
+                >
                   <Skeleton count={1} width="65%" />
                 </div>
               )}
@@ -178,7 +208,11 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
                   rightSpacer
                   size="small"
                   color="tertiary"
-                  onClick={() => trackEvent('Trip Header Details Link Clicked', { trip })}
+                  onClick={() =>
+                    trackEvent('Trip Header Details Link Clicked', {
+                      trip,
+                    })
+                  }
                 >
                   Details
                 </Button>
@@ -188,7 +222,11 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
                   rightSpacer
                   size="small"
                   color="tertiary"
-                  onClick={() => trackEvent('Trip Header Party Link Clicked', { trip })}
+                  onClick={() =>
+                    trackEvent('Trip Header Party Link Clicked', {
+                      trip,
+                    })
+                  }
                 >
                   Party
                 </Button>
@@ -201,7 +239,9 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
                   <button
                     onClick={() => {
                       setModalIsOpen(true);
-                      trackEvent('Trip Header Delete Trip Clicked', { trip });
+                      trackEvent('Trip Header Delete Trip Clicked', {
+                        trip,
+                      });
                     }}
                     type="button"
                   >
@@ -211,8 +251,20 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
               </>
             ) : (
               <>
-                <Skeleton width={100} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
-                <Skeleton width={80} height={doubleSpacer} style={{ marginRight: baseSpacer }} />
+                <Skeleton
+                  width={100}
+                  height={doubleSpacer}
+                  style={{
+                    marginRight: baseSpacer,
+                  }}
+                />
+                <Skeleton
+                  width={80}
+                  height={doubleSpacer}
+                  style={{
+                    marginRight: baseSpacer,
+                  }}
+                />
                 <Skeleton width={50} height={doubleSpacer} />
               </>
             )}
@@ -220,7 +272,11 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
         </Column>
       </Row>
 
-      <div style={{ margin: `${halfSpacer} 0` }}>
+      <div
+        style={{
+          margin: `${halfSpacer} 0`,
+        }}
+      >
         <HorizontalScroller>
           {trip ? (
             <>
@@ -240,19 +296,31 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
           ) : (
             <>
               {/* Generate some tag placeholders and make widths dynamic with Math */}
-              {Array.from({ length: 7 }).map((_, i) => (
+              {Array.from({
+                length: 7,
+              }).map((_, i) => (
                 <Skeleton
                   // eslint-disable-next-line react/no-array-index-key
                   key={i}
                   // random widths between 48 and 128
                   width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
                   height={baseAndAHalfSpacer}
-                  style={{ marginRight: halfSpacer, borderRadius: baseAndAHalfSpacer }}
+                  style={{
+                    marginRight: halfSpacer,
+                    borderRadius: baseAndAHalfSpacer,
+                  }}
                 />
               ))}
             </>
           )}
         </HorizontalScroller>
+        <progress
+          max="100"
+          value={((packedItemsLength / gearListLength) * 100).toString()}
+          style={{ width: '100%' }}
+        >
+          70%
+        </progress>
       </div>
     </StyledTripWrapper>
   );

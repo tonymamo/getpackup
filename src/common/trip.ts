@@ -23,3 +23,20 @@ export type TripFormType = Omit<TripType, 'startDate' | 'endDate'> & {
   startDate: string | Date | undefined;
   endDate: string | Date | undefined;
 };
+
+export interface GearListItem {
+  isEssential: boolean;
+  quantity: number;
+  weight: string;
+  name: string;
+  created: Created;
+  description: string;
+  isPacked: boolean;
+  weightUnit: string;
+  id: string;
+  category: string;
+}
+export interface Created {
+  seconds: number;
+  nanoseconds: number;
+}
