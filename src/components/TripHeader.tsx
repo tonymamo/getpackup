@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaChevronLeft } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
@@ -57,21 +57,14 @@ const StyledLineItem = styled.div`
 const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
+  const gearListArray: GearListItem[] = gearList ? Object.values(gearList) : [];
 
-  const [gearListLength, setGearListLength] = useState(0);
-  const [packedItemsLength, setPackedItemsLength] = useState(0);
-
-  const packedPercent = (packedItemsLength / gearListLength) * 100;
+  const packedItemsLength = gearListArray.filter((item) => item.isPacked === true).length;
+  const packedPercent = (packedItemsLength / gearListArray.length) * 100;
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const size = useWindowSize();
-
-  useEffect(() => {
-    const gearListArray: GearListItem[] = gearList ? Object.values(gearList) : [];
-    setGearListLength(gearListArray.length);
-    setPackedItemsLength(gearListArray.filter((item) => item.isPacked === true).length);
-  }, [gearList]);
 
   const numberOfAvatarsToShow = 4;
 
