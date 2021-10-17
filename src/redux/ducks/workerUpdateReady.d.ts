@@ -10,3 +10,7 @@ export type HideUpdateModal = {
 };
 
 export type WorkerUpdateActions = ShowUpdateModal | HideUpdateModal;
+
+export type WorkerUpdateStoreType = {
+  display: boolean;
+};

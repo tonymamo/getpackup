@@ -1,14 +1,18 @@
-import { WorkerUpdateActions, SHOW_UPDATE_MODAL, HIDE_UPDATE_MODAL } from '@redux/ducks/workerUpdateReady.d';
-
-export type WorkerUpdateStoreType = {
-  display: boolean;
-}
+import {
+  WorkerUpdateActions,
+  SHOW_UPDATE_MODAL,
+  HIDE_UPDATE_MODAL,
+  WorkerUpdateStoreType,
+} from '@redux/ducks/workerUpdateReady.d';
 
 export const initialState: WorkerUpdateStoreType = {
   display: false,
 };
 
-export default (state: WorkerUpdateStoreType = initialState, action: WorkerUpdateActions): WorkerUpdateStoreType => {
+export default (
+  state: WorkerUpdateStoreType = initialState,
+  action: WorkerUpdateActions
+): WorkerUpdateStoreType => {
   switch (action.type) {
     case SHOW_UPDATE_MODAL: {
       return {
