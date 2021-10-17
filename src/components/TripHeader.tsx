@@ -6,7 +6,9 @@ import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import ProgressBar from '@ramonak/react-progress-bar';
 
-import { GearListItem, TripType } from '@common/trip';
+import { PackingListItemType } from '@common/packingListItem';
+import { brandSuccess } from '@styles/color';
+import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import {
   Heading,
@@ -57,7 +59,7 @@ const StyledLineItem = styled.div`
 const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
-  const gearListArray: GearListItem[] = gearList ? Object.values(gearList) : [];
+  const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
 
   const packedItemsLength = gearListArray.filter((item) => item.isPacked === true).length;
   const packedPercent = (packedItemsLength / gearListArray.length) * 100;
@@ -320,7 +322,8 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
               width="100%"
               completed={packedPercent ? packedPercent.toFixed(0) : 0}
               isLabelVisible={false}
-              bgColor="#56831f"
+              bgColor={brandSuccess}
+              transitionDuration="0.25s"
             />
           </div>
         )}
