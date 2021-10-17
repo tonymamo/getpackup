@@ -4,7 +4,6 @@ import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
-import ProgressBar from '@ramonak/react-progress-bar';
 
 import { PackingListItemType } from '@common/packingListItem';
 import { brandSuccess } from '@styles/color';
@@ -21,6 +20,7 @@ import {
   Button,
   Row,
   Column,
+  ProgressBar,
 } from '@components';
 import {
   baseAndAHalfSpacer,
@@ -62,7 +62,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
   const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
 
   const packedItemsLength = gearListArray.filter((item) => item.isPacked === true).length;
-  const packedPercent = (packedItemsLength / gearListArray.length) * 100;
+  const packedPercent = ((packedItemsLength / gearListArray.length) * 100).toFixed(0);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -314,13 +314,11 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
         </HorizontalScroller>
         {trip && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ textAlign: 'center' }}>
-              Your Packing Progress ({packedPercent ? packedPercent.toFixed(0) : 0}%)
-            </span>
+            <small style={{ textAlign: 'center' }}>Your Packing Progress ({packedPercent}%)</small>
             <ProgressBar
-              height="30px"
-              width="100%"
-              completed={packedPercent ? packedPercent.toFixed(0) : 0}
+              height={baseAndAHalfSpacer}
+              borderRadius={baseAndAHalfSpacer}
+              completed={packedPercent}
               isLabelVisible={false}
               bgColor={brandSuccess}
               transitionDuration="0.25s"
