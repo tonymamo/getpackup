@@ -61,6 +61,7 @@ import TripHeader from './TripHeader';
 import TripNavigation from './TripNavigation';
 import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
+import ProgressBar from './ProgressBar';
 
 export {
   Alert,
@@ -113,6 +114,7 @@ export {
   Pill,
   PreviewCompatibleImage,
   PrivateRoute,
+  ProgressBar,
   RelatedBlogPost,
   RelativeOrExternalLink,
   Row,
