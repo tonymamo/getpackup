@@ -8,6 +8,7 @@ import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import ReactTooltip from 'react-tooltip';
+import { setScrollPosition } from '@utils/setScrollPosition';
 
 import {
   Avatar,
@@ -28,6 +29,7 @@ import GearClosetIcon from '@images/gearClosetIcon';
 import { zIndexNavbar } from '@styles/layers';
 import trackEvent from '@utils/trackEvent';
 import { AvatarImageWrapper } from './Avatar';
+import { ScrollTimeout } from '../enums';
 
 type NavbarProps = {};
 
@@ -276,6 +278,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Back Button Clicked');
                     if (routeIsChecklistOrGearClosetItem) {
+                      setTimeout(() => setScrollPosition(), ScrollTimeout.default);
                       navigate(-1);
                     }
                   }}
