@@ -25,14 +25,13 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
-import { LocalStorage } from '../enums';
+import { ScrollTimeout } from '../enums';
+import { setScrollPosition } from '@utils/setScrollPosition';
 
 type EditPackingListItemProps = {
   tripId?: string;
   id?: string;
 } & RouteComponentProps;
-
-const TIMEOUT_DELAY: number = 166; // milliseconds
 
 const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props) => {
   const dispatch = useDispatch();
@@ -69,9 +68,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
   };
 
   const handleReturn = (): void => {
-    setTimeout(() => {
-      window?.scrollTo(0, Number(window?.localStorage.getItem(LocalStorage.WindowOffsetTop)));
-    }, TIMEOUT_DELAY);
+    setTimeout(() => setScrollPosition(), ScrollTimeout.default);
     navigate(-1);
   };
 
