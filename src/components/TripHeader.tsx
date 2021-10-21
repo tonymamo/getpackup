@@ -61,7 +61,8 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
   const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
   const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
 
-  const packedItemsLength = gearListArray.filter((item) => item.isPacked === true).length;
+  const packedItemsLength =
+    gearListArray.length > 0 ? gearListArray.filter((item) => item.isPacked === true).length : 0;
   const packedPercent = ((packedItemsLength / gearListArray.length) * 100).toFixed(0);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -312,7 +313,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
             </>
           )}
         </HorizontalScroller>
-        {trip && (
+        {trip && gearListArray.length > 0 && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <small style={{ textAlign: 'center' }}>Your Packing Progress ({packedPercent}%)</small>
             <ProgressBar
