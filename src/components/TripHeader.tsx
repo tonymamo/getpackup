@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaChevronLeft } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
@@ -61,11 +61,15 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
   const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
   const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
 
-  const packedItemsLength =
-    gearListArray.length > 0 ? gearListArray.filter((item) => item.isPacked === true).length : 0;
-  const packedPercent = ((packedItemsLength / gearListArray.length) * 100).toFixed(0);
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [packedPercent, setPackedPercent] = useState(0);
+
+  const packedItemsLength =
+    gearListArray.length > 0 ? gearListArray.filter((item) => item?.isPacked === true).length : 0;
+
+  useEffect(() => {
+    setPackedPercent(Number(((packedItemsLength / gearListArray.length) * 100).toFixed(0)));
+  }, [gearListArray, packedItemsLength]);
 
   const size = useWindowSize();
 
