@@ -181,6 +181,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
                     return (
                       <PackingListCategory
+                        trip={trip}
                         key={categoryName}
                         categoryName={categoryName}
                         sortedItems={sortedItems}

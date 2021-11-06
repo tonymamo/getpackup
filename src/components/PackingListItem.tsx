@@ -222,9 +222,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   </IconWrapper>
                 ) : null}
 
-                <IconWrapper
-                  onClick={() =>  handleItemSelect(props.tripId, props.item.id)}
-                >
+                <IconWrapper onClick={() => handleItemSelect(props.tripId, props.item.id)}>
                   <FaChevronRight />
                 </IconWrapper>
               </FlexContainer>
