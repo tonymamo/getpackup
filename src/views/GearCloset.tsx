@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
 import { IconType } from 'react-icons/lib';
+import Select from 'react-select';
 
 import {
   Seo,
@@ -35,10 +36,13 @@ import {
   gearListCampKitchen,
   gearListOtherConsiderations,
 } from '@utils/gearListItemEnum';
+import { multiSelectStyles } from '@components/Input';
+import useWindowSize from '@utils/useWindowSize';
 
 type GearClosetProps = {};
 
 const GearCloset: FunctionComponent<GearClosetProps> = () => {
+  const size = useWindowSize();
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const personalGear = usePersonalGear();
@@ -140,6 +144,42 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     };
   });
 
+  // the categories that the user DOES NOT have in the gear closet
+  // also remove "essential" because that will always exist for users
+  const getOtherCategories = (array: GearListEnumType) =>
+    array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
+
+  const gearListCategoryOptions = [
+    {
+      label: 'Activities',
+      options: getOtherCategories(gearListActivities).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+    {
+      label: 'Accommodations',
+      options: getOtherCategories(gearListAccommodations).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+    {
+      label: 'Camp Kitchen',
+      options: getOtherCategories(gearListCampKitchen).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+    {
+      label: 'Other Considerations',
+      options: getOtherCategories(gearListOtherConsiderations).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+  ];
+
   const deleteItem = (item: GearItemType) => {
     const deleteType = () => {
       if (item.isCustomGearItem) {
@@ -178,11 +218,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     setItemToBeDeleted(undefined);
     setModalIsOpen(false);
   };
-
-  // the categories that the user DOES NOT have in the gear closet
-  // also remove "essential" because that will always exist for users
-  const getOtherCategories = (array: GearListEnumType) =>
-    array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
 
   useEffect(() => {
     if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
@@ -225,7 +260,7 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
               }}
               type="button"
             >
-              <FaPlusCircle /> Add New Gear Tag
+              <FaPlusCircle /> Add New Gear Category
             </button>
           </DropdownMenu>
         </FlexContainer>
@@ -294,15 +329,28 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         isOpen={addNewCategoryModalIsOpen}
       >
         <Heading>Add New Category</Heading>
+
         <p>
-          Getting into a new sport or activity, or upgrading your gear? Select any tags that apply
-          to gear you own!
+          Getting into a new sport or activity, or upgrading your gear? Select any category that
+          applies to gear you own!
         </p>
         <Alert
           type="info"
-          message="Note: selecting a new tag will pre-populate new gear in your gear closet that you may want to customize after!"
+          message="Note: selecting a new category will pre-populate new gear in your gear closet that you may want to customize after!"
         />
         <p>
+          <Select
+            className="react-select"
+            styles={multiSelectStyles}
+            isMulti={false}
+            menuPlacement="auto"
+            isSearchable={!size.isExtraSmallScreen}
+            options={gearListCategoryOptions}
+            onChange={(option) => {
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              updateUsersGearClosetCategories(option!.value);
+            }}
+          />
           <strong>Activities</strong>
         </p>
         <HorizontalScroller withBorder>
