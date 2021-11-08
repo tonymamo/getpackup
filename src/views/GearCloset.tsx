@@ -252,7 +252,7 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
             </Button>
           </p>
 
-          <DropdownMenu>
+          <DropdownMenu width={290}>
             <button
               onClick={() => {
                 setAddNewCategoryModalIsOpen(true);
