@@ -230,7 +230,7 @@ const Footer = () => {
                   >
                     Terms of Use
                   </Link>{' '}
-                  {`Copyright © Packup ${new Date().getFullYear()}`}
+                  {`Copyright © Packup Technologies, Ltd. ${new Date().getFullYear()}`}
                 </small>
               </FlexContainer>
             </PageContainer>
