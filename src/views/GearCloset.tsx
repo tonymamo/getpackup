@@ -1,9 +1,8 @@
-import React, { FunctionComponent, useMemo, useState, useEffect } from 'react';
+import React, { FunctionComponent, useMemo, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
-import { IconType } from 'react-icons/lib';
-import Select from 'react-select';
+import Select, { ValueType } from 'react-select';
 
 import {
   Seo,
@@ -16,20 +15,16 @@ import {
   Modal,
   LoadingPage,
   Alert,
-  HorizontalScroller,
   DropdownMenu,
   FlexContainer,
 } from '@components';
 import usePersonalGear from '@hooks/usePersonalGear';
 import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
-import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
+import { FaPencilAlt, FaPlusCircle, FaSave, FaTrash } from 'react-icons/fa';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
 import { TripType } from '@common/trip';
-import { IconWrapperLabel, IconCheckboxLabel } from '@components/IconCheckbox';
-import { lightGray } from '@styles/color';
-import { tripleSpacer } from '@styles/size';
 import {
   gearListAccommodations,
   gearListActivities,
@@ -38,8 +33,33 @@ import {
 } from '@utils/gearListItemEnum';
 import { multiSelectStyles } from '@components/Input';
 import useWindowSize from '@utils/useWindowSize';
+import styled from 'styled-components';
 
 type GearClosetProps = {};
+
+const SelectedCategoriesHeader = styled.div`
+  font-weight: bold;
+`;
+
+const SelectedCategoryItem = styled.div`
+  margin-left: 20px;
+
+  & > button {
+    display: inline;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+`;
+
+type Category =
+  | { value: string; label: string }
+  | ValueType<{ value: keyof ActivityTypes; label: string }, false>;
+
+type GearListCategoryOption = {
+  label: string;
+  options: Category[];
+};
 
 const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const size = useWindowSize();
@@ -54,8 +74,53 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
+  const [categoriesToAdd, setCategoriesToAdd] = useState<Category[]>([]);
+  const [gearListCategoryOptions, setGearListCategoryOptions] = useState<GearListCategoryOption[]>(
+    []
+  );
 
   const [addNewCategoryModalIsOpen, setAddNewCategoryModalIsOpen] = useState(false);
+
+  // the categories that the user DOES NOT have in the gear closet
+  // also remove "essential" because that will always exist for users
+  const getOtherCategories = (array: GearListEnumType) =>
+    array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
+
+  useEffect(() => {
+    if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
+      navigate('/app/gear-closet/setup');
+    }
+    setGearListCategoryOptions([
+      {
+        label: 'Activities',
+        options: getOtherCategories(gearListActivities).map((item) => ({
+          value: item.name,
+          label: item.label,
+        })),
+      },
+      {
+        label: 'Accommodations',
+        options: getOtherCategories(gearListAccommodations).map((item) => ({
+          value: item.name,
+          label: item.label,
+        })),
+      },
+      {
+        label: 'Camp Kitchen',
+        options: getOtherCategories(gearListCampKitchen).map((item) => ({
+          value: item.name,
+          label: item.label,
+        })),
+      },
+      {
+        label: 'Other Considerations',
+        options: getOtherCategories(gearListOtherConsiderations).map((item) => ({
+          value: item.name,
+          label: item.label,
+        })),
+      },
+    ]);
+  }, [fetchedGearCloset]);
 
   useFirestoreConnect([
     {
@@ -69,14 +134,40 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     },
   ]);
 
-  const updateUsersGearClosetCategories = (categoryToAdd: string) => {
+  const handleCategorySelect = (option: Category) => {
+    setCategoriesToAdd([...categoriesToAdd, option]);
+    setGearListCategoryOptions(
+      gearListCategoryOptions.map((category) => {
+        return {
+          label: category.label,
+          options: category.options.filter((stateOption) => stateOption?.value !== option?.value),
+        };
+      })
+    );
+  };
+
+  const handleDeleteCategory = (category: Category) => {
+    setCategoriesToAdd(categoriesToAdd.filter((cat) => cat?.value !== category?.value));
+    setGearListCategoryOptions([
+      ...gearListCategoryOptions,
+      {
+        label: 'Restored Categories',
+        options: [category],
+      },
+    ]);
+  };
+
+  const saveAddedCategories = () => {
+    trackEvent('Save Gear Category Button clicked');
     setAddNewCategoryModalIsOpen(false);
     firebase
       .firestore()
       .collection('gear-closet')
       .doc(auth.uid)
       .update({
-        categories: firebase.firestore.FieldValue.arrayUnion(categoryToAdd),
+        categories: firebase.firestore.FieldValue.arrayUnion(
+          ...categoriesToAdd.map((cat) => cat?.value)
+        ),
       })
       .then(() => {})
       .catch((err) => {
@@ -87,11 +178,7 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           })
         );
       });
-  };
-
-  const renderDynamicIcon = (icon: IconType) => {
-    const Icon = icon;
-    return <Icon color={lightGray} size={tripleSpacer} />;
+    setCategoriesToAdd([]);
   };
 
   const personalGearIsLoading = personalGear === 'loading';
@@ -144,42 +231,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     };
   });
 
-  // the categories that the user DOES NOT have in the gear closet
-  // also remove "essential" because that will always exist for users
-  const getOtherCategories = (array: GearListEnumType) =>
-    array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
-
-  const gearListCategoryOptions = [
-    {
-      label: 'Activities',
-      options: getOtherCategories(gearListActivities).map((item) => ({
-        value: item.name,
-        label: item.label,
-      })),
-    },
-    {
-      label: 'Accommodations',
-      options: getOtherCategories(gearListAccommodations).map((item) => ({
-        value: item.name,
-        label: item.label,
-      })),
-    },
-    {
-      label: 'Camp Kitchen',
-      options: getOtherCategories(gearListCampKitchen).map((item) => ({
-        value: item.name,
-        label: item.label,
-      })),
-    },
-    {
-      label: 'Other Considerations',
-      options: getOtherCategories(gearListOtherConsiderations).map((item) => ({
-        value: item.name,
-        label: item.label,
-      })),
-    },
-  ];
-
   const deleteItem = (item: GearItemType) => {
     const deleteType = () => {
       if (item.isCustomGearItem) {
@@ -218,12 +269,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     setItemToBeDeleted(undefined);
     setModalIsOpen(false);
   };
-
-  useEffect(() => {
-    if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
-      navigate('/app/gear-closet/setup');
-    }
-  }, [fetchedGearCloset]);
 
   return (
     <PageContainer>
@@ -327,6 +372,7 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           setAddNewCategoryModalIsOpen(false);
         }}
         isOpen={addNewCategoryModalIsOpen}
+        overflow="inherit"
       >
         <Heading>Add New Category</Heading>
 
@@ -338,89 +384,31 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           type="info"
           message="Note: selecting a new category will pre-populate new gear in your gear closet that you may want to customize after!"
         />
-        <p>
-          <Select
-            className="react-select"
-            styles={multiSelectStyles}
-            isMulti={false}
-            menuPlacement="auto"
-            isSearchable={!size.isExtraSmallScreen}
-            options={gearListCategoryOptions}
-            onChange={(option) => {
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              updateUsersGearClosetCategories(option!.value);
-            }}
-          />
-          <strong>Activities</strong>
-        </p>
-        <HorizontalScroller withBorder>
-          {getOtherCategories(gearListActivities).map((item) => (
-            <li key={item.name}>
-              <IconWrapperLabel
-                onClick={() => {
-                  updateUsersGearClosetCategories(item.name);
-                }}
-              >
-                {renderDynamicIcon(item.icon)}
-                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
-              </IconWrapperLabel>
-            </li>
-          ))}
-        </HorizontalScroller>
-        <br />
-        <p>
-          <strong>Accommodations</strong>
-        </p>
-        <HorizontalScroller withBorder>
-          {getOtherCategories(gearListAccommodations).map((item) => (
-            <li key={item.name}>
-              <IconWrapperLabel
-                onClick={() => {
-                  updateUsersGearClosetCategories(item.name);
-                }}
-              >
-                {renderDynamicIcon(item.icon)}
-                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
-              </IconWrapperLabel>
-            </li>
-          ))}
-        </HorizontalScroller>
-        <br />
-        <p>
-          <strong>Camp Kitchen</strong>
-        </p>
-        <HorizontalScroller withBorder>
-          {getOtherCategories(gearListCampKitchen).map((item) => (
-            <li key={item.name}>
-              <IconWrapperLabel
-                onClick={() => {
-                  updateUsersGearClosetCategories(item.name);
-                }}
-              >
-                {renderDynamicIcon(item.icon)}
-                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
-              </IconWrapperLabel>
-            </li>
-          ))}
-        </HorizontalScroller>
-        <br />
-        <p>
-          <strong>Other Considerations</strong>
-        </p>
-        <HorizontalScroller withBorder>
-          {getOtherCategories(gearListOtherConsiderations).map((item) => (
-            <li key={item.name}>
-              <IconWrapperLabel
-                onClick={() => {
-                  updateUsersGearClosetCategories(item.name);
-                }}
-              >
-                {renderDynamicIcon(item.icon)}
-                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
-              </IconWrapperLabel>
-            </li>
-          ))}
-        </HorizontalScroller>
+        <Select
+          className="react-select"
+          styles={multiSelectStyles}
+          isMulti={false}
+          menuPlacement="auto"
+          isSearchable={!size.isExtraSmallScreen}
+          options={gearListCategoryOptions}
+          onChange={(option) => handleCategorySelect(option as Category)}
+        />
+        {categoriesToAdd.length > 0 && (
+          <>
+            <SelectedCategoriesHeader>Selected Categories</SelectedCategoriesHeader>
+            {categoriesToAdd.map((cat) => (
+              <SelectedCategoryItem key={cat?.value}>
+                <button type="button" onClick={() => handleDeleteCategory(cat)}>
+                  <FaTrash />
+                </button>
+                {cat?.label}
+              </SelectedCategoryItem>
+            ))}
+            <Button type="button" iconLeft={<FaSave />} block onClick={() => saveAddedCategories()}>
+              Save
+            </Button>
+          </>
+        )}
       </Modal>
     </PageContainer>
   );
