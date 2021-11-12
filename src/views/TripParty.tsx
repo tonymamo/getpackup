@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent } from 'react';
+import React, { Fragment, FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
@@ -69,6 +69,7 @@ const StyledSearchBox = styled.input`
 const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const users = useSelector((state: RootState) => state.firestore.data.users);
+  const [isSearchBarDisabled, setIsSearchBarDisabled] = useState(false);
 
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -98,6 +99,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const updateTrip = (memberId: string) => {
     // activeTrip.tripMembers.length + 1 accounts for async data updates
     if (activeTrip?.tripMembers && activeTrip.tripMembers.length + 1 > MAX_TRIP_PARTY_SIZE) {
+      setIsSearchBarDisabled(true);
       dispatch(
         addAlert({
           type: 'danger',
@@ -285,6 +287,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       autoCorrect="off"
       autoCapitalize="off"
       spellCheck="false"
+      disabled={isSearchBarDisabled}
     />
   );
 
