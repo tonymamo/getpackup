@@ -44,8 +44,13 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     },
   ]);
 
+  const isTripOwner: boolean =
+    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
+
   const activeTrip: TripType | undefined =
-    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid
+    activeTripById &&
+    activeTripById.length > 0 &&
+    (activeTripById[0].tripMembers.some((member) => member === auth.uid) || isTripOwner)
       ? activeTripById[0]
       : undefined;
 

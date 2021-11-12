@@ -109,6 +109,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
                 />
                 {users &&
                   trip.tripMembers
+                    .filter((member) => member !== loggedInUser?.uid)
                     .slice(
                       0,
                       trip.tripMembers.length === numberOfAvatarsToShow
