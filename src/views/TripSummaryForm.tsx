@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useFirebase } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { navigate } from 'gatsby';
 import { startOfDay, endOfDay } from 'date-fns';
@@ -20,6 +20,7 @@ import { requiredField } from '@utils/validations';
 import { TripType } from '@common/trip';
 import getSeason from '@utils/getSeason';
 import trackEvent from '@utils/trackEvent';
+import { RootState } from '@redux/ducks';
 
 type ValuesType = Omit<TripType, 'startDate' | 'endDate'> & {
   startDate: string | Date | undefined;
@@ -34,6 +35,8 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const addNewTrip = (values: ValuesType) => {
@@ -46,6 +49,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         startDate: startOfDay(new Date(values.startDate as string)),
         endDate: endOfDay(new Date(values.endDate as string)),
         tags: [],
+        tripMembers: [auth.uid],
         created: new Date(),
       })
       .then((docRef) => {
