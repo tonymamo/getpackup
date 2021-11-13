@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent } from 'react';
+import React, { Fragment, FunctionComponent, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
@@ -31,6 +31,7 @@ import { TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { UserType } from '@common/user';
+import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
 import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
 import Skeleton from 'react-loading-skeleton';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
@@ -68,6 +69,7 @@ const StyledSearchBox = styled.input`
 const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const users = useSelector((state: RootState) => state.firestore.data.users);
+  const [isSearchBarDisabled, setIsSearchBarDisabled] = useState(false);
 
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -95,6 +97,17 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   };
 
   const updateTrip = (memberId: string) => {
+    // activeTrip.tripMembers.length + 1 accounts for async data updates
+    if (activeTrip?.tripMembers && activeTrip.tripMembers.length + 1 > MAX_TRIP_PARTY_SIZE) {
+      setIsSearchBarDisabled(true);
+      dispatch(
+        addAlert({
+          type: 'danger',
+          message: `At this time, Trip Parties are limited to ${MAX_TRIP_PARTY_SIZE} people.`,
+        })
+      );
+      return;
+    }
     if (activeTrip) {
       firebase
         .firestore()
@@ -274,6 +287,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       autoCorrect="off"
       autoCapitalize="off"
       spellCheck="false"
+      disabled={isSearchBarDisabled}
     />
   );
 
