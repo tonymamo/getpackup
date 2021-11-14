@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState, useEffect, useRef } from 'react';
+import React, { FunctionComponent, useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
@@ -33,33 +33,12 @@ import {
 } from '@utils/gearListItemEnum';
 import { multiSelectStyles } from '@components/Input';
 import useWindowSize from '@utils/useWindowSize';
-import styled from 'styled-components';
 
 type GearClosetProps = {};
-
-const SelectedCategoriesHeader = styled.div`
-  font-weight: bold;
-`;
-
-const SelectedCategoryItem = styled.div`
-  margin-left: 20px;
-
-  & > button {
-    display: inline;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-`;
 
 type Category =
   | { value: string; label: string }
   | ValueType<{ value: keyof ActivityTypes; label: string }, false>;
-
-type GearListCategoryOption = {
-  label: string;
-  options: Category[];
-};
 
 const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const size = useWindowSize();
@@ -75,9 +54,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [itemToBeDeleted, setItemToBeDeleted] = useState<GearItemType | undefined>(undefined);
   const [categoriesToAdd, setCategoriesToAdd] = useState<Category[]>([]);
-  const [gearListCategoryOptions, setGearListCategoryOptions] = useState<GearListCategoryOption[]>(
-    []
-  );
 
   const [addNewCategoryModalIsOpen, setAddNewCategoryModalIsOpen] = useState(false);
 
@@ -90,37 +66,38 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
     if (isLoaded(fetchedGearCloset) && fetchedGearCloset.length === 0) {
       navigate('/app/gear-closet/setup');
     }
-    setGearListCategoryOptions([
-      {
-        label: 'Activities',
-        options: getOtherCategories(gearListActivities).map((item) => ({
-          value: item.name,
-          label: item.label,
-        })),
-      },
-      {
-        label: 'Accommodations',
-        options: getOtherCategories(gearListAccommodations).map((item) => ({
-          value: item.name,
-          label: item.label,
-        })),
-      },
-      {
-        label: 'Camp Kitchen',
-        options: getOtherCategories(gearListCampKitchen).map((item) => ({
-          value: item.name,
-          label: item.label,
-        })),
-      },
-      {
-        label: 'Other Considerations',
-        options: getOtherCategories(gearListOtherConsiderations).map((item) => ({
-          value: item.name,
-          label: item.label,
-        })),
-      },
-    ]);
   }, [fetchedGearCloset]);
+
+  const gearListCategoryOptions = [
+    {
+      label: 'Activities',
+      options: getOtherCategories(gearListActivities).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+    {
+      label: 'Accommodations',
+      options: getOtherCategories(gearListAccommodations).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+    {
+      label: 'Camp Kitchen',
+      options: getOtherCategories(gearListCampKitchen).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+    {
+      label: 'Other Considerations',
+      options: getOtherCategories(gearListOtherConsiderations).map((item) => ({
+        value: item.name,
+        label: item.label,
+      })),
+    },
+  ];
 
   useFirestoreConnect([
     {
@@ -133,29 +110,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
       where: ['owner', '==', auth.uid],
     },
   ]);
-
-  const handleCategorySelect = (option: Category) => {
-    setCategoriesToAdd([...categoriesToAdd, option]);
-    setGearListCategoryOptions(
-      gearListCategoryOptions.map((category) => {
-        return {
-          label: category.label,
-          options: category.options.filter((stateOption) => stateOption?.value !== option?.value),
-        };
-      })
-    );
-  };
-
-  const handleDeleteCategory = (category: Category) => {
-    setCategoriesToAdd(categoriesToAdd.filter((cat) => cat?.value !== category?.value));
-    setGearListCategoryOptions([
-      ...gearListCategoryOptions,
-      {
-        label: 'Restored Categories',
-        options: [category],
-      },
-    ]);
-  };
 
   const saveAddedCategories = () => {
     trackEvent('Save Gear Category Button clicked');
@@ -387,27 +341,16 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         <Select
           className="react-select"
           styles={multiSelectStyles}
-          isMulti={false}
+          isMulti
           menuPlacement="auto"
           isSearchable={!size.isExtraSmallScreen}
           options={gearListCategoryOptions}
-          onChange={(option) => handleCategorySelect(option as Category)}
+          onChange={(options) => setCategoriesToAdd(options as React.SetStateAction<Category[]>)}
         />
-        {categoriesToAdd.length > 0 && (
-          <>
-            <SelectedCategoriesHeader>Selected Categories</SelectedCategoriesHeader>
-            {categoriesToAdd.map((cat) => (
-              <SelectedCategoryItem key={cat?.value}>
-                <button type="button" onClick={() => handleDeleteCategory(cat)}>
-                  <FaTrash />
-                </button>
-                {cat?.label}
-              </SelectedCategoryItem>
-            ))}
-            <Button type="button" iconLeft={<FaSave />} block onClick={() => saveAddedCategories()}>
-              Save
-            </Button>
-          </>
+        {categoriesToAdd?.length > 0 && (
+          <Button type="button" iconLeft={<FaSave />} block onClick={() => saveAddedCategories()}>
+            Save
+          </Button>
         )}
       </Modal>
     </PageContainer>
