@@ -68,7 +68,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
         startDate: startOfDay(new Date(values.startDate as string)),
         endDate: endOfDay(new Date(values.endDate as string)),
         updated: new Date(),
-        tripMembers: [...activeTrip.tripMembers, ...values.tripMembers],
         tripLength: values.tripLength,
       };
       firebase
@@ -131,7 +130,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                   ...activeTrip,
                   startDate: new Date(activeTrip.startDate.seconds * 1000),
                   endDate: new Date(activeTrip.endDate.seconds * 1000),
-                  tripMembers: [],
                 } as TripFormType | TripType
               }
               onSubmit={(values, { setSubmitting }) => {

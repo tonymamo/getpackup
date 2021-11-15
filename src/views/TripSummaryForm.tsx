@@ -17,7 +17,7 @@ import {
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { requiredField } from '@utils/validations';
-import { TripType } from '@common/trip';
+import { TripMemberStatus, TripType } from '@common/trip';
 import getSeason from '@utils/getSeason';
 import trackEvent from '@utils/trackEvent';
 import { RootState } from '@redux/ducks';
@@ -49,7 +49,14 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         startDate: startOfDay(new Date(values.startDate as string)),
         endDate: endOfDay(new Date(values.endDate as string)),
         tags: [],
-        tripMembers: [auth.uid],
+        tripMembers: [
+          {
+            uid: auth.uid,
+            status: TripMemberStatus.Owner,
+            invitedAt: new Date(),
+            acceptedAt: new Date(),
+          },
+        ],
         created: new Date(),
       })
       .then((docRef) => {
@@ -82,10 +89,7 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
       </Seo>
       <Formik
         validateOnMount
-        initialValues={{
-          ...props.initialValues,
-          tripMembers: [],
-        }}
+        initialValues={props.initialValues}
         onSubmit={(values, { setSubmitting }) => {
           const valuesWithSeason = {
             ...values,

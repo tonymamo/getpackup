@@ -26,8 +26,15 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         ['owner', '==', auth.uid],
         ['archived', '!=', true],
       ],
-      populates: [{ child: 'tripMembers', root: 'users' }],
     },
+    // {
+    //   collection: 'users',
+    //   where: [
+    //     'uid',
+    //     'in',
+    //     trips?.map((trip) => trip.tripMembers.map((member) => member.uid)).flat() || [auth.uid],
+    //   ],
+    // },
     {
       collection: 'gear-closet',
       storeAs: 'gearCloset',

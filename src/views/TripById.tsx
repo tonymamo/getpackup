@@ -28,12 +28,25 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   );
   const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
 
+  const isTripOwner: boolean =
+    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
+
+  const activeTrip: TripType | undefined =
+    activeTripById &&
+    activeTripById.length > 0 &&
+    (activeTripById[0].tripMembers.some((member) => member.uid === auth.uid) || isTripOwner)
+      ? activeTripById[0]
+      : undefined;
+
   useFirestoreConnect([
     {
       collection: 'trips',
       doc: props.id,
       storeAs: 'activeTripById',
-      populates: [{ child: 'tripMembers', root: 'users' }],
+    },
+    {
+      collection: 'users',
+      where: ['uid', 'in', activeTrip?.tripMembers.map((member) => member.uid) || [auth.uid]],
     },
     {
       collection: 'trips',
@@ -43,16 +56,6 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       orderBy: ['category', 'asc'],
     },
   ]);
-
-  const isTripOwner: boolean =
-    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
-
-  const activeTrip: TripType | undefined =
-    activeTripById &&
-    activeTripById.length > 0 &&
-    (activeTripById[0].tripMembers.some((member) => member === auth.uid) || isTripOwner)
-      ? activeTripById[0]
-      : undefined;
 
   useEffect(() => {
     return () => {

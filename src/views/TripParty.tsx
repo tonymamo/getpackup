@@ -26,8 +26,9 @@ import {
   Seo,
   UserMediaObject,
   TripNavigation,
+  Pill,
 } from '@components';
-import { TripType } from '@common/trip';
+import { TripMemberStatus, TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { UserType } from '@common/user';
@@ -98,6 +99,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const updateTrip = (memberId: string) => {
     // activeTrip.tripMembers.length + 1 accounts for async data updates
+    // TODO: maybe dont count declined members towards total party size?
     if (activeTrip?.tripMembers && activeTrip.tripMembers.length + 1 > MAX_TRIP_PARTY_SIZE) {
       setIsSearchBarDisabled(true);
       dispatch(
@@ -116,13 +118,27 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
         .update({
           ...activeTrip,
           updated: new Date(),
-          tripMembers: [...activeTrip.tripMembers, memberId],
+          tripMembers: [
+            ...activeTrip.tripMembers,
+            {
+              uid: memberId,
+              invitedAt: new Date(),
+              status: TripMemberStatus.Pending,
+            },
+          ],
         })
         .then(() => {
           trackEvent('Trip Party Member Added', {
             ...activeTrip,
             updated: new Date(),
-            tripMembers: [...activeTrip.tripMembers, memberId],
+            tripMembers: [
+              ...activeTrip.tripMembers,
+              {
+                uid: memberId,
+                invitedAt: new Date(),
+                status: TripMemberStatus.Pending,
+              },
+            ],
           });
         })
         .catch((err) => {
@@ -140,8 +156,6 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
         });
     }
   };
-
-  const existingTripMember = (uid: string) => activeTrip && activeTrip.tripMembers.includes(uid);
 
   const InviteButton = ({
     items,
@@ -183,9 +197,9 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       avatarSize="sm"
       showSecondaryContent
       action={
-        existingTripMember(hit.uid) ? (
+        activeTrip?.tripMembers?.find((member) => member.uid === hit.uid) ? (
           <Button type="button" color="tertiary" size="small" disabled>
-            Added
+            {activeTrip?.tripMembers?.find((member) => member.uid === hit.uid)?.status}
           </Button>
         ) : (
           <InviteButtonWithClearSearch clearsQuery hit={hit} />
@@ -293,6 +307,20 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const ConnectedSearchBox = connectSearchBox(SearchBox);
 
+  const getStatusPill = (uid: string) => {
+    const matchingTripMember = activeTrip?.tripMembers?.find((member) => member.uid === uid);
+    if (matchingTripMember?.status === TripMemberStatus.Pending) {
+      return <Pill text="Pending" color="neutral" />;
+    }
+    if (matchingTripMember?.status === TripMemberStatus.Accepted) {
+      return <Pill text="Accepted" color="success" />;
+    }
+    if (matchingTripMember?.status === TripMemberStatus.Declined) {
+      return <Pill text="Declined" color="danger" />;
+    }
+    return undefined;
+  };
+
   return (
     <>
       <Seo title="Trip Party" />
@@ -323,23 +351,23 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                 <p>
                   <strong>Trip Party</strong>
                 </p>
-                <Alert
-                  type="info"
-                  message="Note: Collaborative trips are coming soon, so Trip Party members will not be notified or see this trip yet on their list of trips."
-                />
                 <div
                   style={{
                     margin: `${halfSpacer} 0 ${baseSpacer}`,
                   }}
                 >
-                  {activeTrip.tripMembers.map((tripMember, index) => {
+                  {activeTrip?.tripMembers.map((tripMember, index) => {
                     const matchingUser: UserType =
-                      users && users[tripMember] ? users[tripMember] : undefined;
+                      users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
                     if (!matchingUser) return null;
                     return (
                       <div key={matchingUser.uid}>
-                        <UserMediaObject user={matchingUser} showSecondaryContent />
-                        {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
+                        <UserMediaObject
+                          user={matchingUser}
+                          showSecondaryContent
+                          action={getStatusPill(matchingUser.uid)}
+                        />
+                        {index !== activeTrip?.tripMembers.length - 1 && <HorizontalRule compact />}
                       </div>
                     );
                   })}

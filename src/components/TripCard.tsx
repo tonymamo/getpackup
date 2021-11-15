@@ -5,8 +5,9 @@ import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import { useFirestoreConnect } from 'react-redux-firebase';
 
-import { TripType } from '@common/trip';
+import { TripMemberStatus, TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import {
   Heading,
@@ -51,12 +52,24 @@ const PlaceholderImageWrapper = styled.div`
 
 const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
+  const auth = useSelector((state: RootState) => state.firebase.auth);
 
   const { isExtraSmallScreen, isSmallScreen } = useWindowSize();
   // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
   const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
 
   const numberOfAvatarsToShow = 4;
+
+  const acceptedTripMembersOnly = trip?.tripMembers.filter(
+    (member) => member.status === TripMemberStatus.Accepted
+  );
+
+  useFirestoreConnect([
+    {
+      collection: 'users',
+      where: ['uid', 'in', trip?.tripMembers.map((member) => member.uid) || [auth.uid]],
+    },
+  ]);
 
   return (
     <StyledTripWrapper>
@@ -109,26 +122,26 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
         </Column>
         <Column md={4}>
           <FlexContainer justifyContent={isSmallScreen ? 'flex-start' : 'flex-end'}>
-            {trip && trip.tripMembers.length > 0 && (
+            {trip && acceptedTripMembersOnly && acceptedTripMembersOnly.length > 0 && (
               <StackedAvatars>
                 <Avatar
                   src={loggedInUser?.photoURL as string}
                   gravatarEmail={loggedInUser?.email as string}
                   size="sm"
-                  username={loggedInUser?.username}
+                  username={loggedInUser?.username.toLocaleLowerCase()}
                 />
                 {users &&
-                  trip.tripMembers
-                    .filter((member) => member !== loggedInUser?.uid)
+                  acceptedTripMembersOnly
+                    ?.filter((member) => member.uid !== loggedInUser?.uid)
                     .slice(
                       0,
-                      trip.tripMembers.length === numberOfAvatarsToShow
+                      acceptedTripMembersOnly?.length === numberOfAvatarsToShow
                         ? numberOfAvatarsToShow
                         : numberOfAvatarsToShow - 1 // to account for the +N avatar below
                     )
                     .map((tripMember: any) => {
-                      const matchingUser: UserType = users[tripMember]
-                        ? users[tripMember]
+                      const matchingUser: UserType = users[tripMember.uid]
+                        ? users[tripMember.uid]
                         : undefined;
                       if (!matchingUser) return null;
                       return (
@@ -137,17 +150,17 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
                           gravatarEmail={matchingUser?.email as string}
                           size="sm"
                           key={matchingUser.uid}
-                          username={matchingUser?.username}
+                          username={matchingUser?.username.toLocaleLowerCase()}
                         />
                       );
                     })}
-                {users && trip.tripMembers.length > numberOfAvatarsToShow && (
+                {users && acceptedTripMembersOnly.length > numberOfAvatarsToShow && (
                   <Avatar
                     // never want to show +1, because then we could have just rendered the photo.
                     // Instead, lets add another so its always at least +2
-                    staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
+                    staticContent={`+${acceptedTripMembersOnly.length - numberOfAvatarsToShow + 1}`}
                     size="sm"
-                    username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
+                    username={`+${acceptedTripMembersOnly.length - numberOfAvatarsToShow + 1} more`}
                   />
                 )}
               </StackedAvatars>
