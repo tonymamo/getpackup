@@ -33,6 +33,7 @@ import {
 } from '@utils/gearListItemEnum';
 import { multiSelectStyles } from '@components/Input';
 import useWindowSize from '@utils/useWindowSize';
+import { inputPaddingY } from '@styles/size';
 
 type GearClosetProps = {};
 
@@ -348,14 +349,11 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           onChange={(options) => setCategoriesToAdd(options as React.SetStateAction<Category[]>)}
         />
         {categoriesToAdd?.length > 0 && (
-          <Button
-            style={{ marginRight: '0' }}
-            type="button"
-            iconLeft={<FaPlusCircle />}
-            onClick={() => saveAddedCategories()}
-          >
-            Save
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'end', paddingTop: inputPaddingY }}>
+            <Button type="button" iconLeft={<FaPlusCircle />} onClick={() => saveAddedCategories()}>
+              Save
+            </Button>
+          </div>
         )}
       </Modal>
     </PageContainer>
