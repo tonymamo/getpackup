@@ -20,7 +20,7 @@ import {
 } from '@components';
 import usePersonalGear from '@hooks/usePersonalGear';
 import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
-import { FaPencilAlt, FaPlusCircle, FaSave, FaTrash } from 'react-icons/fa';
+import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
@@ -348,7 +348,12 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           onChange={(options) => setCategoriesToAdd(options as React.SetStateAction<Category[]>)}
         />
         {categoriesToAdd?.length > 0 && (
-          <Button type="button" iconLeft={<FaSave />} block onClick={() => saveAddedCategories()}>
+          <Button
+            style={{ marginRight: '0' }}
+            type="button"
+            iconLeft={<FaPlusCircle />}
+            onClick={() => saveAddedCategories()}
+          >
             Save
           </Button>
         )}
