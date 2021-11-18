@@ -16,16 +16,21 @@ import { zIndexDropdown } from '@styles/layers';
 
 type DropdownMenuProps = {
   color?: string;
+  width?: number;
 };
 
-const StyledDropdown = styled.div`
+interface StyledDropDownProps {
+  width?: number;
+}
+
+const StyledDropdown = styled.div<StyledDropDownProps>`
   position: absolute;
   background-color: ${white};
   border: ${baseBorderStyle};
   box-shadow: ${z1Shadow};
   right: 0;
   top: calc(100% + ${quarterSpacer});
-  width: 250px;
+  width: ${(props) => (props.width ? props.width : '250')}px;
   z-index: ${zIndexDropdown};
   display: flex;
   flex-direction: column;
@@ -85,7 +90,7 @@ const StyledDropdownWrapper = styled.div`
   display: inline-flex;
 `;
 
-const DropdownMenu: FunctionComponent<DropdownMenuProps> = ({ children, color }) => {
+const DropdownMenu: FunctionComponent<DropdownMenuProps> = ({ children, color, width }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownNode = useRef<HTMLDivElement>(null);
 
@@ -114,7 +119,7 @@ const DropdownMenu: FunctionComponent<DropdownMenuProps> = ({ children, color })
       >
         <FaEllipsisH size={baseSpacer} color={color || textColor} />
       </Button>
-      {dropdownOpen && <StyledDropdown>{children}</StyledDropdown>}
+      {dropdownOpen && <StyledDropdown width={width}>{children}</StyledDropdown>}
     </StyledDropdownWrapper>
   );
 };
