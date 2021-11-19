@@ -36,7 +36,7 @@ const Modal: FunctionComponent<ModalProps> = (props) => {
           maxWidth: screenSizes.medium,
           margin: '0 auto',
           top: '50%',
-          position: 'relative',
+          position: 'absolute',
           transform: 'translateY(-50%)',
           right: doubleSpacer,
           left: doubleSpacer,
@@ -44,6 +44,7 @@ const Modal: FunctionComponent<ModalProps> = (props) => {
           marginBottom: doubleSpacer,
           WebkitOverflowScrolling: 'touch',
           padding: props.largePadding ? doubleSpacer : baseSpacer,
+          maxHeight: '80vh',
         },
         overlay: {
           backgroundColor: 'rgba(0,0,0,.75)',
