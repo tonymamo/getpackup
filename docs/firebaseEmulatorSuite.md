@@ -1,4 +1,7 @@
+# Firebase Emulator Suite Setup
+## Installation
 
+**NOTE: You must start the emulators before starting Gatsby**
 
 1.  **Install Additional Dependencies**
 Ref: https://firebase.google.com/docs/cli#mac-linux-npm
@@ -15,6 +18,7 @@ Ref: https://cloud.google.com/sdk/docs/install
 ```
 2.  **Connect To Get Packup Project**
 ```shel
+cd dev-firebase
 firebase login (follow prompts in browser)
 firebase use getpackup 
 
@@ -22,16 +26,36 @@ gcloud projects list
 gcloud config set project getpackup
 ```
 3.  **Export production database**
-From root of getpackup repo
 ```shel
+gsutil -m rm -r gs://getpackup.appspot.com/dev-firebase
 gcloud firestore export gs://getpackup.appspot.com/dev-firebase
 ```
 4.  **Download the export you just created**
 ```shel
-gsutil -m cp -r gs://getpackup.appspot.com/dev-firebase ./dev-firebase
+gsutil -m cp -r gs://getpackup.appspot.com/dev-firebase .
 ```
-
-  1.  **Init Emulators**
+  5.  **Install Cloud Function node_modules**
 ```shel
-firebase init emulators
+cd functions
+npm install
+cd ..
 ```
+5. **Start Emulators**
+```shel
+firebase emulators:start --import ./dev-firebase
+```
+6. **Start Gatsby**
+```shel
+cd ..
+yarn install
+yarn start
+```
+**(Ensure that your .env file has GATSBY_ENVIRONMENT=DEVELOP)**
+
+## Using the Emulators
+1. **Local Console**
+You can visit the emulator console at http://localhost:4000
+2. **Ports**
+The Firestore Database runs at http://localhost:8080
+3. **Cloud Functions**
+Place your cloud functions in ./dev-firebase/functions/index.js
