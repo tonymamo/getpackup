@@ -51,6 +51,7 @@ yarn install
 yarn start
 ```
 **(Ensure that your .env file has GATSBY_ENVIRONMENT=DEVELOP)**
+If the app has connected to the emulator, you'll see a message in the console after yarn start has finished building
 
 ## Using the Emulators
 1. **Local Console**
