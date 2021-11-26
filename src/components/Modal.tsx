@@ -12,6 +12,17 @@ type ModalProps = {
   toggleModal: () => void;
   hideCloseButton?: boolean;
   largePadding?: boolean;
+  overflow?:
+    | 'visible'
+    | 'hidden'
+    | 'clip'
+    | 'scroll'
+    | 'auto'
+    | 'hidden visible'
+    | 'inherit'
+    | 'initial'
+    | 'revert'
+    | 'unset';
 };
 
 const CloseIcon = styled.span`
@@ -45,12 +56,13 @@ const Modal: FunctionComponent<ModalProps> = (props) => {
           WebkitOverflowScrolling: 'touch',
           padding: props.largePadding ? doubleSpacer : baseSpacer,
           maxHeight: '80vh',
+          overflow: props.overflow ?? 'auto',
         },
         overlay: {
           backgroundColor: 'rgba(0,0,0,.75)',
           position: 'fixed',
           height: '100%',
-          overflow: 'auto',
+          overflow: props.overflow ?? 'auto',
           zIndex: zIndexModal,
           display: 'flex',
           justifyContent: 'center',
