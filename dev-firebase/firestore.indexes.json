@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "trips",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "owner",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "archived",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -4,11 +4,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import firebase from 'firebase/app';
-import { showWorkerUpdateModal } from '@redux/ducks/workerUpdateReady';
+import {
+  showWorkerUpdateModal,
+  initialState as workerUpdateInitialState,
+} from '@redux/ducks/workerUpdateReady';
 import configureStore from '@redux/configureStore';
 import { initialState as clientInitialState } from '@redux/ducks/client';
 import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
-import { initialState as workerUpdateInitialState } from '@redux/ducks/workerUpdateReady';
 
 export const initialState = process.env.BROWSER // eslint-disable-next-line no-underscore-dangle
   ? window.__INITIAL_STATE__
@@ -44,7 +46,12 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-firebase.firestore();
+if (process.env.GATSBY_ENVIRONMENT === 'DEVELOP') {
+  console.log(`Development Env: Using Firestore Emulator`);
+  firebase.firestore().useEmulator('localhost', 8080);
+} else {
+  firebase.firestore();
+}
 
 export const onWorkerUpdateReady = () => store.dispatch(showWorkerUpdateModal());
 
