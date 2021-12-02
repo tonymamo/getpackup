@@ -44,6 +44,9 @@ A Gatsby project using React, Firebase, Redux, Styled-Components, Formik, Netlif
 
     _Note: You'll also see a second link: _`http://localhost:1391/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
 
+1.  **Setup Firebase Emulator Suite**
+    You can find additional documentation on exporting production data and setting up Firebase Emulator Suite in `docs/firebaseEmulatorSuite.md`
+
 ## 🧐 What's inside?
 
 A quick look at the top-level files and directories you'll see in a Gatsby project.

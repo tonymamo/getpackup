@@ -92,6 +92,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
                             website: '',
                             location: '',
                             lastUpdated: new Date(),
+                            createdAt: new Date(),
                           })
                           .then(() => {
                             trackEvent('New User Signed Up And Created Profile', {
