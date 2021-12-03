@@ -17,8 +17,8 @@ type PackingListFilterProps = {
 };
 
 const Filters = styled.div`
-  margin: 20px 6px;
-
+  margin-bottom: 20px;
+  
   span {
     font-size: 14px;
     font-weight: 700;

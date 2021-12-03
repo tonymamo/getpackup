@@ -167,12 +167,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           <>
             {tabIndex === 0 && (
               <>
+                <PackingListFilters list={packingList} sendFilteredList={(list) => handlePackingListGrouped(list)} />
                 {sharedTrip && (
                   <Heading as="h4" altStyle uppercase>
                     Personal Items
                   </Heading>
                 )}
-                <PackingListFilters list={packingList} sendFilteredList={(list) => handlePackingListGrouped(list)} />
                 {groupCategories?.map(
                   ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
                     const sortedItems = packingListItems.sort((a, b) => {
