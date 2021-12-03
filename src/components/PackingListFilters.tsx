@@ -3,7 +3,7 @@ import { Button } from '@components';
 import { FaSlidersH } from 'react-icons/fa';
 import styled from 'styled-components';
 import { PackingListItemType } from '@common/packingListItem';
-import { baseSpacer, borderRadius } from '@styles/size';
+import { baseSpacer } from '@styles/size';
 import { FilterListFilterCriteria } from '../enums';
 
 type PackingListFilterProps = {
@@ -16,8 +16,6 @@ const Filters = styled.div`
 `;
 
 const FilterButtons = styled.div`
-  border-radius: ${borderRadius};
-
   & button {
     &:first-child {
       border-top-right-radius: 0;
