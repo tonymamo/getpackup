@@ -81,7 +81,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripIsLoaded,
 }) => {
   const groupedCategories: [string, PackingListItemType[]][] = [];
-  
+
   const [tabIndex, setTabIndex] = useState(0);
   const [groupCategories, setGroupCategories] = useState<[string, PackingListItemType[]][]>([]);
 
@@ -106,12 +106,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     };
   }, [stickyRef, setSticky]);
 
-  useEffect(() => {
-    if (packingList?.length) {
-      handlePackingListGrouped(packingList);
-    }
-  }, [packingList]);
-
   const handlePackingListGrouped = (list: PackingListItemType[]) => {
     // Put the pre-trip category first, if it exists
     const entries = Object.entries(groupBy(list, 'category'));
@@ -121,6 +115,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     groupedCategories.push(...allOtherEntries);
     setGroupCategories(groupedCategories);
   };
+
+  useEffect(() => {
+    if (packingList?.length) {
+      handlePackingListGrouped(packingList);
+    }
+  }, [packingList]);
 
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && trip.tripMembers.length > 0;
@@ -165,9 +165,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       >
         {trip ? (
           <>
+            <PackingListFilters
+              list={packingList}
+              sendFilteredList={(list) => handlePackingListGrouped(list)}
+            />
             {tabIndex === 0 && (
               <>
-                <PackingListFilters list={packingList} sendFilteredList={(list) => handlePackingListGrouped(list)} />
                 {sharedTrip && (
                   <Heading as="h4" altStyle uppercase>
                     Personal Items

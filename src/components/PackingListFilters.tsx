@@ -1,15 +1,10 @@
-import React, { FC, useState, CSSProperties } from "react";
-import { Button } from "@components";
+import React, { FC, useState } from 'react';
+import { Button } from '@components';
 import { FaSlidersH } from 'react-icons/fa';
 import styled from 'styled-components';
-import {
-  lightGray,
-  white,
-  darkGray,
-  brandPrimary,
-} from '@styles/color';
-import { FilterListFilterCriteria } from "../enums";
-import { PackingListItemType } from "@common/packingListItem";
+import { PackingListItemType } from '@common/packingListItem';
+import { baseSpacer, borderRadius } from '@styles/size';
+import { FilterListFilterCriteria } from '../enums';
 
 type PackingListFilterProps = {
   list: PackingListItemType[];
@@ -17,39 +12,19 @@ type PackingListFilterProps = {
 };
 
 const Filters = styled.div`
-  margin-bottom: 20px;
-  
-  span {
-    font-size: 14px;
-    font-weight: 700;
-    margin-left: 8px;
-    vertical-align: top;
-  }
+  margin-bottom: ${baseSpacer};
 `;
 
 const FilterButtons = styled.div`
-  background-color: ${lightGray};
-  border-radius: 5px;
-  display: flex;
-  padding: 5px;
-  width: fit-content;
+  border-radius: ${borderRadius};
 
-  button {
-    background-color: ${white};
-    color: ${darkGray};
-    font-size: 16px;
-    margin: 0;
-    margin-right: 2px;
-    padding-left: 8px;
-    padding-right: 8px;
-
+  & button {
     &:first-child {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
 
     &:last-child {
-      margin-right: 0;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
@@ -60,21 +35,19 @@ const FilterButtons = styled.div`
   }
 `;
 
-const PackingListFilters: FC<PackingListFilterProps> = ({ list, sendFilteredList }): JSX.Element => {
+const PackingListFilters: FC<PackingListFilterProps> = ({
+  list,
+  sendFilteredList,
+}): JSX.Element => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [packingListToFilter] = useState<PackingListItemType[]>(list ?? []);
 
   const initialCopyOfList = Object.assign([], list);
 
-  const activeButtonStyle = (index: number): CSSProperties => ({
-    backgroundColor: currentIndex === index ? brandPrimary : white,
-    color: currentIndex === index ? white : 'inherit',
-  });
-
   const filterSettings = [
     { id: FilterListFilterCriteria.All },
     { id: FilterListFilterCriteria.Packed },
-    { id: FilterListFilterCriteria.Unpacked }
+    { id: FilterListFilterCriteria.Unpacked },
   ];
 
   const handleFilter = (id: string, index: number) => {
@@ -85,9 +58,7 @@ const PackingListFilters: FC<PackingListFilterProps> = ({ list, sendFilteredList
     if (isAll) {
       newList = initialCopyOfList;
     } else {
-      newList = packingListToFilter.filter(
-        (item => item.isPacked === isPacked)
-      );
+      newList = packingListToFilter.filter((item) => item.isPacked === isPacked);
     }
     setCurrentIndex(index);
     sendFilteredList(newList);
@@ -95,17 +66,19 @@ const PackingListFilters: FC<PackingListFilterProps> = ({ list, sendFilteredList
 
   return (
     <Filters>
-      <FaSlidersH /><span>Filter by:</span>
+      <FaSlidersH /> <strong>Filter by:</strong>
       <FilterButtons>
-        {filterSettings.map(({ id }, index) =>
-          <Button 
-            key={id} 
-            type="button" 
-            size="small" 
+        {filterSettings.map(({ id }, index) => (
+          <Button
+            key={id}
+            type="button"
+            size="small"
+            color={index === currentIndex ? 'primary' : 'tertiary'}
             onClick={() => handleFilter(id, index)}
-            style={activeButtonStyle(index)}
-          >{id}</Button>
-        )}
+          >
+            {id}
+          </Button>
+        ))}
       </FilterButtons>
     </Filters>
   );
