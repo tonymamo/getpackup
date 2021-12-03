@@ -21,6 +21,7 @@ import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { zIndexNavbar } from '@styles/layers';
+import PackingListFilters from '@components/PackingListFilters';
 
 type PackingListProps = {
   trip?: TripType;
@@ -80,17 +81,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripIsLoaded,
 }) => {
   const groupedCategories: [string, PackingListItemType[]][] = [];
-
-  if (packingList?.length) {
-    // Put the pre-trip category first, if it exists
-    const entries = Object.entries(groupBy(packingList, 'category'));
-    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
-    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
-    if (preTripEntries) groupedCategories.push(preTripEntries);
-    groupedCategories.push(...allOtherEntries);
-  }
-
+  
   const [tabIndex, setTabIndex] = useState(0);
+  const [groupCategories, setGroupCategories] = useState<[string, PackingListItemType[]][]>([]);
 
   // TODO: extract all of the sticky header stuff out to its own reusable hook
   const [isSticky, setSticky] = useState(false);
@@ -112,6 +105,22 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, [stickyRef, setSticky]);
+
+  useEffect(() => {
+    if (packingList?.length) {
+      handlePackingListGrouped(packingList);
+    }
+  }, [packingList]);
+
+  const handlePackingListGrouped = (list: PackingListItemType[]) => {
+    // Put the pre-trip category first, if it exists
+    const entries = Object.entries(groupBy(list, 'category'));
+    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
+    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
+    if (preTripEntries) groupedCategories.push(preTripEntries);
+    groupedCategories.push(...allOtherEntries);
+    setGroupCategories(groupedCategories);
+  };
 
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && trip.tripMembers.length > 0;
@@ -163,7 +172,8 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                     Personal Items
                   </Heading>
                 )}
-                {groupedCategories.map(
+                <PackingListFilters list={packingList} sendFilteredList={(list) => handlePackingListGrouped(list)} />
+                {groupCategories?.map(
                   ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
                     const sortedItems = packingListItems.sort((a, b) => {
                       if (a.isPacked === b.isPacked) {
