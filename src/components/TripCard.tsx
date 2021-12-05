@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { useFirestoreConnect } from 'react-redux-firebase';
 
-
 import { TripMember, TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import {
@@ -52,8 +51,8 @@ const PlaceholderImageWrapper = styled.div`
 `;
 
 const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
-    const auth = useSelector((state: RootState) => state.firebase.auth);
-  const users: Array<UserType> = useSelector((state: RootState) => state.firestore.data.users);
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const users: Array<UserType> = useSelector((state: RootState) => state.firestore.ordered.users);
 
   const { isExtraSmallScreen, isSmallScreen } = useWindowSize();
   // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
@@ -61,8 +60,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
 
   const numberOfAvatarsToShow = 4;
 
-
-useFirestoreConnect([
+  useFirestoreConnect([
     {
       collection: 'users',
       where: ['uid', 'in', trip?.tripMembers.map((member) => member.uid) || [auth.uid]],
