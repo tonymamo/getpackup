@@ -28,6 +28,7 @@ import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
 import { brandSecondary, lightestGray } from '@styles/color';
+import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
 
 type TripCardProps = {
   trip?: TripType;
@@ -57,8 +58,6 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   const { isExtraSmallScreen, isSmallScreen } = useWindowSize();
   // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
   const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
-
-  const numberOfAvatarsToShow = 4;
 
   useFirestoreConnect([
     {
@@ -124,9 +123,9 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
                   trip.tripMembers
                     .slice(
                       0,
-                      trip.tripMembers.length === numberOfAvatarsToShow
-                        ? numberOfAvatarsToShow
-                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
+                      trip.tripMembers.length === MAX_TRIP_PARTY_SIZE
+                        ? MAX_TRIP_PARTY_SIZE
+                        : MAX_TRIP_PARTY_SIZE - 1 // to account for the +N avatar below
                     )
                     .map((tripMember: TripMember) => {
                       const matchingUser: UserType | undefined = users.find(
@@ -143,13 +142,13 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
                         />
                       );
                     })}
-                {users && trip.tripMembers.length > numberOfAvatarsToShow && (
+                {users && trip.tripMembers.length > MAX_TRIP_PARTY_SIZE && (
                   <Avatar
                     // never want to show +1, because then we could have just rendered the photo.
                     // Instead, lets add another so its always at least +2
-                    staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
+                    staticContent={`+${trip.tripMembers.length - MAX_TRIP_PARTY_SIZE + 1}`}
                     size="sm"
-                    username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
+                    username={`+${trip.tripMembers.length - MAX_TRIP_PARTY_SIZE + 1} more`}
                   />
                 )}
               </StackedAvatars>

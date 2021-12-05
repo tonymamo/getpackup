@@ -6,7 +6,7 @@ import { actionTypes } from 'redux-firestore';
 
 import { Seo, PageContainer, NoTripFound } from '@components';
 import { RootState } from '@redux/ducks';
-import { TripType } from '@common/trip';
+import { TripMember, TripType } from '@common/trip';
 import PackingList from '@views/PackingList';
 import TripDetails from '@views/TripDetails';
 import TripParty from '@views/TripParty';
@@ -28,12 +28,21 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   );
   const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
 
+  console.log(activeTripById);
+
   useFirestoreConnect([
     {
       collection: 'trips',
       doc: props.id,
       storeAs: 'activeTripById',
-      populates: [{ child: 'tripMembers', root: 'users' }],
+    },
+    {
+      collection: 'users',
+      where: [
+        'uid',
+        'in',
+        activeTripById[0]?.tripMembers?.map((member: TripMember) => member.uid) || [auth.uid],
+      ],
     },
     {
       collection: 'trips',
@@ -44,13 +53,10 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     },
   ]);
 
-  const isTripOwner: boolean =
-    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
-
   const activeTrip: TripType | undefined =
     activeTripById &&
     activeTripById.length > 0 &&
-    (activeTripById[0].tripMembers.some((member) => member === auth.uid) || isTripOwner)
+    activeTripById[0].tripMembers.some((member: TripMember) => member.uid === auth.uid)
       ? activeTripById[0]
       : undefined;
 
