@@ -121,37 +121,21 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
             {trip && trip.tripMembers.length > 0 && (
               <StackedAvatars>
                 {users &&
-                  trip.tripMembers
-                    .slice(
-                      0,
-                      trip.tripMembers.length === numberOfAvatarsToShow
-                        ? numberOfAvatarsToShow
-                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
-                    )
-                    .map((tripMember: TripMember) => {
-                      const matchingUser: UserType | undefined = users.find(
-                        (user) => user.uid === tripMember.uid
-                      );
-                      if (!matchingUser) return null;
-                      return (
-                        <Avatar
-                          src={matchingUser?.photoURL as string}
-                          gravatarEmail={matchingUser?.email as string}
-                          size="sm"
-                          key={matchingUser.uid}
-                          username={matchingUser?.username}
-                        />
-                      );
-                    })}
-                {users && trip.tripMembers.length > numberOfAvatarsToShow && (
-                  <Avatar
-                    // never want to show +1, because then we could have just rendered the photo.
-                    // Instead, lets add another so its always at least +2
-                    staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
-                    size="sm"
-                    username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
-                  />
-                )}
+                  trip.tripMembers.map((tripMember: TripMember) => {
+                    const matchingUser: UserType | undefined = users.find(
+                      (user) => user.uid === tripMember.uid
+                    );
+                    if (!matchingUser) return null;
+                    return (
+                      <Avatar
+                        src={matchingUser?.photoURL as string}
+                        gravatarEmail={matchingUser?.email as string}
+                        size="sm"
+                        key={matchingUser.uid}
+                        username={matchingUser?.username}
+                      />
+                    );
+                  })}
               </StackedAvatars>
             )}
           </FlexContainer>
