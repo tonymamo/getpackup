@@ -73,6 +73,7 @@ yarn-error.log
 
 # misc
 dist
+dev-firebase/dev-firebase
 
 #firebase export
 dev-firebase/dev-firebase/

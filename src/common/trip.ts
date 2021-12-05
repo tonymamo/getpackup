@@ -12,7 +12,7 @@ export type TripType = {
   lng: number;
   created?: firebase.default.firestore.Timestamp;
   updated?: firebase.default.firestore.Timestamp;
-  tripMembers: Array<string>;
+  tripMembers: TripMember[];
   tags: Array<string>;
   tripLength: number;
   headerImage?: string;
@@ -24,3 +24,22 @@ export type TripFormType = Omit<TripType, 'startDate' | 'endDate'> & {
   startDate: string | Date | undefined;
   endDate: string | Date | undefined;
 };
+
+export type TripMember = {
+  invitedAt: firebase.default.firestore.Timestamp;
+  declinedAt?: firebase.default.firestore.Timestamp;
+  acceptedAt?: firebase.default.firestore.Timestamp;
+  status: TripMemberStatus;
+  uid: string;
+};
+
+export enum TripMemberStatus {
+  /** User has been invited, but not yet accepted */
+  Pending = 'pending',
+  /** User has accepted  */
+  Accepted = 'accepted',
+  /** User declined the invitation */
+  Declined = 'declined',
+  /** User created the trip */
+  Owner = 'owner',
+}

@@ -5,8 +5,10 @@ import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import { useFirestoreConnect } from 'react-redux-firebase';
 
-import { TripType } from '@common/trip';
+
+import { TripMember, TripType } from '@common/trip';
 import { UserType } from '@common/user';
 import {
   Heading,
@@ -50,13 +52,22 @@ const PlaceholderImageWrapper = styled.div`
 `;
 
 const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
-  const users = useSelector((state: RootState) => state.firestore.data.users);
+    const auth = useSelector((state: RootState) => state.firebase.auth);
+  const users: Array<UserType> = useSelector((state: RootState) => state.firestore.data.users);
 
   const { isExtraSmallScreen, isSmallScreen } = useWindowSize();
   // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
   const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
 
   const numberOfAvatarsToShow = 4;
+
+
+useFirestoreConnect([
+    {
+      collection: 'users',
+      where: ['uid', 'in', trip?.tripMembers.map((member) => member.uid) || [auth.uid]],
+    },
+  ]);
 
   return (
     <StyledTripWrapper>
@@ -111,25 +122,18 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
           <FlexContainer justifyContent={isSmallScreen ? 'flex-start' : 'flex-end'}>
             {trip && trip.tripMembers.length > 0 && (
               <StackedAvatars>
-                <Avatar
-                  src={loggedInUser?.photoURL as string}
-                  gravatarEmail={loggedInUser?.email as string}
-                  size="sm"
-                  username={loggedInUser?.username}
-                />
                 {users &&
                   trip.tripMembers
-                    .filter((member) => member !== loggedInUser?.uid)
                     .slice(
                       0,
                       trip.tripMembers.length === numberOfAvatarsToShow
                         ? numberOfAvatarsToShow
                         : numberOfAvatarsToShow - 1 // to account for the +N avatar below
                     )
-                    .map((tripMember: any) => {
-                      const matchingUser: UserType = users[tripMember]
-                        ? users[tripMember]
-                        : undefined;
+                    .map((tripMember: TripMember) => {
+                      const matchingUser: UserType | undefined = users.find(
+                        (user) => user.uid === tripMember.uid
+                      );
                       if (!matchingUser) return null;
                       return (
                         <Avatar
