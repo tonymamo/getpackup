@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
-import groupBy from 'lodash/groupBy';
 import { RouteComponentProps, navigate } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
@@ -22,6 +21,7 @@ import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { zIndexNavbar } from '@styles/layers';
 import PackingListFilters from '@components/PackingListFilters';
+import groupPackingList from '@utils/groupPackingList';
 
 type PackingListProps = {
   trip?: TripType;
@@ -80,7 +80,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripId,
   tripIsLoaded,
 }) => {
-  const groupedCategories: [string, PackingListItemType[]][] = [];
 
   const [tabIndex, setTabIndex] = useState(0);
   const [groupCategories, setGroupCategories] = useState<[string, PackingListItemType[]][]>([]);
@@ -106,19 +105,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     };
   }, [stickyRef, setSticky]);
 
-  const handlePackingListGrouped = (list: PackingListItemType[]) => {
-    // Put the pre-trip category first, if it exists
-    const entries = Object.entries(groupBy(list, 'category'));
-    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
-    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
-    if (preTripEntries) groupedCategories.push(preTripEntries);
-    groupedCategories.push(...allOtherEntries);
-    setGroupCategories(groupedCategories);
-  };
-
   useEffect(() => {
     if (packingList?.length) {
-      handlePackingListGrouped(packingList);
+      setGroupCategories(groupPackingList(packingList));
     }
   }, [packingList]);
 
@@ -167,7 +156,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           <>
             <PackingListFilters
               list={packingList}
-              sendFilteredList={(list) => handlePackingListGrouped(list)}
+              sendFilteredList={(list) => setGroupCategories(groupPackingList(list))}
             />
             {tabIndex === 0 && (
               <>
@@ -178,10 +167,10 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 )}
                 {groupCategories?.map(
                   ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
-                    const sortedItems = packingListItems.sort((a, b) => {
-                      if (a.isPacked === b.isPacked) {
+                    const sortedItems = packingListItems?.sort((a, b) => {
+                      if (a?.isPacked === b?.isPacked) {
                         // sort by name
-                        if (a.created.seconds === b.created.seconds) {
+                        if (a?.created?.seconds === b?.created?.seconds) {
                           return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                         }
 

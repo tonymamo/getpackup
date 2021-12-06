@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Button } from '@components';
 import { FaSlidersH } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -38,8 +38,6 @@ const PackingListFilters: FC<PackingListFilterProps> = ({
   sendFilteredList,
 }): JSX.Element => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [packingListToFilter] = useState<PackingListItemType[]>(list ?? []);
-
   const initialCopyOfList = Object.assign([], list);
 
   const filterSettings = [
@@ -51,16 +49,21 @@ const PackingListFilters: FC<PackingListFilterProps> = ({
   const handleFilter = (id: string, index: number) => {
     const isPacked = id === FilterListFilterCriteria.Packed;
     const isAll = id === FilterListFilterCriteria.All;
-    let newList: PackingListItemType[] = [];
 
     if (isAll) {
-      newList = initialCopyOfList;
+      sendFilteredList(initialCopyOfList);
     } else {
-      newList = packingListToFilter.filter((item) => item.isPacked === isPacked);
+      const filterList = list.filter((item) => item.isPacked === isPacked);
+      sendFilteredList(filterList);
     }
     setCurrentIndex(index);
-    sendFilteredList(newList);
   };
+
+  useEffect(() => {
+    if (list) {
+      setTimeout(() => handleFilter(filterSettings[currentIndex].id, currentIndex));
+    }
+  }, [list]);
 
   return (
     <Filters>

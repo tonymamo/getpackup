@@ -48,7 +48,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 if (process.env.GATSBY_ENVIRONMENT === 'DEVELOP') {
   console.log(`Development Env: Using Firestore Emulator`);
-  firebase.firestore().useEmulator('localhost', 8080);
+  // firebase.firestore().useEmulator('localhost', 8080);
+  firebase.firestore();
 } else {
   firebase.firestore();
 }
