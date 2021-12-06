@@ -1,11 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Button } from '@components';
-import { FaSlidersH } from 'react-icons/fa';
 import styled from 'styled-components';
 import { PackingListItemType } from '@common/packingListItem';
 import { baseSpacer } from '@styles/size';
 import { FilterListFilterCriteria } from '../enums';
-import groupPackingList from '@utils/groupPackingList';
 
 type PackingListFilterProps = {
   list: PackingListItemType[];
@@ -17,6 +15,7 @@ const Filters = styled.div`
 `;
 
 const FilterButtons = styled.div`
+  display: inline-flex;
   & button {
     &:first-child {
       border-top-right-radius: 0;
@@ -68,7 +67,7 @@ const PackingListFilters: FC<PackingListFilterProps> = ({
 
   return (
     <Filters>
-      <FaSlidersH /> <strong>Filter by:</strong>
+      <strong>Show:</strong>{' '}
       <FilterButtons>
         {filterSettings.map(({ id }, index) => (
           <Button

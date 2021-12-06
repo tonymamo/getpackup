@@ -80,7 +80,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripId,
   tripIsLoaded,
 }) => {
-
   const [tabIndex, setTabIndex] = useState(0);
   const [groupCategories, setGroupCategories] = useState<[string, PackingListItemType[]][]>([]);
 
@@ -160,37 +159,40 @@ const PackingList: FunctionComponent<PackingListProps> = ({
             />
             {tabIndex === 0 && (
               <>
-                {sharedTrip && groupCategories.length > 0 && (
-                  <Heading as="h4" altStyle uppercase>
-                    Personal Items
-                  </Heading>
-                )}
-                {!groupCategories.length ? <p>No results. Please reset filter.</p> : groupCategories.map(
-                  ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
-                    const sortedItems = packingListItems?.sort((a, b) => {
-                      if (a?.isPacked === b?.isPacked) {
-                        // sort by name
-                        if (a?.created?.seconds === b?.created?.seconds) {
-                          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                <Heading as="h4" altStyle uppercase>
+                  Personal Items
+                </Heading>
+
+                {!groupCategories.length ? (
+                  <Box>No results. Please try a different filter.</Box>
+                ) : (
+                  groupCategories.map(
+                    ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
+                      const sortedItems = packingListItems?.sort((a, b) => {
+                        if (a?.isPacked === b?.isPacked) {
+                          // sort by name
+                          if (a?.created?.seconds === b?.created?.seconds) {
+                            return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                          }
+
+                          // sort by timestamp
+                          return b.created.toDate() > a.created.toDate() ? -1 : 1;
                         }
+                        // sort by packed status, with checked items last
+                        return a.isPacked > b.isPacked ? 1 : -1;
+                      });
 
-                        // sort by timestamp
-                        return b.created.toDate() > a.created.toDate() ? -1 : 1;
-                      }
-                      // sort by packed status, with checked items last
-                      return a.isPacked > b.isPacked ? 1 : -1;
-                    });
-
-                    return (
-                      <PackingListCategory
-                        trip={trip}
-                        key={categoryName}
-                        categoryName={categoryName}
-                        sortedItems={sortedItems}
-                        tripId={tripId}
-                      />
-                    );
-                  }
+                      return (
+                        <PackingListCategory
+                          trip={trip}
+                          key={categoryName}
+                          categoryName={categoryName}
+                          sortedItems={sortedItems}
+                          tripId={tripId}
+                        />
+                      );
+                    }
+                  )
                 )}
               </>
             )}
