@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { PackingListItemType } from '@common/packingListItem';
 import { baseSpacer } from '@styles/size';
 import { FilterListFilterCriteria } from '../enums';
+import groupPackingList from '@utils/groupPackingList';
 
 type PackingListFilterProps = {
   list: PackingListItemType[];

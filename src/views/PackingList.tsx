@@ -160,12 +160,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
             />
             {tabIndex === 0 && (
               <>
-                {sharedTrip && (
+                {sharedTrip && groupCategories.length > 0 && (
                   <Heading as="h4" altStyle uppercase>
                     Personal Items
                   </Heading>
                 )}
-                {groupCategories?.map(
+                {!groupCategories.length ? <p>No results. Please reset filter.</p> : groupCategories.map(
                   ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
                     const sortedItems = packingListItems?.sort((a, b) => {
                       if (a?.isPacked === b?.isPacked) {
