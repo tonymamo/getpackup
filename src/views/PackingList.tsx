@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
-import groupBy from 'lodash/groupBy';
 import { RouteComponentProps, navigate } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
@@ -21,6 +20,8 @@ import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { zIndexNavbar } from '@styles/layers';
+import PackingListFilters from '@components/PackingListFilters';
+import groupPackingList from '@utils/groupPackingList';
 
 type PackingListProps = {
   trip?: TripType;
@@ -79,18 +80,8 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripId,
   tripIsLoaded,
 }) => {
-  const groupedCategories: [string, PackingListItemType[]][] = [];
-
-  if (packingList?.length) {
-    // Put the pre-trip category first, if it exists
-    const entries = Object.entries(groupBy(packingList, 'category'));
-    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
-    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
-    if (preTripEntries) groupedCategories.push(preTripEntries);
-    groupedCategories.push(...allOtherEntries);
-  }
-
   const [tabIndex, setTabIndex] = useState(0);
+  const [groupCategories, setGroupCategories] = useState<[string, PackingListItemType[]][]>([]);
 
   // TODO: extract all of the sticky header stuff out to its own reusable hook
   const [isSticky, setSticky] = useState(false);
@@ -112,6 +103,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, [stickyRef, setSticky]);
+
+  useEffect(() => {
+    if (packingList?.length) {
+      setGroupCategories(groupPackingList(packingList));
+    }
+  }, [packingList]);
 
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && trip.tripMembers.length > 0;
@@ -156,39 +153,46 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       >
         {trip ? (
           <>
+            <PackingListFilters
+              list={packingList}
+              sendFilteredList={(list) => setGroupCategories(groupPackingList(list))}
+            />
             {tabIndex === 0 && (
               <>
-                {sharedTrip && (
-                  <Heading as="h4" altStyle uppercase>
-                    Personal Items
-                  </Heading>
-                )}
-                {groupedCategories.map(
-                  ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
-                    const sortedItems = packingListItems.sort((a, b) => {
-                      if (a.isPacked === b.isPacked) {
-                        // sort by name
-                        if (a.created.seconds === b.created.seconds) {
-                          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                <Heading as="h4" altStyle uppercase>
+                  Personal Items
+                </Heading>
+
+                {!groupCategories.length ? (
+                  <Box>No results. Please try a different filter.</Box>
+                ) : (
+                  groupCategories.map(
+                    ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
+                      const sortedItems = packingListItems?.sort((a, b) => {
+                        if (a?.isPacked === b?.isPacked) {
+                          // sort by name
+                          if (a?.created?.seconds === b?.created?.seconds) {
+                            return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                          }
+
+                          // sort by timestamp
+                          return b.created.toDate() > a.created.toDate() ? -1 : 1;
                         }
+                        // sort by packed status, with checked items last
+                        return a.isPacked > b.isPacked ? 1 : -1;
+                      });
 
-                        // sort by timestamp
-                        return b.created.toDate() > a.created.toDate() ? -1 : 1;
-                      }
-                      // sort by packed status, with checked items last
-                      return a.isPacked > b.isPacked ? 1 : -1;
-                    });
-
-                    return (
-                      <PackingListCategory
-                        trip={trip}
-                        key={categoryName}
-                        categoryName={categoryName}
-                        sortedItems={sortedItems}
-                        tripId={tripId}
-                      />
-                    );
-                  }
+                      return (
+                        <PackingListCategory
+                          trip={trip}
+                          key={categoryName}
+                          categoryName={categoryName}
+                          sortedItems={sortedItems}
+                          tripId={tripId}
+                        />
+                      );
+                    }
+                  )
                 )}
               </>
             )}
