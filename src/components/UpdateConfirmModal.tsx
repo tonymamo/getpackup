@@ -24,7 +24,15 @@ const UpdateConfirmModal: FunctionComponent = () => {
           </Button>
         </Column>
         <Column xs={6}>
-          <Button type="button" block color="danger" onClick={() => window.location.reload()}>
+          <Button
+            type="button"
+            block
+            color="danger"
+            onClick={() => {
+              dispatch(hideWorkerUpdateModal());
+              window.location.reload();
+            }}
+          >
             Reload
           </Button>
         </Column>
