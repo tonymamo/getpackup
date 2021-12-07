@@ -224,8 +224,8 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const Results = connectStateResults(
     // extra props are passed in through connectInfiniteHits(Results) down below,
     // but typescript doesnt like it and I can figure out the typing right now :)
-    ({ searchResults, isSearchStalled, searching, error, searchState, props }) => {
-      const loading = isSearchStalled || searching;
+    ({ searchResults, searching, error, searchState, props }) => {
+      const loading = searching;
       const hasResults = searchResults && searchResults.nbHits !== 0;
       const hasEmptyQuery =
         !Object.prototype.hasOwnProperty.call(searchState, 'query') || searchState.query === '';
