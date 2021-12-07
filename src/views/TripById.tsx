@@ -46,7 +46,13 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     },
     {
       collection: 'users',
-      where: ['uid', 'in', activeTrip?.tripMembers.map((member) => member.uid) || [auth.uid]],
+      where: [
+        'uid',
+        'in',
+        activeTrip && activeTrip.tripMembers && activeTrip.tripMembers.length > 0
+          ? activeTrip.tripMembers.map((member) => member.uid)
+          : [auth.uid],
+      ],
     },
     {
       collection: 'trips',

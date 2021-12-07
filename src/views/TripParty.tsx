@@ -15,6 +15,8 @@ import {
 import 'instantsearch.css/themes/satellite.css';
 import styled from 'styled-components';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
+import axios from 'axios';
+import { stringify } from 'query-string';
 
 import {
   Alert,
@@ -69,6 +71,7 @@ const StyledSearchBox = styled.input`
 
 const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const profile = useSelector((state: RootState) => state.firebase.profile);
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const [isSearchBarDisabled, setIsSearchBarDisabled] = useState(false);
 
@@ -97,7 +100,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
     },
   };
 
-  const updateTrip = (memberId: string) => {
+  const updateTrip = (memberId: string, memberEmail: string) => {
     // activeTrip.tripMembers.length + 1 accounts for async data updates
     // TODO: maybe dont count declined members towards total party size?
     if (activeTrip?.tripMembers && activeTrip.tripMembers.length + 1 > MAX_TRIP_PARTY_SIZE) {
@@ -128,6 +131,16 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
           ],
         })
         .then(() => {
+          const queryParams = stringify({
+            to: memberEmail,
+            subject: `${profile.username} has invited you on a trip`,
+            username: profile.username,
+            tripId: activeTrip.tripId,
+          });
+          const invitationUrl = `https://us-central1-getpackup.cloudfunctions.net/sendTripInvitationEmail?${queryParams}`;
+
+          axios.post(invitationUrl);
+
           trackEvent('Trip Party Member Added', {
             ...activeTrip,
             updated: new Date(),
@@ -171,7 +184,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       color="primaryOutline"
       onClick={() => {
         refine(items);
-        updateTrip(hit.uid);
+        updateTrip(hit.uid, hit.email);
       }}
       size="small"
     >

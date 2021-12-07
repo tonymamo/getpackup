@@ -67,7 +67,13 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   useFirestoreConnect([
     {
       collection: 'users',
-      where: ['uid', 'in', trip?.tripMembers.map((member) => member.uid) || [auth.uid]],
+      where: [
+        'uid',
+        'in',
+        trip && trip.tripMembers && trip.tripMembers.length > 0
+          ? trip.tripMembers.map((member) => member.uid)
+          : [auth.uid],
+      ],
     },
   ]);
 
