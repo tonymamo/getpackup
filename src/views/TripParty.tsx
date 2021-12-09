@@ -79,8 +79,12 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const dispatch = useDispatch();
 
   const algoliaClient = algoliasearch(
-    process.env.GATSBY_ALGOLIA_APP_ID as string,
-    process.env.GATSBY_ALGOLIA_SEARCH_API_KEY as string
+    process.env.GATSBY_ENVIRONMENT === 'DEVELOP'
+      ? (process.env.GATSBY_TEST_ALGOLIA_APP_ID as string)
+      : (process.env.GATSBY_ALGOLIA_APP_ID as string),
+    process.env.GATSBY_ENVIRONMENT === 'DEVELOP'
+      ? (process.env.GATSBY_TEST_ALGOLIA_SEARCH_API_KEY as string)
+      : (process.env.GATSBY_ALGOLIA_SEARCH_API_KEY as string)
   );
 
   const searchClient = {
@@ -224,8 +228,8 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const Results = connectStateResults(
     // extra props are passed in through connectInfiniteHits(Results) down below,
     // but typescript doesnt like it and I can figure out the typing right now :)
-    ({ searchResults, searching, error, searchState, props }) => {
-      const loading = searching;
+    ({ searchResults, isSearchStalled, searching, error, searchState, props }) => {
+      const loading = isSearchStalled || searching;
       const hasResults = searchResults && searchResults.nbHits !== 0;
       const hasEmptyQuery =
         !Object.prototype.hasOwnProperty.call(searchState, 'query') || searchState.query === '';
@@ -240,14 +244,24 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
       return (
         <ScrollableHitsWrapper ref={rootRef} hidden={hasEmptyQuery}>
-          {hasResults && props.hits && props.hits.length >= 1 && props.hits[0] !== undefined && (
+          {true && (
             <>
-              {props.hits.map((hit: UserType & { objectID: string }) => (
-                <Fragment key={hit.objectID}>
-                  <Hit hit={hit} />
-                  <HorizontalRule compact />
-                </Fragment>
-              ))}
+              {/* 
+                toggle display to stop infinite loop caused by hits 
+                https://github.com/algolia/react-instantsearch/issues/137#issuecomment-349385276
+              */}
+              <div style={{ display: searching ? 'none' : 'block' }}>
+                {hasResults &&
+                  props.hits &&
+                  props.hits.length >= 1 &&
+                  props.hits[0] !== undefined &&
+                  props.hits.map((hit: UserType & { objectID: string }) => (
+                    <Fragment key={hit.objectID}>
+                      <Hit hit={hit} />
+                      <HorizontalRule compact />
+                    </Fragment>
+                  ))}
+              </div>
               {!loading && !props.hasMore && (
                 <>
                   <p style={{ textAlign: 'center' }}>
