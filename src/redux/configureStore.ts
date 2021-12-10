@@ -33,7 +33,7 @@ if (isBrowser && (window.__ENVIRONMENT || process.env.GATSBY_ENVIRONMENT !== 'PR
 const functionsToCompose = [applyMiddleware(...middlewares), sentryReduxEnhancer];
 
 // eslint-disable-next-line
-if (isBrowser && (window.__ENVIRONMENT || process.env.GATSBY_ENVIRONMENT !== 'PRODUCTION')) {
+if (isBrowser) {
   functionsToCompose.push(
     typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
       ? window.__REDUX_DEVTOOLS_EXTENSION__()
