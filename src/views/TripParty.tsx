@@ -141,7 +141,8 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
     }
   };
 
-  const existingTripMember = (uid: string) => activeTrip && activeTrip.tripMembers.includes(uid);
+  const existingTripMember = (uid: string) =>
+    activeTrip && activeTrip.tripMembers.some((member) => uid === member.uid);
 
   const InviteButton = ({
     items,
@@ -318,7 +319,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
               </InstantSearch>
             </SearchWrapper>
 
-            {activeTrip.tripMembers.length > 0 ? (
+            {activeTrip.tripMembers.length > 1 ? (
               <Box>
                 <p>
                   <strong>Trip Party</strong>
@@ -334,7 +335,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                 >
                   {activeTrip.tripMembers.map((tripMember, index) => {
                     const matchingUser: UserType =
-                      users && users[tripMember] ? users[tripMember] : undefined;
+                      users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
                     if (!matchingUser) return null;
                     return (
                       <div key={matchingUser.uid}>

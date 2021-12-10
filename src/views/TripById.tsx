@@ -28,8 +28,6 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   );
   const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
 
-  console.log(activeTripById);
-
   useFirestoreConnect([
     {
       collection: 'trips',
@@ -41,7 +39,8 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       where: [
         'uid',
         'in',
-        activeTripById[0]?.tripMembers?.map((member: TripMember) => member.uid) || [auth.uid],
+        (activeTripById &&
+          activeTripById[0]?.tripMembers?.map((member: TripMember) => member.uid)) || [auth.uid],
       ],
     },
     {

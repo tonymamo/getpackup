@@ -36,6 +36,7 @@ import TripDeleteModal from '@views/TripDeleteModal';
 import { fontSizeSmall } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { gearListActivities } from '@utils/gearListItemEnum';
+import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
 
 type TripHeaderProps = {
   trip?: TripType;
@@ -73,8 +74,6 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
 
   const size = useWindowSize();
 
-  const numberOfAvatarsToShow = 4;
-
   return (
     <StyledTripWrapper>
       {!size.isSmallScreen ? (
@@ -101,24 +100,17 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
           <FlexContainer justifyContent={size.isSmallScreen ? 'flex-start' : 'flex-end'}>
             {trip && trip.tripMembers.length > 0 && (
               <StackedAvatars>
-                <Avatar
-                  src={loggedInUser?.photoURL as string}
-                  gravatarEmail={loggedInUser?.email as string}
-                  size="sm"
-                  username={loggedInUser?.username}
-                />
                 {users &&
                   trip.tripMembers
-                    .filter((member) => member !== loggedInUser?.uid)
                     .slice(
                       0,
-                      trip.tripMembers.length === numberOfAvatarsToShow
-                        ? numberOfAvatarsToShow
-                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
+                      trip.tripMembers.length === MAX_TRIP_PARTY_SIZE
+                        ? MAX_TRIP_PARTY_SIZE
+                        : MAX_TRIP_PARTY_SIZE - 1 // to account for the +N avatar below
                     )
                     .map((tripMember: any) => {
-                      const matchingUser: UserType = users[tripMember]
-                        ? users[tripMember]
+                      const matchingUser: UserType = users[tripMember.uid]
+                        ? users[tripMember.uid]
                         : undefined;
                       if (!matchingUser) return null;
                       return (
@@ -131,13 +123,13 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
                         />
                       );
                     })}
-                {users && trip.tripMembers.length > numberOfAvatarsToShow && (
+                {users && trip.tripMembers.length > MAX_TRIP_PARTY_SIZE && (
                   <Avatar
                     // never want to show +1, because then we could have just rendered the photo.
                     // Instead, lets add another so its always at least +2
-                    staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
+                    staticContent={`+${trip.tripMembers.length - MAX_TRIP_PARTY_SIZE + 1}`}
                     size="sm"
-                    username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
+                    username={`+${trip.tripMembers.length - MAX_TRIP_PARTY_SIZE + 1} more`}
                   />
                 )}
               </StackedAvatars>
