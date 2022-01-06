@@ -146,7 +146,7 @@ Importantly for the types of activities we do, all the app data is stored within
 
 <https://getpackup.com/>
 
-![](https://res.cloudinary.com/getpackup/image/upload/v1641444011/getpackup/Blog%20Post%20-%20Featured%20Apps/packup_lxmkjm.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1641489532/getpackup/Blog%20Post%20-%20Featured%20Apps/packup_mockup_o7ds1o.jpg)
 
 Shameless plug, we know. But we really are our own biggest fans - nothing is more embarrassing and painful than showing up to the trailhead without your hiking boots, or worse, showing up to your campsite without your stove fuel. At packup, our goal is to ensure that you will always be packed and prepared for your trips by creating packing lists through our trip generator (or on your own), the ability to assign and plan gear with your party members (who's got dinner!), and managing other aspects of your trip planning so you can get out the door faster and safer.
 
