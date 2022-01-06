@@ -1,9 +1,9 @@
 ---
 templateKey: blog-post
 title: Best Outdoor Adventure Apps in 2022
-date: 2022-01-05T16:15:00.000Z
+date: 2022-01-06T04:55:17.453Z
 description: A summary of our top 10 favorite free outdoors apps for great
-  adventures in 2022. Let's get outside.
+  adventures in 2022. Let's get outside!
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1626131644/getpackup/0F1A1972_xxnxn7.jpg
 tags:
   - apps
@@ -14,7 +14,7 @@ tags:
 ---
 The following list is a summary of our favorite apps for getting outside and having a great trip. Just remember that as useful as these platforms are, they are only useful if your phone is charged and working, and the associated data is saved offline. Lastly, always consider the risks to you and your party in the event of your phone becoming dead, broken, or lost.
 
-### **Windy**
+# **Windy**
 
 <https://www.windy.com/>
 
@@ -28,7 +28,7 @@ Don’t forget to take screen shots of your weather forecast if you plan to be o
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.windyty.android)**
 
-### **Gaia GPS**
+# **Gaia GPS**
 
 <https://www.gaiagps.com/>
 
@@ -40,7 +40,7 @@ Gaia GPS is an outstanding general GPS platform for your smartphone. Download co
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.trailbehind.android.gaiagps.pro)**
 
-### **FATMAP**
+# **FATMAP**
 
 <https://fatmap.com/>
 
@@ -52,7 +52,7 @@ Explore the mountains with confidence using the world's most advanced 3D outdoor
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.fatmaprn)**
 
-### **Avalanche Canada (or regional equivalent)**
+# **Avalanche Canada**
 
 <https://www.avalanche.ca/en/map>
 
@@ -62,7 +62,7 @@ If you’re heading into mountainous backcountry areas in winter, it is essentia
 
 Avalanche Canada’s portal summarizes current and forecasted avalanche conditions for different recreational regions across the country from professional forecasters and maps out trip report pins from Mountain Information Network (MIN) users. Many of these trip reports can give detailed observations from the field, which should be an essential part of your pre-trip research into an area before an excursion.
 
-**We strongly recommend** taking your AST 1/2 (or regional equivalent) courses to improve your own knowledge base on avalanche dangers, and most importantly, how to rescue your party in the event of a burial. Your experienced friends might be able to rescue you, but can you rescue them?
+**We strongly recommend** taking your [AST 1/2 (or regional equivalent)](https://www.avalanche.ca/training) courses to improve your own knowledge base on avalanche dangers, and most importantly, how to rescue your party in the event of a burial. Your experienced friends might be able to rescue you, but can you rescue them?
 
 They graciously offered a one-month Explore membership to our community that you can redeem here: <https://fatmap.typeform.com/TaylorBurk>
 
@@ -70,7 +70,7 @@ They graciously offered a one-month Explore membership to our community that you
 
 **[Android Store](https://play.google.com/store/apps/details?id=ca.avalanche.mobile.v2)**
 
-### **iOverlander**
+# **iOverlander**
 
 <https://www.ioverlander.com/>
 
@@ -84,7 +84,7 @@ We’re a fan – we’ve been able to score great (and free!) camping countless
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.samchristiansen.ioverlander.droid)**
 
-### **Hipcamp**
+# **Hipcamp**
 
 <https://www.hipcamp.com/>
 
@@ -98,7 +98,7 @@ Use the code “Taylor25” when making your next booking for 25% off.
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.hipcamp.pocketknife)**
 
-### **Mountain Project**
+# **Mountain Project**
 
 <https://www.mountainproject.com/>
 
@@ -112,7 +112,7 @@ Ultimately it makes for a great research tool for climbing objectives, which you
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.mountainproject.android)**
 
-### **Splitwise**
+# **Splitwise**
 
 <https://www.splitwise.com/>
 
@@ -124,9 +124,9 @@ Is this one outdoors specific? Not exactly. Is it useful when you are coordinati
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.Splitwise.SplitwiseMobile)**
 
-### **First Aid – Canadian Red Cross**
+# **First Aid – Canadian Red Cross**
 
-<https://www.redcross.ca/training-and-certification/first-aid-tips-and-resources/first-aid-app>
+[https://www.redcross.ca/](https://www.redcross.ca/training-and-certification/first-aid-tips-and-resources/first-aid-app)
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1641441338/getpackup/Blog%20Post%20-%20Featured%20Apps/First_Aid_d3b3g6.jpg)
 
@@ -134,12 +134,22 @@ The official Canadian Red Cross first aid app puts expert advice for everyday em
 
 Importantly for the types of activities we do, all the app data is stored within the app itself, which means that you don’t need an internet connection to find the answer you’re looking for.
 
-**DISCLAIMER** – Traditional First Aid processes and triage can be very different from that of Wilderness First Aid, and an app like this should NOT be treated as replacement for proper Wilderness First Aid training, which we strongly encourage. Also, don’t forget your first aid kit in your party!
+**DISCLAIMER** – Traditional First Aid processes and triage can be very different from that of Wilderness First Aid, and an app like this should NOT be treated as replacement for [proper Wilderness First Aid training](https://www.redcross.ca/training-and-certification/course-descriptions/first-aid-at-home-courses/wilderness-remote-first-aid-program), which we strongly encourage. Also, don’t forget your first aid kit in your party!
 
 **[iOS Store](https://apps.apple.com/ca/app/first-aid-canadian-red-cross/id696881375)**
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.cube.gdpc.can)**
 
-### **Packup**
+# **Packup**
 
 <https://getpackup.com/>
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1641444011/getpackup/Blog%20Post%20-%20Featured%20Apps/packup_lxmkjm.jpg)
+
+Shameless plug, we know. But we really are our own biggest fans - nothing is more embarrassing and painful than showing up to the trailhead without your hiking boots, or worse, showing up to your campsite without your stove fuel. At packup, our goal is to ensure that you will always be packed and prepared for your trips by creating packing lists through our trip generator (or on your own), the ability to assign and plan gear with your party members (who's got dinner!), and managing other aspects of your trip planning so you can get out the door faster and safer.
+
+We'd love if you **[signed up and tried out our beta today](https://getpackup.com/)**! We're not in the app store (yet!), but you can **[save our app to your home screen by following these simple instructions.](https://getpackup.com/install)**
+
+And if you like us, spread the word!
+
+### What are your favorite outdoors apps? Let us know below.
