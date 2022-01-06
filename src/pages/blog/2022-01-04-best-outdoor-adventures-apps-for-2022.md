@@ -10,7 +10,9 @@ tags:
   - outdoor
   - adventure
   - resources
-  - research
+  - "2022"
+  - outdoortech
+  - outdoorapps
 ---
 The following list is a summary of our favorite apps for getting outside and having a great trip. Just remember that as useful as these platforms are, they are only useful if your phone is charged and working, and the associated data is saved offline. Lastly, always consider the risks to you and your party in the event of your phone becoming dead, broken, or lost.
 
