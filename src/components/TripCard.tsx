@@ -61,7 +61,8 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
   const numberOfAvatarsToShow = 4;
 
   const acceptedTripMembersOnly = trip?.tripMembers.filter(
-    (member) => member.status === TripMemberStatus.Accepted
+    (member) =>
+      member.status === TripMemberStatus.Accepted || member.status === TripMemberStatus.Owner
   );
 
   useFirestoreConnect([
@@ -136,6 +137,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
                   size="sm"
                   username={loggedInUser?.username.toLocaleLowerCase()}
                 />
+
                 {users &&
                   acceptedTripMembersOnly
                     ?.filter((member) => member.uid !== loggedInUser?.uid)
