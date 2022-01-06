@@ -76,7 +76,8 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
   const numberOfAvatarsToShow = 4;
 
   const acceptedTripMembersOnly = trip?.tripMembers.filter(
-    (member) => member.status === TripMemberStatus.Accepted
+    (member) =>
+      member.status === TripMemberStatus.Accepted || member.status === TripMemberStatus.Owner
   );
 
   return (
