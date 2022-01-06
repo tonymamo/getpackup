@@ -49,3 +49,42 @@ exports.copyOwnerToTripMembers = functions.https.onRequest(async (req, res) => {
   res.send(`Updated tripMembers for ${commitBatchPromises.length} trips`);
   await Promise.all(commitBatchPromises);
 });
+
+exports.convertTripMembersToInviteObject = functions.https.onRequest(async (req, res) => {
+  const snapshot = await admin
+    .firestore()
+    .collection('trips')
+    .get();
+  const MAX_WRITES_PER_BATCH = 500; /** https://cloud.google.com/firestore/quotas#writes_and_transactions */
+
+  /**
+   * `chunk` function splits the array into chunks up to the provided length.
+   * - Or one of [these answers](https://stackoverflow.com/questions/8495687/split-array-into-chunks#comment84212474_8495740)
+   */
+  const batches = chunk(snapshot.docs, MAX_WRITES_PER_BATCH);
+  const commitBatchPromises = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const batch of batches) {
+    batch.forEach((doc) => {
+      if (!doc.get('tripMembers') || !doc.get('owner')) {
+        return;
+      }
+      const writeBatch = admin.firestore().batch();
+      const tripMemberListToWrite = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const member of doc.get('tripMembers')) {
+        tripMemberListToWrite.push({
+          invitedAt: doc.get('created'),
+          acceptedAt: doc.get('created'),
+          status: doc.get('owner') === member ? 'Owner' : 'Accepted',
+          uid: member,
+        });
+      }
+      writeBatch.update(doc.ref, { tripMembers: tripMemberListToWrite });
+      commitBatchPromises.push(writeBatch.commit());
+    });
+  }
+  res.send(`Updated tripMembers for ${commitBatchPromises.length} trips`);
+  await Promise.all(commitBatchPromises);
+});
