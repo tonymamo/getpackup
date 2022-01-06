@@ -262,7 +262,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                     </Fragment>
                   ))}
               </div>
-              {!loading && !props.hasMore && (
+              {!loading && !props.hasMore && hasResults && (
                 <>
                   <p style={{ textAlign: 'center' }}>
                     No more results found for <strong>{searchState.query}</strong>.
