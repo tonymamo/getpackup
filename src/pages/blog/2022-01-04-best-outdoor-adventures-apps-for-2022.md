@@ -30,17 +30,7 @@ Don’t forget to take screen shots of your weather forecast if you plan to be o
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.windyty.android)**
 
-# **Gaia GPS**
-
-<https://www.gaiagps.com/>
-
-![](https://res.cloudinary.com/getpackup/image/upload/v1641441338/getpackup/Blog%20Post%20-%20Featured%20Apps/Gaia_nddmma.jpg)
-
-Gaia GPS is an outstanding general GPS platform for your smartphone. Download comprehensive topo and satellite maps for offline use. Use intelligent routing tools to plan trips, and measure distance, altitude, and elevation change. View your route using comprehensive backpacking maps, including up-to-date weather forecasts. Use the Discover tab to find hikes and nearby trails. Remember that it is still worthwhile to have a backup map of an area you’re in if there is meaningful risk in having your phone die on your excursion.
-
-**[iOS Store](https://apps.apple.com/ca/app/gaia-gps-hiking-offroad-maps/id1201979492)**
-
-**[Android Store](https://play.google.com/store/apps/details?id=com.trailbehind.android.gaiagps.pro)**
+**<br></br>**
 
 # **FATMAP**
 
@@ -55,6 +45,22 @@ They graciously offered a one-month Explore membership to our community that you
 **[iOS Store](https://apps.apple.com/ca/app/fatmap-ski-hike-bike/id1294681561)**
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.fatmaprn)**
+
+**<br></br>**
+
+# **Gaia GPS**
+
+<https://www.gaiagps.com/>
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1641441338/getpackup/Blog%20Post%20-%20Featured%20Apps/Gaia_nddmma.jpg)
+
+Gaia GPS is a great general GPS platform for your smartphone. Download comprehensive topo and satellite maps for offline use. Use intelligent routing tools to plan trips, and measure distance, altitude, and elevation change. View your route using comprehensive backpacking maps, including up-to-date weather forecasts. Use the Discover tab to find hikes and nearby trails. Remember that it is still worthwhile to have a backup map of an area you’re in if there is meaningful risk in having your phone die on your excursion.
+
+**[iOS Store](https://apps.apple.com/ca/app/gaia-gps-hiking-offroad-maps/id1201979492)**
+
+**[Android Store](https://play.google.com/store/apps/details?id=com.trailbehind.android.gaiagps.pro)**
+
+**<br></br>**
 
 # **Avalanche Canada**
 
@@ -72,6 +78,8 @@ Avalanche Canada’s portal summarizes current and forecasted avalanche conditio
 
 **[Android Store](https://play.google.com/store/apps/details?id=ca.avalanche.mobile.v2)**
 
+**<br></br>**
+
 # **iOverlander**
 
 <https://www.ioverlander.com/>
@@ -85,6 +93,8 @@ We’re a fan – we’ve been able to score great (and free!) camping countless
 **[iOS Store](https://apps.apple.com/ca/app/ioverlander/id894352689#?platform=iphone)**
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.samchristiansen.ioverlander.droid)**
+
+**<br></br>**
 
 # **Hipcamp**
 
@@ -100,6 +110,8 @@ Use the code “Taylor25” when making your next booking for 25% off.
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.hipcamp.pocketknife)**
 
+**<br></br>**
+
 # **Mountain Project**
 
 <https://www.mountainproject.com/>
@@ -114,6 +126,8 @@ Ultimately it makes for a great research tool for climbing objectives, which you
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.mountainproject.android)**
 
+**<br></br>**
+
 # **Splitwise**
 
 <https://www.splitwise.com/>
@@ -125,6 +139,8 @@ Is this one outdoors specific? Not exactly. Is it useful when you are coordinati
 **[iOS Store](https://apps.apple.com/ca/app/splitwise/id458023433)**
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.Splitwise.SplitwiseMobile)**
+
+**<br></br>**
 
 # **First Aid – Canadian Red Cross**
 
@@ -141,6 +157,8 @@ Importantly for the types of activities we do, all the app data is stored within
 **[iOS Store](https://apps.apple.com/ca/app/first-aid-canadian-red-cross/id696881375)**
 
 **[Android Store](https://play.google.com/store/apps/details?id=com.cube.gdpc.can)**
+
+**<br></br>**
 
 # **Packup**
 
