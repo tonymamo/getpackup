@@ -54,7 +54,7 @@ They graciously offered a one-month Explore membership to our community that you
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1641441338/getpackup/Blog%20Post%20-%20Featured%20Apps/Gaia_nddmma.jpg)
 
-Gaia GPS is an outstanding general GPS platform for your smartphone. Download comprehensive topo and satellite maps for offline use. Use intelligent routing tools to plan trips, and measure distance, altitude, and elevation change. View your route using comprehensive backpacking maps, including up-to-date weather forecasts. Use the Discover tab to find hikes and nearby trails. Remember that it is still worthwhile to have a backup map of an area you’re in if there is meaningful risk in having your phone die on your excursion.
+Gaia GPS is a great general GPS platform for your smartphone. Download comprehensive topo and satellite maps for offline use. Use intelligent routing tools to plan trips, and measure distance, altitude, and elevation change. View your route using comprehensive backpacking maps, including up-to-date weather forecasts. Use the Discover tab to find hikes and nearby trails. Remember that it is still worthwhile to have a backup map of an area you’re in if there is meaningful risk in having your phone die on your excursion.
 
 **[iOS Store](https://apps.apple.com/ca/app/gaia-gps-hiking-offroad-maps/id1201979492)**
 
