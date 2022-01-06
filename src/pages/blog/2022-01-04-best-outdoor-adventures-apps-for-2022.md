@@ -48,7 +48,9 @@ Gaia GPS is an outstanding general GPS platform for your smartphone. Download co
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1641441338/getpackup/Blog%20Post%20-%20Featured%20Apps/fatmap_dxks0h.jpg)
 
-Explore the mountains with confidence using the world's most advanced 3D outdoor map. Plan the perfect route, orientate and navigate along the way while recording your route. This app and the offline 3D terrain and gradient features has personally helped us navigate unknown areas safely in the BC backcountry. It is great if you are into hiking, biking, trail running, skiing, ski touring, or mountaineering and is an invaluable tool that everyone should have downloaded on their phone when heading out into the wilderness. They graciously offered a one-month Explore membership to our community that you can redeem here: <https://fatmap.typeform.com/TaylorBurk>
+Explore the mountains with confidence using the world's most advanced 3D outdoor map. Plan the perfect route, orientate and navigate along the way while recording your route. This app and the offline 3D terrain and gradient features has personally helped us navigate unknown areas safely in the BC backcountry. It is great if you are into hiking, biking, trail running, skiing, ski touring, or mountaineering and is an invaluable tool that everyone should have downloaded on their phone when heading out into the wilderness. 
+
+They graciously offered a one-month Explore membership to our community that you can redeem here: <https://fatmap.typeform.com/TaylorBurk>
 
 **[iOS Store](https://apps.apple.com/ca/app/fatmap-ski-hike-bike/id1294681561)**
 
@@ -65,8 +67,6 @@ If you’re heading into mountainous backcountry areas in winter, it is essentia
 Avalanche Canada’s portal summarizes current and forecasted avalanche conditions for different recreational regions across the country from professional forecasters and maps out trip report pins from Mountain Information Network (MIN) users. Many of these trip reports can give detailed observations from the field, which should be an essential part of your pre-trip research into an area before an excursion.
 
 **We strongly recommend** taking your [AST 1/2 (or regional equivalent)](https://www.avalanche.ca/training) courses to improve your own knowledge base on avalanche dangers, and most importantly, how to rescue your party in the event of a burial. Your experienced friends might be able to rescue you, but can you rescue them?
-
-They graciously offered a one-month Explore membership to our community that you can redeem here: <https://fatmap.typeform.com/TaylorBurk>
 
 **[iOS Store](https://apps.apple.com/ca/app/avalanche-canada/id1440069335)**
 
