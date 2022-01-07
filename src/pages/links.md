@@ -7,6 +7,9 @@ linksList:
   - linkUrl: /about
     linkText: What is packup?
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
+  - linkUrl: https://getpackup.com/blog/2022-01-04-best-outdoor-adventures-apps-for-2022/
+    linkText: "Blog Post: Best Outdoor Adventure Apps "
+    thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1616895145/mt-rainier_zux2bf.jpg
   - linkUrl: https://www.chrisistace.com/packup-app-adventure-made-easy/
     linkText: "Blog Post: Mindful Explorer, Chris Istace shares his thoughts on packup"
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/screen-shot-2021-02-17-at-2.21.53-pm.png
