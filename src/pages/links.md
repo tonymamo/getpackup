@@ -19,4 +19,7 @@ linksList:
   - linkUrl: https://www.chrisistace.com/packup-app-adventure-made-easy/
     linkText: "Blog Post: Mindful Explorer, Chris Istace shares his thoughts on packup"
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/screen-shot-2021-02-17-at-2.21.53-pm.png
+  - linkUrl: /blog/2021-03-29-the-ten-essentials/
+    linkText: "Blog Post: The Ten Essentials "
+    thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1619038019/044a6193_scxnz0.jpg
 ---
