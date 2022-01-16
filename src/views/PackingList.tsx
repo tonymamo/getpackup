@@ -21,6 +21,8 @@ import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { zIndexNavbar } from '@styles/layers';
+import { useSelector } from 'react-redux';
+import { RootState } from '@redux/ducks';
 
 type PackingListProps = {
   trip?: TripType;
@@ -80,10 +82,15 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripIsLoaded,
 }) => {
   const groupedCategories: [string, PackingListItemType[]][] = [];
+  const auth = useSelector((state: RootState) => state.firebase.auth);
 
   if (packingList?.length) {
-    // Put the pre-trip category first, if it exists
-    const entries = Object.entries(groupBy(packingList, 'category'));
+    // Filter out the shared items that arent packedBy the current user. This does keep items that are marked shared, but only if they are that user's
+    const usersPackingList = packingList.filter((packingListItem: PackingListItemType) =>
+      packingListItem.packedBy.some((item) => item.uid === auth.uid)
+    );
+    // Then, organize by category and put the pre-trip category first, if it exists
+    const entries = Object.entries(groupBy(usersPackingList, 'category'));
     const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
     const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
     if (preTripEntries) groupedCategories.push(preTripEntries);
@@ -123,6 +130,10 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   if (tripIsLoaded && packingList.length === 0) {
     navigate(`${trip?.tripId}/generator`);
   }
+
+  const sharedItems = packingList.filter((packingListItem) =>
+    packingListItem.packedBy.some((item) => item.isShared)
+  );
 
   return (
     <>
@@ -197,13 +208,22 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 <Heading as="h4" altStyle uppercase>
                   Shared Items
                 </Heading>
-                <Box>
-                  <Alert type="info" message="Shared trip items coming soon!" />
-                  <p>
-                    Here you will be able to divide up items and assign roles to who is bringing
-                    what.
-                  </p>
-                </Box>
+                {sharedItems && sharedItems.length > 0 ? (
+                  <PackingListCategory
+                    trip={trip}
+                    key="shared"
+                    categoryName=""
+                    sortedItems={sharedItems}
+                    tripId={tripId}
+                  />
+                ) : (
+                  <Box>
+                    <Alert
+                      type="info"
+                      message="No shared items yet. Add one now by going to your personal list and marking an item as shared by the group!"
+                    />
+                  </Box>
+                )}
               </>
             )}
           </>

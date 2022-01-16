@@ -65,7 +65,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
           collapsedCategories: updatedCollapsedCategories,
         });
       })
-      .catch((err) => {
+      .catch(() => {
         trackEvent('Trip Details Update Failure', {
           collapsedCategories: updatedCollapsedCategories,
         });
@@ -82,6 +82,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
           : false
       }
       collapseCallback={() => handleCollapsible(categoryName)}
+      enabled={categoryName !== ''} // Disable for the Shared Items list which doesn't have a title
     >
       <div>
         <ItemsWrapper>

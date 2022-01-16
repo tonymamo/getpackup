@@ -88,3 +88,32 @@ exports.convertTripMembersToInviteObject = functions.https.onRequest(async (req,
   res.send(`Updated tripMembers for ${commitBatchPromises.length} trips`);
   await Promise.all(commitBatchPromises);
 });
+
+exports.addOwnerToPackingListItems = functions.https.onRequest(async (req, res) => {
+  const tripsSnapshot = await admin
+    .firestore()
+    .collection('trips')
+    .get();
+
+  tripsSnapshot.docs.forEach(async (trip) => {
+    const packingListItemsSnapshot = await trip.ref.collection('packing-list').get();
+    const tripOwner = trip.get('owner');
+
+    packingListItemsSnapshot.docs.forEach(async (item) => {
+      if (tripOwner) {
+        await item.ref.update({
+          ...item.data(),
+          packedBy: [
+            {
+              uid: tripOwner,
+              quantity: item.get('quantity') ?? 1,
+              isShared: false,
+            },
+          ],
+        });
+      }
+    });
+  });
+
+  res.send(`Added owner to packing list item for ${tripsSnapshot.docs.length} trips`);
+});

@@ -188,7 +188,8 @@
     "serve": "gatsby serve -o",
     "clean": "gatsby clean",
     "test": "jest",
-    "eslinta": "eslint --fix"
+    "eslinta": "eslint --fix",
+    "run-emulators": "cd dev-firebase && firebase emulators:start --import=./dev-firebase --export-on-exit"
   },
   "repository": {
     "type": "git",

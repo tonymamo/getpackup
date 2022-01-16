@@ -13,6 +13,7 @@ import TripParty from '@views/TripParty';
 import EditPackingListItem from '@views/EditPackingListItem';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
+import { PackingListItemType } from '@common/packingListItem';
 
 type TripByIdProps = {
   id?: string;
@@ -26,7 +27,9 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
-  const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
+  const packingList: PackingListItemType[] = useSelector(
+    (state: RootState) => state.firestore.ordered.packingList
+  );
 
   const isTripOwner: boolean =
     activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
@@ -91,7 +94,13 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         <Router basepath={`/app/trips/${props.id}`} primary={false}>
           <PackingList
             path="/"
-            packingList={packingList}
+            packingList={
+              packingList && packingList.length > 0
+                ? packingList.filter((packingListItem) =>
+                    packingListItem.packedBy.some((item) => item.uid === auth.uid || item.isShared)
+                  )
+                : []
+            }
             tripId={props.id}
             trip={activeTrip}
             loggedInUser={props.loggedInUser}
