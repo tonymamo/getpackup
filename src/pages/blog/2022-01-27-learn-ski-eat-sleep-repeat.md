@@ -6,17 +6,17 @@ description: "A recap from a 5 day AST-2 ski excursion in the Callaghan Valley
   backcountry with Mabey Ski at the Journeyman Lodge. "
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1643319619/0F1A3417_aoez00.jpg
 ---
-Earlier this winter I, Taylor Burk, had spent 5 days in the Callaghan backcountry based at the Journeyman Lodge for an AST-2 course and guided ski touring in the valley. Located just south of Whistler, this lodge is pretty rare in the sense that it’s uncommon to find upscale lodging in the BC backcountry that isn't accessed by helicopter . To get there you have the options of cross country skiing, snowshoeing, touring or save your energy and take a snowmobile up through old growth forests while your gear gets dropped off for you by the friendly staff. 
+Earlier this winter packup co-founder, Taylor Burk had spent 5 days in the Callaghan backcountry based at the Journeyman Lodge for an AST-2 course and guided ski touring in the valley. Located just south of Whistler, this lodge is pretty rare in the sense that it’s uncommon to find upscale lodging in the BC backcountry that isn't accessed by helicopter. To get there you have the options of cross country skiing, snowshoeing, touring or save your energy and take a snowmobile up through old growth forests while your gear gets dropped off for you by the friendly staff. Once there, the lodge serves as your home base while you ski your heart out from dawn to dusk. 
 
-![](https://res.cloudinary.com/getpackup/image/upload/v1643319727/0F1A3997_s80qfh.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1643322503/0F1A2867-3_zsnr8v.jpg)
 
-![]()
+This trip was put together and organized by [Mabey Ski](https://www.mabeyski.com/), a boutique travel agency that specializes in providing unique and adventurous ski trips around the world and locally, here in British Columbia. Everyone in the group started off as strangers but friendships developed over multiple days of learning and skiing together and were celebrated over good food and bottles of wine in the evenings. I found that building connection and rapport with your group over multiple days in the field helps create realistic situations for backcountry trips, you really get to know everyone's strengths and weaknesses and can come up with solid plans as a team. 
 
-This trip was organized by Mabey Ski, a boutique travel agency that specializes in providing unique and adventurous ski trips around the world and locally in here British Columbia. Everyone in the group started off as strangers but friendships developed over multiple days of learning and skiing together and celebrated over good food and bottles of wine in the evening. I found that building connection and rapport with your group over multiple days in the field helps create realistic situations for backcountry trips, you really get to know everyone's strengths and weaknesses and can come up with solid plans as a team.
+There was a flow and routine to each day which went a little bit like this; learn, ski, eat, sleep and repeat!
 
+Let's break it down:
 
-
-## **Learn**
+## **Learn.**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320399/0F1A3104_anuwsz.jpg)
 
@@ -24,7 +24,7 @@ No one wants to end up in a situation where they have to dig someone out from an
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320356/MabeyCallaghanBlog_agu3wk.jpg)
 
-## **Ski**
+## **Ski.**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320473/0F1A3400_f6f6hq.jpg)
 
@@ -52,7 +52,7 @@ The lodge chef kept busy continuously cooking up hearty and delicious breakfasts
 
 The lodge sleeps a total of 24 people (15 single beds) in eight private rooms.
 
-## **Repeat** 
+## **Repeat**
 
 Time to do it all over again the next day! Truly living the dream.
 
