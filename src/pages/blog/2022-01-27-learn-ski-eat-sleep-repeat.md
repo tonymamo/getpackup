@@ -62,7 +62,7 @@ The ski conditions were a bit tough during this trip but there wasn’t a simple
 
 The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners did much more than help us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip, there was always fresh food available and endless tea and coffee. Each night over dinner and drinks we reflected on the day and all the fun that was had! It was the best part of the day. 
 
-![](https://res.cloudinary.com/getpackup/image/upload/v1643323752/0F1A2850_if0rc3.jpg)
+
 
 **<br></br>**
 
@@ -76,8 +76,6 @@ The lodge chef kept busy continuously cooking up hearty and delicious breakfasts
 
 There’s no excuse to be bored with the plethora of activities available at the lodge, in the evenings we spent our time in the games lounge playing pool, ping pong, chess and a variety of other activities that brought our group together to bond over some intense moments. 
 
-
-
 **<br></br>**
 
 ## **Repeat.**
@@ -88,6 +86,6 @@ Then comes the best part, time to do it all those things again the next day!
 
 [Mabey Ski](https://www.mabeyski.com/adventures/) creates out-of-the-ordinary ski adventures across the globe that push boundaries and challenge the conventional. They practice what they preach and ski all over the world to find those unmarked backcountry huts, mountainside hot springs, and larger-than-life ski guides that become lifelong friends, so that they can create the most authentic and exhilarating ski adventure for you. Keep an eye out for future excursions where you can expand your skillset and ski some incredible backcountry terrain all in one trip! 
 
-![](https://res.cloudinary.com/getpackup/image/upload/v1643323579/0F1A4271_kdiiaq.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1643327719/0F1A4271_rlltys.jpg)
 
 A big part in reducing risk in the backcountry is being properly prepared for any scenario or situation. To prep for this trip I used Packup to ensure that nothing was left behind or forgotten. Try it out on your next trip and let us know what you think!
