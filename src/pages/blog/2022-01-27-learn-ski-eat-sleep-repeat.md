@@ -26,27 +26,35 @@ Let's break it down:
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320399/0F1A3104_anuwsz.jpg)
 
-Each morning started off with a coffee in the lodge discussing our plans for the day and what we wanted to gain out of it. Once we went over the avalanche and weather forecast we picked which slopes looked best and set out into the mountains eager to absorb as much knowledge as we could. No one wants to end up in a situation where they have to dig someone out from an avalanche but it’s important to know exactly what to do if that were to occur, as well as developing the skills to avoid those situations in the first place. Taking the next step in avalanche education via the AST-2 course is fun, engaging and takes you into the field for plenty of real world experience. We spent each day immersed in the backcountry, learning terrain choice, leadership skills, avalanche safety, backcountry travel and much more from our private ACMG qualified guide, Graham. This was my second time doing my AST-2, this time as a refresher to sharpen my skills. It can be easy to forget certain procedures or feel overly confident after years of backcountry skiing. I'd recommend a refresher course if it’s been a few years since you last took it.
+Each morning started off with a coffee in the lodge discussing our plans for the day and what we wanted to gain out of it. Once we went over the avalanche and weather forecast we picked which slopes looked best and set out into the mountains eager to absorb as much knowledge as we could. No one wants to end up in a situation where they have to dig someone out from an avalanche but it’s important to know exactly what to do if that were to occur, as well as developing the skills to avoid those situations in the first place. Taking the next step in avalanche education via the AST-2 course is fun, engaging and takes you into the field for plenty of real world experience. We spent each day immersed in the backcountry, learning terrain choice, leadership skills, avalanche safety, backcountry travel and much more from our private ACMG qualified guide, Graham. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320356/MabeyCallaghanBlog_agu3wk.jpg)
+
+This was my second time doing my AST-2, this time as a refresher to sharpen my skills. It can be easy to forget certain procedures or feel overly confident after years of backcountry skiing. I'd recommend a refresher course if it’s been a few years since you last took it.
 
 ## **Ski.**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320473/0F1A3400_f6f6hq.jpg)
 
-Location, location, location. There are 12,000 hectares of non-motorized alpine terrain at your doorstep, typically this valley is a lot colder than the Whistler area and receives a lot more snow as well as a longer season (average winter snowfall of 6.2 metres (20 feet)). 
+Location, location, location. There are 12,000 hectares of non-motorized alpine terrain at your doorstep. Typically this valley is a lot colder than the Whistler area and receives more snow as well as a longer season (average winter snowfall of 6.2 metres). 
 
-With the lodge being set in the Callaghan Basin you have plenty of options on where to ski based upon the avalanche conditions and weather, everything from high alpine bowls and glacier skiing to glades, pillows and rolling powder hills. You’re only a short tour away from your objectives in the valley, allowing for plenty of time for multiple laps without burning out your legs too badly beforehand.
+With the lodge being in the Callaghan Basin you have plenty of options on where to ski based upon the avalanche conditions and weather, everything from high alpine bowls and glacier skiing to glades, pillows and rolling powder hills. You’re only a short tour away from your objectives in the valley, allowing plenty of time for multiple laps without burning out your legs too badly beforehand.
 
-The ski conditions were a bit tough during this trip but there wasn’t a simple complaint from the group. We made the most of each day and took on whatever came at us!
+![](https://res.cloudinary.com/getpackup/image/upload/v1643323637/0F1A3526_cs3kvs.jpg)
+
+The ski conditions were a bit tough during this trip but there wasn’t a simple complaint from the group, the incredible views and good company made up for it. We made the most of each day and took on whatever came at us!
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320545/0F1A3117_imidhf.jpg)
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1643323506/0F1A3232-3_h4g9jj.jpg)
 
 ## **Eat**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320613/0F1A3970_fd8nmf.jpg)
 
 The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners helped us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip. Each night over dinner and drinks we reflected on the day and all the fun that was had!
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1643323752/0F1A2850_if0rc3.jpg)
 
 ## **Sleep**
 
@@ -56,7 +64,7 @@ The lodge chef kept busy continuously cooking up hearty and delicious breakfasts
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320800/0F1A2786_oy5ze3.jpg)
 
-The lodge sleeps a total of 24 people (15 single beds) in eight private rooms.
+The lodge sleeps a total of 24 people (15 single beds) in eight private rooms. 
 
 ## **Repeat**
 
@@ -65,3 +73,5 @@ Time to do it all over again the next day! Truly living the dream.
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320916/0F1A3189_ag5nee.jpg)
 
 Mabey Ski creates out-of-the-ordinary ski adventures across the globe that push boundaries and challenge the conventional. They practice what they preach and ski all over the world to find those unmarked backcountry huts, mountainside hot springs, and larger-than-life ski guides that become lifelong friends, so that they can create the most authentic and exhilarating ski adventure for you.
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1643323579/0F1A4271_kdiiaq.jpg)
