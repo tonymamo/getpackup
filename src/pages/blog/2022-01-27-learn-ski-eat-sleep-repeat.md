@@ -6,7 +6,7 @@ description: "A recap from a 5 day AST-2 ski excursion in the Callaghan Valley
   backcountry with Mabey Ski at the Journeyman Lodge. "
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1643319619/0F1A3417_aoez00.jpg
 ---
-Earlier this winter Packup co-founder, [Taylor Burk](https://www.instagram.com/taylormichaelburk/) had spent 5 days in the Callaghan backcountry based at the [Journeyman Lodge](https://www.callaghancountry.com/journeyman-lodge.html) for an AST-2 course and guided ski touring in the valley. Located just south of Whistler, this lodge is pretty rare in the sense that it’s uncommon to find upscale full-service lodging in the BC backcountry that isn't only accessible by helicopter. To get there you have the options of cross country skiing, snowshoeing, touring or you can save your energy and take a snowmobile up through old growth forests while your gear gets dropped off for you by the friendly staff. Once there, the lodge serves as your home base while you ski your heart out from dawn to dusk. 
+Earlier this winter Packup co-founder, [Taylor Burk](https://www.instagram.com/taylormichaelburk/) had spent 5 days in the Callaghan backcountry based at the [Journeyman Lodge](https://www.callaghancountry.com/journeyman-lodge.html) for an AST-2 course and guided ski touring in the valley. Located just south of Whistler, this lodge is pretty rare in the sense that it’s uncommon to find upscale full-service lodging in the BC backcountry that isn't only accessible by helicopter. To get there you have the options of cross country skiing, snowshoeing or touring through old growth forests. Alternatively you can save your energy and take a snowmobile up while your gear gets dropped off for you by the friendly staff. Once there, the lodge serves as your home base while you ski your heart out from dawn to dusk. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643322503/0F1A2867-3_zsnr8v.jpg)
 
@@ -61,8 +61,6 @@ The ski conditions were a bit tough during this trip but there wasn’t a simple
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320613/0F1A3970_fd8nmf.jpg)
 
 The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners did much more than help us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip, there was always fresh food available and endless tea and coffee. Each night over dinner and drinks we reflected on the day and all the fun that was had! It was the best part of the day. 
-
-
 
 **<br></br>**
 
