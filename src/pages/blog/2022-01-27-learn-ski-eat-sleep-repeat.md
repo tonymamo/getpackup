@@ -18,7 +18,9 @@ This trip was put together and organized by [Mabey Ski](https://www.mabeyski.com
 
 There was a flow and routine to each day which went a little bit like this; learn, ski, eat, sleep and repeat!
 
-Let's break it down:
+Let's break it down.
+
+**<br></br>**
 
 ## **Learn.**
 
@@ -31,6 +33,8 @@ Each morning started off with a coffee in the lodge discussing our plans for the
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320356/MabeyCallaghanBlog_agu3wk.jpg)
 
 This was my second time doing my AST-2, this time as a refresher to sharpen my skills. It can be easy to forget certain procedures or feel overly confident after years of backcountry skiing. I'd recommend a refresher course if it’s been a few years since you last took it.
+
+**<br></br>**
 
 ## **Ski.**
 
@@ -48,6 +52,8 @@ The ski conditions were a bit tough during this trip but there wasn’t a simple
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323506/0F1A3232-3_h4g9jj.jpg)
 
+**<br></br>**
+
 ## **Eat.**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320613/0F1A3970_fd8nmf.jpg)
@@ -55,6 +61,8 @@ The ski conditions were a bit tough during this trip but there wasn’t a simple
 The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners did much more than help us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip, there was always fresh food available and endless tea and coffee. Each night over dinner and drinks we reflected on the day and all the fun that was had! It was the best part of the day. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323752/0F1A2850_if0rc3.jpg)
+
+**<br></br>**
 
 ## **Sleep.**
 
@@ -67,6 +75,8 @@ The lodge chef kept busy continuously cooking up hearty and delicious breakfasts
 There’s no excuse to be bored with the plethora of activities available at the lodge, in the evenings we spent our time in the games lounge playing pool, ping pong, chess and a variety of other activities that brought our group together to bond over some intense moments. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320800/0F1A2786_oy5ze3.jpg)
+
+**<br></br>**
 
 ## **Repeat.**
 
