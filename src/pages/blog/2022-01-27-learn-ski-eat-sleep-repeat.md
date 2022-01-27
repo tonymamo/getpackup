@@ -56,17 +56,17 @@ The lodge chef kept busy continuously cooking up hearty and delicious breakfasts
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323752/0F1A2850_if0rc3.jpg)
 
-## **Sleep**
+## **Sleep.**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320679/0F1A3689_f452l8.jpg)
 
-4 nights spent waking up in the mountains in what the lodge calls “rustic-luxe”, there's the warmth and charm of an alpine hut but all the amenties and fine dining of a high end lodge that makes you feel right at home. There’s no excuse to be bored with the plethora of activities available at the lodge, in the evenings we spent our time in the games lounge playing pool, ping pong, chess and a variety of other games that brought our group together to bond over some intense moments. 
+4 nights spent waking up in the mountains is 4 nights well spent. The lodge calls themselves “rustic-luxe”, there's the warmth and charm of an alpine hut but all the amenties and fine dining of a high end lodge that makes you feel right at home. There’s no excuse to be bored with the plethora of activities available at the lodge, in the evenings we spent our time in the games lounge playing pool, ping pong, chess and a variety of other activities that brought our group together to bond over some intense moments. 
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1643325044/Fitzpatrick_Christie_Winter20221-02178_i3ulju.jpg)
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320800/0F1A2786_oy5ze3.jpg)
 
-The lodge sleeps a total of 24 people (15 single beds) in eight private rooms. 
-
-## **Repeat**
+## **Repeat.**
 
 Then comes the best part, time to do it all over again the next day! 
 
