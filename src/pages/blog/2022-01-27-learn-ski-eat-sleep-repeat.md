@@ -10,7 +10,11 @@ Earlier this winter packup co-founder, Taylor Burk had spent 5 days in the Calla
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643322503/0F1A2867-3_zsnr8v.jpg)
 
+![](https://res.cloudinary.com/getpackup/image/upload/v1643323200/0F1A3179_soxlml.jpg)
+
 This trip was put together and organized by [Mabey Ski](https://www.mabeyski.com/), a boutique travel agency that specializes in providing unique and adventurous ski trips around the world and locally, here in British Columbia. Everyone in the group started off as strangers but friendships developed over multiple days of learning and skiing together and were celebrated over good food and bottles of wine in the evenings. I found that building connection and rapport with your group over multiple days in the field helps create realistic situations for backcountry trips, you really get to know everyone's strengths and weaknesses and can come up with solid plans as a team. 
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1643319727/0F1A3997_s80qfh.jpg)
 
 There was a flow and routine to each day which went a little bit like this; learn, ski, eat, sleep and repeat!
 
@@ -18,9 +22,11 @@ Let's break it down:
 
 ## **Learn.**
 
+![](https://res.cloudinary.com/getpackup/image/upload/v1643322938/0F1A2473_aqokrt.jpg)
+
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320399/0F1A3104_anuwsz.jpg)
 
-No one wants to end up in a situation where they have to dig someone out from an avalanche but it’s important to know exactly what to do if that were to occur, as well as developing the skills to avoid those situations in the first place. Taking the next step in avalanche education via the AST-2 course is fun, engaging and takes you into the field for plenty of real world experience. We spent each day immersed in the backcountry, learning terrain choice, leadership skills, avalanche safety, backcountry travel and much more from our private ACMG qualified guide, Graham. This was my second time doing my AST-2, this time as a refresher to sharpen my skills. It can be easy to forget certain procedures or feel overly confident after years of backcountry skiing. I'd recommend a refresher course if it’s been a few years since you last took it.
+Each morning started off with a coffee in the lodge discussing our plans for the day and what we wanted to gain out of it. Once we went over the avalanche and weather forecast we picked which slopes looked best and set out into the mountains eager to absorb as much knowledge as we could. No one wants to end up in a situation where they have to dig someone out from an avalanche but it’s important to know exactly what to do if that were to occur, as well as developing the skills to avoid those situations in the first place. Taking the next step in avalanche education via the AST-2 course is fun, engaging and takes you into the field for plenty of real world experience. We spent each day immersed in the backcountry, learning terrain choice, leadership skills, avalanche safety, backcountry travel and much more from our private ACMG qualified guide, Graham. This was my second time doing my AST-2, this time as a refresher to sharpen my skills. It can be easy to forget certain procedures or feel overly confident after years of backcountry skiing. I'd recommend a refresher course if it’s been a few years since you last took it.
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320356/MabeyCallaghanBlog_agu3wk.jpg)
 
