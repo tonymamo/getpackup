@@ -48,11 +48,11 @@ The ski conditions were a bit tough during this trip but there wasn’t a simple
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323506/0F1A3232-3_h4g9jj.jpg)
 
-## **Eat**
+## **Eat.**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320613/0F1A3970_fd8nmf.jpg)
 
-The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners helped us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip. Each night over dinner and drinks we reflected on the day and all the fun that was had!
+The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners did much more than help us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip, there was always fresh food available and endless tea and coffee. Each night over dinner and drinks we reflected on the day and all the fun that was had! It was the best part of the day. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323752/0F1A2850_if0rc3.jpg)
 
@@ -60,7 +60,7 @@ The lodge chef kept busy continuously cooking up hearty and delicious breakfasts
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320679/0F1A3689_f452l8.jpg)
 
-4 nights spent waking up in the mountains in what the lodge calls “rustic-luxe”, there's the warmth and charm of an alpine hut but all the amenties and fine dining of a high end lodge that makes you feel right at home. There’s no excuse to be bored with the plethora of activities available at the lodge, in the evenings we spent our time in the games lounge playing pool, ping pong, chess and other heated games that brought our group together to bond over some intense moments. 
+4 nights spent waking up in the mountains in what the lodge calls “rustic-luxe”, there's the warmth and charm of an alpine hut but all the amenties and fine dining of a high end lodge that makes you feel right at home. There’s no excuse to be bored with the plethora of activities available at the lodge, in the evenings we spent our time in the games lounge playing pool, ping pong, chess and a variety of other games that brought our group together to bond over some intense moments. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320800/0F1A2786_oy5ze3.jpg)
 
@@ -68,10 +68,10 @@ The lodge sleeps a total of 24 people (15 single beds) in eight private rooms.
 
 ## **Repeat**
 
-Time to do it all over again the next day! Truly living the dream.
+Then comes the best part, time to do it all over again the next day! 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320916/0F1A3189_ag5nee.jpg)
 
-Mabey Ski creates out-of-the-ordinary ski adventures across the globe that push boundaries and challenge the conventional. They practice what they preach and ski all over the world to find those unmarked backcountry huts, mountainside hot springs, and larger-than-life ski guides that become lifelong friends, so that they can create the most authentic and exhilarating ski adventure for you.
+Mabey Ski creates out-of-the-ordinary ski adventures across the globe that push boundaries and challenge the conventional. They practice what they preach and ski all over the world to find those unmarked backcountry huts, mountainside hot springs, and larger-than-life ski guides that become lifelong friends, so that they can create the most authentic and exhilarating ski adventure for you. Keep an eye out for future excursions where you can expand your skillset and ski some incredible backcountry terrain all in one trip! 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323579/0F1A4271_kdiiaq.jpg)
