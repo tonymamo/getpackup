@@ -42,11 +42,13 @@ This was my second time doing my AST-2, this time as a refresher to sharpen my s
 
 Location, location, location. There are 12,000 hectares of non-motorized alpine terrain at your doorstep. Typically this valley is a lot colder than the Whistler area and receives more snow as well as a longer season (average winter snowfall of 6.2 metres). 
 
+![](https://res.cloudinary.com/getpackup/image/upload/v1643325888/Screen_Shot_2022-01-25_at_1.25.48_PM_xjadvr.png)
+
 With the lodge being in the Callaghan Basin you have plenty of options on where to ski based upon the avalanche conditions and weather, everything from high alpine bowls and glacier skiing to glades, pillows and rolling powder hills. You’re only a short tour away from your objectives in the valley, allowing plenty of time for multiple laps without burning out your legs too badly beforehand.
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643325728/0F1A3526-2_q3rdgm.jpg)
 
-The ski conditions were a bit tough during this trip but there wasn’t a simple complaint from the group, the incredible views and good company made up for it. We made the most of each day and took on whatever came at us!
+The ski conditions were a bit tough during this trip but there wasn’t a simple complaint from the group, the incredible views and good company made up for it all. We made the most of each day and found all the best pockets of snow thanks to our knowledgeable guide!
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320545/0F1A3117_imidhf.jpg)
 
@@ -74,7 +76,7 @@ The lodge chef kept busy continuously cooking up hearty and delicious breakfasts
 
 There’s no excuse to be bored with the plethora of activities available at the lodge, in the evenings we spent our time in the games lounge playing pool, ping pong, chess and a variety of other activities that brought our group together to bond over some intense moments. 
 
-![](https://res.cloudinary.com/getpackup/image/upload/v1643320800/0F1A2786_oy5ze3.jpg)
+
 
 **<br></br>**
 
