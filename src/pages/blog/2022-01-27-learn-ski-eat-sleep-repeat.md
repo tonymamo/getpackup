@@ -2,8 +2,13 @@
 templateKey: blog-post
 title: "Learn, Ski, Eat, Sleep, Repeat. "
 date: 2022-01-27T21:36:52.417Z
-description: "A recap from a 5 day AST-2 ski excursion in the Callaghan Valley
-  backcountry with Mabey Ski at the Journeyman Lodge. "
+description: >-
+  A recap from a 5 day AST-2 ski excursion in the Callaghan Valley backcountry
+  with Mabey Ski at the Journeyman Lodge. 
+
+  <br></br>
+
+  Photos by Taylor Burk & Christie Fitzpatrick
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1643319619/0F1A3417_aoez00.jpg
 ---
 Earlier this winter Packup co-founder, [Taylor Burk](https://www.instagram.com/taylormichaelburk/) spent 5 days in the Callaghan backcountry based at the [Journeyman Lodge](https://www.callaghancountry.com/journeyman-lodge.html) for an AST-2 course and guided ski touring in the valley. Located just south of Whistler, this type of lodge is unique in BC; it’s uncommon to find upscale full-service lodging in the backcountry that you don't need a helicopter to access. To get there you have the options of cross country skiing, snowshoeing or touring through old growth forests. Alternatively you can save your energy and take a snowmobile up while your gear gets dropped off for you by the friendly staff. Once there, the lodge serves as your home base while you ski your heart out from dawn to dusk. 
