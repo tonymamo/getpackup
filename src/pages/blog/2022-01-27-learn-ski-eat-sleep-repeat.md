@@ -78,7 +78,7 @@ There’s no excuse to be bored with all of the activities available at the lodg
 
 ## **Repeat.**
 
-Then comes the best part, time to do it all those things again the next day! 
+Then comes the best part, time to do it all again the next day! 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320916/0F1A3189_ag5nee.jpg)
 
