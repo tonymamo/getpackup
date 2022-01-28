@@ -82,7 +82,7 @@ Then comes the best part, time to do it all again the next day!
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320916/0F1A3189_ag5nee.jpg)
 
-[Mabey Ski](https://www.mabeyski.com/adventures/) creates out-of-the-ordinary ski adventures across the globe that push boundaries and challenge the conventional. They ski all over the world to find those unmarked backcountry huts, mountainside hot springs, and connect with larger-than-life ski guides that become lifelong friends. Keep an eye out for future excursions where you can expand your skillset and ski some incredible backcountry terrain all in one trip! 
+[Mabey Ski](https://www.mabeyski.com/adventures/) creates unique ski adventures across the globe that push boundaries and challenge the conventional. They ski all over the world to find those unmarked backcountry huts, mountainside hot springs, and connect with larger-than-life ski guides that become lifelong friends. Keep an eye out for future excursions where you can expand your skillset and ski some incredible backcountry terrain all in one trip! 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643327719/0F1A4271_rlltys.jpg)
 
