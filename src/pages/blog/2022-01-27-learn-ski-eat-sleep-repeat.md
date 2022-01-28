@@ -12,7 +12,7 @@ Earlier this winter Packup co-founder, [Taylor Burk](https://www.instagram.com/t
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323200/0F1A3179_soxlml.jpg)
 
-This trip was put together and organized by [Mabey Ski](https://www.mabeyski.com/), a boutique travel agency that specializes in providing unique and adventurous ski trips around the world and locally, here in British Columbia. Everyone in the group started off as strangers but friendships developed over multiple days of learning and skiing together and were celebrated over good food and bottles of wine in the evenings. I found that building connection and rapport with your group over multiple days in the field helps create realistic situations for backcountry trips, you really get to know everyone's strengths and weaknesses and can come up with solid plans as a team. 
+This trip was put together and organized by [Mabey Ski](https://www.mabeyski.com/), a boutique travel agency that specializes in providing unique and adventurous ski trips around the world. Everyone in the group started off as strangers but friendships developed over multiple days of learning and skiing together and were celebrated over good food and bottles of wine in the evenings. I found that building connection and rapport with your group over multiple days in the field helps create realistic situations for backcountry trips, you really get to know everyone's strengths and weaknesses and can come up with solid plans as a team. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643319727/0F1A3997_s80qfh.jpg)
 
