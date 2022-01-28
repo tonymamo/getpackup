@@ -46,11 +46,11 @@ Location, location, location. There are 12,000 hectares of non-motorized alpine 
 
 With the lodge being in the Callaghan Basin you have plenty of options on where to ski based upon the avalanche conditions and weather, everything from high alpine bowls and glacier skiing to glades, pillows and rolling powder hills. You’re only a short tour away from your objectives in the valley, allowing plenty of time for multiple laps without burning out your legs too badly beforehand.
 
-![](https://res.cloudinary.com/getpackup/image/upload/v1643326926/FATMAPLODGE_hrgdc7.jpg)
-
-The ski conditions were a bit tough during this trip but there wasn’t a simple complaint from the group, the incredible views and good company made up for it all. We made the most of each day and found all the best pockets of snow thanks to our knowledgeable guide!
-
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320545/0F1A3117_imidhf.jpg)
+
+We made the most of each day and found all the best pockets of snow thanks to our knowledgeable guide! The incredible views and good company made up for any bad snow conditions that we came across. 
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1643326926/FATMAPLODGE_hrgdc7.jpg)
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643323506/0F1A3232-3_h4g9jj.jpg)
 
