@@ -60,7 +60,7 @@ We made the most of each day and found all the best pockets of snow thanks to ou
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643320613/0F1A3970_fd8nmf.jpg)
 
-The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners did much more than help us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip, there was always fresh food available and endless tea and coffee. Each night over dinner and drinks we reflected on the day and all the fun that was had! It was the best part of the day. 
+The lodge chef kept busy continuously cooking up hearty and delicious breakfasts, lunches and dinners to fuel our adventures. The three course dinners did much more than help us earn back all the calories that were burnt while out exploring the endless terrain each day. You definitely didn’t have to worry about going hungry on this trip, there was always fresh food available and endless tea and coffee. Each night over dinner and drinks we reflected on the day and all the fun that was had! It was always something to look forward to.
 
 **<br></br>**
 
