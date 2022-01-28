@@ -42,7 +42,7 @@ This was my second time doing my AST-2, this time as a refresher to sharpen my s
 
 Location, location, location. There are 12,000 hectares of non-motorized alpine terrain at your doorstep. Typically this valley is a lot colder than the Whistler area and receives more snow as well as a longer season (average winter snowfall of 6.2 metres). 
 
-![](https://res.cloudinary.com/getpackup/image/upload/v1643325728/0F1A3526-2_q3rdgm.jpg)
+![](https://res.cloudinary.com/getpackup/image/upload/v1643330647/0F1A3526-2_y0zwoh.jpg)
 
 With the lodge being in the Callaghan Basin you have plenty of options on where to ski based upon the avalanche conditions and weather, everything from high alpine bowls and glacier skiing to glades, pillows and rolling powder hills. You’re only a short tour away from your objectives in the valley, allowing plenty of time for multiple laps without burning out your legs too badly beforehand.
 
