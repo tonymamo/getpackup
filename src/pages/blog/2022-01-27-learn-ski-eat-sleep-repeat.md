@@ -6,8 +6,6 @@ description: >-
   A recap from a 5 day AST-2 ski excursion in the Callaghan Valley backcountry
   with Mabey Ski at the Journeyman Lodge. 
 
-  <br></br>
-
   Photos by Taylor Burk & Christie Fitzpatrick
 featuredimage: https://res.cloudinary.com/getpackup/image/upload/v1643319619/0F1A3417_aoez00.jpg
 ---
