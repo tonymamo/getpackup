@@ -7,6 +7,9 @@ linksList:
   - linkUrl: /about
     linkText: What is packup?
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
+  - linkText: "Blog Post: Learn, Ski, Eat, Sleep, Repeat."
+    linkUrl: /blog/2022-01-27-learn-ski-eat-sleep-repeat/
+    thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1643322938/0F1A2473_aqokrt.jpg
   - linkUrl: /blog/2022-01-04-best-outdoor-adventures-apps-for-2022/
     linkText: "Blog Post: Best Outdoor Adventure Apps "
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1616895145/mt-rainier_zux2bf.jpg
