@@ -21,17 +21,13 @@ They do this by:
 
 There’s no concrete definition for when a piece of gear becomes ultralight vs. just lightweight.Like certain other things, you know it when you see it.
 
-
-
 ### **Normal vs. Ultralight Gear Examples**
 
 **Tent:** Instead of the REI Co-op Passage 2 (4 lbs. 2 oz), try the Zpacks Duplex (19 oz.)
 
-**Pack:** Instead of the Osprey Farpoint 40L (3 lbs. 2 oz), try the Hyperlite 2400 Junction (1.88 lbs.)
+**Pack:** Instead of the Osprey Aura AG 50 (4 lbs. 3 oz), try the Hyperlite 2400 Junction (1.88 lbs.)
 
 **Sleeping pad:** Instead of the Mountain Summit Gear Self-Inflating 2.5 (4 lbs. 8 oz.), try the Klymit Insulated Static V Lite (20 oz.)
-
-
 
 ### **Base Weight vs. Consumable Weight vs. Worn Weight**
 
@@ -41,13 +37,9 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 
 **Worn weight** is how much the clothes on your body — not in your pack — weigh.
 
-
-
 ### **What Does “Stupid Light” Mean?**
 
 “Stupid light” is an ultralighter term that refers to leaving behind important gear to lose weight.Remember: trimming down your pack should make your experience better. Don’t put yourself in danger just to save a few grams.
-
-
 
 ### Ultralight Pros and Cons
 
@@ -63,8 +55,6 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 * More expensive
 * Can be less comfortable
 * Can be less durable
-
-
 
 ### Do You Need Ultralight Gear?
 
