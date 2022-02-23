@@ -1,9 +1,9 @@
 ---
 templateKey: blog-post
-title: What does "Ultra Light" mean and do you need it?
+title: What does "Ultralight" mean and do you need it?
 date: 2022-02-23T23:09:24.456Z
 description: >-
-  A break down of what exactly ultra light means, the slang used, gear
+  A break down of what exactly ultralight means, the slang used, gear
   recommendations and pros and cons. 
 
 
@@ -62,6 +62,6 @@ That depends. If you’re going for a long thru-hike — hiking for multiple day
 
 If you’re going car camping, you definitely don’t need ultralight gear. Embrace the opportunity to bring silly, heavy, cheap equipment when you can! There’s nothing like frying a fish in a cast iron pan outside.
 
-There are middle options, too. For example, the MassDrop x Granite Gear Crown x60 pack isn’t thought of as “ultralight,” but it’s much lighter than a traditional 60-liter pack. (I use it for nearly every trip, and I love it.)
+There are middle options, too. For example, the [MassDrop x Granite Gear Crown x60 pack](https://sectionhiker.com/massdrop-granite-gear-x60-backpack-review/) isn’t thought of as “ultralight,” but it’s much lighter than a traditional 60L pack. (I use it for nearly every trip, and I love it.)
 
 Keep in mind: no one needs ultralight gear to have a good time. Check out photos of old-school backpackers from the ‘70s. They all carried gigantic, heavy canvas packs with external metal frames. And they had a great time!
