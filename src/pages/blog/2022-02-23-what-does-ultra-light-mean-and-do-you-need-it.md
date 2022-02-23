@@ -64,4 +64,4 @@ If you’re going car camping, you definitely don’t need ultralight gear. Embr
 
 There are middle options, too. For example, the [MassDrop x Granite Gear Crown x60 pack](https://sectionhiker.com/massdrop-granite-gear-x60-backpack-review/) isn’t thought of as “ultralight,” but it’s much lighter than a traditional 60L pack. (I use it for nearly every trip, and I love it.)
 
-Keep in mind: no one needs ultralight gear to have a good time. Check out photos of old-school backpackers from the ‘70s. They all carried gigantic, heavy canvas packs with external metal frames. And they had a great time!
+Keep in mind: no one needs ultralight gear to have a good time. Check out photos of old-school backpackers from the ‘70s. They all carried gigantic, heavy canvas packs with external metal frames and they had a great time!
