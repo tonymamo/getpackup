@@ -17,9 +17,9 @@ It’s become trendy among long-distance hikers and backcountry campers to try t
 They do this by:
 
 * Leaving some heavy or unnecessary items at home, like stoves and pillows.
-* Swapping heavy fabrics like canvas and polyester for lighter ones like nylon and dyneema. 
 
-There’s no concrete definition for when a piece of gear becomes ultralight vs. just lightweight.Like certain other things, you know it when you see it.
+
+* Swapping heavy fabrics like canvas and polyester for lighter ones like nylon and dyneema. 
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1645661156/044A3768-3_hoc1ct.jpg)
 
@@ -38,11 +38,7 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 * Can be less comfortable
 * Can be less durable
 
-  **<br></br>**
-
 ![](https://res.cloudinary.com/getpackup/image/upload/v1645661688/TaylorBurk_KMCSelects6_t7pc7q.jpg)
-
-**<br></br>**
 
 ### **Normal vs. Ultralight Gear Examples**
 
@@ -54,8 +50,6 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1645661366/2400_junction_zs4uvv.png)
 
-**<br></br>**
-
 ### **Base Weight vs. Consumable Weight vs. Worn Weight**
 
 **Base weight** refers to the weight of the gear you’ll have in your pack the entire time you’re hiking. Your tent, sleep system, extra clothes, and things like your headlamp all count as base weight. Ultra lighters typically aim to get this weight under 10 lbs.
@@ -65,8 +59,6 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 **Worn weight** is how much the clothes on your body — not in your pack — weigh.
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1645661276/0F1A2755_nty4jv.jpg)
-
-**<br></br>**
 
 ### **What Does “Stupid Light” Mean?**
 
@@ -83,8 +75,6 @@ If you’re going car camping, you definitely don’t need ultralight gear. Embr
 There are middle options, too. For example, the [MassDrop x Granite Gear Crown x60 pack](https://sectionhiker.com/massdrop-granite-gear-x60-backpack-review/) isn’t thought of as “ultralight,” but it’s much lighter than a traditional 60L pack. (I use it for nearly every trip, and I love it.)
 
 Keep in mind: no one needs ultralight gear to have a good time. Check out photos of old-school backpackers from the ‘70s. They all carried gigantic, heavy canvas packs with external metal frames and they had a great time!
-
-**<br></br>**
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1645661510/TaylorBurk_KMCSelects11_fcjow5.jpg)
 
