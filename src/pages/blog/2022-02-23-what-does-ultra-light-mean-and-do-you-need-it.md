@@ -46,11 +46,11 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 
 ### **Normal vs. Ultralight Gear Examples**
 
-**Tent:** Instead of the REI Co-op Passage 2 (4 lbs. 2 oz), try the Zpacks Duplex (19 oz.) or the Nemo Equipment Hornet Elite (2 lbs  1 oz)
+**Tent:** Instead of the [REI Co-op Passage 2 (4 lbs. 2 oz)](https://bit.ly/351kDHH), try the [Zpacks Duplex (19 oz.)](https://zpacks.com/products/duplex-tent) or the [Nemo Equipment Hornet Elite (2 lbs  1 oz.)](https://bit.ly/3pek3x5)
 
-**Pack:** Instead of the Osprey Aura AG 50 (4 lbs. 3 oz), try the Hyperlite 2400 Junction (1.88 lbs.)
+**Pack:** Instead of the [Osprey Aura AG 50 (4 lbs. 3 oz)](https://bit.ly/3vcOQ12), try the [Hyperlite 2400 Junction (1.88 lbs.)](https://bit.ly/3seqEJS)
 
-**Sleeping pad:** Instead of the Mountain Summit Gear Self-Inflating 2.5 (4 lbs. 8 oz.), try the Klymit Insulated Static V Lite (20 oz.)
+**Sleeping pad:** Instead of the [Mountain Summit Gear Self-Inflating 2.5 (4 lbs. 8 oz.)](https://bit.ly/3t4kN93), try the [Klymit Insulated Static V Lite (20 oz.)](https://amzn.to/3LW7xMw)
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1645661366/2400_junction_zs4uvv.png)
 
@@ -70,7 +70,7 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 
 ### **What Does “Stupid Light” Mean?**
 
-“Stupid light” is an ultralighter term that refers to leaving behind important gear to lose weight.Remember: trimming down your pack should make your experience better. Don’t put yourself in danger just to save a few grams.
+“Stupid light” is an ultralighter term that refers to leaving behind important gear to lose weight. Remember: trimming down your pack should make your experience better. Don’t put yourself in danger just to save a few grams.
 
 **<br></br>**
 
