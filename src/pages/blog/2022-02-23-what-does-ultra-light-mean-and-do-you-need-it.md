@@ -21,25 +21,7 @@ They do this by:
 
 There’s no concrete definition for when a piece of gear becomes ultralight vs. just lightweight.Like certain other things, you know it when you see it.
 
-### **Normal vs. Ultralight Gear Examples**
-
-**Tent:** Instead of the REI Co-op Passage 2 (4 lbs. 2 oz), try the Zpacks Duplex (19 oz.)
-
-**Pack:** Instead of the Osprey Aura AG 50 (4 lbs. 3 oz), try the Hyperlite 2400 Junction (1.88 lbs.)
-
-**Sleeping pad:** Instead of the Mountain Summit Gear Self-Inflating 2.5 (4 lbs. 8 oz.), try the Klymit Insulated Static V Lite (20 oz.)
-
-### **Base Weight vs. Consumable Weight vs. Worn Weight**
-
-**Base weight** refers to the weight of the gear you’ll have in your pack the entire time you’re hiking. Your tent, sleep system, extra clothes, and things like your headlamp all count as base weight. Ultra lighters typically aim to get this weight under 10 lbs.
-
-**Consumable weight** refers to things like food, fuel, and water, which you’ll consume along the trip.
-
-**Worn weight** is how much the clothes on your body — not in your pack — weigh.
-
-### **What Does “Stupid Light” Mean?**
-
-“Stupid light” is an ultralighter term that refers to leaving behind important gear to lose weight.Remember: trimming down your pack should make your experience better. Don’t put yourself in danger just to save a few grams.
+![](https://res.cloudinary.com/getpackup/image/upload/v1645661156/044A3768-3_hoc1ct.jpg)
 
 ### Ultralight Pros and Cons
 
@@ -56,6 +38,42 @@ There’s no concrete definition for when a piece of gear becomes ultralight vs.
 * Can be less comfortable
 * Can be less durable
 
+  **<br></br>**
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1645661688/TaylorBurk_KMCSelects6_t7pc7q.jpg)
+
+**<br></br>**
+
+### **Normal vs. Ultralight Gear Examples**
+
+**Tent:** Instead of the REI Co-op Passage 2 (4 lbs. 2 oz), try the Zpacks Duplex (19 oz.) or the Nemo Equipment Hornet Elite (2 lbs  1 oz)
+
+**Pack:** Instead of the Osprey Aura AG 50 (4 lbs. 3 oz), try the Hyperlite 2400 Junction (1.88 lbs.)
+
+**Sleeping pad:** Instead of the Mountain Summit Gear Self-Inflating 2.5 (4 lbs. 8 oz.), try the Klymit Insulated Static V Lite (20 oz.)
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1645661366/2400_junction_zs4uvv.png)
+
+**<br></br>**
+
+### **Base Weight vs. Consumable Weight vs. Worn Weight**
+
+**Base weight** refers to the weight of the gear you’ll have in your pack the entire time you’re hiking. Your tent, sleep system, extra clothes, and things like your headlamp all count as base weight. Ultra lighters typically aim to get this weight under 10 lbs.
+
+**Consumable weight** refers to things like food, fuel, and water, which you’ll consume along the trip.
+
+**Worn weight** is how much the clothes on your body — not in your pack — weigh.
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1645661276/0F1A2755_nty4jv.jpg)
+
+**<br></br>**
+
+### **What Does “Stupid Light” Mean?**
+
+“Stupid light” is an ultralighter term that refers to leaving behind important gear to lose weight.Remember: trimming down your pack should make your experience better. Don’t put yourself in danger just to save a few grams.
+
+**<br></br>**
+
 ### Do You Need Ultralight Gear?
 
 That depends. If you’re going for a long thru-hike — hiking for multiple days, and camping at different spots along the way — then having some ultralight gear will make it much easier. 
@@ -65,3 +83,17 @@ If you’re going car camping, you definitely don’t need ultralight gear. Embr
 There are middle options, too. For example, the [MassDrop x Granite Gear Crown x60 pack](https://sectionhiker.com/massdrop-granite-gear-x60-backpack-review/) isn’t thought of as “ultralight,” but it’s much lighter than a traditional 60L pack. (I use it for nearly every trip, and I love it.)
 
 Keep in mind: no one needs ultralight gear to have a good time. Check out photos of old-school backpackers from the ‘70s. They all carried gigantic, heavy canvas packs with external metal frames and they had a great time!
+
+**<br></br>**
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1645661510/TaylorBurk_KMCSelects11_fcjow5.jpg)
+
+## Pack with packup
+
+Prepare for your outdoor adventures in a thoughtful and considered way to minimize the risks to your party. Our digital platform ensures that you'll never forget to pack your Ten Essentials on your adventures.
+
+**[Try us out today!](/)**
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1645660757/044A1781_msjcox.jpg)
+
+*While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed post!*
