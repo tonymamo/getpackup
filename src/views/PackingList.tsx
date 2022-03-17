@@ -86,8 +86,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   if (packingList?.length) {
     // Filter out the shared items that arent packedBy the current user. This does keep items that are marked shared, but only if they are that user's
-    const usersPackingList = packingList.filter((packingListItem: PackingListItemType) =>
-      packingListItem.packedBy.some((item) => item.uid === auth.uid)
+    const usersPackingList = packingList.filter(
+      (packingListItem: PackingListItemType) =>
+        packingListItem &&
+        packingListItem.packedBy &&
+        packingListItem.packedBy.length > 0 &&
+        packingListItem.packedBy.some((item) => item.uid === auth.uid || item.isShared)
     );
     // Then, organize by category and put the pre-trip category first, if it exists
     const entries = Object.entries(groupBy(usersPackingList, 'category'));
@@ -131,8 +135,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     navigate(`${trip?.tripId}/generator`);
   }
 
-  const sharedItems = packingList.filter((packingListItem) =>
-    packingListItem.packedBy.some((item) => item.isShared)
+  const sharedItems = packingList.filter(
+    (packingListItem) =>
+      packingListItem &&
+      packingListItem.packedBy &&
+      packingListItem.packedBy.length > 0 &&
+      packingListItem.packedBy.some((item) => item.isShared)
   );
 
   return (
@@ -197,6 +205,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                         categoryName={categoryName}
                         sortedItems={sortedItems}
                         tripId={tripId}
+                        isSharedPackingListCategory={false}
                       />
                     );
                   }
@@ -212,9 +221,10 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                   <PackingListCategory
                     trip={trip}
                     key="shared"
-                    categoryName=""
+                    categoryName="shared"
                     sortedItems={sharedItems}
                     tripId={tripId}
+                    isSharedPackingListCategory
                   />
                 ) : (
                   <Box>
@@ -229,7 +239,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           </>
         ) : (
           // Loading state
-          <PackingListCategory categoryName="" sortedItems={[]} tripId="" />
+          <PackingListCategory
+            categoryName=""
+            sortedItems={[]}
+            tripId=""
+            isSharedPackingListCategory
+          />
         )}
       </div>
     </>

@@ -13,6 +13,7 @@ import { LocalStorage } from '../enums';
 type PackingListCategoryProps = {
   categoryName: string;
   sortedItems: PackingListItemType[];
+  isSharedPackingListCategory: boolean;
   tripId: string;
   trip?: TripType;
 };
@@ -28,6 +29,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
   trip,
+  isSharedPackingListCategory,
 }) => {
   const firebase = useFirebase();
 
@@ -75,21 +77,26 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   return (
     <CollapsibleBox
       key={categoryName}
-      title={categoryName}
+      title={isSharedPackingListCategory ? '' : categoryName}
       defaultClosed={
         trip?.collapsedCategories
           ? trip.collapsedCategories.some((cat) => cat === categoryName)
           : false
       }
       collapseCallback={() => handleCollapsible(categoryName)}
-      enabled={categoryName !== ''} // Disable for the Shared Items list which doesn't have a title
+      enabled={!isSharedPackingListCategory} // Disable for the Shared Items list which doesn't need a title
     >
       <div>
         <ItemsWrapper>
           {sortedItems && sortedItems.length > 0 ? (
             <>
               {sortedItems.map((item) => (
-                <PackingListItem key={item.id} tripId={tripId} item={item} />
+                <PackingListItem
+                  key={item.id}
+                  tripId={tripId}
+                  item={item}
+                  isOnSharedList={isSharedPackingListCategory}
+                />
               ))}
               <PackingListAddItem tripId={tripId} categoryName={categoryName} />
             </>

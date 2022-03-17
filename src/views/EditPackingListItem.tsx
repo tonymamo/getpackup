@@ -25,8 +25,8 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
-import { ScrollTimeout } from '../enums';
 import { setScrollPosition } from '@utils/setScrollPosition';
+import { ScrollTimeout } from '../enums';
 
 type EditPackingListItemProps = {
   tripId?: string;
@@ -228,7 +228,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                   color="text"
                   iconLeft={<FaChevronLeft />}
                 >
-                  Cancel
+                  Back
                 </Button>
                 <Button
                   type="button"

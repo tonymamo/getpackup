@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from 'react';
+import { CSSProperties } from 'styled-components';
 
 type GearClosetIconProps = {
   size: number;
+  style?: CSSProperties;
 };
 
 const GearClosetIcon: FunctionComponent<GearClosetIconProps> = ({ size, ...rest }) => {
