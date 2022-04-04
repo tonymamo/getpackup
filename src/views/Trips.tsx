@@ -15,9 +15,7 @@ type TripsProps = {} & RouteComponentProps;
 
 const Trips: FunctionComponent<TripsProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const trips: Array<TripType> = useSelector((state: RootState) =>
-    state.firestore.ordered.trips.filter((trip: TripType) => trip.archived !== true)
-  );
+  const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
 
   useFirestoreConnect([
@@ -32,46 +30,37 @@ const Trips: FunctionComponent<TripsProps> = () => {
     },
   ]);
 
-  const pendingTrips =
-    trips &&
-    trips.length &&
-    trips
-      .filter((trip) => trip.tripMembers[auth.uid].status === TripMemberStatus.Pending)
-      .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
+  const nonArchivedTrips: TripType[] =
+    trips && trips.length > 0 ? trips.filter((trip: TripType) => trip.archived !== true) : [];
 
-  const inProgressTrips =
-    trips &&
-    trips.length &&
-    trips
-      .filter(
-        (trip) =>
-          trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
-          isBeforeToday(trip.startDate.seconds * 1000) &&
-          isAfterToday(trip.endDate.seconds * 1000)
-      )
-      .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
+  const pendingTrips = nonArchivedTrips
+    .filter((trip) => trip.tripMembers[auth.uid].status === TripMemberStatus.Pending)
+    .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
-  const upcomingTrips =
-    trips &&
-    trips.length &&
-    trips
-      .filter(
-        (trip) =>
-          trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
-          isAfterToday(trip.startDate.seconds * 1000)
-      )
-      .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
+  const inProgressTrips = nonArchivedTrips
+    .filter(
+      (trip) =>
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        isBeforeToday(trip.startDate.seconds * 1000) &&
+        isAfterToday(trip.endDate.seconds * 1000)
+    )
+    .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
-  const pastTrips =
-    trips &&
-    trips.length &&
-    trips
-      .filter(
-        (trip) =>
-          trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
-          isBeforeToday(trip.endDate.seconds * 1000)
-      )
-      .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
+  const upcomingTrips = nonArchivedTrips
+    .filter(
+      (trip) =>
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        isAfterToday(trip.startDate.seconds * 1000)
+    )
+    .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
+
+  const pastTrips = nonArchivedTrips
+    .filter(
+      (trip) =>
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        isBeforeToday(trip.endDate.seconds * 1000)
+    )
+    .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
   const renderTrip = (trip: TripType, pending?: boolean) => (
     <Box
@@ -93,7 +82,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
     isLoaded(fetchedGearCloset) &&
     fetchedGearCloset.length === 0 &&
     isLoaded(trips) &&
-    trips.length === 0
+    nonArchivedTrips.length === 0
   ) {
     navigate('/app/onboarding');
   }
