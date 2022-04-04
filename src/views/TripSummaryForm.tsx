@@ -49,19 +49,17 @@ const TripSummaryForm: FunctionComponent<TripSummaryProps> = (props) => {
         startDate: startOfDay(new Date(values.startDate as string)),
         endDate: endOfDay(new Date(values.endDate as string)),
         tags: [],
-        tripMembers: [
-          {
-            uid: auth.uid,
-            status: TripMemberStatus.Owner,
-            invitedAt: new Date(),
-            acceptedAt: new Date(),
-          },
-        ],
         created: new Date(),
       })
       .then((docRef) => {
         docRef.update({
           tripId: docRef.id,
+          [`tripMembers.${auth.uid}`]: {
+            uid: auth.uid,
+            status: TripMemberStatus.Owner,
+            invitedAt: new Date(),
+            acceptedAt: new Date(),
+          },
         });
         trackEvent('New Trip Submit Successful', { values: { ...values } });
         navigate(`/app/trips/${docRef.id}/add-trip-image`);

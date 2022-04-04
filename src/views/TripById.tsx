@@ -35,9 +35,10 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
 
   const activeTrip: TripType | undefined =
-    activeTripById &&
-    activeTripById.length > 0 &&
-    (activeTripById[0].tripMembers.some((member) => member.uid === auth.uid) || isTripOwner)
+    (activeTripById &&
+      activeTripById.length > 0 &&
+      Object.keys(activeTripById[0].tripMembers).some((member) => member === auth.uid)) ||
+    isTripOwner
       ? activeTripById[0]
       : undefined;
 
@@ -52,8 +53,8 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       where: [
         'uid',
         'in',
-        activeTrip && activeTrip.tripMembers && activeTrip.tripMembers.length > 0
-          ? activeTrip.tripMembers.map((member) => member.uid)
+        activeTrip && activeTrip.tripMembers && Object.keys(activeTrip.tripMembers).length > 0
+          ? Object.keys(activeTrip.tripMembers)
           : [auth.uid],
       ],
     },
@@ -97,7 +98,6 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             packingList={packingList && packingList.length > 0 ? packingList : []}
             tripId={props.id}
             trip={activeTrip}
-            loggedInUser={props.loggedInUser}
             tripIsLoaded={isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip)}
           />
 
@@ -108,7 +108,14 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             loggedInUser={props.loggedInUser}
           />
           <TripParty path="/party" activeTrip={activeTrip} />
-          <EditPackingListItem path="/checklist/:id" tripId={props.id} />
+          <EditPackingListItem
+            path="/checklist/:id"
+            tripId={props.id}
+            users={users}
+            packingList={packingList && packingList.length > 0 ? packingList : []}
+            loggedInUserUid={auth.uid}
+            activeTrip={activeTrip}
+          />
         </Router>
       </PageContainer>
 

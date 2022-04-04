@@ -9,6 +9,14 @@ export enum TripMemberStatus {
   Declined = 'Declined',
 }
 
+export type TripMember = {
+  invitedAt?: firebase.default.firestore.Timestamp;
+  declinedAt?: firebase.default.firestore.Timestamp;
+  acceptedAt?: firebase.default.firestore.Timestamp;
+  status: TripMemberStatus;
+  uid: string;
+};
+
 export type TripType = {
   owner: string;
   tripId: string;
@@ -23,15 +31,7 @@ export type TripType = {
   lng: number;
   created?: firebase.default.firestore.Timestamp;
   updated?: firebase.default.firestore.Timestamp;
-  pendingTripMembers?: Array<string>;
-  declinedTripMembers?: Array<string>;
-  tripMembers: Array<{
-    invitedAt?: firebase.default.firestore.Timestamp;
-    declinedAt?: firebase.default.firestore.Timestamp;
-    acceptedAt?: firebase.default.firestore.Timestamp;
-    status: TripMemberStatus;
-    uid: string;
-  }>;
+  tripMembers: { [key: string]: TripMember }; // note keys are UIDs, but uid is also in object. Use Object.(keys/values) everywhere to get what you need
   tags: Array<string>;
   tripLength: number;
   headerImage?: string;

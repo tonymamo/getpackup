@@ -8,7 +8,7 @@ import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 import { TripType } from '@common/trip';
 import { useFirebase } from 'react-redux-firebase';
 import trackEvent from '@utils/trackEvent';
-import { LocalStorage } from '../enums';
+import { LocalStorage } from '@utils/enums';
 
 type PackingListCategoryProps = {
   categoryName: string;
@@ -98,7 +98,11 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
                   isOnSharedList={isSharedPackingListCategory}
                 />
               ))}
-              <PackingListAddItem tripId={tripId} categoryName={categoryName} />
+              <PackingListAddItem
+                tripId={tripId}
+                categoryName={categoryName}
+                isOnSharedList={isSharedPackingListCategory}
+              />
             </>
           ) : (
             <>

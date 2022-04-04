@@ -39,7 +39,6 @@ import { gearListActivities } from '@utils/gearListItemEnum';
 
 type TripHeaderProps = {
   trip?: TripType;
-  loggedInUser?: UserType;
 };
 
 const StyledTripWrapper = styled.div``;
@@ -56,7 +55,7 @@ const StyledLineItem = styled.div`
   margin-bottom: ${halfSpacer};
 `;
 
-const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) => {
+const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
   const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
@@ -75,10 +74,12 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
 
   const numberOfAvatarsToShow = 4;
 
-  const acceptedTripMembersOnly = trip?.tripMembers.filter(
-    (member) =>
-      member.status === TripMemberStatus.Accepted || member.status === TripMemberStatus.Owner
-  );
+  const acceptedTripMembersOnly =
+    trip &&
+    Object.values(trip.tripMembers).filter(
+      (member) =>
+        member.status === TripMemberStatus.Accepted || member.status === TripMemberStatus.Owner
+    );
 
   return (
     <StyledTripWrapper>
@@ -106,15 +107,8 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, loggedInUser }) 
           <FlexContainer justifyContent={size.isSmallScreen ? 'flex-start' : 'flex-end'}>
             {trip && acceptedTripMembersOnly && acceptedTripMembersOnly.length > 0 && (
               <StackedAvatars>
-                <Avatar
-                  src={loggedInUser?.photoURL as string}
-                  gravatarEmail={loggedInUser?.email as string}
-                  size="sm"
-                  username={loggedInUser?.username.toLocaleLowerCase()}
-                />
                 {users &&
                   acceptedTripMembersOnly
-                    ?.filter((member) => member.uid !== loggedInUser?.uid)
                     .slice(
                       0,
                       acceptedTripMembersOnly.length === numberOfAvatarsToShow

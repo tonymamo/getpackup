@@ -8,7 +8,7 @@ import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
 
-import { setScrollPosition } from '@utils/setScrollPosition';
+import setScrollPosition from '@utils/setScrollPosition';
 
 import {
   Avatar,
@@ -28,8 +28,8 @@ import yak from '@images/yak.svg';
 import GearClosetIcon from '@images/gearClosetIcon';
 import { zIndexNavbar } from '@styles/layers';
 import trackEvent from '@utils/trackEvent';
+import { ScrollTimeout } from '@utils/enums';
 import { AvatarImageWrapper } from './Avatar';
-import { ScrollTimeout } from '../enums';
 
 type NavbarProps = {};
 

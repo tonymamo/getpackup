@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { useEffect, useState, useRef, FunctionComponent } from 'react';
 import { FaChevronLeft, FaTrash } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
@@ -15,38 +15,57 @@ import {
   Heading,
   HorizontalRule,
   Input,
+  Modal,
   Row,
   Seo,
 } from '@components';
-import { PackingListItemType } from '@common/packingListItem';
+import { PackingListItemType, PackedByUserType } from '@common/packingListItem';
 import { requiredField, requiredSelect } from '@utils/validations';
 import { gearListCategories } from '@utils/gearListItemEnum';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { RootState } from '@redux/ducks';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
-import { setScrollPosition } from '@utils/setScrollPosition';
-import { ScrollTimeout } from '../enums';
+import setScrollPosition from '@utils/setScrollPosition';
+import { UserType } from '@common/user';
+import { TripType } from '@common/trip';
+import { ScrollTimeout } from '@utils/enums';
 
 type EditPackingListItemProps = {
   tripId?: string;
   id?: string;
+  users: { [key: string]: UserType };
+  packingList: PackingListItemType[];
+  loggedInUserUid: string;
+  activeTrip?: TripType;
 } & RouteComponentProps;
 
 const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props) => {
   const dispatch = useDispatch();
   const firebase = useFirebase();
-  const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const size = useWindowSize();
 
-  const activeItem =
-    packingList && packingList.find((item: PackingListItemType) => item.id === props.id);
+  const mounted = useRef(false);
 
-  const removeItem = () => {
-    if (activeItem) {
-      navigate(-1);
-      firebase
+  useEffect(() => {
+    mounted.current = true; // Will set it to true on mount ...
+    return () => {
+      mounted.current = false; // ... and to false on unmount
+    };
+  }, []);
+
+  const activeItem: PackingListItemType =
+    props.packingList &&
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    props.packingList.find((item: PackingListItemType) => item.id === props.id)!;
+
+  const removeItem = (isSharedItem: boolean) => {
+    if (isSharedItem) {
+      return setModalIsOpen(true);
+    }
+    if (activeItem && !isSharedItem) {
+      return firebase
         .firestore()
         .collection('trips')
         .doc(props.tripId)
@@ -55,6 +74,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
         .delete()
         .then(() => {
           trackEvent('Packing List Item Removed', { ...activeItem });
+          navigate(-1);
         })
         .catch((err) => {
           dispatch(
@@ -65,6 +85,7 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
           );
         });
     }
+    return null;
   };
 
   const handleReturn = (): void => {
@@ -88,10 +109,45 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
       {activeItem ? (
         <Formik
           validateOnMount
-          initialValues={{
-            ...activeItem,
-          }}
+          initialValues={
+            {
+              ...activeItem,
+              packedBy: activeItem.packedBy.map((member) => member.uid),
+              isSharedItem: activeItem.packedBy.some((item) => item.isShared),
+            } as Omit<PackingListItemType, 'packedBy'> & {
+              isSharedItem?: boolean;
+              packedBy: string[];
+            }
+          }
           onSubmit={(values, { setSubmitting, resetForm }) => {
+            const updateValues = {
+              ...values,
+              quantity: Number(values.quantity),
+              // if it is a sharedItem, map over all the users. If not shared, assign to just one user
+              packedBy: values.isSharedItem
+                ? values.packedBy.map((user) => {
+                    // initialize obj shape and just set quantity to 1 for now, since not sure if we are
+                    // going to use it per user or just the quantity field on the line above
+                    const obj: PackedByUserType = { uid: '', quantity: 1, isShared: false };
+                    // add in the user uid from values
+                    obj.uid = user;
+                    // if values.isSharedItem is true, then set all to true in the map
+                    obj.isShared = true;
+                    return obj;
+                  })
+                : [
+                    {
+                      // TODO: defaulting logged in user, but could also do first person in list of values.packedBy[0]?
+                      uid: props.loggedInUserUid,
+                      isShared: false,
+                      quantity: 1,
+                    },
+                  ],
+            };
+
+            // dont need to send this value along, its just for use on this page to handle the Toggle
+            delete updateValues.isSharedItem;
+
             if (activeItem) {
               firebase
                 .firestore()
@@ -99,13 +155,15 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                 .doc(props.tripId)
                 .collection('packing-list')
                 .doc(activeItem?.id)
-                .update({
-                  ...activeItem,
-                  ...values,
-                  quantity: Number(values.quantity),
-                })
+                .update(updateValues)
                 .then(() => {
-                  resetForm({ values });
+                  resetForm({
+                    values: {
+                      ...updateValues,
+                      packedBy: updateValues.packedBy.map((member) => member.uid),
+                      isSharedItem: updateValues.packedBy.some((item) => item.isShared),
+                    },
+                  });
                   trackEvent('Packing List Item Edited', {
                     ...activeItem,
                     ...values,
@@ -124,11 +182,13 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                     error: err,
                   });
                 });
-              setSubmitting(false);
+              if (mounted.current) {
+                setSubmitting(false);
+              }
             }
           }}
         >
-          {({ setFieldValue, values, ...rest }) => (
+          {({ setFieldValue, values, isSubmitting, ...rest }) => (
             <Form>
               <Heading altStyle as="h2">
                 {values.name}
@@ -215,6 +275,56 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                   </Row>
                 </Column>
               </Row>
+
+              <Row>
+                <Column xs={5} sm={4} md={3}>
+                  <Field
+                    as={Input}
+                    type="toggle"
+                    name="isSharedItem"
+                    label="Shared Group Item"
+                    checked={values.isSharedItem}
+                  />
+                </Column>
+                {values.isSharedItem && props.activeTrip && Object.keys(props.users).length > 0 && (
+                  <Column xs={7} sm={8} md={9}>
+                    <Field
+                      as={Input}
+                      type="select"
+                      name="packedBy"
+                      label="Packed By"
+                      isMulti
+                      required
+                      validate={requiredSelect}
+                      options={Object.values(props.activeTrip.tripMembers).map((member) => {
+                        const matchingUser: UserType = props.users && props.users[member.uid];
+                        const obj = {
+                          value: '',
+                          label: '',
+                        };
+                        obj.value = member.uid;
+                        obj.label = matchingUser?.username.toLocaleLowerCase();
+                        return obj;
+                      })}
+                      setFieldValue={setFieldValue}
+                      {...rest}
+                    />
+                  </Column>
+                )}
+              </Row>
+              {/* <Button
+                type="submit"
+                // onClick={() => {
+                //   handleReturn();
+                //   trackEvent('Edit Packing List Item Cancel Click');
+                // }}
+                color="success"
+                disabled={isSubmitting || !isValid}
+                iconLeft={<FaCheck />}
+              >
+                Save
+              </Button> */}
+
               <AutoSave />
 
               <HorizontalRule />
@@ -227,12 +337,14 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                   }}
                   color="text"
                   iconLeft={<FaChevronLeft />}
+                  disabled={isSubmitting}
                 >
                   Back
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => removeItem()}
+                  disabled={isSubmitting}
+                  onClick={() => removeItem(values.packedBy.length > 1)}
                   color="danger"
                   iconLeft={<FaTrash />}
                 >
@@ -247,6 +359,26 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
           <p>Select an item to edit</p>
         </FlexContainer>
       )}
+
+      <Modal
+        toggleModal={() => {
+          setModalIsOpen(false);
+        }}
+        isOpen={modalIsOpen}
+      >
+        <Heading as="h3">Cannot remove item</Heading>
+        <p>
+          Sorry, you cannot remove an item if multiple people are sharing it. Switch the{' '}
+          <strong>Shared Group Item</strong> toggle to{' '}
+          <em>
+            <strong>No</strong>
+          </em>{' '}
+          and then try again.
+        </p>
+        <Button type="button" onClick={() => setModalIsOpen(false)} color="secondary">
+          Got it 👍
+        </Button>
+      </Modal>
     </div>
   );
 };

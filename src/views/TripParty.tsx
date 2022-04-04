@@ -105,9 +105,12 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   };
 
   const updateTrip = (memberId: string, memberEmail: string) => {
-    // activeTrip.tripMembers.length + 1 accounts for async data updates
+    // Object.values(activeTrip.tripMembers).length + 1 accounts for async data updates
     // TODO: maybe dont count declined members towards total party size?
-    if (activeTrip?.tripMembers && activeTrip.tripMembers.length + 1 > MAX_TRIP_PARTY_SIZE) {
+    if (
+      activeTrip?.tripMembers &&
+      Object.values(activeTrip.tripMembers).length + 1 > MAX_TRIP_PARTY_SIZE
+    ) {
       setIsSearchBarDisabled(true);
       dispatch(
         addAlert({
@@ -123,16 +126,11 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
         .collection('trips')
         .doc(activeTrip.tripId)
         .update({
-          ...activeTrip,
-          updated: new Date(),
-          tripMembers: [
-            ...activeTrip.tripMembers,
-            {
-              uid: memberId,
-              invitedAt: new Date(),
-              status: TripMemberStatus.Pending,
-            },
-          ],
+          [`tripMembers.${memberId}`]: {
+            uid: memberId,
+            invitedAt: new Date(),
+            status: TripMemberStatus.Pending,
+          },
         })
         .then(() => {
           const queryParams = stringify({
@@ -148,14 +146,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
           trackEvent('Trip Party Member Added', {
             ...activeTrip,
             updated: new Date(),
-            tripMembers: [
-              ...activeTrip.tripMembers,
-              {
-                uid: memberId,
-                invitedAt: new Date(),
-                status: TripMemberStatus.Pending,
-              },
-            ],
+            invitedMember: memberId,
           });
         })
         .catch((err) => {
@@ -208,20 +199,27 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const ClearRefinementsButton = connectCurrentRefinements(ClearQueryButton);
 
+  const getActionButton = (hit: UserType) => {
+    const matchingUser =
+      activeTrip &&
+      activeTrip.tripMembers &&
+      Object.values(activeTrip.tripMembers).find((member) => member.uid === hit.uid);
+    if (matchingUser) {
+      return (
+        <Button type="button" color="tertiary" size="small" disabled>
+          {matchingUser.status}
+        </Button>
+      );
+    }
+    return <InviteButtonWithClearSearch clearsQuery hit={hit} />;
+  };
+
   const Hit = ({ hit }: { hit: UserType }) => (
     <UserMediaObject
       user={hit}
       avatarSize="sm"
       showSecondaryContent
-      action={
-        activeTrip?.tripMembers?.find((member) => member.uid === hit.uid) ? (
-          <Button type="button" color="tertiary" size="small" disabled>
-            {activeTrip?.tripMembers?.find((member) => member.uid === hit.uid)?.status}
-          </Button>
-        ) : (
-          <InviteButtonWithClearSearch clearsQuery hit={hit} />
-        )
-      }
+      action={getActionButton(hit)}
     />
   );
 
@@ -335,15 +333,20 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const ConnectedSearchBox = connectSearchBox(SearchBox);
 
   const getStatusPill = (uid: string) => {
-    const matchingTripMember = activeTrip?.tripMembers?.find((member) => member.uid === uid);
+    const matchingTripMember =
+      activeTrip?.tripMembers &&
+      Object.values(activeTrip?.tripMembers)?.find((member) => member.uid === uid);
     if (matchingTripMember?.status === TripMemberStatus.Pending) {
-      return <Pill text="Pending" color="neutral" />;
+      return <Pill text={TripMemberStatus.Pending} color="neutral" />;
+    }
+    if (matchingTripMember?.status === TripMemberStatus.Owner) {
+      return <Pill text={TripMemberStatus.Owner} color="primary" />;
     }
     if (matchingTripMember?.status === TripMemberStatus.Accepted) {
-      return <Pill text="Accepted" color="success" />;
+      return <Pill text={TripMemberStatus.Accepted} color="success" />;
     }
     if (matchingTripMember?.status === TripMemberStatus.Declined) {
-      return <Pill text="Declined" color="danger" />;
+      return <Pill text={TripMemberStatus.Declined} color="danger" />;
     }
     return undefined;
   };
@@ -373,7 +376,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
               </InstantSearch>
             </SearchWrapper>
 
-            {activeTrip.tripMembers.length > 0 ? (
+            {Object.values(activeTrip.tripMembers).length > 0 ? (
               <Box>
                 <p>
                   <strong>Trip Party</strong>
@@ -383,7 +386,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                     margin: `${halfSpacer} 0 ${baseSpacer}`,
                   }}
                 >
-                  {activeTrip?.tripMembers.map((tripMember, index) => {
+                  {Object.values(activeTrip?.tripMembers).map((tripMember, index) => {
                     const matchingUser: UserType =
                       users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
                     if (!matchingUser) return null;
@@ -394,7 +397,9 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                           showSecondaryContent
                           action={getStatusPill(matchingUser.uid)}
                         />
-                        {index !== activeTrip?.tripMembers.length - 1 && <HorizontalRule compact />}
+                        {index !== Object.keys(activeTrip?.tripMembers).length - 1 && (
+                          <HorizontalRule compact />
+                        )}
                       </div>
                     );
                   })}

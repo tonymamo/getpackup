@@ -269,6 +269,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   isLoading,
   style,
   size,
+  ...rest
 }) => {
   if (type === 'link' && to) {
     return (
@@ -281,6 +282,7 @@ const Button: FunctionComponent<ButtonProps> = ({
         style={style}
         size={size}
         onClick={onClick} // so we can track analytics if passed in on Button Links
+        {...rest}
       >
         <Link to={to}>
           {iconLeft}&nbsp;{children}&nbsp;{iconRight}
@@ -300,9 +302,10 @@ const Button: FunctionComponent<ButtonProps> = ({
         disabled={disabled || isLoading}
         style={style}
         size={size}
+        {...rest}
       >
         {isLoading && <LoadingSpinner />}
-        {iconLeft}&nbsp;{children}&nbsp;{iconRight}
+        {!isLoading && iconLeft}&nbsp;{children}&nbsp;{!isLoading && iconRight}
       </StyledButton>
     );
   }

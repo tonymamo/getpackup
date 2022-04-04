@@ -36,13 +36,34 @@ const rrfProps = {
 };
 
 const firebaseConfig = {
-  apiKey: process.env.GATSBY_FIREBASE_API_KEY,
-  authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
-  projectId: process.env.GATSBY_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.GATSBY_FIREBASE_APP_ID,
+  apiKey:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_API_KEY
+      : process.env.GATSBY_FIREBASE_TEST_API_KEY,
+  authDomain:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_AUTH_DOMAIN
+      : process.env.GATSBY_FIREBASE_TEST_AUTH_DOMAIN,
+  databaseURL:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_DATABASE_URL
+      : process.env.GATSBY_FIREBASE_TEST_DATABASE_URL,
+  projectId:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_PROJECT_ID
+      : process.env.GATSBY_FIREBASE_TEST_PROJECT_ID,
+  storageBucket:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_STORAGE_BUCKET
+      : process.env.GATSBY_FIREBASE_TEST_TORAGE_BUCKET,
+  messagingSenderId:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID
+      : process.env.GATSBY_FIREBASE_TEST_MESSAGING_SENDER_ID,
+  appId:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_APP_ID
+      : process.env.GATSBY_FIREBASE_TEST_APP_ID,
 };
 
 firebase.initializeApp(firebaseConfig);

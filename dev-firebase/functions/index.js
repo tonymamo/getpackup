@@ -40,8 +40,8 @@ exports.copyOwnerToTripMembers = functions.https.onRequest(async (req, res) => {
           ? doc.get('tripMembers').some((member) => member === doc.get('owner'))
           : false;
       if (!ownerAlreadyAMember && doc.get('owner')) {
-        console.log([...doc.get('tripMembers'), doc.get('owner')]);
-        writeBatch.update(doc.ref, { tripMembers: [...doc.get('tripMembers'), doc.get('owner')] });
+        // console.log([...doc.get('tripMembers'), doc.get('owner')]);
+        writeBatch.update(doc.ref, { tripMembers: [doc.get('owner')] });
         commitBatchPromises.push(writeBatch.commit());
       }
     });
@@ -71,17 +71,21 @@ exports.convertTripMembersToInviteObject = functions.https.onRequest(async (req,
         return;
       }
       const writeBatch = admin.firestore().batch();
-      const tripMemberListToWrite = [];
+
       // eslint-disable-next-line no-restricted-syntax
-      for (const member of doc.get('tripMembers')) {
-        tripMemberListToWrite.push({
-          invitedAt: doc.get('created'),
-          acceptedAt: doc.get('created'),
-          status: doc.get('owner') === member ? 'Owner' : 'Accepted',
-          uid: member,
-        });
-      }
-      writeBatch.update(doc.ref, { tripMembers: tripMemberListToWrite });
+      //  for (const member of doc.get('tripMembers')) {
+      writeBatch.update(doc.ref, {
+        tripMembers: {
+          [doc.get('owner')]: {
+            invitedAt: doc.get('created'),
+            acceptedAt: doc.get('created'),
+            status: 'Owner',
+            uid: doc.get('owner'),
+          },
+        },
+      });
+      // }
+
       commitBatchPromises.push(writeBatch.commit());
     });
   }

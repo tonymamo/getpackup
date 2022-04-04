@@ -1,4 +1,4 @@
-type PackedByUserType = {
+export type PackedByUserType = {
   uid: string;
   quantity: number;
   isShared: boolean;

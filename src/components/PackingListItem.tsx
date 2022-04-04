@@ -31,7 +31,7 @@ import { PackingListItemType } from '@common/packingListItem';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
 import { UserType } from '@common/user';
-import { LocalStorage } from '../enums';
+import { LocalStorage } from '../utils/enums';
 import Avatar, { StackedAvatars } from './Avatar';
 
 type PackingListItemProps = {
@@ -157,10 +157,13 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
   const onShare = () => {
     firebaseConnection(firebase, props.tripId, props.item.id)
       .update({
-        packedBy: firebase.firestore.FieldValue.arrayUnion({
-          ...props.item.packedBy[0],
-          isShared: !props.item.packedBy[0].isShared,
-        }),
+        // TOOD: can we assume packedBy[0] is ok?
+        packedBy: [
+          {
+            ...props.item.packedBy[0],
+            isShared: !props.item.packedBy[0].isShared,
+          },
+        ],
       })
       .then(() => {
         trackEvent('Packing List Item Shared', {
@@ -222,6 +225,8 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
     handlePersistScrollPosition();
     navigate(`/app/trips/${tripId}/checklist/${itemId}`);
   };
+
+  const itemIsShared = props.item.packedBy.some((item) => item.isShared);
 
   return (
     <PackingListItemWrapper className={removing ? 'removing' : undefined}>
@@ -332,18 +337,10 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                     {!props.isOnSharedList && (
                       <IconWrapper
                         onClick={onShare}
-                        data-tip={
-                          props.item.packedBy.some((item) => item.isShared)
-                            ? 'Shared Group Item'
-                            : 'Mark as Shared Group Item'
-                        }
+                        data-tip={itemIsShared ? 'Shared Group Item' : 'Mark as Shared Group Item'}
                         data-for="sharedItemIcon"
                         hoverColor={brandInfo}
-                        color={
-                          props.item.packedBy.some((item) => item.isShared)
-                            ? brandInfo
-                            : lightestGray
-                        }
+                        color={itemIsShared ? brandInfo : lightestGray}
                         style={{ marginRight: halfSpacer }}
                       >
                         <FaUsers />
@@ -380,13 +377,42 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                 )}
 
                 {size.isSmallScreen && (
-                  <IconWrapper
-                    onClick={() => handleItemSelect(props.tripId, props.item.id)}
-                    hoverColor={brandPrimary}
-                    color={lightestGray}
-                  >
-                    <FaChevronRight />
-                  </IconWrapper>
+                  <>
+                    {!props.isOnSharedList && itemIsShared && (
+                      <IconWrapper
+                        hoverColor={brandInfo}
+                        color={brandInfo}
+                        style={{ marginRight: halfSpacer }}
+                        data-tip="Shared Group Item"
+                        data-for="sharedItemIconSmall"
+                      >
+                        <FaUsers />
+                        <ReactTooltip
+                          id="sharedItemIconSmall"
+                          place="top"
+                          type="dark"
+                          effect="solid"
+                          className="tooltip customTooltip"
+                        />
+                      </IconWrapper>
+                    )}
+                    <IconWrapper
+                      onClick={() => handleItemSelect(props.tripId, props.item.id)}
+                      hoverColor={brandPrimary}
+                      color={lightestGray}
+                      data-tip="Edit Item"
+                      data-for="editItemIconSmall"
+                    >
+                      <FaChevronRight />
+                      <ReactTooltip
+                        id="editItemIconSmall"
+                        place="top"
+                        type="dark"
+                        effect="solid"
+                        className="tooltip customTooltip"
+                      />
+                    </IconWrapper>
+                  </>
                 )}
               </FlexContainer>
             </Form>
