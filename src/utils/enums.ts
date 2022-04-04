@@ -3,7 +3,7 @@ export enum LocalStorage {
 }
 
 export enum ScrollTimeout {
-  default = 167 // in milliseconds
+  default = 167, // in milliseconds
 }
 
 export enum FilterListFilterCriteria {

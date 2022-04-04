@@ -41,16 +41,21 @@ import trackEvent from '@utils/trackEvent';
 import { IconWrapperLabel, IconCheckboxLabel } from '@components/IconCheckbox';
 import { baseSpacer, doubleSpacer, sextupleSpacer, tripleSpacer } from '@styles/size';
 import { lightGray } from '@styles/color';
+import { UserType } from '@common/user';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
+  loggedInUser: UserType;
 } & RouteComponentProps;
 
 type FormValues = { [key: string]: boolean };
 
-const initialValues: { [key: string]: boolean } = {};
-
-const generateGearList = (values: FormValues, gear: any) => {
+const generateGearList = (
+  values: FormValues,
+  gear: any,
+  uid: string,
+  initialValues: { [key: string]: boolean }
+) => {
   const getValues = (list: typeof initialValues) =>
     Object.entries(list)
       .filter((entry) => entry[1])
@@ -78,6 +83,13 @@ const generateGearList = (values: FormValues, gear: any) => {
       weight: item.weight || '',
       weightUnit: item.weightUnit || '',
       created: new Date(),
+      packedBy: [
+        {
+          isShared: false,
+          quantity: 1,
+          uid,
+        },
+      ],
     };
   });
 
@@ -92,6 +104,9 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
 
   const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
+
+  const activeTrip: TripType | undefined =
+    activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
 
   const personalGear = usePersonalGear();
 
@@ -115,16 +130,20 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   const [gearListType, setGearListType] = useState<GearListEnumType | Array<any>>([]);
   const [gearClosetCategoriesIsLoading, setGearClosetCategoriesIsLoading] = useState(false);
 
-  gearListKeys.forEach((item) => {
-    initialValues[item] = false;
-  });
+  const initialValues: { [key: string]: boolean } = {};
 
-  const activeTrip: TripType | undefined =
-    activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
+  allGearListItems.forEach((item) => {
+    initialValues[item.name] = activeTrip?.tags.some((i) => i === item.label) || false;
+  });
 
   const onSubmit = (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
     setIsLoading(true);
-    const { gearList, tagMatches } = generateGearList(values, personalGear);
+    const { gearList, tagMatches } = generateGearList(
+      values,
+      personalGear,
+      auth.uid,
+      initialValues
+    );
 
     const promises: Array<Promise<any>> = [];
 
@@ -237,131 +256,54 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
   return (
     <PageContainer>
       <Seo title="Trip Generator" />
-      <Formik<FormValues>
-        validateOnMount
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validate={(values) => {
-          const numberOfCheckedCategories = Object.keys(values)
-            .filter((valueKey) => gearListKeys.includes(valueKey as keyof ActivityTypes))
-            .filter((item) => values[item] === true).length;
-          return numberOfCheckedCategories === 0
-            ? {
-                selectOne: 'You must select at least one item from any section before proceeding',
-              }
-            : {};
-        }}
-      >
-        {({ isSubmitting, isValid, dirty, errors, values }) => (
-          <Form>
-            <Row>
-              <Column md={8} mdOffset={2}>
-                <Heading altStyle as="h1" align="center">
-                  Tell us about your trip!
-                </Heading>
-                <p style={{ textAlign: 'center' }}>
-                  Select the categories below that apply to this trip so we can make a custom
-                  packing list for you from all the gear in your gear closet.
-                </p>
-                <div>
-                  <Box>
-                    <Heading as="h3" altStyle noMargin>
-                      Activities
-                    </Heading>
+      {activeTrip && (
+        <Formik<FormValues>
+          validateOnMount
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validate={(values) => {
+            const numberOfCheckedCategories = Object.keys(values)
+              .filter((valueKey) => gearListKeys.includes(valueKey as keyof ActivityTypes))
+              .filter((item) => values[item] === true).length;
+            return numberOfCheckedCategories === 0
+              ? {
+                  selectOne: 'You must select at least one item from any section before proceeding',
+                }
+              : {};
+          }}
+        >
+          {({ isSubmitting, isValid, errors, values }) => (
+            <Form>
+              <Row>
+                <Column md={8} mdOffset={2}>
+                  <Heading altStyle as="h1" align="center">
+                    Tell us about your trip!
+                  </Heading>
+                  <p style={{ textAlign: 'center' }}>
+                    <small>
+                      Select the categories below that apply to this trip so we can make a custom
+                      packing list for you from all the gear in your gear closet.
+                    </small>
+                  </p>
+                  {activeTrip && activeTrip.owner !== props.loggedInUser.uid && (
+                    <Alert
+                      type="success"
+                      message="We've pre-selected some options based on the existing trip details!"
+                    />
+                  )}
+                  <div>
+                    <Box>
+                      <Heading as="h3" altStyle noMargin>
+                        Activities
+                      </Heading>
 
-                    <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
-                      <small>What activities are you doing on this trip?</small>
-                    </p>
+                      <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
+                        <small>What activities are you doing on this trip?</small>
+                      </p>
 
-                    <Row>
-                      {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
-                        ? getFilteredCategories(gearListActivities).map((item) => (
-                            <Column xs={4} md={3} key={item.name}>
-                              <Field
-                                as={IconCheckbox}
-                                icon={item.icon}
-                                checked={values[item.name] ?? false}
-                                name={item.name}
-                                label={item.label}
-                              />
-                            </Column>
-                          ))
-                        : renderLoadingIcons()}
-                      {getOtherCategories(gearListActivities).length !== 0 &&
-                        renderAddCategoryButton(gearListActivities)}
-                    </Row>
-                  </Box>
-                </div>
-                <div>
-                  <Box>
-                    <Heading as="h3" altStyle noMargin>
-                      Accommodations
-                    </Heading>
-
-                    <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
-                      <small>Where are you staying on this trip?</small>
-                    </p>
-                    <Row>
-                      {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
-                        ? getFilteredCategories(gearListAccommodations).map((item) => (
-                            <Column xs={4} md={3} key={item.name}>
-                              <Field
-                                as={IconCheckbox}
-                                icon={item.icon}
-                                checked={values[item.name] ?? false}
-                                name={item.name}
-                                label={item.label}
-                              />
-                            </Column>
-                          ))
-                        : renderLoadingIcons()}
-                      {getOtherCategories(gearListAccommodations).length !== 0 &&
-                        renderAddCategoryButton(gearListAccommodations)}
-                    </Row>
-                  </Box>
-                </div>
-                <div>
-                  <Box>
-                    <Heading as="h3" altStyle noMargin>
-                      Camp Kitchen
-                    </Heading>
-
-                    <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
-                      <small>What type of kitchen setup(s) do will you need on this trip?</small>
-                    </p>
-                    <Row>
-                      {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
-                        ? getFilteredCategories(gearListCampKitchen).map((item) => (
-                            <Column xs={4} md={3} key={item.name}>
-                              <Field
-                                as={IconCheckbox}
-                                icon={item.icon}
-                                checked={values[item.name] ?? false}
-                                name={item.name}
-                                label={item.label}
-                              />
-                            </Column>
-                          ))
-                        : renderLoadingIcons()}
-                      {getOtherCategories(gearListCampKitchen).length !== 0 &&
-                        renderAddCategoryButton(gearListCampKitchen)}
-                    </Row>
-                  </Box>
-                </div>
-                <div>
-                  <Box>
-                    <Heading as="h3" altStyle noMargin>
-                      Other Considerations
-                    </Heading>
-
-                    <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
-                      <small>What other things might you need to bring on this trip?</small>
-                    </p>
-                    <Row>
-                      {/* remove '10 essentials' category, the last item in the array */}
-                      {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
-                        ? getFilteredCategories([...gearListOtherConsiderations.slice(0, -1)]).map(
-                            (item) => (
+                      <Row>
+                        {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
+                          ? getFilteredCategories(gearListActivities).map((item) => (
                               <Column xs={4} md={3} key={item.name}>
                                 <Field
                                   as={IconCheckbox}
@@ -371,34 +313,121 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                                   label={item.label}
                                 />
                               </Column>
-                            )
-                          )
-                        : renderLoadingIcons()}
-                      {getOtherCategories([...gearListOtherConsiderations.slice(0, -1)]).length !==
-                        0 && renderAddCategoryButton(gearListOtherConsiderations)}
-                    </Row>
-                  </Box>
-                </div>
-                <FormErrors dirty errors={errors} />
-                <Row>
-                  <Column xs={6} xsOffset={6}>
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting || !isValid || !dirty}
-                      isLoading={isLoading}
-                      block
-                      color="success"
-                      iconLeft={<FaCheckCircle />}
-                    >
-                      {isLoading ? 'Saving' : 'Save'}
-                    </Button>
-                  </Column>
-                </Row>
-              </Column>
-            </Row>
-          </Form>
-        )}
-      </Formik>
+                            ))
+                          : renderLoadingIcons()}
+                        {getOtherCategories(gearListActivities).length !== 0 &&
+                          renderAddCategoryButton(gearListActivities)}
+                      </Row>
+                    </Box>
+                  </div>
+                  <div>
+                    <Box>
+                      <Heading as="h3" altStyle noMargin>
+                        Accommodations
+                      </Heading>
+
+                      <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
+                        <small>Where are you staying on this trip?</small>
+                      </p>
+                      <Row>
+                        {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
+                          ? getFilteredCategories(gearListAccommodations).map((item) => (
+                              <Column xs={4} md={3} key={item.name}>
+                                <Field
+                                  as={IconCheckbox}
+                                  icon={item.icon}
+                                  checked={values[item.name] ?? false}
+                                  name={item.name}
+                                  label={item.label}
+                                />
+                              </Column>
+                            ))
+                          : renderLoadingIcons()}
+                        {getOtherCategories(gearListAccommodations).length !== 0 &&
+                          renderAddCategoryButton(gearListAccommodations)}
+                      </Row>
+                    </Box>
+                  </div>
+                  <div>
+                    <Box>
+                      <Heading as="h3" altStyle noMargin>
+                        Camp Kitchen
+                      </Heading>
+
+                      <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
+                        <small>What type of kitchen setup(s) do will you need on this trip?</small>
+                      </p>
+                      <Row>
+                        {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
+                          ? getFilteredCategories(gearListCampKitchen).map((item) => (
+                              <Column xs={4} md={3} key={item.name}>
+                                <Field
+                                  as={IconCheckbox}
+                                  icon={item.icon}
+                                  checked={values[item.name] ?? false}
+                                  name={item.name}
+                                  label={item.label}
+                                />
+                              </Column>
+                            ))
+                          : renderLoadingIcons()}
+                        {getOtherCategories(gearListCampKitchen).length !== 0 &&
+                          renderAddCategoryButton(gearListCampKitchen)}
+                      </Row>
+                    </Box>
+                  </div>
+                  <div>
+                    <Box>
+                      <Heading as="h3" altStyle noMargin>
+                        Other Considerations
+                      </Heading>
+
+                      <p style={{ margin: '0 0 8px 0', lineHeight: 1 }}>
+                        <small>What other things might you need to bring on this trip?</small>
+                      </p>
+                      <Row>
+                        {/* remove '10 essentials' category, the last item in the array */}
+                        {isLoaded(fetchedGearCloset) || !gearClosetCategoriesIsLoading
+                          ? getFilteredCategories([
+                              ...gearListOtherConsiderations.slice(0, -1),
+                            ]).map((item) => (
+                              <Column xs={4} md={3} key={item.name}>
+                                <Field
+                                  as={IconCheckbox}
+                                  icon={item.icon}
+                                  checked={values[item.name] ?? false}
+                                  name={item.name}
+                                  label={item.label}
+                                />
+                              </Column>
+                            ))
+                          : renderLoadingIcons()}
+                        {getOtherCategories([...gearListOtherConsiderations.slice(0, -1)])
+                          .length !== 0 && renderAddCategoryButton(gearListOtherConsiderations)}
+                      </Row>
+                    </Box>
+                  </div>
+                  <FormErrors dirty errors={errors} />
+                  <Row>
+                    <Column xs={6} xsOffset={6}>
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting || !isValid}
+                        isLoading={isLoading}
+                        block
+                        color="success"
+                        iconLeft={<FaCheckCircle />}
+                      >
+                        {isLoading ? 'Saving' : 'Save'}
+                      </Button>
+                    </Column>
+                  </Row>
+                </Column>
+              </Row>
+            </Form>
+          )}
+        </Formik>
+      )}
 
       <Modal toggleModal={() => {}} isOpen={isLoading}>
         <Heading>Generating packing list...</Heading>

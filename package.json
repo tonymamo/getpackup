@@ -20,6 +20,7 @@
     "@types/react-swipeable-views": "^0.13.0",
     "@types/styled-components": "^5.0.1",
     "algoliasearch": "^4.8.6",
+    "axios": "^0.24.0",
     "babel-plugin-styled-components": "^1.10.7",
     "canvas-sketch-util": "^1.10.0",
     "cross-env": "^7.0.3",
@@ -187,7 +188,8 @@
     "serve": "gatsby serve -o",
     "clean": "gatsby clean",
     "test": "jest",
-    "eslinta": "eslint --fix"
+    "eslinta": "eslint --fix",
+    "run-emulators": "cd dev-firebase && firebase emulators:start --import=./dev-firebase --export-on-exit"
   },
   "repository": {
     "type": "git",

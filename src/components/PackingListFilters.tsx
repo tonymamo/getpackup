@@ -3,7 +3,7 @@ import { Button } from '@components';
 import styled from 'styled-components';
 import { PackingListItemType } from '@common/packingListItem';
 import { baseSpacer } from '@styles/size';
-import { FilterListFilterCriteria } from '../enums';
+import { FilterListFilterCriteria } from '@utils/enums';
 
 type PackingListFilterProps = {
   list: PackingListItemType[];

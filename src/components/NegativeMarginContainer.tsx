@@ -9,6 +9,7 @@ type NegativeMarginContainerProps = {
   bottom?: string;
   left?: string;
   height?: string;
+  aspectRatio?: number;
 };
 
 const NegativeMarginContainer: FunctionComponent<NegativeMarginContainerProps> = styled.div`
@@ -24,6 +25,7 @@ const NegativeMarginContainer: FunctionComponent<NegativeMarginContainerProps> =
       : `calc(100% + ${baseSpacer})`};
   height: ${(props: NegativeMarginContainerProps) => (props.height ? props.height : 'auto')};
   overflow: hidden;
+  aspect-ratio: ${(props) => props.aspectRatio || 'initial'};
 `;
 
 export default NegativeMarginContainer;

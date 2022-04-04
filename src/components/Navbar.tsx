@@ -7,8 +7,8 @@ import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
 import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import ReactTooltip from 'react-tooltip';
-import { setScrollPosition } from '@utils/setScrollPosition';
+
+import setScrollPosition from '@utils/setScrollPosition';
 
 import {
   Avatar,
@@ -28,8 +28,8 @@ import yak from '@images/yak.svg';
 import GearClosetIcon from '@images/gearClosetIcon';
 import { zIndexNavbar } from '@styles/layers';
 import trackEvent from '@utils/trackEvent';
+import { ScrollTimeout } from '@utils/enums';
 import { AvatarImageWrapper } from './Avatar';
-import { ScrollTimeout } from '../enums';
 
 type NavbarProps = {};
 
@@ -47,7 +47,6 @@ const StyledNavbar = styled.header`
   & a,
   & a:hover,
   & a:focus,
-  & a:visited,
   & a:active {
     font-family: ${headingsFontFamily};
     font-weight: 700;
@@ -56,7 +55,6 @@ const StyledNavbar = styled.header`
 
   & a:focus {
     outline: 1px dotted ${brandPrimary};
-    opacity: 0.8;
   }
 
   & h1 a {
@@ -144,22 +142,30 @@ const TopNavIconWrapper = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1;
+    padding: 0 ${baseSpacer};
     height: ${quadrupleSpacer};
-    width: ${tripleSpacer};
     color: ${white};
+    border-top: ${quarterSpacer} solid transparent;
+    border-bottom: ${quarterSpacer} solid transparent;
     transition: all 0.2s ease-in-out;
   }
 
-  & a:focus,
-  & a:active {
-    outline: 1px dotted ${brandPrimary};
-    opacity: 0.8;
+  & a > svg {
+    flex-shrink: 0;
   }
 
-  & a.active,
-  & a.active:visited {
+  & a.active > svg {
     color: ${brandPrimary};
+  }
+
+  & a:hover,
+  & a:focus,
+  & a.active {
+    border-bottom-color: ${brandPrimary};
+  }
+
+  & a:focus {
+    outline: 1px dotted ${brandPrimary};
   }
 
   /* active avatar border */
@@ -391,18 +397,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 getProps={isPartiallyActive}
                 onClick={() => trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Trips' })}
               >
-                <FaCalendar data-tip="Trips" data-for="trips" />
-                <ReactTooltip
-                  id="trips"
-                  place="bottom"
-                  type="dark"
-                  effect="solid"
-                  className="tooltip customTooltip"
-                  delayShow={500}
-                  offset={{
-                    bottom: 8,
-                  }}
-                />
+                <FaCalendar style={{ marginRight: halfSpacer }} /> Trips
               </Link>
               <Link
                 to="/app/gear-closet"
@@ -411,18 +406,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   trackEvent('Navbar LoggedInUser Link Clicked', { link: 'gear-closet' })
                 }
               >
-                <GearClosetIcon data-tip="Gear Closet" data-for="gearCloset" size={17} />
-                <ReactTooltip
-                  id="gearCloset"
-                  place="bottom"
-                  type="dark"
-                  effect="solid"
-                  className="tooltip customTooltip"
-                  delayShow={500}
-                  offset={{
-                    bottom: 8,
-                  }}
-                />
+                <GearClosetIcon size={17} style={{ marginRight: halfSpacer }} /> Gear Closet
               </Link>
               {/* TODO: when shopping list is ready 
               <Link
@@ -447,18 +431,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Link> */}
               {profile.isAdmin && (
                 <Link to="/admin/gear-list" getProps={isPartiallyActive}>
-                  <FaUserLock data-tip="Admin" data-for="admin" />
-                  <ReactTooltip
-                    id="admin"
-                    place="bottom"
-                    type="dark"
-                    effect="solid"
-                    className="tooltip customTooltip"
-                    delayShow={500}
-                    offset={{
-                      bottom: 8,
-                    }}
-                  />
+                  <FaUserLock /> Admin
                 </Link>
               )}
               {loggedInUser && loggedInUser.length > 0 && (
@@ -473,20 +446,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     src={loggedInUser[0].photoURL as string}
                     size="xs"
                     gravatarEmail={loggedInUser[0].email as string}
-                    data-tip="Profile"
-                    data-for="profile"
-                  />
-                  <ReactTooltip
-                    id="profile"
-                    place="bottom"
-                    type="dark"
-                    effect="solid"
-                    className="tooltip customTooltip"
-                    delayShow={500}
-                    offset={{
-                      bottom: 8,
-                    }}
-                  />
+                    rightMargin
+                  />{' '}
+                  Profile
                 </Link>
               )}
             </TopNavIconWrapper>

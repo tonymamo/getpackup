@@ -1,7 +1,9 @@
-import React, { FunctionComponent, useEffect, useState, useRef } from 'react';
-import { RouteComponentProps, navigate } from '@reach/router';
+import React, { FunctionComponent, useEffect, useState, useRef, useCallback } from 'react';
+import groupBy from 'lodash/groupBy';
+import { RouteComponentProps, navigate, useLocation } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 import { brandPrimary, textColor, white } from '@styles/color';
 import {
@@ -15,17 +17,17 @@ import { baseBorderStyle } from '@styles/mixins';
 import { Alert, Box, Heading, PackingListCategory, TripHeader } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
-import { UserType } from '@common/user';
 import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { zIndexNavbar } from '@styles/layers';
+import { RootState } from '@redux/ducks';
+import { getQueryStringParams, mergeQueryParams } from '@utils/queryStringUtils';
 import PackingListFilters from '@components/PackingListFilters';
 import groupPackingList from '@utils/groupPackingList';
 
 type PackingListProps = {
   trip?: TripType;
-  loggedInUser?: UserType;
   tripId: string;
   packingList: PackingListItemType[];
   tripIsLoaded: boolean;
@@ -75,12 +77,36 @@ const Tab = styled.div`
 
 const PackingList: FunctionComponent<PackingListProps> = ({
   trip,
-  loggedInUser,
   packingList,
   tripId,
   tripIsLoaded,
 }) => {
-  const [tabIndex, setTabIndex] = useState(0);
+  const groupedCategories: [string, PackingListItemType[]][] = [];
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const location = useLocation();
+
+  if (packingList?.length) {
+    // Filter out the shared items that arent packedBy the current user. This does keep items that are marked shared, but only if they are that user's
+    const usersPackingList = packingList.filter(
+      (packingListItem: PackingListItemType) =>
+        packingListItem &&
+        packingListItem.packedBy &&
+        packingListItem.packedBy.length > 0 &&
+        packingListItem.packedBy.some((item) => item.uid === auth.uid || item.isShared)
+    );
+    // Then, organize by category and put the pre-trip category first, if it exists
+    const entries = Object.entries(groupBy(usersPackingList, 'category'));
+    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
+    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
+    if (preTripEntries) groupedCategories.push(preTripEntries);
+    groupedCategories.push(...allOtherEntries);
+  }
+
+  type TabOptions = 'personal' | 'shared';
+
+  const { list } = getQueryStringParams(location);
+  // index is 1 or 2, and doesn't start as 0 since we are using query params and 0 is falsy
+  const [tabIndex, setTabIndex] = useState<TabOptions>((list as TabOptions) || 'personal');
   const [groupCategories, setGroupCategories] = useState<[string, PackingListItemType[]][]>([]);
 
   // TODO: extract all of the sticky header stuff out to its own reusable hook
@@ -90,13 +116,13 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   // 64 is height of navbar, plus grab the safe-area-top (sat) from :root css
   const navbarHeightWithSafeAreaOffset = 64 + getSafeAreaInset('--sat');
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (stickyRef && stickyRef.current) {
-        setSticky(stickyRef.current.getBoundingClientRect().top <= navbarHeightWithSafeAreaOffset);
-      }
-    };
+  const handleScroll = useCallback(() => {
+    if (stickyRef && stickyRef.current) {
+      setSticky(stickyRef.current.getBoundingClientRect().top <= navbarHeightWithSafeAreaOffset);
+    }
+  }, []);
 
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -111,7 +137,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   }, [packingList]);
 
   // we only need tabs if there are shared items, so hide if not
-  const sharedTrip = trip && trip.tripMembers.length > 0;
+  const sharedTrip = trip && Object.keys(trip.tripMembers).length > 1;
 
   if (tripIsLoaded && !trip) {
     return null;
@@ -121,26 +147,41 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     navigate(`${trip?.tripId}/generator`);
   }
 
+  const sharedItems = packingList.filter(
+    (packingListItem) =>
+      packingListItem &&
+      packingListItem.packedBy &&
+      packingListItem.packedBy.length > 0 &&
+      packingListItem.packedBy.some((item) => item.isShared)
+  );
+
   return (
     <>
-      <TripHeader trip={trip} loggedInUser={loggedInUser} />
+      <TripHeader trip={trip} />
       <StickyWrapper ref={stickyRef}>
         {sharedTrip && (
           <Tabs isSticky={isSticky}>
             <Tab
-              active={tabIndex === 0}
+              active={tabIndex === 'personal'}
               onClick={() => {
-                setTabIndex(0);
+                setTabIndex('personal');
                 trackEvent('Personal Checklist Tab Clicked');
+                // cant use 0 since it is falsy
+                navigate(mergeQueryParams({ list: 'personal' }, location), {
+                  replace: true,
+                });
               }}
             >
               <FaRegCheckSquare title="Personal Checklist" />
             </Tab>
             <Tab
-              active={tabIndex === 1}
+              active={tabIndex === 'shared'}
               onClick={() => {
-                setTabIndex(1);
+                setTabIndex('shared');
                 trackEvent('Shared Checklist Tab Clicked');
+                navigate(mergeQueryParams({ list: 'shared' }, location), {
+                  replace: true,
+                });
               }}
             >
               <FaUsers title="Shared Checklist" />
@@ -149,15 +190,19 @@ const PackingList: FunctionComponent<PackingListProps> = ({
         )}
       </StickyWrapper>
       <div
-        style={{ paddingTop: isSticky && sharedTrip ? navbarHeightWithSafeAreaOffset : baseSpacer }}
+        style={{
+          paddingTop: isSticky && sharedTrip ? navbarHeightWithSafeAreaOffset : baseSpacer,
+        }}
       >
         {trip ? (
           <>
             <PackingListFilters
               list={packingList}
-              sendFilteredList={(list) => setGroupCategories(groupPackingList(list))}
+              sendFilteredList={(filteredList) =>
+                setGroupCategories(groupPackingList(filteredList))
+              }
             />
-            {tabIndex === 0 && (
+            {tabIndex === 'personal' && (
               <>
                 <Heading as="h4" altStyle uppercase>
                   Personal Items
@@ -174,7 +219,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                           if (a?.created?.seconds === b?.created?.seconds) {
                             return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                           }
-
                           // sort by timestamp
                           return b.created.toDate() > a.created.toDate() ? -1 : 1;
                         }
@@ -189,6 +233,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                           categoryName={categoryName}
                           sortedItems={sortedItems}
                           tripId={tripId}
+                          isSharedPackingListCategory={false}
                         />
                       );
                     }
@@ -196,24 +241,39 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 )}
               </>
             )}
-            {tabIndex === 1 && sharedTrip && (
+            {tabIndex === 'shared' && sharedTrip && (
               <>
                 <Heading as="h4" altStyle uppercase>
                   Shared Items
                 </Heading>
-                <Box>
-                  <Alert type="info" message="Shared trip items coming soon!" />
-                  <p>
-                    Here you will be able to divide up items and assign roles to who is bringing
-                    what.
-                  </p>
-                </Box>
+                {sharedItems && sharedItems.length > 0 ? (
+                  <PackingListCategory
+                    trip={trip}
+                    key="shared"
+                    categoryName="shared"
+                    sortedItems={sharedItems}
+                    tripId={tripId}
+                    isSharedPackingListCategory
+                  />
+                ) : (
+                  <Box>
+                    <Alert
+                      type="info"
+                      message="No shared items yet. Add one now by going to your personal list and marking an item as shared by the group!"
+                    />
+                  </Box>
+                )}
               </>
             )}
           </>
         ) : (
           // Loading state
-          <PackingListCategory categoryName="" sortedItems={[]} tripId="" />
+          <PackingListCategory
+            categoryName=""
+            sortedItems={[]}
+            tripId=""
+            isSharedPackingListCategory
+          />
         )}
       </div>
     </>

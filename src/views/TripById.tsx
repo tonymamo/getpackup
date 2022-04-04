@@ -13,6 +13,7 @@ import TripParty from '@views/TripParty';
 import EditPackingListItem from '@views/EditPackingListItem';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
+import { PackingListItemType } from '@common/packingListItem';
 
 type TripByIdProps = {
   id?: string;
@@ -26,14 +27,36 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
-  const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
+  const packingList: PackingListItemType[] = useSelector(
+    (state: RootState) => state.firestore.ordered.packingList
+  );
+
+  const isTripOwner: boolean =
+    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
+
+  const activeTrip: TripType | undefined =
+    (activeTripById &&
+      activeTripById.length > 0 &&
+      Object.keys(activeTripById[0].tripMembers).some((member) => member === auth.uid)) ||
+    isTripOwner
+      ? activeTripById[0]
+      : undefined;
 
   useFirestoreConnect([
     {
       collection: 'trips',
       doc: props.id,
       storeAs: 'activeTripById',
-      populates: [{ child: 'tripMembers', root: 'users' }],
+    },
+    {
+      collection: 'users',
+      where: [
+        'uid',
+        'in',
+        activeTrip && activeTrip.tripMembers && Object.keys(activeTrip.tripMembers).length > 0
+          ? Object.keys(activeTrip.tripMembers)
+          : [auth.uid],
+      ],
     },
     {
       collection: 'trips',
@@ -43,16 +66,6 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
       orderBy: ['category', 'asc'],
     },
   ]);
-
-  const isTripOwner: boolean =
-    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
-
-  const activeTrip: TripType | undefined =
-    activeTripById &&
-    activeTripById.length > 0 &&
-    (activeTripById[0].tripMembers.some((member) => member === auth.uid) || isTripOwner)
-      ? activeTripById[0]
-      : undefined;
 
   useEffect(() => {
     return () => {
@@ -82,12 +95,12 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         <Router basepath={`/app/trips/${props.id}`} primary={false}>
           <PackingList
             path="/"
-            packingList={packingList}
+            packingList={packingList && packingList.length > 0 ? packingList : []}
             tripId={props.id}
             trip={activeTrip}
-            loggedInUser={props.loggedInUser}
             tripIsLoaded={isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip)}
           />
+
           <TripDetails
             path="/details"
             activeTrip={activeTrip}
@@ -95,7 +108,14 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             loggedInUser={props.loggedInUser}
           />
           <TripParty path="/party" activeTrip={activeTrip} />
-          <EditPackingListItem path="/checklist/:id" tripId={props.id} />
+          <EditPackingListItem
+            path="/checklist/:id"
+            tripId={props.id}
+            users={users}
+            packingList={packingList && packingList.length > 0 ? packingList : []}
+            loggedInUserUid={auth.uid}
+            activeTrip={activeTrip}
+          />
         </Router>
       </PageContainer>
 

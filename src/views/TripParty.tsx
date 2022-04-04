@@ -15,6 +15,8 @@ import {
 import 'instantsearch.css/themes/satellite.css';
 import styled from 'styled-components';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
+import axios from 'axios';
+import { stringify } from 'query-string';
 
 import {
   Alert,
@@ -26,8 +28,9 @@ import {
   Seo,
   UserMediaObject,
   TripNavigation,
+  Pill,
 } from '@components';
-import { TripType } from '@common/trip';
+import { TripMemberStatus, TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { UserType } from '@common/user';
@@ -68,6 +71,7 @@ const StyledSearchBox = styled.input`
 
 const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const profile = useSelector((state: RootState) => state.firebase.profile);
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const [isSearchBarDisabled, setIsSearchBarDisabled] = useState(false);
 
@@ -75,8 +79,12 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const dispatch = useDispatch();
 
   const algoliaClient = algoliasearch(
-    process.env.GATSBY_ALGOLIA_APP_ID as string,
-    process.env.GATSBY_ALGOLIA_SEARCH_API_KEY as string
+    process.env.GATSBY_ENVIRONMENT === 'DEVELOP'
+      ? (process.env.GATSBY_TEST_ALGOLIA_APP_ID as string)
+      : (process.env.GATSBY_ALGOLIA_APP_ID as string),
+    process.env.GATSBY_ENVIRONMENT === 'DEVELOP'
+      ? (process.env.GATSBY_TEST_ALGOLIA_SEARCH_API_KEY as string)
+      : (process.env.GATSBY_ALGOLIA_SEARCH_API_KEY as string)
   );
 
   const searchClient = {
@@ -96,9 +104,13 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
     },
   };
 
-  const updateTrip = (memberId: string) => {
-    // activeTrip.tripMembers.length + 1 accounts for async data updates
-    if (activeTrip?.tripMembers && activeTrip.tripMembers.length + 1 > MAX_TRIP_PARTY_SIZE) {
+  const updateTrip = (memberId: string, memberEmail: string) => {
+    // Object.values(activeTrip.tripMembers).length + 1 accounts for async data updates
+    // TODO: maybe dont count declined members towards total party size?
+    if (
+      activeTrip?.tripMembers &&
+      Object.values(activeTrip.tripMembers).length + 1 > MAX_TRIP_PARTY_SIZE
+    ) {
       setIsSearchBarDisabled(true);
       dispatch(
         addAlert({
@@ -114,15 +126,27 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
         .collection('trips')
         .doc(activeTrip.tripId)
         .update({
-          ...activeTrip,
-          updated: new Date(),
-          tripMembers: [...activeTrip.tripMembers, memberId],
+          [`tripMembers.${memberId}`]: {
+            uid: memberId,
+            invitedAt: new Date(),
+            status: TripMemberStatus.Pending,
+          },
         })
         .then(() => {
+          const queryParams = stringify({
+            to: memberEmail,
+            subject: `${profile.username} has invited you on a trip`,
+            username: profile.username,
+            tripId: activeTrip.tripId,
+          });
+          const invitationUrl = `https://us-central1-getpackup.cloudfunctions.net/sendTripInvitationEmail?${queryParams}`;
+
+          axios.post(invitationUrl);
+
           trackEvent('Trip Party Member Added', {
             ...activeTrip,
             updated: new Date(),
-            tripMembers: [...activeTrip.tripMembers, memberId],
+            invitedMember: memberId,
           });
         })
         .catch((err) => {
@@ -141,8 +165,6 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
     }
   };
 
-  const existingTripMember = (uid: string) => activeTrip && activeTrip.tripMembers.includes(uid);
-
   const InviteButton = ({
     items,
     refine,
@@ -157,7 +179,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       color="primaryOutline"
       onClick={() => {
         refine(items);
-        updateTrip(hit.uid);
+        updateTrip(hit.uid, hit.email);
       }}
       size="small"
     >
@@ -177,20 +199,27 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const ClearRefinementsButton = connectCurrentRefinements(ClearQueryButton);
 
+  const getActionButton = (hit: UserType) => {
+    const matchingUser =
+      activeTrip &&
+      activeTrip.tripMembers &&
+      Object.values(activeTrip.tripMembers).find((member) => member.uid === hit.uid);
+    if (matchingUser) {
+      return (
+        <Button type="button" color="tertiary" size="small" disabled>
+          {matchingUser.status}
+        </Button>
+      );
+    }
+    return <InviteButtonWithClearSearch clearsQuery hit={hit} />;
+  };
+
   const Hit = ({ hit }: { hit: UserType }) => (
     <UserMediaObject
       user={hit}
       avatarSize="sm"
       showSecondaryContent
-      action={
-        existingTripMember(hit.uid) ? (
-          <Button type="button" color="tertiary" size="small" disabled>
-            Added
-          </Button>
-        ) : (
-          <InviteButtonWithClearSearch clearsQuery hit={hit} />
-        )
-      }
+      action={getActionButton(hit)}
     />
   );
 
@@ -213,15 +242,25 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
       return (
         <ScrollableHitsWrapper ref={rootRef} hidden={hasEmptyQuery}>
-          {hasResults && props.hits && props.hits.length >= 1 && props.hits[0] !== undefined && (
+          {true && (
             <>
-              {props.hits.map((hit: UserType & { objectID: string }) => (
-                <Fragment key={hit.objectID}>
-                  <Hit hit={hit} />
-                  <HorizontalRule compact />
-                </Fragment>
-              ))}
-              {!loading && !props.hasMore && (
+              {/* 
+                toggle display to stop infinite loop caused by hits 
+                https://github.com/algolia/react-instantsearch/issues/137#issuecomment-349385276
+              */}
+              <div style={{ display: searching ? 'none' : 'block' }}>
+                {hasResults &&
+                  props.hits &&
+                  props.hits.length >= 1 &&
+                  props.hits[0] !== undefined &&
+                  props.hits.map((hit: UserType & { objectID: string }) => (
+                    <Fragment key={hit.objectID}>
+                      <Hit hit={hit} />
+                      <HorizontalRule compact />
+                    </Fragment>
+                  ))}
+              </div>
+              {!loading && !props.hasMore && hasResults && (
                 <>
                   <p style={{ textAlign: 'center' }}>
                     No more results found for <strong>{searchState.query}</strong>.
@@ -293,6 +332,25 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const ConnectedSearchBox = connectSearchBox(SearchBox);
 
+  const getStatusPill = (uid: string) => {
+    const matchingTripMember =
+      activeTrip?.tripMembers &&
+      Object.values(activeTrip?.tripMembers)?.find((member) => member.uid === uid);
+    if (matchingTripMember?.status === TripMemberStatus.Pending) {
+      return <Pill text={TripMemberStatus.Pending} color="neutral" />;
+    }
+    if (matchingTripMember?.status === TripMemberStatus.Owner) {
+      return <Pill text={TripMemberStatus.Owner} color="primary" />;
+    }
+    if (matchingTripMember?.status === TripMemberStatus.Accepted) {
+      return <Pill text={TripMemberStatus.Accepted} color="success" />;
+    }
+    if (matchingTripMember?.status === TripMemberStatus.Declined) {
+      return <Pill text={TripMemberStatus.Declined} color="danger" />;
+    }
+    return undefined;
+  };
+
   return (
     <>
       <Seo title="Trip Party" />
@@ -318,28 +376,30 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
               </InstantSearch>
             </SearchWrapper>
 
-            {activeTrip.tripMembers.length > 0 ? (
+            {Object.values(activeTrip.tripMembers).length > 0 ? (
               <Box>
                 <p>
                   <strong>Trip Party</strong>
                 </p>
-                <Alert
-                  type="info"
-                  message="Note: Collaborative trips are coming soon, so Trip Party members will not be notified or see this trip yet on their list of trips."
-                />
                 <div
                   style={{
                     margin: `${halfSpacer} 0 ${baseSpacer}`,
                   }}
                 >
-                  {activeTrip.tripMembers.map((tripMember, index) => {
+                  {Object.values(activeTrip?.tripMembers).map((tripMember, index) => {
                     const matchingUser: UserType =
-                      users && users[tripMember] ? users[tripMember] : undefined;
+                      users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
                     if (!matchingUser) return null;
                     return (
                       <div key={matchingUser.uid}>
-                        <UserMediaObject user={matchingUser} showSecondaryContent />
-                        {index !== activeTrip.tripMembers.length - 1 && <HorizontalRule compact />}
+                        <UserMediaObject
+                          user={matchingUser}
+                          showSecondaryContent
+                          action={getStatusPill(matchingUser.uid)}
+                        />
+                        {index !== Object.keys(activeTrip?.tripMembers).length - 1 && (
+                          <HorizontalRule compact />
+                        )}
                       </div>
                     );
                   })}

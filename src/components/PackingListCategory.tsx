@@ -8,11 +8,12 @@ import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 import { TripType } from '@common/trip';
 import { useFirebase } from 'react-redux-firebase';
 import trackEvent from '@utils/trackEvent';
-import { LocalStorage } from '../enums';
+import { LocalStorage } from '@utils/enums';
 
 type PackingListCategoryProps = {
   categoryName: string;
   sortedItems: PackingListItemType[];
+  isSharedPackingListCategory: boolean;
   tripId: string;
   trip?: TripType;
 };
@@ -28,6 +29,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
   trip,
+  isSharedPackingListCategory,
 }) => {
   const firebase = useFirebase();
 
@@ -65,7 +67,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
           collapsedCategories: updatedCollapsedCategories,
         });
       })
-      .catch((err) => {
+      .catch(() => {
         trackEvent('Trip Details Update Failure', {
           collapsedCategories: updatedCollapsedCategories,
         });
@@ -75,22 +77,32 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   return (
     <CollapsibleBox
       key={categoryName}
-      title={categoryName}
+      title={isSharedPackingListCategory ? '' : categoryName}
       defaultClosed={
         trip?.collapsedCategories
           ? trip.collapsedCategories.some((cat) => cat === categoryName)
           : false
       }
       collapseCallback={() => handleCollapsible(categoryName)}
+      enabled={!isSharedPackingListCategory} // Disable for the Shared Items list which doesn't need a title
     >
       <div>
         <ItemsWrapper>
           {sortedItems && sortedItems.length > 0 ? (
             <>
               {sortedItems.map((item) => (
-                <PackingListItem key={item.id} tripId={tripId} item={item} />
+                <PackingListItem
+                  key={item.id}
+                  tripId={tripId}
+                  item={item}
+                  isOnSharedList={isSharedPackingListCategory}
+                />
               ))}
-              <PackingListAddItem tripId={tripId} categoryName={categoryName} />
+              <PackingListAddItem
+                tripId={tripId}
+                categoryName={categoryName}
+                isOnSharedList={isSharedPackingListCategory}
+              />
             </>
           ) : (
             <>

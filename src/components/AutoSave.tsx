@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect, useCallback } from 'react';
+import React, { FunctionComponent, useState, useEffect, useCallback, useRef } from 'react';
 import { useFormikContext } from 'formik';
 import { debounce, isEqual } from 'lodash';
 import { FaHourglassHalf, FaCheck, FaExclamationCircle } from 'react-icons/fa';
@@ -26,34 +26,45 @@ const AutoSave: FunctionComponent<{}> = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isMessageShowing, setIsMessageShowing] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const mounted = useRef(false);
 
   const debouncedSubmit = useCallback(
     debounce(() => {
-      setIsSaving(true);
-      setIsMessageShowing(true);
-      setHasError(false);
-      if (formik.isValid) {
-        formik.submitForm().then(
-          () => {
-            setIsSaving(false);
-            setHasError(false);
-          },
-          () => {
-            setIsSaving(false);
-            setHasError(true);
+      if (mounted.current) {
+        setIsSaving(true);
+        setIsMessageShowing(true);
+        setHasError(false);
+        if (formik.isValid) {
+          formik.submitForm().then(
+            () => {
+              setIsSaving(false);
+              setHasError(false);
+            },
+            () => {
+              setIsSaving(false);
+              setHasError(true);
+            }
+          );
+        }
+        setTimeout(() => {
+          if (mounted.current) {
+            setIsMessageShowing(false);
           }
-        );
+        }, 3000);
       }
-      setTimeout(() => setIsMessageShowing(false), 3000);
     }, debounceMs),
-    [debounceMs, formik.submitForm]
+    [formik.submitForm]
   );
 
   const prevValues = usePrevious(formik.values);
   useEffect(() => {
+    mounted.current = true; // Will set it to true on mount ...
     if (prevValues && !isEqual(formik.values, prevValues)) {
       debouncedSubmit();
     }
+    return () => {
+      mounted.current = false; // ... and to false on unmount
+    };
   }, [formik.values]);
 
   if (isMessageShowing && formik.isValid) {

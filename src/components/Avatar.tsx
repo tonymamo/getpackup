@@ -150,7 +150,7 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
       ) : (
         <>
           <PreviewCompatibleImage
-            data-tip={props.username}
+            data-tip={props.username?.toLocaleLowerCase()}
             data-for="avatar"
             imageInfo={{
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

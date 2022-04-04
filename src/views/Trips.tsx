@@ -8,13 +8,12 @@ import { useSelector } from 'react-redux';
 import { Row, Column, Heading, Box, Button, Seo, PageContainer, TripCard } from '@components';
 import { RootState } from '@redux/ducks';
 import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
-import { UserType } from '@common/user';
-import { TripType } from '@common/trip';
+import { TripMemberStatus, TripType } from '@common/trip';
 import trackEvent from '@utils/trackEvent';
 
-type TripsProps = { loggedInUser?: UserType } & RouteComponentProps;
+type TripsProps = {} & RouteComponentProps;
 
-const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
+const Trips: FunctionComponent<TripsProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
@@ -23,10 +22,9 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     {
       collection: 'trips',
       where: [
-        ['owner', '==', auth.uid],
-        ['archived', '!=', true],
+        [`tripMembers.${auth.uid}.status`, '!=', TripMemberStatus.Declined],
+        ['archived', '==', false],
       ],
-      populates: [{ child: 'tripMembers', root: 'users' }],
     },
     {
       collection: 'gear-closet',
@@ -35,13 +33,22 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     },
   ]);
 
+  const pendingTrips =
+    trips &&
+    trips.length &&
+    trips
+      .filter((trip) => trip.tripMembers[auth.uid].status === TripMemberStatus.Pending)
+      .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
+
   const inProgressTrips =
     trips &&
     trips.length &&
     trips
       .filter(
         (trip) =>
-          isBeforeToday(trip.startDate.seconds * 1000) && isAfterToday(trip.endDate.seconds * 1000)
+          trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+          isBeforeToday(trip.startDate.seconds * 1000) &&
+          isAfterToday(trip.endDate.seconds * 1000)
       )
       .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
@@ -49,25 +56,37 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
     trips &&
     trips.length &&
     trips
-      .filter((trip) => isAfterToday(trip.startDate.seconds * 1000))
+      .filter(
+        (trip) =>
+          trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+          isAfterToday(trip.startDate.seconds * 1000)
+      )
       .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
 
   const pastTrips =
     trips &&
     trips.length &&
     trips
-      .filter((trip) => isBeforeToday(trip.endDate.seconds * 1000))
+      .filter(
+        (trip) =>
+          trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+          isBeforeToday(trip.endDate.seconds * 1000)
+      )
       .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
-  const renderTrip = (trip: TripType) => (
+  const renderTrip = (trip: TripType, pending?: boolean) => (
     <Box
       key={trip.tripId}
-      onClick={() => {
-        navigate(`/app/trips/${trip.tripId}/`);
-        trackEvent('Trip Card Link Clicked', { trip });
-      }}
+      onClick={
+        pending
+          ? () => null
+          : () => {
+              navigate(`/app/trips/${trip.tripId}/`);
+              trackEvent('Trip Card Link Clicked', { trip });
+            }
+      }
     >
-      <TripCard trip={trip} loggedInUser={loggedInUser} />
+      <TripCard trip={trip} isPending={pending} />
     </Box>
   );
 
@@ -109,9 +128,18 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
           {Array.from({ length: 5 }).map((_, index) => (
             // eslint-disable-next-line react/no-array-index-key
             <Box key={`loadingTrip${index}`}>
-              <TripCard trip={undefined} loggedInUser={loggedInUser} />
+              <TripCard trip={{} as TripType} />
             </Box>
           ))}
+        </>
+      )}
+
+      {Array.isArray(pendingTrips) && !!pendingTrips.length && pendingTrips.length > 0 && (
+        <>
+          <Heading as="h2" altStyle withDecoration>
+            Pending Trip Invitations
+          </Heading>
+          {pendingTrips.map((trip) => renderTrip(trip, true))}
         </>
       )}
 
