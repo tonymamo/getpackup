@@ -15,16 +15,15 @@ type TripsProps = {} & RouteComponentProps;
 
 const Trips: FunctionComponent<TripsProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
+  const trips: Array<TripType> = useSelector((state: RootState) =>
+    state.firestore.ordered.trips.filter((trip: TripType) => trip.archived !== true)
+  );
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
 
   useFirestoreConnect([
     {
       collection: 'trips',
-      where: [
-        [`tripMembers.${auth.uid}.status`, '!=', TripMemberStatus.Declined],
-        ['archived', '==', false],
-      ],
+      where: [[`tripMembers.${auth.uid}.status`, '!=', TripMemberStatus.Declined]],
     },
     {
       collection: 'gear-closet',
