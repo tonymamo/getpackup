@@ -24,7 +24,10 @@ module.exports = {
     'gatsby-plugin-styled-components',
     'gatsby-plugin-eslint',
     'gatsby-plugin-smoothscroll',
-    'gatsby-plugin-advanced-sitemap',
+    {
+      resolve: 'gatsby-plugin-advanced-sitemap',
+      exclude: ['/user-mgmt'],
+    },
     'gatsby-plugin-robots-txt',
     'gatsby-plugin-instagram-embed',
     {

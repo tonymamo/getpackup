@@ -1,7 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import {
+  FirestoreReducer,
+  FirebaseReducer,
+  ReactReduxFirebaseProvider,
+} from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import firebase from 'firebase/app';
 import {
@@ -15,8 +19,8 @@ import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAle
 export const initialState = process.env.BROWSER // eslint-disable-next-line no-underscore-dangle
   ? window.__INITIAL_STATE__
   : {
-      firestore: {},
-      firebase: {},
+      firestore: {} as typeof FirestoreReducer,
+      firebase: {} as FirebaseReducer.Reducer<any, any>,
       client: clientInitialState,
       globalAlerts: globalAlertsInitialState,
       workerUpdateReady: workerUpdateInitialState,
@@ -68,6 +72,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 if (process.env.GATSBY_ENVIRONMENT === 'DEVELOP') {
+  // eslint-disable-next-line no-console
   console.log(`Development Env: Using Firestore Emulator`);
   firebase.firestore().useEmulator('localhost', 8083);
 } else {
