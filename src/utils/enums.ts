@@ -6,8 +6,13 @@ export enum ScrollTimeout {
   default = 167, // in milliseconds
 }
 
-export enum FilterListFilterCriteria {
-  All = 'all',
-  Packed = 'packed',
-  Unpacked = 'unpacked',
+export enum PackingListFilterOptions {
+  All = 'All',
+  Packed = 'Packed',
+  Unpacked = 'Unpacked',
+}
+
+export enum TabOptions {
+  PERSONAL = 'Personal',
+  SHARED = 'Shared',
 }

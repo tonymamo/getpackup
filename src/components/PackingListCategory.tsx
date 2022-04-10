@@ -6,9 +6,10 @@ import { FlexContainer, PackingListItem, PackingListAddItem, CollapsibleBox } fr
 import { PackingListItemType } from '@common/packingListItem';
 import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 import { TripType } from '@common/trip';
-import { useFirebase } from 'react-redux-firebase';
+import { FirebaseReducer, useFirebase } from 'react-redux-firebase';
 import trackEvent from '@utils/trackEvent';
 import { LocalStorage } from '@utils/enums';
+import pluralize from '@utils/pluralize';
 
 type PackingListCategoryProps = {
   categoryName: string;
@@ -16,6 +17,7 @@ type PackingListCategoryProps = {
   isSharedPackingListCategory: boolean;
   tripId: string;
   trip?: TripType;
+  auth?: FirebaseReducer.AuthState;
 };
 
 const ItemsWrapper = styled.ul`
@@ -30,6 +32,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   tripId,
   trip,
   isSharedPackingListCategory,
+  auth,
 }) => {
   const firebase = useFirebase();
 
@@ -44,43 +47,65 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   }, [window]);
 
   const handleCollapsible = (name: string) => {
-    let updatedCollapsedCategories: string[] = [];
-    if (trip?.collapsedCategories?.some((cat) => cat === name)) {
-      // Category is in the collapsedList, so we remove it
-      updatedCollapsedCategories = trip.collapsedCategories.filter((cat) => cat !== name);
-    } else if (trip?.collapsedCategories && trip?.collapsedCategories?.length > 0) {
-      // Category is not in the collapsedlist, so we add it
-      updatedCollapsedCategories = [...((trip?.collapsedCategories as unknown) as string[]), name];
-    } else {
-      // collapsedList does not exist, so we can create it with this category
-      updatedCollapsedCategories.push(name);
+    if (auth && auth.uid && trip) {
+      // updatedCollapsedCategories is not the same shape as collapsedCategories,
+      // it is just the array that we will push to the collapsedCategories[auth.uid]
+      let updatedCollapsedCategories: string[] = [];
+
+      // Category is in the collapsedList for the current user, so we remove it
+      if (
+        trip.collapsedCategories &&
+        trip.collapsedCategories[auth.uid] &&
+        trip.collapsedCategories[auth.uid].some((cat) => cat === name)
+      ) {
+        updatedCollapsedCategories = trip.collapsedCategories[auth.uid].filter(
+          (cat) => cat !== name
+        );
+      }
+      // Category is not in the collapsedlist for current user, so we add it
+      else if (
+        trip.collapsedCategories &&
+        trip.collapsedCategories[auth.uid] &&
+        trip.collapsedCategories[auth.uid].findIndex((cat) => cat === name) < 0
+      ) {
+        updatedCollapsedCategories = [...trip.collapsedCategories[auth.uid], name];
+      }
+      // user or trip doesnt have any entries in trip.collapsedCategories yet,
+      // so lets start an array with the new category and we will add it on doc.update below
+      else {
+        updatedCollapsedCategories = [name];
+      }
+
+      firebase
+        .firestore()
+        .collection('trips')
+        .doc(trip?.tripId)
+        .update({
+          [`collapsedCategories.${auth.uid}`]: updatedCollapsedCategories,
+        })
+        .then(() => {
+          trackEvent('Collapsed Categories Updated', {
+            tripId,
+            [`collapsedCategories.${auth.uid}`]: updatedCollapsedCategories,
+          });
+        })
+        .catch(() => {
+          trackEvent('Collapsed Categories Update Failure', {
+            tripId,
+            [`collapsedCategories.${auth.uid}`]: updatedCollapsedCategories,
+          });
+        });
     }
-    firebase
-      .firestore()
-      .collection('trips')
-      .doc(trip?.tripId)
-      .update({
-        collapsedCategories: updatedCollapsedCategories,
-      })
-      .then(() => {
-        trackEvent('Trip Details Updated', {
-          collapsedCategories: updatedCollapsedCategories,
-        });
-      })
-      .catch(() => {
-        trackEvent('Trip Details Update Failure', {
-          collapsedCategories: updatedCollapsedCategories,
-        });
-      });
   };
 
   return (
     <CollapsibleBox
       key={categoryName}
       title={isSharedPackingListCategory ? '' : categoryName}
+      subtitle={isSharedPackingListCategory ? undefined : pluralize('item', sortedItems.length)}
       defaultClosed={
-        trip?.collapsedCategories
-          ? trip.collapsedCategories.some((cat) => cat === categoryName)
+        auth && auth.uid && trip && trip.collapsedCategories && trip.collapsedCategories[auth.uid]
+          ? trip.collapsedCategories[auth.uid].findIndex((cat) => cat === categoryName) > -1
           : false
       }
       collapseCallback={() => handleCollapsible(categoryName)}

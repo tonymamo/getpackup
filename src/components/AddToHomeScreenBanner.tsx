@@ -76,11 +76,11 @@ const AddToHomeScreenBanner: FunctionComponent<{}> = () => {
     setIsLoaded(true);
 
     const t = setTimeout(() => {
-      if (isDevelopment) {
-        console.log('isIOS: ', isIos());
-        console.log('isInStandaloneMode: ', isInStandaloneMode());
-        console.log('checkLastPwaDisplay: ', checkLastPwaDisplay());
-      }
+      // if (isDevelopment) {
+      //   console.log('isIOS: ', isIos());
+      //   console.log('isInStandaloneMode: ', isInStandaloneMode());
+      //   console.log('checkLastPwaDisplay: ', checkLastPwaDisplay());
+      // }
       if (
         isAuthenticated &&
         trips &&

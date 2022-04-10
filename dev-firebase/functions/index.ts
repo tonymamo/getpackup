@@ -1,19 +1,15 @@
+/* eslint-disable no-console */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
+import { BigBatch } from '@qualdesk/firestore-big-batch';
+
 const chunk = require('lodash/chunk');
 
 admin.initializeApp();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info('Hello logs!', { structuredData: true });
-  response.send('Hello from Firebase!');
-});
-
-exports.copyOwnerToTripMembers = functions.https.onRequest(async (req, res) => {
+exports.copyOwnerToTripMembers = functions.https.onRequest(async (_, res) => {
   const snapshot = await admin
     .firestore()
     .collection('trips')
@@ -25,11 +21,11 @@ exports.copyOwnerToTripMembers = functions.https.onRequest(async (req, res) => {
    * - Or one of [these answers](https://stackoverflow.com/questions/8495687/split-array-into-chunks#comment84212474_8495740)
    */
   const batches = chunk(snapshot.docs, MAX_WRITES_PER_BATCH);
-  const commitBatchPromises = [];
+  const commitBatchPromises: any[] = [];
 
   // eslint-disable-next-line no-restricted-syntax
   for (const batch of batches) {
-    batch.forEach((doc) => {
+    batch.forEach((doc: any) => {
       if (!doc.get('tripMembers') || !doc.get('owner')) {
         return;
       }
@@ -37,7 +33,7 @@ exports.copyOwnerToTripMembers = functions.https.onRequest(async (req, res) => {
       //   console.log(doc.get('tripMembers'));
       const ownerAlreadyAMember =
         doc.get('tripMembers').length > 0
-          ? doc.get('tripMembers').some((member) => member === doc.get('owner'))
+          ? doc.get('tripMembers').some((member: any) => member === doc.get('owner'))
           : false;
       if (!ownerAlreadyAMember && doc.get('owner')) {
         // console.log([...doc.get('tripMembers'), doc.get('owner')]);
@@ -50,7 +46,7 @@ exports.copyOwnerToTripMembers = functions.https.onRequest(async (req, res) => {
   await Promise.all(commitBatchPromises);
 });
 
-exports.convertTripMembersToInviteObject = functions.https.onRequest(async (req, res) => {
+exports.convertTripMembersToInviteObject = functions.https.onRequest(async (_, res) => {
   const snapshot = await admin
     .firestore()
     .collection('trips')
@@ -62,11 +58,11 @@ exports.convertTripMembersToInviteObject = functions.https.onRequest(async (req,
    * - Or one of [these answers](https://stackoverflow.com/questions/8495687/split-array-into-chunks#comment84212474_8495740)
    */
   const batches = chunk(snapshot.docs, MAX_WRITES_PER_BATCH);
-  const commitBatchPromises = [];
+  const commitBatchPromises: any[] = [];
 
   // eslint-disable-next-line no-restricted-syntax
   for (const batch of batches) {
-    batch.forEach((doc) => {
+    batch.forEach((doc: any) => {
       if (!doc.get('tripMembers') || !doc.get('owner')) {
         return;
       }
@@ -93,31 +89,75 @@ exports.convertTripMembersToInviteObject = functions.https.onRequest(async (req,
   await Promise.all(commitBatchPromises);
 });
 
-exports.addOwnerToPackingListItems = functions.https.onRequest(async (req, res) => {
-  const tripsSnapshot = await admin
+exports.updatePackingList = functions.https.onRequest(async (req, res) => {
+  const tripId = req.query.lastKey;
+
+  const snapshots = await admin
     .firestore()
     .collection('trips')
+    .doc(tripId as string)
     .get();
 
-  tripsSnapshot.docs.forEach(async (trip) => {
-    const packingListItemsSnapshot = await trip.ref.collection('packing-list').get();
-    const tripOwner = trip.get('owner');
+  const commitBatchPromises: any[] = [];
 
-    packingListItemsSnapshot.docs.forEach(async (item) => {
-      if (tripOwner) {
-        await item.ref.update({
-          ...item.data(),
+  const packingListItemsSnapshot = await snapshots.ref.collection('packing-list').get();
+
+  packingListItemsSnapshot.docs.forEach(async (item) => {
+    const listBatch = new BigBatch({ firestore: admin.firestore() });
+
+    listBatch.update(item.ref, {
+      packedBy: [
+        {
+          uid: (await snapshots.ref.get()).data()?.owner || '',
+          quantity: item.get('quantity') ?? 1,
+          isShared: false,
+        },
+      ],
+    });
+    commitBatchPromises.push(listBatch.commit());
+  });
+
+  try {
+    const finished = await Promise.all(commitBatchPromises);
+    if (finished) {
+      res.send('completed');
+    }
+  } catch (err) {
+    res.send('error');
+  }
+});
+
+exports.addOwnerToPackingListItems = functions.https.onRequest(async () => {
+  const snapshot = await admin
+    .firestore()
+    .collection('trips')
+    .limit(10)
+    .get();
+
+  snapshot.docs.forEach(async (doc) => {
+    const packingList = await admin
+      .firestore()
+      .collection('trips')
+      .doc(doc.id)
+      .collection('packing-list')
+      .get();
+
+    await packingList.docs.forEach(async (item) => {
+      const batch = new BigBatch({ firestore: admin.firestore() });
+      const packedByExists = (await item.ref.get()).data()?.packedBy;
+
+      if (!packedByExists || packedByExists.length === 0) {
+        await batch.update(item.ref, {
           packedBy: [
             {
-              uid: tripOwner,
-              quantity: item.get('quantity') ?? 1,
+              uid: (await doc.ref.get()).data()?.owner || '',
+              quantity: 1,
               isShared: false,
             },
           ],
         });
       }
+      await batch.commit();
     });
   });
-
-  res.send(`Added owner to packing list item for ${tripsSnapshot.docs.length} trips`);
 });

@@ -1,15 +1,29 @@
-import { PackingListItemType } from "@common/packingListItem";
+import { PackingListItemType } from '@common/packingListItem';
 import groupBy from 'lodash/groupBy';
+import { TabOptions } from './enums';
 
-const groupPackingList = (list: PackingListItemType[]) => {
-  const groupedCategories: [string, PackingListItemType[]][] = [];
+const groupPackingList = (list: PackingListItemType[], uid: string, typeOfList: TabOptions) => {
+  // Only grab items that belong to the logged in user, and any shared items
+  const userOrSharedPackingList = list.filter(
+    (packingListItem: PackingListItemType) =>
+      packingListItem &&
+      packingListItem.packedBy &&
+      packingListItem.packedBy.length > 0 &&
+      packingListItem.packedBy.some((item) =>
+        typeOfList === TabOptions.PERSONAL ? item.uid === uid : item.isShared
+      )
+  );
 
-  const entries = Object.entries(groupBy(list, 'category'));
-  const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
+  // group them by category
+  const entries = Object.entries(groupBy(userOrSharedPackingList, 'category'));
+
+  // find all the pre-trip category
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip')!;
+  // then grab all the other categories
   const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
-  if (preTripEntries) groupedCategories.push(preTripEntries);
-  groupedCategories.push(...allOtherEntries);
-  return groupedCategories;
+
+  return [preTripEntries, ...allOtherEntries];
 };
 
 export default groupPackingList;

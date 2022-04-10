@@ -153,7 +153,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         .collection('trips')
         .doc(props.id)
         .update({
-          tags: [...(activeTrip?.tags || []), ...tagMatches],
+          tags: [new Set([...(activeTrip?.tags || []), ...tagMatches])],
         })
     );
 
@@ -287,7 +287,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   </p>
                   {activeTrip && activeTrip.owner !== props.loggedInUser.uid && (
                     <Alert
-                      type="success"
+                      type="info"
                       message="We've pre-selected some options based on the existing trip details!"
                     />
                   )}

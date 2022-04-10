@@ -340,10 +340,10 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       return <Pill text={TripMemberStatus.Pending} color="neutral" />;
     }
     if (matchingTripMember?.status === TripMemberStatus.Owner) {
-      return <Pill text={TripMemberStatus.Owner} color="primary" />;
+      return <Pill text="Creator" color="primary" />;
     }
     if (matchingTripMember?.status === TripMemberStatus.Accepted) {
-      return <Pill text={TripMemberStatus.Accepted} color="success" />;
+      return <Pill text="Member" color="success" />;
     }
     if (matchingTripMember?.status === TripMemberStatus.Declined) {
       return <Pill text={TripMemberStatus.Declined} color="danger" />;

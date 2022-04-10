@@ -31,7 +31,9 @@ const Trips: FunctionComponent<TripsProps> = () => {
   ]);
 
   const nonArchivedTrips: TripType[] =
-    trips && trips.length > 0 ? trips.filter((trip: TripType) => trip.archived !== true) : [];
+    isLoaded(trips) && Array.isArray(trips) && trips && trips.length > 0
+      ? trips.filter((trip: TripType) => trip.archived !== true)
+      : [];
 
   const pendingTrips = nonArchivedTrips
     .filter((trip) => trip.tripMembers[auth.uid].status === TripMemberStatus.Pending)
@@ -87,6 +89,19 @@ const Trips: FunctionComponent<TripsProps> = () => {
     navigate('/app/onboarding');
   }
 
+  if (!isLoaded(trips) || !trips) {
+    return (
+      <>
+        {Array.from({ length: 5 }).map((_, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Box key={`loadingTrip${index}`}>
+            <TripCard trip={{} as TripType} />
+          </Box>
+        ))}
+      </>
+    );
+  }
+
   return (
     <PageContainer>
       <Seo title="My Trips" />
@@ -110,19 +125,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
         </Row>
       )}
 
-      {/* LOADING SKELETON */}
-      {!isLoaded(trips) && (
-        <>
-          {Array.from({ length: 5 }).map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Box key={`loadingTrip${index}`}>
-              <TripCard trip={{} as TripType} />
-            </Box>
-          ))}
-        </>
-      )}
-
-      {Array.isArray(pendingTrips) && !!pendingTrips.length && pendingTrips.length > 0 && (
+      {pendingTrips.length > 0 && (
         <>
           <Heading as="h2" altStyle withDecoration>
             Pending Trip Invitations
@@ -132,7 +135,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
       )}
 
       {/* IN PROGRESS */}
-      {Array.isArray(inProgressTrips) && !!inProgressTrips.length && inProgressTrips.length > 0 && (
+      {inProgressTrips.length > 0 && (
         <>
           <Heading as="h2" altStyle withDecoration>
             Trips in Progress
@@ -142,7 +145,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
       )}
 
       {/* UPCOMING */}
-      {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 && (
+      {upcomingTrips.length > 0 && (
         <>
           <Heading as="h2" altStyle withDecoration>
             Upcoming Trips
@@ -151,8 +154,8 @@ const Trips: FunctionComponent<TripsProps> = () => {
         </>
       )}
 
-      {/* NO UPCOMING TRIPS */}
-      {isLoaded(trips) && !upcomingTrips && (
+      {/* NO TRIPS AT ALL, BUT HAS GEAR CLOSET */}
+      {((isLoaded(trips) && !upcomingTrips) || trips.length === 0) && (
         <Box>
           No upcoming trips planned currently,{' '}
           <Link
@@ -169,7 +172,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
       )}
 
       {/* PAST TRIPS */}
-      {Array.isArray(pastTrips) && !!pastTrips.length && pastTrips.length > 0 && (
+      {pastTrips.length > 0 && (
         <>
           <Heading as="h2" altStyle withDecoration>
             Past Trips

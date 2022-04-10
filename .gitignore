@@ -77,4 +77,10 @@ dist
 #firebase export
 dev-firebase/dev-firebase/
 
+#firebase build
+dev-firebase/functions/index.js
+
 .idea/
+
+# Local Netlify folder
+.netlify

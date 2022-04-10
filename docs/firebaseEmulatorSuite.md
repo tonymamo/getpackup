@@ -60,3 +60,5 @@ You can visit the emulator console at http://localhost:4000
 The Firestore Database runs at http://localhost:8080
 3. **Cloud Functions**
 Place your cloud functions in ./dev-firebase/functions/index.js
+
+if a port is taken (most likely due to stopping the emulators incorrectly), run `lsof -ti tcp:YOUR_PORT_NUMBER | xargs kill -9`

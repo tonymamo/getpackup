@@ -95,7 +95,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         <Router basepath={`/app/trips/${props.id}`} primary={false}>
           <PackingList
             path="/"
-            packingList={packingList && packingList.length > 0 ? packingList : []}
+            packingList={packingList || []}
             tripId={props.id}
             trip={activeTrip}
             tripIsLoaded={isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip)}
@@ -112,7 +112,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             path="/checklist/:id"
             tripId={props.id}
             users={users}
-            packingList={packingList && packingList.length > 0 ? packingList : []}
+            packingList={packingList || []}
             loggedInUserUid={auth.uid}
             activeTrip={activeTrip}
           />

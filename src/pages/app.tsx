@@ -13,7 +13,6 @@ import { offWhite } from '@styles/color';
 import { z1Shadow } from '@styles/mixins';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
-import { addAlert } from '@redux/ducks/globalAlerts';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
 import usePrevious from '@utils/usePrevious';
 
@@ -61,18 +60,12 @@ const App: FunctionComponent<{}> = (props) => {
   const prevAuthValue = usePrevious(auth.isEmpty);
 
   useEffect(() => {
-    if (auth.isLoaded && auth.isEmpty && !!prevAuthValue) {
+    if (auth.isLoaded && auth.isEmpty && prevAuthValue === true) {
       if (location) {
         trackEvent('Attempted Private Page', { location });
         dispatch(addAttemptedPrivatePage(location.pathname));
       }
       navigate('/login');
-      dispatch(
-        addAlert({
-          type: 'danger',
-          message: 'Please log in to access that page',
-        })
-      );
     }
   }, [auth]);
 

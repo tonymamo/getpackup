@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState, useRef, useCallback } from 'react';
-import groupBy from 'lodash/groupBy';
 import { RouteComponentProps, navigate, useLocation } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
@@ -14,7 +13,7 @@ import {
   threeQuarterSpacer,
 } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
-import { Alert, Box, Heading, PackingListCategory, TripHeader } from '@components';
+import { Box, Button, Heading, PackingListCategory, TripHeader } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
 import getSafeAreaInset from '@utils/getSafeAreaInset';
@@ -25,6 +24,7 @@ import { RootState } from '@redux/ducks';
 import { getQueryStringParams, mergeQueryParams } from '@utils/queryStringUtils';
 import PackingListFilters from '@components/PackingListFilters';
 import groupPackingList from '@utils/groupPackingList';
+import { PackingListFilterOptions, TabOptions } from '@utils/enums';
 
 type PackingListProps = {
   trip?: TripType;
@@ -81,34 +81,36 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripId,
   tripIsLoaded,
 }) => {
-  const groupedCategories: [string, PackingListItemType[]][] = [];
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const location = useLocation();
+  const { list, filter } = getQueryStringParams(location);
 
-  if (packingList?.length) {
-    // Filter out the shared items that arent packedBy the current user. This does keep items that are marked shared, but only if they are that user's
-    const usersPackingList = packingList.filter(
-      (packingListItem: PackingListItemType) =>
-        packingListItem &&
-        packingListItem.packedBy &&
-        packingListItem.packedBy.length > 0 &&
-        packingListItem.packedBy.some((item) => item.uid === auth.uid || item.isShared)
-    );
-    // Then, organize by category and put the pre-trip category first, if it exists
-    const entries = Object.entries(groupBy(usersPackingList, 'category'));
-    const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip');
-    const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
-    if (preTripEntries) groupedCategories.push(preTripEntries);
-    groupedCategories.push(...allOtherEntries);
-  }
+  //
+  // Filters stuff
+  //
+  const [activeFilter, setActiveFilter] = useState<PackingListFilterOptions>(
+    (filter as PackingListFilterOptions) || PackingListFilterOptions.All
+  );
 
-  type TabOptions = 'personal' | 'shared';
+  //
+  // Tab stuff
+  //
+  const [tabIndex, setTabIndex] = useState<TabOptions>((list as TabOptions) || 'Personal');
 
-  const { list } = getQueryStringParams(location);
-  // index is 1 or 2, and doesn't start as 0 since we are using query params and 0 is falsy
-  const [tabIndex, setTabIndex] = useState<TabOptions>((list as TabOptions) || 'personal');
-  const [groupCategories, setGroupCategories] = useState<[string, PackingListItemType[]][]>([]);
+  // we only need tabs if there are shared items, so hide if not
+  const sharedTrip = trip && Object.keys(trip.tripMembers).length > 1;
 
+  const handleTabClick = (tab: TabOptions) => {
+    setTabIndex(tab);
+    setActiveFilter(PackingListFilterOptions.All);
+    trackEvent(`${tab} Checklist Tab Clicked`);
+    navigate(mergeQueryParams({ list: tab, filter: PackingListFilterOptions.All }, location), {
+      replace: true,
+    });
+  };
+
+  //
+  // Sticky Header stuff
   // TODO: extract all of the sticky header stuff out to its own reusable hook
   const [isSticky, setSticky] = useState(false);
   const stickyRef = useRef<HTMLDivElement>(null);
@@ -130,30 +132,48 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     };
   }, [stickyRef, setSticky]);
 
-  useEffect(() => {
-    if (packingList?.length) {
-      setGroupCategories(groupPackingList(packingList));
+  //
+  // Personal vs Shared list
+  //
+  const personalItems = packingList?.sort((a, b) => {
+    if (a?.isPacked === b?.isPacked) {
+      // sort by name
+      if (a?.created?.seconds === b?.created?.seconds) {
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      }
+      // sort by timestamp
+      return b.created.toDate() > a.created.toDate() ? -1 : 1;
     }
-  }, [packingList]);
+    // sort by packed status, with checked items last
+    return a.isPacked > b.isPacked ? 1 : -1;
+  });
 
-  // we only need tabs if there are shared items, so hide if not
-  const sharedTrip = trip && Object.keys(trip.tripMembers).length > 1;
+  const sharedItems = packingList?.filter(
+    (item) => item.packedBy && item.packedBy.length > 0 && item.packedBy.some((i) => i.isShared)
+  );
 
+  // take into account if we are on the personal or shared list
+  const items = tabIndex === TabOptions.PERSONAL ? personalItems : sharedItems;
+
+  // take into account if the unpacked or packed filters are selected
+  const filteredItems = items.filter((item) =>
+    activeFilter === PackingListFilterOptions.Unpacked ? !item.isPacked : item.isPacked
+  );
+  // if the filter is All, just return all the items
+  const finalItems = activeFilter === PackingListFilterOptions.All ? items : filteredItems;
+
+  const getGroupedFinalItems = groupPackingList(finalItems, auth.uid, tabIndex);
+
+  // return out early if trip cant be found
+  // todo probably a better loading state thing here?
   if (tripIsLoaded && !trip) {
     return null;
   }
 
+  // navigate to trip gen page if no packing list exists
   if (tripIsLoaded && packingList.length === 0) {
     navigate(`${trip?.tripId}/generator`);
   }
-
-  const sharedItems = packingList.filter(
-    (packingListItem) =>
-      packingListItem &&
-      packingListItem.packedBy &&
-      packingListItem.packedBy.length > 0 &&
-      packingListItem.packedBy.some((item) => item.isShared)
-  );
 
   return (
     <>
@@ -162,27 +182,14 @@ const PackingList: FunctionComponent<PackingListProps> = ({
         {sharedTrip && (
           <Tabs isSticky={isSticky}>
             <Tab
-              active={tabIndex === 'personal'}
-              onClick={() => {
-                setTabIndex('personal');
-                trackEvent('Personal Checklist Tab Clicked');
-                // cant use 0 since it is falsy
-                navigate(mergeQueryParams({ list: 'personal' }, location), {
-                  replace: true,
-                });
-              }}
+              active={tabIndex === TabOptions.PERSONAL}
+              onClick={() => handleTabClick(TabOptions.PERSONAL)}
             >
               <FaRegCheckSquare title="Personal Checklist" />
             </Tab>
             <Tab
-              active={tabIndex === 'shared'}
-              onClick={() => {
-                setTabIndex('shared');
-                trackEvent('Shared Checklist Tab Clicked');
-                navigate(mergeQueryParams({ list: 'shared' }, location), {
-                  replace: true,
-                });
-              }}
+              active={tabIndex === TabOptions.SHARED}
+              onClick={() => handleTabClick(TabOptions.SHARED)}
             >
               <FaUsers title="Shared Checklist" />
             </Tab>
@@ -196,78 +203,154 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       >
         {trip ? (
           <>
+            <Heading as="h4" altStyle uppercase>
+              {tabIndex === TabOptions.PERSONAL ? TabOptions.PERSONAL : TabOptions.SHARED}
+            </Heading>
             <PackingListFilters
-              list={packingList}
-              sendFilteredList={(filteredList) =>
-                setGroupCategories(groupPackingList(filteredList))
-              }
+              activeFilter={activeFilter}
+              onFilterChange={setActiveFilter}
+              disabled={!trip}
+              location={location}
             />
-            {tabIndex === 'personal' && (
-              <>
-                <Heading as="h4" altStyle uppercase>
-                  Personal Items
-                </Heading>
 
-                {!groupCategories.length ? (
-                  <Box>No results. Please try a different filter.</Box>
+            {getGroupedFinalItems.length > 0 && getGroupedFinalItems[0] !== undefined ? (
+              getGroupedFinalItems.map(
+                ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
+                  if (categoryName && packingListItems.length > 0) {
+                    return (
+                      <PackingListCategory
+                        trip={trip}
+                        key={categoryName}
+                        categoryName={categoryName}
+                        sortedItems={packingListItems}
+                        tripId={tripId}
+                        isSharedPackingListCategory={false}
+                        auth={auth}
+                      />
+                    );
+                  }
+                  return null;
+                }
+              )
+            ) : (
+              <Box largePadding>
+                <Heading as="h3" align="center">
+                  Nothing to see here 👀
+                </Heading>
+                <p style={{ textAlign: 'center' }}>
+                  Try changing your filters from{' '}
+                  <strong>
+                    {activeFilter === PackingListFilterOptions.Packed
+                      ? PackingListFilterOptions.Packed
+                      : PackingListFilterOptions.Unpacked}
+                  </strong>{' '}
+                  to{' '}
+                  <Button
+                    type="button"
+                    color="tertiary"
+                    size="small"
+                    onClick={() =>
+                      setActiveFilter(
+                        activeFilter === PackingListFilterOptions.Packed
+                          ? PackingListFilterOptions.Unpacked
+                          : PackingListFilterOptions.Packed
+                      )
+                    }
+                  >
+                    {activeFilter === PackingListFilterOptions.Packed
+                      ? PackingListFilterOptions.Unpacked
+                      : PackingListFilterOptions.Packed}
+                  </Button>{' '}
+                  or{' '}
+                  <Button
+                    type="button"
+                    color="tertiary"
+                    size="small"
+                    onClick={() => setActiveFilter(PackingListFilterOptions.All)}
+                  >
+                    All
+                  </Button>
+                </p>
+              </Box>
+            )}
+
+            {/* {packingListLoaded ? (
+              <>
+                {// can sometimes get an array of [undefined] while its being set so check for that here
+                groupCategories.length === 0 || groupCategories[0] === undefined ? (
+                  <Box>
+                    <Heading as="h3" align="center">
+                      Nothing to see here 👀
+                    </Heading>
+                    <p style={{ textAlign: 'center' }}>Try changing your filters!</p>
+                  </Box>
                 ) : (
+                  groupCategories &&
+                  groupCategories.length > 0 &&
+                  // can sometimes get an array of [undefined] while its being set so check for that here
                   groupCategories.map(
                     ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
-                      const sortedItems = packingListItems?.sort((a, b) => {
-                        if (a?.isPacked === b?.isPacked) {
-                          // sort by name
-                          if (a?.created?.seconds === b?.created?.seconds) {
-                            return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-                          }
-                          // sort by timestamp
-                          return b.created.toDate() > a.created.toDate() ? -1 : 1;
-                        }
-                        // sort by packed status, with checked items last
-                        return a.isPacked > b.isPacked ? 1 : -1;
-                      });
+                      // const personalItems = packingListItems?.sort((a, b) => {
+                      //   if (a?.isPacked === b?.isPacked) {
+                      //     // sort by name
+                      //     if (a?.created?.seconds === b?.created?.seconds) {
+                      //       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                      //     }
+                      //     // sort by timestamp
+                      //     return b.created.toDate() > a.created.toDate() ? -1 : 1;
+                      //   }
+                      //   // sort by packed status, with checked items last
+                      //   return a.isPacked > b.isPacked ? 1 : -1;
+                      // });
+                      // const sharedItems = packingListItems?.filter(
+                      //   (item) =>
+                      //     item.packedBy &&
+                      //     item.packedBy.length > 0 &&
+                      //     item.packedBy.some((i) => i.isShared)
+                      // );
 
-                      return (
+                      // take into account if we are on the personal or shared list
+                      const items = tabIndex === TabOptions.PERSONAL ? personalItems : sharedItems;
+
+                      // take into account if the unpacked or packed filters are selected
+                      const filteredItems = items.filter((item) =>
+                        activeFilter === PackingListFilterOptions.Unpacked
+                          ? !item.isPacked
+                          : item.isPacked
+                      );
+                      // if the filter is All, just return all the items
+                      const finalItems =
+                        activeFilter === PackingListFilterOptions.All ? items : filteredItems;
+
+                      return finalItems.length > 0 ? (
                         <PackingListCategory
                           trip={trip}
                           key={categoryName}
                           categoryName={categoryName}
-                          sortedItems={sortedItems}
+                          sortedItems={finalItems}
                           tripId={tripId}
                           isSharedPackingListCategory={false}
+                          auth={auth}
                         />
-                      );
+                      ) : null;
                     }
                   )
                 )}
               </>
-            )}
-            {tabIndex === 'shared' && sharedTrip && (
+            ) : (
+              // Loading state
               <>
-                <Heading as="h4" altStyle uppercase>
-                  Shared Items
-                </Heading>
-                {sharedItems && sharedItems.length > 0 ? (
-                  <PackingListCategory
-                    trip={trip}
-                    key="shared"
-                    categoryName="shared"
-                    sortedItems={sharedItems}
-                    tripId={tripId}
-                    isSharedPackingListCategory
-                  />
-                ) : (
-                  <Box>
-                    <Alert
-                      type="info"
-                      message="No shared items yet. Add one now by going to your personal list and marking an item as shared by the group!"
-                    />
-                  </Box>
-                )}
+                this one?
+                <PackingListCategory
+                  categoryName=""
+                  sortedItems={[]}
+                  tripId=""
+                  isSharedPackingListCategory
+                />
               </>
-            )}
+            )} */}
           </>
         ) : (
-          // Loading state
           <PackingListCategory
             categoryName=""
             sortedItems={[]}

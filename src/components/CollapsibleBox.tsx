@@ -19,7 +19,7 @@ const StyledCollapsed = styled.div<{
 }>`
   transition: max-height 0.165s;
   overflow: hidden;
-  max-height: ${({ isCollapsed, height }) => (isCollapsed ? `${height}px` : '0px')};
+  max-height: ${({ isCollapsed, height }) => (isCollapsed ? '0px' : `${height}px`)};
 `;
 
 // In the future, we could allow the collapsed state to be passed in as a prop. If the state
@@ -36,7 +36,7 @@ const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
   enabled = true,
 }) => {
   // Manages the collapsed state of the accordion
-  const [collapsed, setCollapsed] = useState(!defaultClosed);
+  const [collapsed, setCollapsed] = useState(defaultClosed);
 
   // Gets the height of the element (ref)
   const [ref, { height }] = useMeasure<HTMLDivElement>();
@@ -72,7 +72,7 @@ const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
             tabIndex={0}
             role="button"
           >
-            {collapsed ? <FaCaretDown /> : <FaCaretUp />}
+            {collapsed ? <FaCaretUp /> : <FaCaretDown />}
           </IconWrapper>
         )}
       </FlexContainer>

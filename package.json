@@ -189,7 +189,8 @@
     "clean": "gatsby clean",
     "test": "jest",
     "eslinta": "eslint --fix",
-    "run-emulators": "cd dev-firebase && firebase emulators:start --import=./dev-firebase --export-on-exit"
+    "build-functions": "tsc \"dev-firebase/functions/index.ts\"",
+    "run-emulators": "cd dev-firebase && npm run build-functions && firebase emulators:start --import=./dev-firebase --export-on-exit"
   },
   "repository": {
     "type": "git",

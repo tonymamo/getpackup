@@ -45,7 +45,7 @@ const StyledLineItem = styled.div`
 `;
 
 const PlaceholderImageWrapper = styled.div`
-  height: calc(100vw / 5);
+  height: calc(100vw / 4.5);
   background-color: ${(props: { backgroundColor: string }) => props.backgroundColor};
   & svg {
     width: 100%;
@@ -186,7 +186,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending }) => {
               <StaticMapImage
                 lat={trip.lat}
                 lng={trip.lng}
-                height="calc(100vw / 5)"
+                height="calc(100vw / 4.5)"
                 width="100%"
                 zoom={10}
                 label={isExtraSmallScreen ? undefined : trip.startingPoint}

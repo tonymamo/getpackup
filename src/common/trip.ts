@@ -36,7 +36,7 @@ export type TripType = {
   tripLength: number;
   headerImage?: string;
   archived?: boolean;
-  collapsedCategories?: string[];
+  collapsedCategories?: { [key: string]: string[] };
 };
 
 export type TripFormType = Omit<TripType, 'startDate' | 'endDate'> & {
