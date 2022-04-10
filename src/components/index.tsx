@@ -58,10 +58,12 @@ import Table from './Table';
 import Testimonial from './Testimonial';
 import TripCard from './TripCard';
 import TripHeader from './TripHeader';
+import TripHeaderImage from './TripHeaderImage';
 import TripNavigation from './TripNavigation';
 import UserMediaObject from './UserMediaObject';
 import Wave from './wave';
 import ProgressBar from './ProgressBar';
+import TripMemberAvatars from './TripMemberAvatars';
 
 export {
   Alert,
@@ -128,6 +130,8 @@ export {
   Testimonial,
   TripCard,
   TripHeader,
+  TripHeaderImage,
+  TripMemberAvatars,
   TripNavigation,
   UserMediaObject,
   Wave,

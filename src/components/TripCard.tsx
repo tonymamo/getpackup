@@ -1,76 +1,52 @@
 import React, { FunctionComponent } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt, FaCheck, FaTimes } from 'react-icons/fa';
-import TextTruncate from 'react-text-truncate';
 import { Link, navigate } from 'gatsby';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { useFirestoreConnect, useFirebase } from 'react-redux-firebase';
 
-import { TripMember, TripMemberStatus, TripType } from '@common/trip';
-import { UserType } from '@common/user';
+import { TripMemberStatus, TripType } from '@common/trip';
 import {
   Heading,
-  StackedAvatars,
-  Avatar,
-  HorizontalRule,
   FlexContainer,
-  NegativeMarginContainer,
-  HeroImage,
-  NoiseRings,
-  StaticMapImage,
   Row,
   Column,
   Button,
+  TripHeaderImage,
+  TripMemberAvatars,
 } from '@components';
-import { baseSpacer, doubleSpacer, halfSpacer, quarterSpacer } from '@styles/size';
+import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
-import useWindowSize from '@utils/useWindowSize';
-import { brandSecondary, lightestGray } from '@styles/color';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import { baseBorderStyle } from '@styles/mixins';
+import { white } from '@styles/color';
 
 type TripCardProps = {
   trip?: TripType;
   isPending?: boolean;
+  onClick?: () => void;
 };
 
 const StyledTripWrapper = styled.div<{ isPending?: boolean }>`
+  padding: ${baseSpacer};
+  margin-bottom: ${baseSpacer};
+  border: ${baseBorderStyle};
   cursor: ${(props) => (props.isPending ? 'initial' : 'pointer')};
+  background-color: ${white};
 `;
 
 const StyledLineItem = styled.div`
   margin-bottom: ${halfSpacer};
 `;
 
-const PlaceholderImageWrapper = styled.div`
-  height: calc(100vw / 4.5);
-  background-color: ${(props: { backgroundColor: string }) => props.backgroundColor};
-  & svg {
-    width: 100%;
-  }
-`;
-
-const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending }) => {
+const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
   const dispatch = useDispatch();
-
-  const { isExtraSmallScreen, isSmallScreen } = useWindowSize();
-  // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
-  const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
-
-  const numberOfAvatarsToShow = 4;
-
-  const acceptedTripMembersOnly =
-    trip &&
-    trip.tripMembers &&
-    Object.values(trip.tripMembers).filter(
-      (member) =>
-        member.status === TripMemberStatus.Accepted || member.status === TripMemberStatus.Owner
-    );
 
   useFirestoreConnect([
     {
@@ -171,102 +147,31 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending }) => {
   };
 
   return (
-    <StyledTripWrapper isPending={isPending}>
-      <NegativeMarginContainer
-        top={negativeSpacingSize}
-        left={negativeSpacingSize}
-        right={negativeSpacingSize}
-        aspectRatio={4}
-      >
-        {trip ? (
-          <>
-            {/* Aspect ratio is 16/4 or these images, but 5 works better because it isnt 100% full width, it's in a PageContainer with a max width */}
-            {trip.headerImage && <HeroImage staticImgSrc={trip.headerImage} aspectRatio={5} />}
-            {!trip.headerImage && !!trip.lat && !!trip.lng && (
-              <StaticMapImage
-                lat={trip.lat}
-                lng={trip.lng}
-                height="calc(100vw / 4.5)"
-                width="100%"
-                zoom={10}
-                label={isExtraSmallScreen ? undefined : trip.startingPoint}
-              />
-            )}
-            {!trip.headerImage && !trip.lat && !trip.lng && (
-              <PlaceholderImageWrapper backgroundColor={brandSecondary}>
-                <NoiseRings height={512} width={2048} seed={trip.name} strokeWidth={4} />
-              </PlaceholderImageWrapper>
-            )}
-          </>
-        ) : (
-          <PlaceholderImageWrapper backgroundColor={lightestGray} />
-        )}
-      </NegativeMarginContainer>
+    <StyledTripWrapper isPending={isPending} onClick={onClick}>
+      <TripHeaderImage trip={trip} />
 
-      <Row>
-        <Column md={8}>
-          <FlexContainer justifyContent="flex-start" height="100%">
-            <Heading as="h3" altStyle noMargin>
-              {trip ? (
-                <>
-                  {isPending ? (
-                    trip.name
-                  ) : (
-                    <Link
-                      to={`/app/trips/${trip.tripId}/`}
-                      onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
-                    >
-                      {trip.name}
-                    </Link>
-                  )}
-                </>
+      <FlexContainer justifyContent="space-between" flexWrap="nowrap">
+        <Heading as="h3" altStyle noMargin>
+          {trip ? (
+            <>
+              {isPending ? (
+                trip.name
               ) : (
-                <Skeleton width={200} />
+                <Link
+                  to={`/app/trips/${trip.tripId}/`}
+                  onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
+                >
+                  {trip.name}
+                </Link>
               )}
-            </Heading>
-          </FlexContainer>
-        </Column>
-        <Column md={4}>
-          <FlexContainer justifyContent={isSmallScreen ? 'flex-start' : 'flex-end'}>
-            {acceptedTripMembersOnly && acceptedTripMembersOnly.length > 0 && (
-              <StackedAvatars>
-                {users &&
-                  acceptedTripMembersOnly
-                    .slice(
-                      0,
-                      acceptedTripMembersOnly?.length === numberOfAvatarsToShow
-                        ? numberOfAvatarsToShow
-                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
-                    )
-                    .map((tripMember: TripMember) => {
-                      const matchingUser: UserType = users[tripMember.uid]
-                        ? users[tripMember.uid]
-                        : undefined;
-                      if (!matchingUser) return null;
-                      return (
-                        <Avatar
-                          src={matchingUser?.photoURL as string}
-                          gravatarEmail={matchingUser?.email as string}
-                          size="sm"
-                          key={matchingUser.uid}
-                          username={matchingUser?.username.toLocaleLowerCase()}
-                        />
-                      );
-                    })}
-                {users && acceptedTripMembersOnly.length > numberOfAvatarsToShow && (
-                  <Avatar
-                    // never want to show +1, because then we could have just rendered the photo.
-                    // Instead, lets add another so its always at least +2
-                    staticContent={`+${acceptedTripMembersOnly.length - numberOfAvatarsToShow + 1}`}
-                    size="sm"
-                    username={`+${acceptedTripMembersOnly.length - numberOfAvatarsToShow + 1} more`}
-                  />
-                )}
-              </StackedAvatars>
-            )}
-          </FlexContainer>
-        </Column>
-      </Row>
+            </>
+          ) : (
+            <Skeleton width={200} />
+          )}
+        </Heading>
+
+        {trip && <TripMemberAvatars trip={trip} users={users} />}
+      </FlexContainer>
 
       <StyledLineItem>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
@@ -297,25 +202,6 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending }) => {
           )}
         </FlexContainer>
       </StyledLineItem>
-
-      {trip ? (
-        <>
-          {trip.description !== '' && (
-            <>
-              <HorizontalRule compact />
-              <TextTruncate
-                line={1}
-                element="p"
-                truncateText="…"
-                text={trip.description || 'No description provided'}
-                containerClassName="truncatedText"
-              />
-            </>
-          )}
-        </>
-      ) : (
-        <Skeleton count={1} />
-      )}
 
       {isPending && (
         <Row>

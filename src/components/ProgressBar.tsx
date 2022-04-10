@@ -8,7 +8,7 @@ type ProgressBarProps = {
   baseBgColor?: string;
   height?: string;
   width?: string;
-  borderRadius?: string;
+  borderRadius?: string | number;
   margin?: string;
   padding?: string;
   labelAlignment?: 'left' | 'center' | 'right' | 'outside';

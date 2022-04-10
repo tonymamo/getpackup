@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
-import { brandPrimary, textColor, white } from '@styles/color';
+import { brandPrimary, textColor, white, brandSuccess } from '@styles/color';
 import {
   baseSpacer,
   breakpoints,
@@ -13,7 +13,7 @@ import {
   threeQuarterSpacer,
 } from '@styles/size';
 import { baseBorderStyle } from '@styles/mixins';
-import { Box, Button, Heading, PackingListCategory, TripHeader } from '@components';
+import { Box, Button, Heading, PackingListCategory, TripHeader, ProgressBar } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
 import getSafeAreaInset from '@utils/getSafeAreaInset';
@@ -34,7 +34,6 @@ type PackingListProps = {
 } & RouteComponentProps;
 
 const StickyWrapper = styled.div`
-  border-top: ${baseBorderStyle};
   position: relative;
   margin: 0 -${halfSpacer};
   @media only screen and (min-width: ${breakpoints.sm}) {
@@ -43,15 +42,11 @@ const StickyWrapper = styled.div`
   }
 `;
 
-const Tabs = styled.div`
-  background-color: ${white};
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  border-bottom: ${baseBorderStyle};
+const StickyInner = styled.div`
   left: 0;
   right: 0;
-
+  max-width: ${breakpoints.xl};
+  margin: 0 auto;
   ${(props: { isSticky: boolean }) =>
     props.isSticky &&
     `
@@ -59,6 +54,14 @@ const Tabs = styled.div`
   z-index: ${zIndexNavbar};
   top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
   `}
+`;
+
+const Tabs = styled.div`
+  background-color: ${white};
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  border-bottom: ${baseBorderStyle};
 `;
 
 const Tab = styled.div`
@@ -82,8 +85,22 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   tripIsLoaded,
 }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
+
   const location = useLocation();
   const { list, filter } = getQueryStringParams(location);
+
+  const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
+  const [packedPercent, setPackedPercent] = useState(0);
+
+  const packedItemsLength =
+    gearListArray.length > 0 ? gearListArray.filter((item) => item?.isPacked === true).length : 0;
+
+  useEffect(() => {
+    if (gearListArray.length > 0 && packedItemsLength) {
+      setPackedPercent(Number(((packedItemsLength / gearListArray.length) * 100).toFixed(0)));
+    }
+  }, [gearListArray, packedItemsLength]);
 
   //
   // Filters stuff
@@ -132,37 +149,49 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     };
   }, [stickyRef, setSticky]);
 
+  const packingListCopy = [...packingList];
+
   //
   // Personal vs Shared list
   //
-  const personalItems = packingList?.sort((a, b) => {
-    if (a?.isPacked === b?.isPacked) {
-      // sort by name
-      if (a?.created?.seconds === b?.created?.seconds) {
-        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+  const personalItems =
+    packingListCopy &&
+    packingListCopy.length > 0 &&
+    packingListCopy?.sort((a, b) => {
+      if (a?.isPacked === b?.isPacked) {
+        // sort by name
+        if (a?.created?.seconds === b?.created?.seconds) {
+          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+        }
+        // sort by timestamp
+        return b.created.toDate() > a.created.toDate() ? -1 : 1;
       }
-      // sort by timestamp
-      return b.created.toDate() > a.created.toDate() ? -1 : 1;
-    }
-    // sort by packed status, with checked items last
-    return a.isPacked > b.isPacked ? 1 : -1;
-  });
+      // sort by packed status, with checked items last
+      return a.isPacked > b.isPacked ? 1 : -1;
+    });
 
-  const sharedItems = packingList?.filter(
-    (item) => item.packedBy && item.packedBy.length > 0 && item.packedBy.some((i) => i.isShared)
-  );
+  const sharedItems =
+    packingListCopy &&
+    packingListCopy.length > 0 &&
+    packingListCopy?.filter(
+      (item) => item.packedBy && item.packedBy.length > 0 && item.packedBy.some((i) => i.isShared)
+    );
 
   // take into account if we are on the personal or shared list
   const items = tabIndex === TabOptions.PERSONAL ? personalItems : sharedItems;
 
   // take into account if the unpacked or packed filters are selected
-  const filteredItems = items.filter((item) =>
-    activeFilter === PackingListFilterOptions.Unpacked ? !item.isPacked : item.isPacked
-  );
+  const filteredItems =
+    items &&
+    items.length > 0 &&
+    items.filter((item) =>
+      activeFilter === PackingListFilterOptions.Unpacked ? !item.isPacked : item.isPacked
+    );
   // if the filter is All, just return all the items
   const finalItems = activeFilter === PackingListFilterOptions.All ? items : filteredItems;
 
-  const getGroupedFinalItems = groupPackingList(finalItems, auth.uid, tabIndex);
+  const getGroupedFinalItems =
+    finalItems && finalItems.length > 0 && groupPackingList(finalItems, auth.uid, tabIndex);
 
   // return out early if trip cant be found
   // todo probably a better loading state thing here?
@@ -178,23 +207,35 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   return (
     <>
       <TripHeader trip={trip} />
+      <small style={{ textAlign: 'center', display: 'block' }}>{packedPercent}% packed</small>
       <StickyWrapper ref={stickyRef}>
-        {sharedTrip && (
-          <Tabs isSticky={isSticky}>
-            <Tab
-              active={tabIndex === TabOptions.PERSONAL}
-              onClick={() => handleTabClick(TabOptions.PERSONAL)}
-            >
-              <FaRegCheckSquare title="Personal Checklist" />
-            </Tab>
-            <Tab
-              active={tabIndex === TabOptions.SHARED}
-              onClick={() => handleTabClick(TabOptions.SHARED)}
-            >
-              <FaUsers title="Shared Checklist" />
-            </Tab>
-          </Tabs>
-        )}
+        <StickyInner isSticky={isSticky}>
+          <ProgressBar
+            height={halfSpacer}
+            borderRadius={0}
+            completed={packedPercent}
+            isLabelVisible={false}
+            bgColor={brandSuccess}
+            transitionDuration="0.25s"
+          />
+
+          {sharedTrip && (
+            <Tabs>
+              <Tab
+                active={tabIndex === TabOptions.PERSONAL}
+                onClick={() => handleTabClick(TabOptions.PERSONAL)}
+              >
+                <FaRegCheckSquare title="Personal Checklist" />
+              </Tab>
+              <Tab
+                active={tabIndex === TabOptions.SHARED}
+                onClick={() => handleTabClick(TabOptions.SHARED)}
+              >
+                <FaUsers title="Shared Checklist" />
+              </Tab>
+            </Tabs>
+          )}
+        </StickyInner>
       </StickyWrapper>
       <div
         style={{
@@ -203,9 +244,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       >
         {trip ? (
           <>
-            <Heading as="h4" altStyle uppercase>
-              {tabIndex === TabOptions.PERSONAL ? TabOptions.PERSONAL : TabOptions.SHARED}
-            </Heading>
+            {sharedTrip ? (
+              <Heading as="h4" altStyle uppercase>
+                {tabIndex === TabOptions.PERSONAL ? TabOptions.PERSONAL : TabOptions.SHARED}
+              </Heading>
+            ) : null}
+
             <PackingListFilters
               activeFilter={activeFilter}
               onFilterChange={setActiveFilter}
@@ -213,7 +257,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
               location={location}
             />
 
-            {getGroupedFinalItems.length > 0 && getGroupedFinalItems[0] !== undefined ? (
+            {getGroupedFinalItems &&
+            getGroupedFinalItems.length > 0 &&
+            getGroupedFinalItems[0] !== undefined ? (
               getGroupedFinalItems.map(
                 ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
                   if (categoryName && packingListItems.length > 0) {
@@ -273,82 +319,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 </p>
               </Box>
             )}
-
-            {/* {packingListLoaded ? (
-              <>
-                {// can sometimes get an array of [undefined] while its being set so check for that here
-                groupCategories.length === 0 || groupCategories[0] === undefined ? (
-                  <Box>
-                    <Heading as="h3" align="center">
-                      Nothing to see here 👀
-                    </Heading>
-                    <p style={{ textAlign: 'center' }}>Try changing your filters!</p>
-                  </Box>
-                ) : (
-                  groupCategories &&
-                  groupCategories.length > 0 &&
-                  // can sometimes get an array of [undefined] while its being set so check for that here
-                  groupCategories.map(
-                    ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
-                      // const personalItems = packingListItems?.sort((a, b) => {
-                      //   if (a?.isPacked === b?.isPacked) {
-                      //     // sort by name
-                      //     if (a?.created?.seconds === b?.created?.seconds) {
-                      //       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-                      //     }
-                      //     // sort by timestamp
-                      //     return b.created.toDate() > a.created.toDate() ? -1 : 1;
-                      //   }
-                      //   // sort by packed status, with checked items last
-                      //   return a.isPacked > b.isPacked ? 1 : -1;
-                      // });
-                      // const sharedItems = packingListItems?.filter(
-                      //   (item) =>
-                      //     item.packedBy &&
-                      //     item.packedBy.length > 0 &&
-                      //     item.packedBy.some((i) => i.isShared)
-                      // );
-
-                      // take into account if we are on the personal or shared list
-                      const items = tabIndex === TabOptions.PERSONAL ? personalItems : sharedItems;
-
-                      // take into account if the unpacked or packed filters are selected
-                      const filteredItems = items.filter((item) =>
-                        activeFilter === PackingListFilterOptions.Unpacked
-                          ? !item.isPacked
-                          : item.isPacked
-                      );
-                      // if the filter is All, just return all the items
-                      const finalItems =
-                        activeFilter === PackingListFilterOptions.All ? items : filteredItems;
-
-                      return finalItems.length > 0 ? (
-                        <PackingListCategory
-                          trip={trip}
-                          key={categoryName}
-                          categoryName={categoryName}
-                          sortedItems={finalItems}
-                          tripId={tripId}
-                          isSharedPackingListCategory={false}
-                          auth={auth}
-                        />
-                      ) : null;
-                    }
-                  )
-                )}
-              </>
-            ) : (
-              // Loading state
-              <>
-                this one?
-                <PackingListCategory
-                  categoryName=""
-                  sortedItems={[]}
-                  tripId=""
-                  isSharedPackingListCategory
-                />
-              </>
-            )} */}
           </>
         ) : (
           <PackingListCategory

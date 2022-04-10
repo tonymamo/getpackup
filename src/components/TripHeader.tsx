@@ -1,39 +1,31 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaChevronLeft } from 'react-icons/fa';
+import React, { FunctionComponent, useState } from 'react';
+import { FaRegCalendar, FaMapMarkerAlt, FaTrash } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import TextTruncate from 'react-text-truncate';
 
-import { PackingListItemType } from '@common/packingListItem';
-import { brandSuccess } from '@styles/color';
-import { TripMemberStatus, TripType } from '@common/trip';
-import { UserType } from '@common/user';
+import { TripType } from '@common/trip';
 import {
   Heading,
-  StackedAvatars,
-  Avatar,
   Pill,
   HorizontalScroller,
   FlexContainer,
   DropdownMenu,
   Button,
-  Row,
-  Column,
-  ProgressBar,
+  TripHeaderImage,
+  TripMemberAvatars,
 } from '@components';
 import {
   baseAndAHalfSpacer,
   baseSpacer,
+  decupleSpacer,
   doubleSpacer,
   halfSpacer,
-  quarterSpacer,
 } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
-import useWindowSize from '@utils/useWindowSize';
 import TripDeleteModal from '@views/TripDeleteModal';
-import { fontSizeSmall } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { gearListActivities } from '@utils/gearListItemEnum';
 
@@ -41,239 +33,68 @@ type TripHeaderProps = {
   trip?: TripType;
 };
 
-const StyledTripWrapper = styled.div``;
-
-const StyledBackLink = styled(Link)`
-  display: inline-block;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin-bottom: ${halfSpacer};
-  font-size: ${fontSizeSmall};
-`;
-
-const StyledLineItem = styled.div`
-  margin-bottom: ${halfSpacer};
-`;
-
 const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
-  const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
-  const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [packedPercent, setPackedPercent] = useState(0);
-
-  const packedItemsLength =
-    gearListArray.length > 0 ? gearListArray.filter((item) => item?.isPacked === true).length : 0;
-
-  useEffect(() => {
-    setPackedPercent(Number(((packedItemsLength / gearListArray.length) * 100).toFixed(0)));
-  }, [gearListArray, packedItemsLength]);
-
-  const size = useWindowSize();
-
-  const numberOfAvatarsToShow = 4;
-
-  const acceptedTripMembersOnly =
-    trip &&
-    Object.values(trip.tripMembers).filter(
-      (member) =>
-        member.status === TripMemberStatus.Accepted || member.status === TripMemberStatus.Owner
-    );
 
   return (
-    <StyledTripWrapper>
-      {!size.isSmallScreen ? (
-        <StyledBackLink
-          to="../"
-          onClick={() =>
-            trackEvent('Trip Header Back To Trips Link Clicked', {
-              trip,
-            })
-          }
-        >
-          <FaChevronLeft /> All Trips
-        </StyledBackLink>
-      ) : null}
-      <Row>
-        <Column md={8}>
-          <FlexContainer justifyContent="flex-start" height="100%">
-            <Heading as="h3" altStyle noMargin>
-              {trip ? trip.name : <Skeleton width={200} />}
-            </Heading>
-          </FlexContainer>
-        </Column>
-        <Column md={4}>
-          <FlexContainer justifyContent={size.isSmallScreen ? 'flex-start' : 'flex-end'}>
-            {trip && acceptedTripMembersOnly && acceptedTripMembersOnly.length > 0 && (
-              <StackedAvatars>
-                {users &&
-                  acceptedTripMembersOnly
-                    .slice(
-                      0,
-                      acceptedTripMembersOnly.length === numberOfAvatarsToShow
-                        ? numberOfAvatarsToShow
-                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
-                    )
-                    .map((tripMember: any) => {
-                      const matchingUser: UserType = users[tripMember.uid]
-                        ? users[tripMember.uid]
-                        : undefined;
-                      if (!matchingUser) return null;
-                      return (
-                        <Avatar
-                          src={matchingUser?.photoURL as string}
-                          gravatarEmail={matchingUser?.email as string}
-                          size="sm"
-                          key={matchingUser.uid}
-                          username={matchingUser.username.toLocaleLowerCase()}
-                        />
-                      );
-                    })}
-                {users && acceptedTripMembersOnly.length > numberOfAvatarsToShow && (
-                  <Avatar
-                    // never want to show +1, because then we could have just rendered the photo.
-                    // Instead, lets add another so its always at least +2
-                    staticContent={`+${acceptedTripMembersOnly.length - numberOfAvatarsToShow + 1}`}
-                    size="sm"
-                    username={`+${acceptedTripMembersOnly.length - numberOfAvatarsToShow + 1} more`}
-                  />
-                )}
-              </StackedAvatars>
-            )}
-          </FlexContainer>
-        </Column>
-      </Row>
+    <div>
+      <TripHeaderImage trip={trip} />
 
-      <Row>
-        <Column md={7}>
-          <StyledLineItem>
-            <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-              <FaRegCalendar
-                style={{
-                  marginRight: halfSpacer,
-                  top: quarterSpacer,
-                  flexShrink: 0,
-                }}
+      <FlexContainer justifyContent="space-between" flexWrap="nowrap">
+        <Heading as="h3" altStyle noMargin>
+          {trip ? trip.name : <Skeleton width={200} />}
+        </Heading>
+        {trip && (
+          <Link to={`/app/trips/${trip.tripId}/party`}>
+            <TripMemberAvatars trip={trip} users={users} />
+          </Link>
+        )}
+      </FlexContainer>
+
+      <FlexContainer justifyContent="flex-start">
+        <div style={{ marginRight: halfSpacer, minWidth: decupleSpacer }}>
+          {trip ? (
+            <>
+              <FaRegCalendar />{' '}
+              {trip.tripLength === 21
+                ? formattedDate(new Date(trip.startDate.seconds * 1000))
+                : formattedDateRange(trip.startDate.seconds * 1000, trip.endDate.seconds * 1000)}
+            </>
+          ) : (
+            <Skeleton count={1} />
+          )}
+        </div>
+        <div style={{ minWidth: decupleSpacer }}>
+          {trip ? (
+            <>
+              <FaMapMarkerAlt /> {trip.startingPoint}
+            </>
+          ) : (
+            <Skeleton count={1} />
+          )}
+        </div>
+      </FlexContainer>
+
+      <div>
+        {trip ? (
+          <p style={{ margin: 0 }}>
+            {trip.description && (
+              <TextTruncate
+                line={2}
+                element="small"
+                truncateText="…"
+                text={trip.description || 'No description provided'}
+                containerClassName="truncatedText"
+                textTruncateChild={<Link to={`/app/trips/${trip.tripId}/details`}>Read more</Link>}
               />
-              {trip ? (
-                <>
-                  {trip.tripLength === 21
-                    ? formattedDate(new Date(trip.startDate.seconds * 1000))
-                    : formattedDateRange(
-                        trip.startDate.seconds * 1000,
-                        trip.endDate.seconds * 1000
-                      )}
-                </>
-              ) : (
-                <div
-                  style={{
-                    flex: 1,
-                  }}
-                >
-                  <Skeleton count={1} width="50%" />
-                </div>
-              )}
-            </FlexContainer>
-          </StyledLineItem>
-
-          <StyledLineItem>
-            <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
-              <FaMapMarkerAlt
-                style={{
-                  marginRight: halfSpacer,
-                  top: quarterSpacer,
-                  flexShrink: 0,
-                }}
-              />
-              {trip ? (
-                trip.startingPoint
-              ) : (
-                <div
-                  style={{
-                    flex: 1,
-                  }}
-                >
-                  <Skeleton count={1} width="65%" />
-                </div>
-              )}
-            </FlexContainer>
-          </StyledLineItem>
-        </Column>
-
-        <Column md={5}>
-          <FlexContainer justifyContent={!size.isSmallScreen ? 'flex-end' : 'flex-start'}>
-            {trip ? (
-              <>
-                <Button
-                  type="link"
-                  to={`/app/trips/${trip.tripId}/details`}
-                  rightSpacer
-                  size="small"
-                  color="tertiary"
-                  onClick={() =>
-                    trackEvent('Trip Header Details Link Clicked', {
-                      trip,
-                    })
-                  }
-                >
-                  Details
-                </Button>
-                <Button
-                  type="link"
-                  to={`/app/trips/${trip.tripId}/party`}
-                  rightSpacer
-                  size="small"
-                  color="tertiary"
-                  onClick={() =>
-                    trackEvent('Trip Header Party Link Clicked', {
-                      trip,
-                    })
-                  }
-                >
-                  Party
-                </Button>
-                <TripDeleteModal
-                  setModalIsOpen={setModalIsOpen}
-                  modalIsOpen={modalIsOpen}
-                  tripId={trip.tripId}
-                />
-                <DropdownMenu>
-                  <button
-                    onClick={() => {
-                      setModalIsOpen(true);
-                      trackEvent('Trip Header Delete Trip Clicked', {
-                        trip,
-                      });
-                    }}
-                    type="button"
-                  >
-                    <FaTrash /> Delete
-                  </button>
-                </DropdownMenu>
-              </>
-            ) : (
-              <>
-                <Skeleton
-                  width={100}
-                  height={doubleSpacer}
-                  style={{
-                    marginRight: baseSpacer,
-                  }}
-                />
-                <Skeleton
-                  width={80}
-                  height={doubleSpacer}
-                  style={{
-                    marginRight: baseSpacer,
-                  }}
-                />
-                <Skeleton width={50} height={doubleSpacer} />
-              </>
             )}
-          </FlexContainer>
-        </Column>
-      </Row>
+          </p>
+        ) : (
+          <Skeleton count={2} />
+        )}
+      </div>
 
       <div
         style={{
@@ -292,7 +113,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip }) => {
                     // TODO: link to tags
                     // to={`/search/tags/${tag.replace(' ', '-')}`}
                     text={tag}
-                    color="primary"
+                    color="neutral"
                   />
                 ))}
             </>
@@ -317,21 +138,79 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip }) => {
             </>
           )}
         </HorizontalScroller>
-        {trip && gearListArray.length > 0 && (
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <small style={{ textAlign: 'center' }}>Your Packing Progress ({packedPercent}%)</small>
-            <ProgressBar
-              height={baseAndAHalfSpacer}
-              borderRadius={baseAndAHalfSpacer}
-              completed={packedPercent}
-              isLabelVisible={false}
-              bgColor={brandSuccess}
-              transitionDuration="0.25s"
-            />
-          </div>
-        )}
       </div>
-    </StyledTripWrapper>
+
+      <FlexContainer justifyContent="flex-start">
+        {trip ? (
+          <>
+            <Button
+              type="link"
+              to={`/app/trips/${trip.tripId}/details`}
+              rightSpacer
+              size="small"
+              color="tertiary"
+              onClick={() =>
+                trackEvent('Trip Header Details Link Clicked', {
+                  trip,
+                })
+              }
+            >
+              Edit
+            </Button>
+            <Button
+              type="link"
+              to={`/app/trips/${trip.tripId}/party`}
+              rightSpacer
+              size="small"
+              color="tertiary"
+              onClick={() =>
+                trackEvent('Trip Header Party Link Clicked', {
+                  trip,
+                })
+              }
+            >
+              Party
+            </Button>
+            <TripDeleteModal
+              setModalIsOpen={setModalIsOpen}
+              modalIsOpen={modalIsOpen}
+              tripId={trip.tripId}
+            />
+            <DropdownMenu>
+              <button
+                onClick={() => {
+                  setModalIsOpen(true);
+                  trackEvent('Trip Header Delete Trip Clicked', {
+                    trip,
+                  });
+                }}
+                type="button"
+              >
+                <FaTrash /> Delete
+              </button>
+            </DropdownMenu>
+          </>
+        ) : (
+          <>
+            <Skeleton
+              width={100}
+              height={doubleSpacer}
+              style={{
+                marginRight: baseSpacer,
+              }}
+            />
+            <Skeleton
+              width={80}
+              height={doubleSpacer}
+              style={{
+                marginRight: baseSpacer,
+              }}
+            />
+            <Skeleton width={50} height={doubleSpacer} />
+          </>
+        )}
+      </FlexContainer>
+    </div>
   );
 };
 

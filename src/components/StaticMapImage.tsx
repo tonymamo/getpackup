@@ -1,14 +1,12 @@
 /* eslint-disable import/no-unresolved */
 import React, { FunctionComponent } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import styled from 'styled-components';
 import { StaticMap, Marker } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { brandPrimary, white } from '@styles/color';
-import { borderRadius, doubleSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
-import { fontSizeSmall } from '@styles/typography';
+import { white } from '@styles/color';
+import { doubleSpacer } from '@styles/size';
 
 // Mapbox failing on prod builds, fixed by adding `worker-loader` package and the following line
 // https://github.com/visgl/react-map-gl/issues/1266
@@ -25,20 +23,20 @@ type StaticMapImageProps = {
   label?: string;
 };
 
-const StyledMarkerText = styled.span`
-  display: block;
-  transform: translateX(
-    -45%
-  ); /* 45 works better to center than 50% for some reason? probably accounting for padding */
-  font-size: ${fontSizeSmall};
-  font-weight: bold;
-  color: ${white};
-  background: ${brandPrimary};
-  padding: ${quarterSpacer} ${threeQuarterSpacer};
-  border-radius: ${borderRadius};
-  text-align: center;
-  margin-top: ${quarterSpacer};
-`;
+// const StyledMarkerText = styled.span`
+//   display: block;
+//   transform: translateX(
+//     -45%
+//   ); /* 45 works better to center than 50% for some reason? probably accounting for padding */
+//   font-size: ${fontSizeSmall};
+//   font-weight: bold;
+//   color: ${white};
+//   background: ${brandPrimary};
+//   padding: ${quarterSpacer} ${threeQuarterSpacer};
+//   border-radius: ${borderRadius};
+//   text-align: center;
+//   margin-top: ${quarterSpacer};
+// `;
 
 const StaticMapImage: FunctionComponent<StaticMapImageProps> = ({
   lat,
@@ -60,7 +58,6 @@ const StaticMapImage: FunctionComponent<StaticMapImageProps> = ({
     {label ? (
       <Marker latitude={lat} longitude={lng}>
         <FaMapMarkerAlt size={doubleSpacer} color={white} />
-        <StyledMarkerText>{label}</StyledMarkerText>
       </Marker>
     ) : null}
   </StaticMap>

@@ -65,7 +65,9 @@ const Trips: FunctionComponent<TripsProps> = () => {
     .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
   const renderTrip = (trip: TripType, pending?: boolean) => (
-    <Box
+    <TripCard
+      trip={trip}
+      isPending={pending}
       key={trip.tripId}
       onClick={
         pending
@@ -75,9 +77,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
               trackEvent('Trip Card Link Clicked', { trip });
             }
       }
-    >
-      <TripCard trip={trip} isPending={pending} />
-    </Box>
+    />
   );
 
   if (

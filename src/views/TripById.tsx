@@ -101,12 +101,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
             tripIsLoaded={isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip)}
           />
 
-          <TripDetails
-            path="/details"
-            activeTrip={activeTrip}
-            users={users}
-            loggedInUser={props.loggedInUser}
-          />
+          <TripDetails path="/details" activeTrip={activeTrip} users={users} />
           <TripParty path="/party" activeTrip={activeTrip} />
           <EditPackingListItem
             path="/checklist/:id"

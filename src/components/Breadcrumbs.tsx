@@ -6,6 +6,7 @@ import { FaChevronRight } from 'react-icons/fa';
 
 import { halfSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
+import truncateText from '@utils/truncateText';
 
 type CrumbProps = {
   url: string;
@@ -57,7 +58,7 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = memo((props) => {
       <Router primary={false} basepath="/app">
         <Crumb path="/trips" url="/app/trips" text="All Trips">
           <Crumb path="/new" url="../" text="New" />
-          <Crumb path="/:id" url="../" text={props.tripName || 'Trip'}>
+          <Crumb path="/:id" url="../" text={truncateText(props.tripName, 20) || 'Trip'}>
             <Crumb path="/details" url="../" text="Details" />
             <Crumb path="/party" url="../" text="party" />
           </Crumb>

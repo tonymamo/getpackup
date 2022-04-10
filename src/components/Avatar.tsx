@@ -11,7 +11,6 @@ import {
   sextupleSpacer,
   borderRadiusCircle,
   octupleSpacer,
-  quarterSpacer,
   tripleSpacer,
 } from '@styles/size';
 import { lightestGray, white } from '@styles/color';
@@ -109,11 +108,6 @@ export const StackedAvatars = styled.div`
     z-index: ${zIndexAvatarImageAfter};
     transition: transform 0.1s ease-out 0s;
   }
-
-  & ${AvatarImageWrapper}:hover {
-    z-index: ${zIndexAvatarImageAfter + 1};
-    transform: translateY(-${quarterSpacer});
-  }
 `;
 
 const Avatar: FunctionComponent<AvatarProps> = (props) => {
@@ -135,12 +129,12 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
           <StaticContentWrapper
             size={props.size || 'sm'}
             data-tip={`${props.staticContent} more`}
-            data-for="avatar"
+            data-for="static-avatar"
           >
             <small>{props.staticContent}</small>
           </StaticContentWrapper>
           <ReactTooltip
-            id="avatar"
+            id="static-avatar"
             place="top"
             type="dark"
             effect="solid"
@@ -150,8 +144,6 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
       ) : (
         <>
           <PreviewCompatibleImage
-            data-tip={props.username?.toLocaleLowerCase()}
-            data-for="avatar"
             imageInfo={{
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               image: (props.src || (gravatarUrl as string))!,
@@ -160,15 +152,6 @@ const Avatar: FunctionComponent<AvatarProps> = (props) => {
             width={renderSize(props.size)}
             height={renderSize(props.size)}
           />
-          {props.username ? (
-            <ReactTooltip
-              id="avatar"
-              place="top"
-              type="dark"
-              effect="solid"
-              className="tooltip customTooltip"
-            />
-          ) : null}
         </>
       )}
     </AvatarImageWrapper>

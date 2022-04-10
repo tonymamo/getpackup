@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
+import { Link, RouteComponentProps } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import { Formik, Form, Field } from 'formik';
@@ -33,14 +33,14 @@ import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 import { ActivityTypes, GearListEnumType } from '@common/gearItem';
 import { RootState } from '@redux/ducks';
+import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
   users: Array<UserType>;
-  loggedInUser: UserType;
 } & RouteComponentProps;
 
-const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, loggedInUser }) => {
+const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -285,17 +285,26 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                             <HorizontalRule compact />
                           </>
                         )}
-
                         <p>
-                          <strong>Trip Creator</strong>
+                          <strong>Party Members</strong>{' '}
+                          <small>
+                            <Link to={`/app/trips/${activeTrip.tripId}/party`}>Edit &rarr;</Link>
+                          </small>
                         </p>
-                        <UserMediaObject
-                          user={
-                            activeTrip.owner === loggedInUser.uid
-                              ? loggedInUser
-                              : users[activeTrip.owner as any]
-                          }
-                        />
+
+                        {users &&
+                          acceptedTripMembersOnly(activeTrip).map((tripMember: any) => {
+                            const matchingUser: UserType | undefined = users[tripMember.uid]
+                              ? users[tripMember.uid]
+                              : undefined;
+                            if (!matchingUser) return null;
+                            return (
+                              <>
+                                <UserMediaObject user={matchingUser} key={matchingUser.uid} />
+                                <br />
+                              </>
+                            );
+                          })}
                       </Box>
                     </Column>
                   </Row>
