@@ -260,7 +260,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                         categoryName={categoryName}
                         sortedItems={packingListItems}
                         tripId={tripId}
-                        isSharedPackingListCategory={false}
+                        isSharedPackingListCategory={activePackingListTab === TabOptions.Shared}
                         auth={auth}
                         isSharedTrip={sharedTrip}
                       />
