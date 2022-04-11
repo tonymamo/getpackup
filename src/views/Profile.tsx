@@ -27,7 +27,7 @@ import { RootState } from '@redux/ducks';
 import { requiredEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
 import validateUsername from '@utils/validateUsername';
 import { brandDanger, offWhite } from '@styles/color';
-import { baseSpacerUnit, baseSpacer, halfSpacer, sextupleSpacer, doubleSpacer } from '@styles/size';
+import { baseSpacerUnit, baseSpacer, sextupleSpacer, doubleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import { AvatarImageWrapper } from '@components/Avatar';
 import useWindowSize from '@utils/useWindowSize';
@@ -169,9 +169,9 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
       {auth && loggedInUser && (
         <ProfileWrapper>
           <NegativeMarginContainer
-            top={baseSpacer}
-            left={isExtraSmallScreen ? halfSpacer : baseSpacer}
-            right={isExtraSmallScreen ? halfSpacer : baseSpacer}
+            top={baseSpacerUnit}
+            left={isExtraSmallScreen ? baseSpacerUnit / 2 : baseSpacerUnit}
+            right={isExtraSmallScreen ? baseSpacerUnit / 2 : baseSpacerUnit}
           >
             <HeroImageUpload type="profile" id={auth.uid} image={loggedInUser.profileHeaderImage} />
           </NegativeMarginContainer>

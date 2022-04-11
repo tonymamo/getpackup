@@ -59,7 +59,7 @@ const firebaseConfig = {
   storageBucket:
     process.env.GATSBY_SITE_URL === 'https://getpackup.com'
       ? process.env.GATSBY_FIREBASE_STORAGE_BUCKET
-      : process.env.GATSBY_FIREBASE_TEST_TORAGE_BUCKET,
+      : process.env.GATSBY_FIREBASE_TEST_STORAGE_BUCKET,
   messagingSenderId:
     process.env.GATSBY_SITE_URL === 'https://getpackup.com'
       ? process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID

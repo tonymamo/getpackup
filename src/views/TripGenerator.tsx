@@ -17,7 +17,6 @@ import {
   Row,
   Column,
   Modal,
-  HorizontalScroller,
   IconCheckbox,
   FlexContainer,
   Alert,
@@ -462,9 +461,9 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
           message="Note: selecting a new tag will pre-populate new gear in your gear closet that you may want to customize after!"
         />
         <strong style={{ textTransform: 'uppercase' }}>Select a Category</strong>
-        <HorizontalScroller withBorder>
+        <Row>
           {getOtherCategories(gearListType).map((item) => (
-            <li key={item.name}>
+            <Column xs={4} md={3} key={item.name}>
               <IconWrapperLabel
                 onClick={() => {
                   updateUsersGearClosetCategories(item.name);
@@ -473,9 +472,9 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                 {renderDynamicIcon(item.icon)}
                 <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
               </IconWrapperLabel>
-            </li>
+            </Column>
           ))}
-        </HorizontalScroller>
+        </Row>
       </Modal>
     </PageContainer>
   );
