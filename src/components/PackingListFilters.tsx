@@ -1,17 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { Button } from '@components';
 import styled from 'styled-components';
-import { navigate } from '@reach/router';
 
 import { baseSpacer } from '@styles/size';
 import { PackingListFilterOptions } from '@utils/enums';
-import { mergeQueryParams } from '@utils/queryStringUtils';
+import { useDispatch } from 'react-redux';
 
 type PackingListFilterProps = {
   disabled: boolean;
   activeFilter: PackingListFilterOptions;
   onFilterChange: (filter: PackingListFilterOptions) => void;
-  location: any;
 };
 
 const Filters = styled.div`
@@ -43,7 +41,6 @@ const PackingListFilters: FunctionComponent<PackingListFilterProps> = ({
   disabled,
   activeFilter,
   onFilterChange,
-  location,
 }): JSX.Element => {
   const filterSettings = [
     PackingListFilterOptions.All,
@@ -51,11 +48,10 @@ const PackingListFilters: FunctionComponent<PackingListFilterProps> = ({
     PackingListFilterOptions.Unpacked,
   ];
 
+  const dispatch = useDispatch();
+
   const handleFilter = (filter: PackingListFilterOptions) => {
-    onFilterChange(filter);
-    navigate(mergeQueryParams({ filter }, location), {
-      replace: true,
-    });
+    dispatch(onFilterChange(filter));
   };
 
   return (

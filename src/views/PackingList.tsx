@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState, useRef, useCallback } from 'react';
-import { RouteComponentProps, navigate, useLocation } from '@reach/router';
+import { RouteComponentProps, navigate } from '@reach/router';
 import styled from 'styled-components';
 import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { brandPrimary, textColor, white, brandSuccess } from '@styles/color';
 import {
@@ -21,10 +21,10 @@ import { fontSizeH5 } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import { zIndexNavbar } from '@styles/layers';
 import { RootState } from '@redux/ducks';
-import { getQueryStringParams, mergeQueryParams } from '@utils/queryStringUtils';
 import PackingListFilters from '@components/PackingListFilters';
 import groupPackingList from '@utils/groupPackingList';
 import { PackingListFilterOptions, TabOptions } from '@utils/enums';
+import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
 
 type PackingListProps = {
   trip?: TripType;
@@ -86,9 +86,10 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
-
-  const location = useLocation();
-  const { list, filter } = getQueryStringParams(location);
+  const { activePackingListFilter, activePackingListTab } = useSelector(
+    (state: RootState) => state.client
+  );
+  const dispatch = useDispatch();
 
   const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
   const [packedPercent, setPackedPercent] = useState(0);
@@ -102,28 +103,13 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     }
   }, [gearListArray, packedItemsLength]);
 
-  //
-  // Filters stuff
-  //
-  const [activeFilter, setActiveFilter] = useState<PackingListFilterOptions>(
-    (filter as PackingListFilterOptions) || PackingListFilterOptions.All
-  );
-
-  //
-  // Tab stuff
-  //
-  const [tabIndex, setTabIndex] = useState<TabOptions>((list as TabOptions) || 'Personal');
-
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && Object.keys(trip.tripMembers).length > 1;
 
   const handleTabClick = (tab: TabOptions) => {
-    setTabIndex(tab);
-    setActiveFilter(PackingListFilterOptions.All);
+    dispatch(setActivePackingListTab(tab));
+    dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
     trackEvent(`${tab} Checklist Tab Clicked`);
-    navigate(mergeQueryParams({ list: tab, filter: PackingListFilterOptions.All }, location), {
-      replace: true,
-    });
   };
 
   //
@@ -178,20 +164,23 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     );
 
   // take into account if we are on the personal or shared list
-  const items = tabIndex === TabOptions.PERSONAL ? personalItems : sharedItems;
+  const items = activePackingListTab === TabOptions.Personal ? personalItems : sharedItems;
 
   // take into account if the unpacked or packed filters are selected
   const filteredItems =
     items &&
     items.length > 0 &&
     items.filter((item) =>
-      activeFilter === PackingListFilterOptions.Unpacked ? !item.isPacked : item.isPacked
+      activePackingListFilter === PackingListFilterOptions.Unpacked ? !item.isPacked : item.isPacked
     );
   // if the filter is All, just return all the items
-  const finalItems = activeFilter === PackingListFilterOptions.All ? items : filteredItems;
+  const finalItems =
+    activePackingListFilter === PackingListFilterOptions.All ? items : filteredItems;
 
   const getGroupedFinalItems =
-    finalItems && finalItems.length > 0 && groupPackingList(finalItems, auth.uid, tabIndex);
+    finalItems &&
+    finalItems.length > 0 &&
+    groupPackingList(finalItems, auth.uid, activePackingListTab);
 
   // return out early if trip cant be found
   // todo probably a better loading state thing here?
@@ -222,14 +211,14 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           {sharedTrip && (
             <Tabs>
               <Tab
-                active={tabIndex === TabOptions.PERSONAL}
-                onClick={() => handleTabClick(TabOptions.PERSONAL)}
+                active={activePackingListTab === TabOptions.Personal}
+                onClick={() => handleTabClick(TabOptions.Personal)}
               >
                 <FaRegCheckSquare title="Personal Checklist" />
               </Tab>
               <Tab
-                active={tabIndex === TabOptions.SHARED}
-                onClick={() => handleTabClick(TabOptions.SHARED)}
+                active={activePackingListTab === TabOptions.Shared}
+                onClick={() => handleTabClick(TabOptions.Shared)}
               >
                 <FaUsers title="Shared Checklist" />
               </Tab>
@@ -246,15 +235,16 @@ const PackingList: FunctionComponent<PackingListProps> = ({
           <>
             {sharedTrip ? (
               <Heading as="h4" altStyle uppercase>
-                {tabIndex === TabOptions.PERSONAL ? TabOptions.PERSONAL : TabOptions.SHARED}
+                {activePackingListTab === TabOptions.Personal
+                  ? TabOptions.Personal
+                  : TabOptions.Shared}
               </Heading>
             ) : null}
 
             <PackingListFilters
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
+              activeFilter={activePackingListFilter}
+              onFilterChange={setActivePackingListFilter}
               disabled={!trip}
-              location={location}
             />
 
             {getGroupedFinalItems &&
@@ -284,7 +274,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 <Heading as="h3" align="center">
                   Nothing to see here 👀
                 </Heading>
-                {activeFilter === PackingListFilterOptions.All ? (
+                {activePackingListFilter === PackingListFilterOptions.All ? (
                   <p style={{ textAlign: 'center' }}>
                     Perhaps you need to
                     <Button
@@ -301,7 +291,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                   <p style={{ textAlign: 'center' }}>
                     Try changing your filters from{' '}
                     <strong>
-                      {activeFilter === PackingListFilterOptions.Packed
+                      {activePackingListFilter === PackingListFilterOptions.Packed
                         ? PackingListFilterOptions.Packed
                         : PackingListFilterOptions.Unpacked}
                     </strong>{' '}
@@ -311,14 +301,16 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                       color="tertiary"
                       size="small"
                       onClick={() =>
-                        setActiveFilter(
-                          activeFilter === PackingListFilterOptions.Packed
-                            ? PackingListFilterOptions.Unpacked
-                            : PackingListFilterOptions.Packed
+                        dispatch(
+                          setActivePackingListFilter(
+                            activePackingListFilter === PackingListFilterOptions.Packed
+                              ? PackingListFilterOptions.Unpacked
+                              : PackingListFilterOptions.Packed
+                          )
                         )
                       }
                     >
-                      {activeFilter === PackingListFilterOptions.Packed
+                      {activePackingListFilter === PackingListFilterOptions.Packed
                         ? PackingListFilterOptions.Unpacked
                         : PackingListFilterOptions.Packed}
                     </Button>{' '}
@@ -327,7 +319,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                       type="button"
                       color="tertiary"
                       size="small"
-                      onClick={() => setActiveFilter(PackingListFilterOptions.All)}
+                      onClick={() =>
+                        dispatch(setActivePackingListFilter(PackingListFilterOptions.All))
+                      }
                     >
                       All
                     </Button>

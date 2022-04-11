@@ -13,6 +13,6 @@ export enum PackingListFilterOptions {
 }
 
 export enum TabOptions {
-  PERSONAL = 'Personal',
-  SHARED = 'Shared',
+  Personal = 'Personal',
+  Shared = 'Shared',
 }
