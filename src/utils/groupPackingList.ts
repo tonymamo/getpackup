@@ -10,7 +10,7 @@ const groupPackingList = (list: PackingListItemType[], uid: string, typeOfList: 
       packingListItem.packedBy &&
       packingListItem.packedBy.length > 0 &&
       packingListItem.packedBy.some((item) =>
-        typeOfList === TabOptions.PERSONAL ? item.uid === uid : item.isShared
+        typeOfList === TabOptions.Personal ? item.uid === uid : item.isShared
       )
   );
 
