@@ -23,6 +23,7 @@ import {
   Alert,
   Box,
   FormErrors,
+  LoadingSpinner,
 } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
@@ -147,13 +148,20 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
 
     const promises: Array<Promise<any>> = [];
 
+    const uniqueTags = [...(activeTrip?.tags || []), ...tagMatches];
+    tagMatches.forEach((tag) => {
+      if (!uniqueTags.includes(tag)) {
+        uniqueTags.push(tag);
+      }
+    });
+
     promises.push(
       firebase
         .firestore()
         .collection('trips')
         .doc(props.id)
         .update({
-          tags: [new Set([...(activeTrip?.tags || []), ...tagMatches])],
+          tags: uniqueTags,
         })
     );
 
@@ -429,12 +437,16 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         </Formik>
       )}
 
-      <Modal toggleModal={() => {}} isOpen={isLoading}>
-        <Heading>Generating packing list...</Heading>
-        {/* TODO: loading animation? */}
-        <p>
-          Please hold tight while we create a custom packing list for you based on your selections!
-        </p>
+      <Modal toggleModal={() => {}} isOpen={isLoading} hideCloseButton largePadding>
+        <div style={{ textAlign: 'center' }}>
+          <LoadingSpinner theme="dark" />
+          <Heading>Generating packing list...</Heading>
+
+          <p>
+            Please hold tight while we create a custom packing list for you based on your selections
+            📝
+          </p>
+        </div>
       </Modal>
 
       <Modal

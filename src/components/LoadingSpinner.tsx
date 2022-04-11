@@ -117,6 +117,7 @@ const StyledLoadingSpinner = styled.span`
   animation: ${(props) => CirclesKeyframes(props)} 1s linear infinite;
   transform: scale(0.35);
   margin-right: 8px;
+  display: inline-block;
 `;
 
 type LoadingSpinnerProps = {
