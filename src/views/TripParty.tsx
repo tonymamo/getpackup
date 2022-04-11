@@ -139,6 +139,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
             subject: `${profile.username} has invited you on a trip`,
             username: profile.username,
             tripId: activeTrip.tripId,
+            isTestEnv: String(process.env.GATSBY_SITE_URL !== 'https://getpackup.com'),
           });
           const invitationUrl =
             process.env.GATSBY_SITE_URL === 'https://getpackup.com'
