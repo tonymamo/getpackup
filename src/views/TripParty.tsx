@@ -130,6 +130,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
             uid: memberId,
             invitedAt: new Date(),
             status: TripMemberStatus.Pending,
+            invitedBy: auth.uid,
           },
         })
         .then(() => {
@@ -139,7 +140,10 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
             username: profile.username,
             tripId: activeTrip.tripId,
           });
-          const invitationUrl = `https://us-central1-getpackup.cloudfunctions.net/sendTripInvitationEmail?${queryParams}`;
+          const invitationUrl =
+            process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+              ? `https://us-central1-getpackup.cloudfunctions.net/sendTripInvitationEmail?${queryParams}`
+              : `https://us-central1-packup-test-fc0c2.cloudfunctions.net/sendTripInvitationEmail?${queryParams}`;
 
           axios.post(invitationUrl);
 

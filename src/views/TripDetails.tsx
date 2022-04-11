@@ -28,7 +28,12 @@ import getSeason from '@utils/getSeason';
 import { requiredField } from '@utils/validations';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
-import { gearListActivities } from '@utils/gearListItemEnum';
+import {
+  gearListAccommodations,
+  gearListActivities,
+  gearListCampKitchen,
+  gearListOtherConsiderations,
+} from '@utils/gearListItemEnum';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 import { ActivityTypes, GearListEnumType } from '@common/gearItem';
@@ -59,7 +64,13 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const updateTrip = (values: TripFormType) => {
+  const updateTrip = (
+    values: TripFormType & {
+      activityTags: string[];
+      accommodationAndKitchenTags: string[];
+      otherConsiderationTags: string[];
+    }
+  ) => {
     setIsLoading(true);
     if (activeTrip) {
       const updatedValues = {
@@ -69,6 +80,11 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
         endDate: endOfDay(new Date(values.endDate as string)),
         updated: new Date(),
         tripLength: values.tripLength,
+        tags: [
+          ...values.activityTags,
+          ...values.accommodationAndKitchenTags,
+          ...values.otherConsiderationTags,
+        ],
       };
       firebase
         .firestore()
@@ -100,13 +116,33 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
 
   const formattedTripDates =
     activeTrip &&
-    (activeTrip?.tripLength === 21
+    (activeTrip.tripLength === 21
       ? formattedDate(new Date(activeTrip.startDate.seconds * 1000))
       : formattedDateRange(activeTrip.startDate.seconds * 1000, activeTrip.endDate.seconds * 1000));
 
   // the categories that the user DOES have in their gear closet, so we can only show those
   const getFilteredCategories = (array: GearListEnumType) =>
     array.filter((item) => gearClosetCategories.includes(item.name));
+
+  const onlyActivityTags = activeTrip
+    ? activeTrip.tags.filter((item) =>
+        gearListActivities.some((activity) => item === activity.label)
+      )
+    : [];
+
+  const onlyAccommodationOrCampKitchenTags = activeTrip
+    ? activeTrip.tags.filter(
+        (item) =>
+          gearListAccommodations.some((activity) => item === activity.label) ||
+          gearListCampKitchen.some((activity) => item === activity.label)
+      )
+    : [];
+
+  const onlyOtherConsiderationsTags = activeTrip
+    ? activeTrip.tags.filter((item) =>
+        gearListOtherConsiderations.some((activity) => item === activity.label)
+      )
+    : [];
 
   return (
     <>
@@ -119,7 +155,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
         )}
       </Seo>
       <PageContainer>
-        {typeof activeTrip !== 'undefined' && (
+        {typeof activeTrip !== 'undefined' && activeTrip && (
           <>
             <TripNavigation activeTrip={activeTrip} />
             <HeroImageUpload type="trip" image={activeTrip.headerImage} id={activeTrip.tripId} />
@@ -130,10 +166,17 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                   ...activeTrip,
                   startDate: new Date(activeTrip.startDate.seconds * 1000),
                   endDate: new Date(activeTrip.endDate.seconds * 1000),
-                } as TripFormType | TripType
+                  activityTags: [...onlyActivityTags],
+                  accommodationAndKitchenTags: [...onlyAccommodationOrCampKitchenTags],
+                  otherConsiderationTags: [...onlyOtherConsiderationsTags],
+                } as TripFormType & {
+                  activityTags: string[];
+                  accommodationAndKitchenTags: string[];
+                  otherConsiderationTags: string[];
+                }
               }
               onSubmit={(values, { setSubmitting }) => {
-                updateTrip(values as TripFormType);
+                updateTrip(values);
                 setSubmitting(false);
               }}
             >
@@ -228,16 +271,11 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                           label="Activities"
                           isLoading={isLoading}
                           value={
-                            activeTrip.tags.length > 0 ? (
+                            onlyActivityTags && onlyActivityTags.length > 0 ? (
                               <>
-                                {// only show Activity tags
-                                activeTrip.tags
-                                  .filter((item) =>
-                                    gearListActivities.some((activity) => item === activity.label)
-                                  )
-                                  .map((tag: string) => (
-                                    <Pill key={`${tag}tag`} text={tag} color="primary" />
-                                  ))}
+                                {onlyActivityTags.map((tag: string) => (
+                                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                                ))}
                               </>
                             ) : (
                               'No activities selected'
@@ -248,11 +286,80 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                             as={Input}
                             type="select"
                             isMulti
-                            name="tags"
-                            label="Tags"
+                            name="activityTags"
+                            label="Activity Tags"
                             hiddenLabel
                             options={createOptionsFromArrayOfObjects(
                               getFilteredCategories(gearListActivities),
+                              'label'
+                            )}
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            {...rest}
+                          />
+                        </EditableInput>
+                        <EditableInput
+                          label="Accommodations/Kitchen"
+                          isLoading={isLoading}
+                          value={
+                            onlyAccommodationOrCampKitchenTags &&
+                            onlyAccommodationOrCampKitchenTags.length > 0 ? (
+                              <>
+                                {onlyAccommodationOrCampKitchenTags.map((tag: string) => (
+                                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                                ))}
+                              </>
+                            ) : (
+                              'No accommodations or kitchen setups selected'
+                            )
+                          }
+                        >
+                          <Field
+                            as={Input}
+                            type="select"
+                            isMulti
+                            name="accommodationAndKitchenTags"
+                            label="Accommodation & Kictchen Tags"
+                            hiddenLabel
+                            options={createOptionsFromArrayOfObjects(
+                              getFilteredCategories([
+                                ...gearListAccommodations,
+                                ...gearListCampKitchen,
+                              ]),
+                              'label'
+                            )}
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            {...rest}
+                          />
+                        </EditableInput>
+                        <EditableInput
+                          label="Other Considerations"
+                          isLoading={isLoading}
+                          value={
+                            onlyOtherConsiderationsTags &&
+                            onlyOtherConsiderationsTags.length > 0 ? (
+                              <>
+                                {onlyOtherConsiderationsTags.map((tag: string) => (
+                                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                                ))}
+                              </>
+                            ) : (
+                              'No other considerations selected'
+                            )
+                          }
+                        >
+                          <Field
+                            as={Input}
+                            type="select"
+                            isMulti
+                            name="otherConsiderationTags"
+                            label="Other Consideration Tags"
+                            hiddenLabel
+                            options={createOptionsFromArrayOfObjects(
+                              getFilteredCategories(gearListOtherConsiderations),
                               'label'
                             )}
                             required

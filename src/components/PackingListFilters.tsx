@@ -33,6 +33,8 @@ const FilterButtons = styled.div`
 
     &:nth-child(2) {
       border-radius: 0;
+      border-left-width: 0;
+      border-right-width: 0;
     }
   }
 `;

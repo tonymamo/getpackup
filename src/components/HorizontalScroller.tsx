@@ -19,6 +19,7 @@ const HorizontalScrollerWrapper = styled.ul`
   /* touch-action: pan-x; */
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
+  cursor: ew-resize;
 
   background: linear-gradient(90deg, ${offWhite} 33%, rgba(255, 255, 255, 0)),
     linear-gradient(90deg, rgba(255, 255, 255, 0), ${offWhite} 66%) 0 100%,
@@ -29,7 +30,7 @@ const HorizontalScrollerWrapper = styled.ul`
     ${baseSpacer} 100%;
   background-position: 0 0, 100%, 0 0, 100%;
   background-attachment: local, local, scroll, scroll;
-  background-color: ${offWhite};
+  background-color: transparent;
   border: ${(props: HorizontalScrollerProps) => (props.withBorder ? baseBorderStyle : 'none')};
 
   &::-webkit-scrollbar {

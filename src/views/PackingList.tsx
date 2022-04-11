@@ -272,6 +272,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                         tripId={tripId}
                         isSharedPackingListCategory={false}
                         auth={auth}
+                        isSharedTrip={sharedTrip}
                       />
                     );
                   }
@@ -283,40 +284,55 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 <Heading as="h3" align="center">
                   Nothing to see here 👀
                 </Heading>
-                <p style={{ textAlign: 'center' }}>
-                  Try changing your filters from{' '}
-                  <strong>
-                    {activeFilter === PackingListFilterOptions.Packed
-                      ? PackingListFilterOptions.Packed
-                      : PackingListFilterOptions.Unpacked}
-                  </strong>{' '}
-                  to{' '}
-                  <Button
-                    type="button"
-                    color="tertiary"
-                    size="small"
-                    onClick={() =>
-                      setActiveFilter(
-                        activeFilter === PackingListFilterOptions.Packed
-                          ? PackingListFilterOptions.Unpacked
-                          : PackingListFilterOptions.Packed
-                      )
-                    }
-                  >
-                    {activeFilter === PackingListFilterOptions.Packed
-                      ? PackingListFilterOptions.Unpacked
-                      : PackingListFilterOptions.Packed}
-                  </Button>{' '}
-                  or{' '}
-                  <Button
-                    type="button"
-                    color="tertiary"
-                    size="small"
-                    onClick={() => setActiveFilter(PackingListFilterOptions.All)}
-                  >
-                    All
-                  </Button>
-                </p>
+                {activeFilter === PackingListFilterOptions.All ? (
+                  <p style={{ textAlign: 'center' }}>
+                    Perhaps you need to
+                    <Button
+                      type="link"
+                      to={`/app/trips/${trip.tripId}/generator`}
+                      color="tertiary"
+                      size="small"
+                    >
+                      select some categories
+                    </Button>
+                    and generate your custom list?
+                  </p>
+                ) : (
+                  <p style={{ textAlign: 'center' }}>
+                    Try changing your filters from{' '}
+                    <strong>
+                      {activeFilter === PackingListFilterOptions.Packed
+                        ? PackingListFilterOptions.Packed
+                        : PackingListFilterOptions.Unpacked}
+                    </strong>{' '}
+                    to{' '}
+                    <Button
+                      type="button"
+                      color="tertiary"
+                      size="small"
+                      onClick={() =>
+                        setActiveFilter(
+                          activeFilter === PackingListFilterOptions.Packed
+                            ? PackingListFilterOptions.Unpacked
+                            : PackingListFilterOptions.Packed
+                        )
+                      }
+                    >
+                      {activeFilter === PackingListFilterOptions.Packed
+                        ? PackingListFilterOptions.Unpacked
+                        : PackingListFilterOptions.Packed}
+                    </Button>{' '}
+                    or{' '}
+                    <Button
+                      type="button"
+                      color="tertiary"
+                      size="small"
+                      onClick={() => setActiveFilter(PackingListFilterOptions.All)}
+                    >
+                      All
+                    </Button>
+                  </p>
+                )}
               </Box>
             )}
           </>

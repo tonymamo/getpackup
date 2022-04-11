@@ -23,7 +23,9 @@ const Actions: FunctionComponent<ActionsProps> = () => {
           // eslint-disable-next-line no-console
           console.log(`calling endpoint for ${trip.tripId}`);
           axios.get(
-            `https://us-central1-packup-test-fc0c2.cloudfunctions.net/updatePackingList?tripId=${trip.tripId}`
+            process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+              ? `https://us-central1-getpackup.cloudfunctions.net/updatePackingList?tripId=${trip.tripId}`
+              : `https://us-central1-packup-test-fc0c2.cloudfunctions.net/updatePackingList?tripId=${trip.tripId}`
           );
         }, index * 500);
       });

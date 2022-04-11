@@ -38,6 +38,7 @@ type PackingListItemProps = {
   tripId: string;
   item: PackingListItemType;
   isOnSharedList?: boolean;
+  isSharedTrip?: boolean;
 };
 
 const PackingListItemWrapper = styled.li`
@@ -232,7 +233,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
     <PackingListItemWrapper className={removing ? 'removing' : undefined}>
       <SwipeableListItem
         listType={ListType.IOS}
-        leadingActions={leadingActions()}
+        leadingActions={props.isSharedTrip ? leadingActions() : null}
         trailingActions={trailingActions()}
         destructiveCallbackDelay={callbackDelay}
         blockSwipe={!size.isSmallScreen} // only enable swiping for small screens
@@ -334,7 +335,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
 
                 {!size.isSmallScreen && (
                   <>
-                    {!props.isOnSharedList && (
+                    {!props.isOnSharedList && props.isSharedTrip && (
                       <IconWrapper
                         onClick={onShare}
                         data-tip={itemIsShared ? 'Shared Group Item' : 'Mark as Shared Group Item'}

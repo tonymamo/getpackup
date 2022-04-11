@@ -15,6 +15,7 @@ export type TripMember = {
   acceptedAt?: firebase.default.firestore.Timestamp;
   status: TripMemberStatus;
   uid: string;
+  invitedBy?: string;
 };
 
 export type TripType = {

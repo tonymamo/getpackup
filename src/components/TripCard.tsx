@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { FaRegCalendar, FaMapMarkerAlt, FaCheck, FaTimes } from 'react-icons/fa';
 import { Link, navigate } from 'gatsby';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,8 +15,10 @@ import {
   Button,
   TripHeaderImage,
   TripMemberAvatars,
+  HorizontalScroller,
+  Pill,
 } from '@components';
-import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
+import { baseAndAHalfSpacer, baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
@@ -146,13 +148,38 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
     }
   };
 
+  const getInvitedByName = useMemo(() => {
+    let inviter: string | undefined = '...';
+
+    // need to wait for trip users to be loaded in redux, not just logged in user
+    if (users && Object.keys(users).length > 1 && trip) {
+      if (Object.keys(trip.tripMembers).length > 0) {
+        if (
+          trip.tripMembers[auth.uid].invitedBy &&
+          typeof trip.tripMembers[auth.uid].invitedBy === 'string'
+        ) {
+          inviter = users[`${trip.tripMembers[auth.uid].invitedBy}`].displayName;
+        } else {
+          const owner =
+            trip.owner ||
+            Object.values(trip.tripMembers).find(
+              (member) => member.status === TripMemberStatus.Owner
+            )?.uid;
+          inviter = owner;
+        }
+      }
+    }
+
+    return `You've been invited by ${inviter}`;
+  }, [trip, users]);
+
   return (
     <StyledTripWrapper isPending={isPending} onClick={onClick}>
       <TripHeaderImage trip={trip} />
 
       <FlexContainer justifyContent="space-between" flexWrap="nowrap">
         <Heading as="h3" altStyle noMargin>
-          {trip ? (
+          {trip && trip.name ? (
             <>
               {isPending ? (
                 trip.name
@@ -193,7 +220,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
       <StyledLineItem>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
           <FaMapMarkerAlt style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }} />
-          {trip ? (
+          {trip && trip.startingPoint ? (
             trip.startingPoint
           ) : (
             <div style={{ flex: 1 }}>
@@ -203,31 +230,74 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
         </FlexContainer>
       </StyledLineItem>
 
-      {isPending && (
-        <Row>
-          <Column xs={6}>
-            <Button
-              type="button"
-              block
-              color="success"
-              iconLeft={<FaCheck />}
-              onClick={acceptInvitation}
-            >
-              Accept
-            </Button>
-          </Column>
-          <Column xs={6}>
-            <Button
-              type="button"
-              block
-              color="danger"
-              iconLeft={<FaTimes />}
-              onClick={declineInvitation}
-            >
-              Decline
-            </Button>
-          </Column>
-        </Row>
+      <div
+        style={{
+          margin: `${halfSpacer} -${baseSpacer}`,
+          paddingLeft: halfSpacer,
+        }}
+      >
+        <HorizontalScroller>
+          {trip ? (
+            <>
+              {trip.tags &&
+                trip.tags.length > 0 &&
+                trip.tags.map((tag: string) => (
+                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                ))}
+            </>
+          ) : (
+            <>
+              {/* Generate some tag placeholders and make widths dynamic with Math */}
+              {Array.from({
+                length: 7,
+              }).map((_, i) => (
+                <Skeleton
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={i}
+                  // random widths between 48 and 128
+                  width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
+                  height={baseAndAHalfSpacer}
+                  style={{
+                    marginRight: halfSpacer,
+                    borderRadius: baseAndAHalfSpacer,
+                  }}
+                />
+              ))}
+            </>
+          )}
+        </HorizontalScroller>
+      </div>
+
+      {isPending && trip && (
+        <>
+          <p>
+            <strong> {getInvitedByName}</strong>
+          </p>
+          <Row>
+            <Column xs={6}>
+              <Button
+                type="button"
+                block
+                color="success"
+                iconLeft={<FaCheck />}
+                onClick={acceptInvitation}
+              >
+                Accept
+              </Button>
+            </Column>
+            <Column xs={6}>
+              <Button
+                type="button"
+                block
+                color="danger"
+                iconLeft={<FaTimes />}
+                onClick={declineInvitation}
+              >
+                Decline
+              </Button>
+            </Column>
+          </Row>
+        </>
       )}
     </StyledTripWrapper>
   );

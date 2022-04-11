@@ -18,6 +18,7 @@ type PackingListCategoryProps = {
   tripId: string;
   trip?: TripType;
   auth?: FirebaseReducer.AuthState;
+  isSharedTrip?: boolean;
 };
 
 const ItemsWrapper = styled.ul`
@@ -33,6 +34,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   trip,
   isSharedPackingListCategory,
   auth,
+  isSharedTrip,
 }) => {
   const firebase = useFirebase();
 
@@ -121,6 +123,7 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
                   tripId={tripId}
                   item={item}
                   isOnSharedList={isSharedPackingListCategory}
+                  isSharedTrip={isSharedTrip}
                 />
               ))}
               <PackingListAddItem
