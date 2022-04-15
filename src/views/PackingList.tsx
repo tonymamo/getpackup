@@ -178,9 +178,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
     activePackingListFilter === PackingListFilterOptions.All ? items : filteredItems;
 
   const getGroupedFinalItems =
-    finalItems &&
-    finalItems.length > 0 &&
-    groupPackingList(finalItems, auth.uid, activePackingListTab);
+    finalItems && finalItems.length > 0
+      ? groupPackingList(finalItems, auth.uid, activePackingListTab)
+      : [];
 
   // return out early if trip cant be found
   // todo probably a better loading state thing here?
@@ -276,16 +276,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                 </Heading>
                 {activePackingListFilter === PackingListFilterOptions.All ? (
                   <p style={{ textAlign: 'center' }}>
-                    Perhaps you need to
-                    <Button
-                      type="link"
-                      to={`/app/trips/${trip.tripId}/generator`}
-                      color="tertiary"
-                      size="small"
-                    >
-                      select some categories
-                    </Button>
-                    and generate your custom list?
+                    {activePackingListTab === TabOptions.Shared
+                      ? "No items have been marked as a shared group item yet. Didn't you learn to share as a kid!? Sharing is caring ☺️"
+                      : 'Something went wrong, please refresh the page to try loading your packing list again.'}
                   </p>
                 ) : (
                   <p style={{ textAlign: 'center' }}>

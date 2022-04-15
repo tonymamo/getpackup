@@ -1,15 +1,17 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { Link, navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Row, Column, Heading, Box, Button, Seo, PageContainer, TripCard } from '@components';
 import { RootState } from '@redux/ducks';
 import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
 import { TripMemberStatus, TripType } from '@common/trip';
 import trackEvent from '@utils/trackEvent';
+import { PackingListFilterOptions, TabOptions } from '@utils/enums';
+import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
 
 type TripsProps = {} & RouteComponentProps;
 
@@ -17,6 +19,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const dispatch = useDispatch();
 
   useFirestoreConnect([
     {
@@ -88,6 +91,12 @@ const Trips: FunctionComponent<TripsProps> = () => {
   ) {
     navigate('/app/onboarding');
   }
+
+  useEffect(() => {
+    // reset filters and tab for packing list each time All Trips page is visited
+    dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
+    dispatch(setActivePackingListTab(TabOptions.Personal));
+  }, []);
 
   if (!isLoaded(trips) || !trips) {
     return (

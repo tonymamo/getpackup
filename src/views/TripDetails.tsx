@@ -38,7 +38,6 @@ import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 import { ActivityTypes, GearListEnumType } from '@common/gearItem';
 import { RootState } from '@redux/ducks';
-import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
@@ -400,14 +399,18 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                         </p>
 
                         {users &&
-                          acceptedTripMembersOnly(activeTrip).map((tripMember: any) => {
+                          Object.values(activeTrip.tripMembers).map((tripMember: any) => {
                             const matchingUser: UserType | undefined = users[tripMember.uid]
                               ? users[tripMember.uid]
                               : undefined;
                             if (!matchingUser) return null;
                             return (
                               <>
-                                <UserMediaObject user={matchingUser} key={matchingUser.uid} />
+                                <UserMediaObject
+                                  user={matchingUser}
+                                  key={matchingUser.uid}
+                                  showSecondaryContent
+                                />
                                 <br />
                               </>
                             );
