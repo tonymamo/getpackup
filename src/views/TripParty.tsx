@@ -44,6 +44,7 @@ import { white } from '@styles/color';
 import { sharedStyles } from '@components/Input';
 import trackEvent from '@utils/trackEvent';
 import { zIndexDropdown } from '@styles/layers';
+import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
 
 type TripPartyProps = {
   activeTrip?: TripType;
@@ -108,11 +109,10 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   };
 
   const updateTrip = (memberId: string, memberEmail: string) => {
-    // Object.values(activeTrip.tripMembers).length + 1 accounts for async data updates
-    // TODO: maybe dont count declined members towards total party size?
+    // Object.values(acceptedTripMembersOnly(activeTrip)).length + 1 accounts for async data updates
     if (
       activeTrip?.tripMembers &&
-      Object.values(activeTrip.tripMembers).length + 1 > MAX_TRIP_PARTY_SIZE
+      Object.values(acceptedTripMembersOnly(activeTrip)).length + 1 > MAX_TRIP_PARTY_SIZE
     ) {
       setIsSearchBarDisabled(true);
       dispatch(
