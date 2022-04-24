@@ -94,12 +94,55 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
   const [packedPercent, setPackedPercent] = useState(0);
 
+  const packingListCopy = [...packingList];
+
+  //
+  // Personal vs Shared list
+  //
+  const personalItems =
+    packingListCopy &&
+    packingListCopy.length > 0 &&
+    packingListCopy?.filter(
+      (packingListItem: PackingListItemType) =>
+        packingListItem &&
+        packingListItem.packedBy &&
+        packingListItem.packedBy.length > 0 &&
+        packingListItem.packedBy.some((item) => item.uid === auth.uid)
+    );
+
+  const sharedItems =
+    packingListCopy &&
+    packingListCopy.length > 0 &&
+    packingListCopy?.filter(
+      (item) => item.packedBy && item.packedBy.length > 0 && item.packedBy.some((i) => i.isShared)
+    );
+
+  // take into account if we are on the personal or shared list
+  const items = activePackingListTab === TabOptions.Personal ? personalItems : sharedItems;
+
+  // take into account if the unpacked or packed filters are selected
+  const filteredItems =
+    items &&
+    items.length > 0 &&
+    items.filter((item) =>
+      activePackingListFilter === PackingListFilterOptions.Unpacked ? !item.isPacked : item.isPacked
+    );
+  // if the filter is All, just return all the items
+  const finalItems =
+    activePackingListFilter === PackingListFilterOptions.All ? items : filteredItems;
+
+  const getGroupedFinalItems =
+    finalItems && finalItems.length > 0
+      ? groupPackingList(finalItems, auth.uid, activePackingListTab)
+      : [];
+
+  // filter out only current user's items that are packed
   const packedItemsLength =
     gearListArray.length > 0 ? gearListArray.filter((item) => item?.isPacked === true).length : 0;
 
   useEffect(() => {
-    if (gearListArray.length > 0 && packedItemsLength) {
-      setPackedPercent(Number(((packedItemsLength / gearListArray.length) * 100).toFixed(0)));
+    if (personalItems && personalItems.length > 0 && packedItemsLength) {
+      setPackedPercent(Number(((packedItemsLength / personalItems.length) * 100).toFixed(0)));
     }
   }, [gearListArray, packedItemsLength]);
 
@@ -134,53 +177,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, [stickyRef, setSticky]);
-
-  const packingListCopy = [...packingList];
-
-  //
-  // Personal vs Shared list
-  //
-  const personalItems =
-    packingListCopy &&
-    packingListCopy.length > 0 &&
-    packingListCopy?.sort((a, b) => {
-      if (a?.isPacked === b?.isPacked) {
-        // sort by name
-        if (a?.created?.seconds === b?.created?.seconds) {
-          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-        }
-        // sort by timestamp
-        return b.created.toDate() > a.created.toDate() ? -1 : 1;
-      }
-      // sort by packed status, with checked items last
-      return a.isPacked > b.isPacked ? 1 : -1;
-    });
-
-  const sharedItems =
-    packingListCopy &&
-    packingListCopy.length > 0 &&
-    packingListCopy?.filter(
-      (item) => item.packedBy && item.packedBy.length > 0 && item.packedBy.some((i) => i.isShared)
-    );
-
-  // take into account if we are on the personal or shared list
-  const items = activePackingListTab === TabOptions.Personal ? personalItems : sharedItems;
-
-  // take into account if the unpacked or packed filters are selected
-  const filteredItems =
-    items &&
-    items.length > 0 &&
-    items.filter((item) =>
-      activePackingListFilter === PackingListFilterOptions.Unpacked ? !item.isPacked : item.isPacked
-    );
-  // if the filter is All, just return all the items
-  const finalItems =
-    activePackingListFilter === PackingListFilterOptions.All ? items : filteredItems;
-
-  const getGroupedFinalItems =
-    finalItems && finalItems.length > 0
-      ? groupPackingList(finalItems, auth.uid, activePackingListTab)
-      : [];
 
   // return out early if trip cant be found
   // todo probably a better loading state thing here?
@@ -250,12 +246,24 @@ const PackingList: FunctionComponent<PackingListProps> = ({
               getGroupedFinalItems.map(
                 ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
                   if (categoryName && packingListItems.length > 0) {
+                    const sortedItems = packingListItems.sort((a, b) => {
+                      if (a?.isPacked === b?.isPacked) {
+                        // sort by name
+                        if (a?.created?.seconds === b?.created?.seconds) {
+                          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                        }
+                        // sort by timestamp
+                        return b.created.toDate() > a.created.toDate() ? -1 : 1;
+                      }
+                      // sort by packed status, with checked items last
+                      return a.isPacked > b.isPacked ? 1 : -1;
+                    });
                     return (
                       <PackingListCategory
                         trip={trip}
                         key={categoryName}
                         categoryName={categoryName}
-                        sortedItems={packingListItems}
+                        sortedItems={sortedItems}
                         tripId={tripId}
                         isSharedPackingListCategory={activePackingListTab === TabOptions.Shared}
                         auth={auth}

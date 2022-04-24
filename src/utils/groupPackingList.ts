@@ -23,6 +23,7 @@ const groupPackingList = (list: PackingListItemType[], uid: string, typeOfList: 
   // then grab all the other categories
   const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
 
+  // categories already come in sorted from useFirestoreConnect in tripById, so just add them after pre-trip
   return [...preTripEntries, ...allOtherEntries];
 };
 
