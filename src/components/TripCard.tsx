@@ -153,7 +153,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
 
     // need to wait for trip users to be loaded in redux, not just logged in user
     if (users && Object.keys(users).length > 1 && trip) {
-      if (Object.keys(trip.tripMembers).length > 0) {
+      if (trip && trip.tripMembers && Object.keys(trip.tripMembers).length > 0) {
         if (
           trip.tripMembers[auth.uid].invitedBy &&
           typeof trip.tripMembers[auth.uid].invitedBy === 'string'

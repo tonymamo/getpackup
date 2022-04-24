@@ -73,8 +73,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 if (process.env.GATSBY_ENVIRONMENT === 'DEVELOP') {
   // eslint-disable-next-line no-console
-  console.log(`Development Env: Using Firestore Emulator`);
-  firebase.firestore().useEmulator('localhost', 8083);
+  // console.log(`Development Env: Using Firestore Emulator`);
+  // firebase.firestore().useEmulator('localhost', 8083);
 } else {
   firebase.firestore();
 }

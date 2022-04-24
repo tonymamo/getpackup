@@ -103,8 +103,8 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   return (
     <CollapsibleBox
       key={categoryName}
-      title={isSharedPackingListCategory ? '' : categoryName}
-      subtitle={isSharedPackingListCategory ? undefined : pluralize('item', sortedItems.length)}
+      title={categoryName}
+      subtitle={pluralize('item', sortedItems.length)}
       defaultClosed={
         auth && auth.uid && trip && trip.collapsedCategories && trip.collapsedCategories[auth.uid]
           ? trip.collapsedCategories[auth.uid].findIndex((cat) => cat === categoryName) > -1

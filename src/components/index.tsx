@@ -49,6 +49,7 @@ import PrivateRoute from './PrivateRoute';
 import RelatedBlogPost from './RelatedBlogPost';
 import RelativeOrExternalLink from './RelativeOrExternalLink';
 import Row from './Row';
+import SendInviteForm from './SendInviteForm';
 import Seo from './Seo';
 import Share from './Share';
 import SignupForm from './SignupForm';
@@ -120,6 +121,7 @@ export {
   RelatedBlogPost,
   RelativeOrExternalLink,
   Row,
+  SendInviteForm,
   Seo,
   Share,
   SignupForm,

@@ -29,6 +29,8 @@ import {
   UserMediaObject,
   TripNavigation,
   Pill,
+  Modal,
+  SendInviteForm,
 } from '@components';
 import { TripMemberStatus, TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -74,6 +76,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const [isSearchBarDisabled, setIsSearchBarDisabled] = useState(false);
+  const [showManualShareModal, setShowManualShareModal] = useState<boolean>(false);
 
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -196,8 +199,19 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const ClearQueryButton = ({ items, refine }: { items: any; refine: (val: any) => void }) => (
     <p style={{ textAlign: 'center' }}>
-      <Button type="button" color="tertiary" onClick={() => refine(items)} size="small">
-        Start Over
+      <Button
+        type="button"
+        onClick={() => {
+          refine(items);
+          setShowManualShareModal(true);
+          trackEvent('Send Invite Modal Opened', {
+            location: 'Trip Party Search',
+            ...activeTrip,
+          });
+        }}
+        size="small"
+      >
+        Send an Invite
       </Button>
     </p>
   );
@@ -268,7 +282,8 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
               {!loading && !props.hasMore && hasResults && (
                 <>
                   <p style={{ textAlign: 'center' }}>
-                    No more results found for <strong>{searchState.query}</strong>.
+                    No more results found for <strong>{searchState.query}</strong>. Friend not on
+                    Packup yet?
                   </p>
                   <ClearRefinementsButton clearsQuery />
                 </>
@@ -359,6 +374,9 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   return (
     <>
       <Seo title="Trip Party" />
+      <Modal isOpen={showManualShareModal} toggleModal={() => setShowManualShareModal(false)}>
+        <SendInviteForm />
+      </Modal>
       <PageContainer>
         {typeof activeTrip !== 'undefined' && (
           <>

@@ -190,7 +190,7 @@
     "test": "jest",
     "eslinta": "eslint --fix",
     "build-functions": "tsc \"dev-firebase/functions/index.ts\"",
-    "run-emulators": "cd dev-firebase && npm run build-functions && firebase emulators:start --import=./dev-firebase --export-on-exit"
+    "run-emulators": "cd dev-firebase && firebase emulators:start --import=./dev-firebase --export-on-exit"
   },
   "repository": {
     "type": "git",

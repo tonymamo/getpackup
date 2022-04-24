@@ -19,11 +19,11 @@ const groupPackingList = (list: PackingListItemType[], uid: string, typeOfList: 
 
   // find all the pre-trip category
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const preTripEntries = entries.find((item) => item[0] === 'Pre-Trip')!;
+  const preTripEntries = entries.filter((item) => item[0] === 'Pre-Trip')!;
   // then grab all the other categories
   const allOtherEntries = entries.filter((item) => item[0] !== 'Pre-Trip');
 
-  return [preTripEntries, ...allOtherEntries];
+  return [...preTripEntries, ...allOtherEntries];
 };
 
 export default groupPackingList;

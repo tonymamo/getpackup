@@ -106,9 +106,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
       )}
 
       <PageContainer withVerticalPadding>
-        <Row>
-          <Column md={9}>
-            <Box largePadding>
+        <Box largePadding>
+          <Row>
+            <Column md={8} mdOffset={2}>
               <div>
                 <Heading>{props.title}</Heading>
                 <FlexContainer justifyContent="space-between">
@@ -189,9 +189,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
               <HorizontalRule />
               <Heading as="h3">Comments</Heading>
               {!props.hideFromCms && <DiscussionEmbed {...disqusConfig} />}
-            </Box>
-          </Column>
-        </Row>
+            </Column>
+          </Row>
+        </Box>
       </PageContainer>
     </div>
   );

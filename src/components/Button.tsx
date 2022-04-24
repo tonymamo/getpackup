@@ -284,9 +284,15 @@ const Button: FunctionComponent<ButtonProps> = ({
         onClick={onClick} // so we can track analytics if passed in on Button Links
         {...rest}
       >
-        <Link to={to}>
-          {iconLeft}&nbsp;{children}&nbsp;{iconRight}
-        </Link>
+        {!to.startsWith('sms') && !to.includes('mailto') ? (
+          <Link to={to}>
+            {iconLeft}&nbsp;{children}&nbsp;{iconRight}
+          </Link>
+        ) : (
+          <a href={to}>
+            {iconLeft}&nbsp;{children}&nbsp;{iconRight}
+          </a>
+        )}
       </StyledLink>
     );
   }

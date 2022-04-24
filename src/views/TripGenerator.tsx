@@ -4,7 +4,7 @@ import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { navigate } from 'gatsby';
-import uniqBy from 'lodash/uniqBy';
+import { uniq, uniqBy } from 'lodash';
 import { FaCheckCircle, FaPlusSquare } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 import { IconType } from 'react-icons';
@@ -147,12 +147,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
 
     const promises: Array<Promise<any>> = [];
 
-    const uniqueTags = [...(activeTrip?.tags || []), ...tagMatches];
-    tagMatches.forEach((tag) => {
-      if (!uniqueTags.includes(tag)) {
-        uniqueTags.push(tag);
-      }
-    });
+    const uniqueTags = uniq([...(activeTrip?.tags || []), ...tagMatches]);
 
     promises.push(
       firebase

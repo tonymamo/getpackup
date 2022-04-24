@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { Fragment, FunctionComponent, useState } from 'react';
 import { Link, RouteComponentProps } from '@reach/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
@@ -63,13 +63,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const updateTrip = (
-    values: TripFormType & {
-      activityTags: string[];
-      accommodationAndKitchenTags: string[];
-      otherConsiderationTags: string[];
-    }
-  ) => {
+  const updateTrip = (values: TripFormType) => {
     setIsLoading(true);
     if (activeTrip) {
       const updatedValues = {
@@ -79,11 +73,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
         endDate: endOfDay(new Date(values.endDate as string)),
         updated: new Date(),
         tripLength: values.tripLength,
-        tags: [
-          ...values.activityTags,
-          ...values.accommodationAndKitchenTags,
-          ...values.otherConsiderationTags,
-        ],
       };
       firebase
         .firestore()
@@ -118,10 +107,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
     (activeTrip.tripLength === 21
       ? formattedDate(new Date(activeTrip.startDate.seconds * 1000))
       : formattedDateRange(activeTrip.startDate.seconds * 1000, activeTrip.endDate.seconds * 1000));
-
-  // the categories that the user DOES have in their gear closet, so we can only show those
-  const getFilteredCategories = (array: GearListEnumType) =>
-    array.filter((item) => gearClosetCategories.includes(item.name));
 
   const onlyActivityTags = activeTrip
     ? activeTrip.tags.filter((item) =>
@@ -169,13 +154,24 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                   accommodationAndKitchenTags: [...onlyAccommodationOrCampKitchenTags],
                   otherConsiderationTags: [...onlyOtherConsiderationsTags],
                 } as TripFormType & {
-                  activityTags: string[];
-                  accommodationAndKitchenTags: string[];
-                  otherConsiderationTags: string[];
+                  activityTags?: string[];
+                  accommodationAndKitchenTags?: string[];
+                  otherConsiderationTags?: string[];
                 }
               }
               onSubmit={(values, { setSubmitting }) => {
-                updateTrip(values);
+                const valuesToSave = {
+                  ...values,
+                  tags: [
+                    ...(values.activityTags || []),
+                    ...(values.accommodationAndKitchenTags || []),
+                    ...(values.otherConsiderationTags || []),
+                  ],
+                };
+                delete valuesToSave.activityTags;
+                delete valuesToSave.accommodationAndKitchenTags;
+                delete valuesToSave.otherConsiderationTags;
+                updateTrip(valuesToSave);
                 setSubmitting(false);
               }}
             >
@@ -288,10 +284,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                             name="activityTags"
                             label="Activity Tags"
                             hiddenLabel
-                            options={createOptionsFromArrayOfObjects(
-                              getFilteredCategories(gearListActivities),
-                              'label'
-                            )}
+                            options={createOptionsFromArrayOfObjects(gearListActivities, 'label')}
                             required
                             setFieldTouched={setFieldTouched}
                             setFieldValue={setFieldValue}
@@ -322,10 +315,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                             label="Accommodation & Kictchen Tags"
                             hiddenLabel
                             options={createOptionsFromArrayOfObjects(
-                              getFilteredCategories([
-                                ...gearListAccommodations,
-                                ...gearListCampKitchen,
-                              ]),
+                              [...gearListAccommodations, ...gearListCampKitchen],
                               'label'
                             )}
                             required
@@ -358,7 +348,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                             label="Other Consideration Tags"
                             hiddenLabel
                             options={createOptionsFromArrayOfObjects(
-                              getFilteredCategories(gearListOtherConsiderations),
+                              gearListOtherConsiderations,
                               'label'
                             )}
                             required
@@ -405,14 +395,10 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
                               : undefined;
                             if (!matchingUser) return null;
                             return (
-                              <>
-                                <UserMediaObject
-                                  user={matchingUser}
-                                  key={matchingUser.uid}
-                                  showSecondaryContent
-                                />
+                              <Fragment key={matchingUser.uid}>
+                                <UserMediaObject user={matchingUser} showSecondaryContent />
                                 <br />
-                              </>
+                              </Fragment>
                             );
                           })}
                       </Box>

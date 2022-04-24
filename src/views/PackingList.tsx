@@ -240,16 +240,13 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                   : TabOptions.Shared}
               </Heading>
             ) : null}
-
             <PackingListFilters
               activeFilter={activePackingListFilter}
               onFilterChange={setActivePackingListFilter}
               disabled={!trip}
             />
 
-            {getGroupedFinalItems &&
-            getGroupedFinalItems.length > 0 &&
-            getGroupedFinalItems[0] !== undefined ? (
+            {getGroupedFinalItems && getGroupedFinalItems.length > 0 ? (
               getGroupedFinalItems.map(
                 ([categoryName, packingListItems]: [string, PackingListItemType[]]) => {
                   if (categoryName && packingListItems.length > 0) {

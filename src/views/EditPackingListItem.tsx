@@ -29,6 +29,7 @@ import setScrollPosition from '@utils/setScrollPosition';
 import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
 import { ScrollTimeout } from '@utils/enums';
+import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
 
 type EditPackingListItemProps = {
   tripId?: string;
@@ -296,16 +297,18 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
                       isMulti
                       required
                       validate={requiredSelect}
-                      options={Object.values(props.activeTrip.tripMembers).map((member) => {
-                        const matchingUser: UserType = props.users && props.users[member.uid];
-                        const obj = {
-                          value: '',
-                          label: '',
-                        };
-                        obj.value = member.uid;
-                        obj.label = matchingUser?.username.toLocaleLowerCase();
-                        return obj;
-                      })}
+                      options={Object.values(acceptedTripMembersOnly(props.activeTrip)).map(
+                        (member) => {
+                          const matchingUser: UserType = props.users && props.users[member.uid];
+                          const obj = {
+                            value: '',
+                            label: '',
+                          };
+                          obj.value = member.uid;
+                          obj.label = matchingUser?.username.toLocaleLowerCase();
+                          return obj;
+                        }
+                      )}
                       setFieldValue={setFieldValue}
                       {...rest}
                     />
