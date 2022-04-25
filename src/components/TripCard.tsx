@@ -149,7 +149,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
   };
 
   const getInvitedByName = useMemo(() => {
-    let inviter: string | undefined = '...';
+    let inviter: string | undefined = undefined;
 
     // need to wait for trip users to be loaded in redux, not just logged in user
     if (users && Object.keys(users).length > 1 && trip) {
@@ -165,12 +165,12 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
             Object.values(trip.tripMembers).find(
               (member) => member.status === TripMemberStatus.Owner
             )?.uid;
-          inviter = owner;
+          inviter = owner ? users[owner]?.displayName : undefined;
         }
       }
     }
 
-    return `You've been invited by ${inviter}`;
+    return inviter ? `You've been invited by ${inviter}` : null;
   }, [trip, users]);
 
   return (
@@ -270,9 +270,11 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
 
       {isPending && trip && (
         <>
-          <p>
-            <strong> {getInvitedByName}</strong>
-          </p>
+          {getInvitedByName && (
+            <p>
+              <strong>{getInvitedByName}</strong>
+            </p>
+          )}
           <Row>
             <Column xs={6}>
               <Button

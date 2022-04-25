@@ -8,8 +8,7 @@ import { useLocation } from '@reach/router';
 import { Helmet } from 'react-helmet-async';
 import { useFirestoreConnect } from 'react-redux-firebase';
 
-import setScrollPosition from '@utils/setScrollPosition';
-
+import scrollToPosition from '@utils/scrollToPosition';
 import {
   Avatar,
   PageContainer,
@@ -28,7 +27,7 @@ import yak from '@images/yak.svg';
 import GearClosetIcon from '@images/gearClosetIcon';
 import { zIndexNavbar } from '@styles/layers';
 import trackEvent from '@utils/trackEvent';
-import { ScrollTimeout } from '@utils/enums';
+import { TabOptions } from '@utils/enums';
 import { AvatarImageWrapper } from './Avatar';
 
 type NavbarProps = {};
@@ -178,6 +177,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  const {
+    activePackingListTab,
+    personalListScrollPosition,
+    sharedListScrollPosition,
+  } = useSelector((state: RootState) => state.client);
 
   useFirestoreConnect([
     { collection: 'users', where: ['uid', '==', auth.uid || ''], storeAs: 'loggedInUser' },
@@ -284,7 +288,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Back Button Clicked');
                     if (routeIsChecklistOrGearClosetItem) {
-                      setTimeout(() => setScrollPosition(), ScrollTimeout.default);
+                      if (personalListScrollPosition || sharedListScrollPosition) {
+                        scrollToPosition(
+                          activePackingListTab === TabOptions.Personal
+                            ? personalListScrollPosition
+                            : sharedListScrollPosition
+                        );
+                      }
                       navigate(-1);
                     }
                   }}

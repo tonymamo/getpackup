@@ -60,7 +60,6 @@ const AddToHomeScreenBanner: FunctionComponent<{}> = () => {
 
   const LOCAL_STORAGE_KEY = 'packup_pwa_popup_display';
   const NB_DAYS_EXPIRE = 30; // only ask once every 30 days so we dont annoy
-  const isDevelopment = process.env.NODE_ENV === 'development';
 
   const checkLastPwaDisplay = () => {
     const lastDisplayTimestamp = window.localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -76,7 +75,7 @@ const AddToHomeScreenBanner: FunctionComponent<{}> = () => {
     setIsLoaded(true);
 
     const t = setTimeout(() => {
-      // if (isDevelopment) {
+      // if (process.env.NODE_ENV === 'development') {
       //   console.log('isIOS: ', isIos());
       //   console.log('isInStandaloneMode: ', isInStandaloneMode());
       //   console.log('checkLastPwaDisplay: ', checkLastPwaDisplay());

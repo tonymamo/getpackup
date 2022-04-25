@@ -15,7 +15,12 @@ import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
 import { PackingListItemType } from '@common/packingListItem';
 import { PackingListFilterOptions, TabOptions } from '@utils/enums';
-import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
+import {
+  setActivePackingListFilter,
+  setActivePackingListTab,
+  setPersonalListScrollPosition,
+  setSharedListScrollPosition,
+} from '@redux/ducks/client';
 
 type TripByIdProps = {
   id?: string;
@@ -70,9 +75,11 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   ]);
 
   useEffect(() => {
-    // reset filters and tab for packing list each time tripId changes
+    // reset filters, tab, and scroll positions for packing list each time tripId changes
     dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
     dispatch(setActivePackingListTab(TabOptions.Personal));
+    dispatch(setPersonalListScrollPosition(0));
+    dispatch(setSharedListScrollPosition(0));
     return () => {
       // disconnect listening and remove data from redux store
       // so next trip can fetch without `activeTripById` already being populated with

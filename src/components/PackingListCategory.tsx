@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 
@@ -8,7 +8,6 @@ import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 import { TripType } from '@common/trip';
 import { FirebaseReducer, useFirebase } from 'react-redux-firebase';
 import trackEvent from '@utils/trackEvent';
-import { LocalStorage } from '@utils/enums';
 import pluralize from '@utils/pluralize';
 
 type PackingListCategoryProps = {
@@ -37,16 +36,6 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   isSharedTrip,
 }) => {
   const firebase = useFirebase();
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const { localStorage } = window;
-      const windowOffsetTop = LocalStorage.WindowOffsetTop;
-      if (localStorage.getItem(windowOffsetTop) === null) {
-        localStorage.setItem(windowOffsetTop, '0');
-      }
-    }
-  }, [window]);
 
   const handleCollapsible = (name: string) => {
     if (auth && auth.uid && trip) {

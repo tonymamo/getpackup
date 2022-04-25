@@ -81,11 +81,14 @@ const LeaveTheTripModal: FunctionComponent<LeaveTheTripModalProps> = ({
     >
       {numberOfUsersSharedItems > 0 ? (
         <>
-          <Heading>You can't go quite yet!</Heading>
+          <Heading>You can't go quite yet! 🛑</Heading>
           <p>
             You have <strong>{pluralize('item', numberOfUsersSharedItems)}</strong> that{' '}
-            {numberOfUsersSharedItems === 1 ? 'is' : 'are'} marked as <FaUsers color={brandInfo} />{' '}
-            shared group items. You must reassign or delete those items before you can leave the
+            {numberOfUsersSharedItems === 1 ? 'is' : 'are'} marked as{' '}
+            {numberOfUsersSharedItems === 1 ? 'a ' : ''}
+            <FaUsers color={brandInfo} /> shared group{' '}
+            {numberOfUsersSharedItems === 1 ? 'item' : 'items'}. You must reassign or delete{' '}
+            {numberOfUsersSharedItems === 1 ? 'that item' : 'those items'} before you can leave the
             trip.
           </p>
           <Row>

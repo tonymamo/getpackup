@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, FunctionComponent } from 'react';
 import { FaChevronLeft, FaTrash } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
@@ -25,11 +25,12 @@ import { gearListCategories } from '@utils/gearListItemEnum';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
-import setScrollPosition from '@utils/setScrollPosition';
+import scrollToPosition from '@utils/scrollToPosition';
 import { UserType } from '@common/user';
 import { TripType } from '@common/trip';
-import { ScrollTimeout } from '@utils/enums';
+import { TabOptions } from '@utils/enums';
 import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
+import { RootState } from '@redux/ducks';
 
 type EditPackingListItemProps = {
   tripId?: string;
@@ -43,6 +44,12 @@ type EditPackingListItemProps = {
 const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props) => {
   const dispatch = useDispatch();
   const firebase = useFirebase();
+
+  const {
+    activePackingListTab,
+    personalListScrollPosition,
+    sharedListScrollPosition,
+  } = useSelector((state: RootState) => state.client);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const size = useWindowSize();
@@ -90,7 +97,13 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
   };
 
   const handleReturn = (): void => {
-    setTimeout(() => setScrollPosition(), ScrollTimeout.default);
+    if (personalListScrollPosition || sharedListScrollPosition) {
+      scrollToPosition(
+        activePackingListTab === TabOptions.Personal
+          ? personalListScrollPosition
+          : sharedListScrollPosition
+      );
+    }
     navigate(-1);
   };
 

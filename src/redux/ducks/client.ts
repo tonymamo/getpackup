@@ -7,10 +7,15 @@ export const REMOVE_ATTEMPTED_PRIVATE_PAGE = 'REMOVE_ATTEMPTED_PRIVATE_PAGE';
 export const SET_ACTIVE_PACKING_LIST_FILTER = 'SET_ACTIVE_PACKING_LIST_FILTER';
 export const SET_ACTIVE_PACKING_LIST_TAB = 'SET_ACTIVE_PACKING_LIST_TAB';
 
+export const SET_PERSONAL_LIST_SCROLL_POSITION = 'SET_PERSONAL_LIST_SCROLL_POSITION';
+export const SET_SHARED_LIST_SCROLL_POSITION = 'SET_SHARED_LIST_SCROLL_POSITION';
+
 export const initialState: ClientStoreType = {
   location: undefined,
   activePackingListFilter: PackingListFilterOptions.All,
   activePackingListTab: TabOptions.Personal,
+  personalListScrollPosition: 0,
+  sharedListScrollPosition: 0,
 };
 
 export default (state: ClientStoreType = initialState, action: ClientActions): ClientStoreType => {
@@ -39,6 +44,18 @@ export default (state: ClientStoreType = initialState, action: ClientActions): C
         activePackingListTab: action.payload,
       };
     }
+    case SET_PERSONAL_LIST_SCROLL_POSITION: {
+      return {
+        ...state,
+        personalListScrollPosition: action.payload,
+      };
+    }
+    case SET_SHARED_LIST_SCROLL_POSITION: {
+      return {
+        ...state,
+        sharedListScrollPosition: action.payload,
+      };
+    }
     default:
       return state;
   }
@@ -60,5 +77,15 @@ export const setActivePackingListFilter = (payload: PackingListFilterOptions) =>
 
 export const setActivePackingListTab = (payload: TabOptions) => ({
   type: SET_ACTIVE_PACKING_LIST_TAB,
+  payload,
+});
+
+export const setPersonalListScrollPosition = (payload: number) => ({
+  type: SET_PERSONAL_LIST_SCROLL_POSITION,
+  payload,
+});
+
+export const setSharedListScrollPosition = (payload: number) => ({
+  type: SET_SHARED_LIST_SCROLL_POSITION,
   payload,
 });

@@ -31,8 +31,8 @@ import { PackingListItemType } from '@common/packingListItem';
 import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
 import { UserType } from '@common/user';
-import { LocalStorage } from '../utils/enums';
 import Avatar, { StackedAvatars } from './Avatar';
+import { setPersonalListScrollPosition, setSharedListScrollPosition } from '@redux/ducks/client';
 
 type PackingListItemProps = {
   tripId: string;
@@ -217,13 +217,12 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
     </TrailingActions>
   );
 
-  const handlePersistScrollPosition = (): void => {
-    // eslint-disable-next-line no-unused-expressions
-    window?.localStorage.setItem(LocalStorage.WindowOffsetTop, `${window.pageYOffset}`);
-  };
-
   const handleItemSelect = (tripId: string, itemId: string): void => {
-    handlePersistScrollPosition();
+    dispatch(
+      props.isOnSharedList
+        ? setSharedListScrollPosition(window.pageYOffset)
+        : setPersonalListScrollPosition(window.pageYOffset)
+    );
     navigate(`/app/trips/${tripId}/checklist/${itemId}`);
   };
 

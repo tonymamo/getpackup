@@ -24,8 +24,14 @@ import { RootState } from '@redux/ducks';
 import PackingListFilters from '@components/PackingListFilters';
 import groupPackingList from '@utils/groupPackingList';
 import { PackingListFilterOptions, TabOptions } from '@utils/enums';
-import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
+import {
+  setActivePackingListFilter,
+  setActivePackingListTab,
+  setPersonalListScrollPosition,
+  setSharedListScrollPosition,
+} from '@redux/ducks/client';
 import isUserTripOwner from '@utils/isUserTripOwner';
+import scrollToPosition from '@utils/scrollToPosition';
 
 type PackingListProps = {
   trip?: TripType;
@@ -87,9 +93,12 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const gearList = useSelector((state: RootState) => state.firestore.data.packingList);
-  const { activePackingListFilter, activePackingListTab } = useSelector(
-    (state: RootState) => state.client
-  );
+  const {
+    activePackingListFilter,
+    activePackingListTab,
+    personalListScrollPosition,
+    sharedListScrollPosition,
+  } = useSelector((state: RootState) => state.client);
   const dispatch = useDispatch();
 
   const gearListArray: PackingListItemType[] = gearList ? Object.values(gearList) : [];
@@ -150,12 +159,6 @@ const PackingList: FunctionComponent<PackingListProps> = ({
   // we only need tabs if there are shared items, so hide if not
   const sharedTrip = trip && Object.keys(trip.tripMembers).length > 1;
 
-  const handleTabClick = (tab: TabOptions) => {
-    dispatch(setActivePackingListTab(tab));
-    dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
-    trackEvent(`${tab} Checklist Tab Clicked`);
-  };
-
   //
   // Sticky Header stuff
   // TODO: extract all of the sticky header stuff out to its own reusable hook
@@ -178,6 +181,35 @@ const PackingList: FunctionComponent<PackingListProps> = ({
       window.removeEventListener('scroll', () => handleScroll);
     };
   }, [stickyRef, setSticky]);
+
+  const handleTabClick = (tab: TabOptions) => {
+    if (stickyRef && stickyRef.current) {
+      // store the scroll position for where the user was curently
+      dispatch(
+        tab === TabOptions.Personal
+          ? setSharedListScrollPosition(
+              isSticky ? window.pageYOffset : stickyRef.current.getBoundingClientRect().top
+            )
+          : setPersonalListScrollPosition(
+              isSticky ? window.pageYOffset : stickyRef.current.getBoundingClientRect().top
+            )
+      );
+    }
+    // change the tab in redux
+    dispatch(setActivePackingListTab(tab));
+    // update the filter in redux
+    dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
+    trackEvent(`${tab} Checklist Tab Clicked`);
+
+    // update the scroll position for the new tab you are going to, if it exists
+    if (stickyRef.current && (personalListScrollPosition || sharedListScrollPosition))
+      scrollToPosition(
+        (tab === TabOptions.Personal && personalListScrollPosition) ||
+          (tab === TabOptions.Shared && sharedListScrollPosition) ||
+          // default to bottom of stickyRef if both dont exist
+          stickyRef.current.getBoundingClientRect().bottom
+      );
+  };
 
   // return out early if trip cant be found
   // todo probably a better loading state thing here?
