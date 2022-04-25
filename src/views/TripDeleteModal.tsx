@@ -7,36 +7,37 @@ import { FaTrash } from 'react-icons/fa';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Button, Column, Heading, Modal, Row } from '@components';
 import trackEvent from '@utils/trackEvent';
+import { TripType } from '@common/trip';
 
 type TripDeleteModalProps = {
   modalIsOpen: boolean;
   setModalIsOpen: (val: boolean) => void;
-  tripId: string;
+  trip: TripType;
 };
 
 const TripDeleteModal: FunctionComponent<TripDeleteModalProps> = ({
   modalIsOpen,
-  tripId,
+  trip,
   setModalIsOpen,
 }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
   const deleteTrip = () => {
-    if (tripId) {
+    if (trip.tripId) {
       firebase
         .firestore()
         .collection('trips')
-        .doc(tripId)
+        .doc(trip.tripId)
         .update({
           archived: true,
         })
         .then(() => {
-          trackEvent('Trip Archived Successfully', { tripId });
+          trackEvent('Trip Archived Successfully', { tripId: trip.tripId });
           navigate('/app/trips');
         })
         .catch((err) => {
-          trackEvent('Trip Archive Failure', { tripId, error: err });
+          trackEvent('Trip Archive Failure', { tripId: trip.tripId, error: err });
           dispatch(
             addAlert({
               type: 'danger',
@@ -55,13 +56,18 @@ const TripDeleteModal: FunctionComponent<TripDeleteModalProps> = ({
       isOpen={modalIsOpen}
     >
       <Heading>Are you sure?</Heading>
-      <p>Are you sure you want to delete this trip? This action cannot be undone.</p>
+      <p>
+        Are you sure you want to delete this trip?{' '}
+        {Object.keys(trip.tripMembers).length > 1 &&
+          'This will delete the trip for everyone in the trip party. '}
+        This action cannot be undone.
+      </p>
       <Row>
         <Column xs={6}>
           <Button
             type="button"
             onClick={() => {
-              trackEvent('Trip Delete Modal Canceled', { tripId });
+              trackEvent('Trip Delete Modal Canceled', { tripId: trip.tripId });
               setModalIsOpen(false);
             }}
             color="primaryOutline"

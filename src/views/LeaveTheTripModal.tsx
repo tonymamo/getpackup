@@ -2,13 +2,16 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { navigate } from 'gatsby';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt, FaUsers } from 'react-icons/fa';
 
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { Button, Column, Heading, Modal, Row } from '@components';
 import trackEvent from '@utils/trackEvent';
 import { RootState } from '@redux/ducks';
 import { TripMemberStatus, TripType } from '@common/trip';
+import { PackingListItemType } from '@common/packingListItem';
+import pluralize from '@utils/pluralize';
+import { brandInfo } from '@styles/color';
 
 type LeaveTheTripModalProps = {
   modalIsOpen: boolean;
@@ -22,8 +25,22 @@ const LeaveTheTripModal: FunctionComponent<LeaveTheTripModalProps> = ({
   setModalIsOpen,
 }) => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
+  const packingList: PackingListItemType[] = useSelector(
+    (state: RootState) => state.firestore.ordered.packingList
+  );
   const firebase = useFirebase();
   const dispatch = useDispatch();
+
+  const numberOfUsersSharedItems =
+    packingList && packingList.length > 0
+      ? packingList.filter(
+          (packingListItem: PackingListItemType) =>
+            packingListItem &&
+            packingListItem.packedBy &&
+            packingListItem.packedBy.length > 0 &&
+            packingListItem.packedBy.some((item) => item.uid === auth.uid && item.isShared)
+        ).length
+      : 0;
 
   const leaveTrip = () => {
     if (trip.tripId) {
@@ -62,34 +79,70 @@ const LeaveTheTripModal: FunctionComponent<LeaveTheTripModalProps> = ({
       }}
       isOpen={modalIsOpen}
     >
-      <Heading>Are you sure?</Heading>
-      <p>Are you sure you want to leave this trip? This action cannot be undone.</p>
-      <Row>
-        <Column xs={6}>
-          <Button
-            type="button"
-            onClick={() => {
-              trackEvent('Leave The Trip Modal Canceled', { tripId: trip.tripId, uid: auth.uid });
-              setModalIsOpen(false);
-            }}
-            color="primaryOutline"
-            block
-          >
-            Cancel
-          </Button>
-        </Column>
-        <Column xs={6}>
-          <Button
-            type="button"
-            onClick={() => leaveTrip()}
-            block
-            color="danger"
-            iconLeft={<FaSignOutAlt />}
-          >
-            Leave Trip
-          </Button>
-        </Column>
-      </Row>
+      {numberOfUsersSharedItems > 0 ? (
+        <>
+          <Heading>You can't go quite yet!</Heading>
+          <p>
+            You have <strong>{pluralize('item', numberOfUsersSharedItems)}</strong> that{' '}
+            {numberOfUsersSharedItems === 1 ? 'is' : 'are'} marked as <FaUsers color={brandInfo} />{' '}
+            shared group items. You must reassign or delete those items before you can leave the
+            trip.
+          </p>
+          <Row>
+            <Column xs={6}>
+              <Button
+                type="button"
+                onClick={() => {
+                  trackEvent('Leave The Trip, Has Shared Items Modal Closed', {
+                    tripId: trip.tripId,
+                    uid: auth.uid,
+                    numberOfUsersSharedItems,
+                  });
+                  setModalIsOpen(false);
+                }}
+                color="primaryOutline"
+                block
+              >
+                Go Back
+              </Button>
+            </Column>
+          </Row>
+        </>
+      ) : (
+        <>
+          <Heading>Are you sure?</Heading>
+          <p>Are you sure you want to leave this trip? This action cannot be undone.</p>
+          <Row>
+            <Column xs={6}>
+              <Button
+                type="button"
+                onClick={() => {
+                  trackEvent('Leave The Trip Modal Canceled', {
+                    tripId: trip.tripId,
+                    uid: auth.uid,
+                  });
+                  setModalIsOpen(false);
+                }}
+                color="primaryOutline"
+                block
+              >
+                Cancel
+              </Button>
+            </Column>
+            <Column xs={6}>
+              <Button
+                type="button"
+                onClick={() => leaveTrip()}
+                block
+                color="danger"
+                iconLeft={<FaSignOutAlt />}
+              >
+                Leave Trip
+              </Button>
+            </Column>
+          </Row>
+        </>
+      )}
     </Modal>
   );
 };

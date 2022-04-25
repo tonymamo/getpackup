@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { FaInfoCircle, FaRegCheckSquare, FaTrash, FaUsers } from 'react-icons/fa';
+import { FaInfoCircle, FaRegCheckSquare, FaSignOutAlt, FaTrash, FaUsers } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { useLocation } from '@reach/router';
 
@@ -72,7 +72,7 @@ const TripNavigation: FunctionComponent<TripNavigationProps> = ({
                 trackEvent('Trip Nav Leave Trip Dropdown Link Clicked', activeTrip);
               }}
             >
-              <FaTrash /> Leave Trip
+              <FaSignOutAlt /> Leave Trip
             </button>
           )}
         </DropdownMenu>
@@ -80,7 +80,7 @@ const TripNavigation: FunctionComponent<TripNavigationProps> = ({
       <TripDeleteModal
         setModalIsOpen={setDeleteModalIsOpen}
         modalIsOpen={deleteModalIsOpen}
-        tripId={activeTrip.tripId}
+        trip={activeTrip}
       />
       <LeaveTheTripModal
         setModalIsOpen={setLeaveTripModalIsOpen}

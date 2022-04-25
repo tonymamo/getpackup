@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { FaRegCalendar, FaMapMarkerAlt, FaTrash } from 'react-icons/fa';
+import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaSignOutAlt } from 'react-icons/fa';
 import { Link } from 'gatsby';
 import { useSelector } from 'react-redux';
 import Skeleton from 'react-loading-skeleton';
@@ -169,7 +169,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, userIsTripOwner 
             <TripDeleteModal
               setModalIsOpen={setDeleteModalIsOpen}
               modalIsOpen={deleteModalIsOpen}
-              tripId={trip.tripId}
+              trip={trip}
             />
             <LeaveTheTripModal
               setModalIsOpen={setLeaveTripModalIsOpen}
@@ -203,7 +203,7 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, userIsTripOwner 
                     }}
                     type="button"
                   >
-                    <FaTrash /> Leave Trip
+                    <FaSignOutAlt /> Leave Trip
                   </button>
                 </>
               )}

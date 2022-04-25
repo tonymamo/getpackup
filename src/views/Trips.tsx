@@ -45,13 +45,13 @@ const Trips: FunctionComponent<TripsProps> = () => {
       : [];
 
   const pendingTrips = nonArchivedTrips
-    .filter((trip) => trip.tripMembers[auth.uid].status === TripMemberStatus.Pending)
+    .filter((trip) => trip.tripMembers[auth.uid]?.status === TripMemberStatus.Pending)
     .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
   const inProgressTrips = nonArchivedTrips
     .filter(
       (trip) =>
-        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        trip.tripMembers[auth.uid]?.status !== TripMemberStatus.Pending &&
         isBeforeToday(trip.startDate.seconds * 1000) &&
         isAfterToday(trip.endDate.seconds * 1000)
     )
@@ -60,7 +60,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
   const upcomingTrips = nonArchivedTrips
     .filter(
       (trip) =>
-        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        trip.tripMembers[auth.uid]?.status !== TripMemberStatus.Pending &&
         isAfterToday(trip.startDate.seconds * 1000)
     )
     .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
@@ -68,7 +68,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
   const pastTrips = nonArchivedTrips
     .filter(
       (trip) =>
-        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        trip.tripMembers[auth.uid]?.status !== TripMemberStatus.Pending &&
         isBeforeToday(trip.endDate.seconds * 1000)
     )
     .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
