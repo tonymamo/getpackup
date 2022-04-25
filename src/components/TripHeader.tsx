@@ -26,16 +26,19 @@ import {
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
 import TripDeleteModal from '@views/TripDeleteModal';
+import LeaveTheTripModal from '@views/LeaveTheTripModal';
 import trackEvent from '@utils/trackEvent';
 
 type TripHeaderProps = {
   trip?: TripType;
+  userIsTripOwner: boolean | undefined;
 };
 
-const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip }) => {
+const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip, userIsTripOwner }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [leaveTripModalIsOpen, setLeaveTripModalIsOpen] = useState(false);
 
   return (
     <div>
@@ -162,23 +165,48 @@ const TripHeader: FunctionComponent<TripHeaderProps> = ({ trip }) => {
             >
               Party
             </Button>
+
             <TripDeleteModal
-              setModalIsOpen={setModalIsOpen}
-              modalIsOpen={modalIsOpen}
+              setModalIsOpen={setDeleteModalIsOpen}
+              modalIsOpen={deleteModalIsOpen}
               tripId={trip.tripId}
             />
+            <LeaveTheTripModal
+              setModalIsOpen={setLeaveTripModalIsOpen}
+              modalIsOpen={leaveTripModalIsOpen}
+              trip={trip}
+            />
+
             <DropdownMenu>
-              <button
-                onClick={() => {
-                  setModalIsOpen(true);
-                  trackEvent('Trip Header Delete Trip Clicked', {
-                    trip,
-                  });
-                }}
-                type="button"
-              >
-                <FaTrash /> Delete
-              </button>
+              {userIsTripOwner ? (
+                <>
+                  <button
+                    onClick={() => {
+                      setDeleteModalIsOpen(true);
+                      trackEvent('Trip Header Delete Trip Clicked', {
+                        trip,
+                      });
+                    }}
+                    type="button"
+                  >
+                    <FaTrash /> Delete
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setLeaveTripModalIsOpen(true);
+                      trackEvent('Trip Header Leave The Trip Clicked', {
+                        trip,
+                      });
+                    }}
+                    type="button"
+                  >
+                    <FaTrash /> Leave Trip
+                  </button>
+                </>
+              )}
             </DropdownMenu>
           </>
         ) : (

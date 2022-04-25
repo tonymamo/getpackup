@@ -36,8 +36,8 @@ import {
 } from '@utils/gearListItemEnum';
 import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
-import { ActivityTypes, GearListEnumType } from '@common/gearItem';
 import { RootState } from '@redux/ducks';
+import isUserTripOwner from '@utils/isUserTripOwner';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
@@ -49,9 +49,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
   const dispatch = useDispatch();
 
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
-
-  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
 
   useFirestoreConnect([
     {
@@ -141,7 +138,10 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
       <PageContainer>
         {typeof activeTrip !== 'undefined' && activeTrip && (
           <>
-            <TripNavigation activeTrip={activeTrip} />
+            <TripNavigation
+              activeTrip={activeTrip}
+              userIsTripOwner={isUserTripOwner(activeTrip, auth.uid)}
+            />
             <HeroImageUpload type="trip" image={activeTrip.headerImage} id={activeTrip.tripId} />
             <Formik
               validateOnMount

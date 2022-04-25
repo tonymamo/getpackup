@@ -31,6 +31,7 @@ import {
   Pill,
   Modal,
   SendInviteForm,
+  IconWrapper,
 } from '@components';
 import { TripMemberStatus, TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -40,11 +41,16 @@ import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
 import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
 import Skeleton from 'react-loading-skeleton';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
-import { white } from '@styles/color';
+import { brandDanger, white } from '@styles/color';
 import { sharedStyles } from '@components/Input';
 import trackEvent from '@utils/trackEvent';
 import { zIndexDropdown } from '@styles/layers';
 import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
+import isUserTripOwner from '@utils/isUserTripOwner';
+import { FaSignOutAlt, FaUserTimes } from 'react-icons/fa';
+import ReactTooltip from 'react-tooltip';
+import LeaveTheTripModal from './LeaveTheTripModal';
+import RemoveUserFromTripModal from './RemoveUserFromTripModal';
 
 type TripPartyProps = {
   activeTrip?: TripType;
@@ -78,6 +84,9 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
   const [isSearchBarDisabled, setIsSearchBarDisabled] = useState(false);
   const [showManualShareModal, setShowManualShareModal] = useState<boolean>(false);
+  const [leaveTripModalIsOpen, setLeaveTripModalIsOpen] = useState(false);
+  const [removeUserModalIsOpen, setRemoveUserModalIsOpen] = useState(false);
+  const [userToRemove, setUserToRemove] = useState('');
 
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -115,6 +124,12 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       Object.values(acceptedTripMembersOnly(activeTrip)).length + 1 > MAX_TRIP_PARTY_SIZE
     ) {
       setIsSearchBarDisabled(true);
+      // send us a slack message so we can follow up
+      axios.get(
+        process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+          ? `https://us-central1-getpackup.cloudfunctions.net/notifyOnTripPartyMaxReached?tripId=${activeTrip.tripId}`
+          : `https://us-central1-packup-test-fc0c2.cloudfunctions.net/notifyOnTripPartyMaxReached?tripId=${activeTrip.tripId}`
+      );
       dispatch(
         addAlert({
           type: 'danger',
@@ -352,21 +367,77 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const ConnectedSearchBox = connectSearchBox(SearchBox);
 
+  const removeUserIconButton = (uid: string) => (
+    <IconWrapper
+      onClick={() => {
+        setUserToRemove(uid);
+        setRemoveUserModalIsOpen(true);
+      }}
+      data-tip="Remove User from Trip"
+      data-for="removeUser"
+    >
+      <FaUserTimes color={brandDanger} />
+      <ReactTooltip
+        id="removeUser"
+        place="top"
+        type="dark"
+        effect="solid"
+        className="tooltip customTooltip"
+        delayShow={500}
+      />
+    </IconWrapper>
+  );
+
+  const leaveTripButton = () => (
+    <IconWrapper
+      onClick={() => setLeaveTripModalIsOpen(true)}
+      data-tip="Leave Trip"
+      data-for="leaveTrip"
+    >
+      <FaSignOutAlt color={brandDanger} />
+      <ReactTooltip
+        id="leaveTrip"
+        place="top"
+        type="dark"
+        effect="solid"
+        className="tooltip customTooltip"
+        delayShow={500}
+      />
+    </IconWrapper>
+  );
+
   const getStatusPill = (uid: string) => {
+    const isOwner = isUserTripOwner(activeTrip, auth.uid);
     const matchingTripMember =
       activeTrip?.tripMembers &&
       Object.values(activeTrip?.tripMembers)?.find((member) => member.uid === uid);
     if (matchingTripMember?.status === TripMemberStatus.Pending) {
-      return <Pill text={TripMemberStatus.Pending} color="neutral" />;
+      return (
+        <>
+          {isOwner ? removeUserIconButton(matchingTripMember.uid) : null}
+          <Pill text={TripMemberStatus.Pending} color="neutral" />
+        </>
+      );
     }
     if (matchingTripMember?.status === TripMemberStatus.Owner) {
       return <Pill text="Creator" color="primary" />;
     }
     if (matchingTripMember?.status === TripMemberStatus.Accepted) {
-      return <Pill text="Member" color="success" />;
+      return (
+        <>
+          {isOwner && removeUserIconButton(matchingTripMember.uid)}
+          {!isOwner && uid === auth.uid && leaveTripButton()}
+          <Pill text="Member" color="success" />
+        </>
+      );
     }
     if (matchingTripMember?.status === TripMemberStatus.Declined) {
-      return <Pill text={TripMemberStatus.Declined} color="danger" />;
+      return (
+        <>
+          {isOwner ? removeUserIconButton(matchingTripMember.uid) : null}
+          <Pill text={TripMemberStatus.Declined} color="danger" />
+        </>
+      );
     }
     return undefined;
   };
@@ -377,10 +448,30 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       <Modal isOpen={showManualShareModal} toggleModal={() => setShowManualShareModal(false)}>
         <SendInviteForm />
       </Modal>
+
       <PageContainer>
         {typeof activeTrip !== 'undefined' && (
           <>
-            <TripNavigation activeTrip={activeTrip} />
+            <LeaveTheTripModal
+              setModalIsOpen={setLeaveTripModalIsOpen}
+              modalIsOpen={leaveTripModalIsOpen}
+              trip={activeTrip}
+            />
+            {userToRemove !== '' && (
+              <RemoveUserFromTripModal
+                setModalIsOpen={() => {
+                  setRemoveUserModalIsOpen(false);
+                  setUserToRemove('');
+                }}
+                modalIsOpen={removeUserModalIsOpen}
+                trip={activeTrip}
+                uid={userToRemove}
+              />
+            )}
+            <TripNavigation
+              activeTrip={activeTrip}
+              userIsTripOwner={isUserTripOwner(activeTrip, auth.uid)}
+            />
             <SearchWrapper>
               <InstantSearch
                 searchClient={searchClient}

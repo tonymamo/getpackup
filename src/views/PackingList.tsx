@@ -25,6 +25,7 @@ import PackingListFilters from '@components/PackingListFilters';
 import groupPackingList from '@utils/groupPackingList';
 import { PackingListFilterOptions, TabOptions } from '@utils/enums';
 import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
+import isUserTripOwner from '@utils/isUserTripOwner';
 
 type PackingListProps = {
   trip?: TripType;
@@ -191,7 +192,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   return (
     <>
-      <TripHeader trip={trip} />
+      <TripHeader trip={trip} userIsTripOwner={isUserTripOwner(trip, auth.uid)} />
       <small style={{ textAlign: 'center', display: 'block' }}>{packedPercent}% packed</small>
       <StickyWrapper ref={stickyRef}>
         <StickyInner isSticky={isSticky}>

@@ -24,7 +24,13 @@ const Trips: FunctionComponent<TripsProps> = () => {
   useFirestoreConnect([
     {
       collection: 'trips',
-      where: [[`tripMembers.${auth.uid}.status`, '!=', TripMemberStatus.Declined]],
+      where: [
+        [
+          `tripMembers.${auth.uid}.status`,
+          'not-in',
+          [TripMemberStatus.Declined, TripMemberStatus.Removed],
+        ],
+      ],
     },
     {
       collection: 'gear-closet',

@@ -7,12 +7,15 @@ export enum TripMemberStatus {
   Accepted = 'Accepted',
   /** User declined the invitation */
   Declined = 'Declined',
+  /** Removed by trip owner */
+  Removed = 'Removed',
 }
 
 export type TripMember = {
   invitedAt?: firebase.default.firestore.Timestamp;
   declinedAt?: firebase.default.firestore.Timestamp;
   acceptedAt?: firebase.default.firestore.Timestamp;
+  removedAt?: firebase.default.firestore.Timestamp;
   status: TripMemberStatus;
   uid: string;
   invitedBy?: string;

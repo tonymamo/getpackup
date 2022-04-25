@@ -15,7 +15,6 @@
     "@sentry/browser": "^6.11.0",
     "@sentry/gatsby": "^6.11.0",
     "@sentry/tracing": "^6.9.0",
-    "@slack/webhook": "^6.1.0",
     "@types/jest": "^25.1.4",
     "@types/react-rangeslider": "^2.2.3",
     "@types/react-swipeable-views": "^0.13.0",

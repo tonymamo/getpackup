@@ -107,11 +107,12 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
       subtitle={pluralize('item', sortedItems.length)}
       defaultClosed={
         auth && auth.uid && trip && trip.collapsedCategories && trip.collapsedCategories[auth.uid]
-          ? trip.collapsedCategories[auth.uid].findIndex((cat) => cat === categoryName) > -1
+          ? trip.collapsedCategories[auth.uid].findIndex((cat) => cat === categoryName) > -1 &&
+            !isSharedPackingListCategory
           : false
       }
       collapseCallback={() => handleCollapsible(categoryName)}
-      enabled={!isSharedPackingListCategory} // Disable for the Shared Items list which doesn't need a title
+      enabled={!isSharedPackingListCategory}
     >
       <div>
         <ItemsWrapper>
