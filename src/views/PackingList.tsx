@@ -148,7 +148,9 @@ const PackingList: FunctionComponent<PackingListProps> = ({
 
   // filter out only current user's items that are packed
   const packedItemsLength =
-    gearListArray.length > 0 ? gearListArray.filter((item) => item?.isPacked === true).length : 0;
+    personalItems && personalItems.length > 0
+      ? personalItems.filter((item) => item?.isPacked === true).length
+      : 0;
 
   useEffect(() => {
     if (personalItems && personalItems.length > 0 && packedItemsLength) {
