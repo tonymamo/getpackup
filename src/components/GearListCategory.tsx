@@ -22,7 +22,7 @@ const GearListCategory: FunctionComponent<GearListCategoryProps> = ({
   sortedItems,
 }) => {
   return (
-    <CollapsibleBox key={categoryName} title={categoryName}>
+    <CollapsibleBox key={categoryName} title={categoryName} defaultClosed={false}>
       <ItemsWrapper>
         {sortedItems && sortedItems.length > 0 ? (
           <>

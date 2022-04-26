@@ -91,7 +91,11 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
 
   return (
     <CollapsibleBox
-      key={categoryName}
+      key={
+        isSharedPackingListCategory
+          ? `${categoryName}-CollapsibleBox-Shared`
+          : `${categoryName}-CollapsibleBox-Personal`
+      }
       title={categoryName}
       subtitle={pluralize('item', sortedItems.length)}
       defaultClosed={

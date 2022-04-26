@@ -294,7 +294,7 @@ const PackingList: FunctionComponent<PackingListProps> = ({
                     return (
                       <PackingListCategory
                         trip={trip}
-                        key={categoryName}
+                        key={`${categoryName}-PackingListCategory`}
                         categoryName={categoryName}
                         sortedItems={sortedItems}
                         tripId={tripId}

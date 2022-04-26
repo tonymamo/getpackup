@@ -8,7 +8,7 @@ import { Box, FlexContainer, Heading, IconWrapper } from '@components';
 type CollapsibleBoxProps = {
   title: string;
   subtitle?: string;
-  defaultClosed?: boolean;
+  defaultClosed: boolean;
   collapseCallback?: () => void;
   enabled?: boolean;
 };
@@ -30,13 +30,13 @@ const StyledCollapsed = styled.div<{
 const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
   title,
   subtitle,
-  defaultClosed = false,
+  defaultClosed,
   children,
   collapseCallback,
   enabled = true,
 }) => {
   // Manages the collapsed state of the accordion
-  const [collapsed, setCollapsed] = useState(defaultClosed);
+  const [collapsed, setCollapsed] = useState(enabled === true ? defaultClosed : false);
 
   // Gets the height of the element (ref)
   const [ref, { height }] = useMeasure<HTMLDivElement>();

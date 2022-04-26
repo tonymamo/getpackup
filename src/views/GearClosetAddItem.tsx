@@ -242,6 +242,7 @@ const GearClosetAddItem: FunctionComponent<GearClosetAddItemProps> = () => {
                 <CollapsibleBox
                   title="Activities"
                   subtitle={getSelectedCount(gearListActivities, values)}
+                  defaultClosed={false}
                 >
                   <Row>
                     {getFilteredCategories(gearListActivities).map((item) => (
