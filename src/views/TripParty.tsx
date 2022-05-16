@@ -33,7 +33,7 @@ import {
   SendInviteForm,
   IconWrapper,
 } from '@components';
-import { TripMemberStatus, TripType } from '@common/trip';
+import { TripMember, TripMemberStatus, TripType } from '@common/trip';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { UserType } from '@common/user';
@@ -47,10 +47,11 @@ import trackEvent from '@utils/trackEvent';
 import { zIndexDropdown } from '@styles/layers';
 import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
 import isUserTripOwner from '@utils/isUserTripOwner';
-import { FaSignOutAlt, FaUserTimes } from 'react-icons/fa';
+import { FaSignOutAlt, FaUserPlus, FaUserTimes } from 'react-icons/fa';
 import ReactTooltip from 'react-tooltip';
 import LeaveTheTripModal from './LeaveTheTripModal';
 import RemoveUserFromTripModal from './RemoveUserFromTripModal';
+import ReinviteUserToTripModal from './ReinviteUserToTripModal';
 
 type TripPartyProps = {
   activeTrip?: TripType;
@@ -87,6 +88,8 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const [leaveTripModalIsOpen, setLeaveTripModalIsOpen] = useState(false);
   const [removeUserModalIsOpen, setRemoveUserModalIsOpen] = useState(false);
   const [userToRemove, setUserToRemove] = useState('');
+  const [reinviteUserModalIsOpen, setReinviteUserModalIsOpen] = useState(false);
+  const [userToReinvite, setUserToReinvite] = useState<TripMember | undefined>(undefined);
 
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -214,6 +217,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
 
   const ClearQueryButton = ({ items, refine }: { items: any; refine: (val: any) => void }) => (
     <p style={{ textAlign: 'center' }}>
+      Friend not on Packup yet?{' '}
       <Button
         type="button"
         onClick={() => {
@@ -297,8 +301,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
               {!loading && !props.hasMore && hasResults && (
                 <>
                   <p style={{ textAlign: 'center' }}>
-                    No more results found for <strong>{searchState.query}</strong>. Friend not on
-                    Packup yet?
+                    No more results found for <strong>{searchState.query}</strong>.
                   </p>
                   <ClearRefinementsButton clearsQuery />
                 </>
@@ -388,6 +391,27 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
     </IconWrapper>
   );
 
+  const readdUserIconButton = (member: TripMember) => (
+    <IconWrapper
+      onClick={() => {
+        setUserToReinvite(member);
+        setReinviteUserModalIsOpen(true);
+      }}
+      data-tip="Re-invite User to Trip"
+      data-for="reinviteUser"
+    >
+      <FaUserPlus />
+      <ReactTooltip
+        id="reinviteUser"
+        place="top"
+        type="dark"
+        effect="solid"
+        className="tooltip customTooltip"
+        delayShow={500}
+      />
+    </IconWrapper>
+  );
+
   const leaveTripButton = () => (
     <IconWrapper
       onClick={() => setLeaveTripModalIsOpen(true)}
@@ -434,8 +458,16 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
     if (matchingTripMember?.status === TripMemberStatus.Declined) {
       return (
         <>
-          {isOwner ? removeUserIconButton(matchingTripMember.uid) : null}
+          {isOwner ? readdUserIconButton(matchingTripMember) : null}
           <Pill text={TripMemberStatus.Declined} color="danger" />
+        </>
+      );
+    }
+    if (matchingTripMember?.status === TripMemberStatus.Removed) {
+      return (
+        <>
+          {isOwner ? readdUserIconButton(matchingTripMember) : null}
+          <Pill text={TripMemberStatus.Removed} color="danger" />
         </>
       );
     }
@@ -468,6 +500,21 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                 uid={userToRemove}
               />
             )}
+            {userToReinvite !== undefined &&
+              reinviteUserModalIsOpen &&
+              users[userToReinvite.uid].email !== '' && (
+                <ReinviteUserToTripModal
+                  setModalIsOpen={() => {
+                    setReinviteUserModalIsOpen(false);
+                    setUserToReinvite(undefined);
+                  }}
+                  modalIsOpen={reinviteUserModalIsOpen}
+                  trip={activeTrip}
+                  tripMember={userToReinvite}
+                  profile={profile}
+                  tripMemberEmail={users[userToReinvite.uid].email}
+                />
+              )}
             <TripNavigation
               activeTrip={activeTrip}
               userIsTripOwner={isUserTripOwner(activeTrip, auth.uid)}

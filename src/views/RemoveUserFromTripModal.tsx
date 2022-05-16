@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
 import { FaSignOutAlt } from 'react-icons/fa';
 
 import { addAlert } from '@redux/ducks/globalAlerts';
@@ -40,10 +39,11 @@ const RemoveUserFromTripModal: FunctionComponent<RemoveUserFromTripModalProps> =
           },
         })
         .then(() => {
+          setModalIsOpen(false);
           trackEvent('Removed User From Trip Successfully', { tripId: trip.tripId, uid });
-          navigate('/app/trips');
         })
         .catch((err) => {
+          setModalIsOpen(false);
           trackEvent('Removed User From Trip Failure', { tripId: trip.tripId, uid, error: err });
           dispatch(
             addAlert({
