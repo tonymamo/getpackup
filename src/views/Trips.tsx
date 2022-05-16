@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { Link, navigate } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
-import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
+import { FaArrowRight, FaPlusCircle, FaRedo } from 'react-icons/fa';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -12,6 +12,7 @@ import { TripMemberStatus, TripType } from '@common/trip';
 import trackEvent from '@utils/trackEvent';
 import { PackingListFilterOptions, TabOptions } from '@utils/enums';
 import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
+import { doubleSpacer } from '@styles/size';
 
 type TripsProps = {} & RouteComponentProps;
 
@@ -89,15 +90,6 @@ const Trips: FunctionComponent<TripsProps> = () => {
     />
   );
 
-  if (
-    isLoaded(fetchedGearCloset) &&
-    fetchedGearCloset.length === 0 &&
-    isLoaded(trips) &&
-    nonArchivedTrips.length === 0
-  ) {
-    navigate('/app/onboarding');
-  }
-
   useEffect(() => {
     // reset filters and tab for packing list each time All Trips page is visited
     dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
@@ -114,6 +106,40 @@ const Trips: FunctionComponent<TripsProps> = () => {
           </Box>
         ))}
       </>
+    );
+  }
+
+  if (
+    isLoaded(fetchedGearCloset) &&
+    fetchedGearCloset.length === 0 &&
+    isLoaded(trips) &&
+    nonArchivedTrips.length === 0
+  ) {
+    return (
+      <PageContainer>
+        <Row>
+          <Column md={8} mdOffset={2}>
+            <div style={{ textAlign: 'center', margin: doubleSpacer }}>
+              <Heading align="center">New here? 🤔</Heading>
+              <p>
+                For some reason we couldn&apos;t find your gear closet or any trips for you. Do you
+                want to try to load your info again, or do you need to set up your acccount?
+              </p>
+              <Button
+                type="button"
+                onClick={() => window.location.reload()}
+                rightSpacer
+                iconLeft={<FaRedo />}
+              >
+                Refresh
+              </Button>
+              <Button type="link" to="/app/onboarding" iconLeft={<FaArrowRight />} color="tertiary">
+                Set up account
+              </Button>
+            </div>
+          </Column>
+        </Row>
+      </PageContainer>
     );
   }
 
