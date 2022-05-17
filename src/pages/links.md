@@ -7,6 +7,9 @@ linksList:
   - linkUrl: /about
     linkText: What is packup?
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
+  - linkUrl: /blog/2022-05-17-how-to-build-the-ultimate-camping-sleep-system/
+    linkText: "Blog Post: How to Build the Ultimate Camping Sleep System"
+    thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1652751503/Patagonia_TaylorBurk-13_m7cpup.jpg
   - linkUrl: /blog/2022-02-23-what-does-ultra-light-mean-and-do-you-need-it/
     linkText: 'Blog Post: What does "Ultralight" mean and do you need it?'
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1645658671/044A9683_tamggv.jpg
