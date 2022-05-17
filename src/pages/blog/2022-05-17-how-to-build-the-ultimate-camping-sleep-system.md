@@ -13,7 +13,7 @@ tags:
   - tent
   - pros and cons
 ---
-Sleeping under the stars is one of life’s great joys. 
+Sleeping under the stars is one of lives great joys. 
 
 Waking up with a pinecone poking into your back because your sleeping pad deflated in the middle of the night is… not.
 
@@ -26,8 +26,6 @@ When your beauty rest is at the mercy of Mother Nature, you’ll want to be well
 ## Gear You’ll Need
 
 Your “sleep system” refers to every part of what you need to sleep while camping.
-
-**<br></br>**
 
 ### Shelter 
 
@@ -261,3 +259,15 @@ For everything else, there are a lot of trade-offs to consider, including price,
 But once you do, there’s nothing better than waking up refreshed after a perfect night’s sleep in the great outdoors.
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1652751942/044A1926_zthkge.jpg)
+
+##### <br></br>
+
+## **[Pack with Packup](https://getpackup.com/)**
+
+Take the guesswork out of trip preparation using our Trip Generator – simply choose your accommodation, transportation, and outdoor activities to form the foundation of your customizable packing list and trip. Our digital platform ensures that you'll never forget to pack everything that you need for your adventures.
+
+**[Try us out today!](applewebdata://8DF5BC44-2F4F-4C5E-A179-E76CB322B2B6/)**
+
+![](https://res.cloudinary.com/getpackup/image/upload/v1645661156/044A3768-3_hoc1ct.jpg)
+
+###### *While we are not sponsored by any of these brands, some of these items have affiliate links and we will make a small percentage off the value of a sale. Rest assured, we use all of these items, and believe in their value. Think of these links as a way of giving back for using this detailed post!*
