@@ -13,7 +13,7 @@ tags:
   - tent
   - pros and cons
 ---
-Sleeping under the stars is one of life’s great joys. 
+Sleeping under the stars is one of lives great joys. 
 
 Waking up with a pinecone poking into your back because your sleeping pad deflated in the middle of the night is… not.
 
@@ -26,8 +26,6 @@ When your beauty rest is at the mercy of Mother Nature, you’ll want to be well
 ## Gear You’ll Need
 
 Your “sleep system” refers to every part of what you need to sleep while camping.
-
-**<br></br>**
 
 ### Shelter 
 
