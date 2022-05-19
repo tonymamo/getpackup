@@ -1,6 +1,7 @@
 import Alert from './Alert';
 import AutoSave from './AutoSave';
 import Avatar, { StackedAvatars } from './Avatar';
+import AvatarUpload from './AvatarUpload';
 import BlogRoll from './BlogRoll';
 import Box from './Box';
 import Breadcrumbs from './Breadcrumbs';
@@ -11,9 +12,8 @@ import Column from './Column';
 import Content, { MarkdownContent, HTMLContent } from './Content';
 import DayPickerInput from './DayPickerInput';
 import DropdownMenu from './DropdownMenu';
-import ErrorBoundary from './ErrorBoundary';
-import AvatarUpload from './AvatarUpload';
 import EditableInput from './EditableInput';
+import ErrorBoundary from './ErrorBoundary';
 import FeedbackModal from './FeedbackModal';
 import FirebaseAuthWrapper from './FirebaseAuthWrapper';
 import FlexContainer from './FlexContainer';
@@ -46,6 +46,7 @@ import PageContainer from './PageContainer';
 import Pill from './Pill';
 import PreviewCompatibleImage from './PreviewCompatibleImage';
 import PrivateRoute from './PrivateRoute';
+import ProgressBar from './ProgressBar';
 import RelatedBlogPost from './RelatedBlogPost';
 import RelativeOrExternalLink from './RelativeOrExternalLink';
 import Row from './Row';
@@ -60,11 +61,11 @@ import Testimonial from './Testimonial';
 import TripCard from './TripCard';
 import TripHeader from './TripHeader';
 import TripHeaderImage from './TripHeaderImage';
+import TripMemberAvatars from './TripMemberAvatars';
 import TripNavigation from './TripNavigation';
 import UserMediaObject from './UserMediaObject';
+import UserSearch from './UserSearch';
 import Wave from './wave';
-import ProgressBar from './ProgressBar';
-import TripMemberAvatars from './TripMemberAvatars';
 
 export {
   Alert,
@@ -79,10 +80,10 @@ export {
   CollapsibleBox,
   Column,
   Content,
-  DropdownMenu,
   DayPickerInput,
-  ErrorBoundary,
+  DropdownMenu,
   EditableInput,
+  ErrorBoundary,
   FeedbackModal,
   FirebaseAuthWrapper,
   FlexContainer,
@@ -99,8 +100,8 @@ export {
   HTMLContent,
   IconCheckbox,
   IconWrapper,
-  Input,
   InlineLoader,
+  Input,
   Layout,
   LoadingPage,
   LoadingSpinner,
@@ -136,5 +137,6 @@ export {
   TripMemberAvatars,
   TripNavigation,
   UserMediaObject,
+  UserSearch,
   Wave,
 };

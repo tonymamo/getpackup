@@ -620,7 +620,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
                 disabled
               />
               <small>
-                <LoadingSpinner /> Loading Google Maps...
+                <LoadingSpinner theme="dark" /> Loading Google Maps...
               </small>
             </>
           )}
