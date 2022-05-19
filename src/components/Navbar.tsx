@@ -1,33 +1,33 @@
-import React, { useEffect, useRef, useState, FunctionComponent } from 'react';
-import styled from 'styled-components';
-import { Link, navigate } from 'gatsby';
-import { useSelector } from 'react-redux';
-import { Spin as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
-import { useLocation } from '@reach/router';
-import { Helmet } from 'react-helmet-async';
-import { useFirestoreConnect } from 'react-redux-firebase';
-
-import scrollToPosition from '@utils/scrollToPosition';
 import {
   Avatar,
-  PageContainer,
+  Box,
+  Button,
   FlexContainer,
   Heading,
-  Button,
-  Box,
   HorizontalRule,
+  PageContainer,
 } from '@components';
-import { brandSecondary, brandTertiary, white, brandPrimary } from '@styles/color';
-import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
-import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typography';
-import { RootState } from '@redux/ducks';
-import useWindowSize from '@utils/useWindowSize';
-import yak from '@images/yak.svg';
 import GearClosetIcon from '@images/gearClosetIcon';
+import yak from '@images/yak.svg';
+import { useLocation } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { brandPrimary, brandSecondary, brandTertiary, white } from '@styles/color';
 import { zIndexNavbar } from '@styles/layers';
-import trackEvent from '@utils/trackEvent';
+import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
+import { fontSizeBase, fontSizeSmall, headingsFontFamily } from '@styles/typography';
 import { TabOptions } from '@utils/enums';
+import scrollToPosition from '@utils/scrollToPosition';
+import trackEvent from '@utils/trackEvent';
+import useWindowSize from '@utils/useWindowSize';
+import { Link, navigate } from 'gatsby';
+import { Spin as Hamburger } from 'hamburger-react';
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
+import styled from 'styled-components';
+
 import { AvatarImageWrapper } from './Avatar';
 
 type NavbarProps = {};
@@ -177,11 +177,8 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
-  const {
-    activePackingListTab,
-    personalListScrollPosition,
-    sharedListScrollPosition,
-  } = useSelector((state: RootState) => state.client);
+  const { activePackingListTab, personalListScrollPosition, sharedListScrollPosition } =
+    useSelector((state: RootState) => state.client);
 
   useFirestoreConnect([
     { collection: 'users', where: ['uid', '==', auth.uid || ''], storeAs: 'loggedInUser' },

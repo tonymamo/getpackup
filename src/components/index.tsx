@@ -9,7 +9,7 @@ import Button from './Button';
 import ClientOnly from './ClientOnly';
 import CollapsibleBox from './CollapsibleBox';
 import Column from './Column';
-import Content, { MarkdownContent, HTMLContent } from './Content';
+import Content, { HTMLContent, MarkdownContent } from './Content';
 import DayPickerInput from './DayPickerInput';
 import DropdownMenu from './DropdownMenu';
 import EditableInput from './EditableInput';

@@ -1,6 +1,7 @@
 import { TripType } from '@common/trip';
 import axios from 'axios';
 import { stringify } from 'query-string';
+
 import trackEvent from './trackEvent';
 
 const sendTripInvitationEmail = ({

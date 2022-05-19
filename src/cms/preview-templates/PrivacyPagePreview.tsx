@@ -1,6 +1,6 @@
+import { Layout, MarkdownContent } from '@components';
 import React from 'react';
 
-import { MarkdownContent, Layout } from '@components';
 import { PrivacyTemplate } from '../../templates/privacy';
 
 const PrivacyPagePreview = ({ entry }: { entry: any }) => {

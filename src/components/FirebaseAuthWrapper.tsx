@@ -1,16 +1,15 @@
-import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import { navigate } from 'gatsby';
-import { useFirebase } from 'react-redux-firebase';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
-import { brandPrimary } from '@styles/color';
-import { halfSpacer, baseAndAHalfSpacer, borderRadius } from '@styles/size';
 import { RootState } from '@redux/ducks';
 import { removeAttemptedPrivatePage } from '@redux/ducks/client';
+import { brandPrimary } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
+import { baseAndAHalfSpacer, borderRadius, halfSpacer } from '@styles/size';
+import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent } from 'react';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 // Wrapper around 'react-firebaseui/StyledFirebaseAuth' just to modify some styling
 // to make buttons match better to Button.tsx

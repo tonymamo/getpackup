@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-
 import { UserType } from '@common/user';
 import { textColorLight } from '@styles/color';
 import { halfSpacer } from '@styles/size';
-import { FlexContainer, Avatar } from '.';
+import React, { FunctionComponent } from 'react';
+import styled from 'styled-components';
+
 import { AvatarProps } from './Avatar';
+import { Avatar, FlexContainer } from '.';
 
 type UserMediaObjectProps = {
   user: UserType;

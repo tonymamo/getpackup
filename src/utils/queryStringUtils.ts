@@ -1,7 +1,7 @@
 import { WindowLocation } from '@reach/router';
-import { parse, stringify } from 'query-string';
-import pickBy from 'lodash/pickBy';
 import identity from 'lodash/identity';
+import pickBy from 'lodash/pickBy';
+import { parse, stringify } from 'query-string';
 
 export const getQueryStringParams = (location: WindowLocation<unknown>) => {
   return parse(location.search);

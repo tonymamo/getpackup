@@ -1,28 +1,28 @@
-/* eslint-disable no-console */
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
-import {
-  Uppload,
-  en,
-  Local,
-  Camera,
-  Crop,
-  Instagram,
-  Facebook,
-  Twitter,
-  URL,
-  Reddit,
-  Flip,
-} from 'uppload';
-import styled from 'styled-components';
-import { FaCamera } from 'react-icons/fa';
-
 import { RootState } from '@redux/ducks';
-import trackEvent from '@utils/trackEvent';
-import { doubleSpacer, tripleSpacer } from '@styles/size';
 import { textColor, white } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
+import { doubleSpacer, tripleSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
+/* eslint-disable no-console */
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import { FaCamera } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import styled from 'styled-components';
+import {
+  Camera,
+  Crop,
+  Facebook,
+  Flip,
+  Instagram,
+  Local,
+  Reddit,
+  Twitter,
+  URL,
+  Uppload,
+  en,
+} from 'uppload';
+
 import Avatar from './Avatar';
 
 const AvatarUploadWrapper = styled.div`
@@ -100,14 +100,10 @@ const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }
   }, [uploader]);
 
   uploader.on('upload', (newUrl: string) => {
-    firebase
-      .firestore()
-      .collection('users')
-      .doc(auth.uid)
-      .update({
-        photoURL: newUrl,
-        lastUpdated: new Date(),
-      });
+    firebase.firestore().collection('users').doc(auth.uid).update({
+      photoURL: newUrl,
+      lastUpdated: new Date(),
+    });
     trackEvent('New User Avatar Uploaded', { user: auth.email, photoURL: newUrl });
     uploader.close();
   });

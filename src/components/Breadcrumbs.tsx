@@ -1,12 +1,11 @@
-import React, { Children, FunctionComponent, memo } from 'react';
-import { Router, RouteComponentProps } from '@reach/router';
-import { Link } from 'gatsby';
-import styled from 'styled-components';
-import { FaChevronRight } from 'react-icons/fa';
-
+import { RouteComponentProps, Router } from '@reach/router';
 import { halfSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
 import truncateText from '@utils/truncateText';
+import { Link } from 'gatsby';
+import React, { Children, FunctionComponent, memo } from 'react';
+import { FaChevronRight } from 'react-icons/fa';
+import styled from 'styled-components';
 
 type CrumbProps = {
   url: string;

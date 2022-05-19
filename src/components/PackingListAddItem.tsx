@@ -1,18 +1,18 @@
-import React, { FunctionComponent } from 'react';
-import { Formik, Field, Form } from 'formik';
-import styled from 'styled-components';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { FaPlus } from 'react-icons/fa';
-import ReactTooltip from 'react-tooltip';
-
-import { baseBorderStyle } from '@styles/mixins';
-import { halfSpacer, doubleSpacer } from '@styles/size';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { Input, FlexContainer } from '@components';
-import { brandPrimary, offWhite, textColor } from '@styles/color';
-import trackEvent from '@utils/trackEvent';
+import { FlexContainer, Input } from '@components';
 import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { brandPrimary, offWhite, textColor } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
+import { doubleSpacer, halfSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
+import { Field, Form, Formik } from 'formik';
+import React, { FunctionComponent } from 'react';
+import { FaPlus } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
+import styled from 'styled-components';
+
 import { InputWrapper } from './Input';
 
 type PackingListItemProps = {

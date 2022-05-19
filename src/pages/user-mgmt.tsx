@@ -1,11 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import { parse } from 'query-string';
+import { Box, Column, PageContainer, Row, Seo } from '@components';
 import { RouteComponentProps } from '@reach/router';
-import { navigate } from 'gatsby';
-
-import { Row, Box, Column, PageContainer, Seo } from '@components';
 import ResetPassword from '@views/ResetPassword';
 import VerifyEmail from '@views/VerifyEmail';
+import { navigate } from 'gatsby';
+import { parse } from 'query-string';
+import React, { FunctionComponent } from 'react';
 
 type UserManagementProps = {
   location: {

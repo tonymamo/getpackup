@@ -1,5 +1,5 @@
-import tzlookup from 'tz-lookup';
 import spacetime from 'spacetime';
+import tzlookup from 'tz-lookup';
 
 type GetSeasonReturnType = 'spring' | 'summer' | 'autumn' | 'winter';
 

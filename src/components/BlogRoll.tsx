@@ -1,10 +1,9 @@
+import { BlogRollType } from '@common/blogRoll';
+import { Box, Column, Heading, HorizontalRule, PreviewCompatibleImage, Row } from '@components';
+import trackEvent from '@utils/trackEvent';
+import { Link } from 'gatsby';
 /* eslint-disable react/display-name */
 import React, { FunctionComponent } from 'react';
-import { Link } from 'gatsby';
-
-import { Box, HorizontalRule, Heading, Row, Column, PreviewCompatibleImage } from '@components';
-import { BlogRollType } from '@common/blogRoll';
-import trackEvent from '@utils/trackEvent';
 
 type BlogRollProps = {
   posts: BlogRollType;

@@ -1,13 +1,13 @@
-import React from 'react';
+import { ErrorBoundary, LoadingPage, PrivateRoute } from '@components';
 import { Router } from '@reach/router';
-import { useSelector } from 'react-redux';
-
 import { RootState } from '@redux/ducks';
-import { PrivateRoute, LoadingPage, ErrorBoundary } from '@components';
+import Actions from '@views/Admin/Actions';
+import EditGearListItem from '@views/Admin/EditGearListItem';
 import GearList from '@views/Admin/GearList';
 import NewGearListItem from '@views/Admin/NewGearListItem';
-import EditGearListItem from '@views/Admin/EditGearListItem';
-import Actions from '@views/Admin/Actions';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
 import { AppContainer } from './app';
 
 const Admin = () => {

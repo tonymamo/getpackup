@@ -1,14 +1,13 @@
-import React, { FunctionComponent } from 'react';
-
-import { PageContainer, Seo, Box, Heading, HorizontalRule, Row, Column, Button } from '@components';
+import { Box, Button, Column, Heading, HorizontalRule, PageContainer, Row, Seo } from '@components';
+import step1android from '@images/A2HS-step1-android.png';
 import step1ios from '@images/A2HS-step1-ios.png';
+import step2android from '@images/A2HS-step2-android.png';
 import step2ios from '@images/A2HS-step2-ios.png';
+import step3android from '@images/A2HS-step3-android.png';
 import step3ios from '@images/A2HS-step3-ios.png';
 import step4ios from '@images/A2HS-step4-ios.png';
-import step1android from '@images/A2HS-step1-android.png';
-import step2android from '@images/A2HS-step2-android.png';
-import step3android from '@images/A2HS-step3-android.png';
 import { Link } from 'gatsby';
+import React, { FunctionComponent } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 
 type InstallProps = {};

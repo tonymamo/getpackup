@@ -1,8 +1,7 @@
+import { baseBorderStyle } from '@styles/mixins';
+import { baseSpacer } from '@styles/size';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-
-import { baseSpacer } from '@styles/size';
-import { baseBorderStyle } from '@styles/mixins';
 
 type HorizontalScrollerProps = { withBorder?: boolean };
 

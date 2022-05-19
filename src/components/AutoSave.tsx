@@ -1,11 +1,10 @@
-import React, { FunctionComponent, useState, useEffect, useCallback, useRef } from 'react';
+import { brandDanger, brandPrimary, brandSuccess } from '@styles/color';
+import usePrevious from '@utils/usePrevious';
 import { useFormikContext } from 'formik';
 import { debounce, isEqual } from 'lodash';
-import { FaHourglassHalf, FaCheck, FaExclamationCircle } from 'react-icons/fa';
+import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
+import { FaCheck, FaExclamationCircle, FaHourglassHalf } from 'react-icons/fa';
 import styled, { keyframes } from 'styled-components';
-
-import usePrevious from '@utils/usePrevious';
-import { brandDanger, brandPrimary, brandSuccess } from '@styles/color';
 
 const opacityTransition = keyframes`
   0%, 100% {

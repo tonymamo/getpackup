@@ -1,9 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { kebabCase } from 'lodash';
-import { Link, graphql } from 'gatsby';
-
-import { PageContainer, Box, Heading, Seo, HeroImage } from '@components';
 import { FluidImageType } from '@common/image';
+import { Box, Heading, HeroImage, PageContainer, Seo } from '@components';
+import { Link, graphql } from 'gatsby';
+import { kebabCase } from 'lodash';
+import React, { FunctionComponent } from 'react';
 
 type TagsIndexProps = {
   title: string;

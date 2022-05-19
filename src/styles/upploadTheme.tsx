@@ -1,13 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
+
 import {
-  lightestGray,
-  textColor,
-  white,
+  black,
   brandDanger,
   brandPrimary,
   brandPrimaryHover,
-  black,
   darkGray,
+  lightestGray,
+  textColor,
+  white,
 } from './color';
 import { quadrupleSpacer } from './size';
 

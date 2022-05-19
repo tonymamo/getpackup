@@ -1,19 +1,16 @@
+import { BigBatch } from '@qualdesk/firestore-big-batch';
 /* eslint-disable no-console */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-import { BigBatch } from '@qualdesk/firestore-big-batch';
 
 const chunk = require('lodash/chunk');
 
 admin.initializeApp();
 
 exports.copyOwnerToTripMembers = functions.https.onRequest(async (_, res) => {
-  const snapshot = await admin
-    .firestore()
-    .collection('trips')
-    .get();
+  const snapshot = await admin.firestore().collection('trips').get();
   const MAX_WRITES_PER_BATCH = 500; /** https://cloud.google.com/firestore/quotas#writes_and_transactions */
 
   /**
@@ -47,10 +44,7 @@ exports.copyOwnerToTripMembers = functions.https.onRequest(async (_, res) => {
 });
 
 exports.convertTripMembersToInviteObject = functions.https.onRequest(async (_, res) => {
-  const snapshot = await admin
-    .firestore()
-    .collection('trips')
-    .get();
+  const snapshot = await admin.firestore().collection('trips').get();
   const MAX_WRITES_PER_BATCH = 500; /** https://cloud.google.com/firestore/quotas#writes_and_transactions */
 
   /**
@@ -128,11 +122,7 @@ exports.updatePackingList = functions.https.onRequest(async (req, res) => {
 });
 
 exports.addOwnerToPackingListItems = functions.https.onRequest(async () => {
-  const snapshot = await admin
-    .firestore()
-    .collection('trips')
-    .limit(10)
-    .get();
+  const snapshot = await admin.firestore().collection('trips').limit(10).get();
 
   snapshot.docs.forEach(async (doc) => {
     const packingList = await admin

@@ -1,34 +1,33 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Formik, Field, Form } from 'formik';
-import { navigate, Link } from 'gatsby';
-import { FaArrowRight, FaInfoCircle } from 'react-icons/fa';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
-
 import {
-  Row,
-  Column,
-  PageContainer,
   Box,
   Button,
-  Input,
-  HorizontalRule,
-  Seo,
-  Heading,
-  FlexContainer,
+  Column,
   FirebaseAuthWrapper,
+  FlexContainer,
+  Heading,
+  HorizontalRule,
+  Input,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
+import validateUsername from '@utils/validateUsername';
 import {
   passwordRulesString,
   requiredEmail,
   requiredField,
   requiredPassword,
 } from '@utils/validations';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { RootState } from '@redux/ducks';
-import validateUsername from '@utils/validateUsername';
-import trackEvent from '@utils/trackEvent';
+import { Field, Form, Formik } from 'formik';
+import { Link, navigate } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaArrowRight, FaInfoCircle } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
 
 type SignupProps = {};
 

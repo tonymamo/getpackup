@@ -1,43 +1,44 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
-import { FieldMetaProps, FormikHelpers, useField } from 'formik';
-import { FaEye, FaEyeSlash, FaCheckCircle, FaRegCircle } from 'react-icons/fa';
-import Select, { CommonProps } from 'react-select';
-import AsyncSelect from 'react-select/async';
-import Geosuggest, { QueryType, Suggest } from 'react-geosuggest';
 import 'react-geosuggest/module/geosuggest.css';
-import NumericInput from 'react-numeric-input';
 
+import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
 import {
-  baseSpacer,
-  borderRadius,
-  doubleSpacer,
-  halfSpacer,
-  sextupleSpacer,
-  quarterSpacer,
-  quadrupleSpacer,
-  inputHeight,
-  inputPaddingX,
-  inputPaddingY,
-  baseAndAHalfSpacer,
-} from '@styles/size';
-import { lineHeightBase, fontSizeSmall, fontSizeH6 } from '@styles/typography';
-import {
-  textColor,
-  white,
-  lightestGray,
   brandDanger,
   brandDangerRGB,
   brandPrimary,
   brandPrimaryRGB,
-  lightGray,
-  offWhite,
   brandSuccess,
+  lightGray,
+  lightestGray,
+  offWhite,
+  textColor,
   textColorLight,
+  white,
 } from '@styles/color';
 import { baseBorderStyle, disabledStyle, visuallyHiddenStyle } from '@styles/mixins';
-import poweredByGoogle from '@images/powered_by_google_on_white_hdpi.png';
+import {
+  baseAndAHalfSpacer,
+  baseSpacer,
+  borderRadius,
+  doubleSpacer,
+  halfSpacer,
+  inputHeight,
+  inputPaddingX,
+  inputPaddingY,
+  quadrupleSpacer,
+  quarterSpacer,
+  sextupleSpacer,
+} from '@styles/size';
+import { fontSizeH6, fontSizeSmall, lineHeightBase } from '@styles/typography';
 import { formatPhoneNumberValue } from '@utils/phoneNumber';
+import { FieldMetaProps, FormikHelpers, useField } from 'formik';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import Geosuggest, { QueryType, Suggest } from 'react-geosuggest';
+import { FaCheckCircle, FaEye, FaEyeSlash, FaRegCircle } from 'react-icons/fa';
+import NumericInput from 'react-numeric-input';
+import Select, { CommonProps } from 'react-select';
+import AsyncSelect from 'react-select/async';
+import styled, { css } from 'styled-components';
+
 import LoadingSpinner from './LoadingSpinner';
 
 type OptionType = { label: string; value: string };

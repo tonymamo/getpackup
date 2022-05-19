@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { doubleSpacer } from '@styles/size';
 import { brandPrimary, textColor } from '@styles/color';
+import { doubleSpacer } from '@styles/size';
+import styled from 'styled-components';
 
 const IconWrapper = styled.div<{ color?: string; hoverColor?: string }>`
   cursor: pointer;

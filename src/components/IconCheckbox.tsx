@@ -1,11 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import { useField, FieldMetaProps, FormikHelpers } from 'formik';
-import { IconType } from 'react-icons';
-
 import { brandPrimary, lightGray, textColor } from '@styles/color';
 import { baseSpacer, tripleSpacer } from '@styles/size';
 import { fontSizeXSmall } from '@styles/typography';
+import { FieldMetaProps, FormikHelpers, useField } from 'formik';
+import React, { FunctionComponent } from 'react';
+import { IconType } from 'react-icons';
+import styled from 'styled-components';
 
 type IconCheckboxProps = {
   id?: string;

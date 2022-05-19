@@ -1,13 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { useSelector } from 'react-redux';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { FaChevronLeft } from 'react-icons/fa';
-import { navigate } from 'gatsby';
-
-import { Seo, Heading, LoadingPage, PageContainer, Button } from '@components';
-import { RootState } from '@redux/ducks';
 import { GearItemType } from '@common/gearItem';
+import { Button, Heading, LoadingPage, PageContainer, Seo } from '@components';
+import { RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent } from 'react';
+import { FaChevronLeft } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
+
 import GearListItemForm from './GearListItemForm';
 
 type EditGearListItemProps = {

@@ -1,11 +1,6 @@
-import React, { useEffect, useState, useRef, FunctionComponent } from 'react';
-import { FaChevronLeft, FaTrash } from 'react-icons/fa';
-import { Formik, Form, Field } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
-import { RouteComponentProps } from '@reach/router';
-
+import { PackedByUserType, PackingListItemType } from '@common/packingListItem';
+import { TripType } from '@common/trip';
+import { UserType } from '@common/user';
 import {
   Alert,
   AutoSave,
@@ -19,18 +14,22 @@ import {
   Row,
   Seo,
 } from '@components';
-import { PackingListItemType, PackedByUserType } from '@common/packingListItem';
-import { requiredField, requiredSelect } from '@utils/validations';
-import { gearListCategories } from '@utils/gearListItemEnum';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import useWindowSize from '@utils/useWindowSize';
-import trackEvent from '@utils/trackEvent';
-import scrollToPosition from '@utils/scrollToPosition';
-import { UserType } from '@common/user';
-import { TripType } from '@common/trip';
-import { TabOptions } from '@utils/enums';
-import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
+import { RouteComponentProps } from '@reach/router';
 import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { TabOptions } from '@utils/enums';
+import { gearListCategories } from '@utils/gearListItemEnum';
+import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
+import scrollToPosition from '@utils/scrollToPosition';
+import trackEvent from '@utils/trackEvent';
+import useWindowSize from '@utils/useWindowSize';
+import { requiredField, requiredSelect } from '@utils/validations';
+import { Field, Form, Formik } from 'formik';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FaChevronLeft, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
 
 type EditPackingListItemProps = {
   tripId?: string;
@@ -45,11 +44,8 @@ const EditPackingListItem: FunctionComponent<EditPackingListItemProps> = (props)
   const dispatch = useDispatch();
   const firebase = useFirebase();
 
-  const {
-    activePackingListTab,
-    personalListScrollPosition,
-    sharedListScrollPosition,
-  } = useSelector((state: RootState) => state.client);
+  const { activePackingListTab, personalListScrollPosition, sharedListScrollPosition } =
+    useSelector((state: RootState) => state.client);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const size = useWindowSize();

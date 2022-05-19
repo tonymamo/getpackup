@@ -1,39 +1,38 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import SwipeableViews from 'react-swipeable-views';
-import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { FaCheck, FaChevronLeft, FaChevronRight, FaCircle } from 'react-icons/fa';
-import { useSelector, useDispatch } from 'react-redux';
-import { isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
-import pickBy from 'lodash/pickBy';
-import styled from 'styled-components';
-import { navigate } from 'gatsby';
-
+import { ActivityTypes } from '@common/gearItem';
 import {
   Button,
   Column,
   FlexContainer,
+  FormErrors,
   Heading,
+  HorizontalRule,
+  IconCheckbox,
+  InlineLoader,
   PageContainer,
   Row,
   Seo,
-  IconCheckbox,
-  HorizontalRule,
-  FormErrors,
-  InlineLoader,
 } from '@components';
-import { doubleSpacer, halfSpacer } from '@styles/size';
-import { textColor, textColorLight } from '@styles/color';
-import {
-  gearListActivities,
-  gearListAccommodations,
-  gearListOtherConsiderations,
-  gearListKeys,
-  gearListCampKitchen,
-} from '@utils/gearListItemEnum';
 import { RootState } from '@redux/ducks';
-import trackEvent from '@utils/trackEvent';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { ActivityTypes } from '@common/gearItem';
+import { textColor, textColorLight } from '@styles/color';
+import { doubleSpacer, halfSpacer } from '@styles/size';
+import {
+  gearListAccommodations,
+  gearListActivities,
+  gearListCampKitchen,
+  gearListKeys,
+  gearListOtherConsiderations,
+} from '@utils/gearListItemEnum';
+import trackEvent from '@utils/trackEvent';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { navigate } from 'gatsby';
+import pickBy from 'lodash/pickBy';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { FaCheck, FaChevronLeft, FaChevronRight, FaCircle } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import SwipeableViews from 'react-swipeable-views';
+import styled from 'styled-components';
 
 type OnboardingProps = {};
 

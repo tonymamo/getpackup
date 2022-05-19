@@ -1,18 +1,3 @@
-import React, { CSSProperties, FunctionComponent } from 'react';
-import styled, { css } from 'styled-components';
-import { Link } from 'gatsby';
-
-import {
-  baseAndAHalfSpacer,
-  baseSpacer,
-  borderRadius,
-  borderWidth,
-  halfSpacer,
-  inputHeight,
-  quarterSpacer,
-  threeQuarterSpacer,
-} from '@styles/size';
-import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
 import {
   brandDanger,
   brandPrimary,
@@ -26,6 +11,21 @@ import {
   white,
 } from '@styles/color';
 import { baseBorderStyle, disabledStyle } from '@styles/mixins';
+import {
+  baseAndAHalfSpacer,
+  baseSpacer,
+  borderRadius,
+  borderWidth,
+  halfSpacer,
+  inputHeight,
+  quarterSpacer,
+  threeQuarterSpacer,
+} from '@styles/size';
+import { fontFamilySansSerif, fontSizeBase } from '@styles/typography';
+import { Link } from 'gatsby';
+import React, { CSSProperties, FunctionComponent } from 'react';
+import styled, { css } from 'styled-components';
+
 import LoadingSpinner from './LoadingSpinner';
 
 export type ButtonProps = {
@@ -198,7 +198,7 @@ const allStyles = css`
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   border-radius: ${borderRadius};
-  
+
   /* Color */
   ${primaryButtonStyles}
   ${(props: ButtonProps) => props.color === 'primaryOutline' && primaryOutlineButtonStyles}
@@ -225,7 +225,7 @@ const allStyles = css`
   &:active,
   &:focus {
     outline: none;
-    filter: brightness(.85);
+    filter: brightness(0.85);
   }
 `;
 

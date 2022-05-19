@@ -1,14 +1,13 @@
+import { TripMember, TripMemberStatus, TripType } from '@common/trip';
+import { Button, Column, Heading, Modal, Row } from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
+import axios from 'axios';
+import { stringify } from 'query-string';
 import React, { FunctionComponent } from 'react';
+import { FaCheck } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { FaCheck } from 'react-icons/fa';
-
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { Button, Column, Heading, Modal, Row } from '@components';
-import trackEvent from '@utils/trackEvent';
-import { TripMember, TripMemberStatus, TripType } from '@common/trip';
-import { stringify } from 'query-string';
-import axios from 'axios';
 
 type ReinviteUserToTripModalProps = {
   modalIsOpen: boolean;

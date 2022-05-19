@@ -1,23 +1,22 @@
-import React, { FunctionComponent } from 'react';
-import { graphql, Link } from 'gatsby';
-import styled from 'styled-components';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
-
 import {
-  Box,
-  PageContainer,
-  Seo,
-  PreviewCompatibleImage,
-  FlexContainer,
-  Row,
-  Column,
   Avatar,
+  Box,
+  Column,
+  FlexContainer,
+  PageContainer,
+  PreviewCompatibleImage,
   RelativeOrExternalLink,
+  Row,
+  Seo,
 } from '@components';
-import { baseSpacer, doubleSpacer, tripleSpacer } from '@styles/size';
-import { visuallyHiddenStyle } from '@styles/mixins';
 import logo from '@images/maskable_icon.png';
+import { visuallyHiddenStyle } from '@styles/mixins';
+import { baseSpacer, doubleSpacer, tripleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
+import { Link, graphql } from 'gatsby';
+import React, { FunctionComponent } from 'react';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import styled from 'styled-components';
 
 type LinksPageProps = {
   hideFromCms?: boolean;

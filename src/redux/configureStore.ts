@@ -1,20 +1,20 @@
-/* eslint-disable no-underscore-dangle */
-import { applyMiddleware, compose, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import { apiMiddleware } from 'redux-api-middleware';
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import * as Sentry from '@sentry/gatsby';
 // Note: imported 'isomorphic-fetch' this way so that in reducer tests we can mock Fetch/Response
 import 'isomorphic-fetch';
 
+import { initialState as clientInitialState } from '@redux/ducks/client';
+import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
 import rootReducer, { RootState } from '@redux/ducks/index';
+import errorCatcher from '@redux/middleware/errorCatcher';
 import logger from '@redux/middleware/logger';
 import oauth from '@redux/middleware/oauth';
 import requestHeaders from '@redux/middleware/requestHeaders';
-import errorCatcher from '@redux/middleware/errorCatcher';
-import { initialState as clientInitialState } from '@redux/ducks/client';
-import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
+import * as Sentry from '@sentry/gatsby';
+/* eslint-disable no-underscore-dangle */
+import { applyMiddleware, compose, createStore } from 'redux';
+import { apiMiddleware } from 'redux-api-middleware';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk';
 
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options

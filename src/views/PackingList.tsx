@@ -1,10 +1,18 @@
-import React, { FunctionComponent, useEffect, useState, useRef, useCallback } from 'react';
+import { PackingListItemType } from '@common/packingListItem';
+import { TripType } from '@common/trip';
+import { Box, Button, Heading, PackingListCategory, ProgressBar, TripHeader } from '@components';
+import PackingListFilters from '@components/PackingListFilters';
 import { RouteComponentProps, navigate } from '@reach/router';
-import styled from 'styled-components';
-import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { brandPrimary, textColor, white, brandSuccess } from '@styles/color';
+import { RootState } from '@redux/ducks';
+import {
+  setActivePackingListFilter,
+  setActivePackingListTab,
+  setPersonalListScrollPosition,
+  setSharedListScrollPosition,
+} from '@redux/ducks/client';
+import { brandPrimary, brandSuccess, textColor, white } from '@styles/color';
+import { zIndexNavbar } from '@styles/layers';
+import { baseBorderStyle } from '@styles/mixins';
 import {
   baseSpacer,
   breakpoints,
@@ -12,26 +20,17 @@ import {
   quadrupleSpacer,
   threeQuarterSpacer,
 } from '@styles/size';
-import { baseBorderStyle } from '@styles/mixins';
-import { Box, Button, Heading, PackingListCategory, TripHeader, ProgressBar } from '@components';
-import { PackingListItemType } from '@common/packingListItem';
-import { TripType } from '@common/trip';
-import getSafeAreaInset from '@utils/getSafeAreaInset';
 import { fontSizeH5 } from '@styles/typography';
-import trackEvent from '@utils/trackEvent';
-import { zIndexNavbar } from '@styles/layers';
-import { RootState } from '@redux/ducks';
-import PackingListFilters from '@components/PackingListFilters';
-import groupPackingList from '@utils/groupPackingList';
 import { PackingListFilterOptions, TabOptions } from '@utils/enums';
-import {
-  setActivePackingListFilter,
-  setActivePackingListTab,
-  setPersonalListScrollPosition,
-  setSharedListScrollPosition,
-} from '@redux/ducks/client';
+import getSafeAreaInset from '@utils/getSafeAreaInset';
+import groupPackingList from '@utils/groupPackingList';
 import isUserTripOwner from '@utils/isUserTripOwner';
 import scrollToPosition from '@utils/scrollToPosition';
+import trackEvent from '@utils/trackEvent';
+import React, { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
+import { FaRegCheckSquare, FaUsers } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 type PackingListProps = {
   trip?: TripType;

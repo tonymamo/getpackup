@@ -1,8 +1,7 @@
-import React, { FunctionComponent } from 'react';
-import { Link, graphql } from 'gatsby';
-
-import { PageContainer, Box, Heading, Seo, HeroImage } from '@components';
 import { FluidImageType } from '@common/image';
+import { Box, Heading, HeroImage, PageContainer, Seo } from '@components';
+import { Link, graphql } from 'gatsby';
+import React, { FunctionComponent } from 'react';
 
 type TagRouteProps = {
   data: {

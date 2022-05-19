@@ -1,18 +1,17 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { Link, navigate } from 'gatsby';
-import { RouteComponentProps } from '@reach/router';
-import { FaArrowRight, FaPlusCircle, FaRedo } from 'react-icons/fa';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { Row, Column, Heading, Box, Button, Seo, PageContainer, TripCard } from '@components';
-import { RootState } from '@redux/ducks';
-import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
 import { TripMemberStatus, TripType } from '@common/trip';
-import trackEvent from '@utils/trackEvent';
-import { PackingListFilterOptions, TabOptions } from '@utils/enums';
+import { Box, Button, Column, Heading, PageContainer, Row, Seo, TripCard } from '@components';
+import { RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
 import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
 import { doubleSpacer } from '@styles/size';
+import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
+import { PackingListFilterOptions, TabOptions } from '@utils/enums';
+import trackEvent from '@utils/trackEvent';
+import { Link, navigate } from 'gatsby';
+import React, { FunctionComponent, useEffect } from 'react';
+import { FaArrowRight, FaPlusCircle, FaRedo } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 
 type TripsProps = {} & RouteComponentProps;
 
@@ -38,6 +37,29 @@ const Trips: FunctionComponent<TripsProps> = () => {
       storeAs: 'gearCloset',
       doc: auth.uid,
     },
+    // the following is a somewhat hacky way to load more users in, because sometimes the similar
+    // query in TripCard meant some users would be missing sometimes, probably based on order of the
+    // api calls being sent out for each tripcard. It will be fixed by having a proper following/follower
+    // aka friending model where we would just load all of a user's friends once on load
+    {
+      collection: 'users',
+      where: [
+        'uid',
+        'in',
+        [
+          ...new Set([
+            ...[
+              trips
+                ? trips
+                    .map((trip) => (trip.tripMembers ? Object.keys(trip.tripMembers) : ''))
+                    .flat()
+                : [],
+            ].flat(),
+            auth.uid,
+          ]),
+        ].slice(0, 9),
+      ],
+    },
   ]);
 
   const nonArchivedTrips: TripType[] =
@@ -46,13 +68,20 @@ const Trips: FunctionComponent<TripsProps> = () => {
       : [];
 
   const pendingTrips = nonArchivedTrips
-    .filter((trip) => trip.tripMembers[auth.uid]?.status === TripMemberStatus.Pending)
+    .filter(
+      (trip) =>
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status === TripMemberStatus.Pending
+    )
     .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
   const inProgressTrips = nonArchivedTrips
     .filter(
       (trip) =>
-        trip.tripMembers[auth.uid]?.status !== TripMemberStatus.Pending &&
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
         isBeforeToday(trip.startDate.seconds * 1000) &&
         isAfterToday(trip.endDate.seconds * 1000)
     )
@@ -61,7 +90,9 @@ const Trips: FunctionComponent<TripsProps> = () => {
   const upcomingTrips = nonArchivedTrips
     .filter(
       (trip) =>
-        trip.tripMembers[auth.uid]?.status !== TripMemberStatus.Pending &&
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
         isAfterToday(trip.startDate.seconds * 1000)
     )
     .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
@@ -69,7 +100,9 @@ const Trips: FunctionComponent<TripsProps> = () => {
   const pastTrips = nonArchivedTrips
     .filter(
       (trip) =>
-        trip.tripMembers[auth.uid]?.status !== TripMemberStatus.Pending &&
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
         isBeforeToday(trip.endDate.seconds * 1000)
     )
     .sort((a, b) => b.startDate.seconds - a.startDate.seconds);

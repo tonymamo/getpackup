@@ -1,3 +1,4 @@
+import { GearListEnumType } from '@common/gearItem';
 import {
   FaBaby,
   FaBed,
@@ -31,8 +32,6 @@ import {
   FaWarehouse,
   FaWater,
 } from 'react-icons/fa';
-
-import { GearListEnumType } from '@common/gearItem';
 
 export const gearListCategories = [
   { value: 'Activity Gear', label: 'Activity Gear' },

@@ -1,12 +1,11 @@
+import { darkSpinner, lightSpinner } from '@styles/color';
 import React, { FunctionComponent } from 'react';
 import styled, {
-  keyframes,
+  CSSProperties,
   ThemeProvider,
   ThemedStyledProps,
-  CSSProperties,
+  keyframes,
 } from 'styled-components';
-
-import { darkSpinner, lightSpinner } from '@styles/color';
 
 const CirclesKeyframes = (props: ThemedStyledProps<{}, { main: string }>) => keyframes`
   0% {

@@ -1,22 +1,21 @@
-import React, { FunctionComponent, useState } from 'react';
-import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
-import { navigate } from 'gatsby';
-
-import { Input, Button, HorizontalRule, Row, Column, Heading } from '@components';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { requiredField, requiredSelect } from '@utils/validations';
 import { GearItemType } from '@common/gearItem';
+import { Button, Column, Heading, HorizontalRule, Input, Row } from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
 import {
-  gearListTripType,
   gearListAccommodations,
   gearListActivities,
   gearListCampKitchen,
-  gearListOtherConsiderations,
   gearListCategories,
+  gearListOtherConsiderations,
+  gearListTripType,
 } from '@utils/gearListItemEnum';
+import { requiredField, requiredSelect } from '@utils/validations';
+import { Field, Form, Formik } from 'formik';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaCheckCircle, FaChevronCircleRight } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
 
 type GearListItemFormProps = {
   initialValues: GearItemType;

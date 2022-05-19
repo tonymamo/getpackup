@@ -1,39 +1,38 @@
-import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
-import axios from 'axios';
-import ReactTooltip from 'react-tooltip';
-import { FaSignOutAlt, FaUserPlus, FaUserTimes } from 'react-icons/fa';
-
+import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
+import { TripMember, TripMemberStatus, TripType } from '@common/trip';
+import { UserType } from '@common/user';
 import {
   Box,
   HorizontalRule,
-  PageContainer,
-  Seo,
-  UserMediaObject,
-  TripNavigation,
-  Pill,
-  Modal,
-  SendInviteForm,
   IconWrapper,
+  Modal,
+  PageContainer,
+  Pill,
+  SendInviteForm,
+  Seo,
+  TripNavigation,
+  UserMediaObject,
   UserSearch,
 } from '@components';
-import { TripMember, TripMemberStatus, TripType } from '@common/trip';
-import { addAlert } from '@redux/ducks/globalAlerts';
+import { RouteComponentProps } from '@reach/router';
 import { RootState } from '@redux/ducks';
-import { UserType } from '@common/user';
-import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
-import { baseSpacer, halfSpacer } from '@styles/size';
+import { addAlert } from '@redux/ducks/globalAlerts';
 import { brandDanger } from '@styles/color';
-import trackEvent from '@utils/trackEvent';
+import { baseSpacer, halfSpacer } from '@styles/size';
 import acceptedTripMembersOnly from '@utils/getAcceptedTripMembersOnly';
 import isUserTripOwner from '@utils/isUserTripOwner';
 import sendTripInvitationEmail from '@utils/sendTripInvitationEmail';
+import trackEvent from '@utils/trackEvent';
+import axios from 'axios';
+import React, { FunctionComponent, useState } from 'react';
+import { FaSignOutAlt, FaUserPlus, FaUserTimes } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
 
 import LeaveTheTripModal from './LeaveTheTripModal';
-import RemoveUserFromTripModal from './RemoveUserFromTripModal';
 import ReinviteUserToTripModal from './ReinviteUserToTripModal';
+import RemoveUserFromTripModal from './RemoveUserFromTripModal';
 
 type TripPartyProps = {
   activeTrip?: TripType;

@@ -1,37 +1,36 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, navigate } from 'gatsby';
-import { useFirebase } from 'react-redux-firebase';
-import { actionTypes } from 'redux-firestore';
-import { FaSignOutAlt, FaTrash } from 'react-icons/fa';
-import { Formik, Form, Field } from 'formik';
-import styled from 'styled-components';
-
+import { UserType } from '@common/user';
 import {
-  Input,
-  Button,
-  Seo,
-  PageContainer,
-  Row,
-  Column,
   AvatarUpload,
+  Button,
+  Column,
+  EditableInput,
   FlexContainer,
   HeroImageUpload,
-  EditableInput,
+  Input,
   NegativeMarginContainer,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { RootState } from '@redux/ducks';
-import { requiredEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
-import validateUsername from '@utils/validateUsername';
-import { brandDanger, offWhite } from '@styles/color';
-import { baseSpacerUnit, baseSpacer, sextupleSpacer, doubleSpacer } from '@styles/size';
-import trackEvent from '@utils/trackEvent';
 import { AvatarImageWrapper } from '@components/Avatar';
+import { RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { brandDanger, offWhite } from '@styles/color';
+import { baseSpacer, baseSpacerUnit, doubleSpacer, sextupleSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
-import { UserType } from '@common/user';
+import validateUsername from '@utils/validateUsername';
+import { requiredEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
+import { Field, Form, Formik } from 'formik';
+import { Link, navigate } from 'gatsby';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { FunctionComponent, useState } from 'react';
+import { FaSignOutAlt, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import { actionTypes } from 'redux-firestore';
+import styled from 'styled-components';
 
 type ProfileProps = {
   loggedInUser?: UserType;

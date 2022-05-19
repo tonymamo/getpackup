@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { FaCaretRight, FaInfoCircle } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import { navigate } from 'gatsby';
-import { useFirebase } from 'react-redux-firebase';
-import ReactTooltip from 'react-tooltip';
-
-import { Button, Input, Heading, Alert } from '@components';
-import { passwordRulesString, requiredPassword } from '@utils/validations';
+import { Alert, Button, Heading, Input } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import trackEvent from '@utils/trackEvent';
+import { passwordRulesString, requiredPassword } from '@utils/validations';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { navigate } from 'gatsby';
+import React, { useEffect, useState } from 'react';
+import { FaCaretRight, FaInfoCircle } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
 
 type Props = { actionCode: string };
 
@@ -57,23 +56,21 @@ const ResetPassword = ({ actionCode }: Props) => {
     firebase
       .auth()
       .confirmPasswordReset(actionCode, values.password)
-      .then(
-        (): Promise<void> => {
-          if (!email) {
-            trackEvent('Reset Password No Email');
-            return Promise.reject(new Error('Something went wrong, please try again'));
-          }
-
-          // Password reset has been confirmed and new password updated, navigate to home page
-          return firebase
-            .auth()
-            .signInWithEmailAndPassword(email, values.password)
-            .then(() => {
-              trackEvent('Reset Password Confirmed And Signed In', { email });
-              navigate('/app/trips');
-            });
+      .then((): Promise<void> => {
+        if (!email) {
+          trackEvent('Reset Password No Email');
+          return Promise.reject(new Error('Something went wrong, please try again'));
         }
-      )
+
+        // Password reset has been confirmed and new password updated, navigate to home page
+        return firebase
+          .auth()
+          .signInWithEmailAndPassword(email, values.password)
+          .then(() => {
+            trackEvent('Reset Password Confirmed And Signed In', { email });
+            navigate('/app/trips');
+          });
+      })
       .catch((error: Error) => {
         setDisplayError(error.message);
       })

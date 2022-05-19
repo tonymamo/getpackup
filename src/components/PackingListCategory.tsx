@@ -1,14 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
-
-import { FlexContainer, PackingListItem, PackingListAddItem, CollapsibleBox } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
-import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 import { TripType } from '@common/trip';
-import { FirebaseReducer, useFirebase } from 'react-redux-firebase';
-import trackEvent from '@utils/trackEvent';
+import { CollapsibleBox, FlexContainer, PackingListAddItem, PackingListItem } from '@components';
+import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 import pluralize from '@utils/pluralize';
+import trackEvent from '@utils/trackEvent';
+import React, { FunctionComponent } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import { FirebaseReducer, useFirebase } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 type PackingListCategoryProps = {
   categoryName: string;

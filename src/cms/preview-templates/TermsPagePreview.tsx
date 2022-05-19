@@ -1,6 +1,6 @@
+import { Layout, MarkdownContent } from '@components';
 import React from 'react';
 
-import { MarkdownContent, Layout } from '@components';
 import { TermsTemplate } from '../../templates/terms';
 
 const TermsPagePreview = ({ entry }: { entry: any }) => {

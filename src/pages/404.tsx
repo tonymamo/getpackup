@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import { Box, Button, Heading, LoadingPage, PageContainer, Seo } from '@components';
 import { RouteComponentProps } from '@reach/router';
-
-import { PageContainer, Button, Box, Seo, Heading, LoadingPage } from '@components';
 import trackEvent from '@utils/trackEvent';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 
 const NotFoundPage: FunctionComponent<RouteComponentProps> = () => {
   const [showLoading, setShowLoading] = useState(true);

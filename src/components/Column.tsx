@@ -1,7 +1,6 @@
+import { baseSpacer, baseSpacerUnit, breakpoints } from '@styles/size';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
-
-import { baseSpacer, baseSpacerUnit, breakpoints } from '@styles/size';
 
 function createColumnSpan(breakpoint: number) {
   const width = (breakpoint / 12) * 100;

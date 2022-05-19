@@ -1,25 +1,19 @@
-import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
-import { FaCheckCircle, FaChevronLeft } from 'react-icons/fa';
-import { Formik, Form, Field, FormikHelpers } from 'formik';
-
+import { ActivityTypes, GearItemType, GearListEnumType, activityTypesList } from '@common/gearItem';
 import {
-  Seo,
-  Heading,
-  PageContainer,
   Button,
-  Input,
-  Column,
-  Row,
   CollapsibleBox,
+  Column,
   FormErrors,
+  Heading,
+  Input,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
-import { ActivityTypes, activityTypesList, GearItemType, GearListEnumType } from '@common/gearItem';
-import trackEvent from '@utils/trackEvent';
-import { requiredField, requiredSelect } from '@utils/validations';
+import { StyledLabel } from '@components/Input';
+import { RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
 import {
   gearListAccommodations,
   gearListActivities,
@@ -27,10 +21,15 @@ import {
   gearListCategories,
   gearListOtherConsiderations,
 } from '@utils/gearListItemEnum';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { RootState } from '@redux/ducks';
-import { StyledLabel } from '@components/Input';
+import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
+import { requiredField, requiredSelect } from '@utils/validations';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaCheckCircle, FaChevronLeft } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 
 type GearClosetAddItemProps = {} & RouteComponentProps;
 

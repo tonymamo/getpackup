@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
-
+import { GearItemType } from '@common/gearItem';
 import { CollapsibleBox, GearListItem } from '@components';
 import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
-import { GearItemType } from '@common/gearItem';
+import React, { FunctionComponent } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
 
 type GearListCategoryProps = {
   categoryName: string;

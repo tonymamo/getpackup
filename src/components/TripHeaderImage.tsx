@@ -1,10 +1,9 @@
+import { TripType } from '@common/trip';
+import { HeroImage, NegativeMarginContainer, NoiseRings, StaticMapImage } from '@components';
+import { brandSecondary, lightestGray } from '@styles/color';
+import { baseSpacerUnit } from '@styles/size';
 import React from 'react';
 import styled from 'styled-components';
-
-import { TripType } from '@common/trip';
-import { HeroImage, StaticMapImage, NegativeMarginContainer, NoiseRings } from '@components';
-import { baseSpacerUnit } from '@styles/size';
-import { brandSecondary, lightestGray } from '@styles/color';
 
 type TripHeaderImageProps = {
   trip: TripType | undefined;

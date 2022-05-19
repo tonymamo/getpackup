@@ -1,43 +1,42 @@
-import React, { Fragment, FunctionComponent, useState } from 'react';
-import { Link, RouteComponentProps } from '@reach/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
-import { Formik, Form, Field } from 'formik';
-import { startOfDay, endOfDay } from 'date-fns';
-
+import { TripFormType, TripType } from '@common/trip';
+import { UserType } from '@common/user';
 import {
-  PageContainer,
-  Column,
-  Row,
-  Input,
-  EditableInput,
-  DayPickerInput,
-  Seo,
-  StaticMapImage,
-  Pill,
   Alert,
   Box,
-  HorizontalRule,
-  UserMediaObject,
+  Column,
+  DayPickerInput,
+  EditableInput,
   HeroImageUpload,
+  HorizontalRule,
+  Input,
+  PageContainer,
+  Pill,
+  Row,
+  Seo,
+  StaticMapImage,
   TripNavigation,
+  UserMediaObject,
 } from '@components';
-import { TripType, TripFormType } from '@common/trip';
+import { Link, RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import getSeason from '@utils/getSeason';
-import { requiredField } from '@utils/validations';
-import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
+import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import {
   gearListAccommodations,
   gearListActivities,
   gearListCampKitchen,
   gearListOtherConsiderations,
 } from '@utils/gearListItemEnum';
-import { UserType } from '@common/user';
-import trackEvent from '@utils/trackEvent';
-import { RootState } from '@redux/ducks';
+import getSeason from '@utils/getSeason';
 import isUserTripOwner from '@utils/isUserTripOwner';
+import trackEvent from '@utils/trackEvent';
+import { requiredField } from '@utils/validations';
+import { endOfDay, startOfDay } from 'date-fns';
+import { Field, Form, Formik } from 'formik';
+import React, { Fragment, FunctionComponent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 
 type TripDetailsProps = {
   activeTrip?: TripType;

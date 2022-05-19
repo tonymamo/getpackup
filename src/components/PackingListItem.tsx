@@ -1,9 +1,19 @@
+import 'react-swipeable-list/dist/styles.css';
+
+import { PackingListItemType } from '@common/packingListItem';
+import { UserType } from '@common/user';
+import { Button, FlexContainer, IconWrapper, Input, Pill } from '@components';
+import { RootState } from '@redux/ducks';
+import { setPersonalListScrollPosition, setSharedListScrollPosition } from '@redux/ducks/client';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { brandDanger, brandInfo, brandPrimary, lightestGray, offWhite } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
+import { halfSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
+import useWindowSize from '@utils/useWindowSize';
+import { Field, Formik, FormikHelpers } from 'formik';
+import { navigate } from 'gatsby';
 import React, { FunctionComponent, useState } from 'react';
-import { Formik, Field, FormikHelpers } from 'formik';
-import styled from 'styled-components';
-import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
 import {
   FaChevronRight,
   FaExclamationTriangle,
@@ -11,28 +21,19 @@ import {
   FaTrash,
   FaUsers,
 } from 'react-icons/fa';
-import { navigate } from 'gatsby';
-import { RootState } from '@redux/ducks';
+import { useDispatch, useSelector } from 'react-redux';
+import { ExtendedFirebaseInstance, useFirebase } from 'react-redux-firebase';
 import {
-  SwipeableListItem,
-  SwipeAction,
-  TrailingActions,
   LeadingActions,
   Type as ListType,
+  SwipeAction,
+  SwipeableListItem,
+  TrailingActions,
 } from 'react-swipeable-list';
-import 'react-swipeable-list/dist/styles.css';
+import ReactTooltip from 'react-tooltip';
+import styled from 'styled-components';
 
-import { baseBorderStyle } from '@styles/mixins';
-import { halfSpacer } from '@styles/size';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { Input, FlexContainer, Pill, IconWrapper, Button } from '@components';
-import { brandDanger, brandInfo, brandPrimary, lightestGray, offWhite } from '@styles/color';
-import { PackingListItemType } from '@common/packingListItem';
-import useWindowSize from '@utils/useWindowSize';
-import trackEvent from '@utils/trackEvent';
-import { UserType } from '@common/user';
 import Avatar, { StackedAvatars } from './Avatar';
-import { setPersonalListScrollPosition, setSharedListScrollPosition } from '@redux/ducks/client';
 
 type PackingListItemProps = {
   tripId: string;

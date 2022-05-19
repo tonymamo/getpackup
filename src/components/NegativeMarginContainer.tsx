@@ -1,7 +1,6 @@
+import { baseSpacer } from '@styles/size';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
-
-import { baseSpacer } from '@styles/size';
 
 type NegativeMarginContainerProps = {
   /** pass the number without px value or minus sign */

@@ -166,8 +166,10 @@
     "eslint-plugin-react": "^7.19.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24",
     "identity-obj-proxy": "^3.0.0",
+    "import-sort-style-module": "^6.0.0",
     "jest": "^25.1.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.3.2",
+    "prettier-plugin-import-sort": "^0.0.7",
     "react-docgen-typescript-loader": "^3.7.1",
     "react-test-renderer": "^16.13.0",
     "start-server-and-test": "^1.10.11",
@@ -198,5 +200,11 @@
   },
   "bugs": {
     "url": "https://github.com/tonymamo/getpackup/issues"
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "parser": "typescript",
+      "style": "module"
+    }
   }
 }

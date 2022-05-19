@@ -1,6 +1,5 @@
+import { Box, Heading, PageContainer, Seo } from '@components';
 import React, { FunctionComponent } from 'react';
-
-import { Seo, Heading, PageContainer, Box } from '@components';
 
 type ShoppingListProps = {};
 

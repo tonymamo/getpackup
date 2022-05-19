@@ -1,12 +1,11 @@
-import { navigate } from 'gatsby';
-import React, { useEffect } from 'react';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
-
+import { LoadingSpinner } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import { baseSpacer } from '@styles/size';
-import { LoadingSpinner } from '@components';
 import trackEvent from '@utils/trackEvent';
+import { navigate } from 'gatsby';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
 
 type VerifyEmailProps = { actionCode: string };
 

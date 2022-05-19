@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
 import { Button } from '@components';
-import styled from 'styled-components';
-
 import { baseSpacer } from '@styles/size';
 import { PackingListFilterOptions } from '@utils/enums';
+import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
 type PackingListFilterProps = {
   disabled: boolean;

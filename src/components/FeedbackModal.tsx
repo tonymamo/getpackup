@@ -1,19 +1,18 @@
+import { Button, Column, Heading, Input, Modal, Row } from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { brandTertiary, brandTertiaryHover, white } from '@styles/color';
+import { zIndexFeedbackButton } from '@styles/layers';
+import { breakpoints, tripleSpacer } from '@styles/size';
+import postFormUrlEncoded from '@utils/postFormUrlEncoded';
+import { requiredField } from '@utils/validations';
+import { Field, Form, Formik } from 'formik';
+import { Link } from 'gatsby';
 import React, { FunctionComponent, useState } from 'react';
 import { FaBullhorn, FaCheck, FaTimes } from 'react-icons/fa';
-import { Formik, Form, Field } from 'formik';
-import ReactTooltip from 'react-tooltip';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { FirebaseReducer } from 'react-redux-firebase';
-import { Link } from 'gatsby';
-
-import { Input, Row, Button, Column, Modal, Heading } from '@components';
-import { brandTertiary, brandTertiaryHover, white } from '@styles/color';
-import { requiredField } from '@utils/validations';
-import postFormUrlEncoded from '@utils/postFormUrlEncoded';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { zIndexFeedbackButton } from '@styles/layers';
-import { tripleSpacer, breakpoints } from '@styles/size';
+import ReactTooltip from 'react-tooltip';
+import styled from 'styled-components';
 
 type FeedbackModalProps = {
   auth: FirebaseReducer.AuthState;

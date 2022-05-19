@@ -1,23 +1,22 @@
-import React, { FunctionComponent } from 'react';
-import styled, { CSSProperties } from 'styled-components';
-import { Md5 } from 'ts-md5/dist/md5';
-import ReactTooltip from 'react-tooltip';
-
+import { FluidImageType } from '@common/image';
+import { PreviewCompatibleImage } from '@components';
+import { lightestGray, white } from '@styles/color';
+import { zIndexAvatarImageAfter } from '@styles/layers';
 import {
   baseSpacer,
+  borderRadiusCircle,
   doubleSpacer,
   halfSpacer,
+  octupleSpacer,
   quadrupleSpacer,
   sextupleSpacer,
-  borderRadiusCircle,
-  octupleSpacer,
   tripleSpacer,
 } from '@styles/size';
-import { lightestGray, white } from '@styles/color';
-import { PreviewCompatibleImage } from '@components';
-import { zIndexAvatarImageAfter } from '@styles/layers';
 import { fontSizeSmall } from '@styles/typography';
-import { FluidImageType } from '@common/image';
+import React, { FunctionComponent } from 'react';
+import ReactTooltip from 'react-tooltip';
+import styled, { CSSProperties } from 'styled-components';
+import { Md5 } from 'ts-md5/dist/md5';
 
 export type AvatarProps = {
   src?: FluidImageType | string;
@@ -60,9 +59,7 @@ export const AvatarImageWrapper = styled.div`
   ${(props) => props.bottomMargin && `margin-bottom: ${baseSpacer};`}
   ${(props) =>
     props.rightMargin &&
-    `margin-right: ${
-      props.size === 'md' || props.size === 'lg' ? baseSpacer : halfSpacer
-    };`}
+    `margin-right: ${props.size === 'md' || props.size === 'lg' ? baseSpacer : halfSpacer};`}
 
   /* If image fails to load, provide some fallback styling to make it look better */
   & img {

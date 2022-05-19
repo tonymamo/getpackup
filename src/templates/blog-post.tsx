@@ -1,27 +1,26 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { kebabCase } from 'lodash';
-import { graphql } from 'gatsby';
-import { DiscussionEmbed } from 'disqus-react';
-
+import { FixedImageType, FluidImageType } from '@common/image';
 import {
-  HeroImage,
-  PageContainer,
   Box,
-  Row,
-  Column,
-  Heading,
-  HorizontalRule,
-  FlexContainer,
-  Pill,
-  Seo,
-  RelatedBlogPost,
-  Share,
   ClientOnly,
+  Column,
   Content,
+  FlexContainer,
   HTMLContent,
+  Heading,
+  HeroImage,
+  HorizontalRule,
+  PageContainer,
+  Pill,
+  RelatedBlogPost,
+  Row,
+  Seo,
+  Share,
 } from '@components';
 import useWindowSize from '@utils/useWindowSize';
-import { FixedImageType, FluidImageType } from '@common/image';
+import { DiscussionEmbed } from 'disqus-react';
+import { graphql } from 'gatsby';
+import { kebabCase } from 'lodash';
+import React, { FunctionComponent, useEffect } from 'react';
 
 type RelatedPostType = {
   fields: {

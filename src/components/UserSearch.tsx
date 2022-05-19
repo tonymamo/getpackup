@@ -1,37 +1,38 @@
-import React, { Fragment, FunctionComponent, useState } from 'react';
-import styled from 'styled-components';
-import {
-  InstantSearch,
-  Configure,
-  PoweredBy,
-  connectInfiniteHits,
-  connectStateResults,
-  connectCurrentRefinements,
-  connectSearchBox,
-} from 'react-instantsearch-dom';
 import 'instantsearch.css/themes/satellite.css';
-import useInfiniteScroll from 'react-infinite-scroll-hook';
-import Skeleton from 'react-loading-skeleton';
-import { useSelector } from 'react-redux';
 
-import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
-import { baseBorderStyle, z1Shadow } from '@styles/mixins';
-import { zIndexDropdown } from '@styles/layers';
-import { white } from '@styles/color';
+import { TripType } from '@common/trip';
 import { UserType } from '@common/user';
-import trackEvent from '@utils/trackEvent';
 import {
   Alert,
-  UserMediaObject,
   Button,
-  HorizontalRule,
   FlexContainer,
+  HorizontalRule,
   Modal,
   SendInviteForm,
+  UserMediaObject,
 } from '@components';
-import alogliaSearch from '@utils/algoliaSearch';
 import { RootState } from '@redux/ducks';
-import { TripType } from '@common/trip';
+import { white } from '@styles/color';
+import { zIndexDropdown } from '@styles/layers';
+import { baseBorderStyle, z1Shadow } from '@styles/mixins';
+import { baseSpacer, doubleSpacer, halfSpacer } from '@styles/size';
+import alogliaSearch from '@utils/algoliaSearch';
+import trackEvent from '@utils/trackEvent';
+import React, { Fragment, FunctionComponent, useState } from 'react';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
+import {
+  Configure,
+  InstantSearch,
+  PoweredBy,
+  connectCurrentRefinements,
+  connectInfiniteHits,
+  connectSearchBox,
+  connectStateResults,
+} from 'react-instantsearch-dom';
+import Skeleton from 'react-loading-skeleton';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
 import { sharedStyles } from './Input';
 
 const SearchWrapper = styled.div`

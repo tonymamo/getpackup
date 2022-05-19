@@ -1,5 +1,6 @@
 import { PackingListItemType } from '@common/packingListItem';
 import groupBy from 'lodash/groupBy';
+
 import { TabOptions } from './enums';
 
 const groupPackingList = (list: PackingListItemType[], uid: string, typeOfList: TabOptions) => {

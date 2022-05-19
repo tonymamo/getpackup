@@ -1,26 +1,25 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { RouteComponentProps, Router } from '@reach/router';
-import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { useSelector, useDispatch } from 'react-redux';
-import { actionTypes } from 'redux-firestore';
-
-import { Seo, PageContainer, NoTripFound } from '@components';
-import { RootState } from '@redux/ducks';
-import { TripType } from '@common/trip';
-import PackingList from '@views/PackingList';
-import TripDetails from '@views/TripDetails';
-import TripParty from '@views/TripParty';
-import EditPackingListItem from '@views/EditPackingListItem';
-import { UserType } from '@common/user';
-import trackEvent from '@utils/trackEvent';
 import { PackingListItemType } from '@common/packingListItem';
-import { PackingListFilterOptions, TabOptions } from '@utils/enums';
+import { TripType } from '@common/trip';
+import { UserType } from '@common/user';
+import { NoTripFound, PageContainer, Seo } from '@components';
+import { RouteComponentProps, Router } from '@reach/router';
+import { RootState } from '@redux/ducks';
 import {
   setActivePackingListFilter,
   setActivePackingListTab,
   setPersonalListScrollPosition,
   setSharedListScrollPosition,
 } from '@redux/ducks/client';
+import { PackingListFilterOptions, TabOptions } from '@utils/enums';
+import trackEvent from '@utils/trackEvent';
+import EditPackingListItem from '@views/EditPackingListItem';
+import PackingList from '@views/PackingList';
+import TripDetails from '@views/TripDetails';
+import TripParty from '@views/TripParty';
+import React, { FunctionComponent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
+import { actionTypes } from 'redux-firestore';
 
 type TripByIdProps = {
   id?: string;
@@ -88,7 +87,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         type: actionTypes.CLEAR_DATA,
         preserve: {
           data: ['loggedInUser', 'trips', 'users'],
-          ordered: ['loggedInUser', 'trips'],
+          ordered: ['loggedInUser', 'trips', 'users'],
         },
       });
     };

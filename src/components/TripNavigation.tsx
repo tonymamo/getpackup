@@ -1,14 +1,13 @@
-import React, { FunctionComponent, useState } from 'react';
-import { FaInfoCircle, FaRegCheckSquare, FaSignOutAlt, FaTrash, FaUsers } from 'react-icons/fa';
-import { Link } from 'gatsby';
-import { useLocation } from '@reach/router';
-
-import { FlexContainer, DropdownMenu, Breadcrumbs } from '@components';
 import { TripType } from '@common/trip';
-import TripDeleteModal from '@views/TripDeleteModal';
+import { Breadcrumbs, DropdownMenu, FlexContainer } from '@components';
+import { useLocation } from '@reach/router';
 import { baseSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import LeaveTheTripModal from '@views/LeaveTheTripModal';
+import TripDeleteModal from '@views/TripDeleteModal';
+import { Link } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaInfoCircle, FaRegCheckSquare, FaSignOutAlt, FaTrash, FaUsers } from 'react-icons/fa';
 
 type TripNavigationProps = {
   activeTrip: TripType;

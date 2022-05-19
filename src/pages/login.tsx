@@ -1,28 +1,27 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Formik, Field, Form } from 'formik';
-import { navigate, Link } from 'gatsby';
-import { useFirebase } from 'react-redux-firebase';
-import { FaArrowRight } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-
 import {
-  Row,
-  Column,
-  PageContainer,
   Box,
   Button,
-  Input,
-  HorizontalRule,
-  Seo,
-  Heading,
-  FlexContainer,
+  Column,
   FirebaseAuthWrapper,
+  FlexContainer,
+  Heading,
+  HorizontalRule,
+  Input,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
-import { requiredField } from '@utils/validations';
-import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
 import { removeAttemptedPrivatePage } from '@redux/ducks/client';
+import { addAlert } from '@redux/ducks/globalAlerts';
 import trackEvent from '@utils/trackEvent';
+import { requiredField } from '@utils/validations';
+import { Field, Form, Formik } from 'formik';
+import { Link, navigate } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaArrowRight } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
 
 type LoginProps = {};
 

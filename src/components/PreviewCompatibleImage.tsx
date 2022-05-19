@@ -1,8 +1,7 @@
+import { FixedImageType, FluidImageType } from '@common/image';
+import Img from 'gatsby-image';
 /* eslint-disable react/require-default-props */
 import React from 'react';
-import Img from 'gatsby-image';
-
-import { FluidImageType, FixedImageType } from '@common/image';
 
 const PreviewCompatibleImage = ({
   imageInfo,

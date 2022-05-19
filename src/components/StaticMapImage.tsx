@@ -1,12 +1,12 @@
-/* eslint-disable import/no-unresolved */
-import React, { FunctionComponent } from 'react';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { StaticMap, Marker } from 'react-map-gl';
-import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { white } from '@styles/color';
 import { doubleSpacer } from '@styles/size';
+import mapboxgl from 'mapbox-gl';
+/* eslint-disable import/no-unresolved */
+import React, { FunctionComponent } from 'react';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { Marker, StaticMap } from 'react-map-gl';
 
 // Mapbox failing on prod builds, fixed by adding `worker-loader` package and the following line
 // https://github.com/visgl/react-map-gl/issues/1266

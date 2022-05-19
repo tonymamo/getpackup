@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheetManager } from 'styled-components';
 
 const StyleInjector = ({ children }: { children: any }) => {

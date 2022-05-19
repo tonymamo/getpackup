@@ -1,17 +1,16 @@
-/* eslint-disable no-console */
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import differenceInDays from 'date-fns/differenceInDays';
-import styled from 'styled-components';
-import { FaTimes } from 'react-icons/fa';
-import { useLocation } from '@reach/router';
-
 import { Button, FlexContainer } from '@components';
 import logo from '@images/maskable_icon.png';
-import { doubleSpacer, halfSpacer } from '@styles/size';
+import { useLocation } from '@reach/router';
+import { RootState } from '@redux/ducks';
 import { white } from '@styles/color';
 import { zIndexModal } from '@styles/layers';
+import { doubleSpacer, halfSpacer } from '@styles/size';
+import differenceInDays from 'date-fns/differenceInDays';
+/* eslint-disable no-console */
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { RootState } from '@redux/ducks';
+import styled from 'styled-components';
 
 const AddToHomeScreenWrapper = styled.div`
   position: fixed;

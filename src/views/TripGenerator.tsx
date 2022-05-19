@@ -1,47 +1,46 @@
-import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { Formik, Form, Field, FormikHelpers } from 'formik';
-import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useSelector, useDispatch } from 'react-redux';
-import { navigate } from 'gatsby';
-import { uniq, uniqBy } from 'lodash';
-import { FaCheckCircle, FaPlusSquare } from 'react-icons/fa';
-import Skeleton from 'react-loading-skeleton';
-import { IconType } from 'react-icons';
-
+import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
+import { TripType } from '@common/trip';
+import { UserType } from '@common/user';
 import {
-  Heading,
-  PageContainer,
-  Seo,
-  Button,
-  Row,
-  Column,
-  Modal,
-  IconCheckbox,
-  FlexContainer,
   Alert,
   Box,
+  Button,
+  Column,
+  FlexContainer,
   FormErrors,
+  Heading,
+  IconCheckbox,
   LoadingSpinner,
+  Modal,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { RootState } from '@redux/ducks';
-import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
-import {
-  gearListActivities,
-  gearListAccommodations,
-  gearListOtherConsiderations,
-  gearListKeys,
-  gearListCampKitchen,
-  allGearListItems,
-} from '@utils/gearListItemEnum';
-import { TripType } from '@common/trip';
+import { IconCheckboxLabel, IconWrapperLabel } from '@components/IconCheckbox';
 import usePersonalGear from '@hooks/usePersonalGear';
-import trackEvent from '@utils/trackEvent';
-import { IconWrapperLabel, IconCheckboxLabel } from '@components/IconCheckbox';
-import { baseSpacer, doubleSpacer, sextupleSpacer, tripleSpacer } from '@styles/size';
+import { RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
 import { lightGray } from '@styles/color';
-import { UserType } from '@common/user';
+import { baseSpacer, doubleSpacer, sextupleSpacer, tripleSpacer } from '@styles/size';
+import {
+  allGearListItems,
+  gearListAccommodations,
+  gearListActivities,
+  gearListCampKitchen,
+  gearListKeys,
+  gearListOtherConsiderations,
+} from '@utils/gearListItemEnum';
+import trackEvent from '@utils/trackEvent';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { navigate } from 'gatsby';
+import { uniq, uniqBy } from 'lodash';
+import React, { FunctionComponent, useState } from 'react';
+import { IconType } from 'react-icons';
+import { FaCheckCircle, FaPlusSquare } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 
 type TripGeneratorProps = {
   id?: string; // reach router param
@@ -150,23 +149,14 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
     const uniqueTags = uniq([...(activeTrip?.tags || []), ...tagMatches]);
 
     promises.push(
-      firebase
-        .firestore()
-        .collection('trips')
-        .doc(props.id)
-        .update({
-          tags: uniqueTags,
-        })
+      firebase.firestore().collection('trips').doc(props.id).update({
+        tags: uniqueTags,
+      })
     );
 
     gearList.forEach((item) => {
       promises.push(
-        firebase
-          .firestore()
-          .collection('trips')
-          .doc(props.id)
-          .collection('packing-list')
-          .add(item)
+        firebase.firestore().collection('trips').doc(props.id).collection('packing-list').add(item)
       );
     });
 

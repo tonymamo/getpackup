@@ -2,6 +2,7 @@ import { addAlert } from '@redux/ducks/globalAlerts';
 import trackEvent from '@utils/trackEvent';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import Button from './Button';
 import Heading from './Heading';
 
@@ -9,9 +10,9 @@ const SendInviteForm = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const title = 'Create an account on Packup so we can collaborate on trips!';
-  const text = `Hey, sign up for an account on Packup so we can coordinate trip details together 😎 ${process
-    .env.GATSBY_SITE_URL ||
-    'https://getpackup.com'} Let me know when you have signed up so I can invite you to our trip!`;
+  const text = `Hey, sign up for an account on Packup so we can coordinate trip details together 😎 ${
+    process.env.GATSBY_SITE_URL || 'https://getpackup.com'
+  } Let me know when you have signed up so I can invite you to our trip!`;
 
   const sendInvite = async () => {
     try {

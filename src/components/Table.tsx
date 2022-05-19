@@ -1,9 +1,35 @@
+import { ActivityTypes, GearListEnumType } from '@common/gearItem';
+import { Column, FlexContainer, IconWrapper, Row } from '@components';
+import Button, { ButtonProps } from '@components/Button';
+import { InputWrapper, StyledInput, StyledLabel, multiSelectStyles } from '@components/Input';
+import { WindowLocation, useLocation } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { lightestGray, textColorLight, white } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
+import {
+  baseAndAHalfSpacer,
+  baseSpacer,
+  doubleSpacer,
+  halfSpacer,
+  quarterSpacer,
+} from '@styles/size';
+import { fontSizeSmall } from '@styles/typography';
+import { createOptionsFromGearListArray } from '@utils/createOptionsFromArray';
+import {
+  allGearListItems,
+  gearListAccommodations,
+  gearListActivities,
+  gearListCampKitchen,
+  gearListOtherConsiderations,
+} from '@utils/gearListItemEnum';
+import { getQueryStringParams, mergeQueryParams } from '@utils/queryStringUtils';
+import useWindowSize from '@utils/useWindowSize';
+import { navigate } from 'gatsby';
+import uniqBy from 'lodash/uniqBy';
+import { matchSorter } from 'match-sorter';
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-nested-ternary */
-import React, { FunctionComponent, useState, useMemo } from 'react';
-import { useTable, usePagination, useSortBy, useGlobalFilter, useAsyncDebounce } from 'react-table';
-import { matchSorter } from 'match-sorter';
-import styled from 'styled-components';
+import React, { FunctionComponent, useMemo, useState } from 'react';
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -15,38 +41,11 @@ import {
   FaSortAlphaUp,
   FaTrash,
 } from 'react-icons/fa';
-import { navigate } from 'gatsby';
-import { useLocation, WindowLocation } from '@reach/router';
 import Skeleton from 'react-loading-skeleton';
-import Select from 'react-select';
-import uniqBy from 'lodash/uniqBy';
-
-import {
-  baseSpacer,
-  baseAndAHalfSpacer,
-  halfSpacer,
-  quarterSpacer,
-  doubleSpacer,
-} from '@styles/size';
-import { baseBorderStyle } from '@styles/mixins';
-import { lightestGray, textColorLight, white } from '@styles/color';
-import { fontSizeSmall } from '@styles/typography';
-import { Column, FlexContainer, IconWrapper, Row } from '@components';
-import { getQueryStringParams, mergeQueryParams } from '@utils/queryStringUtils';
-import {
-  allGearListItems,
-  gearListAccommodations,
-  gearListActivities,
-  gearListCampKitchen,
-  gearListOtherConsiderations,
-} from '@utils/gearListItemEnum';
-import { createOptionsFromGearListArray } from '@utils/createOptionsFromArray';
-import Button, { ButtonProps } from '@components/Button';
-import { StyledInput, StyledLabel, InputWrapper, multiSelectStyles } from '@components/Input';
 import { useSelector } from 'react-redux';
-import { RootState } from '@redux/ducks';
-import { ActivityTypes, GearListEnumType } from '@common/gearItem';
-import useWindowSize from '@utils/useWindowSize';
+import Select from 'react-select';
+import { useAsyncDebounce, useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table';
+import styled from 'styled-components';
 
 type TableActionType = {
   to?: string;

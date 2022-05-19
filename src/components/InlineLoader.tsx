@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { Heading } from '@components';
-import { baseSpacer, quadrupleSpacer } from '@styles/size';
 import { brandPrimary } from '@styles/color';
+import { baseSpacer, quadrupleSpacer } from '@styles/size';
+import React, { FunctionComponent } from 'react';
+import Loader from 'react-loader-spinner';
 
 type InlineLoaderProps = {};
 

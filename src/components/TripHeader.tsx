@@ -1,21 +1,15 @@
-import React, { FunctionComponent, useState } from 'react';
-import { FaRegCalendar, FaMapMarkerAlt, FaTrash, FaSignOutAlt } from 'react-icons/fa';
-import { Link } from 'gatsby';
-import { useSelector } from 'react-redux';
-import Skeleton from 'react-loading-skeleton';
-import TextTruncate from 'react-text-truncate';
-
 import { TripType } from '@common/trip';
 import {
-  Heading,
-  Pill,
-  HorizontalScroller,
-  FlexContainer,
-  DropdownMenu,
   Button,
+  DropdownMenu,
+  FlexContainer,
+  Heading,
+  HorizontalScroller,
+  Pill,
   TripHeaderImage,
   TripMemberAvatars,
 } from '@components';
+import { RootState } from '@redux/ducks';
 import {
   baseAndAHalfSpacer,
   baseSpacer,
@@ -24,10 +18,15 @@ import {
   halfSpacer,
 } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
-import { RootState } from '@redux/ducks';
-import TripDeleteModal from '@views/TripDeleteModal';
-import LeaveTheTripModal from '@views/LeaveTheTripModal';
 import trackEvent from '@utils/trackEvent';
+import LeaveTheTripModal from '@views/LeaveTheTripModal';
+import TripDeleteModal from '@views/TripDeleteModal';
+import { Link } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaMapMarkerAlt, FaRegCalendar, FaSignOutAlt, FaTrash } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
+import { useSelector } from 'react-redux';
+import TextTruncate from 'react-text-truncate';
 
 type TripHeaderProps = {
   trip?: TripType;

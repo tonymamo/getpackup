@@ -1,4 +1,4 @@
-import { ClientStoreType, ClientActions } from '@redux/ducks/client.d';
+import { ClientActions, ClientStoreType } from '@redux/ducks/client.d';
 import { PackingListFilterOptions, TabOptions } from '@utils/enums';
 
 export const ADD_ATTEMPTED_PRIVATE_PAGE = 'ADD_ATTEMPTED_PRIVATE_PAGE';

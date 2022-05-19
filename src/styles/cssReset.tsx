@@ -1,19 +1,18 @@
-import { createGlobalStyle } from 'styled-components';
-
+import topo from '@images/topo.png';
 import {
   brandPrimary,
   brandPrimaryHover,
-  textColor,
-  headingsColor,
-  lightGray,
-  white,
   brandSecondary,
   gray,
+  headingsColor,
+  lightGray,
+  textColor,
+  white,
 } from '@styles/color';
-import topo from '@images/topo.png';
-import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
-import { headingsFontFamily, fontFamilySansSerif } from '@styles/typography';
 import { baseBorderStyle } from '@styles/mixins';
+import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
+import { fontFamilySansSerif, headingsFontFamily } from '@styles/typography';
+import { createGlobalStyle } from 'styled-components';
 
 /* eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }] */
 const CssReset = createGlobalStyle`

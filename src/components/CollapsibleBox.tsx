@@ -1,9 +1,8 @@
+import { Box, FlexContainer, Heading, IconWrapper } from '@components';
 import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useMeasure } from 'react-use';
 import styled from 'styled-components';
-
-import { Box, FlexContainer, Heading, IconWrapper } from '@components';
 
 type CollapsibleBoxProps = {
   title: string;

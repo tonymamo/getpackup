@@ -1,37 +1,36 @@
-import { RouteComponentProps } from '@reach/router';
-import React, { FunctionComponent, useState } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
-import { navigate } from 'gatsby';
-import { startOfDay, endOfDay } from 'date-fns';
-
+import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
+import { TripFormType, TripMemberStatus } from '@common/trip';
+import { UserType } from '@common/user';
 import {
-  Input,
+  Box,
   Button,
-  HorizontalRule,
-  Seo,
-  FormErrors,
   DayPickerInput,
   FlexContainer,
+  FormErrors,
   Heading,
+  HorizontalRule,
+  Input,
   PageContainer,
-  UserSearch,
-  Box,
+  Seo,
   UserMediaObject,
+  UserSearch,
 } from '@components';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { requiredField } from '@utils/validations';
-import { TripFormType, TripMemberStatus } from '@common/trip';
-import getSeason from '@utils/getSeason';
-import trackEvent from '@utils/trackEvent';
-import { RootState } from '@redux/ducks';
-import axios from 'axios';
-import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
 import { StyledLabel } from '@components/Input';
-import { UserType } from '@common/user';
+import { RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import getSeason from '@utils/getSeason';
 import sendTripInvitationEmail from '@utils/sendTripInvitationEmail';
+import trackEvent from '@utils/trackEvent';
+import { requiredField } from '@utils/validations';
+import axios from 'axios';
+import { endOfDay, startOfDay } from 'date-fns';
+import { Field, Form, Formik } from 'formik';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 
 type MembersToInviteType = { uid: string; email: string }[];
 

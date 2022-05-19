@@ -1,16 +1,17 @@
+import '@styles/bootstrapCarousel.css';
+
+import { ErrorBoundary, GlobalAlerts, Navbar } from '@components';
+import loadable from '@loadable/component';
+import { black, brandPrimary, brandSecondary, white } from '@styles/color';
+import CssReset from '@styles/cssReset';
+import { quadrupleSpacer } from '@styles/size';
+import { Link } from 'gatsby';
 import React, { FunctionComponent, useEffect } from 'react';
-import styled from 'styled-components';
+import CookieConsent from 'react-cookie-consent';
 import { IconContext } from 'react-icons';
 import Modal from 'react-modal';
-import { Link } from 'gatsby';
-import CookieConsent from 'react-cookie-consent';
-import loadable from '@loadable/component';
+import styled from 'styled-components';
 
-import '@styles/bootstrapCarousel.css';
-import { ErrorBoundary, Navbar, GlobalAlerts } from '@components';
-import { quadrupleSpacer } from '@styles/size';
-import { brandPrimary, black, white, brandSecondary } from '@styles/color';
-import CssReset from '@styles/cssReset';
 import UpdateConfirmModal from './UpdateConfirmModal';
 
 const Footer = loadable(() => import('@components/Footer'), {

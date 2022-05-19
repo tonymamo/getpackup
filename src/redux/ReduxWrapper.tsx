@@ -1,20 +1,20 @@
-import React, { FunctionComponent } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import {
-  FirestoreReducer,
-  FirebaseReducer,
-  ReactReduxFirebaseProvider,
-} from 'react-redux-firebase';
-import { createFirestoreInstance } from 'redux-firestore';
-import firebase from 'firebase/app';
+import configureStore from '@redux/configureStore';
+import { initialState as clientInitialState } from '@redux/ducks/client';
+import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
 import {
   showWorkerUpdateModal,
   initialState as workerUpdateInitialState,
 } from '@redux/ducks/workerUpdateReady';
-import configureStore from '@redux/configureStore';
-import { initialState as clientInitialState } from '@redux/ducks/client';
-import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
+import firebase from 'firebase/app';
+import React, { FunctionComponent } from 'react';
+import { Provider } from 'react-redux';
+import {
+  FirebaseReducer,
+  FirestoreReducer,
+  ReactReduxFirebaseProvider,
+} from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+import { PersistGate } from 'redux-persist/integration/react';
 
 export const initialState = process.env.BROWSER // eslint-disable-next-line no-underscore-dangle
   ? window.__INITIAL_STATE__

@@ -1,9 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { Link } from 'gatsby';
-
-import { PreviewCompatibleImage } from '@components';
 import { FixedImageType } from '@common/image';
+import { PreviewCompatibleImage } from '@components';
 import trackEvent from '@utils/trackEvent';
+import { Link } from 'gatsby';
+import React, { FunctionComponent } from 'react';
 
 type RelatedBlogPostProps = {
   type: 'next' | 'prev';

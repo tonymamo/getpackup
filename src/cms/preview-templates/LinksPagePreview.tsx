@@ -1,6 +1,6 @@
+import { Layout } from '@components';
 import React from 'react';
 
-import { Layout } from '@components';
 import { LinksPageTemplate } from '../../templates/links-page';
 
 const LinksPagePreview = ({ entry }: { entry: any }) => {

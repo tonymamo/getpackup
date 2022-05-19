@@ -1,14 +1,13 @@
 import CMS from 'netlify-cms-app';
 import cloudinary from 'netlify-cms-media-library-cloudinary';
 
-import IndexPagePreview from './preview-templates/IndexPagePreview';
 import AboutPagePreview from './preview-templates/AboutPagePreview';
 import BlogPostPreview from './preview-templates/BlogPostPreview';
 import ContactPagePreview from './preview-templates/ContactPagePreview';
+import IndexPagePreview from './preview-templates/IndexPagePreview';
 import LinksPagePreview from './preview-templates/LinksPagePreview';
 import PrivacyPagePreview from './preview-templates/PrivacyPagePreview';
 import TermsPagePreview from './preview-templates/TermsPagePreview';
-
 import withStyledComponentsRendered from './styleWrapper';
 
 CMS.registerPreviewTemplate('index', withStyledComponentsRendered(IndexPagePreview));

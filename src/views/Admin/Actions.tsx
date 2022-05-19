@@ -1,11 +1,10 @@
+import { TripType } from '@common/trip';
+import { Button, Heading, PageContainer, Seo } from '@components';
+import { RootState } from '@redux/ducks';
+import axios from 'axios';
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import axios from 'axios';
-
-import { Seo, Button, Heading, PageContainer } from '@components';
-import { RootState } from '@redux/ducks';
-import { TripType } from '@common/trip';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 
 type ActionsProps = {};
 

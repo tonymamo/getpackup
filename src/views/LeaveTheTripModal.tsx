@@ -1,17 +1,16 @@
+import { PackingListItemType } from '@common/packingListItem';
+import { TripMemberStatus, TripType } from '@common/trip';
+import { Button, Column, Heading, Modal, Row } from '@components';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { brandInfo } from '@styles/color';
+import pluralize from '@utils/pluralize';
+import trackEvent from '@utils/trackEvent';
+import { navigate } from 'gatsby';
 import React, { FunctionComponent } from 'react';
+import { FaSignOutAlt, FaUsers } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
-import { FaSignOutAlt, FaUsers } from 'react-icons/fa';
-
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { Button, Column, Heading, Modal, Row } from '@components';
-import trackEvent from '@utils/trackEvent';
-import { RootState } from '@redux/ducks';
-import { TripMemberStatus, TripType } from '@common/trip';
-import { PackingListItemType } from '@common/packingListItem';
-import pluralize from '@utils/pluralize';
-import { brandInfo } from '@styles/color';
 
 type LeaveTheTripModalProps = {
   modalIsOpen: boolean;

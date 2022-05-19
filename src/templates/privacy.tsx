@@ -1,18 +1,17 @@
-import React, { FunctionComponent } from 'react';
-import { graphql } from 'gatsby';
-
+import { FluidImageType } from '@common/image';
 import {
   Box,
-  PageContainer,
-  Seo,
-  HeroImage,
-  Heading,
+  Column,
   Content,
   HTMLContent,
+  Heading,
+  HeroImage,
+  PageContainer,
   Row,
-  Column,
+  Seo,
 } from '@components';
-import { FluidImageType } from '@common/image';
+import { graphql } from 'gatsby';
+import React, { FunctionComponent } from 'react';
 
 type PrivacyProps = {
   hideFromCms?: boolean;

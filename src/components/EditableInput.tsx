@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useState } from 'react';
-import { useFormikContext } from 'formik';
-
-import { FlexContainer, Button, FormErrors, HorizontalRule } from '@components';
+import { Button, FlexContainer, FormErrors, HorizontalRule } from '@components';
 import trackEvent from '@utils/trackEvent';
+import { useFormikContext } from 'formik';
+import React, { FunctionComponent, useState } from 'react';
 
 type EditableComponentProps = {
   label: string;

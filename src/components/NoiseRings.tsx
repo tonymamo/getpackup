@@ -1,9 +1,9 @@
+import { linspace, mapRange } from 'canvas-sketch-util/math';
+import { pathsToSVGPaths } from 'canvas-sketch-util/penplot';
+import Random from 'canvas-sketch-util/random';
+import { isoBands } from 'marchingsquares';
 /* eslint-disable no-plusplus */
 import React, { FunctionComponent } from 'react';
-import Random from 'canvas-sketch-util/random';
-import { pathsToSVGPaths } from 'canvas-sketch-util/penplot';
-import { mapRange, linspace } from 'canvas-sketch-util/math';
-import { isoBands } from 'marchingsquares';
 
 type NoiseRingsProps = {
   width: number;

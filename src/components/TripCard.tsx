@@ -1,30 +1,29 @@
-import React, { FunctionComponent, useMemo } from 'react';
-import { FaRegCalendar, FaMapMarkerAlt, FaCheck, FaTimes } from 'react-icons/fa';
-import { Link, navigate } from 'gatsby';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
-import { useFirestoreConnect, useFirebase } from 'react-redux-firebase';
-
 import { TripMemberStatus, TripType } from '@common/trip';
 import {
-  Heading,
-  FlexContainer,
-  Row,
-  Column,
   Button,
-  TripHeaderImage,
-  TripMemberAvatars,
+  Column,
+  FlexContainer,
+  Heading,
   HorizontalScroller,
   Pill,
+  Row,
+  TripHeaderImage,
+  TripMemberAvatars,
 } from '@components';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { white } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
 import { baseAndAHalfSpacer, baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { formattedDate, formattedDateRange } from '@utils/dateUtils';
-import { RootState } from '@redux/ducks';
 import trackEvent from '@utils/trackEvent';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { baseBorderStyle } from '@styles/mixins';
-import { white } from '@styles/color';
+import { Link, navigate } from 'gatsby';
+import React, { FunctionComponent, useMemo } from 'react';
+import { FaCheck, FaMapMarkerAlt, FaRegCalendar, FaTimes } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 type TripCardProps = {
   trip?: TripType;
@@ -56,7 +55,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
       where: [
         'uid',
         'in',
-        trip && trip.tripMembers && Object.keys(trip.tripMembers).length > 0
+        trip && trip.tripMembers && Object.keys(trip.tripMembers)
           ? Object.keys(trip.tripMembers)
           : [auth.uid],
       ],

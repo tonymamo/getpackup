@@ -1,29 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'gatsby';
-import { FaFacebook, FaTwitter, FaInstagram, FaCalendar, FaUserLock } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-
 import {
-  PageContainer,
-  Row,
+  Avatar,
   Column,
-  HorizontalRule,
   FlexContainer,
   Heading,
+  HorizontalRule,
+  PageContainer,
+  Row,
   SignupForm,
-  Avatar,
 } from '@components';
-import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
-import { quadrupleSpacer, baseSpacer, doubleSpacer } from '@styles/size';
-import { fontSizeSmall } from '@styles/typography';
-import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
-import { RootState } from '@redux/ducks';
-import useWindowSize from '@utils/useWindowSize';
-import trackEvent from '@utils/trackEvent';
-import { zIndexSmallScreenFooter } from '@styles/layers';
 import GearClosetIcon from '@images/gearClosetIcon';
 import { useLocation } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
+import { zIndexSmallScreenFooter } from '@styles/layers';
+import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
+import { baseSpacer, doubleSpacer, quadrupleSpacer } from '@styles/size';
+import { fontSizeSmall } from '@styles/typography';
+import trackEvent from '@utils/trackEvent';
+import useWindowSize from '@utils/useWindowSize';
+import { Link } from 'gatsby';
+import React from 'react';
+import { FaCalendar, FaFacebook, FaInstagram, FaTwitter, FaUserLock } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};

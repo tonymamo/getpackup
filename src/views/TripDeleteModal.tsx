@@ -1,13 +1,12 @@
+import { TripType } from '@common/trip';
+import { Button, Column, Heading, Modal, Row } from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
+import { navigate } from 'gatsby';
 import React, { FunctionComponent } from 'react';
+import { FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
-import { FaTrash } from 'react-icons/fa';
-
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { Button, Column, Heading, Modal, Row } from '@components';
-import trackEvent from '@utils/trackEvent';
-import { TripType } from '@common/trip';
 
 type TripDeleteModalProps = {
   modalIsOpen: boolean;

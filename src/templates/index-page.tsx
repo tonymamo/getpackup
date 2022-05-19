@@ -1,42 +1,41 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { navigate, graphql } from 'gatsby';
-import Typewriter from 'typewriter-effect';
-import styled, { keyframes } from 'styled-components';
-import Carousel from 'react-bootstrap/Carousel';
-import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-import loadable from '@loadable/component';
-
+import { BlogRollType } from '@common/blogRoll';
+import { FluidImageType } from '@common/image';
 import {
-  Seo,
-  HeroImage,
   Button,
-  PageContainer,
-  Row,
-  Column,
-  Heading,
-  FlexContainer,
   ClientOnly,
-  PreviewCompatibleImage,
+  Column,
+  FlexContainer,
+  Heading,
+  HeroImage,
   InlineLoader,
+  PageContainer,
+  PreviewCompatibleImage,
+  Row,
+  Seo,
 } from '@components';
+import collage from '@images/Outdoorsman_Collage copy.jpg';
+import waveBismark from '@images/wave-bismark.svg';
+import waveDownriver from '@images/wave-downriver.svg';
+import loadable from '@loadable/component';
+import { RootState } from '@redux/ducks';
 import {
-  textColor,
-  white,
   brandPrimary,
   brandSecondary,
   brandTertiary,
   lightestGray,
+  textColor,
+  white,
 } from '@styles/color';
-import { quadrupleSpacer, breakpoints, doubleSpacer, baseSpacer } from '@styles/size';
-import collage from '@images/Outdoorsman_Collage copy.jpg';
-import waveBismark from '@images/wave-bismark.svg';
-import waveDownriver from '@images/wave-downriver.svg';
-import useWindowSize from '@utils/useWindowSize';
-import { RootState } from '@redux/ducks';
-import { FluidImageType } from '@common/image';
-import { BlogRollType } from '@common/blogRoll';
+import { baseSpacer, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
+import useWindowSize from '@utils/useWindowSize';
+import { graphql, navigate } from 'gatsby';
+import React, { FunctionComponent, useEffect } from 'react';
+import Carousel from 'react-bootstrap/Carousel';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import styled, { keyframes } from 'styled-components';
+import Typewriter from 'typewriter-effect';
 
 const Testimonial = loadable(() => import('@components/Testimonial'), {
   fallback: <InlineLoader />,

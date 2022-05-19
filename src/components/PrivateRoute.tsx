@@ -1,13 +1,12 @@
-import React, { ComponentType, FunctionComponent, useEffect } from 'react';
-import { navigate } from 'gatsby';
-import { useDispatch, useSelector } from 'react-redux';
+import { UserType } from '@common/user';
+import { LoadingPage } from '@components';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
-
 import { RootState } from '@redux/ducks';
 import { addAttemptedPrivatePage } from '@redux/ducks/client';
-import { UserType } from '@common/user';
 import trackEvent from '@utils/trackEvent';
-import { LoadingPage } from '@components';
+import { navigate } from 'gatsby';
+import React, { ComponentType, FunctionComponent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 type PrivateRouteProps = {
   location?: WindowLocation;

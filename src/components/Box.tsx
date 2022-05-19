@@ -1,10 +1,9 @@
-import React, { CSSProperties, FunctionComponent } from 'react';
-import styled, { css } from 'styled-components';
-import { FluidObject } from 'gatsby-image';
-
-import { baseSpacer, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
 import { white } from '@styles/color';
 import { baseBorderStyle, z1Shadow, z2Shadow, z3Shadow, z4Shadow } from '@styles/mixins';
+import { baseSpacer, breakpoints, doubleSpacer, quadrupleSpacer } from '@styles/size';
+import { FluidObject } from 'gatsby-image';
+import React, { CSSProperties, FunctionComponent } from 'react';
+import styled, { css } from 'styled-components';
 
 type BoxProps = {
   textAlign?: 'center' | 'left' | 'right';

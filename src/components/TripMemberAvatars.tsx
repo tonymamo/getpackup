@@ -32,7 +32,8 @@ const TripMemberAvatars = ({ trip, users }: TripMemberAvatarsProps): JSX.Element
                 const matchingUser: UserType | undefined = users[tripMember.uid]
                   ? users[tripMember.uid]
                   : undefined;
-                if (!matchingUser) return null;
+                if (!matchingUser)
+                  return <Avatar staticContent="" size="sm" username={undefined} />;
                 return (
                   <Avatar
                     src={matchingUser?.photoURL as string}
