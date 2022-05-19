@@ -17946,10 +17946,10 @@ react-style-proptype@^3.2.2:
   dependencies:
     prop-types "^15.5.4"
 
-react-swipeable-list@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-swipeable-list/-/react-swipeable-list-1.4.0.tgz#4c025613de6d4f28386ae8c54fb4752d6543f718"
-  integrity sha512-436dulOK7QoYx9cX2SXcxAbPPX5Z7YUkc1iBfIvQCJeIdMsGXDlOOMbgQ1jfUL0RlrrDuGKFHDIGTvvoTUGKxg==
+react-swipeable-list@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-swipeable-list/-/react-swipeable-list-1.5.1.tgz#170efdfca7c757fdd8db0b8278fb1710aba87571"
+  integrity sha512-iBqFkVaNgRJtTW7hMXkQktgnyqEJYpiuFNgZqeGE8aSCnbQPFNpXjHwshfuf2Jb0lMuvweMf9kUrj8lhhsno1g==
 
 react-swipeable-views-core@^0.13.7:
   version "0.13.7"

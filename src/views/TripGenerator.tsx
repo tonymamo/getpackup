@@ -399,7 +399,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                       </Row>
                     </Box>
                   </div>
-                  <FormErrors dirty errors={errors} />
+                  {!isLoading && !isSubmitting && <FormErrors dirty errors={errors} />}
                   <Row>
                     <Column xs={6} xsOffset={6}>
                       <Button
