@@ -58,7 +58,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
           </PageBody>
           {!props.hideFromCms && <GlobalAlerts />}
           {!props.hideFromCms && <Footer />}
-          <UpdateConfirmModal />
+          {!props.hideFromCms && <UpdateConfirmModal />}
         </LayoutWrapper>
         <CookieConsent
           location="bottom"
