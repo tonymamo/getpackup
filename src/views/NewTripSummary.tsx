@@ -90,7 +90,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
       uid: auth.uid,
       status: TripMemberStatus.Owner,
       invitedAt: new Date(),
-      acceptedAt: firebase.firestore.Timestamp.serverTimestamp,
+      acceptedAt: new Date(),
     };
 
     membersToInvite.forEach((member) => {
