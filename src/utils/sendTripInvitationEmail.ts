@@ -27,7 +27,7 @@ const sendTripInvitationEmail = ({
 
   axios.post(invitationUrl);
 
-  trackEvent('Trip Party Member Added', {
+  trackEvent('Trip Party Invitation Email Sent', {
     tripId,
     updated: new Date(),
     invitedMember: email,
