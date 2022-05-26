@@ -1,26 +1,25 @@
-/* eslint-disable no-console */
-import React, { FunctionComponent, useEffect, useState, useMemo } from 'react';
-import { useFirebase } from 'react-redux-firebase';
-import {
-  Uppload,
-  en,
-  Local,
-  Camera,
-  Crop,
-  Instagram,
-  Facebook,
-  Twitter,
-  URL,
-  Reddit,
-  Flip,
-} from 'uppload';
-import styled from 'styled-components';
-import { FaCamera } from 'react-icons/fa';
-
-import trackEvent from '@utils/trackEvent';
 import { Button, HeroImage } from '@components';
 import { borderColor, offWhite, white } from '@styles/color';
 import { baseSpacer, halfSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
+/* eslint-disable no-console */
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { FaCamera } from 'react-icons/fa';
+import { useFirebase } from 'react-redux-firebase';
+import styled from 'styled-components';
+import {
+  Camera,
+  Crop,
+  Facebook,
+  Flip,
+  Instagram,
+  Local,
+  Reddit,
+  Twitter,
+  URL,
+  Uppload,
+  en,
+} from 'uppload';
 
 type HeroImageUploadProps = {
   type: 'trip' | 'profile';
@@ -109,28 +108,20 @@ const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, im
 
   uploader.on('upload', (newUrl: string) => {
     if (type === 'trip') {
-      firebase
-        .firestore()
-        .collection('trips')
-        .doc(id)
-        .update({
-          headerImage: newUrl,
-          lastUpdated: new Date(),
-        });
+      firebase.firestore().collection('trips').doc(id).update({
+        headerImage: newUrl,
+        lastUpdated: new Date(),
+      });
       trackEvent('New Trip Header Image Uploaded', {
         tripId: id,
         headerImage: newUrl,
       });
     }
     if (type === 'profile') {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(id)
-        .update({
-          profileHeaderImage: newUrl,
-          lastUpdated: new Date(),
-        });
+      firebase.firestore().collection('users').doc(id).update({
+        profileHeaderImage: newUrl,
+        lastUpdated: new Date(),
+      });
       trackEvent('New User Profile Header Image Uploaded', {
         uid: id,
         profileHeaderImage: newUrl,

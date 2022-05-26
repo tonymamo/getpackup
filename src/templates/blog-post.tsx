@@ -1,27 +1,26 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { kebabCase } from 'lodash';
-import { graphql } from 'gatsby';
-import { DiscussionEmbed } from 'disqus-react';
-
+import { FixedImageType, FluidImageType } from '@common/image';
 import {
-  HeroImage,
-  PageContainer,
   Box,
-  Row,
-  Column,
-  Heading,
-  HorizontalRule,
-  FlexContainer,
-  Pill,
-  Seo,
-  RelatedBlogPost,
-  Share,
   ClientOnly,
+  Column,
   Content,
+  FlexContainer,
   HTMLContent,
+  Heading,
+  HeroImage,
+  HorizontalRule,
+  PageContainer,
+  Pill,
+  RelatedBlogPost,
+  Row,
+  Seo,
+  Share,
 } from '@components';
 import useWindowSize from '@utils/useWindowSize';
-import { FixedImageType, FluidImageType } from '@common/image';
+import { DiscussionEmbed } from 'disqus-react';
+import { graphql } from 'gatsby';
+import { kebabCase } from 'lodash';
+import React, { FunctionComponent, useEffect } from 'react';
 
 type RelatedPostType = {
   fields: {
@@ -106,9 +105,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
       )}
 
       <PageContainer withVerticalPadding>
-        <Row>
-          <Column md={9}>
-            <Box largePadding>
+        <Box largePadding>
+          <Row>
+            <Column md={8} mdOffset={2}>
               <div>
                 <Heading>{props.title}</Heading>
                 <FlexContainer justifyContent="space-between">
@@ -189,9 +188,9 @@ export const BlogPostTemplate: FunctionComponent<BlogPostProps> = (props) => {
               <HorizontalRule />
               <Heading as="h3">Comments</Heading>
               {!props.hideFromCms && <DiscussionEmbed {...disqusConfig} />}
-            </Box>
-          </Column>
-        </Row>
+            </Column>
+          </Row>
+        </Box>
       </PageContainer>
     </div>
   );

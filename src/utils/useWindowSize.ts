@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { screenSizes } from '@styles/size';
+import { useEffect, useState } from 'react';
 
 const useWindowSize = () => {
   const isClient = typeof window === 'object';

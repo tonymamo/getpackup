@@ -1,26 +1,25 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Formik, Field, Form } from 'formik';
-import { FaCaretRight } from 'react-icons/fa';
-import { graphql } from 'gatsby';
-
+import { FluidImageType } from '@common/image';
 import {
+  Alert,
+  Box,
+  Button,
+  Column,
   Content,
   HTMLContent,
-  HeroImage,
-  Row,
-  Box,
-  Column,
-  PageContainer,
-  Button,
-  Input,
-  Seo,
   Heading,
-  Alert,
+  HeroImage,
+  Input,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
 import postFormUrlEncoded from '@utils/postFormUrlEncoded';
-import { requiredEmail, requiredField } from '@utils/validations';
-import { FluidImageType } from '@common/image';
 import trackEvent from '@utils/trackEvent';
+import { requiredEmail, requiredField } from '@utils/validations';
+import { Field, Form, Formik } from 'formik';
+import { graphql } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaCaretRight } from 'react-icons/fa';
 
 type ContactProps = {
   hideFromCms?: boolean;

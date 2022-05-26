@@ -1,83 +1,179 @@
-import React, { FunctionComponent } from 'react';
-import { Link, navigate } from 'gatsby';
+import { TripMemberStatus, TripType } from '@common/trip';
+import { Box, Button, Column, Heading, PageContainer, Row, Seo, TripCard } from '@components';
 import { RouteComponentProps } from '@reach/router';
-import { FaArrowRight, FaPlusCircle } from 'react-icons/fa';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
-
-import { Row, Column, Heading, Box, Button, Seo, PageContainer, TripCard } from '@components';
 import { RootState } from '@redux/ducks';
+import { setActivePackingListFilter, setActivePackingListTab } from '@redux/ducks/client';
+import { doubleSpacer } from '@styles/size';
 import { isAfterToday, isBeforeToday } from '@utils/dateUtils';
-import { UserType } from '@common/user';
-import { TripType } from '@common/trip';
+import { PackingListFilterOptions, TabOptions } from '@utils/enums';
 import trackEvent from '@utils/trackEvent';
+import { Link, navigate } from 'gatsby';
+import React, { FunctionComponent, useEffect } from 'react';
+import { FaArrowRight, FaPlusCircle, FaRedo } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 
-type TripsProps = { loggedInUser?: UserType } & RouteComponentProps;
+type TripsProps = {} & RouteComponentProps;
 
-const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
+const Trips: FunctionComponent<TripsProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
   const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
+  const dispatch = useDispatch();
 
   useFirestoreConnect([
     {
       collection: 'trips',
       where: [
-        ['owner', '==', auth.uid],
-        ['archived', '!=', true],
+        [
+          `tripMembers.${auth.uid}.status`,
+          'not-in',
+          [TripMemberStatus.Declined, TripMemberStatus.Removed],
+        ],
       ],
-      populates: [{ child: 'tripMembers', root: 'users' }],
     },
     {
       collection: 'gear-closet',
       storeAs: 'gearCloset',
       doc: auth.uid,
     },
+    // the following is a somewhat hacky way to load more users in, because sometimes the similar
+    // query in TripCard meant some users would be missing sometimes, probably based on order of the
+    // api calls being sent out for each tripcard. It will be fixed by having a proper following/follower
+    // aka friending model where we would just load all of a user's friends once on load
+    {
+      collection: 'users',
+      where: [
+        'uid',
+        'in',
+        [
+          ...new Set([
+            ...[
+              trips
+                ? trips
+                    .map((trip) => (trip.tripMembers ? Object.keys(trip.tripMembers) : ''))
+                    .flat()
+                : [],
+            ].flat(),
+            auth.uid,
+          ]),
+        ].slice(0, 9),
+      ],
+    },
   ]);
 
-  const inProgressTrips =
-    trips &&
-    trips.length &&
-    trips
-      .filter(
-        (trip) =>
-          isBeforeToday(trip.startDate.seconds * 1000) && isAfterToday(trip.endDate.seconds * 1000)
-      )
-      .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
+  const nonArchivedTrips: TripType[] =
+    isLoaded(trips) && Array.isArray(trips) && trips && trips.length > 0
+      ? trips.filter((trip: TripType) => trip.archived !== true)
+      : [];
 
-  const upcomingTrips =
-    trips &&
-    trips.length &&
-    trips
-      .filter((trip) => isAfterToday(trip.startDate.seconds * 1000))
-      .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
+  const pendingTrips = nonArchivedTrips
+    .filter(
+      (trip) =>
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status === TripMemberStatus.Pending
+    )
+    .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
-  const pastTrips =
-    trips &&
-    trips.length &&
-    trips
-      .filter((trip) => isBeforeToday(trip.endDate.seconds * 1000))
-      .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
+  const inProgressTrips = nonArchivedTrips
+    .filter(
+      (trip) =>
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        isBeforeToday(trip.startDate.seconds * 1000) &&
+        isAfterToday(trip.endDate.seconds * 1000)
+    )
+    .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
 
-  const renderTrip = (trip: TripType) => (
-    <Box
+  const upcomingTrips = nonArchivedTrips
+    .filter(
+      (trip) =>
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        isAfterToday(trip.startDate.seconds * 1000)
+    )
+    .sort((a, b) => a.startDate.seconds - b.startDate.seconds);
+
+  const pastTrips = nonArchivedTrips
+    .filter(
+      (trip) =>
+        trip.tripMembers &&
+        trip.tripMembers[auth.uid] &&
+        trip.tripMembers[auth.uid].status !== TripMemberStatus.Pending &&
+        isBeforeToday(trip.endDate.seconds * 1000)
+    )
+    .sort((a, b) => b.startDate.seconds - a.startDate.seconds);
+
+  const renderTrip = (trip: TripType, pending?: boolean) => (
+    <TripCard
+      trip={trip}
+      isPending={pending}
       key={trip.tripId}
-      onClick={() => {
-        navigate(`/app/trips/${trip.tripId}/`);
-        trackEvent('Trip Card Link Clicked', { trip });
-      }}
-    >
-      <TripCard trip={trip} loggedInUser={loggedInUser} />
-    </Box>
+      onClick={
+        pending
+          ? () => null
+          : () => {
+              navigate(`/app/trips/${trip.tripId}/`);
+              trackEvent('Trip Card Link Clicked', { trip });
+            }
+      }
+    />
   );
+
+  useEffect(() => {
+    // reset filters and tab for packing list each time All Trips page is visited
+    dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
+    dispatch(setActivePackingListTab(TabOptions.Personal));
+  }, []);
+
+  if (!isLoaded(trips) || !trips) {
+    return (
+      <>
+        {Array.from({ length: 5 }).map((_, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Box key={`loadingTrip${index}`}>
+            <TripCard trip={{} as TripType} />
+          </Box>
+        ))}
+      </>
+    );
+  }
 
   if (
     isLoaded(fetchedGearCloset) &&
     fetchedGearCloset.length === 0 &&
     isLoaded(trips) &&
-    trips.length === 0
+    nonArchivedTrips.length === 0
   ) {
-    navigate('/app/onboarding');
+    return (
+      <PageContainer>
+        <Row>
+          <Column md={8} mdOffset={2}>
+            <div style={{ textAlign: 'center', margin: doubleSpacer }}>
+              <Heading align="center">New here? 🤔</Heading>
+              <p>
+                For some reason we couldn&apos;t find your gear closet or any trips for you. Do you
+                want to try to load your info again, or do you need to set up your acccount?
+              </p>
+              <Button
+                type="button"
+                onClick={() => window.location.reload()}
+                rightSpacer
+                iconLeft={<FaRedo />}
+              >
+                Refresh
+              </Button>
+              <Button type="link" to="/app/onboarding" iconLeft={<FaArrowRight />} color="tertiary">
+                Set up account
+              </Button>
+            </div>
+          </Column>
+        </Row>
+      </PageContainer>
+    );
   }
 
   return (
@@ -103,20 +199,17 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         </Row>
       )}
 
-      {/* LOADING SKELETON */}
-      {!isLoaded(trips) && (
+      {pendingTrips.length > 0 && (
         <>
-          {Array.from({ length: 5 }).map((_, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Box key={`loadingTrip${index}`}>
-              <TripCard trip={undefined} loggedInUser={loggedInUser} />
-            </Box>
-          ))}
+          <Heading as="h2" altStyle withDecoration>
+            Pending Trip Invitations
+          </Heading>
+          {pendingTrips.map((trip) => renderTrip(trip, true))}
         </>
       )}
 
       {/* IN PROGRESS */}
-      {Array.isArray(inProgressTrips) && !!inProgressTrips.length && inProgressTrips.length > 0 && (
+      {inProgressTrips.length > 0 && (
         <>
           <Heading as="h2" altStyle withDecoration>
             Trips in Progress
@@ -126,7 +219,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       )}
 
       {/* UPCOMING */}
-      {Array.isArray(upcomingTrips) && !!upcomingTrips.length && upcomingTrips.length > 0 && (
+      {upcomingTrips.length > 0 && (
         <>
           <Heading as="h2" altStyle withDecoration>
             Upcoming Trips
@@ -135,8 +228,8 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
         </>
       )}
 
-      {/* NO UPCOMING TRIPS */}
-      {isLoaded(trips) && !upcomingTrips && (
+      {/* NO TRIPS AT ALL, BUT HAS GEAR CLOSET */}
+      {((isLoaded(trips) && !upcomingTrips) || trips.length === 0) && (
         <Box>
           No upcoming trips planned currently,{' '}
           <Link
@@ -153,7 +246,7 @@ const Trips: FunctionComponent<TripsProps> = ({ loggedInUser }) => {
       )}
 
       {/* PAST TRIPS */}
-      {Array.isArray(pastTrips) && !!pastTrips.length && pastTrips.length > 0 && (
+      {pastTrips.length > 0 && (
         <>
           <Heading as="h2" altStyle withDecoration>
             Past Trips

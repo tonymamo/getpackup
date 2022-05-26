@@ -1,8 +1,7 @@
-import React, { FunctionComponent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
 import { Button, Column, Heading, Modal, Row } from '@components';
 import { hideWorkerUpdateModal } from '@redux/ducks/workerUpdateReady';
+import React, { FunctionComponent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const UpdateConfirmModal: FunctionComponent = () => {
   const showModal: boolean = useSelector((state: any) => state.workerUpdateReady.display);

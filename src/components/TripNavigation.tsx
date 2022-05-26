@@ -1,20 +1,26 @@
-import React, { FunctionComponent, useState } from 'react';
-import { FaInfoCircle, FaRegCheckSquare, FaTrash, FaUsers } from 'react-icons/fa';
-import { Link } from 'gatsby';
-import { useLocation } from '@reach/router';
-
-import { FlexContainer, DropdownMenu, Breadcrumbs } from '@components';
 import { TripType } from '@common/trip';
-import TripDeleteModal from '@views/TripDeleteModal';
+import { Breadcrumbs, DropdownMenu, FlexContainer } from '@components';
+import { useLocation } from '@reach/router';
 import { baseSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
+import LeaveTheTripModal from '@views/LeaveTheTripModal';
+import TripDeleteModal from '@views/TripDeleteModal';
+import { Link } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaInfoCircle, FaRegCheckSquare, FaSignOutAlt, FaTrash, FaUsers } from 'react-icons/fa';
 
 type TripNavigationProps = {
   activeTrip: TripType;
+  userIsTripOwner: boolean | undefined;
 };
 
-const TripNavigation: FunctionComponent<TripNavigationProps> = ({ activeTrip }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+const TripNavigation: FunctionComponent<TripNavigationProps> = ({
+  activeTrip,
+  userIsTripOwner,
+}) => {
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [leaveTripModalIsOpen, setLeaveTripModalIsOpen] = useState(false);
+
   const { pathname } = useLocation();
   const detailspageIsActive = pathname.includes('details');
   const partyPageIsActive = pathname.includes('party');
@@ -47,21 +53,38 @@ const TripNavigation: FunctionComponent<TripNavigationProps> = ({ activeTrip }) 
             </Link>
           )}
 
-          <Link
-            to="/"
-            onClick={() => {
-              setModalIsOpen(true);
-              trackEvent('Trip Nav Delete Trip Dropdown Link Clicked', activeTrip);
-            }}
-          >
-            <FaTrash /> Delete
-          </Link>
+          {userIsTripOwner ? (
+            <button
+              type="button"
+              onClick={() => {
+                setDeleteModalIsOpen(true);
+                trackEvent('Trip Nav Delete Trip Dropdown Link Clicked', activeTrip);
+              }}
+            >
+              <FaTrash /> Delete
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setLeaveTripModalIsOpen(true);
+                trackEvent('Trip Nav Leave Trip Dropdown Link Clicked', activeTrip);
+              }}
+            >
+              <FaSignOutAlt /> Leave Trip
+            </button>
+          )}
         </DropdownMenu>
       </FlexContainer>
       <TripDeleteModal
-        setModalIsOpen={setModalIsOpen}
-        modalIsOpen={modalIsOpen}
-        tripId={activeTrip.tripId}
+        setModalIsOpen={setDeleteModalIsOpen}
+        modalIsOpen={deleteModalIsOpen}
+        trip={activeTrip}
+      />
+      <LeaveTheTripModal
+        setModalIsOpen={setLeaveTripModalIsOpen}
+        modalIsOpen={leaveTripModalIsOpen}
+        trip={activeTrip}
       />
     </div>
   );

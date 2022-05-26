@@ -1,8 +1,7 @@
-import React, { FunctionComponent } from 'react';
-import { graphql } from 'gatsby';
-
-import { Box, PageContainer, Seo, HeroImage, Heading, Content, HTMLContent } from '@components';
 import { FluidImageType } from '@common/image';
+import { Box, Content, HTMLContent, Heading, HeroImage, PageContainer, Seo } from '@components';
+import { graphql } from 'gatsby';
+import React, { FunctionComponent } from 'react';
 
 type AboutPageProps = {
   hideFromCms?: boolean;

@@ -1,20 +1,20 @@
-import React, { FunctionComponent } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import {
-  FirestoreReducer,
-  FirebaseReducer,
-  ReactReduxFirebaseProvider,
-} from 'react-redux-firebase';
-import { createFirestoreInstance } from 'redux-firestore';
-import firebase from 'firebase/app';
+import configureStore from '@redux/configureStore';
+import { initialState as clientInitialState } from '@redux/ducks/client';
+import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
 import {
   showWorkerUpdateModal,
   initialState as workerUpdateInitialState,
 } from '@redux/ducks/workerUpdateReady';
-import configureStore from '@redux/configureStore';
-import { initialState as clientInitialState } from '@redux/ducks/client';
-import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
+import firebase from 'firebase/app';
+import React, { FunctionComponent } from 'react';
+import { Provider } from 'react-redux';
+import {
+  FirebaseReducer,
+  FirestoreReducer,
+  ReactReduxFirebaseProvider,
+} from 'react-redux-firebase';
+import { createFirestoreInstance } from 'redux-firestore';
+import { PersistGate } from 'redux-persist/integration/react';
 
 export const initialState = process.env.BROWSER // eslint-disable-next-line no-underscore-dangle
   ? window.__INITIAL_STATE__
@@ -40,20 +40,41 @@ const rrfProps = {
 };
 
 const firebaseConfig = {
-  apiKey: process.env.GATSBY_FIREBASE_API_KEY,
-  authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
-  projectId: process.env.GATSBY_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.GATSBY_FIREBASE_APP_ID,
+  apiKey:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_API_KEY
+      : process.env.GATSBY_FIREBASE_TEST_API_KEY,
+  authDomain:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_AUTH_DOMAIN
+      : process.env.GATSBY_FIREBASE_TEST_AUTH_DOMAIN,
+  databaseURL:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_DATABASE_URL
+      : process.env.GATSBY_FIREBASE_TEST_DATABASE_URL,
+  projectId:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_PROJECT_ID
+      : process.env.GATSBY_FIREBASE_TEST_PROJECT_ID,
+  storageBucket:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_STORAGE_BUCKET
+      : process.env.GATSBY_FIREBASE_TEST_STORAGE_BUCKET,
+  messagingSenderId:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID
+      : process.env.GATSBY_FIREBASE_TEST_MESSAGING_SENDER_ID,
+  appId:
+    process.env.GATSBY_SITE_URL === 'https://getpackup.com'
+      ? process.env.GATSBY_FIREBASE_APP_ID
+      : process.env.GATSBY_FIREBASE_TEST_APP_ID,
 };
 
 firebase.initializeApp(firebaseConfig);
 if (process.env.GATSBY_ENVIRONMENT === 'DEVELOP') {
   // eslint-disable-next-line no-console
-  console.log(`Development Env: Using Firestore Emulator`);
-  firebase.firestore().useEmulator('localhost', 8080);
+  // console.log(`Development Env: Using Firestore Emulator`);
+  // firebase.firestore().useEmulator('localhost', 8083);
 } else {
   firebase.firestore();
 }

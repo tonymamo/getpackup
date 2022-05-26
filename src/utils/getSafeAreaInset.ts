@@ -5,9 +5,7 @@
 const getSafeAreaInset = (position: '--sat' | '--sar' | '--sab' | '--sal') => {
   if (typeof window !== 'undefined') {
     return Number(
-      getComputedStyle(window.document.body)
-        .getPropertyValue(position)
-        .replace('px', '')
+      getComputedStyle(window.document.body).getPropertyValue(position).replace('px', '')
     );
   }
   return 0;

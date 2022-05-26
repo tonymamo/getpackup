@@ -1,31 +1,23 @@
-import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, isLoaded } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
-import { FaCheckCircle, FaChevronLeft, FaTrash } from 'react-icons/fa';
-import { Formik, Form, Field, FormikHelpers } from 'formik';
-import omit from 'lodash/omit';
-
-import {
-  Seo,
-  Heading,
-  LoadingPage,
-  PageContainer,
-  Button,
-  Input,
-  Column,
-  Row,
-  CollapsibleBox,
-  Alert,
-  FlexContainer,
-  Modal,
-  HorizontalRule,
-} from '@components';
 import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
-import trackEvent from '@utils/trackEvent';
+import {
+  Alert,
+  Button,
+  CollapsibleBox,
+  Column,
+  FlexContainer,
+  Heading,
+  HorizontalRule,
+  Input,
+  LoadingPage,
+  Modal,
+  PageContainer,
+  Row,
+  Seo,
+} from '@components';
 import usePersonalGear from '@hooks/usePersonalGear';
-import { requiredField, requiredSelect } from '@utils/validations';
+import { RouteComponentProps } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
 import {
   gearListAccommodations,
   gearListActivities,
@@ -33,9 +25,16 @@ import {
   gearListCategories,
   gearListOtherConsiderations,
 } from '@utils/gearListItemEnum';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { RootState } from '@redux/ducks';
+import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
+import { requiredField, requiredSelect } from '@utils/validations';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { navigate } from 'gatsby';
+import omit from 'lodash/omit';
+import React, { FunctionComponent, useState } from 'react';
+import { FaCheckCircle, FaChevronLeft, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoaded, useFirebase } from 'react-redux-firebase';
 
 type GearClosetEditItemProps = {
   id?: string;

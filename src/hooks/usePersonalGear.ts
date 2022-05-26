@@ -1,10 +1,9 @@
-import { useMemo } from 'react';
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
-import uniqBy from 'lodash/uniqBy';
-
-import { RootState } from '@redux/ducks';
 import { ActivityTypes, GearItemType } from '@common/gearItem';
+import { RootState } from '@redux/ducks';
+import uniqBy from 'lodash/uniqBy';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 
 const usePersonalGear = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);

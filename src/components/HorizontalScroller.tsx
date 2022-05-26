@@ -1,9 +1,7 @@
+import { baseBorderStyle } from '@styles/mixins';
+import { baseSpacer } from '@styles/size';
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-
-import { baseSpacer, doubleSpacer } from '@styles/size';
-import { offWhite } from '@styles/color';
-import { baseBorderStyle } from '@styles/mixins';
 
 type HorizontalScrollerProps = { withBorder?: boolean };
 
@@ -19,17 +17,7 @@ const HorizontalScrollerWrapper = styled.ul`
   /* touch-action: pan-x; */
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
-
-  background: linear-gradient(90deg, ${offWhite} 33%, rgba(255, 255, 255, 0)),
-    linear-gradient(90deg, rgba(255, 255, 255, 0), ${offWhite} 66%) 0 100%,
-    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.25), transparent),
-    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.25), transparent) 0 100%;
-  background-repeat: no-repeat;
-  background-size: ${doubleSpacer} 100%, ${doubleSpacer} 100%, ${baseSpacer} 100%,
-    ${baseSpacer} 100%;
-  background-position: 0 0, 100%, 0 0, 100%;
-  background-attachment: local, local, scroll, scroll;
-  background-color: ${offWhite};
+  cursor: ew-resize;
   border: ${(props: HorizontalScrollerProps) => (props.withBorder ? baseBorderStyle : 'none')};
 
   &::-webkit-scrollbar {

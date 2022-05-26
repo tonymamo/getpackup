@@ -1,12 +1,11 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import { LoadingPage, PageContainer, Seo } from '@components';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import trackEvent from '@utils/trackEvent';
 import { navigate } from 'gatsby';
+import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import { actionTypes } from 'redux-firestore';
-
-import { PageContainer, LoadingPage, Seo } from '@components';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import trackEvent from '@utils/trackEvent';
 
 type LogoutProps = {};
 

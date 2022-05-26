@@ -20,6 +20,7 @@
     "@types/react-swipeable-views": "^0.13.0",
     "@types/styled-components": "^5.0.1",
     "algoliasearch": "^4.8.6",
+    "axios": "^0.24.0",
     "babel-plugin-styled-components": "^1.10.7",
     "canvas-sketch-util": "^1.10.0",
     "cross-env": "^7.0.3",
@@ -102,7 +103,7 @@
     "react-select": "^3.1.0",
     "react-share": "^4.3.1",
     "react-spring": "^8.0.27",
-    "react-swipeable-list": "^1.4.0",
+    "react-swipeable-list": "^1.5.1",
     "react-swipeable-views": "^0.13.9",
     "react-swipeable-views-utils": "^0.14.0-alpha.0",
     "react-table": "^7.6.2",
@@ -165,8 +166,10 @@
     "eslint-plugin-react": "^7.19.0",
     "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.24",
     "identity-obj-proxy": "^3.0.0",
+    "import-sort-style-module": "^6.0.0",
     "jest": "^25.1.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.3.2",
+    "prettier-plugin-import-sort": "^0.0.7",
     "react-docgen-typescript-loader": "^3.7.1",
     "react-test-renderer": "^16.13.0",
     "start-server-and-test": "^1.10.11",
@@ -187,7 +190,9 @@
     "serve": "gatsby serve -o",
     "clean": "gatsby clean",
     "test": "jest",
-    "eslinta": "eslint --fix"
+    "eslinta": "eslint --fix",
+    "build-functions": "tsc \"dev-firebase/functions/index.ts\"",
+    "run-emulators": "cd dev-firebase && firebase emulators:start --import=./dev-firebase --export-on-exit"
   },
   "repository": {
     "type": "git",
@@ -195,5 +200,11 @@
   },
   "bugs": {
     "url": "https://github.com/tonymamo/getpackup/issues"
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "parser": "typescript",
+      "style": "module"
+    }
   }
 }

@@ -1,12 +1,11 @@
+import { darkSpinner, lightSpinner } from '@styles/color';
 import React, { FunctionComponent } from 'react';
 import styled, {
-  keyframes,
+  CSSProperties,
   ThemeProvider,
   ThemedStyledProps,
-  CSSProperties,
+  keyframes,
 } from 'styled-components';
-
-import { darkSpinner, lightSpinner } from '@styles/color';
 
 const CirclesKeyframes = (props: ThemedStyledProps<{}, { main: string }>) => keyframes`
   0% {
@@ -117,6 +116,7 @@ const StyledLoadingSpinner = styled.span`
   animation: ${(props) => CirclesKeyframes(props)} 1s linear infinite;
   transform: scale(0.35);
   margin-right: 8px;
+  display: inline-block;
 `;
 
 type LoadingSpinnerProps = {

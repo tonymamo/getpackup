@@ -1,15 +1,15 @@
+import { Box, FlexContainer, Heading, IconWrapper } from '@components';
 import React, { FunctionComponent, useState } from 'react';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useMeasure } from 'react-use';
 import styled from 'styled-components';
 
-import { Box, FlexContainer, Heading, IconWrapper } from '@components';
-
 type CollapsibleBoxProps = {
   title: string;
   subtitle?: string;
-  defaultClosed?: boolean;
+  defaultClosed: boolean;
   collapseCallback?: () => void;
+  enabled?: boolean;
 };
 
 const StyledCollapsed = styled.div<{
@@ -18,7 +18,7 @@ const StyledCollapsed = styled.div<{
 }>`
   transition: max-height 0.165s;
   overflow: hidden;
-  max-height: ${({isCollapsed, height}) => isCollapsed ? `${height}px` : '0px'}
+  max-height: ${({ isCollapsed, height }) => (isCollapsed ? '0px' : `${height}px`)};
 `;
 
 // In the future, we could allow the collapsed state to be passed in as a prop. If the state
@@ -29,17 +29,17 @@ const StyledCollapsed = styled.div<{
 const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
   title,
   subtitle,
-  defaultClosed = false,
+  defaultClosed,
   children,
   collapseCallback,
+  enabled = true,
 }) => {
-
   // Manages the collapsed state of the accordion
-  const [collapsed, setCollapsed] = useState(!defaultClosed);
+  const [collapsed, setCollapsed] = useState(enabled === true ? defaultClosed : false);
 
   // Gets the height of the element (ref)
   const [ref, { height }] = useMeasure<HTMLDivElement>();
-  
+
   const handleCollapse = () => {
     if (collapseCallback) collapseCallback();
     setCollapsed(!collapsed);
@@ -64,14 +64,16 @@ const CollapsibleBox: FunctionComponent<CollapsibleBoxProps> = ({
             </p>
           )}
         </div>
-        <IconWrapper
-          onClick={handleCollapse}
-          onKeyPress={handleCollapse}
-          tabIndex={0}
-          role="button"
-        >
-          {collapsed ? <FaCaretDown /> : <FaCaretUp />}
-        </IconWrapper>
+        {enabled && (
+          <IconWrapper
+            onClick={handleCollapse}
+            onKeyPress={handleCollapse}
+            tabIndex={0}
+            role="button"
+          >
+            {collapsed ? <FaCaretUp /> : <FaCaretDown />}
+          </IconWrapper>
+        )}
       </FlexContainer>
       <StyledCollapsed isCollapsed={collapsed} height={height}>
         <div ref={ref}>{children}</div>

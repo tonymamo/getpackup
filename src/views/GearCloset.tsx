@@ -1,39 +1,38 @@
-import React, { FunctionComponent, useMemo, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { navigate } from 'gatsby';
-import Select, { ValueType } from 'react-select';
-
+import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
+import { TripType } from '@common/trip';
 import {
-  Seo,
-  Heading,
-  PageContainer,
-  Button,
-  Table,
-  Column,
-  Row,
-  Modal,
-  LoadingPage,
   Alert,
+  Button,
+  Column,
   DropdownMenu,
   FlexContainer,
+  Heading,
+  LoadingPage,
+  Modal,
+  PageContainer,
+  Row,
+  Seo,
+  Table,
 } from '@components';
+import { multiSelectStyles } from '@components/Input';
 import usePersonalGear from '@hooks/usePersonalGear';
-import { ActivityTypes, GearItemType, GearListEnumType } from '@common/gearItem';
-import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
-import { addAlert } from '@redux/ducks/globalAlerts';
 import { RootState } from '@redux/ducks';
-import trackEvent from '@utils/trackEvent';
-import { TripType } from '@common/trip';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { inputPaddingY } from '@styles/size';
 import {
   gearListAccommodations,
   gearListActivities,
   gearListCampKitchen,
   gearListOtherConsiderations,
 } from '@utils/gearListItemEnum';
-import { multiSelectStyles } from '@components/Input';
+import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
-import { inputPaddingY } from '@styles/size';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import Select, { ValueType } from 'react-select';
 
 type GearClosetProps = {};
 

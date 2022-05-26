@@ -1,6 +1,6 @@
+import { brandDanger, brandInfo, brandSuccess, white } from '@styles/color';
+import { baseSpacer, borderRadius, doubleSpacer, halfSpacer } from '@styles/size';
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-import { animated } from 'react-spring';
 import {
   FaCheckCircle,
   FaExclamationCircle,
@@ -8,9 +8,9 @@ import {
   FaLongArrowAltRight,
   FaTimes,
 } from 'react-icons/fa';
+import { animated } from 'react-spring';
+import styled from 'styled-components';
 
-import { baseSpacer, borderRadius, doubleSpacer, halfSpacer } from '@styles/size';
-import { brandDanger, brandSuccess, brandInfo, white } from '@styles/color';
 import RelativeOrExternalLink from './RelativeOrExternalLink';
 
 export type AlertProps = {

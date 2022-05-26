@@ -1,27 +1,26 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Formik, Field, Form } from 'formik';
-import { FaCaretRight } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { navigate, RouteComponentProps } from '@reach/router';
-
 import {
-  Row,
-  Box,
-  Column,
-  PageContainer,
-  Button,
-  Input,
-  Seo,
-  Heading,
   Alert,
   Avatar,
+  Box,
+  Button,
+  Column,
   FlexContainer,
+  Heading,
+  Input,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
-import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import logo from '@images/maskable_icon.png';
+import { RouteComponentProps, navigate } from '@reach/router';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import postFormUrlEncoded from '@utils/postFormUrlEncoded';
 import trackEvent from '@utils/trackEvent';
+import { Field, Form, Formik } from 'formik';
+import React, { FunctionComponent, useState } from 'react';
+import { FaCaretRight } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 
 type FeedbackProps = {
   location?: {

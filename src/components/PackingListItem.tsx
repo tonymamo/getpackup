@@ -1,32 +1,45 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Formik, Field, FormikHelpers } from 'formik';
-import styled from 'styled-components';
-import { useFirebase, ExtendedFirebaseInstance } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
-import { FaChevronRight, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
-import { navigate } from 'gatsby';
-import {
-  SwipeableListItem,
-  SwipeAction,
-  TrailingActions,
-  Type as ListType,
-} from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css';
 
+import { PackingListItemType } from '@common/packingListItem';
+import { UserType } from '@common/user';
+import { Button, FlexContainer, IconWrapper, Input, Pill } from '@components';
+import { RootState } from '@redux/ducks';
+import { setPersonalListScrollPosition, setSharedListScrollPosition } from '@redux/ducks/client';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { brandDanger, brandInfo, brandPrimary, lightestGray, offWhite } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 import { halfSpacer } from '@styles/size';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { Input, FlexContainer, Pill, IconWrapper, Button } from '@components';
-import { brandDanger, offWhite } from '@styles/color';
-import { PackingListItemType } from '@common/packingListItem';
-import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
-import { LocalStorage } from '../enums';
+import useWindowSize from '@utils/useWindowSize';
+import { Field, Formik, FormikHelpers } from 'formik';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import {
+  FaChevronRight,
+  FaExclamationTriangle,
+  FaPencilAlt,
+  FaTrash,
+  FaUsers,
+} from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { ExtendedFirebaseInstance, useFirebase } from 'react-redux-firebase';
+import {
+  LeadingActions,
+  Type as ListType,
+  SwipeAction,
+  SwipeableListItem,
+  TrailingActions,
+} from 'react-swipeable-list';
+import ReactTooltip from 'react-tooltip';
+import styled from 'styled-components';
+
+import Avatar, { StackedAvatars } from './Avatar';
 
 type PackingListItemProps = {
   tripId: string;
   item: PackingListItemType;
+  isOnSharedList?: boolean;
+  isSharedTrip?: boolean;
 };
 
 const PackingListItemWrapper = styled.li`
@@ -79,6 +92,8 @@ const firebaseConnection = (firebase: ExtendedFirebaseInstance, tripId: string, 
 const callbackDelay = 350;
 
 const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
+  const users: UserType[] = useSelector((state: RootState) => state.firestore.ordered.users);
+  // const auth = useSelector((state: RootState) => state.firebase.auth);
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const size = useWindowSize();
@@ -141,29 +156,84 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
     setTimeout(onDelete, callbackDelay);
   };
 
+  const onShare = () => {
+    firebaseConnection(firebase, props.tripId, props.item.id)
+      .update({
+        // TOOD: can we assume packedBy[0] is ok?
+        packedBy: [
+          {
+            ...props.item.packedBy[0],
+            isShared: !props.item.packedBy[0].isShared,
+          },
+        ],
+      })
+      .then(() => {
+        trackEvent('Packing List Item Shared', {
+          tripId: props.tripId,
+          item: props.item,
+        });
+      })
+      .catch((err) => {
+        trackEvent('Packing List Item Deleted Failure', {
+          tripId: props.tripId,
+          item: props.item,
+          error: err,
+        });
+        dispatch(
+          addAlert({
+            type: 'danger',
+            message: err.message,
+          })
+        );
+      });
+  };
+
+  const leadingActions = () => (
+    <LeadingActions>
+      <SwipeAction onClick={onShare}>
+        <Button
+          type="button"
+          color="secondary"
+          style={{ borderRadius: 0, height: '100%' }}
+          iconLeft={<FaUsers />}
+        >
+          Group Item
+        </Button>
+      </SwipeAction>
+    </LeadingActions>
+  );
+
   const trailingActions = () => (
     <TrailingActions>
       <SwipeAction destructive onClick={onDelete}>
-        <Button type="button" color="danger" style={{ borderRadius: 0 }}>
+        <Button
+          type="button"
+          color="danger"
+          style={{ borderRadius: 0, height: '100%' }}
+          iconLeft={<FaTrash />}
+        >
           Delete
         </Button>
       </SwipeAction>
     </TrailingActions>
   );
 
-  const handlePersistScrollPosition = (): void => {
-    window?.localStorage.setItem(LocalStorage.WindowOffsetTop, `${window.pageYOffset}`);
-  };
-
   const handleItemSelect = (tripId: string, itemId: string): void => {
-    handlePersistScrollPosition();
+    dispatch(
+      props.isOnSharedList
+        ? setSharedListScrollPosition(window.pageYOffset)
+        : setPersonalListScrollPosition(window.pageYOffset)
+    );
     navigate(`/app/trips/${tripId}/checklist/${itemId}`);
   };
+
+  const itemIsShared = props.item.packedBy.some((item) => item.isShared);
 
   return (
     <PackingListItemWrapper className={removing ? 'removing' : undefined}>
       <SwipeableListItem
         listType={ListType.IOS}
+        leadingActions={props.isSharedTrip ? leadingActions() : null}
         trailingActions={trailingActions()}
         destructiveCallbackDelay={callbackDelay}
         blockSwipe={!size.isSmallScreen} // only enable swiping for small screens
@@ -187,44 +257,164 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
                   />
                 </ItemInputWrapper>
                 <ItemText>
-                  {props.item.quantity && props.item.quantity !== 1 ? (
-                    <>
-                      {props.item.name}{' '}
+                  <>
+                    {props.item.isEssential && (
+                      <span
+                        data-tip="Essential Item"
+                        data-for="essentialItem"
+                        style={{ display: 'inline-block' }}
+                      >
+                        <FaExclamationTriangle color={brandDanger} />
+                        <ReactTooltip
+                          id="essentialItem"
+                          place="top"
+                          type="dark"
+                          effect="solid"
+                          className="tooltip customTooltip"
+                        />
+                      </span>
+                    )}{' '}
+                    {props.item.name}{' '}
+                    {/* TODO: deprecate quantity and only user packedBy quanities added together? Or get rid of quantity on packedBy and not be able to break down total number by person */}
+                    {props.item.quantity && props.item.quantity !== 1 && (
+                      // || props.item.packedBy.length > 1) && (
+                      // use Math.max to grab the larger of the two values, looking at the item's quantity field, or the quantities of all of the packedBy entries
                       <Pill
-                        text={`× ${props.item.quantity}`}
+                        // text={`x ${Math.max(
+                        //   props.item.quantity,
+                        //   props.item.packedBy.reduce((partialSum, a) => partialSum + a.quantity, 0)
+                        // )}`}
+                        text={`x ${props.item.quantity}`}
                         color="neutral"
                         style={{ margin: 0, paddingTop: 2, paddingBottom: 2 }}
                       />
-                    </>
-                  ) : (
-                    props.item.name
-                  )}
+                    )}
+                  </>
                 </ItemText>
-                {props.item.isEssential && (
-                  <IconWrapper data-tip="Essential Item" data-for="essentialItem">
-                    <FaExclamationTriangle color={brandDanger} />
+
+                {props.isOnSharedList && (
+                  <StackedAvatars style={{ marginRight: halfSpacer }}>
+                    {props.item.packedBy.map((packedByUser) => {
+                      const matchingUser =
+                        users &&
+                        users.length > 0 &&
+                        users.find((u: UserType) => u.uid === packedByUser.uid);
+                      if (!matchingUser) return null;
+
+                      return (
+                        <Avatar
+                          src={matchingUser.photoURL}
+                          gravatarEmail={matchingUser.email}
+                          key={matchingUser.uid}
+                          size="xs"
+                          username={matchingUser?.username.toLocaleLowerCase()}
+                        />
+                      );
+                    })}
+                  </StackedAvatars>
+                )}
+
+                {!size.isSmallScreen && (
+                  <IconWrapper
+                    onClick={() => handleItemSelect(props.tripId, props.item.id)}
+                    hoverColor={brandPrimary}
+                    color={lightestGray}
+                    data-tip="Edit Item"
+                    data-for="editItemIcon"
+                  >
+                    <FaPencilAlt />
                     <ReactTooltip
-                      id="essentialItem"
+                      id="editItemIcon"
                       place="top"
                       type="dark"
                       effect="solid"
                       className="tooltip customTooltip"
-                      delayShow={500}
                     />
                   </IconWrapper>
                 )}
-                {!size.isSmallScreen ? (
+
+                {!size.isSmallScreen && (
+                  <>
+                    {!props.isOnSharedList && props.isSharedTrip && (
+                      <IconWrapper
+                        onClick={onShare}
+                        data-tip={itemIsShared ? 'Shared Group Item' : 'Mark as Shared Group Item'}
+                        data-for="sharedItemIcon"
+                        hoverColor={brandInfo}
+                        color={itemIsShared ? brandInfo : lightestGray}
+                        style={{ marginRight: halfSpacer }}
+                      >
+                        <FaUsers />
+                        <ReactTooltip
+                          id="sharedItemIcon"
+                          place="top"
+                          type="dark"
+                          effect="solid"
+                          className="tooltip customTooltip"
+                        />
+                      </IconWrapper>
+                    )}
+                  </>
+                )}
+                {!size.isSmallScreen && (
+                  // TODO: can anyone delete an item from the packing list? or just owners
                   <IconWrapper
                     onClick={onRemove}
-                    style={{ marginRight: halfSpacer, visibility: 'hidden' }}
+                    data-tip="Delete Item"
+                    data-for="deleteIcon"
+                    hoverColor={brandDanger}
+                    color={lightestGray}
+                    style={{ marginRight: halfSpacer }}
                   >
                     <FaTrash />
+                    <ReactTooltip
+                      id="deleteIcon"
+                      place="top"
+                      type="dark"
+                      effect="solid"
+                      className="tooltip customTooltip"
+                    />
                   </IconWrapper>
-                ) : null}
+                )}
 
-                <IconWrapper onClick={() => handleItemSelect(props.tripId, props.item.id)}>
-                  <FaChevronRight />
-                </IconWrapper>
+                {size.isSmallScreen && (
+                  <>
+                    {!props.isOnSharedList && itemIsShared && (
+                      <IconWrapper
+                        hoverColor={brandInfo}
+                        color={brandInfo}
+                        style={{ marginRight: halfSpacer }}
+                        data-tip="Shared Group Item"
+                        data-for="sharedItemIconSmall"
+                      >
+                        <FaUsers />
+                        <ReactTooltip
+                          id="sharedItemIconSmall"
+                          place="top"
+                          type="dark"
+                          effect="solid"
+                          className="tooltip customTooltip"
+                        />
+                      </IconWrapper>
+                    )}
+                    <IconWrapper
+                      onClick={() => handleItemSelect(props.tripId, props.item.id)}
+                      hoverColor={brandPrimary}
+                      color={lightestGray}
+                      data-tip="Edit Item"
+                      data-for="editItemIconSmall"
+                    >
+                      <FaChevronRight />
+                      <ReactTooltip
+                        id="editItemIconSmall"
+                        place="top"
+                        type="dark"
+                        effect="solid"
+                        className="tooltip customTooltip"
+                      />
+                    </IconWrapper>
+                  </>
+                )}
               </FlexContainer>
             </Form>
           )}

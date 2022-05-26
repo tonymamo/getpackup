@@ -1,13 +1,12 @@
+import { FluidImageType } from '@common/image';
+import { PreviewCompatibleImage } from '@components';
+import { white } from '@styles/color';
+import { zIndexHeroImage } from '@styles/layers';
+import { baseSpacer } from '@styles/size';
+import useWindowSize from '@utils/useWindowSize';
 /* eslint-disable no-nested-ternary */
 import React, { FunctionComponent } from 'react';
 import styled, { CSSProperties } from 'styled-components';
-
-import { white } from '@styles/color';
-import useWindowSize from '@utils/useWindowSize';
-import { PreviewCompatibleImage } from '@components';
-import { FluidImageType } from '@common/image';
-import { baseSpacer } from '@styles/size';
-import { zIndexHeroImage } from '@styles/layers';
 
 type HeroImageProps = {
   imgSrc?: FluidImageType;

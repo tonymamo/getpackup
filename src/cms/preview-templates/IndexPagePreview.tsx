@@ -1,6 +1,6 @@
+import { Layout } from '@components';
 import React from 'react';
 
-import { Layout } from '@components';
 import { IndexPageTemplate } from '../../templates/index-page';
 
 const IndexPagePreview = ({ entry }: { entry: any }) => {

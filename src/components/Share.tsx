@@ -1,3 +1,8 @@
+import { white } from '@styles/color';
+import { zIndexModal } from '@styles/layers';
+import { z1Shadow } from '@styles/mixins';
+import { baseSpacer, borderRadius, doubleSpacer, halfSpacer, quarterSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
 import React, { FunctionComponent } from 'react';
 import {
   EmailIcon,
@@ -16,12 +21,6 @@ import {
   TwitterShareButton,
 } from 'react-share';
 import styled from 'styled-components';
-
-import { z1Shadow } from '@styles/mixins';
-import { white } from '@styles/color';
-import { baseSpacer, doubleSpacer, borderRadius, halfSpacer, quarterSpacer } from '@styles/size';
-import trackEvent from '@utils/trackEvent';
-import { zIndexModal } from '@styles/layers';
 
 type ShareProps = {
   url: string;

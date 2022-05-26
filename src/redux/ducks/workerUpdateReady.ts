@@ -1,7 +1,7 @@
 import {
-  WorkerUpdateActions,
-  SHOW_UPDATE_MODAL,
   HIDE_UPDATE_MODAL,
+  SHOW_UPDATE_MODAL,
+  WorkerUpdateActions,
   WorkerUpdateStoreType,
 } from '@redux/ducks/workerUpdateReady.d';
 

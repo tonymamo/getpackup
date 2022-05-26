@@ -1,11 +1,11 @@
-import React, { Children, FunctionComponent, memo } from 'react';
-import { Router, RouteComponentProps } from '@reach/router';
-import { Link } from 'gatsby';
-import styled from 'styled-components';
-import { FaChevronRight } from 'react-icons/fa';
-
+import { RouteComponentProps, Router } from '@reach/router';
 import { halfSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
+import truncateText from '@utils/truncateText';
+import { Link } from 'gatsby';
+import React, { Children, FunctionComponent, memo } from 'react';
+import { FaChevronRight } from 'react-icons/fa';
+import styled from 'styled-components';
 
 type CrumbProps = {
   url: string;
@@ -57,7 +57,7 @@ const Breadcrumbs: FunctionComponent<BreadcrumbsProps> = memo((props) => {
       <Router primary={false} basepath="/app">
         <Crumb path="/trips" url="/app/trips" text="All Trips">
           <Crumb path="/new" url="../" text="New" />
-          <Crumb path="/:id" url="../" text={props.tripName || 'Trip'}>
+          <Crumb path="/:id" url="../" text={truncateText(props.tripName, 20) || 'Trip'}>
             <Crumb path="/details" url="../" text="Details" />
             <Crumb path="/party" url="../" text="party" />
           </Crumb>

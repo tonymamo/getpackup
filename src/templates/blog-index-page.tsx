@@ -1,19 +1,18 @@
-import React, { FunctionComponent } from 'react';
-import { graphql } from 'gatsby';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-
+import { BlogRollType } from '@common/blogRoll';
+import { FluidImageType } from '@common/image';
 import {
   BlogRoll,
   Button,
-  HeroImage,
-  Seo,
-  PageContainer,
-  Heading,
   FlexContainer,
+  Heading,
+  HeroImage,
+  PageContainer,
+  Seo,
 } from '@components';
-import { FluidImageType } from '@common/image';
-import { BlogRollType } from '@common/blogRoll';
 import trackEvent from '@utils/trackEvent';
+import { graphql } from 'gatsby';
+import React, { FunctionComponent } from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 type BlogIndexProps = {
   title: string;

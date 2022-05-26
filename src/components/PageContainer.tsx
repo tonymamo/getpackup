@@ -1,6 +1,5 @@
+import { baseSpacer, breakpoints, doubleSpacer, halfSpacer, quadrupleSpacer } from '@styles/size';
 import styled from 'styled-components';
-
-import { breakpoints, doubleSpacer, baseSpacer, halfSpacer, quadrupleSpacer } from '@styles/size';
 
 const PageContainer = styled.div`
   position: relative;

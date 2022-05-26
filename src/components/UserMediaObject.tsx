@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
-
 import { UserType } from '@common/user';
 import { textColorLight } from '@styles/color';
 import { halfSpacer } from '@styles/size';
-import { FlexContainer, Avatar } from '.';
+import React, { FunctionComponent } from 'react';
+import styled from 'styled-components';
+
 import { AvatarProps } from './Avatar';
+import { Avatar, FlexContainer } from '.';
 
 type UserMediaObjectProps = {
   user: UserType;
@@ -17,6 +17,7 @@ type UserMediaObjectProps = {
 const UserContent = styled.div`
   flex: 1;
   margin-right: ${halfSpacer};
+  line-height: 1.2;
 `;
 
 const MutedText = styled.small`
@@ -38,7 +39,7 @@ const UserMediaObject: FunctionComponent<UserMediaObjectProps> = ({
         size={avatarSize || 'sm'}
       />
       <UserContent>
-        <div style={{ wordBreak: 'break-all' }}>{user.username}</div>
+        <div style={{ wordBreak: 'break-all' }}>{user.username.toLocaleLowerCase()}</div>
         {showSecondaryContent && <MutedText>{user.displayName}</MutedText>}
       </UserContent>
       {action}

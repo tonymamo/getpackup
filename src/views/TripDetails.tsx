@@ -1,53 +1,53 @@
-import React, { FunctionComponent, useState } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
-import { Formik, Form, Field } from 'formik';
-import { startOfDay, endOfDay } from 'date-fns';
-
+import { TripFormType, TripType } from '@common/trip';
+import { UserType } from '@common/user';
 import {
-  PageContainer,
-  Column,
-  Row,
-  Input,
-  EditableInput,
-  DayPickerInput,
-  Seo,
-  StaticMapImage,
-  Pill,
   Alert,
   Box,
-  HorizontalRule,
-  UserMediaObject,
+  Column,
+  DayPickerInput,
+  EditableInput,
   HeroImageUpload,
+  HorizontalRule,
+  Input,
+  PageContainer,
+  Pill,
+  Row,
+  Seo,
+  StaticMapImage,
   TripNavigation,
+  UserMediaObject,
 } from '@components';
-import { TripType, TripFormType } from '@common/trip';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import getSeason from '@utils/getSeason';
-import { requiredField } from '@utils/validations';
-import { formattedDate, formattedDateRange } from '@utils/dateUtils';
-import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
-import { gearListActivities } from '@utils/gearListItemEnum';
-import { UserType } from '@common/user';
-import trackEvent from '@utils/trackEvent';
-import { ActivityTypes, GearListEnumType } from '@common/gearItem';
+import { Link, RouteComponentProps } from '@reach/router';
 import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { createOptionsFromArrayOfObjects } from '@utils/createOptionsFromArray';
+import { formattedDate, formattedDateRange } from '@utils/dateUtils';
+import {
+  gearListAccommodations,
+  gearListActivities,
+  gearListCampKitchen,
+  gearListOtherConsiderations,
+} from '@utils/gearListItemEnum';
+import getSeason from '@utils/getSeason';
+import isUserTripOwner from '@utils/isUserTripOwner';
+import trackEvent from '@utils/trackEvent';
+import { requiredField } from '@utils/validations';
+import { endOfDay, startOfDay } from 'date-fns';
+import { Field, Form, Formik } from 'formik';
+import React, { Fragment, FunctionComponent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 
 type TripDetailsProps = {
   activeTrip?: TripType;
   users: Array<UserType>;
-  loggedInUser: UserType;
 } & RouteComponentProps;
 
-const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, loggedInUser }) => {
+const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
   const auth = useSelector((state: RootState) => state.firebase.auth);
-  const fetchedGearCloset = useSelector((state: RootState) => state.firestore.ordered.gearCloset);
-
-  const gearClosetCategories: Array<keyof ActivityTypes> = fetchedGearCloset?.[0]?.categories ?? [];
 
   useFirestoreConnect([
     {
@@ -68,7 +68,6 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
         startDate: startOfDay(new Date(values.startDate as string)),
         endDate: endOfDay(new Date(values.endDate as string)),
         updated: new Date(),
-        tripMembers: [...activeTrip.tripMembers, ...values.tripMembers],
         tripLength: values.tripLength,
       };
       firebase
@@ -101,13 +100,29 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
 
   const formattedTripDates =
     activeTrip &&
-    (activeTrip?.tripLength === 21
+    (activeTrip.tripLength === 21
       ? formattedDate(new Date(activeTrip.startDate.seconds * 1000))
       : formattedDateRange(activeTrip.startDate.seconds * 1000, activeTrip.endDate.seconds * 1000));
 
-  // the categories that the user DOES have in their gear closet, so we can only show those
-  const getFilteredCategories = (array: GearListEnumType) =>
-    array.filter((item) => gearClosetCategories.includes(item.name));
+  const onlyActivityTags = activeTrip
+    ? activeTrip.tags.filter((item) =>
+        gearListActivities.some((activity) => item === activity.label)
+      )
+    : [];
+
+  const onlyAccommodationOrCampKitchenTags = activeTrip
+    ? activeTrip.tags.filter(
+        (item) =>
+          gearListAccommodations.some((activity) => item === activity.label) ||
+          gearListCampKitchen.some((activity) => item === activity.label)
+      )
+    : [];
+
+  const onlyOtherConsiderationsTags = activeTrip
+    ? activeTrip.tags.filter((item) =>
+        gearListOtherConsiderations.some((activity) => item === activity.label)
+      )
+    : [];
 
   return (
     <>
@@ -120,9 +135,12 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
         )}
       </Seo>
       <PageContainer>
-        {typeof activeTrip !== 'undefined' && (
+        {typeof activeTrip !== 'undefined' && activeTrip && (
           <>
-            <TripNavigation activeTrip={activeTrip} />
+            <TripNavigation
+              activeTrip={activeTrip}
+              userIsTripOwner={isUserTripOwner(activeTrip, auth.uid)}
+            />
             <HeroImageUpload type="trip" image={activeTrip.headerImage} id={activeTrip.tripId} />
             <Formik
               validateOnMount
@@ -131,11 +149,28 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                   ...activeTrip,
                   startDate: new Date(activeTrip.startDate.seconds * 1000),
                   endDate: new Date(activeTrip.endDate.seconds * 1000),
-                  tripMembers: [],
-                } as TripFormType | TripType
+                  activityTags: [...onlyActivityTags],
+                  accommodationAndKitchenTags: [...onlyAccommodationOrCampKitchenTags],
+                  otherConsiderationTags: [...onlyOtherConsiderationsTags],
+                } as TripFormType & {
+                  activityTags?: string[];
+                  accommodationAndKitchenTags?: string[];
+                  otherConsiderationTags?: string[];
+                }
               }
               onSubmit={(values, { setSubmitting }) => {
-                updateTrip(values as TripFormType);
+                const valuesToSave = {
+                  ...values,
+                  tags: [
+                    ...(values.activityTags || []),
+                    ...(values.accommodationAndKitchenTags || []),
+                    ...(values.otherConsiderationTags || []),
+                  ],
+                };
+                delete valuesToSave.activityTags;
+                delete valuesToSave.accommodationAndKitchenTags;
+                delete valuesToSave.otherConsiderationTags;
+                updateTrip(valuesToSave);
                 setSubmitting(false);
               }}
             >
@@ -230,16 +265,11 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                           label="Activities"
                           isLoading={isLoading}
                           value={
-                            activeTrip.tags.length > 0 ? (
+                            onlyActivityTags && onlyActivityTags.length > 0 ? (
                               <>
-                                {// only show Activity tags
-                                activeTrip.tags
-                                  .filter((item) =>
-                                    gearListActivities.some((activity) => item === activity.label)
-                                  )
-                                  .map((tag: string) => (
-                                    <Pill key={`${tag}tag`} text={tag} color="primary" />
-                                  ))}
+                                {onlyActivityTags.map((tag: string) => (
+                                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                                ))}
                               </>
                             ) : (
                               'No activities selected'
@@ -250,11 +280,74 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                             as={Input}
                             type="select"
                             isMulti
-                            name="tags"
-                            label="Tags"
+                            name="activityTags"
+                            label="Activity Tags"
+                            hiddenLabel
+                            options={createOptionsFromArrayOfObjects(gearListActivities, 'label')}
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            {...rest}
+                          />
+                        </EditableInput>
+                        <EditableInput
+                          label="Accommodations/Kitchen"
+                          isLoading={isLoading}
+                          value={
+                            onlyAccommodationOrCampKitchenTags &&
+                            onlyAccommodationOrCampKitchenTags.length > 0 ? (
+                              <>
+                                {onlyAccommodationOrCampKitchenTags.map((tag: string) => (
+                                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                                ))}
+                              </>
+                            ) : (
+                              'No accommodations or kitchen setups selected'
+                            )
+                          }
+                        >
+                          <Field
+                            as={Input}
+                            type="select"
+                            isMulti
+                            name="accommodationAndKitchenTags"
+                            label="Accommodation & Kictchen Tags"
                             hiddenLabel
                             options={createOptionsFromArrayOfObjects(
-                              getFilteredCategories(gearListActivities),
+                              [...gearListAccommodations, ...gearListCampKitchen],
+                              'label'
+                            )}
+                            required
+                            setFieldTouched={setFieldTouched}
+                            setFieldValue={setFieldValue}
+                            {...rest}
+                          />
+                        </EditableInput>
+                        <EditableInput
+                          label="Other Considerations"
+                          isLoading={isLoading}
+                          value={
+                            onlyOtherConsiderationsTags &&
+                            onlyOtherConsiderationsTags.length > 0 ? (
+                              <>
+                                {onlyOtherConsiderationsTags.map((tag: string) => (
+                                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                                ))}
+                              </>
+                            ) : (
+                              'No other considerations selected'
+                            )
+                          }
+                        >
+                          <Field
+                            as={Input}
+                            type="select"
+                            isMulti
+                            name="otherConsiderationTags"
+                            label="Other Consideration Tags"
+                            hiddenLabel
+                            options={createOptionsFromArrayOfObjects(
+                              gearListOtherConsiderations,
                               'label'
                             )}
                             required
@@ -287,17 +380,26 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users, l
                             <HorizontalRule compact />
                           </>
                         )}
-
                         <p>
-                          <strong>Trip Creator</strong>
+                          <strong>Party Members</strong>{' '}
+                          <small>
+                            <Link to={`/app/trips/${activeTrip.tripId}/party`}>Edit &rarr;</Link>
+                          </small>
                         </p>
-                        <UserMediaObject
-                          user={
-                            activeTrip.owner === loggedInUser.uid
-                              ? loggedInUser
-                              : users[activeTrip.owner as any]
-                          }
-                        />
+
+                        {users &&
+                          Object.values(activeTrip.tripMembers).map((tripMember: any) => {
+                            const matchingUser: UserType | undefined = users[tripMember.uid]
+                              ? users[tripMember.uid]
+                              : undefined;
+                            if (!matchingUser) return null;
+                            return (
+                              <Fragment key={matchingUser.uid}>
+                                <UserMediaObject user={matchingUser} showSecondaryContent />
+                                <br />
+                              </Fragment>
+                            );
+                          })}
                       </Box>
                     </Column>
                   </Row>

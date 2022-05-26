@@ -1,22 +1,21 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useFirebase, useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
-
-import { RootState } from '@redux/ducks';
+import { GearItemType } from '@common/gearItem';
 import {
-  Seo,
   Button,
+  Column,
   FlexContainer,
   Heading,
-  Table,
   Modal,
-  Row,
-  Column,
   PageContainer,
+  Row,
+  Seo,
+  Table,
 } from '@components';
+import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { GearItemType } from '@common/gearItem';
+import React, { FunctionComponent, useMemo, useState } from 'react';
+import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty, isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 
 type GearListProps = {};
 

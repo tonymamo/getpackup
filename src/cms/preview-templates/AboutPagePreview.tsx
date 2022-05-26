@@ -1,6 +1,6 @@
+import { Layout, MarkdownContent } from '@components';
 import React from 'react';
 
-import { MarkdownContent, Layout } from '@components';
 import { AboutPageTemplate } from '../../templates/about-page';
 
 const AboutPagePreview = ({ entry }: { entry: any }) => {

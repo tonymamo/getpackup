@@ -1,20 +1,22 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
-
-import { FlexContainer, PackingListItem, PackingListAddItem, CollapsibleBox } from '@components';
 import { PackingListItemType } from '@common/packingListItem';
-import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
 import { TripType } from '@common/trip';
-import { useFirebase } from 'react-redux-firebase';
+import { CollapsibleBox, FlexContainer, PackingListAddItem, PackingListItem } from '@components';
+import { baseAndAHalfSpacer, halfSpacer } from '@styles/size';
+import pluralize from '@utils/pluralize';
 import trackEvent from '@utils/trackEvent';
-import { LocalStorage } from '../enums';
+import React, { FunctionComponent } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import { FirebaseReducer, useFirebase } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 type PackingListCategoryProps = {
   categoryName: string;
   sortedItems: PackingListItemType[];
+  isSharedPackingListCategory: boolean;
   tripId: string;
   trip?: TripType;
+  auth?: FirebaseReducer.AuthState;
+  isSharedTrip?: boolean;
 };
 
 const ItemsWrapper = styled.ul`
@@ -28,69 +30,100 @@ const PackingListCategory: FunctionComponent<PackingListCategoryProps> = ({
   sortedItems,
   tripId,
   trip,
+  isSharedPackingListCategory,
+  auth,
+  isSharedTrip,
 }) => {
   const firebase = useFirebase();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const { localStorage } = window;
-      const windowOffsetTop = LocalStorage.WindowOffsetTop;
-      if (localStorage.getItem(windowOffsetTop) === null) {
-        localStorage.setItem(windowOffsetTop, '0');
-      }
-    }
-  }, [window]);
-
   const handleCollapsible = (name: string) => {
-    let updatedCollapsedCategories: string[] = [];
-    if (trip?.collapsedCategories?.some((cat) => cat === name)) {
-      // Category is in the collapsedList, so we remove it
-      updatedCollapsedCategories = trip.collapsedCategories.filter((cat) => cat !== name);
-    } else if (trip?.collapsedCategories && trip?.collapsedCategories?.length > 0) {
-      // Category is not in the collapsedlist, so we add it
-      updatedCollapsedCategories = [...((trip?.collapsedCategories as unknown) as string[]), name];
-    } else {
-      // collapsedList does not exist, so we can create it with this category
-      updatedCollapsedCategories.push(name);
+    if (auth && auth.uid && trip) {
+      // updatedCollapsedCategories is not the same shape as collapsedCategories,
+      // it is just the array that we will push to the collapsedCategories[auth.uid]
+      let updatedCollapsedCategories: string[] = [];
+
+      // Category is in the collapsedList for the current user, so we remove it
+      if (
+        trip.collapsedCategories &&
+        trip.collapsedCategories[auth.uid] &&
+        trip.collapsedCategories[auth.uid].some((cat) => cat === name)
+      ) {
+        updatedCollapsedCategories = trip.collapsedCategories[auth.uid].filter(
+          (cat) => cat !== name
+        );
+      }
+      // Category is not in the collapsedlist for current user, so we add it
+      else if (
+        trip.collapsedCategories &&
+        trip.collapsedCategories[auth.uid] &&
+        trip.collapsedCategories[auth.uid].findIndex((cat) => cat === name) < 0
+      ) {
+        updatedCollapsedCategories = [...trip.collapsedCategories[auth.uid], name];
+      }
+      // user or trip doesnt have any entries in trip.collapsedCategories yet,
+      // so lets start an array with the new category and we will add it on doc.update below
+      else {
+        updatedCollapsedCategories = [name];
+      }
+
+      firebase
+        .firestore()
+        .collection('trips')
+        .doc(trip?.tripId)
+        .update({
+          [`collapsedCategories.${auth.uid}`]: updatedCollapsedCategories,
+        })
+        .then(() => {
+          trackEvent('Collapsed Categories Updated', {
+            tripId,
+            [`collapsedCategories.${auth.uid}`]: updatedCollapsedCategories,
+          });
+        })
+        .catch(() => {
+          trackEvent('Collapsed Categories Update Failure', {
+            tripId,
+            [`collapsedCategories.${auth.uid}`]: updatedCollapsedCategories,
+          });
+        });
     }
-    firebase
-      .firestore()
-      .collection('trips')
-      .doc(trip?.tripId)
-      .update({
-        collapsedCategories: updatedCollapsedCategories,
-      })
-      .then(() => {
-        trackEvent('Trip Details Updated', {
-          collapsedCategories: updatedCollapsedCategories,
-        });
-      })
-      .catch((err) => {
-        trackEvent('Trip Details Update Failure', {
-          collapsedCategories: updatedCollapsedCategories,
-        });
-      });
   };
 
   return (
     <CollapsibleBox
-      key={categoryName}
+      key={
+        isSharedPackingListCategory
+          ? `${categoryName}-CollapsibleBox-Shared`
+          : `${categoryName}-CollapsibleBox-Personal`
+      }
       title={categoryName}
+      subtitle={pluralize('item', sortedItems.length)}
       defaultClosed={
-        trip?.collapsedCategories
-          ? trip.collapsedCategories.some((cat) => cat === categoryName)
+        auth && auth.uid && trip && trip.collapsedCategories && trip.collapsedCategories[auth.uid]
+          ? trip.collapsedCategories[auth.uid].findIndex((cat) => cat === categoryName) > -1 &&
+            !isSharedPackingListCategory
           : false
       }
       collapseCallback={() => handleCollapsible(categoryName)}
+      enabled={!isSharedPackingListCategory}
     >
       <div>
         <ItemsWrapper>
           {sortedItems && sortedItems.length > 0 ? (
             <>
               {sortedItems.map((item) => (
-                <PackingListItem key={item.id} tripId={tripId} item={item} />
+                <PackingListItem
+                  key={item.id}
+                  tripId={tripId}
+                  item={item}
+                  isOnSharedList={isSharedPackingListCategory}
+                  isSharedTrip={isSharedTrip}
+                />
               ))}
-              <PackingListAddItem tripId={tripId} categoryName={categoryName} />
+              <PackingListAddItem
+                tripId={tripId}
+                categoryName={categoryName}
+                isOnSharedList={isSharedPackingListCategory}
+              />
             </>
           ) : (
             <>

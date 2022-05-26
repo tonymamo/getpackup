@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useState, useRef } from 'react';
-import styled from 'styled-components';
-import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import format from 'date-fns/format';
 
-import { brandPrimary, textColor, white, brandPrimaryRGB } from '@styles/color';
-import { baseSpacer, borderRadius, doubleSpacer } from '@styles/size';
-import { baseBorderStyle } from '@styles/mixins';
-import { Button, Alert } from '@components';
+import { Alert, Button } from '@components';
 import { StyledLabel } from '@components/Input';
+import { brandPrimary, brandPrimaryRGB, textColor, white } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
+import { baseSpacer, borderRadius, doubleSpacer } from '@styles/size';
+import format from 'date-fns/format';
+import React, { FunctionComponent, useRef, useState } from 'react';
+import DayPicker, { DateUtils } from 'react-day-picker';
+import styled from 'styled-components';
 
 type DayPickerInputProps = {
   initialValues: any;

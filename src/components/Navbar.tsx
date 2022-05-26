@@ -1,35 +1,34 @@
-import React, { useEffect, useRef, useState, FunctionComponent } from 'react';
-import styled from 'styled-components';
-import { Link, navigate } from 'gatsby';
-import { useSelector } from 'react-redux';
-import { Spin as Hamburger } from 'hamburger-react';
-import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
-import { useLocation } from '@reach/router';
-import { Helmet } from 'react-helmet-async';
-import { useFirestoreConnect } from 'react-redux-firebase';
-import ReactTooltip from 'react-tooltip';
-import { setScrollPosition } from '@utils/setScrollPosition';
-
 import {
   Avatar,
-  PageContainer,
+  Box,
+  Button,
   FlexContainer,
   Heading,
-  Button,
-  Box,
   HorizontalRule,
+  PageContainer,
 } from '@components';
-import { brandSecondary, brandTertiary, white, brandPrimary } from '@styles/color';
-import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
-import { headingsFontFamily, fontSizeSmall, fontSizeBase } from '@styles/typography';
-import { RootState } from '@redux/ducks';
-import useWindowSize from '@utils/useWindowSize';
-import yak from '@images/yak.svg';
 import GearClosetIcon from '@images/gearClosetIcon';
+import yak from '@images/yak.svg';
+import { useLocation } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import { brandPrimary, brandSecondary, brandTertiary, white } from '@styles/color';
 import { zIndexNavbar } from '@styles/layers';
+import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
+import { fontSizeBase, fontSizeSmall, headingsFontFamily } from '@styles/typography';
+import { TabOptions } from '@utils/enums';
+import scrollToPosition from '@utils/scrollToPosition';
 import trackEvent from '@utils/trackEvent';
+import useWindowSize from '@utils/useWindowSize';
+import { Link, navigate } from 'gatsby';
+import { Spin as Hamburger } from 'hamburger-react';
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
+import styled from 'styled-components';
+
 import { AvatarImageWrapper } from './Avatar';
-import { ScrollTimeout } from '../enums';
 
 type NavbarProps = {};
 
@@ -47,7 +46,6 @@ const StyledNavbar = styled.header`
   & a,
   & a:hover,
   & a:focus,
-  & a:visited,
   & a:active {
     font-family: ${headingsFontFamily};
     font-weight: 700;
@@ -56,7 +54,6 @@ const StyledNavbar = styled.header`
 
   & a:focus {
     outline: 1px dotted ${brandPrimary};
-    opacity: 0.8;
   }
 
   & h1 a {
@@ -144,22 +141,30 @@ const TopNavIconWrapper = styled.nav`
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1;
+    padding: 0 ${baseSpacer};
     height: ${quadrupleSpacer};
-    width: ${tripleSpacer};
     color: ${white};
+    border-top: ${quarterSpacer} solid transparent;
+    border-bottom: ${quarterSpacer} solid transparent;
     transition: all 0.2s ease-in-out;
   }
 
-  & a:focus,
-  & a:active {
-    outline: 1px dotted ${brandPrimary};
-    opacity: 0.8;
+  & a > svg {
+    flex-shrink: 0;
   }
 
-  & a.active,
-  & a.active:visited {
+  & a.active > svg {
     color: ${brandPrimary};
+  }
+
+  & a:hover,
+  & a:focus,
+  & a.active {
+    border-bottom-color: ${brandPrimary};
+  }
+
+  & a:focus {
+    outline: 1px dotted ${brandPrimary};
   }
 
   /* active avatar border */
@@ -172,6 +177,8 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  const { activePackingListTab, personalListScrollPosition, sharedListScrollPosition } =
+    useSelector((state: RootState) => state.client);
 
   useFirestoreConnect([
     { collection: 'users', where: ['uid', '==', auth.uid || ''], storeAs: 'loggedInUser' },
@@ -278,7 +285,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Back Button Clicked');
                     if (routeIsChecklistOrGearClosetItem) {
-                      setTimeout(() => setScrollPosition(), ScrollTimeout.default);
+                      if (personalListScrollPosition || sharedListScrollPosition) {
+                        scrollToPosition(
+                          activePackingListTab === TabOptions.Personal
+                            ? personalListScrollPosition
+                            : sharedListScrollPosition
+                        );
+                      }
                       navigate(-1);
                     }
                   }}
@@ -391,18 +404,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 getProps={isPartiallyActive}
                 onClick={() => trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Trips' })}
               >
-                <FaCalendar data-tip="Trips" data-for="trips" />
-                <ReactTooltip
-                  id="trips"
-                  place="bottom"
-                  type="dark"
-                  effect="solid"
-                  className="tooltip customTooltip"
-                  delayShow={500}
-                  offset={{
-                    bottom: 8,
-                  }}
-                />
+                <FaCalendar style={{ marginRight: halfSpacer }} /> Trips
               </Link>
               <Link
                 to="/app/gear-closet"
@@ -411,18 +413,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   trackEvent('Navbar LoggedInUser Link Clicked', { link: 'gear-closet' })
                 }
               >
-                <GearClosetIcon data-tip="Gear Closet" data-for="gearCloset" size={17} />
-                <ReactTooltip
-                  id="gearCloset"
-                  place="bottom"
-                  type="dark"
-                  effect="solid"
-                  className="tooltip customTooltip"
-                  delayShow={500}
-                  offset={{
-                    bottom: 8,
-                  }}
-                />
+                <GearClosetIcon size={17} style={{ marginRight: halfSpacer }} /> Gear Closet
               </Link>
               {/* TODO: when shopping list is ready 
               <Link
@@ -447,18 +438,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               </Link> */}
               {profile.isAdmin && (
                 <Link to="/admin/gear-list" getProps={isPartiallyActive}>
-                  <FaUserLock data-tip="Admin" data-for="admin" />
-                  <ReactTooltip
-                    id="admin"
-                    place="bottom"
-                    type="dark"
-                    effect="solid"
-                    className="tooltip customTooltip"
-                    delayShow={500}
-                    offset={{
-                      bottom: 8,
-                    }}
-                  />
+                  <FaUserLock /> Admin
                 </Link>
               )}
               {loggedInUser && loggedInUser.length > 0 && (
@@ -473,20 +453,9 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     src={loggedInUser[0].photoURL as string}
                     size="xs"
                     gravatarEmail={loggedInUser[0].email as string}
-                    data-tip="Profile"
-                    data-for="profile"
-                  />
-                  <ReactTooltip
-                    id="profile"
-                    place="bottom"
-                    type="dark"
-                    effect="solid"
-                    className="tooltip customTooltip"
-                    delayShow={500}
-                    offset={{
-                      bottom: 8,
-                    }}
-                  />
+                    rightMargin
+                  />{' '}
+                  Profile
                 </Link>
               )}
             </TopNavIconWrapper>

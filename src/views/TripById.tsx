@@ -1,18 +1,25 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { RouteComponentProps, Router } from '@reach/router';
-import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
-import { useSelector, useDispatch } from 'react-redux';
-import { actionTypes } from 'redux-firestore';
-
-import { Seo, PageContainer, NoTripFound } from '@components';
-import { RootState } from '@redux/ducks';
+import { PackingListItemType } from '@common/packingListItem';
 import { TripType } from '@common/trip';
+import { UserType } from '@common/user';
+import { NoTripFound, PageContainer, Seo } from '@components';
+import { RouteComponentProps, Router } from '@reach/router';
+import { RootState } from '@redux/ducks';
+import {
+  setActivePackingListFilter,
+  setActivePackingListTab,
+  setPersonalListScrollPosition,
+  setSharedListScrollPosition,
+} from '@redux/ducks/client';
+import { PackingListFilterOptions, TabOptions } from '@utils/enums';
+import trackEvent from '@utils/trackEvent';
+import EditPackingListItem from '@views/EditPackingListItem';
 import PackingList from '@views/PackingList';
 import TripDetails from '@views/TripDetails';
 import TripParty from '@views/TripParty';
-import EditPackingListItem from '@views/EditPackingListItem';
-import { UserType } from '@common/user';
-import trackEvent from '@utils/trackEvent';
+import React, { FunctionComponent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty, isLoaded, useFirestoreConnect } from 'react-redux-firebase';
+import { actionTypes } from 'redux-firestore';
 
 type TripByIdProps = {
   id?: string;
@@ -26,14 +33,36 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
   const activeTripById: Array<TripType> = useSelector(
     (state: RootState) => state.firestore.ordered.activeTripById
   );
-  const packingList = useSelector((state: RootState) => state.firestore.ordered.packingList);
+  const packingList: PackingListItemType[] = useSelector(
+    (state: RootState) => state.firestore.ordered.packingList
+  );
+
+  const isTripOwner: boolean =
+    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
+
+  const activeTrip: TripType | undefined =
+    (activeTripById &&
+      activeTripById.length > 0 &&
+      Object.keys(activeTripById[0].tripMembers).some((member) => member === auth.uid)) ||
+    isTripOwner
+      ? activeTripById[0]
+      : undefined;
 
   useFirestoreConnect([
     {
       collection: 'trips',
       doc: props.id,
       storeAs: 'activeTripById',
-      populates: [{ child: 'tripMembers', root: 'users' }],
+    },
+    {
+      collection: 'users',
+      where: [
+        'uid',
+        'in',
+        activeTrip && activeTrip.tripMembers && Object.keys(activeTrip.tripMembers).length > 0
+          ? Object.keys(activeTrip.tripMembers)
+          : [auth.uid],
+      ],
     },
     {
       collection: 'trips',
@@ -44,17 +73,12 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
     },
   ]);
 
-  const isTripOwner: boolean =
-    activeTripById && activeTripById.length > 0 && activeTripById[0].owner === auth.uid;
-
-  const activeTrip: TripType | undefined =
-    activeTripById &&
-    activeTripById.length > 0 &&
-    (activeTripById[0].tripMembers.some((member) => member === auth.uid) || isTripOwner)
-      ? activeTripById[0]
-      : undefined;
-
   useEffect(() => {
+    // reset filters, tab, and scroll positions for packing list each time tripId changes
+    dispatch(setActivePackingListFilter(PackingListFilterOptions.All));
+    dispatch(setActivePackingListTab(TabOptions.Personal));
+    dispatch(setPersonalListScrollPosition(0));
+    dispatch(setSharedListScrollPosition(0));
     return () => {
       // disconnect listening and remove data from redux store
       // so next trip can fetch without `activeTripById` already being populated with
@@ -63,7 +87,7 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         type: actionTypes.CLEAR_DATA,
         preserve: {
           data: ['loggedInUser', 'trips', 'users'],
-          ordered: ['loggedInUser', 'trips'],
+          ordered: ['loggedInUser', 'trips', 'users'],
         },
       });
     };
@@ -82,20 +106,22 @@ const TripById: FunctionComponent<TripByIdProps> = (props) => {
         <Router basepath={`/app/trips/${props.id}`} primary={false}>
           <PackingList
             path="/"
-            packingList={packingList}
+            packingList={packingList || []}
             tripId={props.id}
             trip={activeTrip}
-            loggedInUser={props.loggedInUser}
             tripIsLoaded={isLoaded(activeTripById) && (isEmpty(activeTripById) || !activeTrip)}
           />
-          <TripDetails
-            path="/details"
-            activeTrip={activeTrip}
-            users={users}
-            loggedInUser={props.loggedInUser}
-          />
+
+          <TripDetails path="/details" activeTrip={activeTrip} users={users} />
           <TripParty path="/party" activeTrip={activeTrip} />
-          <EditPackingListItem path="/checklist/:id" tripId={props.id} />
+          <EditPackingListItem
+            path="/checklist/:id"
+            tripId={props.id}
+            users={users}
+            packingList={packingList || []}
+            loggedInUserUid={auth.uid}
+            activeTrip={activeTrip}
+          />
         </Router>
       </PageContainer>
 

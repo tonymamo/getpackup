@@ -1,27 +1,27 @@
-import React, { FunctionComponent, useState } from 'react';
-import styled from 'styled-components';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
-import { FaChevronRight, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
-import { navigate } from 'gatsby';
-import {
-  SwipeableListItem,
-  SwipeAction,
-  TrailingActions,
-  Type as ListType,
-} from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css';
 
+import { GearItemType } from '@common/gearItem';
+import { Button, FlexContainer, IconWrapper, Pill } from '@components';
+import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { brandInfo, offWhite } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 import { halfSpacer } from '@styles/size';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { FlexContainer, IconWrapper, Button, Pill } from '@components';
-import { brandInfo, offWhite } from '@styles/color';
-import { GearItemType } from '@common/gearItem';
-import useWindowSize from '@utils/useWindowSize';
 import trackEvent from '@utils/trackEvent';
-import { RootState } from '@redux/ducks';
+import useWindowSize from '@utils/useWindowSize';
+import { navigate } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaChevronRight, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import {
+  Type as ListType,
+  SwipeAction,
+  SwipeableListItem,
+  TrailingActions,
+} from 'react-swipeable-list';
+import ReactTooltip from 'react-tooltip';
+import styled from 'styled-components';
 
 type GearListItemProps = {
   item: GearItemType;

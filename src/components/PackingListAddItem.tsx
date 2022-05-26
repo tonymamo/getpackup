@@ -1,21 +1,24 @@
-import React, { FunctionComponent } from 'react';
-import { Formik, Field, Form } from 'formik';
-import styled from 'styled-components';
-import { useFirebase } from 'react-redux-firebase';
-import { useDispatch } from 'react-redux';
-import { FaPlus } from 'react-icons/fa';
-
-import { baseBorderStyle } from '@styles/mixins';
-import { halfSpacer, doubleSpacer } from '@styles/size';
+import { FlexContainer, Input } from '@components';
+import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { Input, FlexContainer } from '@components';
 import { brandPrimary, offWhite, textColor } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
+import { doubleSpacer, halfSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
+import { Field, Form, Formik } from 'formik';
+import React, { FunctionComponent } from 'react';
+import { FaPlus } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
+import ReactTooltip from 'react-tooltip';
+import styled from 'styled-components';
+
 import { InputWrapper } from './Input';
 
 type PackingListItemProps = {
   tripId: string;
   categoryName: string;
+  isOnSharedList?: boolean;
 };
 
 const PackingListItemWrapper = styled.li`
@@ -44,9 +47,14 @@ const IconWrapper = styled.div`
   }
 `;
 
-const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, categoryName }) => {
+const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({
+  tripId,
+  categoryName,
+  isOnSharedList,
+}) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.firebase.auth);
 
   return (
     <PackingListItemWrapper>
@@ -78,6 +86,13 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                   isEssential: false,
                   description: '',
                   created: new Date(),
+                  packedBy: [
+                    {
+                      isShared: isOnSharedList,
+                      quantity: 1,
+                      uid: auth.uid,
+                    },
+                  ],
                 });
               trackEvent('Packing List Item Added', {
                 name: values[`new-${categoryName}`],
@@ -96,7 +111,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
               await dispatch(
                 addAlert({
                   type: 'danger',
-                  message: err.message,
+                  message: 'Faled to add item, please try again',
                 })
               );
             }
@@ -114,8 +129,15 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({ tripId, c
                 hiddenLabel
                 disabled={isSubmitting}
               />
-              <IconWrapper onClick={() => handleSubmit()}>
+              <IconWrapper onClick={() => handleSubmit()} data-tip="Add Item" data-for="addItem">
                 <FaPlus />
+                <ReactTooltip
+                  id="addItem"
+                  place="top"
+                  type="dark"
+                  effect="solid"
+                  className="tooltip customTooltip"
+                />
               </IconWrapper>
             </FlexContainer>
           </Form>

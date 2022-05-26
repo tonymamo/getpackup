@@ -1,5 +1,5 @@
-import { useEffect, useReducer, useState } from 'react';
 import { User } from 'firebase';
+import { useEffect, useReducer, useState } from 'react';
 
 interface FirebaseWithAuth {
   auth: () => firebase.auth.Auth;

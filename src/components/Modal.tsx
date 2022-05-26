@@ -1,11 +1,10 @@
+import { zIndexModal } from '@styles/layers';
+import { baseBorderStyle, z1Shadow } from '@styles/mixins';
+import { baseSpacer, borderRadius, doubleSpacer, halfSpacer, screenSizes } from '@styles/size';
 import React, { FunctionComponent } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
-import { FaTimes } from 'react-icons/fa';
-
-import { baseBorderStyle, z1Shadow } from '@styles/mixins';
-import { borderRadius, halfSpacer, screenSizes, doubleSpacer, baseSpacer } from '@styles/size';
-import { zIndexModal } from '@styles/layers';
 
 type ModalProps = {
   isOpen: boolean;

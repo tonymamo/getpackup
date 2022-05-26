@@ -5,11 +5,12 @@
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
 
-import React from 'react';
 import 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
+
+import React from 'react';
 
 import Layout from './src/components/Layout';
 

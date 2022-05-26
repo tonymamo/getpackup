@@ -1,13 +1,14 @@
-import React, { FC, useState, useEffect } from 'react';
 import { Button } from '@components';
-import styled from 'styled-components';
-import { PackingListItemType } from '@common/packingListItem';
 import { baseSpacer } from '@styles/size';
-import { FilterListFilterCriteria } from '../enums';
+import { PackingListFilterOptions } from '@utils/enums';
+import React, { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 
 type PackingListFilterProps = {
-  list: PackingListItemType[];
-  sendFilteredList: (list: PackingListItemType[]) => void;
+  disabled: boolean;
+  activeFilter: PackingListFilterOptions;
+  onFilterChange: (filter: PackingListFilterOptions) => void;
 };
 
 const Filters = styled.div`
@@ -29,55 +30,43 @@ const FilterButtons = styled.div`
 
     &:nth-child(2) {
       border-radius: 0;
+      border-left-width: 0;
+      border-right-width: 0;
     }
   }
 `;
 
-const PackingListFilters: FC<PackingListFilterProps> = ({
-  list,
-  sendFilteredList,
+const PackingListFilters: FunctionComponent<PackingListFilterProps> = ({
+  disabled,
+  activeFilter,
+  onFilterChange,
 }): JSX.Element => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const initialCopyOfList = Object.assign([], list);
-
   const filterSettings = [
-    { id: FilterListFilterCriteria.All },
-    { id: FilterListFilterCriteria.Packed },
-    { id: FilterListFilterCriteria.Unpacked },
+    PackingListFilterOptions.All,
+    PackingListFilterOptions.Packed,
+    PackingListFilterOptions.Unpacked,
   ];
 
-  const handleFilter = (id: string, index: number) => {
-    const isPacked = id === FilterListFilterCriteria.Packed;
-    const isAll = id === FilterListFilterCriteria.All;
+  const dispatch = useDispatch();
 
-    if (isAll) {
-      sendFilteredList(initialCopyOfList);
-    } else {
-      const filterList = list.filter((item) => item.isPacked === isPacked);
-      sendFilteredList(filterList);
-    }
-    setCurrentIndex(index);
+  const handleFilter = (filter: PackingListFilterOptions) => {
+    dispatch(onFilterChange(filter));
   };
-
-  useEffect(() => {
-    if (list) {
-      setTimeout(() => handleFilter(filterSettings[currentIndex].id, currentIndex));
-    }
-  }, [list]);
 
   return (
     <Filters>
-      <strong>Show:</strong>{' '}
+      <strong>Show: </strong>
       <FilterButtons>
-        {filterSettings.map(({ id }, index) => (
+        {filterSettings.map((filter) => (
           <Button
-            key={id}
+            key={filter}
             type="button"
             size="small"
-            color={index === currentIndex ? 'primary' : 'tertiary'}
-            onClick={() => handleFilter(id, index)}
+            color={filter === activeFilter ? 'primary' : 'tertiary'}
+            onClick={() => handleFilter(filter)}
+            disabled={disabled}
           >
-            {id}
+            {filter}
           </Button>
         ))}
       </FilterButtons>

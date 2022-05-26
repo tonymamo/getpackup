@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
-import { RouteComponentProps } from '@reach/router';
-
-import { Seo, Heading, PageContainer } from '@components';
-import GearListItemForm from '@views/Admin/GearListItemForm';
 import { GearItemType } from '@common/gearItem';
+import { Heading, PageContainer, Seo } from '@components';
+import { RouteComponentProps } from '@reach/router';
 import { gearListKeys } from '@utils/gearListItemEnum';
+import GearListItemForm from '@views/Admin/GearListItemForm';
+import React, { FunctionComponent } from 'react';
 
 type NewGearListItemProps = {} & RouteComponentProps;
 

@@ -9,10 +9,11 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "14"
+    "node": "16"
   },
   "main": "index.js",
   "dependencies": {
+    "@qualdesk/firestore-big-batch": "^0.0.2",
     "firebase-admin": "^9.8.0",
     "firebase-functions": "^3.14.1",
     "lodash": "^4.17.20"

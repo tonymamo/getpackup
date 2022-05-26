@@ -5,10 +5,10 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
+import { useLocation } from '@reach/router';
+import { graphql, useStaticQuery } from 'gatsby';
 import React, { FunctionComponent } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { graphql, useStaticQuery } from 'gatsby';
-import { useLocation } from '@reach/router';
 
 type SeoType = {
   description?: string;

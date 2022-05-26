@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import * as Sentry from '@sentry/gatsby';
-
 import { Box, Button, Column, Heading, PageContainer, Row } from '@components';
+import * as Sentry from '@sentry/gatsby';
 import trackEvent from '@utils/trackEvent';
+import React, { Component } from 'react';
 
 type Props = {
   children: any;

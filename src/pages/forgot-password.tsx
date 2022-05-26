@@ -1,25 +1,24 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { useDispatch } from 'react-redux';
-import { useFirebase } from 'react-redux-firebase';
-import { FaCaretRight } from 'react-icons/fa';
-import { Link } from 'gatsby';
-
 import {
-  Row,
+  Alert,
   Box,
+  Button,
   Column,
-  PageContainer,
-  Seo,
+  FlexContainer,
   Heading,
   Input,
-  Button,
-  Alert,
-  FlexContainer,
+  PageContainer,
+  Row,
+  Seo,
 } from '@components';
-import { requiredField } from '@utils/validations';
 import { addAlert } from '@redux/ducks/globalAlerts';
 import trackEvent from '@utils/trackEvent';
+import { requiredField } from '@utils/validations';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
+import { Link } from 'gatsby';
+import React, { FunctionComponent, useState } from 'react';
+import { FaCaretRight } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { useFirebase } from 'react-redux-firebase';
 
 type ForgotPasswordProps = {};
 

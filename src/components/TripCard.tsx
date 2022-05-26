@@ -1,165 +1,208 @@
-import React, { FunctionComponent } from 'react';
-import { FaRegCalendar, FaMapMarkerAlt } from 'react-icons/fa';
-import TextTruncate from 'react-text-truncate';
-import { Link } from 'gatsby';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
-
-import { TripType } from '@common/trip';
-import { UserType } from '@common/user';
+import { TripMemberStatus, TripType } from '@common/trip';
 import {
-  Heading,
-  StackedAvatars,
-  Avatar,
-  HorizontalRule,
-  FlexContainer,
-  NegativeMarginContainer,
-  HeroImage,
-  NoiseRings,
-  StaticMapImage,
-  Row,
+  Button,
   Column,
+  FlexContainer,
+  Heading,
+  HorizontalScroller,
+  Pill,
+  Row,
+  TripHeaderImage,
+  TripMemberAvatars,
 } from '@components';
-import { baseSpacer, doubleSpacer, halfSpacer, quarterSpacer } from '@styles/size';
-import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
+import { white } from '@styles/color';
+import { baseBorderStyle } from '@styles/mixins';
+import { baseAndAHalfSpacer, baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
+import { formattedDate, formattedDateRange } from '@utils/dateUtils';
 import trackEvent from '@utils/trackEvent';
-import useWindowSize from '@utils/useWindowSize';
-import { brandSecondary, lightestGray } from '@styles/color';
+import { Link, navigate } from 'gatsby';
+import React, { FunctionComponent, useMemo } from 'react';
+import { FaCheck, FaMapMarkerAlt, FaRegCalendar, FaTimes } from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 type TripCardProps = {
   trip?: TripType;
-  loggedInUser?: UserType;
+  isPending?: boolean;
+  onClick?: () => void;
 };
 
-const StyledTripWrapper = styled.div`
-  cursor: pointer;
+const StyledTripWrapper = styled.div<{ isPending?: boolean }>`
+  padding: ${baseSpacer};
+  margin-bottom: ${baseSpacer};
+  border: ${baseBorderStyle};
+  cursor: ${(props) => (props.isPending ? 'initial' : 'pointer')};
+  background-color: ${white};
 `;
 
 const StyledLineItem = styled.div`
   margin-bottom: ${halfSpacer};
 `;
 
-const PlaceholderImageWrapper = styled.div`
-  height: calc(100vw / 5);
-  background-color: ${(props: { backgroundColor: string }) => props.backgroundColor};
-  & svg {
-    width: 100%;
-  }
-`;
-
-const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
+const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }) => {
   const users = useSelector((state: RootState) => state.firestore.data.users);
+  const auth = useSelector((state: RootState) => state.firebase.auth);
+  const firebase = useFirebase();
+  const dispatch = useDispatch();
 
-  const { isExtraSmallScreen, isSmallScreen } = useWindowSize();
-  // Box.tsx adjusts padding at small breakpoint, so use this var to change accordingly
-  const negativeSpacingSize = isExtraSmallScreen ? baseSpacer : doubleSpacer;
+  useFirestoreConnect([
+    {
+      collection: 'users',
+      where: [
+        'uid',
+        'in',
+        trip && trip.tripMembers && Object.keys(trip.tripMembers)
+          ? Object.keys(trip.tripMembers)
+          : [auth.uid],
+      ],
+    },
+  ]);
 
-  const numberOfAvatarsToShow = 4;
+  const acceptInvitation = () => {
+    if (trip) {
+      firebase
+        .firestore()
+        .collection('trips')
+        .doc(trip.tripId)
+        .update({
+          [`tripMembers.${auth.uid}`]: {
+            uid: auth.uid,
+            invitedAt: trip?.tripMembers[`${auth.uid}`].invitedAt,
+            acceptedAt: new Date(),
+            status: TripMemberStatus.Accepted,
+          },
+        })
+        .then(() => {
+          trackEvent('Trip Party Member Accepted', {
+            ...trip,
+            acceptedMember: auth.uid,
+          });
+          dispatch(
+            addAlert({
+              type: 'success',
+              message: `Excellent! Let's start thinking about whay you'll need to bring next 🤙`,
+            })
+          );
+          navigate(`/app/trips/${trip.tripId}/generator`);
+        })
+        .catch((err) => {
+          trackEvent('Trip Party Member Accept Failure', {
+            ...trip,
+            acceptedMember: auth.uid,
+            error: err,
+          });
+          dispatch(
+            addAlert({
+              type: 'danger',
+              message: err.message,
+            })
+          );
+        });
+    }
+  };
+
+  const declineInvitation = () => {
+    if (trip) {
+      firebase
+        .firestore()
+        .collection('trips')
+        .doc(trip.tripId)
+        .update({
+          [`tripMembers.${auth.uid}`]: {
+            uid: auth.uid,
+            invitedAt: trip?.tripMembers[`${auth.uid}`].invitedAt,
+            declinedAt: new Date(),
+            status: TripMemberStatus.Declined,
+          },
+        })
+        .then(() => {
+          trackEvent('Trip Party Member Declined', {
+            ...trip,
+            declinedMember: auth.uid,
+          });
+          dispatch(
+            addAlert({
+              type: 'success',
+              message: `Bummer... You have successfully declined to go on the trip 😔`,
+            })
+          );
+        })
+        .catch((err) => {
+          trackEvent('Trip Party Member Decline Failure', {
+            ...trip,
+            declinedMember: auth.uid,
+            error: err,
+          });
+          dispatch(
+            addAlert({
+              type: 'danger',
+              message: err.message,
+            })
+          );
+        });
+    }
+  };
+
+  const getInvitedByName = useMemo(() => {
+    let inviter: string | undefined;
+
+    // need to wait for trip users to be loaded in redux, not just logged in user
+    if (users && Object.keys(users).length > 1 && trip) {
+      if (trip && trip.tripMembers && Object.keys(trip.tripMembers).length > 0) {
+        if (
+          trip.tripMembers[auth.uid].invitedBy &&
+          typeof trip.tripMembers[auth.uid].invitedBy === 'string'
+        ) {
+          inviter = users[`${trip.tripMembers[auth.uid].invitedBy}`]?.displayName || undefined;
+        } else {
+          const owner =
+            trip.owner ||
+            Object.values(trip.tripMembers).find(
+              (member) => member.status === TripMemberStatus.Owner
+            )?.uid;
+          inviter = owner ? users[owner]?.displayName : undefined;
+        }
+      }
+    }
+
+    return inviter ? `You've been invited by ${inviter}` : null;
+  }, [trip, users]);
 
   return (
-    <StyledTripWrapper>
-      <NegativeMarginContainer
-        top={negativeSpacingSize}
-        left={negativeSpacingSize}
-        right={negativeSpacingSize}
-      >
-        {trip ? (
-          <>
-            {/* Aspect ratio is 16/4 or these images, but 5 works better because it isnt 100% full width, it's in a PageContainer with a max width */}
-            {trip.headerImage && <HeroImage staticImgSrc={trip.headerImage} aspectRatio={5} />}
-            {!trip.headerImage && !!trip.lat && !!trip.lng && (
-              <StaticMapImage
-                lat={trip.lat}
-                lng={trip.lng}
-                height="calc(100vw / 5)"
-                width="100%"
-                zoom={10}
-                label={isExtraSmallScreen ? undefined : trip.startingPoint}
-              />
-            )}
-            {!trip.headerImage && !trip.lat && !trip.lng && (
-              <PlaceholderImageWrapper backgroundColor={brandSecondary}>
-                <NoiseRings height={512} width={2048} seed={trip.name} strokeWidth={4} />
-              </PlaceholderImageWrapper>
-            )}
-          </>
-        ) : (
-          <PlaceholderImageWrapper backgroundColor={lightestGray} />
-        )}
-      </NegativeMarginContainer>
+    <StyledTripWrapper isPending={isPending} onClick={onClick}>
+      <TripHeaderImage trip={trip} />
 
-      <Row>
-        <Column md={8}>
-          <FlexContainer justifyContent="flex-start" height="100%">
-            <Heading as="h3" altStyle noMargin>
-              {trip ? (
+      <FlexContainer justifyContent="space-between" flexWrap="nowrap">
+        <Heading as="h3" altStyle noMargin>
+          {trip && trip.name ? (
+            <>
+              {isPending ? (
+                trip.name
+              ) : (
                 <Link
                   to={`/app/trips/${trip.tripId}/`}
                   onClick={() => trackEvent('Trip Card Heading Link Clicked', { trip })}
                 >
                   {trip.name}
                 </Link>
-              ) : (
-                <Skeleton width={200} />
               )}
-            </Heading>
-          </FlexContainer>
-        </Column>
-        <Column md={4}>
-          <FlexContainer justifyContent={isSmallScreen ? 'flex-start' : 'flex-end'}>
-            {trip && trip.tripMembers.length > 0 && (
-              <StackedAvatars>
-                <Avatar
-                  src={loggedInUser?.photoURL as string}
-                  gravatarEmail={loggedInUser?.email as string}
-                  size="sm"
-                  username={loggedInUser?.username}
-                />
-                {users &&
-                  trip.tripMembers
-                    .filter((member) => member !== loggedInUser?.uid)
-                    .slice(
-                      0,
-                      trip.tripMembers.length === numberOfAvatarsToShow
-                        ? numberOfAvatarsToShow
-                        : numberOfAvatarsToShow - 1 // to account for the +N avatar below
-                    )
-                    .map((tripMember: any) => {
-                      const matchingUser: UserType = users[tripMember]
-                        ? users[tripMember]
-                        : undefined;
-                      if (!matchingUser) return null;
-                      return (
-                        <Avatar
-                          src={matchingUser?.photoURL as string}
-                          gravatarEmail={matchingUser?.email as string}
-                          size="sm"
-                          key={matchingUser.uid}
-                          username={matchingUser?.username}
-                        />
-                      );
-                    })}
-                {users && trip.tripMembers.length > numberOfAvatarsToShow && (
-                  <Avatar
-                    // never want to show +1, because then we could have just rendered the photo.
-                    // Instead, lets add another so its always at least +2
-                    staticContent={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1}`}
-                    size="sm"
-                    username={`+${trip.tripMembers.length - numberOfAvatarsToShow + 1} more`}
-                  />
-                )}
-              </StackedAvatars>
-            )}
-          </FlexContainer>
-        </Column>
-      </Row>
+            </>
+          ) : (
+            <Skeleton width={200} />
+          )}
+        </Heading>
+
+        {trip && <TripMemberAvatars trip={trip} users={users} />}
+      </FlexContainer>
 
       <StyledLineItem>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
           <FaRegCalendar style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }} />
-          {trip ? (
+          {trip && trip.startDate ? (
             <>
               {trip.tripLength === 21
                 ? formattedDate(new Date(trip.startDate.seconds * 1000))
@@ -176,7 +219,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
       <StyledLineItem>
         <FlexContainer flexWrap="nowrap" alignItems="flex-start" justifyContent="flex-start">
           <FaMapMarkerAlt style={{ marginRight: halfSpacer, top: quarterSpacer, flexShrink: 0 }} />
-          {trip ? (
+          {trip && trip.startingPoint ? (
             trip.startingPoint
           ) : (
             <div style={{ flex: 1 }}>
@@ -186,23 +229,76 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, loggedInUser }) => {
         </FlexContainer>
       </StyledLineItem>
 
-      {trip ? (
-        <>
-          {trip.description !== '' && (
+      <div
+        style={{
+          margin: `${halfSpacer} -${baseSpacer}`,
+          paddingLeft: halfSpacer,
+        }}
+      >
+        <HorizontalScroller>
+          {trip ? (
             <>
-              <HorizontalRule compact />
-              <TextTruncate
-                line={1}
-                element="p"
-                truncateText="…"
-                text={trip.description || 'No description provided'}
-                containerClassName="truncatedText"
-              />
+              {trip.tags &&
+                trip.tags.length > 0 &&
+                trip.tags.map((tag: string) => (
+                  <Pill key={`${tag}tag`} text={tag} color="neutral" />
+                ))}
+            </>
+          ) : (
+            <>
+              {/* Generate some tag placeholders and make widths dynamic with Math */}
+              {Array.from({
+                length: 7,
+              }).map((_, i) => (
+                <Skeleton
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={i}
+                  // random widths between 48 and 128
+                  width={Math.floor(Math.random() * (128 - 48 + 1) + 48)}
+                  height={baseAndAHalfSpacer}
+                  style={{
+                    marginRight: halfSpacer,
+                    borderRadius: baseAndAHalfSpacer,
+                  }}
+                />
+              ))}
             </>
           )}
+        </HorizontalScroller>
+      </div>
+
+      {isPending && trip && (
+        <>
+          {getInvitedByName && (
+            <p>
+              <strong>{getInvitedByName}</strong>
+            </p>
+          )}
+          <Row>
+            <Column xs={6}>
+              <Button
+                type="button"
+                block
+                color="success"
+                iconLeft={<FaCheck />}
+                onClick={acceptInvitation}
+              >
+                Accept
+              </Button>
+            </Column>
+            <Column xs={6}>
+              <Button
+                type="button"
+                block
+                color="danger"
+                iconLeft={<FaTimes />}
+                onClick={declineInvitation}
+              >
+                Decline
+              </Button>
+            </Column>
+          </Row>
         </>
-      ) : (
-        <Skeleton count={1} />
       )}
     </StyledTripWrapper>
   );

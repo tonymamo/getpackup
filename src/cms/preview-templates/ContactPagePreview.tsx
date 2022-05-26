@@ -1,6 +1,6 @@
+import { Layout, MarkdownContent } from '@components';
 import React from 'react';
 
-import { MarkdownContent, Layout } from '@components';
 import { ContactPageTemplate } from '../../templates/contact-page';
 
 const ContactPagePreview = ({ entry }: { entry: any }) => {

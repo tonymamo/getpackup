@@ -1,21 +1,20 @@
-import React, { FunctionComponent } from 'react';
-import styled, { css } from 'styled-components';
-
-import { baseSpacer } from '@styles/size';
 import { headingsColor, white } from '@styles/color';
+import { baseSpacer } from '@styles/size';
 import {
+  fontFamilySansSerif,
+  fontSizeBase,
   fontSizeH1,
   fontSizeH2,
   fontSizeH3,
   fontSizeH4,
   fontSizeH5,
   fontSizeH6,
-  lineHeightSmall,
-  headingsFontFamily,
-  fontFamilySansSerif,
-  fontSizeBase,
   fontSizeSmall,
+  headingsFontFamily,
+  lineHeightSmall,
 } from '@styles/typography';
+import React, { FunctionComponent } from 'react';
+import styled, { css } from 'styled-components';
 
 type HeadingProps = {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';

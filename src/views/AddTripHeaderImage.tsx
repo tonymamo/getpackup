@@ -1,10 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { Link, navigate } from 'gatsby';
-import { RouteComponentProps } from '@reach/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
-import styled from 'styled-components';
-
+import { TripType } from '@common/trip';
 import {
   FlexContainer,
   Heading,
@@ -13,12 +7,17 @@ import {
   PageContainer,
   Seo,
 } from '@components';
-import { TripType } from '@common/trip';
+import { RouteComponentProps } from '@reach/router';
 import { RootState } from '@redux/ducks';
+import { addAlert } from '@redux/ducks/globalAlerts';
 import { baseSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
-import { addAlert } from '@redux/ducks/globalAlerts';
 import usePrevious from '@utils/usePrevious';
+import { Link, navigate } from 'gatsby';
+import React, { FunctionComponent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 type TripHeaderImageProps = {
   id?: string;

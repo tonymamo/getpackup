@@ -1,4 +1,4 @@
-import { format, isSameDay, isSameMonth, isSameYear, isBefore, isAfter } from 'date-fns';
+import { format, isAfter, isBefore, isSameDay, isSameMonth, isSameYear } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 
 export const formattedDate = (date: Date) => format(date, 'MMM d, y');

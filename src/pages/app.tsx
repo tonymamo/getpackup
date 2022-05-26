@@ -1,21 +1,19 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { navigate, Router, useLocation } from '@reach/router';
-import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { useFirebase, isLoaded } from 'react-redux-firebase';
-import * as Sentry from '@sentry/gatsby';
+import { UserType } from '@common/user';
+import { ErrorBoundary, FeedbackModal, LoadingPage, PrivateRoute } from '@components';
 import loadable from '@loadable/component';
-
+import { Router, navigate, useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
-import { PrivateRoute, LoadingPage, ErrorBoundary, FeedbackModal } from '@components';
-import { breakpoints, baseSpacer } from '@styles/size';
+import { addAttemptedPrivatePage } from '@redux/ducks/client';
+import * as Sentry from '@sentry/gatsby';
 import { offWhite } from '@styles/color';
 import { z1Shadow } from '@styles/mixins';
-import { UserType } from '@common/user';
+import { baseSpacer, breakpoints } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
-import { addAlert } from '@redux/ducks/globalAlerts';
-import { addAttemptedPrivatePage } from '@redux/ducks/client';
 import usePrevious from '@utils/usePrevious';
+import React, { FunctionComponent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { isLoaded, useFirebase } from 'react-redux-firebase';
+import styled from 'styled-components';
 
 const Profile = loadable(() => import('@views/Profile'), { fallback: <LoadingPage /> });
 const Trips = loadable(() => import('@views/Trips'), { fallback: <LoadingPage /> });
@@ -61,18 +59,12 @@ const App: FunctionComponent<{}> = (props) => {
   const prevAuthValue = usePrevious(auth.isEmpty);
 
   useEffect(() => {
-    if (auth.isLoaded && auth.isEmpty && !!prevAuthValue) {
+    if (auth.isLoaded && auth.isEmpty && prevAuthValue === true) {
       if (location) {
         trackEvent('Attempted Private Page', { location });
         dispatch(addAttemptedPrivatePage(location.pathname));
       }
       navigate('/login');
-      dispatch(
-        addAlert({
-          type: 'danger',
-          message: 'Please log in to access that page',
-        })
-      );
     }
   }, [auth]);
 

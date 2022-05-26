@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "getpackup"
-  }
+    "default": "getpackup",
+    "packup-test": "packup-test-fc0c2",
+    "packup-prod": "getpackup"
+  },
+  "targets": {}
 }

@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
 import { Link } from 'gatsby';
+import React, { FunctionComponent } from 'react';
 
 type RelativeOrExternalLinkProps = {
   to: string;

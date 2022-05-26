@@ -1,12 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import { FaQuoteRight } from 'react-icons/fa';
-
-import { Avatar, Heading, FlexContainer, Row, Column } from '@components';
-
+import { FluidImageType } from '@common/image';
+import { Avatar, Column, FlexContainer, Heading, Row } from '@components';
+import { brandPrimary } from '@styles/color';
 import { baseSpacer, doubleSpacer, quadrupleSpacer } from '@styles/size';
 import { fontSizeH6 } from '@styles/typography';
-import { brandPrimary } from '@styles/color';
-import { FluidImageType } from '@common/image';
+import React, { FunctionComponent } from 'react';
+import { FaQuoteRight } from 'react-icons/fa';
 
 type TestimonialProps = {
   testimonial: {

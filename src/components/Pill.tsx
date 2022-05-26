@@ -1,19 +1,18 @@
-import React, { FunctionComponent, CSSProperties } from 'react';
-import styled from 'styled-components';
-import { Link } from 'gatsby';
-
 import {
+  brandDanger,
+  brandInfo,
   brandPrimary,
   brandPrimaryHover,
-  white,
+  brandSuccess,
   lightestGray,
   textColor,
-  brandDanger,
-  brandSuccess,
-  brandInfo,
+  white,
 } from '@styles/color';
-import { threeQuarterSpacer, doubleSpacer, quarterSpacer } from '@styles/size';
+import { doubleSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
 import { fontSizeSmall } from '@styles/typography';
+import { Link } from 'gatsby';
+import React, { CSSProperties, FunctionComponent } from 'react';
+import styled from 'styled-components';
 
 type PillProps = {
   to?: string;

@@ -1,4 +1,5 @@
 import algoliasearch from 'algoliasearch';
+
 import { isAlphaNumeric } from './validations';
 
 const algoliaClient = algoliasearch(

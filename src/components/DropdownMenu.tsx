@@ -1,8 +1,6 @@
-import React, { useState, FunctionComponent, useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import { FaEllipsisH } from 'react-icons/fa';
-
-import { textColor, white, borderColor, brandPrimary, offWhite } from '@styles/color';
+import { Button } from '@components';
+import { borderColor, brandPrimary, offWhite, textColor, white } from '@styles/color';
+import { zIndexDropdown } from '@styles/layers';
 import { baseBorderStyle, z1Shadow } from '@styles/mixins';
 import {
   baseAndAHalfSpacer,
@@ -11,8 +9,9 @@ import {
   halfSpacer,
   quarterSpacer,
 } from '@styles/size';
-import { Button } from '@components';
-import { zIndexDropdown } from '@styles/layers';
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FaEllipsisH } from 'react-icons/fa';
+import styled from 'styled-components';
 
 type DropdownMenuProps = {
   color?: string;
