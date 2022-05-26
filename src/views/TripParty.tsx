@@ -245,6 +245,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
             )}
             {userToReinvite !== undefined &&
               reinviteUserModalIsOpen &&
+              users[userToReinvite.uid]?.email &&
               users[userToReinvite.uid].email !== '' && (
                 <ReinviteUserToTripModal
                   setModalIsOpen={() => {
