@@ -86,6 +86,10 @@ const UserSearch: FunctionComponent<UserSearchProps> = ({
       onClick={() => {
         refine(items);
         updateTrip(hit.uid, hit.email);
+        trackEvent('Trip Party Search User Added', {
+          hit,
+          activeTrip,
+        });
       }}
       size="small"
     >
