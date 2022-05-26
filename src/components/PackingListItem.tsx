@@ -174,7 +174,7 @@ const PackingListItem: FunctionComponent<PackingListItemProps> = (props) => {
         });
       })
       .catch((err) => {
-        trackEvent('Packing List Item Deleted Failure', {
+        trackEvent('Packing List Item Shared Failure', {
           tripId: props.tripId,
           item: props.item,
           error: err,

@@ -76,6 +76,7 @@ const App: FunctionComponent<{}> = (props) => {
             userId: auth.uid,
             email: auth.email,
             displayName: auth.displayName || '',
+            name: auth.displayName || '',
           });
           Sentry.setUser({
             userId: auth.uid,
