@@ -1,9 +1,8 @@
 import { TripMember, TripMemberStatus, TripType } from '@common/trip';
 import { Button, Column, Heading, Modal, Row } from '@components';
 import { addAlert } from '@redux/ducks/globalAlerts';
+import sendTripInvitationEmail from '@utils/sendTripInvitationEmail';
 import trackEvent from '@utils/trackEvent';
-import axios from 'axios';
-import { stringify } from 'query-string';
 import React, { FunctionComponent } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
@@ -16,6 +15,7 @@ type ReinviteUserToTripModalProps = {
   tripMember: TripMember;
   profile: any;
   tripMemberEmail: string;
+  greetingName: string;
 };
 
 const ReinviteUserToTripModal: FunctionComponent<ReinviteUserToTripModalProps> = ({
@@ -25,6 +25,7 @@ const ReinviteUserToTripModal: FunctionComponent<ReinviteUserToTripModalProps> =
   tripMember,
   profile,
   tripMemberEmail,
+  greetingName,
 }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
@@ -48,19 +49,13 @@ const ReinviteUserToTripModal: FunctionComponent<ReinviteUserToTripModalProps> =
             tripId: trip.tripId,
             uid: tripMember.uid,
           });
-          const queryParams = stringify({
-            to: tripMemberEmail,
-            subject: `${profile.username} has invited you on a trip`,
-            username: profile.username,
-            tripId: trip.tripId,
-            isTestEnv: String(process.env.GATSBY_SITE_URL !== 'https://getpackup.com'),
-          });
-          const invitationUrl =
-            process.env.GATSBY_SITE_URL === 'https://getpackup.com'
-              ? `https://us-central1-getpackup.cloudfunctions.net/sendTripInvitationEmail?${queryParams}`
-              : `https://us-central1-packup-test-fc0c2.cloudfunctions.net/sendTripInvitationEmail?${queryParams}`;
 
-          axios.post(invitationUrl);
+          sendTripInvitationEmail({
+            tripId: trip.tripId,
+            invitedBy: profile.username,
+            email: tripMemberEmail,
+            greetingName,
+          });
 
           setModalIsOpen(false);
         })

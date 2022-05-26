@@ -32,7 +32,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 
-type MembersToInviteType = { uid: string; email: string }[];
+type MembersToInviteType = { uid: string; email: string; greetingName: string }[];
 
 type NewTripSummaryProps = {} & RouteComponentProps;
 
@@ -60,7 +60,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
     },
   ]);
 
-  const updateTripMembers = (uid: string, email: string) => {
+  const updateTripMembers = (uid: string, email: string, greetingName: string) => {
     // Object.values(acceptedTripMembersOnly(activeTrip)).length + 1 accounts for async data updates
     if (membersToInvite && membersToInvite.length + 1 > MAX_TRIP_PARTY_SIZE) {
       setIsSearchBarDisabled(true);
@@ -79,7 +79,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
       return;
     }
 
-    setMembersToInvite((prevState) => [...prevState, { uid, email }]);
+    setMembersToInvite((prevState) => [...prevState, { uid, email, greetingName }]);
   };
 
   const addNewTrip = (values: TripFormType) => {
@@ -122,6 +122,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
             tripId: docRef.id,
             invitedBy: profile.username,
             email: member.email,
+            greetingName: member.greetingName,
           });
         });
         trackEvent('New Trip Submit Successful', { values: { ...values } });
@@ -234,8 +235,8 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
               <StyledLabel>Trip Party</StyledLabel>
               <UserSearch
                 activeTrip={undefined}
-                updateTrip={(uid, email) => {
-                  updateTripMembers(uid, email);
+                updateTrip={(uid, email, greetingName) => {
+                  updateTripMembers(uid, email, greetingName);
                 }}
                 isSearchBarDisabled={isSearchBarDisabled}
               />

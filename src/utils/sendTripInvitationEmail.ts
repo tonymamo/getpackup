@@ -8,13 +8,16 @@ const sendTripInvitationEmail = ({
   tripId,
   invitedBy,
   email,
+  greetingName,
 }: {
   tripId: TripType['tripId'];
   invitedBy: string;
   email: string;
+  greetingName: string;
 }) => {
   const queryParams = stringify({
     to: email,
+    greetingName,
     subject: `${invitedBy} has invited you on a trip`,
     username: invitedBy,
     tripId,

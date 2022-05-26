@@ -58,7 +58,7 @@ const StyledSearchBox = styled.input`
 `;
 
 type UserSearchProps = {
-  updateTrip: (uid: string, email: string) => void;
+  updateTrip: (uid: string, email: string, greetingName: string) => void;
   activeTrip?: TripType;
   isSearchBarDisabled: boolean;
 };
@@ -85,7 +85,7 @@ const UserSearch: FunctionComponent<UserSearchProps> = ({
       color="primaryOutline"
       onClick={() => {
         refine(items);
-        updateTrip(hit.uid, hit.email);
+        updateTrip(hit.uid, hit.email, hit.displayName);
         trackEvent('Trip Party Search User Added', {
           hit,
           activeTrip,

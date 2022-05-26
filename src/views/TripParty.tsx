@@ -53,7 +53,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
-  const updateTrip = (memberId: string, memberEmail: string) => {
+  const updateTrip = (memberId: string, memberEmail: string, greetingName: string) => {
     // Object.values(acceptedTripMembersOnly(activeTrip)).length + 1 accounts for async data updates
     if (
       activeTrip?.tripMembers &&
@@ -93,6 +93,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
             tripId: activeTrip.tripId,
             invitedBy: profile.username,
             email: memberEmail,
+            greetingName: greetingName || '',
           });
           setIsSearchBarDisabled(false);
         })
@@ -245,7 +246,9 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
             )}
             {userToReinvite !== undefined &&
               reinviteUserModalIsOpen &&
+              users[userToReinvite.uid] &&
               users[userToReinvite.uid]?.email &&
+              users[userToReinvite.uid]?.displayName &&
               users[userToReinvite.uid].email !== '' && (
                 <ReinviteUserToTripModal
                   setModalIsOpen={() => {
@@ -257,6 +260,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                   tripMember={userToReinvite}
                   profile={profile}
                   tripMemberEmail={users[userToReinvite.uid].email}
+                  greetingName={users[userToReinvite.uid].displayName}
                 />
               )}
             <TripNavigation
