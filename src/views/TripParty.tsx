@@ -94,6 +94,7 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
             invitedBy: profile.username,
             email: memberEmail,
             greetingName: greetingName || '',
+            dispatch,
           });
           setIsSearchBarDisabled(false);
         })

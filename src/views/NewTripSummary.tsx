@@ -123,6 +123,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
             invitedBy: profile.username,
             email: member.email,
             greetingName: member.greetingName,
+            dispatch,
           });
         });
         trackEvent('New Trip Submit Successful', { values: { ...values } });

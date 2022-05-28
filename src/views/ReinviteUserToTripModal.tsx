@@ -55,6 +55,7 @@ const ReinviteUserToTripModal: FunctionComponent<ReinviteUserToTripModalProps> =
             invitedBy: profile.username,
             email: tripMemberEmail,
             greetingName,
+            dispatch,
           });
 
           setModalIsOpen(false);
