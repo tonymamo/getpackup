@@ -125,14 +125,16 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       data-for="removeUser"
     >
       <FaUserTimes color={brandDanger} />
-      <ReactTooltip
-        id="removeUser"
-        place="top"
-        type="dark"
-        effect="solid"
-        className="tooltip customTooltip"
-        delayShow={500}
-      />
+      {!removeUserModalIsOpen && (
+        <ReactTooltip
+          id="removeUser"
+          place="top"
+          type="dark"
+          effect="solid"
+          className="tooltip customTooltip"
+          delayShow={500}
+        />
+      )}
     </IconWrapper>
   );
 
@@ -146,14 +148,16 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
       data-for="reinviteUser"
     >
       <FaUserPlus />
-      <ReactTooltip
-        id="reinviteUser"
-        place="top"
-        type="dark"
-        effect="solid"
-        className="tooltip customTooltip"
-        delayShow={500}
-      />
+      {!reinviteUserModalIsOpen && (
+        <ReactTooltip
+          id="reinviteUser"
+          place="top"
+          type="dark"
+          effect="solid"
+          className="tooltip customTooltip"
+          delayShow={500}
+        />
+      )}
     </IconWrapper>
   );
 
@@ -284,23 +288,25 @@ const TripParty: FunctionComponent<TripPartyProps> = ({ activeTrip }) => {
                     margin: `${halfSpacer} 0 ${baseSpacer}`,
                   }}
                 >
-                  {Object.values(activeTrip?.tripMembers).map((tripMember, index) => {
-                    const matchingUser: UserType =
-                      users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
-                    if (!matchingUser) return null;
-                    return (
-                      <div key={matchingUser.uid}>
-                        <UserMediaObject
-                          user={matchingUser}
-                          showSecondaryContent
-                          action={getStatusPill(matchingUser.uid)}
-                        />
-                        {index !== Object.keys(activeTrip?.tripMembers).length - 1 && (
-                          <HorizontalRule compact />
-                        )}
-                      </div>
-                    );
-                  })}
+                  {Object.values(activeTrip?.tripMembers)
+                    .sort((a, b) => a.invitedAt.seconds - b.invitedAt.seconds)
+                    .map((tripMember, index) => {
+                      const matchingUser: UserType =
+                        users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
+                      if (!matchingUser) return null;
+                      return (
+                        <div key={matchingUser.uid}>
+                          <UserMediaObject
+                            user={matchingUser}
+                            showSecondaryContent
+                            action={getStatusPill(matchingUser.uid)}
+                          />
+                          {index !== Object.keys(activeTrip?.tripMembers).length - 1 && (
+                            <HorizontalRule compact />
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
               </Box>
             ) : (

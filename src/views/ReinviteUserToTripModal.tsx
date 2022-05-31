@@ -111,7 +111,7 @@ const ReinviteUserToTripModal: FunctionComponent<ReinviteUserToTripModalProps> =
             color="success"
             iconLeft={<FaCheck />}
           >
-            Re-invite to Trip
+            Re-invite
           </Button>
         </Column>
       </Row>

@@ -12,7 +12,7 @@ export enum TripMemberStatus {
 }
 
 export type TripMember = {
-  invitedAt?: firebase.default.firestore.Timestamp;
+  invitedAt: firebase.default.firestore.Timestamp;
   declinedAt?: firebase.default.firestore.Timestamp;
   acceptedAt?: firebase.default.firestore.Timestamp;
   removedAt?: firebase.default.firestore.Timestamp;

@@ -85,7 +85,7 @@ const RemoveUserFromTripModal: FunctionComponent<RemoveUserFromTripModalProps> =
             color="danger"
             iconLeft={<FaSignOutAlt />}
           >
-            Remove From Trip
+            Remove
           </Button>
         </Column>
       </Row>

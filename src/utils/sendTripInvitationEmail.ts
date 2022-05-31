@@ -42,6 +42,13 @@ const sendTripInvitationEmail = ({
       });
     })
     .catch((error) => {
+      dispatch(
+        addAlert({
+          type: 'info',
+          message:
+            'Invitation email failed to send, but will see this invitation when they login next.',
+        })
+      );
       trackEvent('Trip Party Invitation Email Send Failure', {
         tripId,
         updated: new Date(),
