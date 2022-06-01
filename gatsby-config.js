@@ -3,8 +3,6 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
-const SentryFullStory = require('@sentry/fullstory');
-
 module.exports = {
   flags: {
     FAST_DEV: true,
@@ -188,7 +186,6 @@ module.exports = {
           process.env.GATSBY_SITE_URL === 'https://getpackup.com'
             ? process.env.GATSBY_SENTRY_DSN
             : '',
-        integrations: [new SentryFullStory('getpackup')],
       },
     },
     {

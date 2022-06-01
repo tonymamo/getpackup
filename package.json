@@ -5,7 +5,6 @@
   "version": "1.0.0",
   "author": "Tony Mamo <tony@tonymamo.com>",
   "dependencies": {
-    "@fullstory/browser": "^1.5.1",
     "@hot-loader/react-dom": "npm:@hot-loader/react-dom",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/component": "^5.15.0",

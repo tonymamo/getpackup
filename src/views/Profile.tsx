@@ -21,7 +21,7 @@ import { baseSpacer, baseSpacerUnit, doubleSpacer, sextupleSpacer } from '@style
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
 import validateUsername from '@utils/validateUsername';
-import { requiredEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
+import { isEmail, requiredEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
 import { Field, Form, Formik } from 'formik';
 import { Link, navigate } from 'gatsby';
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -427,8 +427,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         type="email"
                         name="newEmergencyContactEmail"
                         label="Email"
-                        required
-                        validate={requiredEmail}
+                        validate={isEmail}
                       />
                     </EditableInput>
                     <Button
