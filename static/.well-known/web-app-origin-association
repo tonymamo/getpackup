@@ -1,0 +1,12 @@
+{
+  "web_apps": [
+    {
+      "manifest": "https://getpackup.com/manifest.json",
+      "details": {
+        "paths": [
+          "/*"
+        ]
+      }
+    }
+  ]
+}

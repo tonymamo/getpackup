@@ -122,6 +122,14 @@ module.exports = {
         icon_options: {
           purpose: `any maskable`,
         },
+        url_handlers: [
+          {
+            origin:
+              process.env.GATSBY_SITE_URL === 'https://test.getpackup.com'
+                ? 'https://test.getpackup.com'
+                : 'https://getpackup.com',
+          },
+        ],
       },
     },
     {

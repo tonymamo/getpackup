@@ -1,5 +1,13 @@
 import { UserType } from '@common/user';
-import { ErrorBoundary, FeedbackModal, LoadingPage, PrivateRoute } from '@components';
+import {
+  Button,
+  ErrorBoundary,
+  FeedbackModal,
+  Heading,
+  LoadingPage,
+  Modal,
+  PrivateRoute,
+} from '@components';
 import loadable from '@loadable/component';
 import { Router, navigate, useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
@@ -10,7 +18,7 @@ import { z1Shadow } from '@styles/mixins';
 import { baseSpacer, breakpoints } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import usePrevious from '@utils/usePrevious';
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isLoaded, useFirebase } from 'react-redux-firebase';
 import styled from 'styled-components';
@@ -55,6 +63,10 @@ const App: FunctionComponent<{}> = (props) => {
   const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
   const activeLoggedInUser: UserType =
     loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
+
+  const [showTestSiteModal, setShowTestSiteModal] = useState(
+    process.env.GATSBY_SITE_URL === 'https://test.getpackup.com'
+  );
 
   const prevAuthValue = usePrevious(auth.isEmpty);
 
@@ -187,6 +199,26 @@ const App: FunctionComponent<{}> = (props) => {
         </Router>
       </ErrorBoundary>
       <FeedbackModal auth={auth} {...props} />
+      <Modal isOpen={showTestSiteModal} toggleModal={() => setShowTestSiteModal(false)}>
+        <Heading as="h1">Heads Up! 🛑</Heading>
+        <p>
+          This is the <strong>TEST</strong> site for Packup, intended only to be used by the Packup
+          team for testing purposes.
+        </p>
+        <p>
+          Do you want to stay here, or go to the <strong>LIVE</strong> (actual) site?
+        </p>
+        <p>
+          <Button type="button" onClick={() => setShowTestSiteModal(false)} color="danger" block>
+            Stay
+          </Button>
+        </p>
+        <p>
+          <Button type="link" to="https://getpackup.com" color="success" block>
+            Go to site
+          </Button>
+        </p>
+      </Modal>
     </AppContainer>
   );
 };

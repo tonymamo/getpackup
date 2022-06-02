@@ -2,9 +2,9 @@ import '@styles/bootstrapCarousel.css';
 
 import { ErrorBoundary, GlobalAlerts, Navbar } from '@components';
 import loadable from '@loadable/component';
-import { black, brandPrimary, brandSecondary, white } from '@styles/color';
+import { brandSecondary, brandSuccess, white } from '@styles/color';
 import CssReset from '@styles/cssReset';
-import { quadrupleSpacer } from '@styles/size';
+import { borderRadius, quadrupleSpacer, quarterSpacer, threeQuarterSpacer } from '@styles/size';
 import { Link } from 'gatsby';
 import React, { FunctionComponent, useEffect } from 'react';
 import CookieConsent from 'react-cookie-consent';
@@ -65,15 +65,24 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
           buttonText="Accept"
           cookieName="packup-gdpr-google-analytics"
           style={{
-            backgroundColor: black,
+            backgroundColor: brandSecondary,
           }}
           buttonStyle={{
-            backgroundColor: brandPrimary,
+            backgroundColor: brandSuccess,
             color: white,
+            fontSize: '80%',
+            borderRadius,
+            fontWeight: 'bold',
+            padding: `${quarterSpacer} ${threeQuarterSpacer}`,
           }}
         >
-          This site uses cookies to enhance the user experience. Visit our{' '}
-          <Link to="/privacy">Privacy page</Link> to learn more.
+          <small>
+            This site uses cookies to enhance the user experience. Visit our{' '}
+            <Link to="/privacy" style={{ color: white, textDecoration: 'underline' }}>
+              Privacy page
+            </Link>{' '}
+            to learn more.
+          </small>
         </CookieConsent>
       </IconContext.Provider>
     </>
