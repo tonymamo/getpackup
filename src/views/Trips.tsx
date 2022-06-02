@@ -143,11 +143,10 @@ const Trips: FunctionComponent<TripsProps> = () => {
   }
 
   if (
-    // isLoaded(fetchedGearCloset) &&
-    // fetchedGearCloset.length === 0 &&
-    // isLoaded(trips) &&
-    // nonArchivedTrips.length === 0
-    true
+    isLoaded(fetchedGearCloset) &&
+    fetchedGearCloset.length === 0 &&
+    isLoaded(trips) &&
+    nonArchivedTrips.length === 0
   ) {
     return (
       <PageContainer>
