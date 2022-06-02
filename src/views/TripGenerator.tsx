@@ -441,10 +441,6 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
         isOpen={addNewCategoryModalIsOpen}
       >
         <Heading>Add New Category</Heading>
-        <Alert
-          type="info"
-          message="Note: selecting a new tag will pre-populate new gear in your gear closet that you may want to customize after!"
-        />
         <strong style={{ textTransform: 'uppercase' }}>Select a Category</strong>
         <Row>
           {getOtherCategories(gearListType).map((item) => (

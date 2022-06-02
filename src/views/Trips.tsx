@@ -143,10 +143,11 @@ const Trips: FunctionComponent<TripsProps> = () => {
   }
 
   if (
-    isLoaded(fetchedGearCloset) &&
-    fetchedGearCloset.length === 0 &&
-    isLoaded(trips) &&
-    nonArchivedTrips.length === 0
+    // isLoaded(fetchedGearCloset) &&
+    // fetchedGearCloset.length === 0 &&
+    // isLoaded(trips) &&
+    // nonArchivedTrips.length === 0
+    true
   ) {
     return (
       <PageContainer>
@@ -155,19 +156,28 @@ const Trips: FunctionComponent<TripsProps> = () => {
             <div style={{ textAlign: 'center', margin: doubleSpacer }}>
               <Heading align="center">New here? 🤔</Heading>
               <p>
-                For some reason we couldn&apos;t find your gear closet or any trips for you. Do you
-                want to try to load your info again, or do you need to set up your acccount?
+                Looks like you don&apos;t have any gear in your gear closet, or any trips planned
+                yet!
+              </p>
+              <Button type="link" to="/app/onboarding" iconRight={<FaArrowRight />} color="success">
+                Let&apos;s Get Started!
+              </Button>
+              <br />
+              <br />
+              <br />
+              <p>
+                <small>
+                  Already started your gear closet, but still seeing this? Let&apos;s try to load
+                  your data again.
+                </small>
               </p>
               <Button
                 type="button"
                 onClick={() => window.location.reload()}
-                rightSpacer
+                color="tertiary"
                 iconLeft={<FaRedo />}
               >
                 Refresh
-              </Button>
-              <Button type="link" to="/app/onboarding" iconLeft={<FaArrowRight />} color="tertiary">
-                Set up account
               </Button>
             </div>
           </Column>

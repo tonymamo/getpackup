@@ -40,6 +40,8 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const users = useSelector((state: RootState) => state.firestore.data.users);
+  const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
@@ -234,17 +236,14 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
               />
 
               <StyledLabel>Trip Party</StyledLabel>
-              <UserSearch
-                activeTrip={undefined}
-                updateTrip={(uid, email, greetingName) => {
-                  updateTripMembers(uid, email, greetingName);
-                }}
-                isSearchBarDisabled={isSearchBarDisabled}
-              />
 
-              {membersToInvite.length > 0 ? (
-                <Box>
-                  {membersToInvite.map((tripMember, index) => {
+              <Box>
+                {activeLoggedInUser && (
+                  <UserMediaObject user={activeLoggedInUser} showSecondaryContent />
+                )}
+                {membersToInvite.length > 0 && <HorizontalRule compact />}
+                {membersToInvite.length > 0 &&
+                  membersToInvite.map((tripMember, index) => {
                     const matchingUser: UserType =
                       users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
                     if (!matchingUser) return null;
@@ -272,8 +271,14 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
                       </div>
                     );
                   })}
-                </Box>
-              ) : null}
+              </Box>
+              <UserSearch
+                activeTrip={undefined}
+                updateTrip={(uid, email, greetingName) => {
+                  updateTripMembers(uid, email, greetingName);
+                }}
+                isSearchBarDisabled={isSearchBarDisabled}
+              />
 
               <HorizontalRule />
 

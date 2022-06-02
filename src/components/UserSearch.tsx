@@ -264,7 +264,9 @@ const UserSearch: FunctionComponent<UserSearchProps> = ({
           searchClient={alogliaSearch}
           indexName="Users"
           onSearchStateChange={(searchState) => {
-            trackEvent('Trip Party Search', { query: searchState.query });
+            if (searchState.query !== '') {
+              trackEvent('Trip Party Search', { query: searchState.query });
+            }
           }}
         >
           <Configure hitsPerPage={10} filters={`NOT uid:${auth.uid}`} />

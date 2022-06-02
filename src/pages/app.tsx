@@ -200,7 +200,7 @@ const App: FunctionComponent<{}> = (props) => {
       </ErrorBoundary>
       <FeedbackModal auth={auth} {...props} />
       <Modal isOpen={showTestSiteModal} toggleModal={() => setShowTestSiteModal(false)}>
-        <Heading as="h1">Heads Up! 🛑</Heading>
+        <Heading as="h1">Hold Up! 🛑</Heading>
         <p>
           This is the <strong>TEST</strong> site for Packup, intended only to be used by the Packup
           team for testing purposes.

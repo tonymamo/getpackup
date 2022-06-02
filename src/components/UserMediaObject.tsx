@@ -39,7 +39,7 @@ const UserMediaObject: FunctionComponent<UserMediaObjectProps> = ({
         size={avatarSize || 'sm'}
       />
       <UserContent>
-        <div style={{ wordBreak: 'break-all' }}>{user.username.toLocaleLowerCase()}</div>
+        <div style={{ wordBreak: 'break-all' }}>{user.username?.toLocaleLowerCase()}</div>
         {showSecondaryContent && <MutedText>{user.displayName}</MutedText>}
       </UserContent>
       {action}
