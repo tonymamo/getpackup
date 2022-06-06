@@ -40,7 +40,7 @@ const HeroImageUploadPicker = styled.div`
     ${offWhite} ${halfSpacer},
     ${offWhite} ${baseSpacer}
   );
-  min-height: calc(100vw / 5); /* 5 is to match aspectRatio of HeroImage */
+  min-height: calc(100vw / 7); /* 7 is to match approximate aspectRatio of HeroImage */
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -135,12 +135,7 @@ const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, im
   return (
     <HeroImageUploadWrapper>
       {image ? (
-        <HeroImage
-          staticImgSrc={image as string}
-          aspectRatio={5}
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
+        <HeroImage staticImgSrc={image as string} justifyContent="flex-end" alignItems="flex-end">
           <Button
             color="tertiary"
             size="small"

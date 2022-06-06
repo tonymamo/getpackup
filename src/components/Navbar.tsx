@@ -1,3 +1,4 @@
+import { TripMemberStatus, TripType } from '@common/trip';
 import {
   Avatar,
   Box,
@@ -5,13 +6,20 @@ import {
   FlexContainer,
   Heading,
   HorizontalRule,
+  NotificationDot,
   PageContainer,
 } from '@components';
 import GearClosetIcon from '@images/gearClosetIcon';
 import yak from '@images/yak.svg';
 import { useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
-import { brandPrimary, brandSecondary, brandTertiary, white } from '@styles/color';
+import {
+  brandNotification,
+  brandPrimary,
+  brandSecondary,
+  brandTertiary,
+  white,
+} from '@styles/color';
 import { zIndexNavbar } from '@styles/layers';
 import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
 import { fontSizeBase, fontSizeSmall, headingsFontFamily } from '@styles/typography';
@@ -25,8 +33,8 @@ import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import { useFirestoreConnect } from 'react-redux-firebase';
-import styled from 'styled-components';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
+import styled, { keyframes } from 'styled-components';
 
 import { AvatarImageWrapper } from './Avatar';
 
@@ -146,6 +154,7 @@ const TopNavIconWrapper = styled.nav`
     color: ${white};
     border-top: ${quarterSpacer} solid transparent;
     border-bottom: ${quarterSpacer} solid transparent;
+    position: relative;
     transition: all 0.2s ease-in-out;
   }
 
@@ -177,12 +186,25 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
   const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
   const { activePackingListTab, personalListScrollPosition, sharedListScrollPosition } =
     useSelector((state: RootState) => state.client);
 
   useFirestoreConnect([
     { collection: 'users', where: ['uid', '==', auth.uid || ''], storeAs: 'loggedInUser' },
   ]);
+
+  const nonArchivedTrips: TripType[] =
+    isLoaded(trips) && Array.isArray(trips) && trips && trips.length > 0
+      ? trips.filter((trip: TripType) => trip.archived !== true)
+      : [];
+
+  const pendingTrips = nonArchivedTrips.filter(
+    (trip) =>
+      trip.tripMembers &&
+      trip.tripMembers[auth.uid] &&
+      trip.tripMembers[auth.uid].status === TripMemberStatus.Pending
+  );
 
   const { pathname } = useLocation();
 
@@ -324,16 +346,6 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
                 <NavLink
-                  to="/install"
-                  onClick={() => {
-                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Install' });
-                    toggleMenu();
-                  }}
-                >
-                  Get the App
-                </NavLink>
-                <HorizontalRule compact />
-                <NavLink
                   to="/blog"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Blog' });
@@ -387,7 +399,6 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {!size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <FlexContainer as="nav">
-              <NavLink to="/install">Get the App</NavLink>
               <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
               <NavLink to="/contact">Contact</NavLink>
@@ -405,6 +416,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 onClick={() => trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Trips' })}
               >
                 <FaCalendar style={{ marginRight: halfSpacer }} /> Trips
+                {pendingTrips.length > 0 && <NotificationDot top={halfSpacer} right="0" />}
               </Link>
               <Link
                 to="/app/gear-closet"
