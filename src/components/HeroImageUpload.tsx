@@ -90,15 +90,7 @@ const HeroImageUpload: FunctionComponent<HeroImageUploadProps> = ({ type, id, im
   );
 
   useEffect(() => {
-    uploader.use([
-      new Local(),
-      new Camera(),
-      new Instagram(),
-      new Facebook(),
-      new Reddit(),
-      new Twitter(),
-      new URL(),
-    ]);
+    uploader.use([new Local()]);
     uploader.use([new Crop({ aspectRatio: 16 / 4 }), new Flip()]);
   }, [uploader]);
 
