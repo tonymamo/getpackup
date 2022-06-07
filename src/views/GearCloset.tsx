@@ -18,7 +18,8 @@ import { multiSelectStyles } from '@components/Input';
 import usePersonalGear from '@hooks/usePersonalGear';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { inputPaddingY } from '@styles/size';
+import { lightGray } from '@styles/color';
+import { halfSpacer, inputPaddingY } from '@styles/size';
 import {
   gearListAccommodations,
   gearListActivities,
@@ -27,12 +28,13 @@ import {
 } from '@utils/gearListItemEnum';
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
-import { navigate } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import { FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
+import { FaFolderOpen, FaInfoCircle, FaPencilAlt, FaPlusCircle, FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { isLoaded, useFirebase, useFirestoreConnect } from 'react-redux-firebase';
 import Select, { ValueType } from 'react-select';
+import ReactTooltip from 'react-tooltip';
 
 type GearClosetProps = {};
 
@@ -238,32 +240,56 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
       )}
 
       {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
-        <FlexContainer justifyContent="space-between" alignItems="flex-start">
-          <p>
-            <Button
-              type="link"
-              to="/app/gear-closet/new"
-              iconLeft={<FaPlusCircle />}
-              block
-              onClick={() => trackEvent('New Gear Closet Item Button clicked')}
-            >
-              Add New Item
-            </Button>
-          </p>
-
-          <DropdownMenu width={290}>
-            <button
-              onClick={() => {
-                setAddNewCategoryModalIsOpen(true);
-                trackEvent('Add New Tag to Gear Closet Clicked');
-              }}
-              type="button"
-            >
-              <FaPlusCircle /> Add New Gear Category
-            </button>
-          </DropdownMenu>
+        <FlexContainer justifyContent="space-between" alignItems="flex-start" flexWrap="nowrap">
+          <div>
+            <Heading altStyle style={{ display: 'inline' }}>
+              Gear Closet
+            </Heading>
+            <FaInfoCircle
+              color={lightGray}
+              style={{ marginLeft: halfSpacer }}
+              data-tip="An at-a-glance look at all of your gear, categorized and tagged to generate packing
+                lists on future trips. Keep track of item weight, quanities, and notes for
+                each item."
+              data-for="info"
+            />
+            <ReactTooltip
+              id="info"
+              place="top"
+              type="dark"
+              effect="solid"
+              className="tooltip customTooltip customTooltip200"
+            />
+          </div>
+          <div>
+            <DropdownMenu width={290}>
+              <Link to="/app/gear-closet/new">
+                <FaPlusCircle /> Add New Item
+              </Link>
+              <button
+                onClick={() => {
+                  setAddNewCategoryModalIsOpen(true);
+                  trackEvent('Add New Tag to Gear Closet Clicked');
+                }}
+                type="button"
+              >
+                <FaFolderOpen /> Add New Category
+              </button>
+            </DropdownMenu>
+          </div>
         </FlexContainer>
       )}
+      <p>
+        <Button
+          type="link"
+          to="/app/gear-closet/new"
+          iconLeft={<FaPlusCircle />}
+          size="small"
+          onClick={() => trackEvent('New Gear Closet Item Button clicked')}
+        >
+          Add New Item
+        </Button>
+      </p>
 
       {isLoaded(fetchedGearCloset) && fetchedGearCloset.length !== 0 && (
         <Table

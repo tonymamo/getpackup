@@ -87,15 +87,7 @@ const AvatarUpload: FunctionComponent<{ loggedInUser: any }> = ({ loggedInUser }
   );
 
   useEffect(() => {
-    uploader.use([
-      new Local(),
-      new Camera(),
-      new Instagram(),
-      new Facebook(),
-      new Reddit(),
-      new Twitter(),
-      new URL(),
-    ]);
+    uploader.use([new Local()]);
     uploader.use([new Crop({ aspectRatio: 1 }), new Flip()]);
   }, [uploader]);
 

@@ -1,9 +1,11 @@
+import { TripMemberStatus, TripType } from '@common/trip';
 import {
   Avatar,
   Column,
   FlexContainer,
   Heading,
   HorizontalRule,
+  NotificationDot,
   PageContainer,
   Row,
   SignupForm,
@@ -14,14 +16,15 @@ import { RootState } from '@redux/ducks';
 import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
 import { zIndexSmallScreenFooter } from '@styles/layers';
 import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
-import { baseSpacer, doubleSpacer, quadrupleSpacer } from '@styles/size';
-import { fontSizeSmall } from '@styles/typography';
+import { baseSpacer, doubleSpacer, halfSpacer, quadrupleSpacer } from '@styles/size';
+import { fontSizeH3, fontSizeSmall } from '@styles/typography';
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
 import { Link } from 'gatsby';
 import React from 'react';
 import { FaCalendar, FaFacebook, FaInstagram, FaTwitter, FaUserLock } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { isLoaded } from 'react-redux-firebase';
 import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
@@ -75,6 +78,8 @@ const BottomNav = styled.nav`
     height: ${quadrupleSpacer};
     color: ${textColor};
     transition: all 0.2s ease-in-out;
+    position: relative;
+    font-size: ${fontSizeH3};
   }
 
   & a:focus {
@@ -90,9 +95,22 @@ const BottomNav = styled.nav`
 const Footer = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
+  const trips: Array<TripType> = useSelector((state: RootState) => state.firestore.ordered.trips);
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
   const size = useWindowSize();
   const location = useLocation();
+
+  const nonArchivedTrips: TripType[] =
+    isLoaded(trips) && Array.isArray(trips) && trips && trips.length > 0
+      ? trips.filter((trip: TripType) => trip.archived !== true)
+      : [];
+
+  const pendingTrips = nonArchivedTrips.filter(
+    (trip) =>
+      trip.tripMembers &&
+      trip.tripMembers[auth.uid] &&
+      trip.tripMembers[auth.uid].status === TripMemberStatus.Pending
+  );
 
   const isInOnboardingFlow = location.pathname.includes('onboarding');
 
@@ -169,14 +187,6 @@ const Footer = () => {
                 <Column sm={4} md={3} lg={2}>
                   <p>
                     <Link
-                      to="/install"
-                      onClick={() => trackEvent('Footer Link Click', { link: 'Get the App' })}
-                    >
-                      Get the App
-                    </Link>
-                  </p>
-                  <p>
-                    <Link
                       to="/contact"
                       onClick={() => trackEvent('Footer Link Click', { link: 'Send a message' })}
                     >
@@ -246,6 +256,7 @@ const Footer = () => {
             }
           >
             <FaCalendar />
+            {pendingTrips.length > 0 && <NotificationDot top={`-${halfSpacer}`} right="0" />}
           </Link>
           <Link
             to="/app/gear-closet"

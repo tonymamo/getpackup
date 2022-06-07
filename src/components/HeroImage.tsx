@@ -19,7 +19,8 @@ type HeroImageProps = {
 
 const HeroImageWrapper = styled.div`
   position: relative;
-  min-height: ${(props: { aspectRatio: number }) => `calc(100vw / ${props.aspectRatio})`};
+  min-height: ${(props: { aspectRatio?: number }) =>
+    props.aspectRatio ? `calc(100vw / ${props.aspectRatio})` : 'initial'};
 `;
 
 const ChildrenWrapper = styled.div`
@@ -61,7 +62,7 @@ const HeroImage: FunctionComponent<HeroImageProps> = ({
           ? mobileImgSrc.fluid.aspectRatio
           : imgSrc && imgSrc.fluid
           ? imgSrc.fluid.aspectRatio
-          : 16 / 9)
+          : undefined)
       }
     >
       <PreviewCompatibleImage

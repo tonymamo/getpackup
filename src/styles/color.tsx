@@ -36,6 +36,7 @@ export const brandTertiaryHover = bismarkVariant;
 export const brandSuccess = green;
 export const brandInfo = brandTertiary;
 export const brandDanger = red;
+export const brandNotification = '#d10101';
 
 // Grayscale for UI (borders, shadows, etc)
 export const black = '#000A19';

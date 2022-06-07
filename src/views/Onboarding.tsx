@@ -169,8 +169,8 @@ const Onboarding: FunctionComponent<OnboardingProps> = () => {
                     <CenteredText>
                       <Heading>Welcome! 🤝</Heading>
                       <p>
-                        Looks like it&apos;s your first time here, let&apos;s set up your account.
-                        Tell us all the activities you&apos;re interested in doing.
+                        We are glad you are here. Let&apos;s set up your account. Tell us all the
+                        activities you&apos;re interested in doing.
                       </p>
                       <p>
                         <small>

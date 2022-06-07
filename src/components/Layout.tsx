@@ -12,8 +12,6 @@ import { IconContext } from 'react-icons';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
-import UpdateConfirmModal from './UpdateConfirmModal';
-
 const Footer = loadable(() => import('@components/Footer'), {
   fallback: <footer style={{ backgroundColor: brandSecondary, height: '20vh' }} />,
 });
@@ -58,7 +56,6 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
           </PageBody>
           {!props.hideFromCms && <GlobalAlerts />}
           {!props.hideFromCms && <Footer />}
-          {!props.hideFromCms && <UpdateConfirmModal />}
         </LayoutWrapper>
         <CookieConsent
           location="bottom"

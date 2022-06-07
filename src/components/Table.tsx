@@ -4,7 +4,7 @@ import Button, { ButtonProps } from '@components/Button';
 import { InputWrapper, StyledInput, StyledLabel, multiSelectStyles } from '@components/Input';
 import { WindowLocation, useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
-import { lightestGray, textColorLight, white } from '@styles/color';
+import { brandDanger, brandPrimary, lightestGray, textColorLight, white } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 import {
   baseAndAHalfSpacer,
@@ -36,6 +36,7 @@ import {
   FaAngleLeft,
   FaAngleRight,
   FaChevronRight,
+  FaPencilAlt,
   FaSort,
   FaSortAlphaDown,
   FaSortAlphaUp,
@@ -449,18 +450,21 @@ const Table: FunctionComponent<TableProps> = ({
                             {String(cell.getCellProps().key).includes('action') ? (
                               <FlexContainer justifyContent="flex-end" flexWrap="nowrap">
                                 <IconWrapper
+                                  onClick={() => navigate(cell.row.original.actions[0].to)}
+                                  hoverColor={brandPrimary}
+                                  color={lightestGray}
+                                >
+                                  <FaPencilAlt />
+                                </IconWrapper>
+                                <IconWrapper
                                   onClick={cell.row.original.actions[1].onClick}
+                                  hoverColor={brandDanger}
+                                  color={lightestGray}
                                   style={{
-                                    marginRight: halfSpacer,
-                                    visibility: 'hidden',
+                                    marginLeft: halfSpacer,
                                   }}
                                 >
                                   <FaTrash />
-                                </IconWrapper>
-                                <IconWrapper
-                                  onClick={() => navigate(cell.row.original.actions[0].to)}
-                                >
-                                  <FaChevronRight />
                                 </IconWrapper>
                               </FlexContainer>
                             ) : (
