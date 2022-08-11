@@ -9,6 +9,7 @@ import { FaCaretRight, FaInfoCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { useFirebase } from 'react-redux-firebase';
 import ReactTooltip from 'react-tooltip';
+import * as Sentry from '@sentry/gatsby';
 
 type Props = { actionCode: string };
 
@@ -31,7 +32,7 @@ const ResetPassword = ({ actionCode }: Props) => {
       })
     );
     trackEvent('Reset Password Unrecoverable Error');
-    navigate('/login');
+    // navigate('/login');
   };
 
   useEffect(() => {
@@ -43,11 +44,13 @@ const ResetPassword = ({ actionCode }: Props) => {
           setEmail(userEmail);
           trackEvent('Reset Password Verified', { userEmail });
         })
-        .catch(() => {
+        .catch((err) => {
           unrecoverableError();
+          Sentry.captureException(err);
         });
-    } catch (_) {
+    } catch (err2) {
       unrecoverableError();
+      Sentry.captureException(err2);
     }
   }, [firebase, actionCode]);
 
