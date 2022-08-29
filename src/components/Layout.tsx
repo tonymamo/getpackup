@@ -31,7 +31,8 @@ const LayoutWrapper = styled.div`
 
 const PageBody = styled.main<{ isHomePage: boolean }>`
   flex: 1;
-  padding-top: calc(${quadrupleSpacer} + env(safe-area-inset-top));
+  padding-top: ${(props) =>
+    props.isHomePage ? '0' : `calc(${quadrupleSpacer} + env(safe-area-inset-top))`};
   padding-bottom: ${(props) =>
     props.isHomePage ? '0' : `calc(${quadrupleSpacer} + env(safe-area-inset-bottom))`};
 `;
