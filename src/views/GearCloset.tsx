@@ -360,10 +360,6 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
           Getting into a new sport or activity, or upgrading your gear? Select any category that
           applies to gear you own!
         </p>
-        <Alert
-          type="info"
-          message="Note: selecting a new category will pre-populate new gear in your gear closet that you may want to customize after!"
-        />
         <Select
           className="react-select"
           styles={multiSelectStyles}

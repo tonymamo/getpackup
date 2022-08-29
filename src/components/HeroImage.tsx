@@ -15,12 +15,14 @@ type HeroImageProps = {
   aspectRatio?: number;
   justifyContent?: CSSProperties['justifyContent'];
   alignItems?: CSSProperties['alignItems'];
+  fullHeight?: boolean;
 };
 
 const HeroImageWrapper = styled.div`
   position: relative;
-  min-height: ${(props: { aspectRatio?: number }) =>
-    props.aspectRatio ? `calc(100vw / ${props.aspectRatio})` : 'initial'};
+  min-height: ${(props: { aspectRatio?: number; fullHeight?: boolean }) =>
+    !props.fullHeight && props.aspectRatio ? `calc(100vw / ${props.aspectRatio})` : 'initial'};
+  height: ${(props) => (props.fullHeight ? '100vh' : 'auto')};
 `;
 
 const ChildrenWrapper = styled.div`
@@ -37,9 +39,11 @@ const ChildrenWrapper = styled.div`
   padding: ${baseSpacer};
   z-index: ${zIndexHeroImage};
 
+  // force white text over image with text-shadow
   & h1,
   & p {
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+    color: ${white};
   }
 `;
 
@@ -51,11 +55,13 @@ const HeroImage: FunctionComponent<HeroImageProps> = ({
   aspectRatio,
   justifyContent,
   alignItems,
+  fullHeight,
 }) => {
   const size = useWindowSize();
 
   return (
     <HeroImageWrapper
+      fullHeight={fullHeight}
       aspectRatio={
         aspectRatio || // if a specific aspectRatio is passed in use that, otherwise use fluid image ratios. default to 16/9 if nothing is there
         (size.isExtraSmallScreen && mobileImgSrc
@@ -75,6 +81,7 @@ const HeroImage: FunctionComponent<HeroImageProps> = ({
               : (staticImgSrc as string),
           alt: '',
         }}
+        height={fullHeight ? '100vh' : 'auto'}
       />
       <ChildrenWrapper justifyContent={justifyContent} alignItems={alignItems}>
         {children}

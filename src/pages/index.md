@@ -1,8 +1,9 @@
 ---
 templateKey: index-page
 title: Expert packing lists for camping and outdoor adventure
-heroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
-mobileHeroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244551/getpackup/0f1a2059-4.jpg
+heroImage: https://res.cloudinary.com/getpackup/image/upload/v1661797136/getpackup/hero2_kowpye_vgq0sp.jpg
+# heroImage: https://res.cloudinary.com/getpackup/image/upload/v1617244552/getpackup/0f1a2062-3.jpg
+mobileHeroImage: https://res.cloudinary.com/getpackup/image/upload/v1659925246/getpackup/mobileHero_mgby0w.jpg
 heroHeading: Never forget important gear again
 typewriterList:
   - text: tent poles
@@ -17,26 +18,31 @@ typewriterList:
   - text: gloves
   - text: helmet
   - text: batteries
-heroSubheading: Create your customized gear closet and start planning trips today
+heroSubheading: Manage your gear and create custom packing lists
 heroCTALink: '/signup'
 heroCTAText: Get Started
 mainpitch:
   image: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/Screen%20Shot%202020-09-08%20at%201.17.18%20PM.png
-  heading: Spend more time outside doing what you love.
-  subheading: Outside faster, with more confidence
-  text: Take the guesswork out of trip preparation using our Trip Generator –
-    simply choose your accommodation, transportation, and outdoor activities to
-    form the foundation of your customizable packing list and trip.
+  heading: Centralize your trips and packing process
+  subheading: Hiking trip this weekend, and kayaking the next? Manage all your gear and packing lists for each trip in one place.
+  text: Get out the door faster and safer with our trip generator and inventory tools.
 secondpitch:
   image: https://res.cloudinary.com/getpackup/image/upload/v1617244528/getpackup/shared.png
-  heading: Collaborate with your trip party
-  subheading: Collaborate with your trip party
+  heading: Generate packing lists based on your gear
+  subheading: Get out the door faster and safer with our trip generator and inventory tools.
   text: Organize and lead your group to ensure everyone has their share of
     essential items, and that nothing gets left behind (or double packed!).
 thirdpitch:
   image: https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/learn.png
-  heading: Learn from the best
-  subheading: Learn from the best
+  heading: Collaborate with your trip members
+  subheading: Share items with your party to figure out who is bringing the stove and tent.
+  text: Going to a new area or trying a new activity? See what other professional
+    guides and enthusiasts are packing for their adventures, improving your own
+    preparedness and safety.
+fourthpitch:
+  image: https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/learn.png
+  heading: Plan on any device, anywhere
+  subheading: All of your trip plans and packing lists available from your phone, tablet, or computer.
   text: Going to a new area or trying a new activity? See what other professional
     guides and enthusiasts are packing for their adventures, improving your own
     preparedness and safety.

@@ -1,6 +1,7 @@
 import { TripMemberStatus, TripType } from '@common/trip';
 import {
   Avatar,
+  Button,
   Column,
   FlexContainer,
   Heading,
@@ -8,27 +9,35 @@ import {
   NotificationDot,
   PageContainer,
   Row,
-  SignupForm,
 } from '@components';
 import GearClosetIcon from '@images/gearClosetIcon';
 import { useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
-import { brandPrimary, brandSecondary, textColor, white } from '@styles/color';
+import { brandPrimary, brandSecondary, brandSecondaryHover, textColor, white } from '@styles/color';
 import { zIndexSmallScreenFooter } from '@styles/layers';
 import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
-import { baseSpacer, doubleSpacer, halfSpacer, quadrupleSpacer } from '@styles/size';
+import { baseSpacer, halfSpacer, quadrupleSpacer } from '@styles/size';
 import { fontSizeH3, fontSizeSmall } from '@styles/typography';
+import { ThemeContext } from '@utils/ThemeContext';
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
 import { Link } from 'gatsby';
 import React from 'react';
-import { FaCalendar, FaFacebook, FaInstagram, FaTwitter, FaUserLock } from 'react-icons/fa';
+import {
+  FaCalendar,
+  FaFacebook,
+  FaInstagram,
+  FaShoppingCart,
+  FaTwitter,
+  FaUserLock,
+} from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
   background-color: ${brandSecondary};
+  // background-color: var(--color-secondary);
   color: ${white};
   padding: ${quadrupleSpacer} 0;
   font-size: ${fontSizeSmall};
@@ -53,8 +62,9 @@ const HiddenText = styled.span`
 `;
 
 const SignupFormWrapper = styled.div`
-  padding: ${doubleSpacer} 0;
-  background-color: ${brandPrimary};
+  padding: ${quadrupleSpacer} 0;
+  background-color: ${brandSecondaryHover};
+  text-align: center;
 `;
 
 const BottomNav = styled.nav`
@@ -77,6 +87,7 @@ const BottomNav = styled.nav`
     flex: 1;
     height: ${quadrupleSpacer};
     color: ${textColor};
+    // color: var(--color-text);
     transition: all 0.2s ease-in-out;
     position: relative;
     font-size: ${fontSizeH3};
@@ -99,6 +110,8 @@ const Footer = () => {
   const loggedInUser = auth && auth.isLoaded && !auth.isEmpty;
   const size = useWindowSize();
   const location = useLocation();
+
+  const { colorMode, setColorMode } = React.useContext(ThemeContext);
 
   const nonArchivedTrips: TripType[] =
     isLoaded(trips) && Array.isArray(trips) && trips && trips.length > 0
@@ -129,16 +142,12 @@ const Footer = () => {
           <SignupFormWrapper id="signup">
             <PageContainer>
               <Heading as="h1" inverse align="center">
-                Sign up for the newsletter
+                Plan your first trip today
               </Heading>
-              <p style={{ textAlign: 'center', color: white }}>
-                <strong>Enter your email to receive periodic updates about Packup</strong>
-              </p>
-              <Row>
-                <Column md={8} mdOffset={2}>
-                  <SignupForm location="footer" />
-                </Column>
-              </Row>
+
+              <Button type="link" to="/signup">
+                Get Started
+              </Button>
             </PageContainer>
           </SignupFormWrapper>
 
@@ -149,7 +158,7 @@ const Footer = () => {
                   <Heading>
                     <Link to="/">packup</Link>
                   </Heading>
-                  <p>Adventure made easy.</p>
+                  <p>Get outside faster and safer.</p>
                 </Column>
                 <Column sm={4} md={3} lg={2}>
                   <p>
@@ -193,6 +202,29 @@ const Footer = () => {
                       Send a Message
                     </Link>
                   </p>
+                  <p>
+                    <a
+                      href="https://reddit.com/r/packup"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'Send a message' })}
+                    >
+                      Community
+                    </a>
+                  </p>
+                  {/* <p>
+                    {colorMode ? (
+                      // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={colorMode === 'dark'}
+                          onChange={(ev) => {
+                            setColorMode(ev.target.checked ? 'dark' : 'light');
+                          }}
+                        />{' '}
+                        {colorMode === 'dark' ? `🌝` : `🌞`}
+                      </label>
+                    ) : null}
+                  </p> */}
                 </Column>
               </Row>
               <HorizontalRule />

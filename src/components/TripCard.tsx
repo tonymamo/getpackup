@@ -37,6 +37,7 @@ const StyledTripWrapper = styled.div<{ isPending?: boolean }>`
   border: ${baseBorderStyle};
   cursor: ${(props) => (props.isPending ? 'initial' : 'pointer')};
   background-color: ${white};
+  // background-color: var(--color-backgroundAlt);
 `;
 
 const StyledLineItem = styled.div`
@@ -154,6 +155,7 @@ const TripCard: FunctionComponent<TripCardProps> = ({ trip, isPending, onClick }
     if (users && Object.keys(users).length > 1 && trip) {
       if (trip && trip.tripMembers && Object.keys(trip.tripMembers).length > 0) {
         if (
+          auth.uid &&
           trip.tripMembers[auth.uid].invitedBy &&
           typeof trip.tripMembers[auth.uid].invitedBy === 'string'
         ) {

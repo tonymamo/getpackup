@@ -59,7 +59,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
       <Box>
         <Heading align="center">Sign Up</Heading>
         <p style={{ textAlign: 'center' }}>
-          Adventure made easy&mdash;never forget important gear again!
+          Create an account to keep track of your gear and start planning your first trip today.
         </p>
         <HorizontalRule />
         <Row>

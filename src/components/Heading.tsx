@@ -1,5 +1,5 @@
 import { headingsColor, white } from '@styles/color';
-import { baseSpacer } from '@styles/size';
+import { baseSpacer, quadrupleSpacer, tripleSpacer } from '@styles/size';
 import {
   fontFamilySansSerif,
   fontSizeBase,
@@ -9,6 +9,7 @@ import {
   fontSizeH4,
   fontSizeH5,
   fontSizeH6,
+  fontSizeMega,
   fontSizeSmall,
   headingsFontFamily,
   lineHeightSmall,
@@ -26,6 +27,7 @@ type HeadingProps = {
   altStyle?: boolean;
   onClick?: () => void;
   withDecoration?: boolean;
+  mega?: boolean;
 };
 
 const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle']) => {
@@ -53,11 +55,12 @@ const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle
 const StyledHeading = styled.h1<HeadingProps>`
   font-weight: 700;
   line-height: ${lineHeightSmall};
+  // color: ${(props) => (props.inverse ? `var(--color-background)` : `var(--color-headings)`)};
   color: ${(props) => (props.inverse ? white : headingsColor)};
   margin-bottom: ${(props) => (props.noMargin ? '0' : baseSpacer)};
   text-align: ${(props) => props.align};
   white-space: pre-line;
-  font-size: ${(props) => renderFontSize(props.as, props.altStyle)};
+  font-size: ${(props) => (props.mega ? fontSizeMega : renderFontSize(props.as, props.altStyle))};
   text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'initial')};
   font-family: ${(props) => (props.altStyle ? fontFamilySansSerif : headingsFontFamily)};
   & div {

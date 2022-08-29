@@ -210,7 +210,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
 
       {pendingTrips.length > 0 && (
         <>
-          <Heading as="h2" altStyle withDecoration>
+          <Heading as="h2" altStyle>
             Pending Trip Invitations
           </Heading>
           {pendingTrips.map((trip) => renderTrip(trip, true))}
@@ -220,7 +220,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
       {/* IN PROGRESS */}
       {inProgressTrips.length > 0 && (
         <>
-          <Heading as="h2" altStyle withDecoration>
+          <Heading as="h2" altStyle>
             Trips in Progress
           </Heading>
           {inProgressTrips.map((trip) => renderTrip(trip))}
@@ -230,7 +230,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
       {/* UPCOMING */}
       {upcomingTrips.length > 0 && (
         <>
-          <Heading as="h2" altStyle withDecoration>
+          <Heading as="h2" altStyle>
             Upcoming Trips
           </Heading>
           {upcomingTrips.map((trip) => renderTrip(trip))}
@@ -257,7 +257,7 @@ const Trips: FunctionComponent<TripsProps> = () => {
       {/* PAST TRIPS */}
       {pastTrips.length > 0 && (
         <>
-          <Heading as="h2" altStyle withDecoration>
+          <Heading as="h2" altStyle>
             Past Trips
           </Heading>
           {pastTrips.map((trip) => renderTrip(trip))}

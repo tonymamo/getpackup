@@ -28,6 +28,9 @@ const renderColor = (color: PillProps['color']) => {
         backgroundColor: lightestGray,
         hoverBackgroundColor: lightestGray,
         color: textColor,
+        // backgroundColor: `var(--color-lightestGray)`,
+        // hoverBackgroundColor: `var(--color-lightestGray)`,
+        // color: `var(--color-text)`,
       };
     case 'primary':
       return {
