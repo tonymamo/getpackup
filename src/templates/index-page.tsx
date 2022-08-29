@@ -312,7 +312,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={1.65} speed={1.2}>
+          <ParallaxLayer offset={1.65} speed={0.8}>
             <PageContainer>
               <img
                 src={tripCard1}
@@ -325,7 +325,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={1.9} speed={1.5}>
+          <ParallaxLayer offset={1.9} speed={0.9}>
             <PageContainer>
               <img
                 src={tripCard2}
@@ -357,7 +357,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               </Row>
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={1.15}>
+          <ParallaxLayer offset={2.4} speed={0.85}>
             <PageContainer>
               <FaCampground
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -368,7 +368,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.6} speed={1}>
+          <ParallaxLayer offset={2.6} speed={0.75}>
             <PageContainer>
               <FaMountain
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -379,7 +379,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.6} speed={1.3}>
+          <ParallaxLayer offset={2.6} speed={0.6}>
             <PageContainer>
               <FaBiking
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -390,7 +390,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={1.3}>
+          <ParallaxLayer offset={2.4} speed={0.7}>
             <PageContainer>
               <FaRunning
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -401,7 +401,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.7} speed={1}>
+          <ParallaxLayer offset={2.7} speed={0.8}>
             <PageContainer>
               <FaMapMarkedAlt
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -412,7 +412,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.5} speed={1.6}>
+          <ParallaxLayer offset={2.5} speed={0.9}>
             <PageContainer>
               <FaWater
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -423,7 +423,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={1.7}>
+          <ParallaxLayer offset={2.4} speed={0.7}>
             <PageContainer>
               <FaCamera
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -434,7 +434,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.55} speed={1.7}>
+          <ParallaxLayer offset={2.55} speed={0.7}>
             <PageContainer>
               <FaPaw
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -445,7 +445,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={1.5}>
+          <ParallaxLayer offset={2.4} speed={0.5}>
             <PageContainer>
               <FaHiking
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
@@ -456,7 +456,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={2.7} speed={1.2}>
+          <ParallaxLayer offset={2.7} speed={0.4}>
             <PageContainer>
               <FaSkiing
                 fontSize={isSmallScreen ? '10vw' : '4rem'}
