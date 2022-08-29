@@ -251,7 +251,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
             </HeroImage>
           </ParallaxLayer>
 
-          {[offWhite, lightestGray, lightGray, white, brandSecondary].map((item, index) => {
+          {[offWhite, '#eaeff8', '#d9e1ec', white, brandSecondary].map((item, index) => {
             const divider = () => {
               switch (index) {
                 case 0:
@@ -360,7 +360,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.4} speed={1.15}>
             <PageContainer>
               <FaCampground
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={brandSecondary}
                 style={{
                   marginLeft: isSmallScreen ? '13%' : '80%',
@@ -371,7 +371,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.6} speed={1}>
             <PageContainer>
               <FaMountain
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={brandSecondary}
                 style={{
                   marginLeft: isSmallScreen ? '5%' : '55%',
@@ -382,7 +382,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.6} speed={1.3}>
             <PageContainer>
               <FaBiking
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={brandSecondary}
                 style={{
                   marginLeft: '62%',
@@ -393,7 +393,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.4} speed={1.3}>
             <PageContainer>
               <FaRunning
-                fontSize="15vh"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={darkGray}
                 style={{
                   marginLeft: isSmallScreen ? '45%' : '50%',
@@ -404,7 +404,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.7} speed={1}>
             <PageContainer>
               <FaMapMarkedAlt
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={brandTertiary}
                 style={{
                   marginLeft: isSmallScreen ? '35%' : '82%',
@@ -415,7 +415,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.5} speed={1.6}>
             <PageContainer>
               <FaWater
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={brandTertiary}
                 style={{
                   marginLeft: '62%',
@@ -426,7 +426,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.4} speed={1.7}>
             <PageContainer>
               <FaCamera
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={darkGray}
                 style={{
                   marginLeft: isSmallScreen ? '2%' : '77%',
@@ -437,7 +437,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.55} speed={1.7}>
             <PageContainer>
               <FaPaw
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={brandSecondary}
                 style={{
                   marginLeft: '79%',
@@ -448,7 +448,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.4} speed={1.5}>
             <PageContainer>
               <FaHiking
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={brandTertiary}
                 style={{
                   marginLeft: isSmallScreen ? '30%' : '65%',
@@ -459,7 +459,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.7} speed={1.2}>
             <PageContainer>
               <FaSkiing
-                fontSize="5rem"
+                fontSize={isSmallScreen ? '10vw' : '4rem'}
                 fill={darkGray}
                 style={{
                   marginLeft: '70%',
@@ -552,8 +552,8 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           {/* Text */}
           {[
             ['mainpitch', offWhite],
-            ['secondpitch', lightestGray],
-            ['thirdpitch', lightGray],
+            ['secondpitch', '#eaeff8'],
+            ['thirdpitch', '#d9e1ec'],
             ['fourthpitch', white],
           ].map((item, index) => {
             return (
