@@ -393,7 +393,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={2.4} speed={1.3}>
             <PageContainer>
               <FaRunning
-                fontSize="5rem"
+                fontSize="15vh"
                 fill={darkGray}
                 style={{
                   marginLeft: isSmallScreen ? '45%' : '50%',
