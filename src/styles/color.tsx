@@ -58,7 +58,8 @@ export const brandSecondaryRGB = '14, 55, 87';
 export const brandDangerRGB = '125,38,0';
 
 // Borders
-export const borderColor = `var(--color-border)`;
+export const borderColor = lightestGray;
+// export const borderColor = `var(--color-border)`;
 
 // Loading spinners
 export const lightSpinner = '255, 255, 255'; // white

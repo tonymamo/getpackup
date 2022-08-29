@@ -1,3 +1,4 @@
+import { headingsColor, white } from '@styles/color';
 import { baseSpacer, quadrupleSpacer, tripleSpacer } from '@styles/size';
 import {
   fontFamilySansSerif,
@@ -54,7 +55,8 @@ const renderFontSize = (as: HeadingProps['as'], altStyle: HeadingProps['altStyle
 const StyledHeading = styled.h1<HeadingProps>`
   font-weight: 700;
   line-height: ${lineHeightSmall};
-  color: ${(props) => (props.inverse ? `var(--color-background)` : `var(--color-headings)`)};
+  // color: ${(props) => (props.inverse ? `var(--color-background)` : `var(--color-headings)`)};
+  color: ${(props) => (props.inverse ? white : headingsColor)};
   margin-bottom: ${(props) => (props.noMargin ? '0' : baseSpacer)};
   text-align: ${(props) => props.align};
   white-space: pre-line;

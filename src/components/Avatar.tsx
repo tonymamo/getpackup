@@ -101,7 +101,8 @@ export const StackedAvatars = styled.div`
   & ${AvatarImageWrapper} {
     margin-right: -${halfSpacer};
     display: inline-flex;
-    border: 2px solid var(--color-background);
+    border: 2px solid ${white};
+    // border: 2px solid var(--color-background);
     z-index: ${zIndexAvatarImageAfter};
     transition: transform 0.1s ease-out 0s;
   }

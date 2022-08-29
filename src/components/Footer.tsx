@@ -13,7 +13,7 @@ import {
 import GearClosetIcon from '@images/gearClosetIcon';
 import { useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
-import { brandPrimary, brandSecondaryHover, white } from '@styles/color';
+import { brandPrimary, brandSecondary, brandSecondaryHover, textColor, white } from '@styles/color';
 import { zIndexSmallScreenFooter } from '@styles/layers';
 import { baseBorderStyle, visuallyHiddenStyle } from '@styles/mixins';
 import { baseSpacer, halfSpacer, quadrupleSpacer } from '@styles/size';
@@ -36,7 +36,8 @@ import { isLoaded } from 'react-redux-firebase';
 import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
-  background-color: var(--color-secondary);
+  background-color: ${brandSecondary};
+  // background-color: var(--color-secondary);
   color: ${white};
   padding: ${quadrupleSpacer} 0;
   font-size: ${fontSizeSmall};
@@ -85,7 +86,8 @@ const BottomNav = styled.nav`
     align-items: center;
     flex: 1;
     height: ${quadrupleSpacer};
-    color: var(--color-text);
+    color: ${textColor};
+    // color: var(--color-text);
     transition: all 0.2s ease-in-out;
     position: relative;
     font-size: ${fontSizeH3};
@@ -201,6 +203,14 @@ const Footer = () => {
                     </Link>
                   </p>
                   <p>
+                    <a
+                      href="https://reddit.com/r/packup"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'Send a message' })}
+                    >
+                      Community
+                    </a>
+                  </p>
+                  {/* <p>
                     {colorMode ? (
                       // eslint-disable-next-line jsx-a11y/label-has-associated-control
                       <label>
@@ -214,7 +224,7 @@ const Footer = () => {
                         {colorMode === 'dark' ? `🌝` : `🌞`}
                       </label>
                     ) : null}
-                  </p>
+                  </p> */}
                 </Column>
               </Row>
               <HorizontalRule />

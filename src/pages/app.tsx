@@ -49,7 +49,8 @@ export const AppContainer = styled.div`
   margin-right: auto;
   margin-left: auto;
   max-width: ${breakpoints.xl};
-  background-color: var(--color-background);
+  background-color: ${offWhite};
+  // background-color: var(--color-background);
   min-height: 100vh;
   box-shadow: ${z1Shadow};
 `;

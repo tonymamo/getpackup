@@ -36,7 +36,8 @@ const StyledTripWrapper = styled.div<{ isPending?: boolean }>`
   margin-bottom: ${baseSpacer};
   border: ${baseBorderStyle};
   cursor: ${(props) => (props.isPending ? 'initial' : 'pointer')};
-  background-color: var(--color-backgroundAlt);
+  background-color: ${white};
+  // background-color: var(--color-backgroundAlt);
 `;
 
 const StyledLineItem = styled.div`

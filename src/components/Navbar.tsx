@@ -38,7 +38,8 @@ const StyledNavbar = styled.header`
   position: fixed;
   left: 0;
   right: 0;
-  background: var(--color-secondary);
+  // background: var(--color-secondary);
+  background: ${brandSecondary};
   min-height: ${quadrupleSpacer};
   padding-top: env(safe-area-inset-top);
   z-index: ${zIndexNavbar};
