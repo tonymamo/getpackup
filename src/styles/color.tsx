@@ -58,8 +58,59 @@ export const brandSecondaryRGB = '14, 55, 87';
 export const brandDangerRGB = '125,38,0';
 
 // Borders
-export const borderColor = lightestGray;
+export const borderColor = `var(--color-border)`;
 
 // Loading spinners
 export const lightSpinner = '255, 255, 255'; // white
 export const darkSpinner = '74, 85, 90'; // riverbed
+
+export const COLORS = {
+  text: {
+    light: riverbed, // white
+    dark: '#CDD3DE', // near-black
+  },
+  headings: {
+    light: headingsColor,
+    dark: lightestGray,
+  },
+  background: {
+    light: white, // white
+    dark: '#0F2027',
+  },
+  backgroundAlt: {
+    light: offWhite,
+    dark: '#1B2B34',
+  },
+  primary: {
+    light: brandPrimary,
+    dark: brandPrimary,
+  },
+  secondary: {
+    light: brandSecondary,
+    dark: '#051218',
+  },
+  // Grays, scaling from least-noticeable to most-noticeable
+  lightestGray: {
+    light: lightestGray,
+    dark: '#343d46',
+  },
+  lightGray: {
+    light: lightGray,
+    dark: lightGray,
+  },
+  gray: {
+    light: gray,
+    dark: gray,
+  },
+  darkGray: {
+    light: darkGray,
+    dark: darkGray,
+  },
+  border: {
+    light: lightestGray,
+    dark: '#39474F',
+  },
+};
+
+export const COLOR_MODE_KEY = 'color-mode';
+export const INITIAL_COLOR_MODE_CSS_PROP = '--initial-color-mode';

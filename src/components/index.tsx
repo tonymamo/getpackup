@@ -11,6 +11,7 @@ import CollapsibleBox from './CollapsibleBox';
 import Column from './Column';
 import Content, { HTMLContent, MarkdownContent } from './Content';
 import DayPickerInput from './DayPickerInput';
+import Dividers from './Dividers';
 import DropdownMenu from './DropdownMenu';
 import EditableInput from './EditableInput';
 import ErrorBoundary from './ErrorBoundary';
@@ -54,6 +55,8 @@ import Row from './Row';
 import SendInviteForm from './SendInviteForm';
 import Seo from './Seo';
 import Share from './Share';
+import ShoppingListAddItem from './ShoppingListAddItem';
+import ShoppingListItem from './ShoppingListItem';
 import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
 import StaticMapImage from './StaticMapImage';
@@ -82,6 +85,7 @@ export {
   Column,
   Content,
   DayPickerInput,
+  Dividers,
   DropdownMenu,
   EditableInput,
   ErrorBoundary,
@@ -127,6 +131,8 @@ export {
   SendInviteForm,
   Seo,
   Share,
+  ShoppingListAddItem,
+  ShoppingListItem,
   SignupForm,
   SiteMetadata,
   StackedAvatars,

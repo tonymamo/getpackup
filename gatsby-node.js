@@ -258,6 +258,18 @@ exports.onCreateNode = async ({
       });
     }
 
+    if (node.frontmatter && node.frontmatter.fourthpitch) {
+      await createRemoteImageNode({
+        url: node.frontmatter.fourthpitch.image,
+        parentNode: node,
+        relationshipName: 'fourthpitchImage',
+        createNode,
+        createNodeId,
+        createContentDigest,
+        reporter,
+      });
+    }
+
     if (node.frontmatter && node.frontmatter.featuredimage) {
       await createRemoteImageNode({
         url: node.frontmatter.featuredimage,

@@ -1,14 +1,5 @@
 import topo from '@images/topo.png';
-import {
-  brandPrimary,
-  brandPrimaryHover,
-  brandSecondary,
-  gray,
-  headingsColor,
-  lightGray,
-  textColor,
-  white,
-} from '@styles/color';
+import { brandPrimaryHover } from '@styles/color';
 import { baseBorderStyle } from '@styles/mixins';
 import { baseSpacer, halfSpacer, quarterSpacer } from '@styles/size';
 import { fontFamilySansSerif, headingsFontFamily } from '@styles/typography';
@@ -76,7 +67,7 @@ const CssReset = createGlobalStyle`
   html {
     font-size: 16px;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-    background-color: ${brandSecondary};
+    background-color: var(--color-secondary);
   }
 
   body {
@@ -84,9 +75,9 @@ const CssReset = createGlobalStyle`
     /* https://www.codementor.io/@ricardozea/100-responsive-typography-system-using-a-modular-scale-s5rhft58g */
     font-size: calc(14px + .35vw); /* Responsive base font size */
     line-height: calc(21px + 1.05vw); /* Responsive Vertical Rhythm */
-    color: ${textColor};
+    color: var(--color-text);
     overflow-x: hidden;
-    background-color: ${white};
+    background-color: var(--color-background);
     background-image: url('${topo}');
     background-size: 500px;
 
@@ -98,7 +89,7 @@ const CssReset = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     margin-bottom: ${halfSpacer};
-    color: ${headingsColor};
+    color: var(--color-headings);
     font-family: ${headingsFontFamily};
     font-weight: 700;
   }
@@ -110,7 +101,7 @@ const CssReset = createGlobalStyle`
 
   abbr[title] {
     cursor: help;
-    border-bottom: 1px dotted ${lightGray};
+    border-bottom: 1px dotted var(--color-lightGray);
   }
 
   address {
@@ -153,7 +144,7 @@ const CssReset = createGlobalStyle`
   }
 
   a {
-    color: ${brandPrimary};
+    color: var(--color-primary);
     text-decoration: none;
 
     &:hover,
@@ -208,7 +199,7 @@ const CssReset = createGlobalStyle`
   caption {
     padding-top: .75rem;
     padding-bottom: .75rem;
-    color: ${lightGray};
+    color: var(--color-lightGray);
     text-align: left;
     caption-side: bottom;
   }
@@ -257,7 +248,7 @@ const CssReset = createGlobalStyle`
 
   input[type="number"] {
     color: transparent;
-    text-shadow: 0 0 0 ${gray};
+    text-shadow: 0 0 0 var(--color-gray);
     caret-color: transparent;
     
     &::selection {
@@ -273,25 +264,25 @@ const CssReset = createGlobalStyle`
   }
 
   ::-moz-selection {
-      color: ${white};
+      color: var(--color-background);
       background: ${brandPrimaryHover};
   }
 
   ::selection {
-      color: ${white};
+      color: var(--color-background);
       background: ${brandPrimaryHover};
   }
 
   :-ms-input-placeholder {
-      color: ${lightGray};
+      color: var(--color-lightGray);
   }
 
   ::-ms-input-placeholder {
-      color: ${lightGray};
+      color: var(--color-lightGray);
   }
 
   ::placeholder {
-      color: ${lightGray};
+      color: var(--color-lightGray);
       opacity: 1; /* Firefox */
   }
   .accordion *:focus {

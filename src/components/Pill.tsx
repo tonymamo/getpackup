@@ -25,9 +25,9 @@ const renderColor = (color: PillProps['color']) => {
   switch (color) {
     case 'neutral':
       return {
-        backgroundColor: lightestGray,
-        hoverBackgroundColor: lightestGray,
-        color: textColor,
+        backgroundColor: `var(--color-lightestGray)`,
+        hoverBackgroundColor: `var(--color-lightestGray)`,
+        color: `var(--color-text)`,
       };
     case 'primary':
       return {

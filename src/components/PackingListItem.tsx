@@ -74,6 +74,7 @@ const ItemInputWrapper = styled.div`
 
 const ItemText = styled.div`
   flex: 1;
+  word-break: break-all;
 `;
 
 type FormValues = {

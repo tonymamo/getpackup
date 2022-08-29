@@ -48,7 +48,7 @@ const Login: FunctionComponent<LoginProps> = () => {
       <Box>
         <Heading align="center">Log In</Heading>
         <p style={{ textAlign: 'center' }}>
-          Adventure made easy&mdash;never forget important gear again!
+          to access your digital gear inventory and custom packing lists
         </p>
         <HorizontalRule />
         <Row>

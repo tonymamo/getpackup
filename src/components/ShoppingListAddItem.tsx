@@ -15,13 +15,9 @@ import styled from 'styled-components';
 
 import { InputWrapper } from './Input';
 
-type PackingListItemProps = {
-  tripId: string;
-  categoryName: string;
-  isOnSharedList?: boolean;
-};
+type ShoppingListItemProps = {};
 
-const PackingListItemWrapper = styled.li`
+const ShoppingListItemWrapper = styled.li`
   border-bottom: ${baseBorderStyle};
   padding: ${halfSpacer};
   &:hover {
@@ -47,65 +43,49 @@ const IconWrapper = styled.div`
   }
 `;
 
-const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({
-  tripId,
-  categoryName,
-  isOnSharedList,
-}) => {
+const ShoppingListAddItem: FunctionComponent<ShoppingListItemProps> = () => {
   const firebase = useFirebase();
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.firebase.auth);
 
+  // isChecked: boolean;
+  //   created: firebase.default.firestore.Timestamp;
+  //   id: string;
+  //   name: string;
+  //   quantity: number;
+  //   updated?: firebase.default.firestore.Timestamp;
+
   return (
-    <PackingListItemWrapper>
+    <ShoppingListItemWrapper>
       <Formik
         validateOnMount
         initialValues={{
-          [`new-${categoryName}`]: '',
-          category: categoryName,
-          quantity: 1,
-          isPacked: false,
-          isEssential: false,
-          description: '',
           created: new Date(),
+          isChecked: false,
+          name: '',
+          quantity: 1,
         }}
         onSubmit={async (values, { resetForm, setSubmitting }) => {
           resetForm({});
-          if ((values[`new-${categoryName}`] as string).length > 1) {
+          if (values.name.length > 1) {
             try {
               await firebase
                 .firestore()
-                .collection('trips')
-                .doc(tripId)
-                .collection('packing-list')
+                .collection('shopping-list')
+                .doc(auth.uid)
+                .collection('items')
                 .add({
-                  name: values[`new-${categoryName}`],
-                  category: categoryName,
-                  quantity: 1,
-                  isPacked: false,
-                  isEssential: false,
-                  description: '',
                   created: new Date(),
-                  packedBy: [
-                    {
-                      isShared: isOnSharedList,
-                      quantity: 1,
-                      uid: auth.uid,
-                    },
-                  ],
+                  isChecked: false,
+                  name: values.name,
+                  quantity: 1,
                 });
-              trackEvent('Packing List Item Added', {
-                name: values[`new-${categoryName}`],
-                categoryName,
-                tripId,
-              });
+              trackEvent('Shopping List Item Added', values);
               setSubmitting(false);
             } catch (err) {
               setSubmitting(false);
-              trackEvent('Packing List Item Add Failure', {
-                name: values[`new-${categoryName}`],
-                categoryName,
-                tripId,
+              trackEvent('Shopping List Item Add Failure', {
+                ...values,
                 error: err,
               });
               await dispatch(
@@ -124,7 +104,7 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({
               <Field
                 as={Input}
                 type="text"
-                name={`new-${categoryName}`}
+                name="name"
                 label="Add Item"
                 hiddenLabel
                 disabled={isSubmitting}
@@ -144,8 +124,8 @@ const PackingListAddItem: FunctionComponent<PackingListItemProps> = ({
           </Form>
         )}
       </Formik>
-    </PackingListItemWrapper>
+    </ShoppingListItemWrapper>
   );
 };
 
-export default PackingListAddItem;
+export default ShoppingListAddItem;

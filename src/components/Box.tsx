@@ -46,7 +46,7 @@ const StyledBox = styled.div<BoxProps>`
   background: ${(props) =>
     props.bgSrc
       ? `url(${props.bgSrc.childImageSharp.fluid.src}) center center / cover no-repeat`
-      : white};
+      : `var(--color-backgroundAlt)`};
   cursor: ${(props) => (props.onClick ? 'pointer' : 'initial')};
   transition: all 0.2s ease-in-out;
   ${(props) =>

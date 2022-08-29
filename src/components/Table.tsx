@@ -152,6 +152,8 @@ const GlobalFilter = ({
   const getFilteredCategories = (array: GearListEnumType) =>
     array.filter((item) => gearClosetCategories.includes(item.name));
 
+  const getMatchingTagToSearch = allGearListItems.find((i) => i.name === tagToSearch);
+
   return (
     <>
       <Row>
@@ -180,8 +182,8 @@ const GlobalFilter = ({
               menuPlacement="auto"
               isSearchable={!size.isExtraSmallScreen}
               value={{
-                value: allGearListItems.find((i) => i.name === tagToSearch)?.name || '',
-                label: tagToSearch,
+                value: getMatchingTagToSearch?.name || '',
+                label: getMatchingTagToSearch?.label || tagToSearch || '',
               }}
               options={[
                 {

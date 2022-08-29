@@ -5,6 +5,7 @@ import React from 'react';
 
 const PreviewCompatibleImage = ({
   imageInfo,
+  height,
   ...rest
 }: {
   imageInfo: {
@@ -16,7 +17,10 @@ const PreviewCompatibleImage = ({
   width?: string;
   height?: string;
 }) => {
-  const imageStyle = { width: '100%' };
+  const imageStyle = {
+    width: '100%',
+    height: height || 'auto',
+  };
   const { alt = '', image } = imageInfo;
 
   const isFluidImage =

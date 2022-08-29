@@ -13,13 +13,7 @@ import GearClosetIcon from '@images/gearClosetIcon';
 import yak from '@images/yak.svg';
 import { useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
-import {
-  brandNotification,
-  brandPrimary,
-  brandSecondary,
-  brandTertiary,
-  white,
-} from '@styles/color';
+import { brandPrimary, brandSecondary, brandTertiary, white } from '@styles/color';
 import { zIndexNavbar } from '@styles/layers';
 import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
 import { fontSizeBase, fontSizeSmall, headingsFontFamily } from '@styles/typography';
@@ -31,10 +25,10 @@ import { Link, navigate } from 'gatsby';
 import { Spin as Hamburger } from 'hamburger-react';
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { FaCalendar, FaChevronLeft, FaUserLock } from 'react-icons/fa';
+import { FaCalendar, FaChevronLeft, FaShoppingCart, FaUserLock } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import { AvatarImageWrapper } from './Avatar';
 
@@ -44,7 +38,7 @@ const StyledNavbar = styled.header`
   position: fixed;
   left: 0;
   right: 0;
-  background: ${brandSecondary};
+  background: var(--color-secondary);
   min-height: ${quadrupleSpacer};
   padding-top: env(safe-area-inset-top);
   z-index: ${zIndexNavbar};
@@ -76,15 +70,15 @@ const StyledNavbar = styled.header`
     line-height: ${quadrupleSpacer};
   }
 
-  & sup {
-    text-transform: uppercase;
-    font-size: 0.5em;
-    top: -1em;
-    padding: ${quarterSpacer};
-    border-radius: ${baseSpacer};
-    background-color: ${white};
-    color: ${brandSecondary};
-  }
+  // & sup {
+  //   text-transform: uppercase;
+  //   font-size: 0.5em;
+  //   top: -1em;
+  //   padding: ${quarterSpacer};
+  //   border-radius: ${baseSpacer};
+  //   background-color: ${white};
+  //   color: ${brandSecondary};
+  // }
 
   & svg:focus {
     outline: none;
@@ -278,13 +272,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 onClick={() => trackEvent('Navbar Logo Clicked', { isAuthenticated })}
               >
                 <img src={yak} alt="" width={tripleSpacer} height={27} />{' '}
-                {size.isSmallScreen && !isAuthenticated ? (
-                  ''
-                ) : (
-                  <>
-                    packup<sup>beta</sup>
-                  </>
-                )}
+                {size.isSmallScreen && !isAuthenticated ? '' : <>packup</>}
               </Link>
             </Heading>
           )}
@@ -295,7 +283,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 onClick={() => trackEvent('Navbar SmallScreen Logo Clicked', { isAuthenticated })}
               >
                 <img src={yak} alt="" width={tripleSpacer} />
-                packup<sup>beta</sup>
+                packup
               </Link>
             </Heading>
           )}
@@ -399,10 +387,13 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
           )}
           {!size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <FlexContainer as="nav">
-              <NavLink to="/blog">Blog</NavLink>
+              {/* <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
-              <NavLink to="/contact">Contact</NavLink>
-              <NavLink to="/login">Log In</NavLink>
+              <NavLink to="/contact">Contact</NavLink> */}
+              <Button type="link" to="/login" color="secondary">
+                Log In
+              </Button>
+              &nbsp;
               <Button type="link" to="/signup">
                 Sign Up
               </Button>
@@ -427,27 +418,19 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               >
                 <GearClosetIcon size={17} style={{ marginRight: halfSpacer }} /> Gear Closet
               </Link>
-              {/* TODO: when shopping list is ready 
-              <Link
-                to="/app/shopping-list"
-                getProps={isPartiallyActive}
-                onClick={() =>
-                  trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Shopping List' })
-                }
-              >
-                <FaShoppingCart data-tip="Shopping list" data-for="shoppingList" />
-                <ReactTooltip
-                  id="shoppingList"
-                  place="bottom"
-                  type="dark"
-                  effect="solid"
-                  className="tooltip customTooltip"
-                  delayShow={500}
-                  offset={{
-                    bottom: 8,
-                  }}
-                />
-              </Link> */}
+
+              {false ? ( // TODO
+                <Link
+                  to="/app/shopping-list"
+                  getProps={isPartiallyActive}
+                  onClick={() =>
+                    trackEvent('Navbar LoggedInUser Link Clicked', { link: 'Shopping List' })
+                  }
+                >
+                  <FaShoppingCart style={{ marginRight: halfSpacer }} /> Shopping List
+                </Link>
+              ) : null}
+
               {profile.isAdmin && (
                 <Link to="/admin/gear-list" getProps={isPartiallyActive}>
                   <FaUserLock /> Admin
