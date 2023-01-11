@@ -72,7 +72,7 @@
     "gatsby-source-filesystem": "^3.9.0",
     "gatsby-source-firestore-easy": "^1.0.0",
     "gatsby-transformer-cloudinary": "^2.2.4",
-    "gatsby-transformer-remark": "^2.6.58",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^2.3.18",
     "hamburger-react": "^1.2.0",
     "instantsearch.css": "^7.4.5",
