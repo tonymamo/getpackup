@@ -11,12 +11,7 @@ export default function HTML(props) {
         <meta name="color-scheme" content="light only" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         {props.headComponents}
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cloud.typography.com/7222118/6340832/css/fonts.css"
-          media="all"
-        />
+        <link rel="stylesheet" href="/webfonts.css" type="text/css" charset="utf-8" />
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
