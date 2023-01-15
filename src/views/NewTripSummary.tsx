@@ -411,7 +411,6 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
                   </Row>
                 </Slide>
 
-                {/* <Field as={Input} type="textarea" name="description" label="Description" /> */}
               </SwipeableViews>
 
               {/* <FormErrors dirty={dirty} errors={errors} /> */}
