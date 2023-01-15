@@ -4,6 +4,7 @@ import { UserType } from '@common/user';
 import {
   Box,
   Button,
+  Column,
   DayPickerInput,
   FlexContainer,
   FormErrors,
@@ -11,6 +12,7 @@ import {
   HorizontalRule,
   Input,
   PageContainer,
+  Row,
   Seo,
   UserMediaObject,
   UserSearch,
@@ -31,10 +33,18 @@ import React, { FunctionComponent, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
+import SwipeableViews from 'react-swipeable-views';
+import styled from 'styled-components';
 
 type MembersToInviteType = { uid: string; email: string; greetingName: string }[];
 
 type NewTripSummaryProps = {} & RouteComponentProps;
+
+const Slide = styled.div`
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+`;
 
 const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
@@ -46,6 +56,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
   const [isSearchBarDisabled, setIsSearchBarDisabled] = useState(false);
   const [membersToInvite, setMembersToInvite] = useState<MembersToInviteType>([]);
 
@@ -142,6 +153,10 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
       });
   };
 
+  const onSwitch = (i: number) => {
+    setActiveTab(activeTab + i);
+  };
+
   const initialValues: TripFormType = {
     owner: auth.uid,
     tripId: '',
@@ -201,117 +216,234 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
             ...rest
           }) => (
             <Form autoComplete="off">
-              <Field
-                as={Input}
-                type="text"
-                name="name"
-                label="Trip Name"
-                validate={requiredField}
-                required
-                autoComplete="off"
-                maxLength={50}
-              />
+              <SwipeableViews disabled index={activeTab}>
+                <Slide>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <Heading>Where are you headed?</Heading>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <Field
+                        as={Input}
+                        type="geosuggest"
+                        types={[]}
+                        name="startingPoint"
+                        label="Trip Location"
+                        validate={requiredField}
+                        required
+                        setFieldValue={setFieldValue}
+                        setFieldTouched={setFieldTouched}
+                        {...rest}
+                      />
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={4} xsOffset={6}>
+                      <Button
+                        type="button"
+                        block
+                        onClick={() => onSwitch(1)}
+                        iconRight={<FaChevronRight />}
+                      >
+                        Next
+                      </Button>
+                    </Column>
+                  </Row>
+                </Slide>
 
-              <DayPickerInput
-                label="Trip Date"
-                initialValues={initialValues}
-                values={values}
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-              />
+                <Slide>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <Heading>When are you going?</Heading>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <DayPickerInput
+                        label="Trip Date"
+                        initialValues={initialValues}
+                        values={values}
+                        setFieldValue={setFieldValue}
+                        setFieldTouched={setFieldTouched}
+                      />
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={4} xsOffset={2} xsSpacer xsOrder={1}>
+                      <Button
+                        type="button"
+                        color="text"
+                        block
+                        onClick={() => onSwitch(-1)}
+                        iconLeft={<FaChevronLeft />}
+                      >
+                        Back
+                      </Button>
+                    </Column>
+                    <Column xs={4} xsOrder={2}>
+                      <Button
+                        type="button"
+                        block
+                        onClick={() => onSwitch(1)}
+                        iconRight={<FaChevronRight />}
+                      >
+                        Next
+                      </Button>
+                    </Column>
+                  </Row>
+                </Slide>
 
-              <Field as={Input} type="textarea" name="description" label="Description" />
+                <Slide>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <Heading>Going with anyone else?</Heading>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <Box>
+                        {activeLoggedInUser && (
+                          <UserMediaObject user={activeLoggedInUser} showSecondaryContent />
+                        )}
+                        {membersToInvite.length > 0 && <HorizontalRule compact />}
+                        {membersToInvite.length > 0 &&
+                          membersToInvite.map((tripMember, index) => {
+                            const matchingUser: UserType =
+                              users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
+                            if (!matchingUser) return null;
+                            return (
+                              <div key={matchingUser.uid}>
+                                <UserMediaObject
+                                  user={matchingUser}
+                                  showSecondaryContent
+                                  action={
+                                    <Button
+                                      type="button"
+                                      color="tertiary"
+                                      size="small"
+                                      onClick={() =>
+                                        setMembersToInvite((prevState) =>
+                                          prevState.filter((_, i) => i !== index)
+                                        )
+                                      }
+                                    >
+                                      Remove
+                                    </Button>
+                                  }
+                                />
+                                {index !== membersToInvite.length - 1 && <HorizontalRule compact />}
+                              </div>
+                            );
+                          })}
+                      </Box>
+                      <UserSearch
+                        activeTrip={undefined}
+                        updateTrip={(uid, email, greetingName) => {
+                          updateTripMembers(uid, email, greetingName);
+                        }}
+                        isSearchBarDisabled={isSearchBarDisabled}
+                      />
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={4} xsOffset={2} xsSpacer xsOrder={1}>
+                      <Button
+                        type="button"
+                        color="text"
+                        block
+                        onClick={() => onSwitch(-1)}
+                        iconLeft={<FaChevronLeft />}
+                      >
+                        Back
+                      </Button>
+                    </Column>
+                    <Column xs={4} xsOrder={2}>
+                      <Button
+                        type="button"
+                        block
+                        onClick={() => onSwitch(1)}
+                        iconRight={<FaChevronRight />}
+                      >
+                        Next
+                      </Button>
+                    </Column>
+                  </Row>
+                </Slide>
 
-              <Field
-                as={Input}
-                type="geosuggest"
-                types={[]}
-                name="startingPoint"
-                label="Trip Location"
-                validate={requiredField}
-                required
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-                {...rest}
-              />
+                <Slide>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <Field
+                        as={Input}
+                        type="text"
+                        name="name"
+                        label="Trip Name"
+                        validate={requiredField}
+                        required
+                        autoComplete="off"
+                        maxLength={50}
+                      />
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={3} xsOffset={3}>
+                      <Button
+                        type="button"
+                        block
+                        onClick={() => onSwitch(-1)}
+                        iconLeft={<FaChevronLeft />}
+                      >
+                        Back
+                      </Button>
+                    </Column>
+                    <Column xs={3} xsOffset={6}>
+                      <Button
+                        type="button"
+                        block
+                        onClick={() => onSwitch(1)}
+                        iconRight={<FaChevronRight />}
+                      >
+                        Next
+                      </Button>
+                    </Column>
+                  </Row>
+                </Slide>
 
-              <StyledLabel>Trip Party</StyledLabel>
+                {/* <Field as={Input} type="textarea" name="description" label="Description" /> */}
+              </SwipeableViews>
 
-              <Box>
-                {activeLoggedInUser && (
-                  <UserMediaObject user={activeLoggedInUser} showSecondaryContent />
-                )}
-                {membersToInvite.length > 0 && <HorizontalRule compact />}
-                {membersToInvite.length > 0 &&
-                  membersToInvite.map((tripMember, index) => {
-                    const matchingUser: UserType =
-                      users && users[tripMember.uid] ? users[tripMember.uid] : undefined;
-                    if (!matchingUser) return null;
-                    return (
-                      <div key={matchingUser.uid}>
-                        <UserMediaObject
-                          user={matchingUser}
-                          showSecondaryContent
-                          action={
-                            <Button
-                              type="button"
-                              color="tertiary"
-                              size="small"
-                              onClick={() =>
-                                setMembersToInvite((prevState) =>
-                                  prevState.filter((_, i) => i !== index)
-                                )
-                              }
-                            >
-                              Remove
-                            </Button>
-                          }
-                        />
-                        {index !== membersToInvite.length - 1 && <HorizontalRule compact />}
-                      </div>
-                    );
-                  })}
-              </Box>
-              <UserSearch
-                activeTrip={undefined}
-                updateTrip={(uid, email, greetingName) => {
-                  updateTripMembers(uid, email, greetingName);
-                }}
-                isSearchBarDisabled={isSearchBarDisabled}
-              />
-
-              <HorizontalRule />
-
-              <FormErrors dirty={dirty} errors={errors} />
-              <FlexContainer justifyContent="space-between">
-                <Button
-                  type="link"
-                  to="../"
-                  color="tertiary"
-                  rightSpacer
-                  iconLeft={<FaChevronLeft />}
-                  onClick={() =>
-                    trackEvent('New Trip Form Cancelled', {
-                      values: { ...values },
-                      errors: { ...errors },
-                      touched: { ...touched },
-                      dirty,
-                      isValid,
-                    })
-                  }
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting || !isValid || isLoading}
-                  isLoading={isLoading}
-                  color="success"
-                  iconRight={<FaChevronRight />}
-                >
-                  Continue
-                </Button>
-              </FlexContainer>
+              {/* <FormErrors dirty={dirty} errors={errors} /> */}
+              {/* <FlexContainer justifyContent="space-between"> */}
+              {/*  <Button */}
+              {/*    type="link" */}
+              {/*    to="../" */}
+              {/*    color="tertiary" */}
+              {/*    rightSpacer */}
+              {/*    iconLeft={<FaChevronLeft />} */}
+              {/*    onClick={() => */}
+              {/*      trackEvent('New Trip Form Cancelled', { */}
+              {/*        values: { ...values }, */}
+              {/*        errors: { ...errors }, */}
+              {/*        touched: { ...touched }, */}
+              {/*        dirty, */}
+              {/*        isValid, */}
+              {/*      }) */}
+              {/*    } */}
+              {/*  > */}
+              {/*    Cancel */}
+              {/*  </Button> */}
+              {/*  <Button */}
+              {/*    type="submit" */}
+              {/*    disabled={isSubmitting || !isValid || isLoading} */}
+              {/*    isLoading={isLoading} */}
+              {/*    color="success" */}
+              {/*    iconRight={<FaChevronRight />} */}
+              {/*  > */}
+              {/*    Continue */}
+              {/*  </Button> */}
+              {/* </FlexContaineer> */}
             </Form>
           )}
         </Formik>
