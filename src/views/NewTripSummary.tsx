@@ -388,9 +388,10 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
                     </Column>
                   </Row>
                   <Row>
-                    <Column xs={3} xsOffset={3}>
+                    <Column xs={4} xsOffset={2} xsSpacer xsOrder={1}>
                       <Button
                         type="button"
+                        color="text"
                         block
                         onClick={() => onSwitch(-1)}
                         iconLeft={<FaChevronLeft />}
@@ -398,7 +399,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
                         Back
                       </Button>
                     </Column>
-                    <Column xs={3} xsOffset={6}>
+                    <Column xs={4} xsOrder={2}>
                       <Button
                         type="button"
                         block
