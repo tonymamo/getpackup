@@ -203,11 +203,13 @@ const Seo: FunctionComponent<SeoType> = ({
         rel="apple-touch-startup-image"
       />
       <script type="text/javascript">{`window.googleMapsLoaded = function() {}`}</script>
-      <script
-        type="text/javascript"
-        async
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places&callback=googleMapsLoaded`}
-      />
+      {typeof window !== 'undefined' && !window.google && (
+        <script
+          type="text/javascript"
+          async
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places&callback=googleMapsLoaded`}
+        />
+      )}
       {children}
     </Helmet>
   );
