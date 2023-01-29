@@ -21,7 +21,7 @@ import { baseSpacer, baseSpacerUnit, doubleSpacer, sextupleSpacer } from '@style
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
 import validateUsername from '@utils/validateUsername';
-import { isEmail, requiredEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
+import { isEmail, requiredField, requiredPhoneNumber } from '@utils/validations';
 import { Field, Form, Formik } from 'formik';
 import { Link, navigate } from 'gatsby';
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -157,14 +157,7 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
 
   return (
     <PageContainer>
-      <Seo title="Edit Profile">
-        {typeof google !== 'object' && (
-          <script
-            type="text/javascript"
-            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places`}
-          />
-        )}
-      </Seo>
+      <Seo title="Edit Profile" />
       {auth && loggedInUser && (
         <ProfileWrapper>
           <NegativeMarginContainer
@@ -318,24 +311,24 @@ const Profile: FunctionComponent<ProfileProps> = ({ loggedInUser }) => {
                         )}
                       </FlexContainer>
                     </EditableInput>
-                    {typeof window !== 'undefined' && window.google && (
-                      <EditableInput
+
+                    <EditableInput
+                      label="Location"
+                      isLoading={isLoading}
+                      value={loggedInUser.location || 'No location provided'}
+                    >
+                      <Field
+                        as={Input}
+                        type="geosuggest"
+                        geosuggestTypes={['(cities)']}
+                        name="location"
                         label="Location"
-                        isLoading={isLoading}
-                        value={loggedInUser.location || 'No location provided'}
-                      >
-                        <Field
-                          as={Input}
-                          type="geosuggest"
-                          geosuggestTypes={['(cities)']}
-                          name="location"
-                          label="Location"
-                          hiddenLabel
-                          setFieldValue={setFieldValue}
-                          {...rest}
-                        />
-                      </EditableInput>
-                    )}
+                        hiddenLabel
+                        setFieldValue={setFieldValue}
+                        {...rest}
+                      />
+                    </EditableInput>
+
                     <EditableInput
                       label="Website"
                       isLoading={isLoading}

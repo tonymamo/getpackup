@@ -126,14 +126,7 @@ const TripDetails: FunctionComponent<TripDetailsProps> = ({ activeTrip, users })
 
   return (
     <>
-      <Seo title="Trip Details">
-        {typeof google !== 'object' && (
-          <script
-            type="text/javascript"
-            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places`}
-          />
-        )}
-      </Seo>
+      <Seo title="Trip Details" />
       <PageContainer>
         {typeof activeTrip !== 'undefined' && activeTrip && (
           <>

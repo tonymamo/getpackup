@@ -181,14 +181,7 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
         Create New Trip
       </Heading>
       <>
-        <Seo title="New Trip">
-          {typeof google !== 'object' && (
-            <script
-              type="text/javascript"
-              src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places`}
-            />
-          )}
-        </Seo>
+        <Seo title="New Trip" />
         <Formik
           validateOnMount
           initialValues={initialValues}
