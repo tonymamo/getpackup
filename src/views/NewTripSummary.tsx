@@ -368,11 +368,16 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
                 <Slide>
                   <Row>
                     <Column xs={8} xsOffset={2}>
+                      <Heading>Trip Name</Heading>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
                       <Field
                         as={Input}
                         type="text"
                         name="name"
-                        label="Trip Name"
+                        label=""
                         validate={requiredField}
                         required
                         autoComplete="off"
@@ -405,6 +410,38 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
                   </Row>
                 </Slide>
 
+                <Slide>
+                  <Row>
+                    <Column xs={8} xsOffset={2}>
+                      <Heading>Pick a Cover Image</Heading>
+                    </Column>
+                  </Row>
+                  <Row>
+                    <Column xs={4} xsOffset={2} xsSpacer xsOrder={1}>
+                      <Button
+                        type="button"
+                        color="text"
+                        block
+                        onClick={() => onSwitch(-1)}
+                        iconLeft={<FaChevronLeft />}
+                      >
+                        Back
+                      </Button>
+                    </Column>
+                    <Column xs={4} xsOrder={2}>
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting || !isValid || isLoading}
+                        onClick={() => onSwitch(1)}
+                        isLoading={isLoading}
+                        color="success"
+                        iconRight={<FaChevronRight />}
+                      >
+                        Next
+                      </Button>
+                    </Column>
+                  </Row>
+                </Slide>
               </SwipeableViews>
 
               {/* <FormErrors dirty={dirty} errors={errors} /> */}
