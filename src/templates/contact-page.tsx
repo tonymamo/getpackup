@@ -61,7 +61,7 @@ export const ContactPageTemplate: FunctionComponent<ContactProps> = (props) => {
                 initialValues={initialValues}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                   postFormUrlEncoded('contact', values).then(() => {
-                    trackEvent('Contact Page Form Submitted', { values });
+                    trackEvent('Contact Page Forms Submitted', { values });
                     setSent(true);
                     setSubmitting(false);
                     resetForm();

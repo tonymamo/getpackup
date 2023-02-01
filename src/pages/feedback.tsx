@@ -71,13 +71,13 @@ export const Feedback: FunctionComponent<FeedbackProps> = (props) => {
                   onSubmit={(values, { resetForm, setSubmitting }) => {
                     postFormUrlEncoded('feedback', values)
                       .then(() => {
-                        trackEvent('Feedback Form Submitted', values);
+                        trackEvent('Feedback Forms Submitted', values);
                         setSent(true);
                         setSubmitting(false);
                         resetForm();
                       })
                       .catch((err) => {
-                        trackEvent('Feedback Form Submitted', { ...values, error: err });
+                        trackEvent('Feedback Forms Submitted', { ...values, error: err });
                         dispatch(
                           addAlert({
                             type: 'danger',

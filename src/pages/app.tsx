@@ -26,7 +26,7 @@ import styled from 'styled-components';
 
 const Profile = loadable(() => import('@views/Profile'), { fallback: <LoadingPage /> });
 const Trips = loadable(() => import('@views/Trips'), { fallback: <LoadingPage /> });
-const NewTripSummary = loadable(() => import('@views/NewTripSummary'), {
+const NewTripSummary = loadable(() => import('@views/NewTrip/NewTripSummary'), {
   fallback: <LoadingPage />,
 });
 const TripById = loadable(() => import('@views/TripById'), { fallback: <LoadingPage /> });
