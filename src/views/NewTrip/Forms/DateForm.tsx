@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function DateForm(props: any) {
   const {
-    formField: { tripDate },
+    // formField: { tripDate },
     formValues,
     setFieldValue,
     setFieldTouched,
@@ -14,7 +14,7 @@ export default function DateForm(props: any) {
       <Row>
         <Column xs={8} xsOffset={2}>
           <DayPickerInput
-            label={tripDate.label}
+            label="Trip Date"
             initialValues=""
             values={formValues}
             setFieldValue={setFieldValue}

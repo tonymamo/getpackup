@@ -5,6 +5,8 @@ import React from 'react';
 export default function LocationForm(props: any) {
   const {
     formField: { startingPoint },
+    setFieldTouched,
+    setFieldValue,
   } = props;
 
   return (
@@ -22,6 +24,8 @@ export default function LocationForm(props: any) {
             types={[]}
             name={startingPoint.name}
             label={startingPoint.label}
+            setFieldTouched={setFieldTouched}
+            setFieldValue={setFieldValue}
             required
           />
         </Column>

@@ -1,74 +1,90 @@
-import { MAX_TRIP_PARTY_SIZE } from '@common/constants';
 import { TripFormType, TripMemberStatus } from '@common/trip';
-import { UserType } from '@common/user';
-import {
-  Box,
-  Button,
-  Column,
-  DayPickerInput,
-  FlexContainer,
-  FormErrors,
-  Heading,
-  HeroImageUpload,
-  HorizontalRule,
-  Input,
-  PageContainer,
-  Row,
-  Seo,
-  UserMediaObject,
-  UserSearch,
-} from '@components';
-import { StyledLabel } from '@components/Input';
+import { Button, Column, PageContainer, Row, Seo } from '@components';
 import { RouteComponentProps } from '@reach/router';
 import { RootState } from '@redux/ducks';
 import { addAlert } from '@redux/ducks/globalAlerts';
-import { borderColor, offWhite, white } from '@styles/color';
-import { baseSpacer, halfSpacer } from '@styles/size';
 import getSeason from '@utils/getSeason';
 import sendTripInvitationEmail from '@utils/sendTripInvitationEmail';
 import trackEvent from '@utils/trackEvent';
-import { requiredField } from '@utils/validations';
-import axios from 'axios';
 import { endOfDay, startOfDay } from 'date-fns';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { navigate } from 'gatsby';
-import React, { FunctionComponent, useMemo, useState } from 'react';
-import { FaCamera, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import React, { FunctionComponent, useState } from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, useFirestoreConnect } from 'react-redux-firebase';
-import SwipeableViews from 'react-swipeable-views';
-import styled from 'styled-components';
+import { useFirebase } from 'react-redux-firebase';
 
-import { getInitValues } from './FormModel/formInitialValues';
+import getInitValues from './FormModel/formInitialValues';
 import newTripFormModel from './FormModel/newTripFormModel';
 import validationSchema from './FormModel/validationSchema';
+import DateForm from './Forms/DateForm';
+import ImageForm from './Forms/ImageForm';
+import LocationForm from './Forms/LocationForm';
+import MembersForm from './Forms/MembersForm';
+import NameForm from './Forms/NameForm';
 
 type MembersToInviteType = { uid: string; email: string; greetingName: string }[];
-
 type NewTripSummaryProps = {} & RouteComponentProps;
 
-const Slide = styled.div`
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-`;
-
 const { formId, formField } = newTripFormModel;
+const steps = ['Location', 'Date', 'Members', 'Name', 'Image'];
+
+/**
+ * TODO: add type to parameters or refactor forms to eliminate the need for this
+ * @param step
+ * @param parameters
+ */
+const renderStepContent = (step: number, parameters: any) => {
+  switch (step) {
+    case 0:
+      return (
+        <LocationForm
+          formField={formField}
+          setFieldTouched={parameters.setFieldTouched}
+          setFieldValue={parameters.setFieldValue}
+        />
+      );
+    case 1:
+      return (
+        <DateForm
+          formField={formField}
+          formValues={parameters.formValues}
+          setFieldValue={parameters.setFieldValue}
+          setFieldTouched={parameters.setFieldTouched}
+        />
+      );
+    case 2:
+      return (
+        <MembersForm
+          activeLoggedInUser={parameters.activeLoggedInUser}
+          membersToInvite={parameters.membersToInvite}
+          auth={parameters.auth}
+          setMembersToInvite={parameters.setMembersToInvite}
+        />
+      );
+    case 3:
+      return <NameForm formField={formField} />;
+    case 4:
+      return <ImageForm formField={formField} setFieldValue={parameters.setFieldValue} />;
+    default:
+      return <div>Form Not Found</div>;
+  }
+};
 
 const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth);
   const profile = useSelector((state: RootState) => state.firebase.profile);
-  // const users = useSelector((state: RootState) => state.firestore.data.users);
-  // const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
-  // const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
+  const loggedInUser = useSelector((state: RootState) => state.firestore.ordered.loggedInUser);
+  const activeLoggedInUser = loggedInUser && loggedInUser.length > 0 ? loggedInUser[0] : undefined;
   const firebase = useFirebase();
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const isLastStep = activeStep === steps.length - 1;
   const [membersToInvite, setMembersToInvite] = useState<MembersToInviteType>([]);
 
-  const addNewTrip = (values: TripFormType) => {
+  const submitForm = (values: TripFormType) => {
     setIsLoading(true);
     const tripMembers: Record<string, any> = {};
     tripMembers[`${auth.uid}`] = {
@@ -125,137 +141,95 @@ const NewTripSummary: FunctionComponent<NewTripSummaryProps> = () => {
       });
   };
 
+  const handleSubmit = (values: TripFormType, actions: any) => {
+    if (isLastStep) {
+      const valuesWithSeason = {
+        ...values,
+        season: getSeason(values.lat, values.lng, values.startDate as string),
+      };
+      trackEvent('New Trip Submit Button Clicked', valuesWithSeason);
 
-  const initialValues: TripFormType = getInitValues(auth.uid)
+      submitForm(valuesWithSeason);
+
+      actions.setSubmitting(false);
+    } else {
+      setActiveStep(activeStep + 1);
+      actions.setSubmitting(false);
+    }
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+  const initialValues: TripFormType = getInitValues(auth.uid);
+  const currentValidationSchema = validationSchema[activeStep];
 
   return (
     <PageContainer>
-      <>
-        <Seo title="New Trip" />
+      <Seo title="New Trip" />
+      {activeStep === steps.length ? (
+        <div>New trip created, redirect to trips list</div>
+      ) : (
         <Formik
-          validateOnMount
+          validationSchema={currentValidationSchema}
           initialValues={initialValues}
-          onSubmit={(values, { setSubmitting }) => {
-            const valuesWithSeason = {
-              ...values,
-              season: getSeason(values.lat, values.lng, values.startDate as string),
-            };
-            trackEvent('New Trip Submit Button Clicked', valuesWithSeason);
-
-            addNewTrip(valuesWithSeason);
-
-            setSubmitting(false);
-          }}
+          onSubmit={handleSubmit}
         >
-          {({
-            isSubmitting,
-            isValid,
-            values,
-            setFieldValue,
-            dirty,
-            errors,
-            setFieldTouched,
-            touched,
-            ...rest
-          }) => (
-            <Form autoComplete="off">
-              <SwipeableViews disabled index={activeTab}>
-                {/* Location input */}
+          {({ isSubmitting, isValid, values, setFieldValue, setFieldTouched }) => (
+            <Form autoComplete="off" id={formId}>
+              {renderStepContent(activeStep, {
+                formValues: values,
+                setFieldValue,
+                setFieldTouched,
+                activeLoggedInUser,
+                membersToInvite,
+                setMembersToInvite,
+                auth,
+              })}
 
-                {/* Dates input */}
-
-                {/* People input */}
-
-                {/* Trip name input */}
-                <Slide>
-                  <Row>
-                    <Column xs={4} xsOffset={2} xsSpacer xsOrder={1}>
-                      <Button
-                        type="button"
-                        color="text"
-                        block
-                        onClick={() => onSwitch(-1)}
-                        iconLeft={<FaChevronLeft />}
-                      >
-                        Back
-                      </Button>
-                    </Column>
-                    <Column xs={4} xsOrder={2}>
-                      <Button
-                        type="button"
-                        block
-                        onClick={() => onSwitch(1)}
-                        iconRight={<FaChevronRight />}
-                      >
-                        Next
-                      </Button>
-                    </Column>
-                  </Row>
-                </Slide>
-
-                {/* Image input */}
-                <Slide>
-                  <Row>
-                    <Column xs={4} xsOffset={2} xsSpacer xsOrder={1}>
-                      <Button
-                        type="button"
-                        color="text"
-                        block
-                        onClick={() => onSwitch(-1)}
-                        iconLeft={<FaChevronLeft />}
-                      >
-                        Back
-                      </Button>
-                    </Column>
-                    <Column xs={4} xsOrder={2}>
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting || !isValid || isLoading}
-                        isLoading={isLoading}
-                        color="success"
-                        iconRight={<FaChevronRight />}
-                      >
-                        Submit
-                      </Button>
-                    </Column>
-                  </Row>
-                </Slide>
-              </SwipeableViews>
-
-              {/* <FormErrors dirty={dirty} errors={errors} /> */}
-              {/* <FlexContainer justifyContent="space-between"> */}
-              {/*  <Button */}
-              {/*    type="link" */}
-              {/*    to="../" */}
-              {/*    color="tertiary" */}
-              {/*    rightSpacer */}
-              {/*    iconLeft={<FaChevronLeft />} */}
-              {/*    onClick={() => */}
-              {/*      trackEvent('New Trip Forms Cancelled', { */}
-              {/*        values: { ...values }, */}
-              {/*        errors: { ...errors }, */}
-              {/*        touched: { ...touched }, */}
-              {/*        dirty, */}
-              {/*        isValid, */}
-              {/*      }) */}
-              {/*    } */}
-              {/*  > */}
-              {/*    Cancel */}
-              {/*  </Button> */}
-              {/*  <Button */}
-              {/*    type="submit" */}
-              {/*    disabled={isSubmitting || !isValid || isLoading} */}
-              {/*    isLoading={isLoading} */}
-              {/*    color="success" */}
-              {/*    iconRight={<FaChevronRight />} */}
-              {/*  > */}
-              {/*    Continue */}
-              {/*  </Button> */}
-              {/* </FlexContainer> */}
+              <Row>
+                <Column xs={4} xsOffset={2} xsSpacer xsOrder={1}>
+                  {activeStep !== 0 && (
+                    <Button
+                      type="button"
+                      color="text"
+                      block
+                      disabled={isSubmitting || !isValid || isLoading}
+                      onClick={handleBack}
+                      iconLeft={<FaChevronLeft />}
+                    >
+                      Back
+                    </Button>
+                  )}
+                </Column>
+                <Column xs={4} xsOrder={2}>
+                  {isLastStep ? (
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || !isValid || isLoading}
+                      isLoading={isLoading}
+                      color="success"
+                      iconRight={<FaChevronRight />}
+                    >
+                      Create
+                    </Button>
+                  ) : (
+                    <Button
+                      disabled={isSubmitting || !isValid || isLoading}
+                      type="submit"
+                      block
+                      iconRight={<FaChevronRight />}
+                    >
+                      Next
+                    </Button>
+                  )}
+                </Column>
+              </Row>
             </Form>
           )}
         </Formik>
-      </>
+      )}
     </PageContainer>
   );
 };

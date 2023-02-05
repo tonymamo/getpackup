@@ -1,11 +1,12 @@
-import { Button, Column, Heading, Row } from '@components';
+import { Alert, Button, Column, Heading, Row } from '@components';
 import { borderColor, offWhite, white } from '@styles/color';
 import { baseSpacer, halfSpacer } from '@styles/size';
-import firebase from 'firebase/app';
-import React, { useMemo } from 'react';
+import trackEvent from '@utils/trackEvent';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
+import { useFirebase } from 'react-redux-firebase';
 import styled from 'styled-components';
-import { Uppload, en } from 'uppload';
+import { Crop, Flip, Local, Uppload, en } from 'uppload';
 
 const HeroImageUploadPicker = styled.div`
   border: 2px dashed ${borderColor};
@@ -33,45 +34,14 @@ const ImageOption = styled.img`
 
 export default function ImageForm(props: any) {
   const {
-    formField: { heroImage },
+    formField: { headerImage },
+    setFieldValue,
   } = props;
 
-  const uploader = useMemo(
-    () =>
-      new Uppload({
-        lang: en,
-        defaultService: 'local',
-        compression: 0,
-        compressionToMime: 'image/jpeg',
-        maxSize: [2048, 512],
-        uploader: (file, updateProgress) =>
-          new Promise((resolve, reject) => {
-            const storageReference = firebase.storage().ref();
-            const path = `trips/new`;
-            const reference = storageReference.child(path);
-            const uploadTask = reference.put(file);
-            uploadTask.on(
-              'state_changed',
-              (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                if (updateProgress) updateProgress(progress);
-              },
-              (error) => {
-                console.log('Got error', error);
-                return reject(new Error('unable_to_upload'));
-              },
-              () => {
-                console.log('Uploaded!');
-                uploadTask.snapshot.ref
-                  .getDownloadURL()
-                  .then((url) => resolve(url))
-                  .catch(() => reject(new Error('unable_to_upload')));
-              }
-            );
-          }),
-      }),
-    []
-  );
+  const firebase = useFirebase();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [haveSelectedImage, setHaveSelectedImage] = useState(false);
 
   const predefinedChoices = [
     // 'https://res.cloudinary.com/getpackup/image/upload/c_fill,g_north,h_512,w_2048/v1617244552/getpackup/0f1a2062-3.jpg',
@@ -109,6 +79,71 @@ export default function ImageForm(props: any) {
     'https://res.cloudinary.com/getpackup/image/upload/c_fill,h_512,w_2048/v1626131634/getpackup/044A5994-3_ofhstu.jpg',
   ];
 
+  const uploader = useMemo(
+    () =>
+      new Uppload({
+        lang: en,
+        defaultService: 'local',
+        compression: 0,
+        compressionToMime: 'image/jpeg',
+        maxSize: [2048, 512],
+        uploader: (file, updateProgress) =>
+          new Promise((resolve, reject) => {
+            const storageReference = firebase.storage().ref();
+            const path = `trips/new`;
+            const reference = storageReference.child(path);
+            const uploadTask = reference.put(file);
+            uploadTask.on(
+              'state_changed',
+              (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                if (updateProgress) updateProgress(progress);
+              },
+              (error) => {
+                console.error('Got error', error);
+                return reject(new Error('unable_to_upload'));
+              },
+              () => {
+                console.log('Uploaded!');
+                setIsLoading(false);
+                uploadTask.snapshot.ref
+                  .getDownloadURL()
+                  .then((url) => resolve(url))
+                  .catch(() => reject(new Error('unable_to_upload')));
+                setHaveSelectedImage(true);
+              }
+            );
+          }),
+      }),
+    []
+  );
+
+  useEffect(() => {
+    uploader.use([new Local()]);
+    uploader.use([new Crop({ aspectRatio: 16 / 4 }), new Flip()]);
+  }, [uploader]);
+
+  uploader.on('before-upload', () => {
+    setIsLoading(true);
+  });
+
+  uploader.on('upload', (newUrl: string) => {
+    setFieldValue(headerImage.name, newUrl);
+
+    setIsLoading(false);
+    uploader.close();
+  });
+
+  const handleSelection = (index: number) => {
+    setFieldValue(headerImage.name, predefinedChoices[index]);
+    setHaveSelectedImage(true);
+  };
+
+  const handleImageChange = () => {
+    setHaveSelectedImage(false);
+    setIsLoading(false);
+  };
+
   return (
     <>
       <Row>
@@ -118,30 +153,48 @@ export default function ImageForm(props: any) {
       </Row>
       <Row>
         <Column xs={8} xsOffset={2}>
-          <HeroImageUploadPicker>
-            <Button
-              type="button"
-              onClick={() => uploader.open()}
-              color="tertiary"
-              size="small"
-              iconLeft={<FaCamera />}
-              style={{ zIndex: 1 }}
-            >
-              Add
-            </Button>
-          </HeroImageUploadPicker>
+          {haveSelectedImage ? (
+            <>
+              <Alert type="success" message="Success!" />
+              <Button
+                type="button"
+                color="text"
+                block
+                onClick={handleImageChange}
+                style={{ marginBottom: '1rem' }}
+              >
+                Change Image
+              </Button>
+            </>
+          ) : (
+            <>
+              <HeroImageUploadPicker>
+                <Button
+                  type="button"
+                  onClick={() => uploader.open()}
+                  color="tertiary"
+                  size="small"
+                  isLoading={isLoading}
+                  iconLeft={<FaCamera />}
+                  style={{ zIndex: 1 }}
+                >
+                  Add
+                </Button>
+              </HeroImageUploadPicker>
 
-          <p style={{ textAlign: 'center' }}>Or choose from one below:</p>
+              <p style={{ textAlign: 'center' }}>Or choose from one below:</p>
 
-          {predefinedChoices.map((img, index) => (
-            <ImageOption src={img} alt="" key={img} onClick={() => console.log(index)} />
-          ))}
-          <p>
-            All photos courtesy of{' '}
-            <a href="https://www.taylorburk.com/" target="_blank" rel="noopener noreferrer">
-              Taylor Burk Photography
-            </a>
-          </p>
+              {predefinedChoices.map((img, index) => (
+                <ImageOption src={img} alt="" key={img} onClick={() => handleSelection(index)} />
+              ))}
+              <p>
+                All photos courtesy of{' '}
+                <a href="https://www.taylorburk.com/" target="_blank" rel="noopener noreferrer">
+                  Taylor Burk Photography
+                </a>
+              </p>
+            </>
+          )}
         </Column>
       </Row>
     </>

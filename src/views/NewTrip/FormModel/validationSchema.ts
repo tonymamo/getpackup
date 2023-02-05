@@ -15,9 +15,9 @@ export default [
     [startDate.name]: Yup.string().required(startDate.requiredErrorMsg),
     [endDate.name]: Yup.string().required(endDate.requiredErrorMsg),
   }),
-  {}, // Third step is to add trip members which is not required
+  Yup.object().shape({}), // Third step is to add trip members which is not required
   Yup.object().shape({
     [name.name]: Yup.string().required(name.requiredErrorMsg),
   }),
-  {}, // Fifth step is to add header image which is not required
+  Yup.object().shape({}), // Fifth step is to add header image which is not required
 ];

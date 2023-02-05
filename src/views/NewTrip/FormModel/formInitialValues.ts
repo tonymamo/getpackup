@@ -1,43 +1,29 @@
-import newTripFormModel from './newTripFormModel';
-
-const {
-  formField: {
-    name,
-    startDate,
-    endDate,
-    description,
-    owner,
-    tripId,
-    startingPoint,
-    timezoneOffset,
-    tripLength,
-    season,
-    lat,
-    lng,
-    tripMembers,
-    headerImage,
-  },
-} = newTripFormModel;
+import { TripFormType } from 'common/trip';
 
 /*
  * This function is used to initialize the form values
  */
-const getInitValues = (ownerId: string) => {
+const getInitValues = (ownerId: string): TripFormType => {
   return {
-    [name.name]: '',
-    [startDate.name]: '',
-    [endDate.name]: '',
-    [description.name]: '',
-    [owner.name]: ownerId,
-    [tripId.name]: '',
-    [startingPoint.name]: '',
-    [timezoneOffset.name]: new Date().getTimezoneOffset(),
-    [tripLength.name]: '',
-    [season.name]: '',
-    [lat.name]: '',
-    [lng.name]: '',
-    [tripMembers.name]: [],
-    [headerImage.name]: '',
+    owner: ownerId,
+    tripId: '',
+    name: '',
+    description: '',
+    startingPoint: '',
+    season: undefined,
+    startDate: new Date(),
+    endDate: new Date(),
+    timezoneOffset: new Date().getTimezoneOffset(),
+    lat: 0,
+    lng: 0,
+    created: undefined,
+    updated: undefined,
+    tripMembers: {},
+    tags: [],
+    tripLength: 0,
+    headerImage: '',
+    archived: false,
+    collapsedCategories: {},
   };
 };
 
