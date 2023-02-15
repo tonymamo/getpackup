@@ -295,10 +295,10 @@ const GearCloset: FunctionComponent<GearClosetProps> = () => {
         <Table
           columns={columns}
           data={data || []}
-          hasPagination
+          // hasPagination
           hasSorting
           hasFiltering
-          rowsPerPage={25}
+          // rowsPerPage={25}
           isLoading={personalGearIsLoading}
         />
       )}
