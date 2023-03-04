@@ -63,7 +63,7 @@ const generateGearList = (
   const tagMatches: Array<string> = [];
 
   getValues(values).forEach((val) => {
-    matches.push(...gear.filter((item: GearItemType) => (item[val] as GearItemType) === true));
+    matches.push(...gear.filter((item: GearItemType) => item[val] === true));
     // for each option selected, add a tag to the trip
     allGearListItems.filter((item) => item.name === val).map((i) => tagMatches.push(i.label));
   });
