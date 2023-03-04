@@ -35,8 +35,7 @@ import trackEvent from '@utils/trackEvent';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import { navigate } from 'gatsby';
 import { uniq, uniqBy } from 'lodash';
-import React, { FunctionComponent, useState } from 'react';
-import { IconType } from 'react-icons';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FaCheckCircle, FaPlusSquare } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,7 +63,7 @@ const generateGearList = (
   const tagMatches: Array<string> = [];
 
   getValues(values).forEach((val) => {
-    matches.push(...gear.filter((item: GearItemType) => item[val] === true));
+    matches.push(...gear.filter((item: GearItemType) => (item[val] as GearItemType) === true));
     // for each option selected, add a tag to the trip
     allGearListItems.filter((item) => item.name === val).map((i) => tagMatches.push(i.label));
   });
@@ -108,6 +107,12 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
     activeTripById && activeTripById.length > 0 ? activeTripById[0] : undefined;
 
   const personalGear = usePersonalGear();
+
+  const [usersCategories, setUsersCategories] = useState(gearClosetCategories);
+
+  useEffect(() => {
+    setUsersCategories(gearClosetCategories);
+  }, [gearClosetCategories]);
 
   useFirestoreConnect([
     {
@@ -183,12 +188,12 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
 
   // the categories that the user DOES have in their gear closet, so we can only show those
   const getFilteredCategories = (array: GearListEnumType) =>
-    array.filter((item) => gearClosetCategories.includes(item.name));
+    array.filter((item) => usersCategories.includes(item.name));
 
   // the categories that the user DOES NOT have in the gear closet
   // also remove "essential" because that will always exist for users
   const getOtherCategories = (array: GearListEnumType) =>
-    array.filter((item) => !gearClosetCategories.includes(item.name) && item.name !== 'essential');
+    array.filter((item) => !usersCategories.includes(item.name) && item.name !== 'essential');
 
   const renderAddCategoryButton = (array: GearListEnumType) => (
     <Column xs={4} md={3}>
@@ -216,13 +221,12 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
     ));
   };
 
-  const renderDynamicIcon = (icon: IconType) => {
-    const Icon = icon;
-    return <Icon color={lightGray} size={tripleSpacer} />;
-  };
-
-  const updateUsersGearClosetCategories = (categoryToAdd: string) => {
+  const updateUsersGearClosetCategories = (
+    categoryToAdd: string,
+    setFieldValue: (name: string, value: boolean) => void
+  ) => {
     setGearClosetCategoriesIsLoading(true);
+    setFieldValue(categoryToAdd, true);
     setAddNewCategoryModalIsOpen(false);
     firebase
       .firestore()
@@ -264,7 +268,7 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
               : {};
           }}
         >
-          {({ isSubmitting, isValid, errors, values }) => (
+          {({ isSubmitting, isValid, errors, values, setFieldValue }) => (
             <Form>
               <Row>
                 <Column md={8} mdOffset={2}>
@@ -416,47 +420,49 @@ const TripGenerator: FunctionComponent<TripGeneratorProps> = (props) => {
                   </Row>
                 </Column>
               </Row>
+              <Modal toggleModal={() => {}} isOpen={isLoading} hideCloseButton largePadding>
+                <div style={{ textAlign: 'center' }}>
+                  <LoadingSpinner theme="dark" />
+                  <Heading>Generating packing list...</Heading>
+
+                  <p>
+                    Please hold tight while we create a custom packing list for you based on your
+                    selections 📝
+                  </p>
+                </div>
+              </Modal>
+
+              <Modal
+                toggleModal={() => {
+                  setGearListType([]);
+                  setAddNewCategoryModalIsOpen(false);
+                }}
+                isOpen={addNewCategoryModalIsOpen}
+              >
+                <Heading>Add New Category</Heading>
+                <strong style={{ textTransform: 'uppercase' }}>Select a Category</strong>
+                <Row>
+                  {getOtherCategories(gearListType).map((item) => (
+                    <Column xs={4} md={3} key={item.name}>
+                      <IconWrapperLabel
+                        onClick={() => updateUsersGearClosetCategories(item.name, setFieldValue)}
+                      >
+                        <Field
+                          as={IconCheckbox}
+                          icon={item.icon}
+                          checked={values[item.name] ?? false}
+                          name={item.name}
+                          label={item.label}
+                        />
+                      </IconWrapperLabel>
+                    </Column>
+                  ))}
+                </Row>
+              </Modal>
             </Form>
           )}
         </Formik>
       )}
-
-      <Modal toggleModal={() => {}} isOpen={isLoading} hideCloseButton largePadding>
-        <div style={{ textAlign: 'center' }}>
-          <LoadingSpinner theme="dark" />
-          <Heading>Generating packing list...</Heading>
-
-          <p>
-            Please hold tight while we create a custom packing list for you based on your selections
-            📝
-          </p>
-        </div>
-      </Modal>
-
-      <Modal
-        toggleModal={() => {
-          setGearListType([]);
-          setAddNewCategoryModalIsOpen(false);
-        }}
-        isOpen={addNewCategoryModalIsOpen}
-      >
-        <Heading>Add New Category</Heading>
-        <strong style={{ textTransform: 'uppercase' }}>Select a Category</strong>
-        <Row>
-          {getOtherCategories(gearListType).map((item) => (
-            <Column xs={4} md={3} key={item.name}>
-              <IconWrapperLabel
-                onClick={() => {
-                  updateUsersGearClosetCategories(item.name);
-                }}
-              >
-                {renderDynamicIcon(item.icon)}
-                <IconCheckboxLabel>{item.label}</IconCheckboxLabel>
-              </IconWrapperLabel>
-            </Column>
-          ))}
-        </Row>
-      </Modal>
     </PageContainer>
   );
 };
