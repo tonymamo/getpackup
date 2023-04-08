@@ -143,7 +143,7 @@ const Login: FunctionComponent<LoginProps> = () => {
                       <small>
                         Don&apos;t have an account yet?{' '}
                         <Link
-                          to="/signup"
+                          to="https://packupapp.com"
                           onClick={() =>
                             trackEvent('Sign Up Now Link Clicked', { location: 'Login Page' })
                           }

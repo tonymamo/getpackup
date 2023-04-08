@@ -78,7 +78,7 @@ const App: FunctionComponent<{}> = (props) => {
         trackEvent('Attempted Private Page', { location });
         dispatch(addAttemptedPrivatePage(location.pathname));
       }
-      navigate('/login');
+      navigate('https://packupapp.com');
     }
   }, [auth]);
 

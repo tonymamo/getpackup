@@ -216,7 +216,7 @@ const Signup: FunctionComponent<SignupProps> = () => {
         <p style={{ textAlign: 'center' }}>
           <small>
             Already have an account?{' '}
-            <Link to="/login">
+            <Link to="https://packupapp.com">
               Log in now <FaArrowRight />
             </Link>
           </small>

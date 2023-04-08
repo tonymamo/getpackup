@@ -29,7 +29,7 @@ const PrivateRoute: FunctionComponent<PrivateRouteProps> = ({
         trackEvent('Attempted Private Page', { location });
         dispatch(addAttemptedPrivatePage(location.pathname));
       }
-      navigate('/login');
+      navigate('https://packupapp.com');
     }
   }, [auth]);
 

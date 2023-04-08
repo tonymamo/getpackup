@@ -365,7 +365,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </NavLink>
                 <HorizontalRule compact />
                 <NavLink
-                  to="/login"
+                  to="https://packupapp.com"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Login' });
                     toggleMenu();
@@ -375,7 +375,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </NavLink>
                 <HorizontalRule compact />
                 <NavLink
-                  to="/signup"
+                  to="https://packupapp.com"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Sign Up' });
                     toggleMenu();
@@ -391,11 +391,11 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
               {/* <NavLink to="/blog">Blog</NavLink>
               <NavLink to="/about">About</NavLink>
               <NavLink to="/contact">Contact</NavLink> */}
-              <Button type="link" to="/login" color="secondary">
+              <Button type="link" to="https://packupapp.com" color="secondary">
                 Log In
               </Button>
               &nbsp;
-              <Button type="link" to="/signup">
+              <Button type="link" to="https://packupapp.com">
                 Sign Up
               </Button>
             </FlexContainer>

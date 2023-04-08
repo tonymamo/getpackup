@@ -91,4 +91,4 @@ Then comes the best part, time to do it all again the next day!
 
 ![](https://res.cloudinary.com/getpackup/image/upload/v1643327719/0F1A4271_rlltys.jpg)
 
-A big part in reducing risk in the backcountry is being properly prepared for any scenario or situation. To prep for this trip I used Packup to ensure that nothing was left behind or forgotten. [Try it out](https://getpackup.com/signup) on your next trip and let us know what you think!
+A big part in reducing risk in the backcountry is being properly prepared for any scenario or situation. To prep for this trip I used Packup to ensure that nothing was left behind or forgotten. [Try it out](https://getpackup.com/) on your next trip and let us know what you think!

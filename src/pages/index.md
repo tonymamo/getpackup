@@ -19,7 +19,7 @@ typewriterList:
   - text: helmet
   - text: batteries
 heroSubheading: Manage your gear and create custom packing lists
-heroCTALink: '/signup'
+heroCTALink: 'https://packupapp.com'
 heroCTAText: Get Started
 mainpitch:
   image: https://res.cloudinary.com/getpackup/image/upload/v1617244441/getpackup/Screen%20Shot%202020-09-08%20at%201.17.18%20PM.png

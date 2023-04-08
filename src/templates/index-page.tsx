@@ -672,7 +672,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                         </p>
                         <p>
                           <Link
-                            to="/signup"
+                            to="https://packupapp.com"
                             onClick={() => trackEvent('Footer Link Click', { link: 'Sign Up' })}
                           >
                             Sign Up

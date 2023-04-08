@@ -97,7 +97,7 @@ export const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
                       </p>
 
                       <p>
-                        <Link to="/login">Back to login</Link>
+                        <Link to="https://packupapp.com">Back to login</Link>
                       </p>
                     </FlexContainer>
                   </Form>
