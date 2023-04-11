@@ -1,6 +1,12 @@
 ---
 templateKey: links-page
 linksList:
+  - linkText: Download app on Apple App Store
+    thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1681218594/Apple_gmdqxu.png
+    linkUrl: https://apps.apple.com/us/app/packup-trip-planning/id6446636448
+  - linkUrl: https://play.google.com/store/apps/details?id=com.packupapp.twa
+    linkText: Download app on Google Play Store
+    thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1681218537/GooglePlay_vxf9lf.png
   - linkUrl: /signup
     linkText: Sign up for packup
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244536/getpackup/maskable_icon.png
