@@ -7,7 +7,7 @@ linksList:
   - linkUrl: https://play.google.com/store/apps/details?id=com.packupapp.twa
     linkText: Download app on Google Play Store
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1681218537/GooglePlay_vxf9lf.png
-  - linkUrl: /signup
+  - linkUrl: https://packupapp.com/signup
     linkText: Sign up for packup
     thumbnail: https://res.cloudinary.com/getpackup/image/upload/v1617244536/getpackup/maskable_icon.png
   - linkUrl: /about

@@ -2,6 +2,7 @@ import Alert from './Alert';
 import AutoSave from './AutoSave';
 import Avatar, { StackedAvatars } from './Avatar';
 import AvatarUpload from './AvatarUpload';
+import Badges from './Badges';
 import BlogRoll from './BlogRoll';
 import Box from './Box';
 import Breadcrumbs from './Breadcrumbs';
@@ -76,6 +77,7 @@ export {
   AutoSave,
   Avatar,
   AvatarUpload,
+  Badges,
   BlogRoll,
   Box,
   Breadcrumbs,

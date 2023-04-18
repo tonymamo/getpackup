@@ -1,6 +1,7 @@
 import { BlogRollType } from '@common/blogRoll';
 import { FluidImageType } from '@common/image';
 import {
+  Badges,
   Button,
   Column,
   Dividers,
@@ -11,51 +12,24 @@ import {
   Row,
   Seo,
 } from '@components';
-import checklist from '@images/checklist.svg';
-import deviceDesktop from '@images/device-desktop.svg';
-import devicePhone from '@images/device-phone.svg';
-import deviceTablet from '@images/device-tablet.svg';
-import gearTable from '@images/gear-table.svg';
-import listPersonal from '@images/list-personal.svg';
-import listShared from '@images/list-shared.svg';
+import devices from '@images/devices.png';
 import mountainScene from '@images/mountain-scene.png';
 import route from '@images/route.svg';
+import screenshot1 from '@images/screenshot-1.png';
+import screenshot2 from '@images/screenshot-2.png';
+import screenshot3 from '@images/screenshot-5.png';
 import TopoBg from '@images/topo1';
-import tripCard1 from '@images/trip-card-1.svg';
-import tripCard2 from '@images/trip-card-2.svg';
 // import loadable from '@loadable/component';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { RootState } from '@redux/ducks';
-import {
-  brandSecondary,
-  brandTertiary,
-  darkGray,
-  lightGray,
-  lightestGray,
-  offWhite,
-  white,
-} from '@styles/color';
+import { brandSecondary, offWhite, white } from '@styles/color';
 import { visuallyHiddenStyle } from '@styles/mixins';
-import { baseSpacer, breakpoints, halfSpacer } from '@styles/size';
+import { baseSpacer, breakpoints, halfSpacer, tripleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
 import { Link, graphql, navigate } from 'gatsby';
 import React, { FunctionComponent, useEffect } from 'react';
-import {
-  FaBiking,
-  FaCamera,
-  FaCampground,
-  FaFacebook,
-  FaHiking,
-  FaInstagram,
-  FaMapMarkedAlt,
-  FaMountain,
-  FaPaw,
-  FaRunning,
-  FaSkiing,
-  FaTwitter,
-  FaWater,
-} from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Typewriter from 'typewriter-effect';
@@ -239,13 +213,13 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                   <p style={{ color: white, fontSize: '1.5rem', lineHeight: 1.5 }}>
                     {props.heroSubheading}
                   </p>
-                  <Button
-                    type="link"
-                    to={props.heroCTALink}
-                    onClick={() => trackEvent('Index Page Hero CTA Clicked')}
-                  >
-                    {props.heroCTAText}
-                  </Button>
+
+                  <div style={{ marginTop: tripleSpacer }}>
+                    <Heading inverse align="center" as="h6" uppercase>
+                      Now available on iOS, Android, and Web
+                    </Heading>
+                  </div>
+                  <Badges />
                 </FlexContainer>
               </PageContainer>
             </HeroImage>
@@ -286,183 +260,31 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               }}
             />
           </ParallaxLayer>
-          <ParallaxLayer offset={1.3} speed={0.75}>
+
+          <ParallaxLayer offset={1} speed={0.8}>
             <PageContainer>
               <img
-                src={checklist}
+                src={screenshot1}
                 alt=""
                 style={{
-                  width: isSmallScreen ? '36%' : '18%',
-                  marginLeft: isSmallScreen ? '40%' : '80%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
+                  width: isSmallScreen ? '85%' : '40%',
+                  marginLeft: isSmallScreen ? '10%' : '60%',
                 }}
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={1.2} speed={0.5}>
-            <PageContainer>
-              <img
-                src={checklist}
-                alt=""
-                style={{
-                  width: isSmallScreen ? '36%' : '18%',
-                  marginLeft: '72%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={1.65} speed={0.8}>
-            <PageContainer>
-              <img
-                src={tripCard1}
-                alt=""
-                style={{
-                  width: isSmallScreen ? '45%' : '25%',
-                  marginLeft: isSmallScreen ? '0%' : '50%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={1.9} speed={0.9}>
-            <PageContainer>
-              <img
-                src={tripCard2}
-                alt=""
-                style={{
-                  width: isSmallScreen ? '45%' : '25%',
-                  marginLeft: isSmallScreen ? '50%' : '57%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
+
           {/* End Page 2 */}
 
           {/* Page 3 */}
-          <ParallaxLayer offset={2.3} speed={0.75}>
+          <ParallaxLayer offset={2} speed={0.75}>
             <PageContainer>
-              <Row>
-                <Column xs={8} xsOffset={2} md={6} mdOffset={6}>
-                  <img
-                    src={gearTable}
-                    alt=""
-                    style={{
-                      width: '100%',
-                      filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
-                    }}
-                  />
-                </Column>
-              </Row>
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={0.85}>
-            <PageContainer>
-              <FaCampground
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={brandSecondary}
+              <img
+                src={screenshot2}
+                alt=""
                 style={{
-                  marginLeft: isSmallScreen ? '13%' : '80%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.6} speed={0.75}>
-            <PageContainer>
-              <FaMountain
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={brandSecondary}
-                style={{
-                  marginLeft: isSmallScreen ? '5%' : '55%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.6} speed={0.6}>
-            <PageContainer>
-              <FaBiking
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={brandSecondary}
-                style={{
-                  marginLeft: '62%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={0.7}>
-            <PageContainer>
-              <FaRunning
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={darkGray}
-                style={{
-                  marginLeft: isSmallScreen ? '45%' : '50%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.7} speed={0.8}>
-            <PageContainer>
-              <FaMapMarkedAlt
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={brandTertiary}
-                style={{
-                  marginLeft: isSmallScreen ? '35%' : '82%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.5} speed={0.9}>
-            <PageContainer>
-              <FaWater
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={brandTertiary}
-                style={{
-                  marginLeft: '62%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={0.7}>
-            <PageContainer>
-              <FaCamera
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={darkGray}
-                style={{
-                  marginLeft: isSmallScreen ? '2%' : '77%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.55} speed={0.7}>
-            <PageContainer>
-              <FaPaw
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={brandSecondary}
-                style={{
-                  marginLeft: '79%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.4} speed={0.5}>
-            <PageContainer>
-              <FaHiking
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={brandTertiary}
-                style={{
-                  marginLeft: isSmallScreen ? '30%' : '65%',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2.7} speed={0.4}>
-            <PageContainer>
-              <FaSkiing
-                fontSize={isSmallScreen ? '10vw' : '4rem'}
-                fill={darkGray}
-                style={{
-                  marginLeft: '70%',
+                  width: isSmallScreen ? '85%' : '35%',
+                  marginLeft: isSmallScreen ? '10%' : '60%',
                 }}
               />
             </PageContainer>
@@ -481,68 +303,27 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
           <ParallaxLayer offset={3.2} speed={0.5}>
             <PageContainer>
               <img
-                src={listPersonal}
+                src={screenshot3}
                 alt=""
                 style={{
-                  width: isSmallScreen ? '40%' : '25%',
+                  width: isSmallScreen ? '80%' : '40%',
                   marginLeft: isSmallScreen ? '10%' : '55%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
                 }}
               />
             </PageContainer>
           </ParallaxLayer>
-          <ParallaxLayer offset={3.3} speed={0.75}>
-            <PageContainer>
-              <img
-                src={listShared}
-                alt=""
-                style={{
-                  width: isSmallScreen ? '50%' : '25%',
 
-                  marginLeft: isSmallScreen ? '40%' : '72%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
           {/* End Page 4 */}
 
           {/* Page 5 */}
           <ParallaxLayer offset={4.2} speed={0.5}>
             <PageContainer>
               <img
-                src={deviceDesktop}
+                src={devices}
                 alt=""
                 style={{
-                  width: isSmallScreen ? '60%' : '35%',
-                  marginLeft: isSmallScreen ? '15%' : '60%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={4.3} speed={0.75}>
-            <PageContainer>
-              <img
-                src={devicePhone}
-                alt=""
-                style={{
-                  width: isSmallScreen ? '20%' : '10%',
-                  marginLeft: isSmallScreen ? '5%' : '55%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
-                }}
-              />
-            </PageContainer>
-          </ParallaxLayer>
-          <ParallaxLayer offset={4.35} speed={0.9}>
-            <PageContainer>
-              <img
-                src={deviceTablet}
-                alt=""
-                style={{
-                  width: isSmallScreen ? '36%' : '15%',
-                  marginLeft: isSmallScreen ? '60%' : '85%',
-                  filter: 'drop-shadow(0px 0px 4px rgba(0,0,0,.1))',
+                  width: isSmallScreen ? '100%' : '70%',
+                  marginLeft: isSmallScreen ? '0%' : '45%',
                 }}
               />
             </PageContainer>
@@ -574,6 +355,12 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                             </Heading>
 
                             <p>{props[item[0]].subheading}</p>
+
+                            {index === 3 && (
+                              <>
+                                <Badges />
+                              </>
+                            )}
                           </BlurredBackgroundWrapper>
                         </FlexContainer>
                       </Column>
@@ -599,7 +386,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                       Plan your first trip today
                     </Heading>
 
-                    <Button type="link" to="/signup">
+                    <Button type="link" to="https://packupapp.com/signup">
                       Get Started
                     </Button>
                   </div>
@@ -718,6 +505,9 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                         </p>
                       </Column>
                     </Row>
+                    <div style={{ marginTop: tripleSpacer }}>
+                      <Badges />
+                    </div>
                   </Footer>
                 </PageContainer>
               </FlexContainer>

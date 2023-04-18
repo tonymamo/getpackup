@@ -1,6 +1,7 @@
 import { TripMemberStatus, TripType } from '@common/trip';
 import {
   Avatar,
+  Badges,
   Box,
   Button,
   FlexContainer,
@@ -16,7 +17,7 @@ import { RootState } from '@redux/ducks';
 import { brandPrimary, brandSecondary, brandTertiary, white } from '@styles/color';
 import { zIndexNavbar } from '@styles/layers';
 import { baseSpacer, halfSpacer, quadrupleSpacer, quarterSpacer, tripleSpacer } from '@styles/size';
-import { fontSizeBase, fontSizeSmall, headingsFontFamily } from '@styles/typography';
+import { fontSizeBase, fontSizeH3, fontSizeSmall, headingsFontFamily } from '@styles/typography';
 import { TabOptions } from '@utils/enums';
 import scrollToPosition from '@utils/scrollToPosition';
 import trackEvent from '@utils/trackEvent';
@@ -87,10 +88,15 @@ const StyledNavbar = styled.header`
 `;
 
 const NavLink = styled(Link)`
-  padding: 0 ${halfSpacer};
-  &:last-child {
-    margin-right: -${halfSpacer};
-  }
+  padding: ${baseSpacer} 0;
+  font-size: ${fontSizeH3};
+  text-transform: uppercase;
+`;
+
+const NavLinkA = styled.a`
+  padding: ${baseSpacer} 0;
+  font-size: ${fontSizeH3};
+  text-transform: uppercase;
 `;
 
 const StyledMenuToggle = styled.div`
@@ -114,7 +120,6 @@ const StyledMenu = styled.nav`
 
   & a,
   & a:visited {
-    padding: 0;
     display: block;
     color: ${brandTertiary};
   }
@@ -364,38 +369,37 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   Contact
                 </NavLink>
                 <HorizontalRule compact />
-                <NavLink
-                  to="https://packupapp.com"
+                <NavLinkA
+                  href="https://packupapp.com/login"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Login' });
                     toggleMenu();
                   }}
                 >
                   Log In
-                </NavLink>
+                </NavLinkA>
                 <HorizontalRule compact />
-                <NavLink
-                  to="https://packupapp.com"
+                <NavLinkA
+                  href="https://packupapp.com/signup"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Sign Up' });
                     toggleMenu();
                   }}
                 >
                   Sign Up
-                </NavLink>
+                </NavLinkA>
+                <HorizontalRule compact />
+                <Badges />
               </Box>
             </StyledMenu>
           )}
           {!size.isSmallScreen && !isAuthenticated && auth.isLoaded && (
             <FlexContainer as="nav">
-              {/* <NavLink to="/blog">Blog</NavLink>
-              <NavLink to="/about">About</NavLink>
-              <NavLink to="/contact">Contact</NavLink> */}
-              <Button type="link" to="https://packupapp.com" color="secondary">
+              <Button type="link" to="https://packupapp.com/login" color="secondary">
                 Log In
               </Button>
               &nbsp;
-              <Button type="link" to="https://packupapp.com">
+              <Button type="link" to="https://packupapp.com/signup">
                 Sign Up
               </Button>
             </FlexContainer>
