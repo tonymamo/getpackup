@@ -19,7 +19,6 @@ const Footer = loadable(() => import('@components/Footer'), {
   fallback: <footer style={{ backgroundColor: brandSecondary, height: '20vh' }} />,
 });
 const UpploadTheme = loadable(() => import('@styles/upploadTheme'));
-const AddToHomeScreenBanner = loadable(() => import('./AddToHomeScreenBanner'));
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -56,7 +55,6 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
         <UpploadTheme />
         <IconContext.Provider value={{ style: { position: 'relative' } }}>
           <LayoutWrapper>
-            {!props.hideFromCms && <AddToHomeScreenBanner />}
             {!props.hideFromCms && <Navbar />}
             <PageBody isHomePage={location.pathname === '/'}>
               <ErrorBoundary>{props.children}</ErrorBoundary>

@@ -26,22 +26,12 @@ In this post, we will summarize what to expect from our current beta version, ho
 
 # Setting up
 
-1. Visit [getpackup.com](/) on your mobile browser.
-2. Using your phone or tablet, save the webpage to your phone’s home screen as a progressive web app. [You can checkout out our install guide here](/install).
-3. Open the app, or your mobile browser, and sign up as a user using email, Google, Facebook, Twitter, or GitHub credentials. Your choice! Your profile can be customized once you’re on the platform.
-4. You’re done! Explore the platform on your phone, tablet, or desktop computer. Get packing!
-
-![iOS App Save Sequence](https://res.cloudinary.com/getpackup/image/upload/v1626121231/getpackup/add-pwa_palqnl.jpg)
+1. Visit [getpackup.com](/) on your browser.
+2. Find the link to the Apple App Store or Google Play Store to download the app, or, alternatively you can use the web version.
+3. Create an account & login.
+4. Start packing!
 
 
-
-# What is a Progressive Web App?
-
-We’re using a new technology called a “progressive web app” for the early stages of our platform - it combines the best of web and mobile apps. Think of it as a website built using web technologies, but acts and feels like an app. It seems complicated, but it's not.
-
-Why did we develop under this framework? This allows us to build, test, and maintain our platform and code base more quickly on iOS, Android, and desktop, and make changes based on early feedback. Eventually in the future, we will have a dedicated native app for iOS and Android once we feel that we have the right product dialed in. If you’re interested in learning more about PWA’s, [here is a great case study on a recent PWA made by Starbucks.](https://formidable.com/work/starbucks-progressive-web-app/)
-
-Keep in mind, if you don’t want to install the PWA, that is perfectly fine - our platform will work well in your mobile browser too, but you’re missing out!
 
 # Current Beta Features
 

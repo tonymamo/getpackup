@@ -168,7 +168,7 @@ Importantly for the types of activities we do, all the app data is stored within
 
 Shameless plug, we know. But we really are our own biggest fans - nothing is more embarrassing and painful than showing up to the trailhead without your hiking boots, or worse, showing up to your campsite without your stove fuel. At packup, our goal is to ensure that you will always be packed and prepared for your trips by creating packing lists through our trip generator (or on your own), the ability to assign and plan gear with your party members (who's got dinner!), and managing other aspects of your trip planning so you can get out the door faster and safer.
 
-We'd love if you **[signed up and tried out our beta today](https://getpackup.com/)**! We're not in the app store (yet!), but you can **[save our app to your home screen by following these simple instructions.](https://getpackup.com/install)**
+We'd love if you signed up and tried out our beta today! You can download the app or use the website version at **[getpackup.com](https://getpackup.com)**
 
 And if you like us, spread the word!
 
