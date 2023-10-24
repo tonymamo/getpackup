@@ -207,7 +207,7 @@ const Seo: FunctionComponent<SeoType> = ({
         <script
           type="text/javascript"
           async
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places&callback=googleMapsLoaded`}
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GATSBY_GOOGLE_MAPS_API_KEY}&libraries=places&callback=googleMapsLoaded&v=3.53`}
         />
       )}
       {children}
