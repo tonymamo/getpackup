@@ -90,7 +90,7 @@ The key items to measure and consider at this stage are:
 1. The potential length of your total platform. Ours ended up being 73” long, the same length as our mattress.
 2. The length of each of the individual platform sections – will section 1 (Trunk) be able to remain in rear of your car with the rear seats folded upright? Be sure to measure the length at the correct HEIGHT, as your rear seats lean backwards further as you increase in height from the floor.
 3. The width of your vehicle – will a full 48” wide sheet of plywood fit in your vehicle? **Will a plywood board fit through the tailgate entrance of your vehicle?**
-4. Where is a reasonable location for each of your eight support legs? Using the bubble level and stacks of books, estimate the height of each of your leg sections. Be especially aware that your platform will likely need to be higher than your wheel wells. Our platform ended up 10½” high at the trunk end.
+4. Where is a reasonable location for each of your eight support legs? Using the bubble level and stacks of books, estimate the height of each of your leg sections. Be especially aware that your platform will likely need to be higher than your wheel wells. Our platform ended up 10 1/2” high at the trunk end.
 5. Where are the cargo holds/hooks in your vehicle? Would they be accessible for your turnbuckles based on where your legs will be positioned?
 
 The most important measurements at this stage to get right are the dimensions of your plywood platform – when you get them cut to size at your hardware store, you’ll want to make sure you got it right. Some of the other estimates around leg location and length may continue to be modified.
@@ -141,7 +141,7 @@ As you begin stapling the carpet to the platform, make sure that the carpet unde
 
 With your top carpet layer now stapled to your platform sections, it is now time to mount your 1x4 support beams crosswise. This comes with a few steps:
 
-1. Placing your 1x4 beam and 3/4" flanges into their confirmed locations (light brown wood and dark grey donuts in diagram below), use your drill and 1/8th drill bit to pre-drill screw holes approximately 1” to 1¼” deep, through the support beam and into the plywood below. To make sure you are consistent with your drilling depth, use a piece of tape on your drill-bit to mark the correct depth. You do NOT want to drill straight through the other side of the plywood into your carpet. Aim to have screws in pairs, every 6” or so along the beam.
+1. Placing your 1x4 beam and 3/4" flanges into their confirmed locations (light brown wood and dark grey donuts in diagram below), use your drill and 1/8th drill bit to pre-drill screw holes approximately 1” to 1 1/4” deep, through the support beam and into the plywood below. To make sure you are consistent with your drilling depth, use a piece of tape on your drill-bit to mark the correct depth. You do NOT want to drill straight through the other side of the plywood into your carpet. Aim to have screws in pairs, every 6” or so along the beam.
 2. After pre-drilling holes for a single beam, take your screws, and affix your beams and flanges, again aiming to not drill through to the rug side of the platform by over-drilling.
 
 ![Support beams for platform](https://res.cloudinary.com/getpackup/image/upload/v1617244442/getpackup/screw-boards.png)
