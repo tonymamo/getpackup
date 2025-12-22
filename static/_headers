@@ -1,0 +1,31 @@
+# Cache control headers for Packup
+# This file prevents aggressive caching of page-data JSON files which can cause
+# "Unexpected end of JSON input" errors during deployments when service workers
+# serve stale/truncated cached versions
+
+# Page data JSON files - use NetworkFirst strategy with short cache
+/page-data/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Static query data - use NetworkFirst strategy with short cache
+/page-data/sq/d/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# App data - always revalidate
+/page-data/app-data.json
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Static assets can be cached longer
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# JavaScript and CSS with content hashes can be cached indefinitely
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# Service worker should never be cached
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
