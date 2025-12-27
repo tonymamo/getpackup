@@ -1,10 +1,6 @@
 import configureStore from '@redux/configureStore';
 import { initialState as clientInitialState } from '@redux/ducks/client';
 import { initialState as globalAlertsInitialState } from '@redux/ducks/globalAlerts';
-import {
-  showWorkerUpdateModal,
-  initialState as workerUpdateInitialState,
-} from '@redux/ducks/workerUpdateReady';
 import firebase from 'firebase/app';
 import React, { FunctionComponent } from 'react';
 import { Provider } from 'react-redux';
@@ -23,7 +19,6 @@ export const initialState = process.env.BROWSER // eslint-disable-next-line no-u
       firebase: {} as FirebaseReducer.Reducer<any, any>,
       client: clientInitialState,
       globalAlerts: globalAlertsInitialState,
-      workerUpdateReady: workerUpdateInitialState,
     };
 const { store, persistor } = configureStore(initialState);
 
@@ -78,8 +73,6 @@ if (process.env.GATSBY_ENVIRONMENT === 'DEVELOP') {
 } else {
   firebase.firestore();
 }
-
-export const onWorkerUpdateReady = () => store.dispatch(showWorkerUpdateModal());
 
 const ReduxWrapper: FunctionComponent<{ element: any }> = ({ element }) => (
   <Provider store={store}>
