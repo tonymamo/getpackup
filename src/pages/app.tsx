@@ -8,7 +8,6 @@ import {
   Modal,
   PrivateRoute,
 } from '@components';
-import UpdateConfirmModal from '@components/UpdateConfirmModal';
 import loadable from '@loadable/component';
 import { Router, navigate, useLocation } from '@reach/router';
 import { RootState } from '@redux/ducks';
@@ -221,7 +220,6 @@ const App: FunctionComponent<{}> = (props) => {
           </Button>
         </p>
       </Modal>
-      <UpdateConfirmModal />
     </AppContainer>
   );
 };

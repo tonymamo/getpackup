@@ -14,7 +14,6 @@ import 'firebase/storage';
 import React from 'react';
 
 import Layout from './src/components/Layout';
-import { onWorkerUpdateReady } from './src/redux/ReduxWrapper';
 
 export { default as wrapRootElement } from './src/redux/ReduxWrapper';
 
@@ -26,13 +25,4 @@ export const wrapPageElement = ({ element }) => {
       <Layout>{element}</Layout>
     </>
   );
-};
-
-export const onServiceWorkerUpdateReady = () => {
-  onWorkerUpdateReady();
-  // Automatically reload the page after a short delay to ensure users get the latest version
-  // This prevents stale cache issues where old page-data.json files cause JSON parsing errors
-  setTimeout(() => {
-    window.location.reload();
-  }, 3000); // Give the user 3 seconds to see the modal before reloading
 };

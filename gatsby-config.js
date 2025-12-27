@@ -250,41 +250,5 @@ module.exports = {
     //     collections: ['users'],
     //   },
     // },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    {
-      resolve: 'gatsby-plugin-offline',
-      options: {
-        workboxConfig: {
-          // Immediately activate the new service worker
-          skipWaiting: true,
-          // Take control of all open clients immediately
-          clientsClaim: true,
-          // Use NetworkFirst strategy for page-data.json to avoid stale cache issues
-          runtimeCaching: [
-            {
-              urlPattern: /\/page-data\/.*\.json$/,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'page-data-cache',
-                networkTimeoutSeconds: 3,
-                expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 60 * 60 * 24, // 24 hours
-                },
-              },
-            },
-            {
-              urlPattern: /\/static\//,
-              handler: 'StaleWhileRevalidate',
-            },
-            {
-              urlPattern: /\.(js|css|woff|woff2)$/,
-              handler: 'StaleWhileRevalidate',
-            },
-          ],
-        },
-      },
-    },
   ],
 };
