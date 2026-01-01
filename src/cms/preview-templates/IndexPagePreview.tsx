@@ -19,10 +19,16 @@ const IndexPagePreview = ({ entry }: { entry: any }) => {
           heroCTALink={data.heroCTALink}
           heroCTAText={data.heroCTAText}
           mainpitch={data.mainpitch}
+          mainpitchImage={data.mainpitchImage}
           secondpitch={data.secondpitch}
+          secondpitchImage={data.secondpitchImage}
           thirdpitch={data.thirdpitch}
-          signupform={data.signupform}
+          thirdpitchImage={data.thirdpitchImage}
+          fourthpitch={data.fourthpitch}
+          fourthpitchImage={data.fourthpitchImage}
           testimonials={data.testimonials}
+          pageContext={data.pageContext}
+          posts={data.posts}
         />
       </Layout>
     );

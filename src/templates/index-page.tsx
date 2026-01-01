@@ -21,16 +21,14 @@ import screenshot3 from '@images/screenshot-5.png';
 import TopoBg from '@images/topo1';
 // import loadable from '@loadable/component';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import { RootState } from '@redux/ducks';
 import { brandSecondary, offWhite, white } from '@styles/color';
 import { visuallyHiddenStyle } from '@styles/mixins';
 import { baseSpacer, breakpoints, halfSpacer, tripleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
-import { Link, graphql, navigate } from 'gatsby';
-import React, { FunctionComponent, useEffect } from 'react';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { Link, graphql } from 'gatsby';
+import React, { FunctionComponent } from 'react';
+import { FaFacebook, FaInstagram, FaReddit } from 'react-icons/fa';
 import styled from 'styled-components';
 import Typewriter from 'typewriter-effect';
 
@@ -160,14 +158,7 @@ const HiddenText = styled.span`
 `;
 
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
-  const auth = useSelector((state: RootState) => state.firebase.auth);
   const { isSmallScreen } = useWindowSize();
-
-  useEffect(() => {
-    if (auth.isLoaded && !auth.isEmpty) {
-      navigate('/app/trips');
-    }
-  }, [auth]);
 
   return (
     <>
@@ -419,13 +410,13 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                             <HiddenText>Facebook</HiddenText>
                           </Social>
                           <Social
-                            href="https://twitter.com/getpackup"
+                            href="https://reddit.com/r/packup"
                             target="_blank"
                             rel="noopener"
-                            onClick={() => trackEvent('Footer Link Click', { link: 'Twitter' })}
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Reddit' })}
                           >
-                            <FaTwitter />
-                            <HiddenText>Twitter</HiddenText>
+                            <FaReddit />
+                            <HiddenText>Reddit</HiddenText>
                           </Social>
                         </nav>
                         <small>
@@ -458,12 +449,12 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                           </Link>
                         </p>
                         <p>
-                          <Link
-                            to="https://packupapp.com"
+                          <a
+                            href="https://packupapp.com"
                             onClick={() => trackEvent('Footer Link Click', { link: 'Sign Up' })}
                           >
                             Sign Up
-                          </Link>
+                          </a>
                         </p>
                       </Column>
                       <Column sm={4} md={3} lg={2}>

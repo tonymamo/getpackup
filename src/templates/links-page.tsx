@@ -15,7 +15,7 @@ import { baseSpacer, doubleSpacer, tripleSpacer } from '@styles/size';
 import trackEvent from '@utils/trackEvent';
 import { Link, graphql } from 'gatsby';
 import React, { FunctionComponent } from 'react';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaReddit } from 'react-icons/fa';
 import styled from 'styled-components';
 
 type LinksPageProps = {
@@ -119,9 +119,9 @@ export const LinksPageTemplate: FunctionComponent<LinksPageProps> = ({
                 <FaFacebook size={tripleSpacer} />
                 <HiddenText>Facebook</HiddenText>
               </Social>
-              <Social href="https://twitter.com/getpackup" target="_blank" rel="noopener">
-                <FaTwitter size={tripleSpacer} />
-                <HiddenText>Twitter</HiddenText>
+              <Social href="https://reddit.com/r/packup" target="_blank" rel="noopener">
+                <FaReddit size={tripleSpacer} />
+                <HiddenText>Reddit</HiddenText>
               </Social>
             </FlexContainer>
             <p style={{ textAlign: 'center' }}>

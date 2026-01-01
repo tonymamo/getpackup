@@ -56,16 +56,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-create-client-paths',
-      options: { prefixes: [`/app/*`, `/admin/*`] },
-    },
-    {
-      resolve: 'gatsby-plugin-mailchimp',
-      options: {
-        endpoint: process.env.GATSBY_MAILCHIMP_ENDPOINT,
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/pages`,
@@ -94,29 +84,6 @@ module.exports = {
         theme_color: '#0b2b44',
         orientation: 'portrait',
         categories: ['packing', 'outdoors', 'productivity', 'safety'],
-        shortcuts: [
-          {
-            name: 'Add New Trip',
-            short_name: 'New Trip',
-            description: 'Quickly create a new trip',
-            url: '/app/trips/new',
-            icons: [{ src: '/img/shortcut-add-trip.png', sizes: '192x192' }],
-          },
-          {
-            name: 'View All Trips',
-            short_name: 'All Trips',
-            description: 'View the list of all your trips',
-            url: '/app/trips',
-            icons: [{ src: '/img/shortcut-trips.png', sizes: '192x192' }],
-          },
-          {
-            name: 'View My Profile',
-            short_name: 'My Profile',
-            description: 'View and Edit My Profile',
-            url: '/app/profile',
-            icons: [{ src: '/img/shortcut-profile.png', sizes: '192x192' }],
-          },
-        ],
         display: 'standalone',
         icon: 'src/images/maskable_icon.png', // This path is relative to the root of the site.
         icon_options: {
