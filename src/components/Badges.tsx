@@ -12,7 +12,7 @@ const BadgeWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Badges = () => (
+const Badges = () => (
   <BadgeWrapper>
     <a href="https://apps.apple.com/us/app/packup-trip-planning/id6446636448">
       <img src={appleBadge} alt="Apple App Store" height={53} width={160} />
