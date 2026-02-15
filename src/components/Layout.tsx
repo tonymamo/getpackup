@@ -55,12 +55,12 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
         <UpploadTheme />
         <IconContext.Provider value={{ style: { position: 'relative' } }}>
           <LayoutWrapper>
-            {!props.hideFromCms && <Navbar />}
+            <Navbar />
             <PageBody isHomePage={location.pathname === '/'}>
               <ErrorBoundary>{props.children}</ErrorBoundary>
             </PageBody>
             {!props.hideFromCms && <GlobalAlerts />}
-            {!props.hideFromCms && location.pathname !== '/' && <Footer />}
+            {location.pathname !== '/' && <Footer />}
           </LayoutWrapper>
           <CookieConsent
             location="bottom"

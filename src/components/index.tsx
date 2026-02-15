@@ -58,7 +58,6 @@ import Seo from './Seo';
 import Share from './Share';
 import ShoppingListAddItem from './ShoppingListAddItem';
 import ShoppingListItem from './ShoppingListItem';
-import SignupForm from './SignupForm';
 import SiteMetadata from './SiteMetadata';
 import StaticMapImage from './StaticMapImage';
 import Table from './Table';
@@ -135,7 +134,6 @@ export {
   Share,
   ShoppingListAddItem,
   ShoppingListItem,
-  SignupForm,
   SiteMetadata,
   StackedAvatars,
   StaticMapImage,
