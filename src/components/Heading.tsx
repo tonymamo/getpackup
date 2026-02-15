@@ -1,5 +1,5 @@
 import { headingsColor, white } from '@styles/color';
-import { baseSpacer, quadrupleSpacer, tripleSpacer } from '@styles/size';
+import { baseSpacer } from '@styles/size';
 import {
   fontFamilySansSerif,
   fontSizeBase,

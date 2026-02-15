@@ -23,14 +23,7 @@ import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
 import { Link } from 'gatsby';
 import React from 'react';
-import {
-  FaCalendar,
-  FaFacebook,
-  FaInstagram,
-  FaShoppingCart,
-  FaTwitter,
-  FaUserLock,
-} from 'react-icons/fa';
+import { FaCalendar, FaFacebook, FaInstagram, FaUserLock } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 import styled from 'styled-components';
@@ -203,12 +196,12 @@ const Footer = () => {
                     </Link>
                   </p>
                   <p>
-                    <a
-                      href="https://reddit.com/r/packup"
-                      onClick={() => trackEvent('Footer Link Click', { link: 'Send a message' })}
+                    <Link
+                      to="/support"
+                      onClick={() => trackEvent('Footer Link Click', { link: 'Support Us' })}
                     >
-                      Community
-                    </a>
+                      Support Us
+                    </Link>
                   </p>
                   {/* <p>
                     {colorMode ? (
@@ -247,15 +240,6 @@ const Footer = () => {
                   >
                     <FaFacebook />
                     <HiddenText>Facebook</HiddenText>
-                  </Social>
-                  <Social
-                    href="https://twitter.com/getpackup"
-                    target="_blank"
-                    rel="noopener"
-                    onClick={() => trackEvent('Footer Link Click', { link: 'Twitter' })}
-                  >
-                    <FaTwitter />
-                    <HiddenText>Twitter</HiddenText>
                   </Social>
                 </nav>
                 <small>
