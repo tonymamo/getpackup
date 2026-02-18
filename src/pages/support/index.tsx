@@ -242,41 +242,59 @@ const Support: FunctionComponent<RouteComponentProps> = () => {
           </Column>
         </Row>
       </Box>
-      <Row>
-        <Column sm={4}>
-          <Item>
-            <Polaroid>
-              <img
-                src="https://res.cloudinary.com/getpackup/image/upload/v1617244554/getpackup/j_kelsey_20191023_0625-2.jpg"
-                alt="Taylor"
-              />
-              <Caption>Taylor</Caption>
-            </Polaroid>
-          </Item>
-        </Column>
-        <Column sm={4}>
-          <Item>
-            <Polaroid>
-              <img
-                src="https://res.cloudinary.com/getpackup/image/upload/v1617244556/getpackup/mackheadshot.jpg"
-                alt="Mack"
-              />
-              <Caption>Mack</Caption>
-            </Polaroid>
-          </Item>
-        </Column>
-        <Column sm={4}>
-          <Item>
-            <Polaroid>
-              <img
-                src="https://res.cloudinary.com/getpackup/image/upload/v1617244534/getpackup/tony.jpg"
-                alt="Tony"
-              />
-              <Caption>Tony</Caption>
-            </Polaroid>
-          </Item>
-        </Column>
-      </Row>
+      <ListItem>
+        <Row>
+          <Column sm={8} smOffset={2}>
+            <div style={{ width: '100%', padding: baseSpacer }}>
+              <Heading as="h2">Thank you</Heading>
+              <p>
+                Whether you donate or not, thank you for being part of the Packup community. We are
+                grateful for your support over the years helping us achieve our mission of
+                increasing the safety and enjoyment of outdoor adventures by improving competency
+                and preparedness.
+              </p>
+              <Button type="link" to="/about" color="tertiary" size="small">
+                Learn more about us
+              </Button>
+              <Row>
+                <Column sm={4}>
+                  <Item>
+                    <Polaroid>
+                      <img
+                        src="https://res.cloudinary.com/getpackup/image/upload/v1617244554/getpackup/j_kelsey_20191023_0625-2.jpg"
+                        alt="Taylor"
+                      />
+                      <Caption>Taylor</Caption>
+                    </Polaroid>
+                  </Item>
+                </Column>
+                <Column sm={4}>
+                  <Item>
+                    <Polaroid>
+                      <img
+                        src="https://res.cloudinary.com/getpackup/image/upload/v1617244556/getpackup/mackheadshot.jpg"
+                        alt="Mack"
+                      />
+                      <Caption>Mack</Caption>
+                    </Polaroid>
+                  </Item>
+                </Column>
+                <Column sm={4}>
+                  <Item>
+                    <Polaroid>
+                      <img
+                        src="https://res.cloudinary.com/getpackup/image/upload/v1617244534/getpackup/tony.jpg"
+                        alt="Tony"
+                      />
+                      <Caption>Tony</Caption>
+                    </Polaroid>
+                  </Item>
+                </Column>
+              </Row>
+            </div>
+          </Column>
+        </Row>
+      </ListItem>
     </PageContainer>
   );
 };

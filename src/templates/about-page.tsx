@@ -1,5 +1,15 @@
 import { FluidImageType } from '@common/image';
-import { Box, Content, HTMLContent, Heading, HeroImage, PageContainer, Seo } from '@components';
+import {
+  Box,
+  Column,
+  Content,
+  HTMLContent,
+  Heading,
+  HeroImage,
+  PageContainer,
+  Row,
+  Seo,
+} from '@components';
 import { graphql } from 'gatsby';
 import React, { FunctionComponent } from 'react';
 
@@ -32,10 +42,14 @@ export const AboutPageTemplate: FunctionComponent<AboutPageProps> = ({
       <PageContainer withVerticalPadding>
         {!hideFromCms && <Seo title={title} />}
         <Box>
-          <Heading>{title}</Heading>
-          <div>
-            <PageContent content={content} />
-          </div>
+          <Row>
+            <Column md={8} mdOffset={2}>
+              <Heading>{title}</Heading>
+              <div>
+                <PageContent content={content} />
+              </div>
+            </Column>
+          </Row>
         </Box>
       </PageContainer>
     </>
