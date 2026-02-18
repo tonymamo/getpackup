@@ -1,7 +1,7 @@
 import 'animate.css';
 import '@styles/bootstrapCarousel.css';
 
-import { ErrorBoundary, GlobalAlerts, Navbar } from '@components';
+import { ErrorBoundary, Navbar } from '@components';
 import loadable from '@loadable/component';
 import { useLocation } from '@reach/router';
 import { brandSecondary, brandSuccess, white } from '@styles/color';
@@ -59,7 +59,6 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
             <PageBody isHomePage={location.pathname === '/'}>
               <ErrorBoundary>{props.children}</ErrorBoundary>
             </PageBody>
-            {!props.hideFromCms && <GlobalAlerts />}
             {location.pathname !== '/' && <Footer />}
           </LayoutWrapper>
           <CookieConsent

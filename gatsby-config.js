@@ -5,7 +5,8 @@ require('dotenv').config({
 
 module.exports = {
   flags: {
-    FAST_DEV: true,
+    DEV_SSR: false,
+    FAST_DEV: false,
     PARALLEL_SOURCING: true,
     PRESERVE_FILE_DOWNLOAD_CACHE: true,
   },

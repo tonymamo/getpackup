@@ -1,8 +1,9 @@
 import { Box, Button, Column, Heading, HorizontalRule, PageContainer, Row, Seo } from '@components';
 import { RouteComponentProps } from '@reach/router';
-import { brandPrimary, white } from '@styles/color';
+import { brandPrimary, brandSecondary, brandTertiary, white } from '@styles/color';
 import { baseSpacer, doubleSpacer } from '@styles/size';
-import React, { FunctionComponent } from 'react';
+import confetti from 'canvas-confetti';
+import React, { FunctionComponent, useEffect } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -23,9 +24,21 @@ const Item = styled.div`
 `;
 
 const SupportThankYou: FunctionComponent<RouteComponentProps> = () => {
+  useEffect(() => {
+    confetti({
+      particleCount: 500,
+      spread: 1000,
+      gravity: 0.5,
+      origin: { x: 0.5, y: 0.2 },
+      colors: [brandPrimary, brandSecondary, brandTertiary],
+      disableForReducedMotion: true,
+    });
+  }, []);
+
   return (
     <PageContainer withVerticalPadding>
       <Seo title="Thank you" />
+
       <Box>
         <Row>
           <Column sm={8} smOffset={2}>
