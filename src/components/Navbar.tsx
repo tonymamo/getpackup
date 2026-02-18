@@ -217,7 +217,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </NavLink>
                 <HorizontalRule compact />
                 <NavLinkA
-                  href="https://packupapp.com/login"
+                  href="https://packupapp.com"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Login' });
                     toggleMenu();
@@ -227,7 +227,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 </NavLinkA>
                 <HorizontalRule compact />
                 <NavLinkA
-                  href="https://packupapp.com/signup"
+                  href="https://packupapp.com"
                   onClick={() => {
                     trackEvent('Navbar SmallScreen Link Clicked', { link: 'Sign Up' });
                     toggleMenu();
@@ -236,17 +236,27 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   Sign Up
                 </NavLinkA>
                 <HorizontalRule compact />
+                <NavLinkA
+                  href="/support"
+                  onClick={() => {
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Support' });
+                    toggleMenu();
+                  }}
+                >
+                  Support Us
+                </NavLinkA>
+                <HorizontalRule compact />
                 <Badges />
               </Box>
             </StyledMenu>
           )}
           {!size.isSmallScreen && (
             <FlexContainer as="nav">
-              <Button type="link" to="https://packupapp.com/login" color="secondary">
+              <Button type="link" to="https://packupapp.com" color="secondary">
                 Log In
               </Button>
               &nbsp;
-              <Button type="link" to="https://packupapp.com/signup">
+              <Button type="link" to="https://packupapp.com">
                 Sign Up
               </Button>
             </FlexContainer>
