@@ -183,7 +183,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
             </StyledMenuToggle>
           )}
 
-          {size.isSmallScreen && (
+          {size.isSmallScreen && menuIsOpen && (
             <StyledMenu id="navMenu" menuIsOpen={menuIsOpen} ref={menuDropdown}>
               <Box>
                 <NavLink
