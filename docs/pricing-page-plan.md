@@ -59,7 +59,7 @@ Two columns, **Free** and **Pro**, rows driven directly by the confirmed split i
 | Trip Chat (send messages) | Read-only | ✓ |
 | Custom Tags (create new) | — | ✓ |
 
-Below the table, a third visual state for **not-yet-built Pro features**, styled grayed-out with a "Coming Soon" badge (small pill, muted color) rather than a checkmark or dash — per user preference to signal the roadmap without implying they're purchasable now:
+At the bottom of the table, a third visual state for **not-yet-built Pro features**, styled grayed-out with a "Coming Soon" badge (small pill, muted color) rather than a checkmark or dash — per user preference to signal the roadmap without implying they're purchasable now:
 - Trip Templates
 - Weight Tracking (with charts)
 - Print/Export packing list
@@ -73,9 +73,9 @@ Single Pro price row/card: `$X.XX/mo` where `X.XX` is a literal placeholder toke
 This is the only real interactive logic on the page. Behavior, per your decisions:
 
 1. Page loads. Parse `uid` from the query string (`window.location.search` or Reach Router's `useLocation`, consistent with how other components in this repo already read location, e.g. see `@reach/router` usage in `Layout.tsx`).
-2. Render one CTA button: **"Upgrade to Pro"**.
+2. Render one CTA button for the Pro column: **"Upgrade to Pro"**. If `uid` is not present, show "Get started" in the Free column, or "Open app" if `uid` was present.
 3. **If `uid` is present in the URL** (app-originated path): clicking the CTA submits the checkout form immediately with the known `uid` — no email step is ever shown.
-4. **If `uid` is absent** (direct navigation to getpackup.com/pricing): clicking the CTA does *not* navigate anywhere yet. Instead it reveals an inline email input + "Continue" button in place of (or beside) the CTA.
+4. **If `uid` is absent** (direct navigation to getpackup.com/pricing): clicking the CTA does *not* navigate anywhere yet. Instead it reveals a modal with email input + "Continue" button in place of (or beside) the CTA.
 5. Submitting the email input calls `fetch(GATSBY_LOOKUP_UID_FUNCTION_URL, { method: 'POST', body: JSON.stringify({ email }) })`.
    - **200 with `{ uid }`**: immediately submit the checkout form using that resolved `uid` (auto-submit, no extra click).
    - **404**: show the function's own message inline, styled as a neutral/muted notice (not a red error) — `"If an account exists, you will receive further instructions."` Do not reveal whether the email matched. Below it, a secondary line: `"Don't have an account yet? "` + a link to `${GATSBY_APP_URL}/signup` (confirm exact signup path in packupapp's `app/routes.ts` before wiring — likely `/signup` or `/`).
