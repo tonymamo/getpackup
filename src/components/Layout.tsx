@@ -59,7 +59,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
             <PageBody isHomePage={location.pathname === '/'}>
               <ErrorBoundary>{props.children}</ErrorBoundary>
             </PageBody>
-            {location.pathname !== '/' && <Footer />}
+            <Footer />
           </LayoutWrapper>
           <CookieConsent
             location="bottom"

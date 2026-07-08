@@ -34,7 +34,7 @@ This is a small, mechanical, low-risk change (~10 lines) in `packupapp`, but it'
 
 Add to `.env.sample` and Netlify env config (mirroring the existing `GATSBY_SITE_URL` per-context pattern in `netlify.toml`):
 
-- `GATSBY_APP_URL` — `https://app.getpackup.com` (checkout form POST target + "sign up in the app" link).
+- `GATSBY_APP_URL` — `https://new.packupapp.com` (checkout form POST target + "sign up in the app" link).
 - `GATSBY_LOOKUP_UID_FUNCTION_URL` — the deployed Cloud Function trigger URL for `lookupUidByEmail`. No Firebase Hosting rewrite exists for a clean path, so this will be the raw Cloud Functions/Cloud Run URL — grab it from the Firebase console (Functions tab) after packupapp's `functions` are deployed, and confirm it responds to CORS from `getpackup.com` (it's already allowlisted in `functions/src/index.ts`).
 - `GATSBY_STRIPE_PRICE_LOOKUP_KEY` — `pro_monthly`.
 

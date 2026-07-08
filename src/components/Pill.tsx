@@ -75,6 +75,7 @@ const StyledPill = styled.span`
   transition: all 0.2s ease-in-out;
   color: ${(props) => props.color && renderColor(props.color).color};
   line-height: 1.5;
+  flex-shrink: 0;
 
   &:hover {
     background-color: ${(props) => props.color && renderColor(props.color).hoverBackgroundColor};

@@ -226,15 +226,15 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                   Log In
                 </NavLinkA>
                 <HorizontalRule compact />
-                <NavLinkA
-                  href="https://packupapp.com"
+                <NavLink
+                  to="/pricing"
                   onClick={() => {
-                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Sign Up' });
+                    trackEvent('Navbar SmallScreen Link Clicked', { link: 'Get Started' });
                     toggleMenu();
                   }}
                 >
-                  Sign Up
-                </NavLinkA>
+                  Get Started
+                </NavLink>
                 <HorizontalRule compact />
                 <NavLinkA
                   href="/support"
@@ -256,8 +256,8 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                 Log In
               </Button>
               &nbsp;
-              <Button type="link" to="https://packupapp.com">
-                Sign Up
+              <Button type="link" to="/pricing">
+                Get Started
               </Button>
             </FlexContainer>
           )}
