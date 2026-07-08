@@ -187,9 +187,12 @@ const Pricing: FunctionComponent<RouteComponentProps> = () => {
       }
     } catch {
       setLookupState('error');
-    } finally {
-      setSubmitting(false);
     }
+
+    // Skipped on the 200 path above (early return) - the modal has already
+    // closed and unmounted Formik by then, so setSubmitting would warn about
+    // updating state on an unmounted component.
+    setSubmitting(false);
   };
 
   const renderFeatureList = (planKey: 'free' | 'pro') => (
