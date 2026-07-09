@@ -98,6 +98,12 @@ const Section = styled.section<{ background?: string }>`
   background-color: ${(props) => props.background || 'transparent'};
   position: relative;
   height: 100vh;
+  /* Establishes its own stacking context so a z-index:-1 child (e.g. the footer's
+     mountain background image) paints above this Section's own background instead of
+     being pushed behind it into the parent ParallaxLayer's stacking context (which
+     otherwise happens because position:relative alone with z-index:auto doesn't
+     contain child stacking). */
+  z-index: 0;
 `;
 
 const TypewriterWrapper = styled.div`
