@@ -2,6 +2,7 @@ import { BlogRollType } from '@common/blogRoll';
 import { FluidImageType } from '@common/image';
 import {
   Badges,
+  Button,
   Column,
   Dividers,
   FlexContainer,
@@ -12,6 +13,7 @@ import {
   Seo,
 } from '@components';
 import devices from '@images/devices.png';
+import mountainScene from '@images/mountain-scene.png';
 import route from '@images/route.svg';
 import screenshot1 from '@images/screenshot-1.png';
 import screenshot2 from '@images/screenshot-2.png';
@@ -19,11 +21,14 @@ import screenshot3 from '@images/screenshot-5.png';
 import TopoBg from '@images/topo1';
 // import loadable from '@loadable/component';
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import { offWhite, white } from '@styles/color';
-import { baseSpacer, breakpoints, tripleSpacer } from '@styles/size';
+import { brandSecondary, offWhite, white } from '@styles/color';
+import { visuallyHiddenStyle } from '@styles/mixins';
+import { baseSpacer, breakpoints, halfSpacer, tripleSpacer } from '@styles/size';
+import trackEvent from '@utils/trackEvent';
 import useWindowSize from '@utils/useWindowSize';
-import { graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import React, { FunctionComponent } from 'react';
+import { FaFacebook, FaInstagram, FaReddit } from 'react-icons/fa';
 import styled from 'styled-components';
 import Typewriter from 'typewriter-effect';
 
@@ -129,6 +134,40 @@ const BlurredBackgroundWrapper = styled.div<{ bgColor: string }>`
   }
 `;
 
+const Footer = styled.footer`
+  color: ${white};
+  width: 100%;
+  & a {
+    color: ${white};
+    opacity: 0.8;
+
+    &:hover,
+    &:focus {
+      color: ${white};
+      opacity: 1;
+    }
+  }
+`;
+
+const Social = styled.a`
+  margin-right: ${baseSpacer};
+`;
+
+const HiddenText = styled.span`
+  ${visuallyHiddenStyle};
+`;
+
+// Total "pages" (viewport heights) used by the hero + pitch/background layers above the
+// footer - matches where every background-color/text layer actually ends.
+const PAGES_BEFORE_FOOTER = 5;
+// The footer's own Section/FlexContainer are hardcoded to `height: 100vh`, so its
+// rendered content is always exactly one viewport tall regardless of what factor we
+// give it here - factor isn't sizing the content, just how much scroll space is
+// reserved for it. 1.0 matches that exactly; the small buffer beyond it is only to
+// absorb mobile browsers' well-known "100vh is slightly taller than the real visible
+// viewport" quirk (collapsing address bars etc), not to fit more content.
+const FOOTER_FACTOR = 1.05;
+
 export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
   const { isSmallScreen } = useWindowSize();
 
@@ -153,7 +192,7 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
             </Column>
             <Column xs={6} xsOffset={3} sm={4} smOffset={1} md={6}> */}
       <ParallaxWrapper>
-        <Parallax pages={5.2}>
+        <Parallax pages={PAGES_BEFORE_FOOTER + FOOTER_FACTOR}>
           <ParallaxLayer offset={0}>
             <HeroImage imgSrc={props.heroImage} mobileImgSrc={props.mobileHeroImage} fullHeight>
               <PageContainer>
@@ -333,6 +372,166 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
               </ParallaxLayer>
             );
           })}
+
+          {/* Page 6 aka Footer */}
+          <ParallaxLayer offset={PAGES_BEFORE_FOOTER} factor={FOOTER_FACTOR}>
+            <Section background={brandSecondary}>
+              <FlexContainer
+                justifyContent="space-evenly"
+                flexDirection="column"
+                height="100vh"
+                alignItems="center"
+              >
+                <PageContainer>
+                  <div style={{ textAlign: 'center' }}>
+                    <Heading as="h1" inverse align="center">
+                      Plan your first trip today
+                    </Heading>
+
+                    <Button type="link" to="https://packupapp.com/signup">
+                      Get Started
+                    </Button>
+                  </div>
+                </PageContainer>
+                <PageContainer>
+                  <Footer>
+                    <Row>
+                      <Column md={3} lg={6}>
+                        <Heading>
+                          <Link to="/">packup</Link>
+                        </Heading>
+                        <p>Get outside faster and safer.</p>
+                        <nav>
+                          <Social
+                            href="https://www.instagram.com/getpackup/"
+                            target="_blank"
+                            rel="noopener"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Instagram' })}
+                          >
+                            <FaInstagram />
+                            <HiddenText>Instagram</HiddenText>
+                          </Social>
+                          <Social
+                            href="https://www.facebook.com/getpackup"
+                            target="_blank"
+                            rel="noopener"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Facebook' })}
+                          >
+                            <FaFacebook />
+                            <HiddenText>Facebook</HiddenText>
+                          </Social>
+                          <Social
+                            href="https://reddit.com/r/packup"
+                            target="_blank"
+                            rel="noopener"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Reddit' })}
+                          >
+                            <FaReddit />
+                            <HiddenText>Reddit</HiddenText>
+                          </Social>
+                        </nav>
+                        <small>
+                          <Link
+                            to="/privacy"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Privacy' })}
+                          >
+                            Privacy
+                          </Link>
+                          {' | '}
+                          <Link
+                            to="/terms"
+                            onClick={() =>
+                              trackEvent('Footer Link Click', { link: 'Terms of Use' })
+                            }
+                          >
+                            Terms of Use
+                          </Link>
+                          <br />
+                          {`Copyright © Packup Technologies, Ltd. ${new Date().getFullYear()}`}
+                        </small>
+                      </Column>
+                      <Column sm={4} md={3} lg={2}>
+                        <p>
+                          <Link
+                            to="/"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Home' })}
+                          >
+                            Home
+                          </Link>
+                        </p>
+                        <p>
+                          <a
+                            href="https://packupapp.com"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Sign Up' })}
+                          >
+                            Sign Up
+                          </a>
+                        </p>
+                      </Column>
+                      <Column sm={4} md={3} lg={2}>
+                        <p>
+                          <Link
+                            to="/blog"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Blog' })}
+                          >
+                            Blog
+                          </Link>
+                        </p>
+                        <p>
+                          <Link
+                            to="/about"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'About' })}
+                          >
+                            About
+                          </Link>
+                        </p>
+                      </Column>
+                      <Column sm={4} md={3} lg={2}>
+                        <p>
+                          <Link
+                            to="/contact"
+                            onClick={() =>
+                              trackEvent('Footer Link Click', { link: 'Send a message' })
+                            }
+                          >
+                            Send a Message
+                          </Link>
+                        </p>
+                        <p>
+                          <Link
+                            to="/support"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Support Us' })}
+                          >
+                            Support Us
+                          </Link>
+                        </p>
+                      </Column>
+                    </Row>
+                    <div style={{ marginTop: tripleSpacer }}>
+                      <Badges />
+                    </div>
+                  </Footer>
+                </PageContainer>
+              </FlexContainer>
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  backgroundImage: `url(${mountainScene})`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '100%',
+                  backgroundPosition: 'bottom center',
+                  padding: halfSpacer,
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  height: '100vh',
+                  zIndex: -1,
+                }}
+              />
+            </Section>
+          </ParallaxLayer>
         </Parallax>
       </ParallaxWrapper>
 

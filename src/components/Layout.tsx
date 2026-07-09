@@ -1,7 +1,7 @@
 import 'animate.css';
 import '@styles/bootstrapCarousel.css';
 
-import { ErrorBoundary, Navbar } from '@components';
+import { ErrorBoundary, Footer, Navbar } from '@components';
 import loadable from '@loadable/component';
 import { useLocation } from '@reach/router';
 import { brandSecondary, brandSuccess, white } from '@styles/color';
@@ -15,9 +15,6 @@ import { IconContext } from 'react-icons';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
-const Footer = loadable(() => import('@components/Footer'), {
-  fallback: <footer style={{ backgroundColor: brandSecondary, height: '20vh' }} />,
-});
 const UpploadTheme = loadable(() => import('@styles/upploadTheme'));
 
 const LayoutWrapper = styled.div`
@@ -59,7 +56,7 @@ const Layout: FunctionComponent<LayoutProps> = (props) => {
             <PageBody isHomePage={location.pathname === '/'}>
               <ErrorBoundary>{props.children}</ErrorBoundary>
             </PageBody>
-            <Footer />
+            {location.pathname !== '/' && <Footer />}
           </LayoutWrapper>
           <CookieConsent
             location="bottom"
