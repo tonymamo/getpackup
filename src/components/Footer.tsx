@@ -55,7 +55,7 @@ const Footer = () => {
               Plan your first trip today
             </Heading>
 
-            <Button type="link" to="https://packupapp.com/signup">
+            <Button type="link" to="/pricing">
               Get Started
             </Button>
           </div>
@@ -122,12 +122,12 @@ const Footer = () => {
                   </Link>
                 </p>
                 <p>
-                  <a
-                    href="https://packupapp.com"
-                    onClick={() => trackEvent('Footer Link Click', { link: 'Sign Up' })}
+                  <Link
+                    to="/pricing"
+                    onClick={() => trackEvent('Footer Link Click', { link: 'Get Started' })}
                   >
-                    Sign Up
-                  </a>
+                    Get Started
+                  </Link>
                 </p>
               </Column>
               <Column sm={4} md={3} lg={2}>

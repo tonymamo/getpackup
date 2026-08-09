@@ -466,12 +466,12 @@ export const IndexPageTemplate: FunctionComponent<IndexPageProps> = (props) => {
                           </Link>
                         </p>
                         <p>
-                          <a
-                            href="https://packupapp.com"
-                            onClick={() => trackEvent('Footer Link Click', { link: 'Sign Up' })}
+                          <Link
+                            to="/pricing"
+                            onClick={() => trackEvent('Footer Link Click', { link: 'Pricing' })}
                           >
-                            Sign Up
-                          </a>
+                            Get Started
+                          </Link>
                         </p>
                       </Column>
                       <Column sm={4} md={3} lg={2}>
